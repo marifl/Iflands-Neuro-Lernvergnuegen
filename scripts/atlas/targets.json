@@ -1,0 +1,35 @@
+{
+  "_doc": "Carve-Targets fuer register.py (stage_h4). Generalisiert die 6 hartkodierten Patches auf die figur-kritischen DKT-Splits. src=allen|learn (Quell-Dict), names=Liste von Mesh-Keys (werden konkateniert; pars* sind dorsal/ventral gesplittet), host=TARO-Host-Gyrus (in taro_hosts*.json), mode=absolute|partition. absolute: Host-Vertices innerhalb thresh_mm der gewarpten Parzelle. partition: alle Host-Vertices der naechsten Parzelle der group zuweisen (Within-Host-Split, robust gegen lateralen Versatz). group: Targets gleicher group+host werden gemeinsam partitioniert.",
+  "default_thresh_mm": 6.0,
+  "targets": [
+    { "slug": "left-sma", "src": "allen", "names": ["left, area 6mp (cxl)"], "host": "left-superior-frontal-gyrus", "mode": "absolute" },
+    { "slug": "right-sma", "src": "allen", "names": ["right, area 6mp (cxr)"], "host": "right-superior-frontal-gyrus", "mode": "absolute" },
+    { "slug": "left-pre-sma", "src": "allen", "names": ["left, area 6ma (cxl)"], "host": "left-superior-frontal-gyrus", "mode": "absolute" },
+    { "slug": "right-pre-sma", "src": "allen", "names": ["right, area 6ma (cxr)"], "host": "right-superior-frontal-gyrus", "mode": "absolute" },
+    { "slug": "left-anterior-cingulate", "src": "learn", "names": ["caudalanteriorcingulate-l"], "host": "left-cingulate-gyrus", "mode": "absolute" },
+    { "slug": "right-anterior-cingulate", "src": "learn", "names": ["caudalanteriorcingulate-r"], "host": "right-cingulate-gyrus", "mode": "absolute" },
+
+    { "slug": "left-parsopercularis", "src": "learn", "names": ["parsopercularis-cortex-l-dorsal", "parsopercularis-cortex-l-ventral"], "host": "left-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-l" },
+    { "slug": "left-parstriangularis", "src": "learn", "names": ["parstriangularis-cortex-l-dorsal", "parstriangularis-cortex-l-ventral"], "host": "left-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-l" },
+    { "slug": "left-parsorbitalis", "src": "learn", "names": ["parsorbitalis-l"], "host": "left-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-l" },
+    { "slug": "right-parsopercularis", "src": "learn", "names": ["parsopercularis-cortex-r-dorsal", "parsopercularis-cortex-r-ventral"], "host": "right-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-r" },
+    { "slug": "right-parstriangularis", "src": "learn", "names": ["parstriangularis-cortex-r"], "host": "right-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-r" },
+    { "slug": "right-parsorbitalis", "src": "learn", "names": ["parsorbitalis-r"], "host": "right-inferior-frontal-gyrus", "mode": "partition", "group": "ifg-r" },
+
+    { "slug": "left-caudal-anterior-cingulate", "src": "learn", "names": ["caudalanteriorcingulate-l"], "host": "left-cingulate-gyrus", "mode": "partition", "group": "cing-l" },
+    { "slug": "left-rostral-anterior-cingulate", "src": "learn", "names": ["rostralanteriorcingulate-l"], "host": "left-cingulate-gyrus", "mode": "partition", "group": "cing-l" },
+    { "slug": "right-caudal-anterior-cingulate", "src": "learn", "names": ["caudalanteriorcingulate-r"], "host": "right-cingulate-gyrus", "mode": "partition", "group": "cing-r" },
+    { "slug": "right-rostral-anterior-cingulate", "src": "learn", "names": ["rostralanteriorcingulate-r"], "host": "right-cingulate-gyrus", "mode": "partition", "group": "cing-r" },
+
+    { "slug": "left-lateral-orbitofrontal", "src": "learn", "names": ["lateralorbitofrontal-l"], "host": "left-lateral-orbital-gyrus", "mode": "partition", "group": "latofc-l" },
+    { "slug": "right-lateral-orbitofrontal", "src": "learn", "names": ["lateralorbitofrontal-r"], "host": "right-lateral-orbital-gyrus", "mode": "partition", "group": "latofc-r" },
+    { "slug": "left-medial-orbitofrontal", "src": "learn", "names": ["medialorbitofrontal-l"], "host": "left-medial-orbital-gyrus", "mode": "partition", "group": "medofc-l" },
+    { "slug": "right-medial-orbitofrontal", "src": "learn", "names": ["medialorbitofrontal-r"], "host": "right-medial-orbital-gyrus", "mode": "partition", "group": "medofc-r" },
+
+    { "slug": "left-nucleus-accumbens", "src": "learn", "names": ["accumbens-l"], "host": "left-caudate-nucleus", "mode": "absolute", "warp": "subcortical", "thresh_mm": 8.0 },
+    { "slug": "right-nucleus-accumbens", "src": "learn", "names": ["accumbens-r"], "host": "right-caudate-nucleus", "mode": "absolute", "warp": "subcortical", "thresh_mm": 8.0 },
+
+    { "slug": "left-frontopolar", "mode": "geometric_pole", "hosts": ["left-superior-frontal-gyrus", "left-middle-frontal-gyrus"], "axis": "z", "pole_depth_mm": 22.0, "combined_host": "left-frontal-pole-host" },
+    { "slug": "right-frontopolar", "mode": "geometric_pole", "hosts": ["right-superior-frontal-gyrus", "right-middle-frontal-gyrus"], "axis": "z", "pole_depth_mm": 22.0, "combined_host": "right-frontal-pole-host" }
+  ]
+}

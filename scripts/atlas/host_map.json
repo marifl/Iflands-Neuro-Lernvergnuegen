@@ -1,0 +1,90 @@
+{
+  "_doc": "Julich-Host-Suffix (aus julich3-area-<code>-<suffix>-<l/r>) + DKT-Name -> TARO-Host-Gyrus (brain.glb). Within-Host-Partition: jede Parzelle wird in IHREM Host-Gyrus gegen die Geschwister-Parzellen zentroid-aligned partitioniert. 'combined' = synthetischer Host aus mehreren Gyri (wie geometric_pole). 'exclude' = nicht transformieren (Grund dokumentiert). Sulci (ifs/sts/ips/...) -> adjazenter Gyrus (anatomische Konvention).",
+
+  "combined_hosts": {
+    "ofc-combined": ["lateral-orbital-gyrus", "medial-orbital-gyrus", "anterior-orbital-gyrus", "posterior-orbital-gyrus", "straight-gyrus"],
+    "ipl-combined": ["supramarginal-gyrus", "angular-gyrus"],
+    "frontal-pole-combined": ["superior-frontal-gyrus", "middle-frontal-gyrus"],
+    "insula-combined": ["insula", "first-short-gyrus-of-insula", "second-short-gyrus-of-insula", "intermediate-short-gyrus-of-insula"],
+    "heschl-combined": ["anterior-transverse-temporal-gyrus", "posterior-transverse-temporal-gyrus"]
+  },
+
+  "_host_restrictions_doc": "Manche Parzellen bewohnen einen Host, den sie NICHT tilen (z.B. nur fp1/fp2 im ganzen SFG+MFG -> blaehen auf beide Haelften statt nur den Pol). Restriction beschneidet die Host-Geometrie VOR der Partition auf eine Region (anteriore mm-Kappe), Achse +Z=anterior. Gilt bei host_vertices() ueberall.",
+  "host_restrictions": {
+    "frontal-pole-combined": { "axis": "z", "anterior_mm": 25 }
+  },
+
+  "julich_suffix_to_host": {
+    "_frontal": "----",
+    "precg": "precentral-gyrus",
+    "sfg": "superior-frontal-gyrus",
+    "mfg": "middle-frontal-gyrus",
+    "ifg": "inferior-frontal-gyrus",
+    "poperc": "inferior-frontal-gyrus",
+    "frontal-operculum": "inferior-frontal-gyrus",
+    "ifs": "inferior-frontal-gyrus",
+    "ifs-precs": "inferior-frontal-gyrus",
+    "mfg-ifg": "inferior-frontal-gyrus",
+    "sfs": "middle-frontal-gyrus",
+    "fpole": "frontal-pole-combined",
+    "sma-mesial-sfg": "superior-frontal-gyrus",
+    "presma-mesial-sfg": "superior-frontal-gyrus",
+    "ofc": "ofc-combined",
+
+    "_cingulate": "----",
+    "acc": "cingulate-gyrus",
+    "sacc": "cingulate-gyrus",
+    "pacc": "cingulate-gyrus",
+
+    "_parietal": "----",
+    "spl": "superior-parietal-lobule",
+    "ips": "superior-parietal-lobule",
+    "ipl": "ipl-combined",
+    "postcg": "postcentral-gyrus",
+    "postcs": "postcentral-gyrus",
+    "stg-smg": "supramarginal-gyrus",
+
+    "_temporal": "----",
+    "stg": "superior-temporal-gyrus",
+    "3-stg": "superior-temporal-gyrus",
+    "2-2-stg": "superior-temporal-gyrus",
+    "2-1-stg": "superior-temporal-gyrus",
+    "sts": "middle-temporal-gyrus",
+    "fusg": "fusiform-gyrus",
+    "phg": "parahippocampal-gyrus",
+    "ots": "inferior-temporal-gyrus",
+    "cos": "fusiform-gyrus",
+    "1-0-heschl": "heschl-combined",
+    "1-1-heschl": "heschl-combined",
+    "1-2-heschl": "heschl-combined",
+
+    "_occipital": "----",
+    "loc": "lateral-occipital-gyrus",
+    "lingg": "lingual-gyrus",
+    "cuneus": "cuneus",
+    "v1-17-calcs": "cuneus",
+    "v2-18": "cuneus",
+    "pos": "precuneus",
+
+    "_insula": "----",
+    "insula": "insula-combined",
+
+    "_hippocampus": "---- (User-Entscheidung: echte TARO-hippocampus-proper-Geometrie als Host; Subfelder partitionieren sie)",
+    "hippocampal-region-entorhinal-cortex": "parahippocampal-gyrus",
+    "ca1-hippocampus": "hippocampus-proper",
+    "ca2-hippocampus": "hippocampus-proper",
+    "ca3-hippocampus": "hippocampus-proper",
+    "dg-hippocampus": "hippocampus-proper",
+    "subc-hippocampus-subicular-complex": "hippocampus-proper",
+    "trs-hippocampus-transsubiculum": "hippocampus-proper",
+
+    "_gapmaps": "---- (User-Entscheidung: mit-transformieren; Transition-Zonen ohne klaren Namens-Host -> geometrisch dem zentroid-naechsten Kortex-Gyrus zuweisen, laut geloggt)",
+    "frontal-i-1-gapmap": "AUTO_NEAREST",
+    "frontal-i-2-gapmap": "AUTO_NEAREST",
+    "frontal-ii-gapmap": "AUTO_NEAREST",
+    "frontal-to-temporal-i-gapmap": "AUTO_NEAREST",
+    "frontal-to-temporal-ii-gapmap": "AUTO_NEAREST",
+    "frontal-to-occipital-gapmap": "AUTO_NEAREST",
+    "temporal-to-parietal-gapmap": "AUTO_NEAREST"
+  }
+}

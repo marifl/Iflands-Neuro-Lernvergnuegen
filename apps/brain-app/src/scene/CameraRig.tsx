@@ -11,6 +11,7 @@ import { loadCoords, unionBounds, type StructureCoords } from './structureCoords
 export default function CameraRig() {
   const { camera, controls } = useThree()
   const highlight = useViewerStore((s) => s.highlight)
+  const cameraView = useViewerStore((s) => s.cameraView)
   const shot = useSceneStore((s) => s.cameraShot)
   const [coords, setCoords] = useState<StructureCoords | null>(null)
   const target = useRef(new THREE.Vector3())
@@ -36,6 +37,18 @@ export default function CameraRig() {
     camGoal.current.set(...center).addScaledVector(directionVec(shot), dist)
     want.current = true
   }, [coords, shot, highlight, camera])
+
+  // Globale Ansicht-Box: das Gesamt-Hirn aus einer benannten Richtung framen (one-shot, nonce-getriggert).
+  useEffect(() => {
+    if (!cameraView) return
+    const center = new THREE.Vector3(0, 12, 0)
+    const radius = 85 // grobe Gesamt-Hirn-Ausdehnung; reicht fuer das Anflug-Framing
+    const fov = (camera as THREE.PerspectiveCamera).fov
+    const dist = (radius / Math.sin((fov * Math.PI) / 360)) * 1.4
+    target.current.copy(center)
+    camGoal.current.copy(center).addScaledVector(directionVec(cameraView.name), dist)
+    want.current = true
+  }, [cameraView, camera])
 
   useFrame(() => {
     if (!want.current) return

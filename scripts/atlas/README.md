@@ -1,55 +1,116 @@
-# Atlas-Subparzellierung (scripts/atlas)
+# Atlas-Geometrie & Transformation — Single Source of Truth
 
-Pipeline: MNI-Atlas-Parzellen (DKT ACC aus `mni152-learn-brain.glb`, Julich SMA/pre-SMA aus
-`mni152-allen-fullbrain-gage-context.glb`, beide aus `archive/2026-06-11-mni-stack/`) →
-auf das TARO-`brain.glb` registriert → Sub-Patches als TARO-Geometrie in `k11-subparcels.glb`.
+> **LIES MICH ZUERST, bevor du irgendetwas ueber Hirn-Atlas-Geometrie, Julich, DKT, Brodmann
+> oder MNI→TARO behauptest.** Dieses Dokument haelt die teuer erkaempften Fakten fest, damit
+> niemand denselben „Durchbruch" ein viertes Mal findet. Wenn eine Aussage hier einer Erinnerung
+> oder einem aelteren Plan widerspricht: **dieses Dokument gewinnt** (oder verifiziere neu und
+> aktualisiere es hier).
 
-## Reproduktion
+---
 
-```bash
-# 1. Python-Deps
-cd scripts/atlas && python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+## 0. Die Fakten, die immer wieder „neu entdeckt" wurden (NICHT erneut suchen)
 
-# 2. GLBs dekodieren (Playwright+three, braucht apps/brain-app/node_modules)
-# node_modules-Symlink bereits vorhanden (-> apps/brain-app/node_modules)
-node decode_glb.mjs ../../apps/brain-app/public/assets/bodyparts3d/brain.glb work/taro_hosts.json "^(left|right)-(cingulate-gyrus|superior-frontal-gyrus|middle-frontal-gyrus|supramarginal-gyrus|superior-parietal-lobule)$"
-# MNI GLBs: learn-brain (DKT) und allen-fullbrain (Julich) -> work/mni_learn.json, mni_allen.json
+1. **Julich-412-Geometrie EXISTIERT.** Sie fehlt nur im *Archiv dieses Standalone-Repos*. Die echte Mesh-Geometrie liegt unter:
+   - `/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone/public/figs3d/v2/glb/julich3.glb` (Schwester-Standalone, **kanonische Quelle**)
+   - Monorepo: `…/MU - SS26 - Kognitive Neurowissenschaften/deck/brain3d-next/public/figs3d/v2/glb/julich3.glb`
+   - **2,37 MB, MESHOPT-komprimiert (NICHT Draco!), 292 benannte kortikale Meshes**, MNI152-ICBM-2009c-Asym, Amunts et al. 2020.
+   - Namens-Schema: `julich3-area-<arealcode>-<host-suffix>-<l|r>` → **der Host-Gyrus steht im Namen** (z.B. `area-44-ifg`, `op4-poperc`, `fp2-fpole`, `6mp-sma-mesial-sfg`).
+2. **DKT-Geometrie** liegt in `archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-learn-brain.glb` (Draco). Enthaelt DKT-Kortex + Brodmann `ba-*` + Julich-FG/hOc + CIT168-Subkortex. **DKT = die figur-relevante gyrale Granularitaet** (pars opercularis=BA44, triangularis=BA45, orbitalis=BA47, rostral/caudal ACC, lateral/medial OFC). Julich = feinere zytoarchitektonische Ebene.
+3. **MNI152 ≠ TARO sind ZWEI VERSCHIEDENE GEHIRNE.** MNI152 = Populations-Mittel, TARO (`brain.glb`, BodyParts3D) = Einzelindividuum. Globale Affine MNI→TARO ist ~**22 mm** lateral daneben (`work/residuals.json` h2_loo=21.9). **Es gibt keine perfekte globale Registrierung.** Methode der Wahl: **Within-Host-Split** (Parzelle auf den korrekten TARO-Gyrus zwingen, nur die innere Grenze registrieren). Eine echte dichte Surface-Registrierung wurde bewusst NICHT gewaehlt (riskanter zwischen zwei Hirnen).
+4. **`julich3.glb` und `mni152-learn-brain.glb` liegen in UNTERSCHIEDLICHEN GLB-Welt-Frames** (z.B. Julich `area-44` vs DKT `parsopercularis` ~21 mm auseinander). → **Jede Quelle braucht ihre EIGENE `<source>→TARO`-Affine.** Die learn→TARO-Affine aus der 6-Patch-Pipeline gilt NICHT fuer Julich.
+5. **`brain.glb` ist UNANTASTBAR.** Alle Sub-Patches kommen in SEPARATE GLBs. Das Runtime-`k11-subparcels.glb` enthaelt nur die in der App genutzten Patches; der volle Atlas liegt auf dem **Shelf** (`work/atlas-*.glb`, NICHT vom App-Asset geladen).
+6. **Decoder:** `brain.glb` + `mni152-learn-brain.glb` = **Draco**; `julich3.glb` = **Meshopt**. `decode_glb.mjs` + `list_glb_names.mjs` setzen beide Decoder. Wer „setMeshoptDecoder must be called"-Fehler sieht: das GLB ist Meshopt.
 
-# 3. Registrierung (H1-H4)
-./.venv/bin/python register.py
+---
 
-# 4. Sub-Patches bauen + structure-coords.json ergaenzen
-node build_subparcels.mjs
-```
+## 1. Zwei Pipelines (nicht verwechseln)
 
-## Gemessene Residuen (2026-06-12)
+### A) Runtime-Pipeline — `register.py` → `k11-subparcels.glb` (in der App)
+Die hand-kuratierten, figur-genutzten Patches. **Diese GLB wird von der App geladen** (`SubParcels.tsx`).
+- **Inhalt (24 Meshes):** 6 Basis (`sma`, `pre-sma`, `anterior-cingulate` je l/r) + W1-B DKT-Splits (pars\*, rostral/caudal ACC, lateral/medial OFC, nucleus-accumbens) + W2 `frontopolar` (geometrischer Pol-Carve).
+- **Targets:** `targets.json` (slug/src/names/host/mode[/group/warp/thresh_mm]). Modi: `absolute` (KDTree-Threshold), `partition` (zentroid-aligned Within-Host-Split), `geometric_pole` (Frontalpol = vorderste SFG+MFG-Spitze), `warp:subcortical` (eigene Striatum/Pallidum-Affine, da kortikale Affine Subkortex ~60 mm verfehlt).
+- **Reproduktion:** `./.venv/bin/python register.py && node build_subparcels.mjs`
+- **NICHT anfassen ausser fuer Runtime-Aenderungen.** W1-B/W2 sind verifiziert (typecheck 0, vitest 48/48, 7 Smokes).
 
-| Stufe | Wert |
-|-------|------|
-| H1 allen→learn Frame-Konsolidierung | mean 0.1 mm, max 0.1 mm |
-| H2 learn→TARO Affine LOO-Residuum | mean 21.9 mm, max 36.1 mm |
-| H3 CPD vs. Affine (pro Host-Gyrus) | ~0.1 mm Verbesserung (CPD marginal besser) |
-| H4 left-anterior-cingulate | 536 Vertices, Median 1.75 mm < 6 mm ✓ |
-| H4 right-anterior-cingulate | 481 Vertices, Median 2.16 mm < 6 mm ✓ |
-| H4 left-sma | 159 Vertices, Median 2.77 mm < 6 mm ✓ |
-| H4 right-sma | 194 Vertices, Median 3.49 mm < 6 mm ✓ |
-| H4 left-pre-sma | 252 Vertices, Median 2.37 mm < 6 mm ✓ |
-| H4 right-pre-sma | 242 Vertices, Median 2.15 mm < 6 mm ✓ |
+### B) Transform-Pipeline — `register_atlas.py` → `work/atlas-*.glb` (Shelf, NICHT Runtime)
+Das **gesamte** Julich + DKT auf TARO, als wiederverwendbares Artefakt fuer spaetere Integration. Beruehrt die Runtime NICHT.
+- **Reproduktion:**
+  ```bash
+  # Julich: Meshopt-GLB decoden (kanonische Quelle, s. Abschnitt 0)
+  node decode_glb.mjs "/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone/public/figs3d/v2/glb/julich3.glb" work/julich_parcels.json "^julich3-"
+  # Alle TARO-Kortex-Hosts decoden (62 Meshes)
+  node decode_glb.mjs ../../apps/brain-app/public/assets/bodyparts3d/brain.glb work/taro_cortex_hosts.json "^(left|right)-(…alle Kortex-Gyri…)$"
+  # Transform + Bake
+  ./.venv/bin/python register_atlas.py julich work/julich_parcels.json
+  node atlas_bake.mjs julich
+  # DKT analog: decode_glb (DKT-Regex) -> dorsal/ventral-Merge -> register_atlas.py dkt -> atlas_bake.mjs dkt
+  ```
+- **Mapping:** `host_map.json` (56 Julich-Suffixe + DKT-Namen → TARO-Host). Combined-Hosts: `ofc-combined`, `ipl-combined`, `frontal-pole-combined`, `insula-combined`, `heschl-combined`. Sonderfaelle: Sulci→adjazenter Gyrus, Gapmaps→`AUTO_NEAREST` (zentroid-naechster Host, geloggt), Hippocampus-Subfelder→`hippocampus-proper`.
+- **Ergebnis (2026-06-12):** **352 Parzellen, null Drops** — 292/292 Julich (274 sauber Median 4.1 mm + 18 Backfill) + 60/60 DKT (Median 2.3 mm).
 
-Vollständige Residuen: `work/residuals.json`.
+---
 
-## Präzisions-Decke
+## 2. Schluessel-Mechanismen (warum es funktioniert)
 
-MNI152 = Populations-Mittel, TARO = Einzelindividuum; keine 1:1-Sulcus-Korrespondenz möglich.
-Mediale Wand (SMA/ACC) ist stereotyp gefaltet → dort am besten (~1–3 mm). Sub-Patches sind
-anatomisch korrekt lokalisiert (richtiger Gyrus-Teil), nicht zytoarchitektonisch grenz-exakt.
-Sub-Patches sind **echte TARO-Geometrie** (kein Schweben, kein Registrierungs-Versatz im Render).
+- **Within-Host-Partition (zentroid-aligned):** Pro TARO-Host alle zugeordneten Parzellen gemeinsam auf den Host-Schwerpunkt zentrieren (entfernt den ~22 mm Bulk-Offset), dann jeden Host-Vertex der naechsten Parzelle zuweisen. Nur die RELATIVE Anordnung entscheidet die innere Grenze → robust gegen lateralen Registrierungs-Fehler. **Ohne Zentroid-Alignment reisst die am weitesten versetzte Teilregion (z.B. parsorbitalis) auf 0 Vertices.**
+- **Subkortex-Affine:** Kortikal gefittete Affine extrapoliert auf tiefe Strukturen katastrophal (accumbens ~60 mm daneben). Eigene Affine aus Striatum/Pallidum-Landmarks (LOO 5.4 mm). Flag `warp:subcortical`.
+- **Backfill (Transform-Pipeline):** In ueberfuellten Hosts (IFG bekommt 15+ Julich-Areale) verlieren winzige Parzellen per argmin alle Vertices. Backfill gibt ihnen garantiert ihre `FLOOR`=12 naechsten Host-Vertices (ueberlappend, ehrlich `backfill:true` markiert). `atlas_bake.mjs` hat einen Face-Fallback fuer Patches an Combined-Host-Naehten.
+- **AUTO_NEAREST:** Gapmaps (Atlas-Uebergangszonen ohne klaren Namens-Host) → geometrisch dem zentroid-naechsten Kortex-Gyrus zugewiesen, im Log nachvollziehbar.
 
-## Ausgabe-GLB
+---
 
-`apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` — 6 Meshes:
-- `left/right-anterior-cingulate` (DKT caudalACC)
-- `left/right-sma` (Julich Area 6mp)
-- `left/right-pre-sma` (Julich Area 6ma)
+## 3. Praezisions-Decke (ehrlich)
 
-Mesh-Namen = Slugs in `src/scene/regions.ts` + Einträge in `public/scenes/structure-coords.json`.
+- **Topologisch/lokal korrekt** (richtiger Gyrus, richtige relative Lage) — ja, fuer alle Parzellen.
+- **Morphometrisch exakt — NEIN.** Die innere Grenze ist registrierungs-genaehert. Bekannte Artefakte aus dem **TARO-Mesh selbst** (nicht aus der Registrierung): `medial-orbital-gyrus` hat nur 422 Vertices (vs 4898 lateral) → medialer OFC strukturell untergroß. Solche bleiben unabhaengig vom Atlas.
+- **Gegen das Buch (Kapitel 11):** Abbildungen sind schematisch (welche Region leuchtet, keine mm). Fuer „richtige Funktionsregion einfaerben" adaequat; fuer zytoarchitektonische Praezision Julich nutzen.
+- **`backfill:true`-Patches** sind Naeherungen (ueberlappend) — fuer „color this area" ok, nicht fuer Flaechen-/Volumen-Messung.
+
+---
+
+## 3b. Verifikation & bekannte Limitationen des Voll-Transforms
+
+**`verify_atlas.py`** prueft das Artefakt (reine Geometrie, kein Browser): anatomische Anordnung
+(area-44 posterior zu area-45, Frontalpol am anteriorsten, V1 am posteriorsten, pre-SMA vor SMA, …)
+**+ Ballooning-Detektor** (Parzellen >3500 Vertices). Stand 2026-06-12: **6/6 Anordnungs-Checks ✓**.
+
+Zwei **combined-Host-Fallen** (hier dokumentiert, damit sie nicht neu entdeckt werden):
+1. **Under-Tiling → GEFIXT.** Wenn wenige Parzellen einen grossen combined-Host bewohnen, den sie
+   nicht ausfuellen (nur `fp1/fp2` im ganzen SFG+MFG), blaehen sie sich auf dessen Haelften auf statt
+   nur den Pol. Fix: `host_restrictions` in `host_map.json` (`frontal-pole-combined` → anteriore
+   25mm-Kappe), angewandt via `eligible_mask()` in `register_atlas.py` (volle Host-Indizierung bleibt
+   fuer `atlas_bake.mjs` erhalten, nur die Zuweisung wird maskiert). fp2 sitzt danach korrekt anterior.
+2. **Voronoi-Imbalance → BEKANNT/akzeptiert.** Im `ofc-combined` dominiert `fo3` (~8000 Vertices),
+   weil die uebrigen OFC-Areale per Affine teils ausserhalb der Orbital-Gyri landen → fo3 gewinnt fast
+   alle Vertices. Nicht figur-kritisch (Runtime nutzt lateral/medial OFC via DKT). Der Ballooning-
+   Detektor flaggt es dauerhaft; bei Bedarf via host_restriction/feinerer OFC-Affine fixbar.
+
+## 4. Artefakt-Inventar
+
+| Datei | Was | Runtime? |
+|---|---|---|
+| `apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` | 24 figur-genutzte Patches | **JA (App laedt)** |
+| `work/atlas-julich.glb` | 292 Julich-Parzellen | nein (Shelf) |
+| `work/atlas-dkt.glb` | 60 DKT-Parzellen | nein (Shelf) |
+| `work/atlas_labels_{julich,dkt}.json` | Parzelle → TARO-Host + Vertex-Indices | nein |
+| `work/atlas_residuals_{julich,dkt}.json` | je Parzelle Median/n/backfill | nein |
+| `work/atlas-manifest.json` | Integrations-Index (352 Parzellen) | nein |
+| `work/{taro_cortex_hosts,julich_parcels,dkt_parcels}.json` | dekodierte Geometrie-Caches | nein |
+| `host_map.json`, `targets.json` | Mapping-/Target-Tabellen | nein |
+
+## 5. Integration in die Runtime (deferred P4 — nur auf Wunsch)
+Gewuenschte Slugs aus `atlas-manifest.json` → in `k11-subparcels.glb` backen (analog `build_subparcels.mjs`, Quelle = `atlas_labels_*`) + in `apps/brain-app/src/viewer/bucketMeshes.ts` verdrahten. Dann z.B. `frontopolar`→echtes `fp1/fp2`, `ifj`→`ifj1/2` (letzte Lücke zu). `structure-coords.json` ergaenzen (CameraRig `unionBounds`), SubParcels-Preset-Faerbung greift automatisch (gleicher Resolver).
+
+## 6. Skripte
+| Skript | Zweck |
+|---|---|
+| `decode_glb.mjs` | GLB (Draco+Meshopt) → world-space Vertices/Faces JSON |
+| `list_glb_names.mjs` | nur Mesh-Namen eines GLB (Draco+Meshopt) |
+| `register.py` | Runtime-Patches (6 + W1-B + W2) → `labels.json`/`residuals.json` |
+| `build_subparcels.mjs` | Runtime-Patches carven → `k11-subparcels.glb` |
+| `register_atlas.py` | **Voll-Transform** Julich/DKT → `atlas_labels_*` (source-agnostisch, host_map) |
+| `atlas_bake.mjs` | Shelf-Bake voller Atlas → `work/atlas-*.glb` |
+| `verify_atlas.py` | Anatomische Anordnungs-Checks + Ballooning-Detektor des Artefakts |
+| `smoke-*.mjs` | Browser-Smokes (preset/figures/carve/frontopolar/eeg/eeg-p3z/eeg-p3b) |
+
+Vollstaendige Wave-/Phasen-Historie: `docs/superpowers/plans/2026-06-12-*.md` (mni-subparcellation, granulare-faerbemodi, julich-dkt-voll-transform).

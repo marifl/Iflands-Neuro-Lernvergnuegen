@@ -1,5 +1,19 @@
 import { create } from 'zustand'
-import { ancestorMap, flattenStructures, nodeChain, type Lang, type Ontology, type OntologyNode } from './ontology'
+import {
+  ancestorMap,
+  buildColorIndex,
+  flattenStructures,
+  nodeChain,
+  type ColorEntry,
+  type ColorMode,
+  type Lang,
+  type Ontology,
+  type OntologyNode,
+} from './ontology'
+import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
+import type { ColorPreset } from './colorPresets'
+
+export type { CutAxis, CutConfig, CutMode }
 
 export interface IsolationCrumb {
   id: string
@@ -11,10 +25,36 @@ export type ViewMode = 'full' | 'k11'
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
 export type AppMode = 'learn' | 'explore' | 'phineas'
+// Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
+// Multi-Axis: jede Achse ist unabhaengig an/aus mit eigener Position (siehe CutAxis/CutConfig).
+function emptyCuts(): Record<CutAxis, CutConfig> {
+  return {
+    sagittal: { on: false, pos: 0 },
+    coronal: { on: false, pos: 0 },
+    axial: { on: false, pos: 0 },
+  }
+}
+/** Einmaliger Kamera-Ausricht-Befehl. nonce erlaubt erneutes Ausloesen desselben Shots. */
+export interface CameraView {
+  name: string
+  nonce: number
+}
 
 interface ViewerState {
   ontology: Ontology | null
   ancestors: Map<string, string[]>
+  /** slug -> {role, side, Top-Gruppe} fuer die Einfaerbung (aus der Ontologie gebaut). */
+  colorIndex: Map<string, ColorEntry>
+  /** Aktiver Farbgebungsmodus der Hirn-Strukturen (modusuebergreifend). */
+  colorMode: ColorMode
+  /** Aktives figur-spezifisches Farb-Preset (nur wirksam bei colorMode='preset'). */
+  activePreset: ColorPreset | null
+  /** Aktive Schnittebenen (Clipping) je Achse — Multi-Axis. */
+  cuts: Record<CutAxis, CutConfig>
+  /** Wirkung der Schnittebenen: schneiden+Cap ('slice') oder dahinter ausblenden ('hide'). */
+  cutMode: CutMode
+  /** Letzter Kamera-Ausricht-Befehl (one-shot, von CameraRig konsumiert). */
+  cameraView: CameraView | null
   /** Kontext-Vollausbau (Schaedel + Kopf), aus den Manifesten gebauter Teilbaum. */
   context: OntologyNode | null
   /** Slugs, die im 3D-View ausgeblendet sind (hierarchisches Ein-/Ausblenden). */
@@ -28,6 +68,12 @@ interface ViewerState {
   hovered: string | null
   /** Von der Animation gesteuertes Highlight-Set (Slugs der aktiven Strukturen). */
   highlight: string[]
+  /** EEG/ERP-Animation laeuft (eine ERP-Szene ist aktiv) -> Quelle pulst synchron. */
+  erpActive: boolean
+  /** Cursor-Position der ERP-Kurve (0..1). */
+  erpPhase: number
+  /** Aktuelle Quellen-Aktivierung (0..1, = positive ERP-Amplitude) fuer den 3D-Puls. */
+  erpPulse: number
   lang: Lang
   mode: ViewMode
   /** Aktiver Grundmodus (Lernen/Explorer/Phineas) — steuert Sidebar + Fussleiste. */
@@ -62,10 +108,26 @@ interface ViewerState {
   drill: (meshName: string) => void
   setHovered: (id: string | null) => void
   setHighlight: (slugs: string[]) => void
+  /** ERP-Animation an/aus; aus setzt Phase/Puls zurueck (kein stiller Rest-Puls). */
+  setErpActive: (active: boolean) => void
+  /** Uhr-Tick der ERP-Animation (Cursor-Phase + Quellen-Puls). */
+  setErpClock: (phase: number, pulse: number) => void
   setLang: (lang: Lang) => void
   setMode: (mode: ViewMode) => void
   /** Grundmodus wechseln; raeumt modus-fremde States (highlight/skull/rod) auf. */
   setAppMode: (mode: AppMode) => void
+  /** Farbgebungsmodus der Hirn-Strukturen setzen. */
+  setColorMode: (mode: ColorMode) => void
+  /** Figur-spezifisches Preset aktivieren (setzt colorMode='preset'); null = aus. */
+  setPreset: (preset: ColorPreset | null) => void
+  /** Eine Achse setzen (on/off + Position). */
+  setCut: (axis: CutAxis, config: CutConfig) => void
+  /** Mehrere Achsen auf einmal setzen (Teil-Update). */
+  setCuts: (configs: Partial<Record<CutAxis, CutConfig>>) => void
+  /** Schnitt-Wirkung umschalten (schneiden vs. ausblenden). */
+  setCutMode: (mode: CutMode) => void
+  /** Kamera auf einen benannten Shot ausrichten (one-shot; null verwirft). */
+  setCameraView: (name: string | null) => void
   setSearch: (search: string) => void
   toggleExpanded: (id: string) => void
   setSkull: (visible: boolean, opacity?: number) => void
@@ -77,6 +139,12 @@ interface ViewerState {
 export const useViewerStore = create<ViewerState>((set, get) => ({
   ontology: null,
   ancestors: new Map(),
+  colorIndex: new Map(),
+  colorMode: 'region',
+  activePreset: null,
+  cuts: emptyCuts(),
+  cutMode: 'slice',
+  cameraView: null,
   context: null,
   hidden: new Set(),
   selected: null,
@@ -85,9 +153,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   selectMode: 'group',
   hovered: null,
   highlight: [],
+  erpActive: false,
+  erpPhase: 0,
+  erpPulse: 0,
   lang: 'de',
   mode: 'full',
-  appMode: 'learn',
+  appMode: 'explore',
   search: '',
   expanded: { brain: true, telencephalon: true, diencephalon: true, brainstem: true },
   isolated: null,
@@ -97,7 +168,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   skullOpacity: 0.25,
   rodVisible: false,
 
-  setOntology: (ontology) => set({ ontology, ancestors: ancestorMap(ontology.tree) }),
+  setOntology: (ontology) =>
+    set({ ontology, ancestors: ancestorMap(ontology.tree), colorIndex: buildColorIndex(ontology.tree) }),
   setContext: (context, slugs) =>
     set((state) => {
       const next = new Set(state.hidden)
@@ -152,6 +224,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   },
   setHovered: (hovered) => set({ hovered }),
   setHighlight: (highlight) => set({ highlight }),
+  setErpActive: (erpActive) => set(erpActive ? { erpActive } : { erpActive: false, erpPhase: 0, erpPulse: 0 }),
+  setErpClock: (erpPhase, erpPulse) => set({ erpPhase, erpPulse }),
   setLang: (lang) => set({ lang }),
   setMode: (mode) => set({ mode }),
   setAppMode: (appMode) => {
@@ -161,6 +235,23 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
     set({ appMode, highlight: [], showSkull: false, rodVisible: false })
   },
+  // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
+  setColorMode: (colorMode) => set((s) => ({ colorMode, activePreset: colorMode === 'preset' ? s.activePreset : null })),
+  setPreset: (activePreset) => set({ activePreset, colorMode: activePreset ? 'preset' : 'region' }),
+  setCut: (axis, config) =>
+    set((s) => ({ cuts: { ...s.cuts, [axis]: { on: config.on, pos: clampCutPosition(config.pos) } } })),
+  setCuts: (configs) =>
+    set((s) => {
+      const next = { ...s.cuts }
+      for (const axis of CUT_AXES) {
+        const c = configs[axis]
+        if (c) next[axis] = { on: c.on, pos: clampCutPosition(c.pos) }
+      }
+      return { cuts: next }
+    }),
+  setCutMode: (cutMode) => set({ cutMode }),
+  setCameraView: (name) =>
+    set((state) => ({ cameraView: name ? { name, nonce: (state.cameraView?.nonce ?? 0) + 1 } : null })),
   setSearch: (search) => set({ search }),
   toggleExpanded: (id) =>
     set((state) => ({ expanded: { ...state.expanded, [id]: !state.expanded[id] } })),

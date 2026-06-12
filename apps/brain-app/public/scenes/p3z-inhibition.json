@@ -12,7 +12,9 @@
         { "label": "Go (grün)", "color": "#2e7d32",
           "points": [[1,0],[2,0.2],[3,0.5],[4,0.8],[5,1],[6,0.8],[7,0.5],[8,0.2],[9,0]] }
       ],
-      "markers": ["P3z 300–400 ms", "Maximum über Cz", "Peak ~4.2 µV (schematisch)"]
+      "markers": ["P3z 300–400 ms", "Maximum über Cz", "Peak ~4.2 µV (schematisch)"],
+      "source": "SMA / pre-SMA (medialer BA6)",
+      "site": "Cz"
     }
   },
   "companion": {

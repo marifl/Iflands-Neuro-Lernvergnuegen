@@ -53,3 +53,6 @@ docs/KAPITEL11_ABBILDUNGEN_MAPPING.md
 docs/laterality-volume-audit.md
 # Buch-Abbildungen (Copyright) — nicht ins Repo
 apps/brain-app/public/figures/
+
+# Smoke-/Debug-Output unter apps (Artefakte)
+apps/brain-app/scripts/atlas/work/

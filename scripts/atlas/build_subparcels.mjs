@@ -11,6 +11,21 @@ const here = dirname(fileURLToPath(import.meta.url))
 const hosts = JSON.parse(readFileSync(resolve(here, 'work/taro_hosts.json')))
 const labels = JSON.parse(readFileSync(resolve(here, 'work/labels.json')))
 
+// Additive Erweiterung: neue TARO-Hosts (IFG, orbital-Gyri, caudate) aus taro_hosts_extra.json.
+// Original taro_hosts.json bleibt unangetastet; Sub-Patches der neuen Hosts werden hieraus gecarvt.
+import { existsSync } from 'node:fs'
+const hostsExtraPath = resolve(here, 'work/taro_hosts_extra.json')
+if (existsSync(hostsExtraPath)) {
+  const hx = JSON.parse(readFileSync(hostsExtraPath))
+  for (const [k, v] of Object.entries(hx)) if (!hosts[k]) hosts[k] = v
+}
+// Synthetische kombinierte Hosts (z.B. Frontalpol = SFG+MFG) aus dem geometric_pole-Modus.
+const combinedHostsPath = resolve(here, 'work/combined_hosts.json')
+if (existsSync(combinedHostsPath)) {
+  const ch = JSON.parse(readFileSync(combinedHostsPath))
+  for (const [k, v] of Object.entries(ch)) if (!hosts[k]) hosts[k] = v
+}
+
 const doc = new Document()
 const buf = doc.createBuffer()
 const scene = doc.createScene()

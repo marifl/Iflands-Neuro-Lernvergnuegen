@@ -311,3 +311,31 @@
   .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
   .scrollbar-thin::-webkit-scrollbar-thumb { background: var(--line-soft); }
 }
+
+/* =====================================================================
+   Touch-Adaption: auf groben Zeigern (Finger) sind die Mono-Buttons der
+   Steuerleiste zu klein. Ziel >=44px Tap-Flaeche, ohne den praezisen
+   Maus-Look auf Desktop zu veraendern.
+   ===================================================================== */
+@media (pointer: coarse) {
+  /* Hoehere Zellen -> groessere Trigger-Tap-Flaeche in der Fussleiste. */
+  .ed-foot .col { padding-top: 13px; padding-bottom: 13px; }
+  /* Flyout-Eintraege auf volle Tap-Hoehe, Text vertikal zentriert. */
+  .ed-foot .ed-panel .ed-btn { min-height: 44px; display: flex; align-items: center; }
+}
+
+/* =====================================================================
+   Phone: viele Steuer-Boxen passen nicht in eine Reihe. Statt Schrumpfen/
+   Trunkieren -> Umbruch in Reihen zu je drei Boxen (alle sichtbar erreichbar).
+   ===================================================================== */
+@media (max-width: 600px) {
+  .ed-foot {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .ed-foot > * {
+    flex: 1 1 33%;
+    min-width: 0;
+    border-bottom: 1px solid var(--line-soft);
+  }
+}

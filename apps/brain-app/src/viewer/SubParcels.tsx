@@ -2,18 +2,33 @@ import { useEffect, useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
+import { resolvePresetColors } from './colorPresets'
 
 const SUBPARCELS_GLB = '/assets/bodyparts3d/k11-subparcels.glb'
 const SELECT_COLOR = '#f26b1f'
 
 useGLTF.preload(SUBPARCELS_GLB)
 
-/** Sub-Patches (ACC/SMA/pre-SMA) als echte TARO-Geometrie. Default unsichtbar; ein Mesh
- *  wird nur sichtbar + leuchtend, wenn sein Name im viewerStore.highlight-Array ist.
- *  polygonOffset haelt es vor dem Eltern-Gyrus (kein Z-Fighting). */
+/** Sub-Patches (ACC/SMA/pre-SMA + DKT-Splits) als echte TARO-Geometrie. Zwei Modi:
+ *  - Highlight/ERP: Mesh sichtbar + orange leuchtend, wenn sein Name im highlight-Array ist
+ *    (bei aktiver ERP-Animation pulst die Quelle zur Huellkurve).
+ *  - Preset (Figur-Faerbung): Sub-Patch sichtbar + in der Gruppenfarbe seines Buckets, sonst
+ *    unsichtbar. So faerben die Presets sub-gyral (vlpfc->pars*, dacc->caudal ACC, ofc->lat/med)
+ *    und Abb. 11-04 (nucleus-accumbens) ist freigeschaltet.
+ *  polygonOffset haelt das Mesh vor dem Eltern-Gyrus (kein Z-Fighting). */
 export default function SubParcels() {
   const { scene } = useGLTF(SUBPARCELS_GLB)
   const highlight = useViewerStore((s) => s.highlight)
+  const erpActive = useViewerStore((s) => s.erpActive)
+  const erpPulse = useViewerStore((s) => s.erpPulse)
+  const colorMode = useViewerStore((s) => s.colorMode)
+  const activePreset = useViewerStore((s) => s.activePreset)
+  // Figur-Preset: Sub-Patch-Name -> Hex. Nur bei colorMode='preset'; wirft laut bei Luecken-Bucket
+  // (gleiche Quelle wie der Brain-Apply-Pfad, damit Namen nicht divergieren).
+  const presetColors = useMemo(
+    () => (colorMode === 'preset' && activePreset ? resolvePresetColors(activePreset) : null),
+    [colorMode, activePreset],
+  )
 
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
@@ -40,8 +55,31 @@ export default function SubParcels() {
 
   useEffect(() => {
     const set = new Set(highlight)
-    for (const m of meshes) m.visible = set.has(m.name)
-  }, [meshes, highlight])
+    // Bei aktiver ERP-Animation pulst die Quelle synchron zur ERP-Huellkurve (0.15..1.0),
+    // sonst konstantes Highlight-Leuchten.
+    const intensity = erpActive ? 0.15 + 0.85 * erpPulse : 0.7
+    for (const m of meshes) {
+      const mat = m.material as THREE.MeshStandardMaterial
+      if (presetColors) {
+        // Figur-Preset: nur Sub-Patches eines aktiven Buckets sichtbar, in Gruppenfarbe.
+        const hex = presetColors.get(m.name)
+        if (hex) {
+          m.visible = true
+          mat.color.set(hex)
+          mat.emissive.set(hex)
+          mat.emissiveIntensity = 0.22
+        } else {
+          m.visible = false
+        }
+      } else {
+        // Highlight-/ERP-Modus: orange Quelle nur fuer Meshes im highlight-Set.
+        m.visible = set.has(m.name)
+        mat.color.set(SELECT_COLOR)
+        mat.emissive.set(SELECT_COLOR)
+        mat.emissiveIntensity = intensity
+      }
+    }
+  }, [meshes, highlight, erpActive, erpPulse, presetColors])
 
   return <primitive object={scene} />
 }

@@ -7,6 +7,7 @@ import {
 } from './ontology'
 import { useViewerStore } from './viewerStore'
 import { useIsNarrow } from '../useMediaQuery'
+import AnimationPlayer from './AnimationPlayer'
 
 const ACCENT = 'var(--orange)'
 
@@ -298,6 +299,12 @@ export default function StructureTree() {
             ) : null}
           </>
         )}
+      </div>
+
+      {/* Vertiefung: Animation — im Explorer-Modus hier in der Sidebar statt im Viewport. */}
+      <div style={{ flex: 'none', borderTop: '1.5px solid var(--line)', padding: 12 }}>
+        <div className="eyebrow" style={{ marginBottom: 8 }}>Vertiefung</div>
+        <AnimationPlayer inline />
       </div>
     </div>
   )

@@ -29,3 +29,20 @@ const canvas2dContext = {
 Object.defineProperty(HTMLCanvasElement.prototype, 'getContext', {
   value: vi.fn((contextId: string) => (contextId === '2d' ? canvas2dContext : null)),
 })
+
+// jsdom kennt window.matchMedia nicht; useMediaQuery braucht es. Default: kein Treffer
+// (breite Viewports), damit Komponenten ihr Desktop-Layout rendern.
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: (query: string): MediaQueryList =>
+    ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(() => false),
+    }) as unknown as MediaQueryList,
+})

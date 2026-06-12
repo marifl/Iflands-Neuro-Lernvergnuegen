@@ -28,10 +28,13 @@ const result = await page.evaluate(async ({ b64, filter }) => {
   const THREE = await import('https://unpkg.com/three@0.184.0/build/three.module.js')
   const { GLTFLoader } = await import('https://unpkg.com/three@0.184.0/examples/jsm/loaders/GLTFLoader.js')
   const { DRACOLoader } = await import('https://unpkg.com/three@0.184.0/examples/jsm/loaders/DRACOLoader.js')
+  const { MeshoptDecoder } = await import('https://unpkg.com/three@0.184.0/examples/jsm/libs/meshopt_decoder.module.js')
   const draco = new DRACOLoader()
   draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
   const loader = new GLTFLoader()
   loader.setDRACOLoader(draco)
+  await MeshoptDecoder.ready
+  loader.setMeshoptDecoder(MeshoptDecoder)
   const bin = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0)).buffer
   const gltf = await new Promise((res, rej) => loader.parse(bin, '', res, rej))
   const re = new RegExp(filter, 'i')

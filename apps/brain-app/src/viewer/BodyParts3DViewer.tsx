@@ -1,16 +1,21 @@
 import { Suspense, useEffect, useMemo, useState } from 'react'
-import { Canvas, type ThreeEvent } from '@react-three/fiber'
+import { Canvas } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
-import { buildContextTree, flattenStructures, type Ontology, type OntologyNode } from './ontology'
+import { ANATOMICAL_COLOR, buildContextTree, flattenStructures, meshColor, type Ontology, type OntologyNode } from './ontology'
+import { PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { useViewerStore } from './viewerStore'
+import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
 import StructureTree from './StructureTree'
-import AnimationPlayer from './AnimationPlayer'
 import FooterBar from './FooterBar'
+import PresetLegend from './PresetLegend'
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
+import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
+import CutPickBridge from './CutPickBridge'
+import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
 import { useIsNarrow } from '../useMediaQuery'
 import {
   ROD_ENTRY,
@@ -44,6 +49,29 @@ function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
 }
 
+/** Alle aktiven Schnittebenen auf die Materialien einer Mesh-Liste anwenden (leer = kein Schnitt).
+ *  Nur im 'slice'-Modus wird geschnitten; im 'hide'-Modus bleibt die Geometrie ungeschnitten. */
+function useClipPlanes(meshes: THREE.Mesh[]): void {
+  const cuts = useViewerStore((s) => s.cuts)
+  const cutMode = useViewerStore((s) => s.cutMode)
+  const planes = useMemo(() => (cutMode === 'slice' ? activeCutPlanes(cuts) : []), [cuts, cutMode])
+  useEffect(() => {
+    for (const mesh of meshes) (mesh.material as THREE.MeshStandardMaterial).clippingPlanes = planes
+  }, [meshes, planes])
+}
+
+const NEVER_HIDDEN = (): boolean => false
+/** Predikat fuer den 'hide'-Modus: blendet Strukturen aus, die vollstaendig hinter einer Ebene
+ *  liegen. Im 'slice'-Modus stabil NEVER_HIDDEN — die Sichtbarkeits-Effekte laufen nicht extra. */
+function useCutHidden(): (mesh: THREE.Mesh) => boolean {
+  const cuts = useViewerStore((s) => s.cuts)
+  const cutMode = useViewerStore((s) => s.cutMode)
+  return useMemo(() => {
+    if (cutMode !== 'hide') return NEVER_HIDDEN
+    return (mesh: THREE.Mesh) => isHiddenByCutSlab(mesh, cuts)
+  }, [cuts, cutMode])
+}
+
 function Brain() {
   const { scene } = useGLTF(BRAIN_GLB)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
@@ -51,10 +79,17 @@ function Brain() {
   const highlight = useViewerStore((s) => s.highlight)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
-  const pick = useViewerStore((s) => s.pick)
-  const drill = useViewerStore((s) => s.drill)
-  const setHovered = useViewerStore((s) => s.setHovered)
-
+  const cutHidden = useCutHidden()
+  const colorMode = useViewerStore((s) => s.colorMode)
+  const colorIndex = useViewerStore((s) => s.colorIndex)
+  const activePreset = useViewerStore((s) => s.activePreset)
+  const erpActive = useViewerStore((s) => s.erpActive)
+  const erpPulse = useViewerStore((s) => s.erpPulse)
+  // Figur-Preset: Mesh -> Hex. Nur bei colorMode='preset' wirksam; wirft laut bei Luecken-Bucket.
+  const presetColors = useMemo(
+    () => (activePreset ? resolvePresetColors(activePreset) : null),
+    [activePreset],
+  )
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -68,11 +103,14 @@ function Brain() {
           // sicher, dass nichts durch Backface-Culling unsichtbar wird.
           side: THREE.DoubleSide,
         })
+        mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
         list.push(mesh)
       }
     })
     return list
   }, [scene])
+
+  useClipPlanes(meshes)
 
   useEffect(() => {
     const highlightSet = new Set(highlight)
@@ -83,12 +121,20 @@ function Brain() {
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
       // Hierarchisches Ein-/Ausblenden ueber den Baum: unsichtbar UND nicht pickbar.
-      const visible = !hidden.has(mesh.name)
+      const visible = !hidden.has(mesh.name) && !cutHidden(mesh)
       mesh.visible = visible
       // Isolationsmodus: alles ausserhalb des aktiven Sets wird transparent + gesperrt.
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
+      // Basisfarbe nach aktivem Farbmodus (Auswahl/Hover ueberlagern als Emissive).
+      // Preset-Modus: Gruppen-Farbe je Mesh; nicht-gruppierte Strukturen gedimmt (dimOthers).
+      if (colorMode === 'preset' && presetColors && activePreset) {
+        const c = presetColors.get(mesh.name)
+        material.color.set(c ?? (activePreset.dimOthers ? PRESET_DIM_COLOR : ANATOMICAL_COLOR))
+      } else {
+        material.color.set(meshColor(colorIndex.get(mesh.name), colorMode))
+      }
       const isActive = selectedSlugs.has(mesh.name) || highlightSet.has(mesh.name)
       if (isActive) {
         material.emissive.set(SELECT_COLOR)
@@ -106,7 +152,20 @@ function Brain() {
       material.opacity = dim ? 0.12 : 1
       material.depthWrite = !dim
     }
-  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs])
+  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden])
+
+  // EEG voll-synchron fuer brain.glb-Quellen (z.B. P3b parietal): pulst NUR die gehighlighteten
+  // Meshes mit der ERP-Huellkurve. Bewusst eigener, leichter Effekt (laeuft per Frame ueber
+  // erpPulse, beruehrt aber nur das kleine Highlight-Set) statt den schweren Farb-Effekt oben
+  // (600+ Meshes) in den Render-Pfad zu ziehen. Sub-Patch-Quellen (P3a/P3z) laufen ueber SubParcels.
+  useEffect(() => {
+    if (!erpActive) return
+    const highlightSet = new Set(highlight)
+    const intensity = 0.15 + 0.85 * erpPulse
+    for (const mesh of meshes) {
+      if (highlightSet.has(mesh.name)) (mesh.material as THREE.MeshStandardMaterial).emissiveIntensity = intensity
+    }
+  }, [meshes, highlight, erpActive, erpPulse])
 
   // DEV-only: Szene + THREE global exponieren, damit das Koordinaten-Bake (scripts/bake-structure-coords.mjs)
   // und kuenftige Punkt-/Verbinder-Animationen die Geometrie im Viewer-Raum traversieren koennen.
@@ -118,24 +177,8 @@ function Brain() {
     }
   }, [scene])
 
-  return (
-    <primitive
-      object={scene}
-      onClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        pick((event.object as THREE.Mesh).name)
-      }}
-      onDoubleClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        drill((event.object as THREE.Mesh).name)
-      }}
-      onPointerOver={(event: ThreeEvent<PointerEvent>) => {
-        event.stopPropagation()
-        setHovered((event.object as THREE.Mesh).name)
-      }}
-      onPointerOut={() => setHovered(null)}
-    />
-  )
+  // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
+  return <primitive object={scene} />
 }
 
 /** Kontext-Schaedel (Phineas-Gage-Layer). Default versteckt; nicht anklickbar, damit die
@@ -146,12 +189,9 @@ function ContextSkull() {
   const skullOpacity = useViewerStore((s) => s.skullOpacity)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
+  const cutHidden = useCutHidden()
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
-  const pick = useViewerStore((s) => s.pick)
-  const drill = useViewerStore((s) => s.drill)
-  const setHovered = useViewerStore((s) => s.setHovered)
-
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -164,18 +204,21 @@ function ContextSkull() {
           side: THREE.DoubleSide,
           transparent: true,
         })
+        mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
         list.push(mesh)
       }
     })
     return list
   }, [scene])
 
+  useClipPlanes(meshes)
+
   // Sichtbar via Phineas-Szene (showSkull, halbtransparent) ODER via Baum-Toggle (solide).
   // Praemisse: was sichtbar ist, ist auch pickbar; Ausgeblendetes nicht.
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const visible = showSkull || !hidden.has(mesh.name)
+      const visible = (showSkull || !hidden.has(mesh.name)) && !cutHidden(mesh)
       mesh.visible = visible
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
@@ -195,26 +238,10 @@ function ContextSkull() {
       }
       material.needsUpdate = true
     }
-  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered])
+  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
 
-  return (
-    <primitive
-      object={scene}
-      onClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        pick((event.object as THREE.Mesh).name)
-      }}
-      onDoubleClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        drill((event.object as THREE.Mesh).name)
-      }}
-      onPointerOver={(event: ThreeEvent<PointerEvent>) => {
-        event.stopPropagation()
-        setHovered((event.object as THREE.Mesh).name)
-      }}
-      onPointerOut={() => setHovered(null)}
-    />
-  )
+  // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
+  return <primitive object={scene} />
 }
 
 /** Voller Kopf-Kontext (Vollausbau): per Baum-Toggle ein-/ausblendbar, anklickbar. */
@@ -222,12 +249,9 @@ function ContextHead() {
   const { scene } = useGLTF(HEAD_GLB)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
+  const cutHidden = useCutHidden()
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
-  const pick = useViewerStore((s) => s.pick)
-  const drill = useViewerStore((s) => s.drill)
-  const setHovered = useViewerStore((s) => s.setHovered)
-
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -239,16 +263,19 @@ function ContextHead() {
           metalness: 0,
           side: THREE.DoubleSide,
         })
+        mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
         list.push(mesh)
       }
     })
     return list
   }, [scene])
 
+  useClipPlanes(meshes)
+
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const visible = !hidden.has(mesh.name)
+      const visible = !hidden.has(mesh.name) && !cutHidden(mesh)
       mesh.visible = visible
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed) // ausgeblendet/isoliert-aussen -> nicht pickbar
@@ -268,26 +295,10 @@ function ContextHead() {
       material.opacity = isoDimmed ? 0.12 : 1
       material.depthWrite = !isoDimmed
     }
-  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered])
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
 
-  return (
-    <primitive
-      object={scene}
-      onClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        pick((event.object as THREE.Mesh).name)
-      }}
-      onDoubleClick={(event: ThreeEvent<MouseEvent>) => {
-        event.stopPropagation()
-        drill((event.object as THREE.Mesh).name)
-      }}
-      onPointerOver={(event: ThreeEvent<PointerEvent>) => {
-        event.stopPropagation()
-        setHovered((event.object as THREE.Mesh).name)
-      }}
-      onPointerOut={() => setHovered(null)}
-    />
-  )
+  // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
+  return <primitive object={scene} />
 }
 
 /** Tampiereisen entlang der rekonstruierten Trajektorie (Eintritt Wange -> Austritt Scheitel),
@@ -468,7 +479,9 @@ export default function BodyParts3DViewer() {
         if (s.selected) s.setIsolated(s.selected)
       } else if (e.key === 'Escape') {
         e.preventDefault()
-        s.isolateUp()
+        // Erst die Auswahl aufheben; erst der naechste ESC wickelt den Drilldown (Isolation) zurueck.
+        if (s.selected) s.select(null)
+        else s.isolateUp()
       }
     }
     window.addEventListener('keydown', onKey)
@@ -590,7 +603,16 @@ export default function BodyParts3DViewer() {
               cursor: selectMode === 'direct' ? 'crosshair' : 'default',
             }}
           >
-            <Canvas camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}>
+            <Canvas
+              camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
+              // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
+              // Schnittflaechen ueber den Stencil-Buffer. R3F erstellt den Context sonst
+              // ohne Stencil (stencilBits=0), wodurch die Caps unmaskiert als volle Plane rendern.
+              gl={{ stencil: true }}
+              onCreated={({ gl }) => {
+                gl.localClippingEnabled = true // Schnittebenen (Clipping) aktivieren
+              }}
+            >
               <ambientLight intensity={0.6} />
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
               <directionalLight position={[-160, -80, -200]} intensity={0.4} />
@@ -599,9 +621,12 @@ export default function BodyParts3DViewer() {
                 <ContextSkull />
                 <ContextHead />
                 <SubParcels />
+                <CutCaps />
               </Suspense>
               <TampingIron />
+              <CutPickBridge />
               <OrbitControls makeDefault enableDamping />
+              <CutPlaneGizmoBridge />
               <CameraRig />
             </Canvas>
 
@@ -624,8 +649,8 @@ export default function BodyParts3DViewer() {
               </div>
             )}
 
+            <PresetLegend />
             <IsolationBar />
-            {isExploreMode && <AnimationPlayer />}
           </div>
 
           {sidebar}

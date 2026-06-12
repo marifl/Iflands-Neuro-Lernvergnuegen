@@ -165,6 +165,89 @@ export function flattenStructures(tree: OntologyNode): OntologyNode[] {
   return out
 }
 
+// =====================================================================
+// Farbgebungs-Modi: jede Hirn-Struktur kann nach verschiedenen Schemata
+// eingefaerbt werden (gilt modusuebergreifend). Gedaempfte, wissenschaftliche
+// Palette (kein Gamification-Knall); der Akzent (Orange) bleibt der Auswahl
+// vorbehalten und ueberlagert die Basisfarbe als Emissive.
+// =====================================================================
+
+export type ColorMode = 'anatomical' | 'function' | 'laterality' | 'region' | 'preset'
+
+/** Pro Struktur-Blatt die Merkmale fuer die Einfaerbung. */
+export interface ColorEntry {
+  role?: string
+  side?: Side
+  group: string
+}
+
+/** slug -> {role, side, Top-Gruppe} fuer alle Hirn-Struktur-Blaetter. */
+export function buildColorIndex(tree: OntologyNode): Map<string, ColorEntry> {
+  const map = new Map<string, ColorEntry>()
+  for (const group of tree.children ?? []) {
+    for (const leaf of flattenStructures(group)) {
+      map.set(leaf.id, { role: leaf.k11Role, side: leaf.side, group: group.id })
+    }
+  }
+  return map
+}
+
+/** Default-Anatomie-Beige (auch Fallback fuer nicht klassifizierbare Strukturen). */
+export const ANATOMICAL_COLOR = '#cdbfb6'
+
+/** k11Role-String -> grobes Funktionssystem (fuer Legende + Farbe). */
+export function functionSystem(role: string | undefined): string {
+  if (!role) return 'other'
+  if (role.startsWith('Basalganglien')) return 'bg'
+  if (role.includes('ACC')) return 'cingulum'
+  if (role.includes('Parietal')) return 'parietal'
+  if (role.includes('M1') || role.includes('S1') || role.includes('SMA')) return 'sensorimotor'
+  // VLPFC / DLPFC / OFC / VMPFC und Mischformen
+  if (/PFC|OFC/.test(role)) return 'pfc'
+  return 'other'
+}
+
+/** Gedaempfte Editorial-Paletten je Modus (slug-/merkmals-bezogen). */
+const FUNCTION_COLORS: Record<string, string> = {
+  pfc: '#c2724a', // Praefrontal (exekutive Kontrolle)
+  bg: '#5f8a86', // Basalganglien-Schleife
+  sensorimotor: '#8a7196', // Sensomotorik (M1/S1/SMA)
+  cingulum: '#9a9255', // ACC / Cingulum
+  parietal: '#6f86a6', // Parietaler Kortex
+  other: '#7d756c', // sonstige (gedaempftes Grau-Braun)
+}
+
+const LATERALITY_COLORS: Record<Side, string> = {
+  left: '#6f86a6', // links: blau-grau
+  right: '#c2724a', // rechts: terracotta
+  midline: '#9a9a92', // Mittellinie: neutral
+}
+
+/** Region-Palette je Top-Gruppen-Index (durchrotierend, gedaempft). */
+const REGION_PALETTE = [
+  '#c2724a', '#5f8a86', '#6f86a6', '#9a9255', '#8a7196',
+  '#a8895f', '#6f9a7a', '#9a6f86', '#7d8a5f', '#8a6f6f',
+]
+const regionColorCache = new Map<string, string>()
+function regionColor(group: string): string {
+  const cached = regionColorCache.get(group)
+  if (cached) return cached
+  // Stabiler Index aus dem Gruppen-Slug (deterministisch, ohne globalen Zaehler).
+  let hash = 0
+  for (let i = 0; i < group.length; i++) hash = (hash * 31 + group.charCodeAt(i)) >>> 0
+  const color = REGION_PALETTE[hash % REGION_PALETTE.length]
+  regionColorCache.set(group, color)
+  return color
+}
+
+/** Basisfarbe eines Hirn-Mesh fuer den aktiven Farbmodus. */
+export function meshColor(entry: ColorEntry | undefined, mode: ColorMode): string {
+  if (mode === 'anatomical' || !entry) return ANATOMICAL_COLOR
+  if (mode === 'function') return FUNCTION_COLORS[functionSystem(entry.role)]
+  if (mode === 'laterality') return entry.side ? LATERALITY_COLORS[entry.side] : ANATOMICAL_COLOR
+  return regionColor(entry.group)
+}
+
 /**
  * Baum auf Kapitel-11-relevante Strukturen reduzieren: behalte Struktur-Blaetter mit
  * k11Role und alle Gruppen, die solche enthalten. Leere Gruppen fallen weg.

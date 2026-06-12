@@ -16,3 +16,7 @@ export function useMediaQuery(query: string): boolean {
 /** Schmale Viewports (Mobile + kleine Tablets): Stack statt Split. */
 export const NARROW_QUERY = '(max-width: 900px)'
 export const useIsNarrow = (): boolean => useMediaQuery(NARROW_QUERY)
+
+/** Phone-Viewports: kompaktere Steuerleiste (gleich breite Boxen statt Spacer-Layout). */
+export const PHONE_QUERY = '(max-width: 600px)'
+export const useIsPhone = (): boolean => useMediaQuery(PHONE_QUERY)
