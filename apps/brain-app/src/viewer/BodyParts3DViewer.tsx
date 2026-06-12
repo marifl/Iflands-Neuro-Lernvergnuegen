@@ -6,7 +6,9 @@ import { buildContextTree, flattenStructures, type Ontology, type OntologyNode }
 import { useViewerStore } from './viewerStore'
 import StructureTree from './StructureTree'
 import AnimationPlayer from './AnimationPlayer'
-import PhineasGageScene from './PhineasGageScene'
+import FooterBar from './FooterBar'
+import PhineasSidebar from './PhineasSidebar'
+import LearnSidebar from '../scene/LearnSidebar'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import { useIsNarrow } from '../useMediaQuery'
@@ -378,13 +380,8 @@ function IsolationBar() {
   )
 }
 
-/** Slots fuer den Praesentationsmodus: `sidebar` ersetzt die Struktur-Sidebar (Szenen-Inhalt
- *  inkl. Szenen-Navigation). `presentation` blendet die Explorer-Overlays (HUD,
- *  Vertiefungs-Trigger) aus, damit nichts die Haupt-UI ueberlagert. */
-export default function BodyParts3DViewer({
-  presentation = false,
-  sidebar,
-}: { presentation?: boolean; sidebar?: React.ReactNode } = {}) {
+/** Shell-Komponente: waehlt Sidebar nach appMode, koppelt HUD/Overlays an Modus. */
+export default function BodyParts3DViewer() {
   const setOntology = useViewerStore((s) => s.setOntology)
   const setContext = useViewerStore((s) => s.setContext)
   const ontology = useViewerStore((s) => s.ontology)
@@ -393,6 +390,7 @@ export default function BodyParts3DViewer({
   const selectedLabels = useViewerStore((s) => s.selectedLabels)
   const selectMode = useViewerStore((s) => s.selectMode)
   const lang = useViewerStore((s) => s.lang)
+  const appMode = useViewerStore((s) => s.appMode)
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
@@ -452,6 +450,11 @@ export default function BodyParts3DViewer({
       if (tag === 'INPUT' || tag === 'TEXTAREA') return // Suchfeld nicht stoeren
       const s = useViewerStore.getState()
       const k = e.key.toLowerCase()
+      if (k === 'f') {
+        e.preventDefault()
+        document.documentElement.requestFullscreen?.()
+        return
+      }
       if (k === 'h') {
         e.preventDefault()
         if (e.shiftKey) return s.clearHidden()
@@ -480,6 +483,10 @@ export default function BodyParts3DViewer({
   }, [ontology, context])
 
   const selectedNode = selected ? bySlug.get(selected) : null
+
+  const isPresentation = appMode !== 'explore'
+  const sidebar =
+    appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'var(--app-bg)', padding: 10, boxSizing: 'border-box' }}>
@@ -601,7 +608,7 @@ export default function BodyParts3DViewer({
             {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). Im Praesentationsmodus
                 steht die gewaehlte Struktur in der Schriftfeld-Fusszeile und die Vertiefungen
                 in der Inhalts-Spalte — nichts ueberlagert den 3D-Viewport. */}
-            {!presentation && (
+            {!isPresentation && (
               <div
                 className="ed-panel ed-frame"
                 style={{ position: 'absolute', top: 16, left: 16, padding: '11px 15px', pointerEvents: 'none', maxWidth: 420 }}
@@ -619,33 +626,14 @@ export default function BodyParts3DViewer({
             )}
 
             <IsolationBar />
-            {!presentation && <AnimationPlayer />}
-            {!presentation && <PhineasGageScene />}
+            {!isPresentation && <AnimationPlayer />}
           </div>
 
-          {sidebar ?? <StructureTree />}
+          {sidebar}
         </div>
 
-        {/* ── Schriftfeld-Fusszeile (Titelblock) ──
-            Breit: 4 Spalten. Schmal: Atlas | Struktur nebeneinander, Quelle volle Breite
-            darunter, Werkzeug ausgeblendet (Atlas-Funktion). */}
-        <div className="ed-foot" style={{ gridTemplateColumns: isNarrow ? '1fr 1fr' : '0.9fr 2.7fr 0.7fr 1.1fr' }}>
-          <div className="col" style={isNarrow ? { order: 1 } : undefined}><div className="h">Atlas</div><b>Iflands Neuro Lernvergnügen</b></div>
-          <div
-            className="col"
-            style={isNarrow ? { order: 3, gridColumn: '1 / -1', borderRight: 'none', borderTop: '1px solid var(--line-soft)' } : undefined}
-          >
-            <div className="h">Quelle</div>
-            <span style={{ display: 'block', textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--ed-display)', fontSize: 8, lineHeight: 1.45, color: 'var(--g600)' }}>
-              Mitsuhashi, N., Fujieda, K., Tamura, T., Kawamoto, S., Takagi, T., &amp; Okubo, K. (2009). BodyParts3D: 3D structure database for anatomical concepts. <i>Nucleic Acids Research, 37</i>(Database issue), D782–D785. https://doi.org/10.1093/nar/gkn613
-            </span>
-            <span style={{ display: 'block', textTransform: 'none', letterSpacing: 0, fontFamily: 'var(--ed-display)', fontSize: 8, lineHeight: 1.45, color: 'var(--g500)', marginTop: 4 }}>
-              BodyParts3D, Copyright© The Database Center for Life Science licensed by CC Attribution-Share Alike 2.1 Japan
-            </span>
-          </div>
-          {!isNarrow && <div className="col"><div className="h">Werkzeug</div><span className="v">{selectMode === 'direct' ? 'Direkt' : 'Gruppe'}</span></div>}
-          <div className="col" style={isNarrow ? { order: 2, borderRight: 'none' } : undefined}><div className="h">Struktur</div><span className="v ellip">{selectedLabels ? selectedLabels[lang] : '—'}</span></div>
-        </div>
+        {/* ── Steuer-Fussleiste: Atlas-Menue, Werkzeug (nur Explorer), Modus ── */}
+        <FooterBar />
       </div>
     </div>
   )
