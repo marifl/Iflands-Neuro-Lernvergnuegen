@@ -10,6 +10,7 @@ export type ViewMode = 'full' | 'k11'
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
+export type AppMode = 'learn' | 'explore' | 'phineas'
 
 interface ViewerState {
   ontology: Ontology | null
@@ -29,6 +30,8 @@ interface ViewerState {
   highlight: string[]
   lang: Lang
   mode: ViewMode
+  /** Aktiver Grundmodus (Lernen/Explorer/Phineas) — steuert Sidebar + Fussleiste. */
+  appMode: AppMode
   search: string
   expanded: Record<string, boolean>
   /** Isolationsmodus (Illustrator-artig): fokussierter Knoten + sein aktives Slug-Set + Breadcrumb. */
@@ -61,6 +64,8 @@ interface ViewerState {
   setHighlight: (slugs: string[]) => void
   setLang: (lang: Lang) => void
   setMode: (mode: ViewMode) => void
+  /** Grundmodus wechseln; raeumt modus-fremde States (highlight/skull/rod) auf. */
+  setAppMode: (mode: AppMode) => void
   setSearch: (search: string) => void
   toggleExpanded: (id: string) => void
   setSkull: (visible: boolean, opacity?: number) => void
@@ -82,6 +87,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   highlight: [],
   lang: 'de',
   mode: 'full',
+  appMode: 'learn',
   search: '',
   expanded: { brain: true, telencephalon: true, diencephalon: true, brainstem: true },
   isolated: null,
@@ -148,6 +154,13 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setHighlight: (highlight) => set({ highlight }),
   setLang: (lang) => set({ lang }),
   setMode: (mode) => set({ mode }),
+  setAppMode: (appMode) => {
+    if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'phineas') {
+      throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
+    }
+    // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
+    set({ appMode, highlight: [], showSkull: false, rodVisible: false })
+  },
   setSearch: (search) => set({ search }),
   toggleExpanded: (id) =>
     set((state) => ({ expanded: { ...state.expanded, [id]: !state.expanded[id] } })),
