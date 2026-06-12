@@ -210,8 +210,6 @@ export default function StructureTree() {
   const setLang = useViewerStore((s) => s.setLang)
   const setMode = useViewerStore((s) => s.setMode)
   const setSearch = useViewerStore((s) => s.setSearch)
-  const selectMode = useViewerStore((s) => s.selectMode)
-  const setSelectMode = useViewerStore((s) => s.setSelectMode)
   const isNarrow = useIsNarrow()
 
   const visibleTree = useMemo(() => {
@@ -273,27 +271,6 @@ export default function StructureTree() {
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Struktur suchen…"
         />
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
-          <span className="eyebrow" style={{ color: 'var(--g500)', marginRight: 2 }}>Auswahl</span>
-          <button
-            type="button"
-            className={`ed-btn${selectMode === 'group' ? ' active' : ''}`}
-            style={sm}
-            title="Gruppen-Werkzeug: hierarchisch (Klick = Gruppe, Doppelklick = eine Ebene tiefer)"
-            onClick={() => setSelectMode('group')}
-          >
-            ▸ Gruppe
-          </button>
-          <button
-            type="button"
-            className={`ed-btn${selectMode === 'direct' ? ' active' : ''}`}
-            style={sm}
-            title="Direkt-Werkzeug: Hierarchie uebergehen, einzelne Struktur waehlen"
-            onClick={() => setSelectMode('direct')}
-          >
-            ▹ Direkt
-          </button>
-        </div>
       </div>
 
       <div className="scrollbar-thin" style={{ flex: 1, overflowY: 'auto', padding: 8, minHeight: 0 }}>
