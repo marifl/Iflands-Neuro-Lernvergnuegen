@@ -1,0 +1,69 @@
+.hard-shadow-sm,
+.brutalist-shadow-sm {
+  box-shadow: var(--shadow-hard-sm);
+}
+
+.hard-shadow,
+.brutalist-shadow {
+  box-shadow: var(--shadow-hard-md);
+}
+
+.hard-shadow-lg,
+.brutalist-shadow-lg {
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.token-focus-ring:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.surface-panel {
+  background: var(--surface-panel);
+  color: var(--text-primary);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--shadow-hard-md);
+}
+
+.surface-panel-raised {
+  background: var(--surface-panel-raised);
+  color: var(--text-primary);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--shadow-hard-lg);
+}
+
+.surface-callout {
+  background: var(--surface-panel-emphasis);
+  color: var(--text-primary);
+  border: 2px solid var(--border-strong);
+  box-shadow: var(--shadow-hard-md);
+}
+
+.flashcard-content [style] {
+  color: unset;
+}
+
+.flashcard-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.anki-card-content .flashcard-content {
+  text-align: inherit;
+}
+
+.flashcard-scroll::-webkit-scrollbar {
+  width: 5px;
+}
+
+.flashcard-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.flashcard-scroll::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--text-primary) 18%, transparent);
+}
+
+.flashcard-scroll::-webkit-scrollbar-thumb:hover {
+  background: color-mix(in srgb, var(--text-primary) 30%, transparent);
+}

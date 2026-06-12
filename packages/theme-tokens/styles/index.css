@@ -1,0 +1,11 @@
+/* =====================================================================
+   @mu-kn/theme-tokens — Single Source of Truth
+   1:1 Spiegel von ~/prj/attachment_TOOLS/styles/theme/* + verified gegen
+   die deployte Live-Site https://attachment.tools (Stand 2026-04-27).
+   NICHT manuell editieren — bei Updates aus attachment_TOOLS sync-en.
+   ===================================================================== */
+
+@import "./tokens.css";
+@import "./typography.css";
+@import "./motion.css";
+@import "./utilities.css";

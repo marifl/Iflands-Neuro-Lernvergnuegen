@@ -1,0 +1,26 @@
+# ==============================================================================
+# Geräteklasse mobile (Phones). Pflicht wenn detectDeviceClass() === "mobile".
+# Überschreibt nur Felder gegenüber defaults.toml / production.toml.
+# ==============================================================================
+
+[canvas]
+antialias = false
+stencil = false
+dpr_min = 1
+dpr_max = 1
+precision = "mediump"
+
+[postprocessing]
+multisampling = 0
+ssao_samples = 8
+ssao_rings = 2
+
+[lights.editorial]
+cast_shadow = false
+back_intensity = 0.0
+
+[assets]
+idle_delay_ms = 3000
+
+[figures]
+atlas_master_detail = "compact"

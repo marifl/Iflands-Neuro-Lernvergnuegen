@@ -1,0 +1,313 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '../../../packages/theme-tokens/styles/tokens.css';
+@import '../../../packages/theme-tokens/styles/typography.css';
+@import '../../../packages/theme-tokens/styles/motion.css';
+
+/* =====================================================================
+   Editorial (dunkel) — app-lokale Design-Schicht
+   Quelle: banfa Planungsvertrag "Editorial Template" (Plansatz-Aesthetik).
+   theme-tokens/ ist geteilte SSoT (do-not-edit); hier nur ueberschrieben.
+   "Tinte" wird auf dunklem Grund hell; ein Akzent (Orange), sparsam.
+   ===================================================================== */
+:root {
+  /* Flaechen */
+  --ed-canvas: #0e0e0e;   /* hinter allem / 3D-Viewport-Backdrop */
+  --paper: #161616;       /* Plate / Panel / Overlay */
+  --paper-raised: #1c1c1c;
+  --fill: #1f1f1f;        /* Tabellenkopf-/Flaechenfuellung (editorial --fill) */
+
+  /* Tinte + Graureihe (auf dunkel invertiert) */
+  --ink: #ededed;         /* Primaertext + starke Haarlinien */
+  --g800: #d2d2d2;
+  --g700: #b2b2b2;
+  --g600: #8c8c8c;
+  --g500: #6f6f6f;
+  --g400: #555555;
+
+  /* Linien: stark (1.5px Tinte) vs. weich (1px Trenner) */
+  --line: #c8c8c8;
+  --line-soft: #2c2c2c;
+
+  /* Der einzige Akzent */
+  --orange: #f26b1f;
+  --orange-wash: color-mix(in srgb, var(--orange) 14%, transparent);
+  --orange-wash-soft: color-mix(in srgb, var(--orange) 7%, transparent);
+
+  /* Konstanten (themen-unabhaengig) */
+  --viewport-bg: #0e0e0e;   /* 3D-Bereich bleibt in beiden Themes dunkel (Cover-Logik) */
+  --on-accent: #160b04;     /* Text auf Orange-Flaeche */
+
+  /* Themen-abhaengig (Dunkel-Defaults; siehe [data-theme="light"]) */
+  --app-bg: #0e0e0e;        /* Galerie/Body hinter der Plate */
+  --on-ink: #0e0e0e;        /* Text auf ink-farbener Flaeche (solid-Pill, Tabellenkopf) */
+  --field-bg: #0e0e0e;      /* Eingabefeld-Hintergrund */
+
+  /* Schrift: Helvetica Neue (Display/Body) + IBM Plex Mono (technische Ebene) */
+  --ed-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --ed-mono: 'IBM Plex Mono', ui-monospace, Menlo, Monaco, monospace;
+
+  /* ── Bestehende Token-Namen auf Editorial umbiegen (Konsumenten/@theme) ── */
+  --surface-canvas: var(--ed-canvas);
+  --surface-subtle: var(--paper);
+  --surface-panel: var(--paper);
+  --surface-panel-raised: var(--paper-raised);
+  --surface-panel-emphasis: var(--fill);
+  --surface-interactive: var(--fill);
+  --surface-interactive-hover: #262626;
+  --surface-interactive-active: #2d2d2d;
+
+  --text-primary: var(--ink);
+  --text-secondary: var(--g700);
+  --text-muted: var(--g600);
+
+  --accent-solid: var(--orange);
+  --accent-soft: var(--orange);
+  --accent-foreground: var(--on-accent);
+  --border-accent: var(--orange);
+
+  --border-strong: var(--line-soft);
+  --border-muted: var(--line-soft);
+  --focus-ring: var(--orange);
+}
+
+/* =====================================================================
+   Editorial HELL — native Papier-Palette des Templates (Plansatz auf Papier).
+   Nur die Chrome (fhead/Sidebar/ffoot/HUD/Panels) wird hell; der 3D-Viewport
+   bleibt ueber --viewport-bg dunkel (Cover-Split-Logik).
+   ===================================================================== */
+[data-theme='light'] {
+  color-scheme: light;
+
+  --app-bg: #e7e7e7;        /* Galerie/Body exakt aus dem Editorial Template (body background) */
+  --paper: #ffffff;
+  --paper-raised: #ffffff;
+  --fill: #f4f4f4;
+
+  --ink: #111111;           /* schwarze Tinte: Text + starke Haarlinien */
+  --g800: #2a2a2a;
+  --g700: #4f4f4f;
+  --g600: #6b6b6b;
+  --g500: #8c8c8c;
+  --g400: #aeaeae;
+
+  --line: #111111;          /* 1.5px Tinte-Linie (schwarz) */
+  --line-soft: #e2e2e2;     /* 1px weicher Trenner */
+
+  --on-ink: #ffffff;        /* Text auf schwarzer ink-Flaeche */
+  --field-bg: #ffffff;
+}
+
+@layer base {
+  * {
+    border-color: var(--border-strong);
+  }
+  body {
+    margin: 0;
+    overflow: hidden;
+    background: var(--surface-canvas);
+    color: var(--text-primary);
+    font-family: var(--ed-display);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .font-mono {
+    font-family: var(--ed-mono);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer components {
+  .brutalist-shadow-sm { box-shadow: var(--shadow-hard-sm); }
+  .brutalist-shadow { box-shadow: var(--shadow-hard-md); }
+  .brutalist-shadow-lg { box-shadow: var(--shadow-hard-lg); }
+
+  /* ── Tinte-Rahmen ("Plate") + Panel-Flaeche ── */
+  .ed-frame { border: 1.5px solid var(--line); }
+  .ed-panel { background: var(--paper); }
+
+  /* ── Eyebrow + technische Tags (Mono, Versalien) ── */
+  .eyebrow {
+    font-family: var(--ed-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+  }
+  .ed-tag {
+    font-family: var(--ed-mono);
+    font-size: 9px;
+    line-height: 1.7;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--g600);
+  }
+  .ed-tag b { color: var(--ink); font-weight: 600; }
+
+  /* ── Abschnittskopf: Nummer (Orange) + Titel (Display), 1.5px Tinte-Unterkante ── */
+  .ed-sec {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-bottom: 1.5px solid var(--line);
+    padding-bottom: 10px;
+  }
+  .ed-sec .n {
+    font-family: var(--ed-display);
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--orange);
+  }
+  .ed-sec .t {
+    font-family: var(--ed-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-size: 18px;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .ed-sec .meta {
+    margin-left: auto;
+    font-family: var(--ed-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--g500);
+    text-align: right;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+
+  /* ── Block-Label mit fuehrendem Orange-Quadrat (Plan-Notation) ── */
+  .ed-block-label {
+    font-family: var(--ed-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .ed-block-label::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    background: var(--orange);
+    flex: none;
+  }
+
+  /* ── Mono-Button: 1px Linie, Hover fuellt; .active = Orange ── */
+  .ed-btn {
+    font-family: var(--ed-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--g700);
+    background: transparent;
+    border: 1px solid var(--line-soft);
+    padding: 5px 11px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background var(--motion-fast, 120ms), color var(--motion-fast, 120ms);
+  }
+  .ed-btn:hover { background: var(--surface-interactive-hover); color: var(--ink); }
+  .ed-btn.active { background: var(--orange); color: var(--on-accent); border-color: var(--orange); }
+  .ed-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; }
+
+  /* ── Eingabefeld ── */
+  .ed-input {
+    font-family: var(--ed-mono);
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: var(--field-bg);
+    border: 1px solid var(--line-soft);
+    padding: 7px 10px;
+    outline: none;
+  }
+  .ed-input::placeholder { color: var(--g500); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; }
+  .ed-input:focus { border-color: var(--orange); }
+
+  /* ── Quadratische Checkbox (editorial .checks .box) ── */
+  .ed-box {
+    flex: none;
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+  }
+  /* "sichtbar" neutral (Tinte) fuellen — Orange bleibt der Auswahl/Aktiv-Ebene vorbehalten */
+  .ed-box.on { background: var(--ink); border-color: var(--ink); }
+  .ed-box.partial {
+    background: linear-gradient(135deg, var(--ink) 0 50%, transparent 50% 100%);
+  }
+
+  /* ── Eckige Pills (Unterscheidung ueber Stil, nicht Hue) ── */
+  .ed-pill {
+    display: inline-flex;
+    align-items: center;
+    height: 17px;
+    padding: 0 7px;
+    font-family: var(--ed-mono);
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    flex: none;
+  }
+  .ed-pill.orange { background: var(--orange); color: var(--on-accent); }
+  .ed-pill.solid { background: var(--ink); color: var(--on-ink); }
+  .ed-pill.out { border: 1px solid var(--ink); color: var(--ink); }
+
+  /* ── Schriftfeld-Fusszeile (Titelblock, Mono-Raster) ── */
+  .ed-foot { display: grid; border-top: 1.5px solid var(--line); }
+  .ed-foot .col {
+    padding: 9px 14px;
+    border-right: 1px solid var(--line-soft);
+    font-family: var(--ed-mono);
+    font-size: 8.5px;
+    line-height: 1.7;
+    color: var(--g700);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    min-width: 0;
+  }
+  .ed-foot .col:last-child { border-right: 0; }
+  .ed-foot .col .h {
+    color: var(--orange);
+    font-size: 7px;
+    letter-spacing: 0.16em;
+    margin-bottom: 4px;
+  }
+  .ed-foot .col b { color: var(--ink); font-weight: 600; }
+  .ed-foot .col .v { color: var(--ink); }
+  .ed-foot .col .ellip { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+  /* ── Baumzeile: Hover/Auswahl ueber Klassen (Inline-Styles blockieren :hover) ── */
+  .ed-row:hover { background: var(--orange-wash-soft); }
+  .ed-row.member { background: var(--orange-wash-soft); }
+  .ed-row.sel,
+  .ed-row.sel:hover { background: var(--orange-wash); }
+
+  /* ── Sichtbarer Tastatur-Fokus auf allen interaktiven Panel-Elementen ── */
+  .ed-panel button:focus-visible,
+  .ed-panel input:focus-visible,
+  .ed-panel [role='button']:focus-visible {
+    outline: 2px solid var(--orange);
+    outline-offset: -2px;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-soft) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background: var(--line-soft); }
+}

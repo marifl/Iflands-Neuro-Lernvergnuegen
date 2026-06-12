@@ -1,0 +1,227 @@
+{
+  "version": "1.0.0",
+  "space": "bodyparts3d-taro",
+  "boneCount": 20,
+  "bones": {
+    "frontal-bone": {
+      "fma": "FMA52734",
+      "name": "Frontal bone",
+      "side": "midline",
+      "region": "vault",
+      "labels": {
+        "de": "Stirnbein",
+        "la": "Os frontale",
+        "en": "Frontal bone"
+      }
+    },
+    "occipital-bone": {
+      "fma": "FMA52735",
+      "name": "Occipital bone",
+      "side": "midline",
+      "region": "vault",
+      "labels": {
+        "de": "Hinterhauptsbein",
+        "la": "Os occipitale",
+        "en": "Occipital bone"
+      }
+    },
+    "sphenoid-bone": {
+      "fma": "FMA52736",
+      "name": "Sphenoid bone",
+      "side": "midline",
+      "region": "vault",
+      "labels": {
+        "de": "Keilbein",
+        "la": "Os sphenoidale",
+        "en": "Sphenoid bone"
+      }
+    },
+    "right-temporal-bone": {
+      "fma": "FMA52738",
+      "name": "Right temporal bone",
+      "side": "right",
+      "region": "vault",
+      "labels": {
+        "de": "Schlaefenbein (rechts)",
+        "la": "Os temporale dextrum",
+        "en": "Temporal bone (right)"
+      }
+    },
+    "left-temporal-bone": {
+      "fma": "FMA52739",
+      "name": "Left temporal bone",
+      "side": "left",
+      "region": "vault",
+      "labels": {
+        "de": "Schlaefenbein (links)",
+        "la": "Os temporale sinistrum",
+        "en": "Temporal bone (left)"
+      }
+    },
+    "ethmoid-bone": {
+      "fma": "FMA52740",
+      "name": "Ethmoid",
+      "side": "midline",
+      "region": "vault",
+      "labels": {
+        "de": "Siebbein",
+        "la": "Os ethmoidale",
+        "en": "Ethmoid bone"
+      }
+    },
+    "right-parietal-bone": {
+      "fma": "FMA52788",
+      "name": "Right parietal bone",
+      "side": "right",
+      "region": "vault",
+      "labels": {
+        "de": "Scheitelbein (rechts)",
+        "la": "Os parietale dextrum",
+        "en": "Parietal bone (right)"
+      }
+    },
+    "left-parietal-bone": {
+      "fma": "FMA52789",
+      "name": "Left parietal bone",
+      "side": "left",
+      "region": "vault",
+      "labels": {
+        "de": "Scheitelbein (links)",
+        "la": "Os parietale sinistrum",
+        "en": "Parietal bone (left)"
+      }
+    },
+    "perpendicular-plate-of-ethmoid": {
+      "fma": "FMA52891",
+      "name": "Perpendicular plate of ethmoid",
+      "side": "midline",
+      "region": "vault",
+      "labels": {
+        "de": "Lamina perpendicularis",
+        "la": "Lamina perpendicularis ossis ethmoidalis",
+        "en": "Perpendicular plate of ethmoid"
+      }
+    },
+    "right-zygomatic-bone": {
+      "fma": "FMA52892",
+      "name": "Right zygomatic bone",
+      "side": "right",
+      "region": "face",
+      "labels": {
+        "de": "Jochbein (rechts)",
+        "la": "Os zygomaticum dextrum",
+        "en": "Zygomatic bone (right)"
+      }
+    },
+    "left-zygomatic-bone": {
+      "fma": "FMA52893",
+      "name": "Left zygomatic bone",
+      "side": "left",
+      "region": "face",
+      "labels": {
+        "de": "Jochbein (links)",
+        "la": "Os zygomaticum sinistrum",
+        "en": "Zygomatic bone (left)"
+      }
+    },
+    "right-lacrimal-bone": {
+      "fma": "FMA53645",
+      "name": "Right lacrimal bone",
+      "side": "right",
+      "region": "face",
+      "labels": {
+        "de": "Traenenbein (rechts)",
+        "la": "Os lacrimale dextrum",
+        "en": "Lacrimal bone (right)"
+      }
+    },
+    "left-lacrimal-bone": {
+      "fma": "FMA53646",
+      "name": "Left lacrimal bone",
+      "side": "left",
+      "region": "face",
+      "labels": {
+        "de": "Traenenbein (links)",
+        "la": "Os lacrimale sinistrum",
+        "en": "Lacrimal bone (left)"
+      }
+    },
+    "right-nasal-bone": {
+      "fma": "FMA53647",
+      "name": "Right nasal bone",
+      "side": "right",
+      "region": "face",
+      "labels": {
+        "de": "Nasenbein (rechts)",
+        "la": "Os nasale dextrum",
+        "en": "Nasal bone (right)"
+      }
+    },
+    "left-nasal-bone": {
+      "fma": "FMA53648",
+      "name": "Left nasal bone",
+      "side": "left",
+      "region": "face",
+      "labels": {
+        "de": "Nasenbein (links)",
+        "la": "Os nasale sinistrum",
+        "en": "Nasal bone (left)"
+      }
+    },
+    "right-maxilla": {
+      "fma": "FMA53649",
+      "name": "Right maxilla",
+      "side": "right",
+      "region": "face",
+      "labels": {
+        "de": "Oberkiefer (rechts)",
+        "la": "Maxilla dextrum",
+        "en": "Maxilla (right)"
+      }
+    },
+    "left-maxilla": {
+      "fma": "FMA53650",
+      "name": "Left maxilla",
+      "side": "left",
+      "region": "face",
+      "labels": {
+        "de": "Oberkiefer (links)",
+        "la": "Maxilla sinistrum",
+        "en": "Maxilla (left)"
+      }
+    },
+    "right-palatine-bone": {
+      "fma": "FMA53655",
+      "name": "Right palatine bone",
+      "side": "right",
+      "region": "face",
+      "labels": {
+        "de": "Gaumenbein (rechts)",
+        "la": "Os palatinum dextrum",
+        "en": "Palatine bone (right)"
+      }
+    },
+    "left-palatine-bone": {
+      "fma": "FMA53656",
+      "name": "Left palatine bone",
+      "side": "left",
+      "region": "face",
+      "labels": {
+        "de": "Gaumenbein (links)",
+        "la": "Os palatinum sinistrum",
+        "en": "Palatine bone (left)"
+      }
+    },
+    "vomer": {
+      "fma": "FMA9710",
+      "name": "Vomer",
+      "side": "midline",
+      "region": "face",
+      "labels": {
+        "de": "Pflugscharbein",
+        "la": "Vomer",
+        "en": "Vomer"
+      }
+    }
+  }
+}

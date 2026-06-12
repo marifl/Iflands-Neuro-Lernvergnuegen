@@ -1,0 +1,22 @@
+{
+  "id": "p3a-konfliktmonitoring", "figure": "11-15(1)", "section": "11.4 · cinguläres Kontrollsystem",
+  "author": "ifland", "order": 40, "title": "P3a — Konfliktmonitoring (No-go)",
+  "brain": { "regions": ["acc-anterior"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "erp", "position": "right", "size": "md",
+    "data": {
+      "x": "ms",
+      "series": [
+        { "label": "No-go (rot)", "color": "#c0392b",
+          "points": [[1,0],[2,-1],[3,-2],[4,-1.5],[5,0],[6,2],[7,4],[8,5],[9,4.5],[10,3],[11,1],[12,-0.5]] },
+        { "label": "Go (grün)", "color": "#2e7d32",
+          "points": [[1,0],[2,-0.5],[3,-1],[4,-0.8],[5,-0.5],[6,0],[7,0.5],[8,0],[9,-0.5],[10,-1],[11,-0.5],[12,0]] }
+      ],
+      "markers": ["P3a 300–400 ms", "Maximum über Cz"]
+    }
+  },
+  "companion": {
+    "summary": "Die fronto-zentrale P3a-No-go-Komponente (Konfliktmonitoring) ist eine Positivierung ~300–400 ms nach dem No-go-Reiz mit Maximum über Cz. Intrakortikale Quellen liegen vor allem in Mittellinienstrukturen, besonders im **anterioren** Cingulum (ACC, Brodmann-Area 24/32). Sie repräsentiert das Entdecken und Korrigieren von Fehlern: Erwartete und tatsächliche Handlung werden verglichen, Diskrepanzen lösen eine Verhaltensänderung aus.",
+    "sources": [{ "key": "mueller_2011" }, { "key": "kropotov_2011" }]
+  }
+}

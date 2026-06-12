@@ -1,0 +1,19 @@
+{
+  "name": "@mu-kn/theme-tokens",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./styles": "./styles/index.css",
+    "./styles/tokens.css": "./styles/tokens.css",
+    "./styles/typography.css": "./styles/typography.css",
+    "./styles/motion.css": "./styles/motion.css",
+    "./styles/utilities.css": "./styles/utilities.css"
+  },
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  }
+}

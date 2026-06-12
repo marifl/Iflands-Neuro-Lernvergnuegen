@@ -1,0 +1,131 @@
+{
+  "$comment": "Lehrbuch-Cut-Presets fuer Companion-Preview. Cut-State wird auf Pill cutPlane geschrieben, Camera ueber OrbitControls (.object.position + .target + .update). Subset-Presets nutzen im S00-Explorer Tree-Hidden-State fuer show-only Teilbaeume.",
+  "version": 1,
+  "default": "lateral",
+  "presets": [
+    {
+      "id": "lateral",
+      "label": "Lateral (kein Cut)",
+      "cut": {
+        "enabled": false,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": true, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "camera": { "position": [180, 30, 0], "target": [0, 0, 0] }
+    },
+    {
+      "id": "medial-cut",
+      "label": "Medialer Sagittal-Cut",
+      "cut": {
+        "enabled": true,
+        "sagittal_on": true,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": true, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "camera": { "position": [-180, 30, 0], "target": [0, 0, 0] }
+    },
+    {
+      "id": "coronal-frontal",
+      "label": "Koronar-Cut (frontal)",
+      "cut": {
+        "enabled": true,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": true,
+        "coronal_pos": -10,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": true, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "camera": { "position": [0, 30, -180], "target": [0, 0, 0] }
+    },
+    {
+      "id": "axial-superior",
+      "label": "Axial-Cut (superior)",
+      "cut": {
+        "enabled": true,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": true,
+        "axial_pos": -5
+      },
+      "layers": { "cortex": true, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "camera": { "position": [0, 180, 0], "target": [0, 0, 0] }
+    },
+    {
+      "id": "basal-ganglia",
+      "label": "Basalganglien + Thalamus",
+      "cut": {
+        "enabled": false,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": false, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "subset": { "mode": "show-only", "nodeIds": [4276, 4392] },
+      "camera": { "position": [125, 90, 155], "target": [0, 0, 0] }
+    },
+    {
+      "id": "limbic-system",
+      "label": "Limbisches System",
+      "cut": {
+        "enabled": false,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": true, "aseg": true, "julich": true, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "subset": { "mode": "show-only", "nodeIds": [4219, 4327] },
+      "camera": { "position": [-155, 95, 130], "target": [0, 0, 0] }
+    },
+    {
+      "id": "brainstem",
+      "label": "Hirnstamm + Cerebellum",
+      "cut": {
+        "enabled": false,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": false, "aseg": true, "julich": false, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "subset": { "mode": "show-only", "nodeIds": [9001, 4833, 9512, 4696] },
+      "camera": { "position": [85, 70, -190], "target": [0, -20, 0] }
+    },
+    {
+      "id": "ventricles",
+      "label": "Ventrikel",
+      "cut": {
+        "enabled": false,
+        "sagittal_on": false,
+        "sagittal_pos": 0,
+        "coronal_on": false,
+        "coronal_pos": 0,
+        "axial_on": false,
+        "axial_pos": 0
+      },
+      "layers": { "cortex": false, "aseg": true, "julich": false, "bahi": false, "wmtracts": false, "skull": false, "skullPre": false, "iron": false },
+      "subset": { "mode": "show-only", "nodeIds": [9418] },
+      "camera": { "position": [95, 140, 120], "target": [0, 0, 0] }
+    }
+  ]
+}

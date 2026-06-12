@@ -1,0 +1,6143 @@
+{
+  "anterior-commissure": {
+    "bp": "BP58379",
+    "fileId": "FJ3792",
+    "fma": "FMA61961",
+    "name": "Anterior commissure",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0859
+  },
+  "anterior-communicating-artery": {
+    "bp": "BP49270",
+    "fileId": "FJ4706",
+    "fma": "FMA50169",
+    "name": "Anterior communicating artery",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0044
+  },
+  "anterior-communicating-artery-v2": {
+    "bp": "BP49270",
+    "fileId": "FJ1655",
+    "fma": "FMA50169",
+    "name": "Anterior communicating artery",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 2,
+    "volume_cm3": 0.0079
+  },
+  "anterior-intercavernous-sinus": {
+    "bp": "BP45028",
+    "fileId": "FJ4707",
+    "fma": "FMA50774",
+    "name": "Anterior intercavernous sinus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0171
+  },
+  "anterior-part-of-left-superior-temporal-gyrus": {
+    "bp": "BP49149",
+    "fileId": "FJ1837",
+    "fma": "FMA72801",
+    "name": "Anterior part of left superior temporal gyrus",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 10.2653
+  },
+  "anterior-part-of-right-superior-temporal-gyrus": {
+    "bp": "BP49388",
+    "fileId": "FJ1838",
+    "fma": "FMA72800",
+    "name": "Anterior part of right superior temporal gyrus",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 10.1202
+  },
+  "anterior-spinal-artery": {
+    "bp": "BP49948",
+    "fileId": "FJ4981",
+    "fma": "FMA50531",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 3 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ4981",
+      "FJ1657M"
+    ],
+    "name": "Anterior spinal artery",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.1127
+  },
+  "anterior-vein-of-left-septum-pellucidum": {
+    "bp": "BP44736",
+    "fileId": "FJ5030M",
+    "fma": "FMA51013",
+    "laterality_note": "Gespiegelt aus 'Anterior vein of right septum pellucidum' (FMA51012) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Anterior vein of left septum pellucidum",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0053
+  },
+  "anterior-vein-of-right-septum-pellucidum": {
+    "bp": "BP44736",
+    "fileId": "FJ5030",
+    "fma": "FMA51012",
+    "name": "Anterior vein of right septum pellucidum",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0053
+  },
+  "anterolateral-central-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP49154",
+    "fileId": "FJ3678M",
+    "fma": "FMA50378",
+    "name": "Anterolateral central branch of left middle cerebral artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0463
+  },
+  "anterolateral-central-branch-of-right-middle-cerebral-artery": {
+    "bp": "BP48891",
+    "fileId": "FJ3679",
+    "fma": "FMA50377",
+    "name": "Anterolateral central branch of right middle cerebral artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0192
+  },
+  "anteromedial-frontal-branch-of-left-callosomarginal-artery": {
+    "bp": "BP48843",
+    "fileId": "FJ5035M",
+    "fma": "FMA50350",
+    "laterality_note": "Gespiegelt aus 'Anteromedial frontal branch of right callosomarginal artery' (FMA50349) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Anteromedial frontal branch of left callosomarginal artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.048
+  },
+  "anteromedial-frontal-branch-of-right-callosomarginal-artery": {
+    "bp": "BP48843",
+    "fileId": "FJ5035",
+    "fma": "FMA50349",
+    "name": "Anteromedial frontal branch of right callosomarginal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.048
+  },
+  "anteromedian-medullary-vein": {
+    "bp": "BP45350",
+    "fileId": "FJ4708",
+    "fma": "FMA51390",
+    "name": "Anteromedian medullary vein",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0312
+  },
+  "anteromedian-pontine-vein": {
+    "bp": "BP45190",
+    "fileId": "FJ4709",
+    "fma": "FMA51346",
+    "name": "Anteromedian pontine vein",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0108
+  },
+  "artery-of-central-sulcus": {
+    "bp": "BP44967",
+    "fileId": "FJ1664",
+    "fma": "FMA77439",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 7 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ1664",
+      "FJ1664M"
+    ],
+    "name": "Artery of central sulcus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.3297
+  },
+  "artery-of-left-postcentral-sulcus": {
+    "bp": "BP49337",
+    "fileId": "FJ1666M",
+    "fma": "FMA50484",
+    "name": "Artery of left postcentral sulcus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0998
+  },
+  "artery-of-left-precentral-sulcus": {
+    "bp": "BP49299",
+    "fileId": "FJ1668M",
+    "fma": "FMA50481",
+    "name": "Artery of left precentral sulcus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1116
+  },
+  "artery-of-left-precentral-sulcus-v2": {
+    "bp": "BP49299",
+    "fileId": "FJ1669M",
+    "fma": "FMA50481",
+    "name": "Artery of left precentral sulcus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0413
+  },
+  "artery-of-left-precentral-sulcus-v3": {
+    "bp": "BP49299",
+    "fileId": "FJ1670M",
+    "fma": "FMA50481",
+    "name": "Artery of left precentral sulcus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 3,
+    "volume_cm3": 0.021
+  },
+  "artery-of-right-postcentral-sulcus": {
+    "bp": "BP48957",
+    "fileId": "FJ1666",
+    "fma": "FMA50483",
+    "name": "Artery of right postcentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0997
+  },
+  "artery-of-right-postcentral-sulcus-v2": {
+    "bp": "BP48957",
+    "fileId": "FJ5018",
+    "fma": "FMA50483",
+    "name": "Artery of right postcentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0978
+  },
+  "artery-of-right-postcentral-sulcus-v3": {
+    "bp": "BP48957",
+    "fileId": "FJ5038",
+    "fma": "FMA50483",
+    "name": "Artery of right postcentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0503
+  },
+  "artery-of-right-precentral-sulcus": {
+    "bp": "BP48919",
+    "fileId": "FJ1668",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1116
+  },
+  "artery-of-right-precentral-sulcus-v2": {
+    "bp": "BP48919",
+    "fileId": "FJ5039",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.1097
+  },
+  "artery-of-right-precentral-sulcus-v3": {
+    "bp": "BP48919",
+    "fileId": "FJ1669",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0413
+  },
+  "artery-of-right-precentral-sulcus-v4": {
+    "bp": "BP48919",
+    "fileId": "FJ1670",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.021
+  },
+  "artery-of-right-precentral-sulcus-v5": {
+    "bp": "BP48919",
+    "fileId": "FJ5040",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 5,
+    "volume_cm3": 0.0402
+  },
+  "artery-of-right-precentral-sulcus-v6": {
+    "bp": "BP48919",
+    "fileId": "FJ5041",
+    "fma": "FMA50480",
+    "name": "Artery of right precentral sulcus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 6,
+    "volume_cm3": 0.0198
+  },
+  "basilar-venous-plexus": {
+    "bp": "BP50105",
+    "fileId": "FJ4714",
+    "fma": "FMA50783",
+    "name": "Basilar venous plexus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.1415
+  },
+  "body-of-left-fornix-of-forebrain": {
+    "bp": "BP58359",
+    "fileId": "MM169",
+    "fma": "FMA72931",
+    "name": "Body of left fornix of forebrain",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6453
+  },
+  "body-of-right-fornix-of-forebrain": {
+    "bp": "BP58368",
+    "fileId": "MM169M",
+    "fma": "FMA72930",
+    "name": "Body of right fornix of forebrain",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.641
+  },
+  "brachium-of-left-inferior-colliculus": {
+    "bp": "BP58227",
+    "fileId": "FJ1761",
+    "fma": "FMA73464",
+    "name": "Brachium of left inferior colliculus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1737
+  },
+  "brachium-of-left-superior-colliculus": {
+    "bp": "BP58230",
+    "fileId": "FJ1735",
+    "fma": "FMA73462",
+    "name": "Brachium of left superior colliculus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2068
+  },
+  "brachium-of-right-inferior-colliculus": {
+    "bp": "BP58228",
+    "fileId": "FJ1809",
+    "fma": "FMA73463",
+    "name": "Brachium of right inferior colliculus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1752
+  },
+  "brachium-of-right-superior-colliculus": {
+    "bp": "BP58229",
+    "fileId": "FJ3793",
+    "fma": "FMA73461",
+    "name": "Brachium of right superior colliculus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2059
+  },
+  "branch-of-left-anterior-choroidal-artery-to-posterior-limb-of-left-internal-capsule": {
+    "bp": "BP49739",
+    "fileId": "FJ1674M",
+    "fma": "FMA50147",
+    "name": "Branch of left anterior choroidal artery to posterior limb of left internal capsule",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0086
+  },
+  "branch-of-left-mandibular-nerve-to-left-otic-ganglion": {
+    "bp": "BP50354",
+    "fileId": "FJ3933",
+    "fma": "FMA53073",
+    "name": "Branch of left mandibular nerve to left otic ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0007
+  },
+  "branch-of-left-middle-cerebral-artery-to-left-angular-gyrus": {
+    "bp": "BP49368",
+    "fileId": "FJ1673M",
+    "fma": "FMA50477",
+    "name": "Branch of left middle cerebral artery to left angular gyrus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.04
+  },
+  "branch-of-right-anterior-choroidal-artery-to-right-lateral-ventricle": {
+    "bp": "BP49338",
+    "fileId": "FJ5067",
+    "fma": "FMA50131",
+    "name": "Branch of right anterior choroidal artery to right lateral ventricle",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0022
+  },
+  "branch-of-right-anterior-choroidal-artery-to-right-optic-tract": {
+    "bp": "BP49193",
+    "fileId": "FJ5053",
+    "fma": "FMA50138",
+    "name": "Branch of right anterior choroidal artery to right optic tract",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.001
+  },
+  "branch-of-right-mandibular-nerve-to-right-otic-ganglion": {
+    "bp": "BP50441",
+    "fileId": "FJ3895",
+    "fma": "FMA53072",
+    "name": "Branch of right mandibular nerve to right otic ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0007
+  },
+  "branch-of-right-middle-cerebral-artery-to-right-angular-gyrus": {
+    "bp": "BP48850",
+    "fileId": "FJ1673",
+    "fma": "FMA50476",
+    "name": "Branch of right middle cerebral artery to right angular gyrus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.04
+  },
+  "branch-of-right-middle-cerebral-artery-to-right-angular-gyrus-v2": {
+    "bp": "BP48850",
+    "fileId": "FJ5047",
+    "fma": "FMA50476",
+    "name": "Branch of right middle cerebral artery to right angular gyrus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0389
+  },
+  "caudal-part-of-left-ventral-lateral-nucleus": {
+    "bp": "BP58061",
+    "fileId": "FJ7557",
+    "fma": "FMA73064",
+    "name": "Caudal part of left ventral lateral nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.3266
+  },
+  "caudal-part-of-left-ventral-posterolateral-nucleus": {
+    "bp": "BP58044",
+    "fileId": "FJ7559",
+    "fma": "FMA73080",
+    "name": "Caudal part of left ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6857
+  },
+  "caudal-part-of-right-ventral-lateral-nucleus": {
+    "bp": "BP58063",
+    "fileId": "FJ7557M",
+    "fma": "FMA73063",
+    "name": "Caudal part of right ventral lateral nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.3233
+  },
+  "caudal-part-of-right-ventral-posterolateral-nucleus": {
+    "bp": "BP58043",
+    "fileId": "FJ7559M",
+    "fma": "FMA73079",
+    "name": "Caudal part of right ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.682
+  },
+  "cavernous-branch-of-left-internal-carotid-artery": {
+    "bp": "BP49977",
+    "fileId": "FJ5063M",
+    "fma": "FMA49823",
+    "laterality_note": "Gespiegelt aus 'Cavernous branch of right internal carotid artery' (FMA49822) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Cavernous branch of left internal carotid artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0045
+  },
+  "cavernous-branch-of-right-internal-carotid-artery": {
+    "bp": "BP49977",
+    "fileId": "FJ5063",
+    "fma": "FMA49822",
+    "name": "Cavernous branch of right internal carotid artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0045
+  },
+  "central-canal-of-spinal-cord": {
+    "bp": "BP51045",
+    "fileId": "FJ1737",
+    "fma": "FMA78497",
+    "name": "Central canal of spinal cord",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0783
+  },
+  "cerebellum": {
+    "bp": "BP58271",
+    "fileId": "FJ3876",
+    "fma": "FMA67944",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3876",
+      "FJ3834"
+    ],
+    "name": "Cerebellum",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 117.7601
+  },
+  "cerebral-aqueduct": {
+    "bp": "BP58277",
+    "fileId": "FJ3795",
+    "fma": "FMA78467",
+    "name": "Cerebral aqueduct",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0709
+  },
+  "cerebral-hemisphere-segment-of-dura-mater": {
+    "bp": "BP48290",
+    "fileId": "FJ3890",
+    "fma": "FMA266056",
+    "name": "Cerebral hemisphere segment of dura mater",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 164.7218
+  },
+  "chiasmatic-branch-of-left-posterior-communicating-artery": {
+    "bp": "BP49369",
+    "fileId": "FJ5066M",
+    "fma": "FMA50413",
+    "laterality_note": "Gespiegelt aus 'Chiasmatic branch of right posterior communicating artery' (FMA50412) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Chiasmatic branch of left posterior communicating artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "chiasmatic-branch-of-right-posterior-communicating-artery": {
+    "bp": "BP49369",
+    "fileId": "FJ5066",
+    "fma": "FMA50412",
+    "name": "Chiasmatic branch of right posterior communicating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "choroid-plexus-of-left-lateral-ventricle": {
+    "bp": "BP47993",
+    "fileId": "FJ3855M",
+    "fma": "FMA242859",
+    "laterality_note": "Gespiegelt aus 'Choroid plexus of right lateral ventricle' (FMA242857) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Choroid plexus of left lateral ventricle",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.3418
+  },
+  "choroid-plexus-of-right-lateral-ventricle": {
+    "bp": "BP47993",
+    "fileId": "FJ3855",
+    "fma": "FMA242857",
+    "name": "Choroid plexus of right lateral ventricle",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.3418
+  },
+  "choroid-plexus-of-third-ventricle": {
+    "bp": "BP58176",
+    "fileId": "MM204",
+    "fma": "FMA78462",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "MM204"
+    ],
+    "name": "Choroid plexus of third ventricle",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0331
+  },
+  "commissure-of-fornix-of-forebrain": {
+    "bp": "BP58386",
+    "fileId": "FJ3798",
+    "fma": "FMA61970",
+    "name": "Commissure of fornix of forebrain",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 1.0469
+  },
+  "communicating-branch-of-left-nasociliary-nerve-with-left-ciliary-ganglion": {
+    "bp": "BP49537",
+    "fileId": "FJ3909",
+    "fma": "FMA52674",
+    "name": "Communicating branch of left nasociliary nerve with left ciliary ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0017
+  },
+  "communicating-branch-of-left-nasociliary-nerve-with-left-ciliary-ganglion-v2": {
+    "bp": "BP49537",
+    "fileId": "FJ1311",
+    "fma": "FMA52674",
+    "name": "Communicating branch of left nasociliary nerve with left ciliary ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.002
+  },
+  "communicating-branch-of-right-nasociliary-nerve-with-right-ciliary-ganglion": {
+    "bp": "BP49686",
+    "fileId": "FJ1362",
+    "fma": "FMA52673",
+    "name": "Communicating branch of right nasociliary nerve with right ciliary ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0021
+  },
+  "communicating-branch-of-right-nasociliary-nerve-with-right-ciliary-ganglion-v2": {
+    "bp": "BP49686",
+    "fileId": "FJ4007",
+    "fma": "FMA52673",
+    "name": "Communicating branch of right nasociliary nerve with right ciliary ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0017
+  },
+  "corpus-callosum": {
+    "bp": "BP58376",
+    "fileId": "FJ3799",
+    "fma": "FMA86464",
+    "name": "Corpus callosum",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 25.5218
+  },
+  "dentate-gyrus-of-left-hippocampus": {
+    "bp": "BP58041",
+    "fileId": "MM171",
+    "fma": "FMA72716",
+    "name": "Dentate gyrus of left hippocampus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.172
+  },
+  "dentate-gyrus-of-right-hippocampus": {
+    "bp": "BP58042",
+    "fileId": "MM171M",
+    "fma": "FMA72715",
+    "name": "Dentate gyrus of right hippocampus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1701
+  },
+  "dorsal-medullary-vein": {
+    "bp": "BP45098",
+    "fileId": "FJ5062",
+    "fma": "FMA51393",
+    "name": "Dorsal medullary vein",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.008
+  },
+  "falx-cerebri": {
+    "bp": "BP48331",
+    "fileId": "FJ7445",
+    "fma": "FMA83967",
+    "name": "Falx cerebri",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 16.0305
+  },
+  "fimbria-of-left-hippocampus": {
+    "bp": "BP58357",
+    "fileId": "MM167",
+    "fma": "FMA235004",
+    "name": "Fimbria of left hippocampus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1038
+  },
+  "fimbria-of-right-hippocampus": {
+    "bp": "BP58363",
+    "fileId": "MM167M",
+    "fma": "FMA235002",
+    "name": "Fimbria of right hippocampus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1028
+  },
+  "fourth-ventricle": {
+    "bp": "BP58285",
+    "fileId": "FJ3788",
+    "fma": "FMA78469",
+    "name": "Fourth ventricle",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 2.5237
+  },
+  "ganglionic-branch-of-left-maxillary-nerve-to-left-pterygopalatine-ganglion": {
+    "bp": "BP50241",
+    "fileId": "FJ3929",
+    "fma": "FMA52733",
+    "name": "Ganglionic branch of left maxillary nerve to left pterygopalatine ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0041
+  },
+  "ganglionic-branch-of-right-maxillary-nerve-to-right-pterygopalatine-ganglion": {
+    "bp": "BP50636",
+    "fileId": "FJ3900",
+    "fma": "FMA52732",
+    "name": "Ganglionic branch of right maxillary nerve to right pterygopalatine ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.004
+  },
+  "habenula": {
+    "bp": "BP58237",
+    "fileId": "FJ3800",
+    "fma": "FMA62032",
+    "name": "Habenula",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0256
+  },
+  "hypothalamic-branch-of-left-posterior-communicating-artery": {
+    "bp": "BP49163",
+    "fileId": "FJ1679M",
+    "fma": "FMA50429",
+    "name": "Hypothalamic branch of left posterior communicating artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0041
+  },
+  "hypothalamic-branch-of-right-posterior-communicating-artery": {
+    "bp": "BP49255",
+    "fileId": "FJ5088",
+    "fma": "FMA50428",
+    "name": "Hypothalamic branch of right posterior communicating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "hypothalamic-branch-of-right-posterior-communicating-artery-v2": {
+    "bp": "BP49255",
+    "fileId": "FJ1679",
+    "fma": "FMA50428",
+    "name": "Hypothalamic branch of right posterior communicating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0041
+  },
+  "hypothalamus": {
+    "bp": "BP58266",
+    "fileId": "FJ3860",
+    "fma": "FMA62008",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3860",
+      "FJ3817"
+    ],
+    "name": "Hypothalamus",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 1.6552
+  },
+  "inferior-branch-of-left-oculomotor-nerve": {
+    "bp": "BP50749",
+    "fileId": "FJ1293",
+    "fma": "FMA52577",
+    "name": "Inferior branch of left oculomotor nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.035
+  },
+  "inferior-branch-of-right-oculomotor-nerve": {
+    "bp": "BP50983",
+    "fileId": "FJ1344",
+    "fma": "FMA52576",
+    "name": "Inferior branch of right oculomotor nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0357
+  },
+  "inferior-cerebral-vein": {
+    "bp": "BP45187",
+    "fileId": "FJ4679",
+    "fma": "FMA50986",
+    "name": "Inferior cerebral vein",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.4478
+  },
+  "inferior-sagittal-sinus": {
+    "bp": "BP49373",
+    "fileId": "FJ4716",
+    "fma": "FMA50768",
+    "name": "Inferior sagittal sinus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.6493
+  },
+  "inferior-vein-of-vermis": {
+    "bp": "BP45559",
+    "fileId": "FJ5101",
+    "fma": "FMA51231",
+    "name": "Inferior vein of vermis",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0164
+  },
+  "inferior-vein-of-vermis-v2": {
+    "bp": "BP45559",
+    "fileId": "FJ4717",
+    "fma": "FMA51231",
+    "name": "Inferior vein of vermis",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 2,
+    "volume_cm3": 0.0985
+  },
+  "insular-part-of-left-middle-cerebral-artery": {
+    "bp": "BP49510",
+    "fileId": "FJ1694M",
+    "fma": "FMA50370",
+    "name": "Insular part of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2857
+  },
+  "insular-part-of-left-middle-cerebral-artery-v2": {
+    "bp": "BP49510",
+    "fileId": "FJ1660M",
+    "fma": "FMA50370",
+    "name": "Insular part of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0704
+  },
+  "insular-part-of-right-middle-cerebral-artery": {
+    "bp": "BP49146",
+    "fileId": "FJ5135",
+    "fma": "FMA50369",
+    "name": "Insular part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.263
+  },
+  "insular-part-of-right-middle-cerebral-artery-v2": {
+    "bp": "BP49146",
+    "fileId": "FJ1660",
+    "fma": "FMA50369",
+    "name": "Insular part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0704
+  },
+  "insular-part-of-right-middle-cerebral-artery-v3": {
+    "bp": "BP49146",
+    "fileId": "FJ5027",
+    "fma": "FMA50369",
+    "name": "Insular part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0385
+  },
+  "insular-part-of-right-middle-cerebral-artery-v4": {
+    "bp": "BP49146",
+    "fileId": "FJ5171",
+    "fma": "FMA50369",
+    "name": "Insular part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.0578
+  },
+  "intermediomedial-branch-of-left-callosomarginal-artery": {
+    "bp": "BP49020",
+    "fileId": "FJ1681M",
+    "fma": "FMA50352",
+    "name": "Intermediomedial branch of left callosomarginal artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.029
+  },
+  "intermediomedial-branch-of-right-callosomarginal-artery": {
+    "bp": "BP48794",
+    "fileId": "FJ1681",
+    "fma": "FMA50351",
+    "name": "Intermediomedial branch of right callosomarginal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.029
+  },
+  "intermediomedial-branch-of-right-callosomarginal-artery-v2": {
+    "bp": "BP48794",
+    "fileId": "FJ5017",
+    "fma": "FMA50351",
+    "name": "Intermediomedial branch of right callosomarginal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0287
+  },
+  "interpeduncular-fossa": {
+    "bp": "BP48377",
+    "fileId": "FJ1763",
+    "fma": "FMA83740",
+    "name": "Interpeduncular fossa",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0017
+  },
+  "interventricular-foramen": {
+    "bp": "BP48607",
+    "fileId": "FJ1752",
+    "fma": "FMA75351",
+    "name": "Interventricular foramen",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.1248
+  },
+  "lamina-terminalis": {
+    "bp": "BP58351",
+    "fileId": "FJ3819",
+    "fma": "FMA61975",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3861",
+      "FJ3819"
+    ],
+    "name": "Lamina terminalis",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0831
+  },
+  "lateral-branch-of-left-pontine-artery": {
+    "bp": "BP49298",
+    "fileId": "FJ1684M",
+    "fma": "FMA50569",
+    "name": "Lateral branch of left pontine artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0204
+  },
+  "lateral-branch-of-left-superior-cerebellar-artery": {
+    "bp": "BP49364",
+    "fileId": "FJ1683M",
+    "fma": "FMA50579",
+    "name": "Lateral branch of left superior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0861
+  },
+  "lateral-branch-of-right-pontine-artery": {
+    "bp": "BP49084",
+    "fileId": "FJ1684",
+    "fma": "FMA50568",
+    "name": "Lateral branch of right pontine artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0204
+  },
+  "lateral-branch-of-right-superior-cerebellar-artery": {
+    "bp": "BP49126",
+    "fileId": "FJ5107",
+    "fma": "FMA50578",
+    "name": "Lateral branch of right superior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0865
+  },
+  "lateral-branch-of-right-superior-cerebellar-artery-v2": {
+    "bp": "BP49126",
+    "fileId": "FJ1683",
+    "fma": "FMA50578",
+    "name": "Lateral branch of right superior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0862
+  },
+  "lateral-vein-of-left-lateral-ventricle": {
+    "bp": "BP44733",
+    "fileId": "FJ4995M",
+    "fma": "FMA51017",
+    "laterality_note": "Gespiegelt aus 'Lateral vein of right lateral ventricle' (FMA51016) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Lateral vein of left lateral ventricle",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0063
+  },
+  "lateral-vein-of-right-lateral-ventricle": {
+    "bp": "BP44733",
+    "fileId": "FJ4995",
+    "fma": "FMA51016",
+    "name": "Lateral vein of right lateral ventricle",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0063
+  },
+  "left-abducens-nerve": {
+    "bp": "BP50823",
+    "fileId": "FJ3927",
+    "fma": "FMA50887",
+    "name": "Left abducens nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0217
+  },
+  "left-amygdala": {
+    "bp": "BP58076",
+    "fileId": "MM179",
+    "fma": "FMA72833",
+    "name": "Left amygdala",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.3397
+  },
+  "left-angular-gyrus": {
+    "bp": "BP58129",
+    "fileId": "MM242",
+    "fma": "FMA72670",
+    "name": "Left angular gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 15.6507
+  },
+  "left-anterior-accessory-gyrus": {
+    "bp": "BP58313",
+    "fileId": "MM240",
+    "fma": "FMA72704",
+    "name": "Left anterior accessory gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.5677
+  },
+  "left-anterior-accessory-gyrus-v2": {
+    "bp": "BP58313",
+    "fileId": "MM239",
+    "fma": "FMA72704",
+    "name": "Left anterior accessory gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.1939
+  },
+  "left-anterior-cerebral-artery": {
+    "bp": "BP50196",
+    "fileId": "FJ1654M",
+    "fma": "FMA50030",
+    "name": "Left anterior cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1387
+  },
+  "left-anterior-choroidal-artery": {
+    "bp": "BP49924",
+    "fileId": "FJ1658M",
+    "fma": "FMA50089",
+    "name": "Left anterior choroidal artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0406
+  },
+  "left-anterior-column-of-fornix": {
+    "bp": "BP58347",
+    "fileId": "MM170",
+    "fma": "FMA72927",
+    "name": "Left anterior column of fornix",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1066
+  },
+  "left-anterior-ethmoidal-nerve": {
+    "bp": "BP49530",
+    "fileId": "FJ3908",
+    "fma": "FMA52677",
+    "name": "Left anterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0134
+  },
+  "left-anterior-ethmoidal-nerve-v2": {
+    "bp": "BP49530",
+    "fileId": "FJ1283",
+    "fma": "FMA52677",
+    "name": "Left anterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0039
+  },
+  "left-anterior-inferior-cerebellar-artery": {
+    "bp": "BP45888",
+    "fileId": "FJ1656M",
+    "fma": "FMA50546",
+    "name": "Anterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0713
+  },
+  "left-anterior-nucleus-of-hypothalamus": {
+    "bp": "BP58100",
+    "fileId": "FJ7508",
+    "fma": "FMA73334",
+    "name": "Left anterior nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0108
+  },
+  "left-anterior-orbital-gyrus": {
+    "bp": "BP58083",
+    "fileId": "FJ7465",
+    "fma": "FMA256200",
+    "name": "Left anterior orbital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.4292
+  },
+  "left-anterior-superior-alveolar-nerve": {
+    "bp": "BP50514",
+    "fileId": "FJ3930",
+    "fma": "FMA52942",
+    "name": "Left anterior superior alveolar nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.016
+  },
+  "left-anterior-transverse-temporal-gyrus": {
+    "bp": "BP58181",
+    "fileId": "MM259",
+    "fma": "FMA72692",
+    "name": "Left anterior transverse temporal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.2863
+  },
+  "left-anterodorsal-nucleus": {
+    "bp": "BP58136",
+    "fileId": "FJ7533",
+    "fma": "FMA72983",
+    "name": "Left anterodorsal nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0076
+  },
+  "left-anterolateral-medullary-vein": {
+    "bp": "BP44908",
+    "fileId": "FJ5033M",
+    "fma": "FMA51638",
+    "laterality_note": "Gespiegelt aus 'Right anterolateral medullary vein' (FMA51637) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left anterolateral medullary vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0395
+  },
+  "left-anterolateral-pontine-vein": {
+    "bp": "BP45052",
+    "fileId": "FJ5034M",
+    "fma": "FMA51636",
+    "laterality_note": "Gespiegelt aus 'Right anterolateral pontine vein' (FMA51635) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left anterolateral pontine vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0318
+  },
+  "left-anteromedial-nucleus": {
+    "bp": "BP58121",
+    "fileId": "FJ7534",
+    "fma": "FMA72985",
+    "name": "Left anteromedial nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0797
+  },
+  "left-anteroventral-nucleus": {
+    "bp": "BP58086",
+    "fileId": "FJ7535",
+    "fma": "FMA72987",
+    "name": "Left anteroventral nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1075
+  },
+  "left-arcuate-nucleus-of-hypothalamus": {
+    "bp": "BP58188",
+    "fileId": "FJ7506",
+    "fma": "FMA73338",
+    "name": "Left arcuate nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.003
+  },
+  "left-basal-vein": {
+    "bp": "BP44892",
+    "fileId": "FJ5046M",
+    "fma": "FMA50992",
+    "laterality_note": "Gespiegelt aus 'Right basal vein' (FMA50991) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left basal vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.5205
+  },
+  "left-buccal-nerve": {
+    "bp": "BP50427",
+    "fileId": "FJ3935",
+    "fma": "FMA53068",
+    "name": "Left buccal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0228
+  },
+  "left-callosomarginal-artery": {
+    "bp": "BP49273",
+    "fileId": "FJ1676M",
+    "fma": "FMA50348",
+    "name": "Left callosomarginal artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1937
+  },
+  "left-caudate-nucleus": {
+    "bp": "BP58034",
+    "fileId": "MM241",
+    "fma": "FMA72827",
+    "name": "Left caudate nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 7.1312
+  },
+  "left-centromedian-nucleus": {
+    "bp": "BP58102",
+    "fileId": "FJ7536",
+    "fma": "FMA73046",
+    "name": "Left centromedian nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2856
+  },
+  "left-cerebral-crus": {
+    "bp": "BP58262",
+    "fileId": "FJ3827",
+    "fma": "FMA242162",
+    "name": "Left cerebral crus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.2039
+  },
+  "left-choroid-plexus-of-cerebral-hemisphere": {
+    "bp": "BP48535",
+    "fileId": "FJ1755",
+    "fma": "FMA274029",
+    "name": "Choroid plexus of cerebral hemisphere",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.3431
+  },
+  "left-ciliary-ganglion": {
+    "bp": "BP46447",
+    "fileId": "FJ1288",
+    "fma": "FMA53550",
+    "name": "Left ciliary ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0105
+  },
+  "left-cingulate-gyrus": {
+    "bp": "BP58215",
+    "fileId": "MM193",
+    "fma": "FMA72718",
+    "name": "Left cingulate gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 11.9925
+  },
+  "left-cuneus": {
+    "bp": "BP58184",
+    "fileId": "MM243",
+    "fma": "FMA72680",
+    "name": "Left cuneus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 5.7896
+  },
+  "left-deep-middle-cerebral-vein": {
+    "bp": "BP44823",
+    "fileId": "FJ4988M",
+    "fma": "FMA51310",
+    "laterality_note": "Gespiegelt aus 'Right deep middle cerebral vein' (FMA51311) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left deep middle cerebral vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0173
+  },
+  "left-diagonal-band": {
+    "bp": "BP58354",
+    "fileId": "MM156",
+    "fma": "FMA72956",
+    "name": "Left diagonal band",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0547
+  },
+  "left-distal-medial-striate-artery": {
+    "bp": "BP49065",
+    "fileId": "FJ4712M",
+    "fma": "FMA50342",
+    "laterality_note": "Gespiegelt aus 'Right distal medial striate artery' (FMA50341) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left distal medial striate artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0041
+  },
+  "left-dorsomedial-nucleus-of-hypothalamus": {
+    "bp": "BP58182",
+    "fileId": "FJ7509",
+    "fma": "FMA73340",
+    "name": "Left dorsomedial nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0093
+  },
+  "left-entorhinal-area": {
+    "bp": "BP58108",
+    "fileId": "MM264",
+    "fma": "FMA72741",
+    "name": "Left entorhinal area",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.6624
+  },
+  "left-external-nasal-nerve": {
+    "bp": "BP49110",
+    "fileId": "FJ3937",
+    "fma": "FMA52690",
+    "name": "Left external nasal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0029
+  },
+  "left-fasciolar-gyrus": {
+    "bp": "BP58055",
+    "fileId": "MM175",
+    "fma": "FMA72712",
+    "name": "Left fasciolar gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0206
+  },
+  "left-fasciolar-gyrus-v2": {
+    "bp": "BP58055",
+    "fileId": "MM194",
+    "fma": "FMA72712",
+    "name": "Left fasciolar gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0496
+  },
+  "left-first-posterior-central-gyrus": {
+    "bp": "BP58307",
+    "fileId": "MM232",
+    "fma": "FMA72721",
+    "name": "Left first posterior central gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.2134
+  },
+  "left-first-short-gyrus-of-insula": {
+    "bp": "BP58308",
+    "fileId": "MM236",
+    "fma": "FMA72725",
+    "name": "Left first short gyrus of insula",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.7613
+  },
+  "left-fornix-of-forebrain": {
+    "bp": "BP46396",
+    "fileId": "FJ7498",
+    "fma": "FMA72925",
+    "name": "Left fornix of forebrain",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.1789
+  },
+  "left-frontal-nerve": {
+    "bp": "BP50655",
+    "fileId": "FJ3910",
+    "fma": "FMA52640",
+    "name": "Left frontal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0869
+  },
+  "left-frontal-nerve-v2": {
+    "bp": "BP50655",
+    "fileId": "FJ1290",
+    "fma": "FMA52640",
+    "name": "Left frontal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0404
+  },
+  "left-fusiform-gyrus": {
+    "bp": "BP58320",
+    "fileId": "MM253",
+    "fma": "FMA72690",
+    "name": "Left fusiform gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 10.4324
+  },
+  "left-globus-pallidus": {
+    "bp": "BP58037",
+    "fileId": "FJ3814",
+    "fma": "FMA72831",
+    "name": "Left globus pallidus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.5288
+  },
+  "left-great-cerebral-vein": {
+    "bp": "BP49115",
+    "fileId": "FJ4654M",
+    "fma": "FMA50995",
+    "laterality_note": "Gespiegelt aus 'Right great cerebral vein' (FMA50994) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left great cerebral vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2419
+  },
+  "left-greater-palatine-nerve": {
+    "bp": "BP50698",
+    "fileId": "FJ3940",
+    "fma": "FMA52804",
+    "name": "Left greater palatine nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0058
+  },
+  "left-hippocampus-proper": {
+    "bp": "BP58046",
+    "fileId": "MM164",
+    "fma": "FMA72714",
+    "name": "Left hippocampus proper",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6859
+  },
+  "left-induseum-griseum": {
+    "bp": "BP58349",
+    "fileId": "MM153",
+    "fma": "FMA72743",
+    "name": "Induseum griseum",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6973
+  },
+  "left-inferior-choroid-vein": {
+    "bp": "BP44826",
+    "fileId": "FJ5093M",
+    "fma": "FMA51002",
+    "laterality_note": "Gespiegelt aus 'Right inferior choroid vein' (FMA51001) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left inferior choroid vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0335
+  },
+  "left-inferior-colliculus": {
+    "bp": "BP58263",
+    "fileId": "FJ1762",
+    "fma": "FMA73435",
+    "name": "Left inferior colliculus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1951
+  },
+  "left-inferior-frontal-gyrus": {
+    "bp": "BP58201",
+    "fileId": "FJ3801",
+    "fma": "FMA72658",
+    "name": "Left inferior frontal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 22.3007
+  },
+  "left-inferior-petrosal-sinus": {
+    "bp": "BP50414",
+    "fileId": "FJ5098M",
+    "fma": "FMA51292",
+    "laterality_note": "Gespiegelt aus 'Right inferior petrosal sinus' (FMA51291) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left inferior petrosal sinus",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1314
+  },
+  "left-inferior-pulvinar-nucleus": {
+    "bp": "BP58070",
+    "fileId": "FJ7544",
+    "fma": "FMA73032",
+    "name": "Left inferior pulvinar nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0766
+  },
+  "left-inferior-temporal-gyrus": {
+    "bp": "BP58157",
+    "fileId": "MM268",
+    "fma": "FMA72688",
+    "name": "Left inferior temporal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 16.5158
+  },
+  "left-infratrochlear-nerve": {
+    "bp": "BP49747",
+    "fileId": "FJ3911",
+    "fma": "FMA52699",
+    "name": "Left infratrochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0132
+  },
+  "left-infratrochlear-nerve-v2": {
+    "bp": "BP49747",
+    "fileId": "FJ1296",
+    "fma": "FMA52699",
+    "name": "Left infratrochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0032
+  },
+  "left-insula": {
+    "bp": "BP50076",
+    "fileId": "FJ1748",
+    "fma": "FMA72978",
+    "name": "Left insula",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 11.2457
+  },
+  "left-intermediate-short-gyrus-of-insula": {
+    "bp": "BP58306",
+    "fileId": "MM237",
+    "fma": "FMA72730",
+    "name": "Left intermediate short gyrus of insula",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.1085
+  },
+  "left-internal-capsule": {
+    "bp": "BP58109",
+    "fileId": "FJ3807",
+    "fma": "FMA72907",
+    "name": "Left internal capsule",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 8.241
+  },
+  "left-lacrimal-nerve": {
+    "bp": "BP50462",
+    "fileId": "FJ3912",
+    "fma": "FMA52630",
+    "name": "Left lacrimal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0355
+  },
+  "left-lacrimal-nerve-v2": {
+    "bp": "BP50462",
+    "fileId": "FJ1300",
+    "fma": "FMA52630",
+    "name": "Left lacrimal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.039
+  },
+  "left-lateral-geniculate-body": {
+    "bp": "BP58087",
+    "fileId": "FJ7539",
+    "fma": "FMA73304",
+    "name": "Left lateral geniculate body",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2174
+  },
+  "left-lateral-hypothalamic-nucleus": {
+    "bp": "BP49418",
+    "fileId": "FJ7491",
+    "fma": "FMA73360",
+    "name": "Left lateral hypothalamic nucleus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1274
+  },
+  "left-lateral-longitudinal-stria": {
+    "bp": "BP58074",
+    "fileId": "MM176",
+    "fma": "FMA72942",
+    "name": "Left lateral longitudinal stria",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1973
+  },
+  "left-lateral-occipital-gyrus": {
+    "bp": "BP58200",
+    "fileId": "MM251",
+    "fma": "FMA72678",
+    "name": "Left lateral occipital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 15.2956
+  },
+  "left-lateral-olfactory-stria": {
+    "bp": "BP58348",
+    "fileId": "MM229",
+    "fma": "FMA72936",
+    "name": "Left lateral olfactory stria",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0502
+  },
+  "left-lateral-orbital-gyrus": {
+    "bp": "BP58137",
+    "fileId": "FJ7466",
+    "fma": "FMA72757",
+    "name": "Left lateral orbital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 4.4525
+  },
+  "left-lateral-preoptic-nucleus": {
+    "bp": "BP58336",
+    "fileId": "FJ7510",
+    "fma": "FMA73328",
+    "name": "Left lateral preoptic nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0088
+  },
+  "left-lateral-pterygoid-nerve": {
+    "bp": "BP49891",
+    "fileId": "FJ3961",
+    "fma": "FMA53110",
+    "name": "Left lateral pterygoid nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0058
+  },
+  "left-lateral-pulvinar-nucleus": {
+    "bp": "BP58062",
+    "fileId": "FJ7550",
+    "fma": "FMA73027",
+    "name": "Left lateral pulvinar nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.7015
+  },
+  "left-lateral-ventricle": {
+    "bp": "BP58236",
+    "fileId": "MM205",
+    "fma": "FMA78450",
+    "name": "Left lateral ventricle",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 12.7003
+  },
+  "left-lesser-occipital-nerve": {
+    "bp": "BP50015",
+    "fileId": "FJ4221",
+    "fma": "FMA65389",
+    "name": "Left lesser occipital nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1398
+  },
+  "left-lingual-gyrus": {
+    "bp": "BP58173",
+    "fileId": "MM252",
+    "fma": "FMA72682",
+    "name": "Left lingual gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 7.8719
+  },
+  "left-mammillary-body": {
+    "bp": "BP58370",
+    "fileId": "FJ3822",
+    "fma": "FMA273254",
+    "name": "Mammillary body",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0474
+  },
+  "left-mammillothalamic-tract-of-hypothalamus": {
+    "bp": "BP49674",
+    "fileId": "FJ7486",
+    "fma": "FMA73390",
+    "name": "Left mammillothalamic tract of hypothalamus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0119
+  },
+  "left-mandibular-nerve": {
+    "bp": "BP50818",
+    "fileId": "FJ3951",
+    "fma": "FMA52998",
+    "name": "Left mandibular nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0548
+  },
+  "left-masseteric-nerve": {
+    "bp": "BP50476",
+    "fileId": "FJ3953",
+    "fma": "FMA53105",
+    "name": "Left masseteric nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0198
+  },
+  "left-medial-geniculate-body": {
+    "bp": "BP58145",
+    "fileId": "FJ7543",
+    "fma": "FMA73310",
+    "name": "Left medial geniculate body",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.124
+  },
+  "left-medial-longitudinal-stria": {
+    "bp": "BP58078",
+    "fileId": "MM177",
+    "fma": "FMA72944",
+    "name": "Left medial longitudinal stria",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2205
+  },
+  "left-medial-orbital-gyrus": {
+    "bp": "BP58124",
+    "fileId": "MM202",
+    "fma": "FMA72759",
+    "name": "Left medial orbital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.5993
+  },
+  "left-medial-orbital-gyrus-v2": {
+    "bp": "BP58124",
+    "fileId": "MM227",
+    "fma": "FMA72759",
+    "name": "Left medial orbital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.4321
+  },
+  "left-medial-preoptic-nucleus": {
+    "bp": "BP58122",
+    "fileId": "FJ7511",
+    "fma": "FMA73326",
+    "name": "Left medial preoptic nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.02
+  },
+  "left-medial-pterygoid-nerve": {
+    "bp": "BP50563",
+    "fileId": "FJ3960",
+    "fma": "FMA53058",
+    "name": "Left medial pterygoid nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0082
+  },
+  "left-medial-pulvinar-nucleus": {
+    "bp": "BP58054",
+    "fileId": "FJ7551",
+    "fma": "FMA73030",
+    "name": "Left medial pulvinar nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.8824
+  },
+  "left-middle-frontal-gyrus": {
+    "bp": "BP58174",
+    "fileId": "FJ3839",
+    "fma": "FMA72656",
+    "name": "Left middle frontal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 21.2487
+  },
+  "left-middle-meningeal-nerve": {
+    "bp": "BP50273",
+    "fileId": "FJ3955",
+    "fma": "FMA52730",
+    "name": "Left middle meningeal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0054
+  },
+  "left-middle-superior-alveolar-nerve": {
+    "bp": "BP50513",
+    "fileId": "FJ3957",
+    "fma": "FMA52940",
+    "name": "Left middle superior alveolar nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0144
+  },
+  "left-middle-temporal-gyrus": {
+    "bp": "BP58186",
+    "fileId": "MM248",
+    "fma": "FMA72686",
+    "name": "Left middle temporal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 20.1657
+  },
+  "left-nasociliary-nerve": {
+    "bp": "BP49979",
+    "fileId": "FJ1310",
+    "fma": "FMA52670",
+    "name": "Left nasociliary nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0311
+  },
+  "left-nasociliary-nerve-v2": {
+    "bp": "BP49979",
+    "fileId": "FJ3913",
+    "fma": "FMA52670",
+    "name": "Left nasociliary nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0181
+  },
+  "left-nasopalatine-nerve": {
+    "bp": "BP50385",
+    "fileId": "FJ3959",
+    "fma": "FMA52799",
+    "name": "Left nasopalatine nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0089
+  },
+  "left-olfactory-nerve": {
+    "bp": "BP50873",
+    "fileId": "FJ3919",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0049
+  },
+  "left-olfactory-nerve-v2": {
+    "bp": "BP50873",
+    "fileId": "FJ3920",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0052
+  },
+  "left-olfactory-nerve-v3": {
+    "bp": "BP50873",
+    "fileId": "FJ3918",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 3,
+    "volume_cm3": 0.0054
+  },
+  "left-olfactory-nerve-v4": {
+    "bp": "BP50873",
+    "fileId": "FJ3917",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 4,
+    "volume_cm3": 0.0048
+  },
+  "left-olfactory-nerve-v5": {
+    "bp": "BP50873",
+    "fileId": "FJ3915",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 5,
+    "volume_cm3": 0.0059
+  },
+  "left-olfactory-nerve-v6": {
+    "bp": "BP50873",
+    "fileId": "FJ3916",
+    "fma": "FMA52593",
+    "name": "Left olfactory nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 6,
+    "volume_cm3": 0.0053
+  },
+  "left-olfactory-tract": {
+    "bp": "BP58334",
+    "fileId": "FJ7526",
+    "fma": "FMA223162",
+    "name": "Left olfactory tract",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0824
+  },
+  "left-ophthalmic-nerve": {
+    "bp": "BP50819",
+    "fileId": "FJ3921",
+    "fma": "FMA52623",
+    "name": "Left ophthalmic nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0923
+  },
+  "left-optic-nerve": {
+    "bp": "BP50890",
+    "fileId": "FJ7501M",
+    "fma": "FMA50878",
+    "name": "Left optic nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.4467
+  },
+  "left-optic-tract": {
+    "bp": "BP50940",
+    "fileId": "FJ7502M",
+    "fma": "FMA67936",
+    "name": "Left optic tract",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.587
+  },
+  "left-oral-pulvinar-nucleus": {
+    "bp": "BP58060",
+    "fileId": "FJ7546",
+    "fma": "FMA73022",
+    "name": "Left oral pulvinar nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6102
+  },
+  "left-oral-pulvinar-nucleus-v2": {
+    "bp": "BP58060",
+    "fileId": "FJ7548",
+    "fma": "FMA73022",
+    "name": "Left oral pulvinar nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.3053
+  },
+  "left-parafascicular-nucleus": {
+    "bp": "BP58131",
+    "fileId": "FJ7545",
+    "fma": "FMA73048",
+    "name": "Left parafascicular nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0657
+  },
+  "left-parahippocampal-gyrus": {
+    "bp": "BP49680",
+    "fileId": "FJ7476",
+    "fma": "FMA72706",
+    "name": "Left parahippocampal gyrus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 9.0577
+  },
+  "left-paratenial-nucleus": {
+    "bp": "BP58134",
+    "fileId": "FJ7547",
+    "fma": "FMA72989",
+    "name": "Left paratenial nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0165
+  },
+  "left-paraterminal-gyrus": {
+    "bp": "BP58085",
+    "fileId": "FJ7530",
+    "fma": "FMA72708",
+    "name": "Left paraterminal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0805
+  },
+  "left-paraventricular-nucleus-of-hypothalamus": {
+    "bp": "BP58223",
+    "fileId": "FJ7553",
+    "fma": "FMA73336",
+    "name": "Left paraventricular nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0933
+  },
+  "left-paraventricular-nucleus-of-hypothalamus-v2": {
+    "bp": "BP58223",
+    "fileId": "FJ7512",
+    "fma": "FMA73336",
+    "name": "Left paraventricular nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0089
+  },
+  "left-periamygdaloid-area": {
+    "bp": "BP58378",
+    "fileId": "MM165",
+    "fma": "FMA72735",
+    "name": "Periamygdaloid area",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1382
+  },
+  "left-pericallosal-artery": {
+    "bp": "BP49131",
+    "fileId": "FJ1699M",
+    "fma": "FMA50360",
+    "name": "Left pericallosal artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1267
+  },
+  "left-postcentral-gyrus": {
+    "bp": "BP58224",
+    "fileId": "FJ3849",
+    "fma": "FMA72666",
+    "name": "Left postcentral gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 25.181
+  },
+  "left-posterior-column-of-fornix": {
+    "bp": "BP58353",
+    "fileId": "MM168",
+    "fma": "FMA72933",
+    "name": "Left posterior column of fornix",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1042
+  },
+  "left-posterior-communicating-artery": {
+    "bp": "BP49556",
+    "fileId": "FJ1713M",
+    "fma": "FMA50086",
+    "name": "Left posterior communicating artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0237
+  },
+  "left-posterior-ethmoidal-nerve": {
+    "bp": "BP49500",
+    "fileId": "FJ3922",
+    "fma": "FMA52716",
+    "name": "Left posterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0019
+  },
+  "left-posterior-ethmoidal-nerve-v2": {
+    "bp": "BP49500",
+    "fileId": "FJ1315",
+    "fma": "FMA52716",
+    "name": "Left posterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0033
+  },
+  "left-posterior-inferior-cerebellar-artery": {
+    "bp": "BP50457",
+    "fileId": "FJ1711M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0224
+  },
+  "left-posterior-inferior-cerebellar-artery-v10": {
+    "bp": "BP50457",
+    "fileId": "FJ1709M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 10,
+    "volume_cm3": 0.0022
+  },
+  "left-posterior-inferior-cerebellar-artery-v11": {
+    "bp": "BP50457",
+    "fileId": "FJ1710M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 11,
+    "volume_cm3": 0.0015
+  },
+  "left-posterior-inferior-cerebellar-artery-v12": {
+    "bp": "BP50457",
+    "fileId": "FJ1708M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 12,
+    "volume_cm3": 0.0005
+  },
+  "left-posterior-inferior-cerebellar-artery-v13": {
+    "bp": "BP50457",
+    "fileId": "FJ1707M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 13,
+    "volume_cm3": 0.0013
+  },
+  "left-posterior-inferior-cerebellar-artery-v2": {
+    "bp": "BP50457",
+    "fileId": "FJ1715M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.056
+  },
+  "left-posterior-inferior-cerebellar-artery-v3": {
+    "bp": "BP50457",
+    "fileId": "FJ1701M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 3,
+    "volume_cm3": 0.0028
+  },
+  "left-posterior-inferior-cerebellar-artery-v4": {
+    "bp": "BP50457",
+    "fileId": "FJ1702M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 4,
+    "volume_cm3": 0.0035
+  },
+  "left-posterior-inferior-cerebellar-artery-v5": {
+    "bp": "BP50457",
+    "fileId": "FJ1703M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 5,
+    "volume_cm3": 0.0026
+  },
+  "left-posterior-inferior-cerebellar-artery-v6": {
+    "bp": "BP50457",
+    "fileId": "FJ1706M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 6,
+    "volume_cm3": 0.0108
+  },
+  "left-posterior-inferior-cerebellar-artery-v7": {
+    "bp": "BP50457",
+    "fileId": "FJ1705M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 7,
+    "volume_cm3": 0.011
+  },
+  "left-posterior-inferior-cerebellar-artery-v8": {
+    "bp": "BP50457",
+    "fileId": "FJ1700M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 8,
+    "volume_cm3": 0.0078
+  },
+  "left-posterior-inferior-cerebellar-artery-v9": {
+    "bp": "BP50457",
+    "fileId": "FJ1704M",
+    "fma": "FMA50520",
+    "name": "Left posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 9,
+    "volume_cm3": 0.0063
+  },
+  "left-posterior-medial-choroidal-artery": {
+    "bp": "BP49041",
+    "fileId": "FJ1727M",
+    "fma": "FMA50673",
+    "name": "Left posterior medial choroidal artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0179
+  },
+  "left-posterior-nucleus-of-hypothalamus": {
+    "bp": "BP58154",
+    "fileId": "FJ7513",
+    "fma": "FMA73354",
+    "name": "Left posterior nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0124
+  },
+  "left-posterior-orbital-gyrus": {
+    "bp": "BP58116",
+    "fileId": "MM230",
+    "fma": "FMA80188",
+    "name": "Left posterior orbital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.2135
+  },
+  "left-posterior-parahippocampal-gyrus": {
+    "bp": "BP58132",
+    "fileId": "MM263",
+    "fma": "FMA72739",
+    "name": "Left posterior parahippocampal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.8487
+  },
+  "left-posterior-superior-alveolar-nerve": {
+    "bp": "BP50618",
+    "fileId": "FJ3975",
+    "fma": "FMA52937",
+    "name": "Left posterior superior alveolar nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0192
+  },
+  "left-posterior-transverse-temporal-gyrus": {
+    "bp": "BP58217",
+    "fileId": "MM261",
+    "fma": "FMA72694",
+    "name": "Left posterior transverse temporal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.4417
+  },
+  "left-precentral-gyrus": {
+    "bp": "BP58221",
+    "fileId": "FJ3852",
+    "fma": "FMA72662",
+    "name": "Left precentral gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 23.6529
+  },
+  "left-precuneus": {
+    "bp": "BP58198",
+    "fileId": "MM246",
+    "fma": "FMA72674",
+    "name": "Left precuneus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 14.6546
+  },
+  "left-presubiculum": {
+    "bp": "BP58143",
+    "fileId": "MM270",
+    "fma": "FMA72737",
+    "name": "Left presubiculum",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1741
+  },
+  "left-putamen": {
+    "bp": "BP58036",
+    "fileId": "FJ3829",
+    "fma": "FMA72829",
+    "name": "Left putamen",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 5.9374
+  },
+  "left-red-nucleus": {
+    "bp": "BP58255",
+    "fileId": "FJ7480M",
+    "fma": "FMA73492",
+    "name": "Left red nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2215
+  },
+  "left-second-posterior-central-gyrus": {
+    "bp": "BP58309",
+    "fileId": "MM233",
+    "fma": "FMA72723",
+    "name": "Left second posterior central gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.6772
+  },
+  "left-second-short-gyrus-of-insula": {
+    "bp": "BP58304",
+    "fileId": "MM235",
+    "fma": "FMA72728",
+    "name": "Left second short gyrus of insula",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.7799
+  },
+  "left-sigmoid-sinus": {
+    "bp": "BP50679",
+    "fileId": "FJ5005M",
+    "fma": "FMA51294",
+    "laterality_note": "Gespiegelt aus 'Right sigmoid sinus' (FMA51293) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left sigmoid sinus",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.9517
+  },
+  "left-straight-gyrus": {
+    "bp": "BP58105",
+    "fileId": "FJ7528",
+    "fma": "FMA72660",
+    "name": "Left straight gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 3.0616
+  },
+  "left-stria-medullaris-of-thalamus": {
+    "bp": "BP58344",
+    "fileId": "FJ3830",
+    "fma": "FMA73414",
+    "name": "Left stria medullaris of thalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1026
+  },
+  "left-stria-terminalis": {
+    "bp": "BP58333",
+    "fileId": "FJ3831",
+    "fma": "FMA72940",
+    "name": "Left stria terminalis",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.5202
+  },
+  "left-subcallosal-area": {
+    "bp": "BP58362",
+    "fileId": "FJ7529",
+    "fma": "FMA72849",
+    "name": "Left subcallosal area",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2254
+  },
+  "left-subiculum": {
+    "bp": "BP58326",
+    "fileId": "MM178",
+    "fma": "FMA272419",
+    "name": "Subiculum",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.0869
+  },
+  "left-substantia-nigra": {
+    "bp": "BP58260",
+    "fileId": "FJ7481M",
+    "fma": "FMA73540",
+    "name": "Left substantia nigra",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.4569
+  },
+  "left-subthalamic-nucleus": {
+    "bp": "BP58327",
+    "fileId": "FJ7482M",
+    "fma": "FMA73368",
+    "name": "Left subthalamic nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1976
+  },
+  "left-superior-cerebellar-artery": {
+    "bp": "BP49634",
+    "fileId": "FJ1726M",
+    "fma": "FMA50575",
+    "name": "Left superior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.092
+  },
+  "left-superior-choroid-vein": {
+    "bp": "BP44765",
+    "fileId": "FJ5200M",
+    "fma": "FMA51331",
+    "laterality_note": "Gespiegelt aus 'Right superior choroid vein' (FMA51330) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left superior choroid vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0303
+  },
+  "left-superior-colliculus": {
+    "bp": "BP58257",
+    "fileId": "FJ3832",
+    "fma": "FMA73423",
+    "name": "Left superior colliculus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1342
+  },
+  "left-superior-frontal-gyrus": {
+    "bp": "BP58158",
+    "fileId": "FJ3879",
+    "fma": "FMA72654",
+    "name": "Left superior frontal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 44.4489
+  },
+  "left-superior-hypophyseal-artery": {
+    "bp": "BP49837",
+    "fileId": "FJ5201M",
+    "fma": "FMA49851",
+    "laterality_note": "Gespiegelt aus 'Right superior hypophyseal artery' (FMA49850) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left superior hypophyseal artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0054
+  },
+  "left-superior-occipital-gyrus": {
+    "bp": "BP58222",
+    "fileId": "MM245",
+    "fma": "FMA72676",
+    "name": "Left superior occipital gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 10.9422
+  },
+  "left-superior-parietal-lobule": {
+    "bp": "BP58171",
+    "fileId": "MM247",
+    "fma": "FMA72672",
+    "name": "Left superior parietal lobule",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 18.0383
+  },
+  "left-superior-petrosal-sinus": {
+    "bp": "BP49573",
+    "fileId": "FJ5207M",
+    "fma": "FMA51290",
+    "laterality_note": "Gespiegelt aus 'Right superior petrosal sinus' (FMA51289) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left superior petrosal sinus",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.4839
+  },
+  "left-superior-temporal-gyrus": {
+    "bp": "BP58180",
+    "fileId": "MM267",
+    "fma": "FMA72684",
+    "name": "Left superior temporal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 16.2102
+  },
+  "left-superior-thalamostriate-vein": {
+    "bp": "BP44761",
+    "fileId": "FJ5219M",
+    "fma": "FMA51000",
+    "laterality_note": "Gespiegelt aus 'Right superior thalamostriate vein' (FMA50999) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left superior thalamostriate vein",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0158
+  },
+  "left-supra-orbital-nerve": {
+    "bp": "BP49919",
+    "fileId": "FJ3924",
+    "fma": "FMA52657",
+    "name": "Left supra-orbital nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0242
+  },
+  "left-suprachiasmatic-nucleus": {
+    "bp": "BP58205",
+    "fileId": "FJ7514M",
+    "fma": "FMA73330",
+    "name": "Left suprachiasmatic nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0031
+  },
+  "left-supramarginal-gyrus": {
+    "bp": "BP58138",
+    "fileId": "MM250",
+    "fma": "FMA72668",
+    "name": "Left supramarginal gyrus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 16.2137
+  },
+  "left-supraoptic-nucleus": {
+    "bp": "BP58330",
+    "fileId": "FJ7515M",
+    "fma": "FMA73332",
+    "name": "Left supraoptic nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0133
+  },
+  "left-supratrochlear-nerve": {
+    "bp": "BP50094",
+    "fileId": "FJ1326",
+    "fma": "FMA52644",
+    "name": "Left supratrochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0532
+  },
+  "left-supratrochlear-nerve-v2": {
+    "bp": "BP50094",
+    "fileId": "FJ3925",
+    "fma": "FMA52644",
+    "name": "Left supratrochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.0504
+  },
+  "left-thalamic-reticular-nucleus": {
+    "bp": "BP58150",
+    "fileId": "FJ7554",
+    "fma": "FMA73324",
+    "name": "Left thalamic reticular nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.9372
+  },
+  "left-thalamogeniculate-artery": {
+    "bp": "BP48950",
+    "fileId": "FJ1675M",
+    "fma": "FMA50671",
+    "name": "Left thalamogeniculate artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0807
+  },
+  "left-thalamoperforating-artery": {
+    "bp": "BP49047",
+    "fileId": "FJ1720M",
+    "fma": "FMA50665",
+    "name": "Left thalamoperforating artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0099
+  },
+  "left-thalamotuberal-artery": {
+    "bp": "BP49169",
+    "fileId": "FJ5220M",
+    "fma": "FMA50426",
+    "laterality_note": "Gespiegelt aus 'Right thalamotuberal artery' (FMA50425) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left thalamotuberal artery",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0016
+  },
+  "left-thalamus": {
+    "bp": "BP50033",
+    "fileId": "FJ1782",
+    "fma": "FMA258716",
+    "name": "Left thalamus",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 8.7541
+  },
+  "left-transverse-sinus": {
+    "bp": "BP49968",
+    "fileId": "FJ5222M",
+    "fma": "FMA50765",
+    "laterality_note": "Gespiegelt aus 'Right transverse sinus' (FMA50764) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "left transverse sinus",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 2.04
+  },
+  "left-trochlear-nerve": {
+    "bp": "BP50891",
+    "fileId": "FJ3981",
+    "fma": "FMA50882",
+    "name": "Left trochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1424
+  },
+  "left-uncus": {
+    "bp": "BP58314",
+    "fileId": "MM172",
+    "fma": "FMA270684",
+    "name": "Uncus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0642
+  },
+  "left-uncus-v2": {
+    "bp": "BP58314",
+    "fileId": "MM173",
+    "fma": "FMA270684",
+    "name": "Uncus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 2,
+    "volume_cm3": 0.2573
+  },
+  "left-ventral-anterior-nucleus": {
+    "bp": "BP58106",
+    "fileId": "FJ7556",
+    "fma": "FMA73050",
+    "name": "Left ventral anterior nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.3478
+  },
+  "left-ventral-posterolateral-nucleus": {
+    "bp": "BP58056",
+    "fileId": "FJ7560",
+    "fma": "FMA73076",
+    "name": "Left ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.5728
+  },
+  "left-ventral-posteromedial-nucleus": {
+    "bp": "BP58057",
+    "fileId": "FJ7562",
+    "fma": "FMA73082",
+    "name": "Left ventral posteromedial nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0399
+  },
+  "left-ventromedial-nucleus-of-hypothalamus": {
+    "bp": "BP58175",
+    "fileId": "FJ7516",
+    "fma": "FMA73342",
+    "name": "Left ventromedial nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0052
+  },
+  "left-vestibulocochlear-nerve": {
+    "bp": "BP50834",
+    "fileId": "FJ3932",
+    "fma": "FMA50891",
+    "name": "Left vestibulocochlear nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0409
+  },
+  "left-zygomatic-nerve": {
+    "bp": "BP50302",
+    "fileId": "FJ3983",
+    "fma": "FMA52969",
+    "name": "Left zygomatic nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0516
+  },
+  "magnocellular-part-of-left-medial-dorsal-nucleus": {
+    "bp": "BP58140",
+    "fileId": "FJ7542",
+    "fma": "FMA73003",
+    "name": "Magnocellular part of left medial dorsal nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2255
+  },
+  "magnocellular-part-of-right-medial-dorsal-nucleus": {
+    "bp": "BP58139",
+    "fileId": "FJ7542M",
+    "fma": "FMA73002",
+    "name": "Magnocellular part of right medial dorsal nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2234
+  },
+  "medial-branch-of-left-pontine-artery": {
+    "bp": "BP49279",
+    "fileId": "FJ1689M",
+    "fma": "FMA50567",
+    "name": "Medial branch of left pontine artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0081
+  },
+  "medial-branch-of-left-superior-cerebellar-artery": {
+    "bp": "BP49189",
+    "fileId": "FJ1688M",
+    "fma": "FMA50582",
+    "name": "Medial branch of left superior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0527
+  },
+  "medial-branch-of-right-pontine-artery": {
+    "bp": "BP49151",
+    "fileId": "FJ1689",
+    "fma": "FMA50566",
+    "name": "Medial branch of right pontine artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0082
+  },
+  "medial-branch-of-right-superior-cerebellar-artery": {
+    "bp": "BP49239",
+    "fileId": "FJ1688",
+    "fma": "FMA50581",
+    "name": "Medial branch of right superior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0526
+  },
+  "medial-olfactory-stria": {
+    "bp": "BP58361",
+    "fileId": "MM155M",
+    "fma": "FMA77627",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "MM155M",
+      "MM155"
+    ],
+    "name": "Medial olfactory stria",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0686
+  },
+  "medial-vein-of-left-lateral-ventricle": {
+    "bp": "BP44737",
+    "fileId": "FJ4998M",
+    "fma": "FMA51019",
+    "laterality_note": "Gespiegelt aus 'Medial vein of right lateral ventricle' (FMA51018) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Medial vein of left lateral ventricle",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.016
+  },
+  "medial-vein-of-right-lateral-ventricle": {
+    "bp": "BP44737",
+    "fileId": "FJ4998",
+    "fma": "FMA51018",
+    "name": "Medial vein of right lateral ventricle",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.016
+  },
+  "median-callosal-artery": {
+    "bp": "BP49252",
+    "fileId": "FJ4977",
+    "fma": "FMA50175",
+    "name": "Median callosal artery",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0013
+  },
+  "medulla-oblongata": {
+    "bp": "BP58279",
+    "fileId": "FJ3877",
+    "fma": "FMA62004",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3877",
+      "FJ3823"
+    ],
+    "name": "Medulla oblongata",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 7.3963
+  },
+  "midbrain": {
+    "bp": "BP58281",
+    "fileId": "FJ3824",
+    "fma": "FMA61993",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3865",
+      "FJ3824"
+    ],
+    "name": "Midbrain",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 8.3219
+  },
+  "middle-temporal-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP49254",
+    "fileId": "FJ1693M",
+    "fma": "FMA50468",
+    "name": "Middle temporal branch of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1028
+  },
+  "middle-temporal-branch-of-right-middle-cerebral-artery": {
+    "bp": "BP49051",
+    "fileId": "FJ1693",
+    "fma": "FMA50467",
+    "name": "Middle temporal branch of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1028
+  },
+  "nerve-to-left-ciliary-ganglion": {
+    "bp": "BP50534",
+    "fileId": "FJ3965",
+    "fma": "FMA52580",
+    "name": "Nerve to left ciliary ganglion",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "nerve-to-left-tensor-veli-palatini": {
+    "bp": "BP50461",
+    "fileId": "FJ3963",
+    "fma": "FMA53077",
+    "name": "Nerve to left tensor veli palatini",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.003
+  },
+  "nerve-to-right-ciliary-ganglion": {
+    "bp": "BP50370",
+    "fileId": "FJ4030",
+    "fma": "FMA52579",
+    "name": "Nerve to right ciliary ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "nerve-to-right-tensor-veli-palatini": {
+    "bp": "BP50560",
+    "fileId": "FJ3997",
+    "fma": "FMA53076",
+    "name": "Nerve to right tensor veli palatini",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0031
+  },
+  "occipital-branch-of-left-posterior-auricular-nerve": {
+    "bp": "BP50384",
+    "fileId": "FJ3964",
+    "fma": "FMA53287",
+    "name": "Occipital branch of left posterior auricular nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0666
+  },
+  "occipital-branch-of-right-posterior-auricular-nerve": {
+    "bp": "BP50306",
+    "fileId": "FJ3998",
+    "fma": "FMA53286",
+    "name": "Occipital branch of right posterior auricular nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0665
+  },
+  "occipital-sinus": {
+    "bp": "BP45141",
+    "fileId": "FJ5140",
+    "fma": "FMA50781",
+    "laterality_note": "Unpaarige, anatomisch symmetrische Mittellinienstruktur; BodyParts3D liefert sie nur einseitig/stark schief. Schwache Seite durch Reflexion an der Mittelsagittalebene (X_mid=-0.66 mm) ergaenzt — synthetische Gegenseite, reale Anatomie kann abweichen.",
+    "name": "Occipital sinus",
+    "origin": "archive",
+    "reconstructed": true,
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 1.3961
+  },
+  "optic-chiasm": {
+    "bp": "BP48015",
+    "fileId": "FJ7505",
+    "fma": "FMA62045",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 4 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ7505",
+      "FJ7505M"
+    ],
+    "name": "Optic chiasm",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.6046
+  },
+  "optic-part-of-left-retina": {
+    "bp": "BP48811",
+    "fileId": "FJ1316",
+    "fma": "FMA58608",
+    "name": "Optic part of left retina",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.7745
+  },
+  "optic-part-of-right-retina": {
+    "bp": "BP48840",
+    "fileId": "FJ1367",
+    "fma": "FMA58607",
+    "name": "Optic part of right retina",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.7742
+  },
+  "oral-part-of-left-ventral-posterolateral-nucleus": {
+    "bp": "BP58045",
+    "fileId": "FJ7558",
+    "fma": "FMA73078",
+    "name": "Oral part of left ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1453
+  },
+  "oral-part-of-right-ventral-posterolateral-nucleus": {
+    "bp": "BP58049",
+    "fileId": "FJ7558M",
+    "fma": "FMA73077",
+    "name": "Oral part of right ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1436
+  },
+  "paracentral-branch-of-left-callosomarginal-artery": {
+    "bp": "BP49025",
+    "fileId": "FJ1696M",
+    "fma": "FMA50358",
+    "name": "Paracentral branch of left callosomarginal artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0436
+  },
+  "paracentral-branch-of-right-callosomarginal-artery": {
+    "bp": "BP48813",
+    "fileId": "FJ1696",
+    "fma": "FMA50357",
+    "name": "Paracentral branch of right callosomarginal artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0436
+  },
+  "paralaminar-part-of-left-medial-dorsal-nucleus": {
+    "bp": "BP58147",
+    "fileId": "FJ7541",
+    "fma": "FMA73001",
+    "name": "Paralaminar part of left medial dorsal nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0994
+  },
+  "paralaminar-part-of-right-medial-dorsal-nucleus": {
+    "bp": "BP58119",
+    "fileId": "FJ7541M",
+    "fma": "FMA73000",
+    "name": "Paralaminar part of right medial dorsal nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0984
+  },
+  "parvicellular-part-of-left-medial-dorsal-nucleus": {
+    "bp": "BP58104",
+    "fileId": "FJ7540",
+    "fma": "FMA73008",
+    "name": "Parvicellular part of left medial dorsal nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 1.0795
+  },
+  "parvicellular-part-of-left-ventral-posteromedial-nucleus": {
+    "bp": "BP58040",
+    "fileId": "FJ7561",
+    "fma": "FMA73085",
+    "name": "Parvicellular part of left ventral posteromedial nucleus",
+    "origin": "primary",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0243
+  },
+  "parvicellular-part-of-right-medial-dorsal-nucleus": {
+    "bp": "BP58115",
+    "fileId": "FJ7540M",
+    "fma": "FMA73006",
+    "name": "Parvicellular part of right medial dorsal nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.0739
+  },
+  "parvicellular-part-of-right-ventral-posteromedial-nucleus": {
+    "bp": "BP58048",
+    "fileId": "FJ7561M",
+    "fma": "FMA73083",
+    "name": "Parvicellular part of right ventral posteromedial nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0241
+  },
+  "periventricular-nucleus": {
+    "bp": "BP47212",
+    "fileId": "FJ7499",
+    "fma": "FMA84354",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ7499M",
+      "FJ7499"
+    ],
+    "name": "Periventricular nucleus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0321
+  },
+  "pharyngeal-nerve": {
+    "bp": "BP46645",
+    "fileId": "FJ3972",
+    "fma": "FMA77524",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ4000",
+      "FJ3972"
+    ],
+    "name": "Pharyngeal nerve",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0254
+  },
+  "pineal-body": {
+    "bp": "BP58240",
+    "fileId": "FJ3847",
+    "fma": "FMA62033",
+    "name": "Pineal body",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.2081
+  },
+  "pituitary-gland": {
+    "bp": "BP51161",
+    "fileId": "FJ1796",
+    "fma": "FMA13889",
+    "name": "Pituitary gland",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.6213
+  },
+  "pituitary-gland-v2": {
+    "bp": "BP51161",
+    "fileId": "FJ3848",
+    "fma": "FMA13889",
+    "name": "Pituitary gland",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 2,
+    "volume_cm3": 0.621
+  },
+  "pons": {
+    "bp": "BP58274",
+    "fileId": "FJ3869",
+    "fma": "FMA67943",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3869",
+      "FJ3828"
+    ],
+    "name": "Pons",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 22.0396
+  },
+  "portal-vein-of-hypophysis": {
+    "bp": "BP45428",
+    "fileId": "FJ5059",
+    "fma": "FMA50798",
+    "name": "Portal vein of hypophysis",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0026
+  },
+  "portal-vein-of-hypophysis-v2": {
+    "bp": "BP45428",
+    "fileId": "FJ5158",
+    "fma": "FMA50798",
+    "name": "Portal vein of hypophysis",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 2,
+    "volume_cm3": 0.0004
+  },
+  "postcommunicating-part-of-left-posterior-cerebral-artery": {
+    "bp": "BP49201",
+    "fileId": "FJ1714M",
+    "fma": "FMA50642",
+    "name": "Postcommunicating part of left posterior cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1033
+  },
+  "postcommunicating-part-of-right-posterior-cerebral-artery": {
+    "bp": "BP49318",
+    "fileId": "FJ5161",
+    "fma": "FMA50641",
+    "name": "Postcommunicating part of right posterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1094
+  },
+  "postcommunicating-part-of-right-posterior-cerebral-artery-v2": {
+    "bp": "BP49318",
+    "fileId": "FJ1714",
+    "fma": "FMA50641",
+    "name": "Postcommunicating part of right posterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.1034
+  },
+  "postcommunicating-part-of-right-posterior-cerebral-artery-v3": {
+    "bp": "BP49318",
+    "fileId": "FJ5069",
+    "fma": "FMA50641",
+    "name": "Postcommunicating part of right posterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0066
+  },
+  "posterior-commissure": {
+    "bp": "BP58247",
+    "fileId": "FJ3851",
+    "fma": "FMA62072",
+    "name": "Posterior commissure",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0894
+  },
+  "posterior-intercavernous-sinus": {
+    "bp": "BP44886",
+    "fileId": "FJ4979",
+    "fma": "FMA50775",
+    "name": "Posterior intercavernous sinus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0242
+  },
+  "posterior-part-of-left-superior-temporal-gyrus": {
+    "bp": "BP49307",
+    "fileId": "FJ1839",
+    "fma": "FMA72805",
+    "name": "Posterior part of left superior temporal gyrus",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 16.1835
+  },
+  "posterior-part-of-right-superior-temporal-gyrus": {
+    "bp": "BP49098",
+    "fileId": "FJ1840",
+    "fma": "FMA72804",
+    "name": "Posterior part of right superior temporal gyrus",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 16.1473
+  },
+  "posterior-temporal-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP49101",
+    "fileId": "FJ1717M",
+    "fma": "FMA50471",
+    "name": "Posterior temporal branch of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.101
+  },
+  "posterior-temporal-branch-of-right-middle-cerebral-artery": {
+    "bp": "BP48854",
+    "fileId": "FJ1717",
+    "fma": "FMA50470",
+    "name": "Posterior temporal branch of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1009
+  },
+  "posterior-vein-of-left-septum-pellucidum": {
+    "bp": "BP44738",
+    "fileId": "FJ5174M",
+    "fma": "FMA51021",
+    "laterality_note": "Gespiegelt aus 'Posterior vein of right septum pellucidum' (FMA51020) — synthetisches Mesh der rechten Seite; reale linksseitige Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Posterior vein of left septum pellucidum",
+    "origin": "mirror",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0017
+  },
+  "posterior-vein-of-right-septum-pellucidum": {
+    "bp": "BP44738",
+    "fileId": "FJ5174",
+    "fma": "FMA51020",
+    "name": "Posterior vein of right septum pellucidum",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0017
+  },
+  "posterolateral-central-branch-of-right-posterior-cerebral-artery": {
+    "bp": "BP49036",
+    "fileId": "FJ5175",
+    "fma": "FMA50668",
+    "name": "Posterolateral central branch of right posterior cerebral artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0059
+  },
+  "posteromedial-branch-of-left-callosomarginal-artery": {
+    "bp": "BP48869",
+    "fileId": "FJ1722M",
+    "fma": "FMA50354",
+    "name": "Posteromedial branch of left callosomarginal artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.1087
+  },
+  "posteromedial-branch-of-right-callosomarginal-artery": {
+    "bp": "BP48758",
+    "fileId": "FJ1722",
+    "fma": "FMA50353",
+    "name": "Posteromedial branch of right callosomarginal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1087
+  },
+  "posteromedial-central-branch-of-left-posterior-cerebral-artery": {
+    "bp": "BP49039",
+    "fileId": "FJ1721M",
+    "fma": "FMA50661",
+    "name": "Posteromedial central branch of left posterior cerebral artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0035
+  },
+  "posteromedian-medullary-vein": {
+    "bp": "BP45112",
+    "fileId": "FJ4980",
+    "fma": "FMA51394",
+    "name": "Posteromedian medullary vein",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0142
+  },
+  "precentral-cerebellar-vein": {
+    "bp": "BP45424",
+    "fileId": "FJ5177",
+    "fma": "FMA51234",
+    "name": "Precentral cerebellar vein",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0056
+  },
+  "precommunicating-part-of-left-posterior-cerebral-artery": {
+    "bp": "BP49371",
+    "fileId": "FJ1723M",
+    "fma": "FMA50640",
+    "name": "Precommunicating part of left posterior cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0355
+  },
+  "precommunicating-part-of-right-posterior-cerebral-artery": {
+    "bp": "BP49261",
+    "fileId": "FJ1723",
+    "fma": "FMA50639",
+    "name": "Precommunicating part of right posterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0355
+  },
+  "precommunicating-part-of-right-posterior-cerebral-artery-v2": {
+    "bp": "BP49261",
+    "fileId": "FJ5178",
+    "fma": "FMA50639",
+    "name": "Precommunicating part of right posterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0342
+  },
+  "precuneal-branch-of-left-pericallosal-artery": {
+    "bp": "BP48859",
+    "fileId": "FJ1671M",
+    "fma": "FMA50362",
+    "name": "Precuneal branch of left pericallosal artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0258
+  },
+  "precuneal-branch-of-right-pericallosal-artery": {
+    "bp": "BP48806",
+    "fileId": "FJ1671",
+    "fma": "FMA50361",
+    "name": "Precuneal branch of right pericallosal artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0257
+  },
+  "right-abducens-nerve": {
+    "bp": "BP50877",
+    "fileId": "FJ3891",
+    "fma": "FMA50886",
+    "name": "Right abducens nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0216
+  },
+  "right-amygdala": {
+    "bp": "BP58075",
+    "fileId": "MM179M",
+    "fma": "FMA72832",
+    "name": "Right amygdala",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.2899
+  },
+  "right-angular-gyrus": {
+    "bp": "BP58135",
+    "fileId": "MM242M",
+    "fma": "FMA72669",
+    "name": "Right angular gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 15.5577
+  },
+  "right-anterior-accessory-gyrus": {
+    "bp": "BP58313",
+    "fileId": "MM240M",
+    "fma": "FMA72703",
+    "laterality_note": "Gespiegelt aus 'Left anterior accessory gyrus' (FMA72704) — synthetische rechte Seite; rechtes Gegenstueck in BodyParts3D nie modelliert, reale Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Right anterior accessory gyrus",
+    "origin": "mirror",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.5677
+  },
+  "right-anterior-accessory-gyrus-v2": {
+    "bp": "BP58313",
+    "fileId": "MM239M",
+    "fma": "FMA72703",
+    "laterality_note": "Gespiegelt aus 'Left anterior accessory gyrus' (FMA72704) — synthetische rechte Seite; rechtes Gegenstueck in BodyParts3D nie modelliert, reale Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Right anterior accessory gyrus",
+    "origin": "mirror",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.1939
+  },
+  "right-anterior-cerebral-artery": {
+    "bp": "BP49416",
+    "fileId": "FJ5021",
+    "fma": "FMA50029",
+    "name": "Right anterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0767
+  },
+  "right-anterior-cerebral-artery-v2": {
+    "bp": "BP49416",
+    "fileId": "FJ1654",
+    "fma": "FMA50029",
+    "name": "Right anterior cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.1387
+  },
+  "right-anterior-cerebral-vein": {
+    "bp": "BP44869",
+    "fileId": "FJ4680",
+    "fma": "FMA51307",
+    "name": "Right anterior cerebral vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0582
+  },
+  "right-anterior-column-of-fornix": {
+    "bp": "BP58350",
+    "fileId": "MM170M",
+    "fma": "FMA72926",
+    "name": "Right anterior column of fornix",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1055
+  },
+  "right-anterior-ethmoidal-nerve": {
+    "bp": "BP49400",
+    "fileId": "FJ4006",
+    "fma": "FMA52676",
+    "name": "Right anterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0134
+  },
+  "right-anterior-ethmoidal-nerve-v2": {
+    "bp": "BP49400",
+    "fileId": "FJ1333",
+    "fma": "FMA52676",
+    "name": "Right anterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0039
+  },
+  "right-anterior-inferior-cerebellar-artery": {
+    "bp": "BP45888",
+    "fileId": "FJ1656",
+    "fma": "FMA50545",
+    "name": "Anterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0713
+  },
+  "right-anterior-nucleus-of-hypothalamus": {
+    "bp": "BP58090",
+    "fileId": "FJ7508M",
+    "fma": "FMA73333",
+    "name": "Right anterior nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0108
+  },
+  "right-anterior-orbital-gyrus": {
+    "bp": "BP58144",
+    "fileId": "FJ7465M",
+    "fma": "FMA256198",
+    "name": "Right anterior orbital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.4277
+  },
+  "right-anterior-superior-alveolar-nerve": {
+    "bp": "BP50652",
+    "fileId": "FJ3892",
+    "fma": "FMA52941",
+    "name": "Right anterior superior alveolar nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.016
+  },
+  "right-anterior-transverse-temporal-gyrus": {
+    "bp": "BP58194",
+    "fileId": "MM259M",
+    "fma": "FMA72691",
+    "name": "Right anterior transverse temporal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.2792
+  },
+  "right-anterodorsal-nucleus": {
+    "bp": "BP58127",
+    "fileId": "FJ7533M",
+    "fma": "FMA72982",
+    "name": "Right anterodorsal nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0075
+  },
+  "right-anterolateral-medullary-vein": {
+    "bp": "BP44908",
+    "fileId": "FJ5033",
+    "fma": "FMA51637",
+    "name": "Right anterolateral medullary vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0395
+  },
+  "right-anterolateral-pontine-vein": {
+    "bp": "BP45052",
+    "fileId": "FJ5034",
+    "fma": "FMA51635",
+    "name": "Right anterolateral pontine vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0318
+  },
+  "right-anteromedial-nucleus": {
+    "bp": "BP58107",
+    "fileId": "FJ7534M",
+    "fma": "FMA72984",
+    "name": "Right anteromedial nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0788
+  },
+  "right-anteroventral-nucleus": {
+    "bp": "BP58080",
+    "fileId": "FJ7535M",
+    "fma": "FMA72986",
+    "name": "Right anteroventral nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.106
+  },
+  "right-arcuate-nucleus-of-hypothalamus": {
+    "bp": "BP58226",
+    "fileId": "FJ7507",
+    "fma": "FMA73337",
+    "name": "Right arcuate nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0029
+  },
+  "right-basal-vein": {
+    "bp": "BP44892",
+    "fileId": "FJ5046",
+    "fma": "FMA50991",
+    "name": "Right basal vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.5205
+  },
+  "right-buccal-nerve": {
+    "bp": "BP50663",
+    "fileId": "FJ3897",
+    "fma": "FMA53067",
+    "name": "Right buccal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0229
+  },
+  "right-callosomarginal-artery": {
+    "bp": "BP48945",
+    "fileId": "FJ1676",
+    "fma": "FMA50347",
+    "name": "Right callosomarginal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1936
+  },
+  "right-caudate-nucleus": {
+    "bp": "BP58038",
+    "fileId": "MM241M",
+    "fma": "FMA72826",
+    "name": "Right caudate nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 7.0528
+  },
+  "right-cavernous-sinus": {
+    "bp": "BP49372",
+    "fileId": "FJ5194",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.8262
+  },
+  "right-cavernous-sinus-v2": {
+    "bp": "BP49372",
+    "fileId": "FJ5064",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 1.328
+  },
+  "right-cavernous-sinus-v3": {
+    "bp": "BP49372",
+    "fileId": "FJ5010",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.038
+  },
+  "right-cavernous-sinus-v4": {
+    "bp": "BP49372",
+    "fileId": "FJ4992",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.0318
+  },
+  "right-cavernous-sinus-v5": {
+    "bp": "BP49372",
+    "fileId": "FJ5186",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 5,
+    "volume_cm3": 0.0392
+  },
+  "right-cavernous-sinus-v6": {
+    "bp": "BP49372",
+    "fileId": "FJ5195",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 6,
+    "volume_cm3": 0.05
+  },
+  "right-cavernous-sinus-v7": {
+    "bp": "BP49372",
+    "fileId": "FJ5196",
+    "fma": "FMA51402",
+    "laterality_note": "Gegenseite nicht im Datensatz — Sinus durae matris, normale Rechts-/Links-Asymmetrie (bewusst NICHT gespiegelt).",
+    "name": "Right cavernous sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 7,
+    "volume_cm3": 0.0184
+  },
+  "right-centromedian-nucleus": {
+    "bp": "BP58101",
+    "fileId": "FJ7536M",
+    "fma": "FMA73045",
+    "name": "Right centromedian nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2846
+  },
+  "right-cerebral-crus": {
+    "bp": "BP58261",
+    "fileId": "FJ3868",
+    "fma": "FMA242160",
+    "name": "Right cerebral crus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.2051
+  },
+  "right-choroid-plexus-of-cerebral-hemisphere": {
+    "bp": "BP48535",
+    "fileId": "FJ1803",
+    "fma": "FMA274027",
+    "name": "Choroid plexus of cerebral hemisphere",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.3398
+  },
+  "right-ciliary-ganglion": {
+    "bp": "BP46152",
+    "fileId": "FJ1339",
+    "fma": "FMA53549",
+    "name": "Right ciliary ganglion",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0109
+  },
+  "right-cingulate-gyrus": {
+    "bp": "BP58196",
+    "fileId": "MM193M",
+    "fma": "FMA72717",
+    "name": "Right cingulate gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 11.9346
+  },
+  "right-cuneus": {
+    "bp": "BP58202",
+    "fileId": "MM243M",
+    "fma": "FMA72679",
+    "name": "Right cuneus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 5.765
+  },
+  "right-deep-middle-cerebral-vein": {
+    "bp": "BP44823",
+    "fileId": "FJ4988",
+    "fma": "FMA51311",
+    "name": "Right deep middle cerebral vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0173
+  },
+  "right-diagonal-band": {
+    "bp": "BP58341",
+    "fileId": "MM156M",
+    "fma": "FMA72955",
+    "name": "Right diagonal band",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0537
+  },
+  "right-distal-medial-striate-artery": {
+    "bp": "BP49065",
+    "fileId": "FJ4712",
+    "fma": "FMA50341",
+    "name": "Right distal medial striate artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0041
+  },
+  "right-dorsomedial-nucleus-of-hypothalamus": {
+    "bp": "BP58148",
+    "fileId": "FJ7509M",
+    "fma": "FMA73339",
+    "name": "Right dorsomedial nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0091
+  },
+  "right-entorhinal-area": {
+    "bp": "BP58091",
+    "fileId": "MM264M",
+    "fma": "FMA72740",
+    "name": "Right entorhinal area",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.6316
+  },
+  "right-external-nasal-nerve": {
+    "bp": "BP49106",
+    "fileId": "FJ4026",
+    "fma": "FMA52689",
+    "name": "Right external nasal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0028
+  },
+  "right-fasciolar-gyrus": {
+    "bp": "BP58058",
+    "fileId": "MM175M",
+    "fma": "FMA72711",
+    "name": "Right fasciolar gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0205
+  },
+  "right-fasciolar-gyrus-v2": {
+    "bp": "BP58058",
+    "fileId": "MM194M",
+    "fma": "FMA72711",
+    "name": "Right fasciolar gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0477
+  },
+  "right-first-posterior-central-gyrus": {
+    "bp": "BP58305",
+    "fileId": "MM232M",
+    "fma": "FMA72720",
+    "name": "Right first posterior central gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.2043
+  },
+  "right-first-short-gyrus-of-insula": {
+    "bp": "BP58312",
+    "fileId": "MM236M",
+    "fma": "FMA72724",
+    "name": "Right first short gyrus of insula",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.7469
+  },
+  "right-fornix-of-forebrain": {
+    "bp": "BP46066",
+    "fileId": "FJ7498M",
+    "fma": "FMA72924",
+    "name": "Right fornix of forebrain",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.1704
+  },
+  "right-frontal-nerve": {
+    "bp": "BP50434",
+    "fileId": "FJ4008",
+    "fma": "FMA52639",
+    "name": "Right frontal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0869
+  },
+  "right-frontal-nerve-v2": {
+    "bp": "BP50434",
+    "fileId": "FJ1341",
+    "fma": "FMA52639",
+    "name": "Right frontal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0405
+  },
+  "right-fusiform-gyrus": {
+    "bp": "BP58321",
+    "fileId": "MM253M",
+    "fma": "FMA72689",
+    "name": "Right fusiform gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 10.3509
+  },
+  "right-globus-pallidus": {
+    "bp": "BP58035",
+    "fileId": "FJ3857",
+    "fma": "FMA72830",
+    "name": "Right globus pallidus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.5265
+  },
+  "right-great-cerebral-vein": {
+    "bp": "BP49115",
+    "fileId": "FJ4654",
+    "fma": "FMA50994",
+    "name": "Right great cerebral vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2419
+  },
+  "right-greater-palatine-nerve": {
+    "bp": "BP50294",
+    "fileId": "FJ3902",
+    "fma": "FMA52803",
+    "name": "Right greater palatine nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0059
+  },
+  "right-hippocampus-proper": {
+    "bp": "BP58047",
+    "fileId": "MM164M",
+    "fma": "FMA72713",
+    "name": "Right hippocampus proper",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.6827
+  },
+  "right-induseum-griseum": {
+    "bp": "BP58349",
+    "fileId": "MM153M",
+    "fma": "FMA72742",
+    "name": "Induseum griseum",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.6971
+  },
+  "right-inferior-choroid-vein": {
+    "bp": "BP44826",
+    "fileId": "FJ5093",
+    "fma": "FMA51001",
+    "name": "Right inferior choroid vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0335
+  },
+  "right-inferior-colliculus": {
+    "bp": "BP58259",
+    "fileId": "FJ1810",
+    "fma": "FMA73434",
+    "name": "Right inferior colliculus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.204
+  },
+  "right-inferior-frontal-gyrus": {
+    "bp": "BP58213",
+    "fileId": "FJ3802",
+    "fma": "FMA72657",
+    "name": "Right inferior frontal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 22.4042
+  },
+  "right-inferior-petrosal-sinus": {
+    "bp": "BP50414",
+    "fileId": "FJ5098",
+    "fma": "FMA51291",
+    "name": "Right inferior petrosal sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1314
+  },
+  "right-inferior-pulvinar-nucleus": {
+    "bp": "BP58071",
+    "fileId": "FJ7544M",
+    "fma": "FMA73031",
+    "name": "Right inferior pulvinar nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0764
+  },
+  "right-inferior-temporal-gyrus": {
+    "bp": "BP58203",
+    "fileId": "MM268M",
+    "fma": "FMA72687",
+    "name": "Right inferior temporal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 16.4424
+  },
+  "right-infratrochlear-nerve": {
+    "bp": "BP49693",
+    "fileId": "FJ4011",
+    "fma": "FMA52698",
+    "name": "Right infratrochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0183
+  },
+  "right-infratrochlear-nerve-v2": {
+    "bp": "BP49693",
+    "fileId": "FJ1347",
+    "fma": "FMA52698",
+    "name": "Right infratrochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0033
+  },
+  "right-insula": {
+    "bp": "BP50107",
+    "fileId": "FJ1749",
+    "fma": "FMA72977",
+    "name": "Right insula",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 11.2316
+  },
+  "right-intermediate-short-gyrus-of-insula": {
+    "bp": "BP58311",
+    "fileId": "MM237M",
+    "fma": "FMA72729",
+    "name": "Right intermediate short gyrus of insula",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.0841
+  },
+  "right-internal-capsule": {
+    "bp": "BP58113",
+    "fileId": "FJ3808",
+    "fma": "FMA72906",
+    "name": "Right internal capsule",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 8.2387
+  },
+  "right-internal-cerebral-vein": {
+    "bp": "BP44861",
+    "fileId": "FJ4690",
+    "fma": "FMA51004",
+    "name": "Right internal cerebral vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.054
+  },
+  "right-interpeduncular-vein": {
+    "bp": "BP45320",
+    "fileId": "FJ4691",
+    "fma": "FMA51378",
+    "name": "Right interpeduncular vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0059
+  },
+  "right-lacrimal-nerve": {
+    "bp": "BP50701",
+    "fileId": "FJ4010",
+    "fma": "FMA52629",
+    "name": "Right lacrimal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0355
+  },
+  "right-lacrimal-nerve-v2": {
+    "bp": "BP50701",
+    "fileId": "FJ1351",
+    "fma": "FMA52629",
+    "name": "Right lacrimal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0391
+  },
+  "right-lateral-geniculate-body": {
+    "bp": "BP58082",
+    "fileId": "FJ7539M",
+    "fma": "FMA73303",
+    "name": "Right lateral geniculate body",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2144
+  },
+  "right-lateral-hypothalamic-nucleus": {
+    "bp": "BP49414",
+    "fileId": "FJ7491M",
+    "fma": "FMA73359",
+    "name": "Right lateral hypothalamic nucleus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1266
+  },
+  "right-lateral-longitudinal-stria": {
+    "bp": "BP58079",
+    "fileId": "MM176M",
+    "fma": "FMA72941",
+    "name": "Right lateral longitudinal stria",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1898
+  },
+  "right-lateral-occipital-gyrus": {
+    "bp": "BP58206",
+    "fileId": "MM251M",
+    "fma": "FMA72677",
+    "name": "Right lateral occipital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 15.1206
+  },
+  "right-lateral-olfactory-stria": {
+    "bp": "BP58342",
+    "fileId": "MM229M",
+    "fma": "FMA72935",
+    "name": "Right lateral olfactory stria",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0494
+  },
+  "right-lateral-orbital-gyrus": {
+    "bp": "BP58089",
+    "fileId": "FJ7466M",
+    "fma": "FMA72756",
+    "name": "Right lateral orbital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 4.4484
+  },
+  "right-lateral-preoptic-nucleus": {
+    "bp": "BP58338",
+    "fileId": "FJ7510M",
+    "fma": "FMA73327",
+    "name": "Right lateral preoptic nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0087
+  },
+  "right-lateral-pterygoid-nerve": {
+    "bp": "BP49788",
+    "fileId": "FJ3995",
+    "fma": "FMA53109",
+    "name": "Right lateral pterygoid nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0058
+  },
+  "right-lateral-pulvinar-nucleus": {
+    "bp": "BP58065",
+    "fileId": "FJ7550M",
+    "fma": "FMA73026",
+    "name": "Right lateral pulvinar nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.6925
+  },
+  "right-lateral-ventricle": {
+    "bp": "BP58242",
+    "fileId": "MM205M",
+    "fma": "FMA78449",
+    "name": "Right lateral ventricle",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 12.5751
+  },
+  "right-lesser-occipital-nerve": {
+    "bp": "BP50015",
+    "fileId": "FJ4221M",
+    "fma": "FMA65388",
+    "laterality_note": "Gespiegelt aus 'Left lesser occipital nerve' (FMA65389) — synthetische rechte Seite; rechtes Gegenstueck in BodyParts3D nie modelliert, reale Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Right lesser occipital nerve",
+    "origin": "mirror",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1398
+  },
+  "right-lingual-gyrus": {
+    "bp": "BP58183",
+    "fileId": "MM252M",
+    "fma": "FMA72681",
+    "name": "Right lingual gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 7.8208
+  },
+  "right-mammillary-artery": {
+    "bp": "BP49248",
+    "fileId": "FJ5119",
+    "fma": "FMA50449",
+    "name": "Right mammillary artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "right-mammillary-body": {
+    "bp": "BP58370",
+    "fileId": "FJ1815",
+    "fma": "FMA273252",
+    "name": "Mammillary body",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0479
+  },
+  "right-mammillothalamic-tract-of-hypothalamus": {
+    "bp": "BP49545",
+    "fileId": "FJ7486M",
+    "fma": "FMA73389",
+    "name": "Right mammillothalamic tract of hypothalamus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0118
+  },
+  "right-mandibular-nerve": {
+    "bp": "BP50904",
+    "fileId": "FJ3985",
+    "fma": "FMA52997",
+    "name": "Right mandibular nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0564
+  },
+  "right-masseteric-nerve": {
+    "bp": "BP50255",
+    "fileId": "FJ3987",
+    "fma": "FMA53104",
+    "name": "Right masseteric nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0199
+  },
+  "right-medial-geniculate-body": {
+    "bp": "BP58117",
+    "fileId": "FJ7543M",
+    "fma": "FMA73309",
+    "name": "Right medial geniculate body",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1232
+  },
+  "right-medial-longitudinal-stria": {
+    "bp": "BP58077",
+    "fileId": "MM177M",
+    "fma": "FMA72943",
+    "name": "Right medial longitudinal stria",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2131
+  },
+  "right-medial-orbital-gyrus": {
+    "bp": "BP58110",
+    "fileId": "MM202M",
+    "fma": "FMA72758",
+    "name": "Right medial orbital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.5755
+  },
+  "right-medial-preoptic-nucleus": {
+    "bp": "BP58118",
+    "fileId": "FJ7511M",
+    "fma": "FMA73325",
+    "name": "Right medial preoptic nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0198
+  },
+  "right-medial-pterygoid-nerve": {
+    "bp": "BP50578",
+    "fileId": "FJ3994",
+    "fma": "FMA53057",
+    "name": "Right medial pterygoid nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0082
+  },
+  "right-medial-pulvinar-nucleus": {
+    "bp": "BP58069",
+    "fileId": "FJ7551M",
+    "fma": "FMA73029",
+    "name": "Right medial pulvinar nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.8761
+  },
+  "right-middle-frontal-gyrus": {
+    "bp": "BP58164",
+    "fileId": "FJ3840",
+    "fma": "FMA72655",
+    "name": "Right middle frontal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 21.1843
+  },
+  "right-middle-meningeal-nerve": {
+    "bp": "BP50593",
+    "fileId": "FJ3989",
+    "fma": "FMA52729",
+    "name": "Right middle meningeal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0053
+  },
+  "right-middle-superior-alveolar-nerve": {
+    "bp": "BP50286",
+    "fileId": "FJ3991",
+    "fma": "FMA52939",
+    "name": "Right middle superior alveolar nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0144
+  },
+  "right-middle-temporal-gyrus": {
+    "bp": "BP58190",
+    "fileId": "MM248M",
+    "fma": "FMA72685",
+    "name": "Right middle temporal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 19.9952
+  },
+  "right-nasociliary-nerve": {
+    "bp": "BP49819",
+    "fileId": "FJ1361",
+    "fma": "FMA52669",
+    "name": "Right nasociliary nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0311
+  },
+  "right-nasopalatine-nerve": {
+    "bp": "BP50310",
+    "fileId": "FJ3993",
+    "fma": "FMA52798",
+    "name": "Right nasopalatine nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0089
+  },
+  "right-olfactory-nerve": {
+    "bp": "BP50750",
+    "fileId": "FJ4018",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.005
+  },
+  "right-olfactory-nerve-v2": {
+    "bp": "BP50750",
+    "fileId": "FJ4016",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0053
+  },
+  "right-olfactory-nerve-v3": {
+    "bp": "BP50750",
+    "fileId": "FJ4017",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0047
+  },
+  "right-olfactory-nerve-v4": {
+    "bp": "BP50750",
+    "fileId": "FJ4013",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.0059
+  },
+  "right-olfactory-nerve-v5": {
+    "bp": "BP50750",
+    "fileId": "FJ4015",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 5,
+    "volume_cm3": 0.0048
+  },
+  "right-olfactory-nerve-v6": {
+    "bp": "BP50750",
+    "fileId": "FJ4014",
+    "fma": "FMA52592",
+    "name": "Right olfactory nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 6,
+    "volume_cm3": 0.0053
+  },
+  "right-olfactory-tract": {
+    "bp": "BP58335",
+    "fileId": "FJ7526M",
+    "fma": "FMA223163",
+    "name": "Right olfactory tract",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0813
+  },
+  "right-ophthalmic-nerve": {
+    "bp": "BP50738",
+    "fileId": "FJ1363",
+    "fma": "FMA52622",
+    "name": "Right ophthalmic nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0773
+  },
+  "right-ophthalmic-nerve-v2": {
+    "bp": "BP50738",
+    "fileId": "FJ4019",
+    "fma": "FMA52622",
+    "name": "Right ophthalmic nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0921
+  },
+  "right-optic-nerve": {
+    "bp": "BP50744",
+    "fileId": "FJ7501",
+    "fma": "FMA50875",
+    "name": "Right optic nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.4497
+  },
+  "right-optic-tract": {
+    "bp": "BP50879",
+    "fileId": "FJ7502",
+    "fma": "FMA62382",
+    "name": "Right optic tract",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.5962
+  },
+  "right-oral-pulvinar-nucleus": {
+    "bp": "BP58067",
+    "fileId": "FJ7546M",
+    "fma": "FMA73021",
+    "name": "Right oral pulvinar nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.6083
+  },
+  "right-oral-pulvinar-nucleus-v2": {
+    "bp": "BP58067",
+    "fileId": "FJ7548M",
+    "fma": "FMA73021",
+    "name": "Right oral pulvinar nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.3029
+  },
+  "right-parafascicular-nucleus": {
+    "bp": "BP58081",
+    "fileId": "FJ7545M",
+    "fma": "FMA73047",
+    "name": "Right parafascicular nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0654
+  },
+  "right-parahippocampal-gyrus": {
+    "bp": "BP49541",
+    "fileId": "FJ7476M",
+    "fma": "FMA72705",
+    "name": "Right parahippocampal gyrus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 9.0396
+  },
+  "right-paratenial-nucleus": {
+    "bp": "BP58126",
+    "fileId": "FJ7547M",
+    "fma": "FMA72988",
+    "name": "Right paratenial nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0161
+  },
+  "right-paraterminal-gyrus": {
+    "bp": "BP58097",
+    "fileId": "FJ7530M",
+    "fma": "FMA72707",
+    "name": "Right paraterminal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0798
+  },
+  "right-paraventricular-nucleus-of-hypothalamus": {
+    "bp": "BP58204",
+    "fileId": "FJ7553M",
+    "fma": "FMA73335",
+    "name": "Right paraventricular nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0927
+  },
+  "right-paraventricular-nucleus-of-hypothalamus-v2": {
+    "bp": "BP58204",
+    "fileId": "FJ7512M",
+    "fma": "FMA73335",
+    "name": "Right paraventricular nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0089
+  },
+  "right-periamygdaloid-area": {
+    "bp": "BP58378",
+    "fileId": "MM165M",
+    "fma": "FMA72734",
+    "name": "Periamygdaloid area",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1353
+  },
+  "right-pericallosal-artery": {
+    "bp": "BP48893",
+    "fileId": "FJ1699",
+    "fma": "FMA50359",
+    "name": "Right pericallosal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1267
+  },
+  "right-postcentral-gyrus": {
+    "bp": "BP58212",
+    "fileId": "FJ3850",
+    "fma": "FMA72665",
+    "name": "Right postcentral gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 25.119
+  },
+  "right-posterior-column-of-fornix": {
+    "bp": "BP58356",
+    "fileId": "MM168M",
+    "fma": "FMA72932",
+    "name": "Right posterior column of fornix",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1034
+  },
+  "right-posterior-communicating-artery": {
+    "bp": "BP49471",
+    "fileId": "FJ1713",
+    "fma": "FMA50085",
+    "name": "Right posterior communicating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0237
+  },
+  "right-posterior-communicating-artery-v2": {
+    "bp": "BP49471",
+    "fileId": "FJ5162",
+    "fma": "FMA50085",
+    "name": "Right posterior communicating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0237
+  },
+  "right-posterior-ethmoidal-nerve": {
+    "bp": "BP49459",
+    "fileId": "FJ4020",
+    "fma": "FMA52715",
+    "name": "Right posterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0019
+  },
+  "right-posterior-ethmoidal-nerve-v2": {
+    "bp": "BP49459",
+    "fileId": "FJ1366",
+    "fma": "FMA52715",
+    "name": "Right posterior ethmoidal nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0032
+  },
+  "right-posterior-inferior-cerebellar-artery": {
+    "bp": "BP49800",
+    "fileId": "FJ1711",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0224
+  },
+  "right-posterior-inferior-cerebellar-artery-v10": {
+    "bp": "BP49800",
+    "fileId": "FJ1705",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 10,
+    "volume_cm3": 0.011
+  },
+  "right-posterior-inferior-cerebellar-artery-v11": {
+    "bp": "BP49800",
+    "fileId": "FJ5227",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 11,
+    "volume_cm3": 0.011
+  },
+  "right-posterior-inferior-cerebellar-artery-v12": {
+    "bp": "BP49800",
+    "fileId": "FJ1700",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 12,
+    "volume_cm3": 0.0078
+  },
+  "right-posterior-inferior-cerebellar-artery-v13": {
+    "bp": "BP49800",
+    "fileId": "FJ1704",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 13,
+    "volume_cm3": 0.0063
+  },
+  "right-posterior-inferior-cerebellar-artery-v14": {
+    "bp": "BP49800",
+    "fileId": "FJ5226",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 14,
+    "volume_cm3": 0.0063
+  },
+  "right-posterior-inferior-cerebellar-artery-v15": {
+    "bp": "BP49800",
+    "fileId": "FJ1709",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 15,
+    "volume_cm3": 0.0022
+  },
+  "right-posterior-inferior-cerebellar-artery-v16": {
+    "bp": "BP49800",
+    "fileId": "FJ1710",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 16,
+    "volume_cm3": 0.0015
+  },
+  "right-posterior-inferior-cerebellar-artery-v17": {
+    "bp": "BP49800",
+    "fileId": "FJ5229",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 17,
+    "volume_cm3": 0.0015
+  },
+  "right-posterior-inferior-cerebellar-artery-v18": {
+    "bp": "BP49800",
+    "fileId": "FJ1708",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 18,
+    "volume_cm3": 0.0005
+  },
+  "right-posterior-inferior-cerebellar-artery-v19": {
+    "bp": "BP49800",
+    "fileId": "FJ1707",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 19,
+    "volume_cm3": 0.0013
+  },
+  "right-posterior-inferior-cerebellar-artery-v2": {
+    "bp": "BP49800",
+    "fileId": "FJ5230",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0224
+  },
+  "right-posterior-inferior-cerebellar-artery-v20": {
+    "bp": "BP49800",
+    "fileId": "FJ5228",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 20,
+    "volume_cm3": 0.0013
+  },
+  "right-posterior-inferior-cerebellar-artery-v3": {
+    "bp": "BP49800",
+    "fileId": "FJ1715",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.0556
+  },
+  "right-posterior-inferior-cerebellar-artery-v4": {
+    "bp": "BP49800",
+    "fileId": "FJ1701",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.0028
+  },
+  "right-posterior-inferior-cerebellar-artery-v5": {
+    "bp": "BP49800",
+    "fileId": "FJ1702",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 5,
+    "volume_cm3": 0.0035
+  },
+  "right-posterior-inferior-cerebellar-artery-v6": {
+    "bp": "BP49800",
+    "fileId": "FJ5224",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 6,
+    "volume_cm3": 0.0035
+  },
+  "right-posterior-inferior-cerebellar-artery-v7": {
+    "bp": "BP49800",
+    "fileId": "FJ1703",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 7,
+    "volume_cm3": 0.0026
+  },
+  "right-posterior-inferior-cerebellar-artery-v8": {
+    "bp": "BP49800",
+    "fileId": "FJ5225",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 8,
+    "volume_cm3": 0.0026
+  },
+  "right-posterior-inferior-cerebellar-artery-v9": {
+    "bp": "BP49800",
+    "fileId": "FJ1706",
+    "fma": "FMA50519",
+    "name": "Right posterior inferior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 9,
+    "volume_cm3": 0.0108
+  },
+  "right-posterior-medial-choroidal-artery": {
+    "bp": "BP48903",
+    "fileId": "FJ1727",
+    "fma": "FMA50672",
+    "name": "Right posterior medial choroidal artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0179
+  },
+  "right-posterior-nucleus-of-hypothalamus": {
+    "bp": "BP58220",
+    "fileId": "FJ7513M",
+    "fma": "FMA73353",
+    "name": "Right posterior nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0124
+  },
+  "right-posterior-orbital-gyrus": {
+    "bp": "BP58114",
+    "fileId": "MM230M",
+    "fma": "FMA80187",
+    "name": "Right posterior orbital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.1845
+  },
+  "right-posterior-parahippocampal-gyrus": {
+    "bp": "BP58103",
+    "fileId": "MM263M",
+    "fma": "FMA72738",
+    "name": "Right posterior parahippocampal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.8026
+  },
+  "right-posterior-superior-alveolar-nerve": {
+    "bp": "BP50676",
+    "fileId": "FJ4003",
+    "fma": "FMA52936",
+    "name": "Right posterior superior alveolar nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0191
+  },
+  "right-posterior-transverse-temporal-gyrus": {
+    "bp": "BP58208",
+    "fileId": "MM261M",
+    "fma": "FMA72693",
+    "name": "Right posterior transverse temporal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.4338
+  },
+  "right-precentral-gyrus": {
+    "bp": "BP58189",
+    "fileId": "FJ3853",
+    "fma": "FMA72661",
+    "name": "Right precentral gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 23.6412
+  },
+  "right-precuneus": {
+    "bp": "BP58168",
+    "fileId": "MM246M",
+    "fma": "FMA72673",
+    "name": "Right precuneus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 14.512
+  },
+  "right-presubiculum": {
+    "bp": "BP58092",
+    "fileId": "MM270M",
+    "fma": "FMA72736",
+    "name": "Right presubiculum",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1717
+  },
+  "right-proximal-medial-striate-artery": {
+    "bp": "BP49136",
+    "fileId": "FJ5180",
+    "fma": "FMA50315",
+    "name": "Right proximal medial striate artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0066
+  },
+  "right-putamen": {
+    "bp": "BP58039",
+    "fileId": "FJ3870",
+    "fma": "FMA72828",
+    "name": "Right putamen",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 5.9353
+  },
+  "right-red-nucleus": {
+    "bp": "BP58254",
+    "fileId": "FJ7480",
+    "fma": "FMA73491",
+    "name": "Right red nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2221
+  },
+  "right-second-posterior-central-gyrus": {
+    "bp": "BP58303",
+    "fileId": "MM233M",
+    "fma": "FMA72722",
+    "name": "Right second posterior central gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.6725
+  },
+  "right-second-short-gyrus-of-insula": {
+    "bp": "BP58310",
+    "fileId": "MM235M",
+    "fma": "FMA72726",
+    "name": "Right second short gyrus of insula",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.7592
+  },
+  "right-sigmoid-sinus": {
+    "bp": "BP50679",
+    "fileId": "FJ5005",
+    "fma": "FMA51293",
+    "name": "Right sigmoid sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.9517
+  },
+  "right-straight-gyrus": {
+    "bp": "BP58098",
+    "fileId": "FJ7528M",
+    "fma": "FMA72659",
+    "name": "Right straight gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 3.0565
+  },
+  "right-stria-medullaris-of-thalamus": {
+    "bp": "BP58352",
+    "fileId": "FJ3871",
+    "fma": "FMA73413",
+    "name": "Right stria medullaris of thalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1017
+  },
+  "right-stria-terminalis": {
+    "bp": "BP58337",
+    "fileId": "FJ3872",
+    "fma": "FMA72939",
+    "name": "Right stria terminalis",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.5156
+  },
+  "right-subcallosal-area": {
+    "bp": "BP58362",
+    "fileId": "FJ7529M",
+    "fma": "FMA72848",
+    "laterality_note": "Gespiegelt aus 'Left subcallosal area' (FMA72849) — synthetische rechte Seite; rechtes Gegenstueck in BodyParts3D nie modelliert, reale Anatomie kann abweichen.",
+    "mirrored": true,
+    "name": "Right subcallosal area",
+    "origin": "mirror",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.2254
+  },
+  "right-subiculum": {
+    "bp": "BP58326",
+    "fileId": "MM178M",
+    "fma": "FMA272417",
+    "name": "Subiculum",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 1.0796
+  },
+  "right-substantia-nigra": {
+    "bp": "BP58256",
+    "fileId": "FJ7481",
+    "fma": "FMA73539",
+    "name": "Right substantia nigra",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.4573
+  },
+  "right-subthalamic-nucleus": {
+    "bp": "BP58331",
+    "fileId": "FJ7482",
+    "fma": "FMA73367",
+    "name": "Right subthalamic nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1983
+  },
+  "right-superior-cerebellar-artery": {
+    "bp": "BP49681",
+    "fileId": "FJ1726",
+    "fma": "FMA50574",
+    "name": "Right superior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0921
+  },
+  "right-superior-cerebellar-vein": {
+    "bp": "BP49384",
+    "fileId": "FJ4698",
+    "fma": "FMA52452",
+    "name": "Right superior cerebellar vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0236
+  },
+  "right-superior-choroid-vein": {
+    "bp": "BP44765",
+    "fileId": "FJ5200",
+    "fma": "FMA51330",
+    "name": "Right superior choroid vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0303
+  },
+  "right-superior-colliculus": {
+    "bp": "BP58258",
+    "fileId": "FJ1826",
+    "fma": "FMA73422",
+    "name": "Right superior colliculus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1349
+  },
+  "right-superior-frontal-gyrus": {
+    "bp": "BP58162",
+    "fileId": "FJ3880",
+    "fma": "FMA72653",
+    "name": "Right superior frontal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 44.5106
+  },
+  "right-superior-hypophyseal-artery": {
+    "bp": "BP49837",
+    "fileId": "FJ5201",
+    "fma": "FMA49850",
+    "name": "Right superior hypophyseal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0054
+  },
+  "right-superior-occipital-gyrus": {
+    "bp": "BP58187",
+    "fileId": "MM245M",
+    "fma": "FMA72675",
+    "name": "Right superior occipital gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 10.9163
+  },
+  "right-superior-parietal-lobule": {
+    "bp": "BP58216",
+    "fileId": "MM247M",
+    "fma": "FMA72671",
+    "name": "Right superior parietal lobule",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 17.8817
+  },
+  "right-superior-petrosal-sinus": {
+    "bp": "BP49573",
+    "fileId": "FJ5207",
+    "fma": "FMA51289",
+    "name": "Right superior petrosal sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.4839
+  },
+  "right-superior-temporal-gyrus": {
+    "bp": "BP58179",
+    "fileId": "MM267M",
+    "fma": "FMA72683",
+    "name": "Right superior temporal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 16.0799
+  },
+  "right-superior-thalamostriate-vein": {
+    "bp": "BP44761",
+    "fileId": "FJ5219",
+    "fma": "FMA50999",
+    "name": "Right superior thalamostriate vein",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0158
+  },
+  "right-supra-orbital-nerve": {
+    "bp": "BP50023",
+    "fileId": "FJ1376",
+    "fma": "FMA52656",
+    "name": "Right supra-orbital nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0668
+  },
+  "right-supra-orbital-nerve-v2": {
+    "bp": "BP50023",
+    "fileId": "FJ4022",
+    "fma": "FMA52656",
+    "name": "Right supra-orbital nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0241
+  },
+  "right-suprachiasmatic-nucleus": {
+    "bp": "BP58225",
+    "fileId": "FJ7514",
+    "fma": "FMA73329",
+    "name": "Right suprachiasmatic nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0031
+  },
+  "right-supramarginal-gyrus": {
+    "bp": "BP58095",
+    "fileId": "MM250M",
+    "fma": "FMA72667",
+    "name": "Right supramarginal gyrus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 15.9998
+  },
+  "right-supraoptic-nucleus": {
+    "bp": "BP58332",
+    "fileId": "FJ7515",
+    "fma": "FMA73331",
+    "name": "Right supraoptic nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0133
+  },
+  "right-supratrochlear-nerve": {
+    "bp": "BP50066",
+    "fileId": "FJ1377",
+    "fma": "FMA52643",
+    "name": "Right supratrochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0532
+  },
+  "right-supratrochlear-nerve-v2": {
+    "bp": "BP50066",
+    "fileId": "FJ4023",
+    "fma": "FMA52643",
+    "name": "Right supratrochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0503
+  },
+  "right-thalamic-reticular-nucleus": {
+    "bp": "BP58193",
+    "fileId": "FJ7554M",
+    "fma": "FMA73323",
+    "name": "Right thalamic reticular nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.9364
+  },
+  "right-thalamogeniculate-artery": {
+    "bp": "BP48894",
+    "fileId": "FJ5217",
+    "fma": "FMA50670",
+    "name": "Right thalamogeniculate artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0282
+  },
+  "right-thalamogeniculate-artery-v2": {
+    "bp": "BP48894",
+    "fileId": "FJ1675",
+    "fma": "FMA50670",
+    "name": "Right thalamogeniculate artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0807
+  },
+  "right-thalamoperforating-artery": {
+    "bp": "BP48909",
+    "fileId": "FJ1720",
+    "fma": "FMA50664",
+    "name": "Right thalamoperforating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0099
+  },
+  "right-thalamoperforating-artery-v2": {
+    "bp": "BP48909",
+    "fileId": "FJ5218",
+    "fma": "FMA50664",
+    "name": "Right thalamoperforating artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0036
+  },
+  "right-thalamotuberal-artery": {
+    "bp": "BP49169",
+    "fileId": "FJ5220",
+    "fma": "FMA50425",
+    "name": "Right thalamotuberal artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0016
+  },
+  "right-thalamus": {
+    "bp": "BP50213",
+    "fileId": "FJ1827",
+    "fma": "FMA258714",
+    "name": "Right thalamus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 8.632
+  },
+  "right-transverse-medullary-vein": {
+    "bp": "BP45059",
+    "fileId": "FJ4701",
+    "fma": "FMA51400",
+    "name": "Right transverse medullary vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0066
+  },
+  "right-transverse-pontine-vein": {
+    "bp": "BP44896",
+    "fileId": "FJ4702",
+    "fma": "FMA51355",
+    "name": "Right transverse pontine vein",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0085
+  },
+  "right-transverse-sinus": {
+    "bp": "BP49968",
+    "fileId": "FJ5222",
+    "fma": "FMA50764",
+    "name": "Right transverse sinus",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 2.04
+  },
+  "right-trochlear-nerve": {
+    "bp": "BP50809",
+    "fileId": "FJ4039",
+    "fma": "FMA50881",
+    "name": "Right trochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1424
+  },
+  "right-trochlear-nerve-v2": {
+    "bp": "BP50809",
+    "fileId": "FJ1381",
+    "fma": "FMA50881",
+    "name": "Right trochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.0594
+  },
+  "right-uncus": {
+    "bp": "BP58314",
+    "fileId": "MM172M",
+    "fma": "FMA270682",
+    "name": "Uncus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0635
+  },
+  "right-uncus-v2": {
+    "bp": "BP58314",
+    "fileId": "MM173M",
+    "fma": "FMA270682",
+    "name": "Uncus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.2529
+  },
+  "right-ventral-anterior-nucleus": {
+    "bp": "BP58125",
+    "fileId": "FJ7556M",
+    "fma": "FMA73049",
+    "name": "Right ventral anterior nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.3453
+  },
+  "right-ventral-posterolateral-nucleus": {
+    "bp": "BP58059",
+    "fileId": "FJ7560M",
+    "fma": "FMA73075",
+    "name": "Right ventral posterolateral nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.566
+  },
+  "right-ventral-posteromedial-nucleus": {
+    "bp": "BP58066",
+    "fileId": "FJ7562M",
+    "fma": "FMA73081",
+    "name": "Right ventral posteromedial nucleus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0393
+  },
+  "right-ventromedial-nucleus-of-hypothalamus": {
+    "bp": "BP58167",
+    "fileId": "FJ7516M",
+    "fma": "FMA73341",
+    "name": "Right ventromedial nucleus of hypothalamus",
+    "origin": "primary",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.005
+  },
+  "right-vestibulocochlear-nerve": {
+    "bp": "BP50942",
+    "fileId": "FJ3894",
+    "fma": "FMA50890",
+    "name": "Right vestibulocochlear nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0409
+  },
+  "right-zygomatic-nerve": {
+    "bp": "BP50623",
+    "fileId": "FJ4042",
+    "fma": "FMA52968",
+    "name": "Right zygomatic nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0512
+  },
+  "septum-of-telencephalon": {
+    "bp": "BP58383",
+    "fileId": "FJ3878",
+    "fma": "FMA61842",
+    "name": "Septum of telencephalon",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 1.1692
+  },
+  "set-of-branches-of-cavernous-part-of-internal-carotid-artery-to-nerves": {
+    "bp": "BP48476",
+    "fileId": "FJ5048",
+    "fma": "FMA71693",
+    "name": "Set of branches of cavernous part of internal carotid artery to nerves",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0105
+  },
+  "set-of-inferior-veins-of-cerebellar-hemisphere": {
+    "bp": "BP48287",
+    "fileId": "FJ4689",
+    "fma": "FMA71578",
+    "name": "Set of inferior veins of cerebellar hemisphere",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0324
+  },
+  "set-of-inferior-veins-of-cerebellar-hemisphere-v2": {
+    "bp": "BP48287",
+    "fileId": "FJ4687",
+    "fma": "FMA71578",
+    "name": "Set of inferior veins of cerebellar hemisphere",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 2,
+    "volume_cm3": 0.0545
+  },
+  "set-of-inferior-veins-of-cerebellar-hemisphere-v3": {
+    "bp": "BP48287",
+    "fileId": "FJ4688",
+    "fma": "FMA71578",
+    "name": "Set of inferior veins of cerebellar hemisphere",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 3,
+    "volume_cm3": 0.015
+  },
+  "set-of-lateral-direct-veins-of-lateral-ventricle": {
+    "bp": "BP48406",
+    "fileId": "FJ4693",
+    "fma": "FMA71571",
+    "name": "Set of lateral direct veins of lateral ventricle",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0081
+  },
+  "sinus-confluence": {
+    "bp": "BP47802",
+    "fileId": "FJ4704",
+    "fma": "FMA50784",
+    "laterality_note": "Unpaarige, anatomisch symmetrische Mittellinienstruktur; BodyParts3D liefert sie nur einseitig/stark schief. Schwache Seite durch Reflexion an der Mittelsagittalebene (X_mid=-0.66 mm) ergaenzt — synthetische Gegenseite, reale Anatomie kann abweichen.",
+    "name": "Sinus confluence",
+    "origin": "archive",
+    "reconstructed": true,
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 2.355
+  },
+  "sphenoid-part-of-left-middle-cerebral-artery": {
+    "bp": "BP49557",
+    "fileId": "FJ1692M",
+    "fma": "FMA50367",
+    "name": "Sphenoid part of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2242
+  },
+  "sphenoid-part-of-right-middle-cerebral-artery": {
+    "bp": "BP48895",
+    "fileId": "FJ4982",
+    "fma": "FMA50366",
+    "name": "Sphenoid part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0886
+  },
+  "sphenoid-part-of-right-middle-cerebral-artery-v2": {
+    "bp": "BP48895",
+    "fileId": "FJ1659",
+    "fma": "FMA50366",
+    "name": "Sphenoid part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.1522
+  },
+  "sphenoid-part-of-right-middle-cerebral-artery-v3": {
+    "bp": "BP48895",
+    "fileId": "FJ1692",
+    "fma": "FMA50366",
+    "name": "Sphenoid part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 3,
+    "volume_cm3": 0.2242
+  },
+  "sphenoid-part-of-right-middle-cerebral-artery-v4": {
+    "bp": "BP48895",
+    "fileId": "FJ1712",
+    "fma": "FMA50366",
+    "name": "Sphenoid part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 4,
+    "volume_cm3": 0.0443
+  },
+  "sphenoid-part-of-right-middle-cerebral-artery-v5": {
+    "bp": "BP48895",
+    "fileId": "FJ5132",
+    "fma": "FMA50366",
+    "name": "Sphenoid part of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 5,
+    "volume_cm3": 0.1558
+  },
+  "straight-sinus": {
+    "bp": "BP49597",
+    "fileId": "FJ4705",
+    "fma": "FMA50769",
+    "name": "Straight sinus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.5522
+  },
+  "superior-branch-of-left-oculomotor-nerve": {
+    "bp": "BP50822",
+    "fileId": "FJ1321",
+    "fma": "FMA52575",
+    "name": "Superior branch of left oculomotor nerve",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0131
+  },
+  "superior-branch-of-right-oculomotor-nerve": {
+    "bp": "BP50895",
+    "fileId": "FJ1372",
+    "fma": "FMA52574",
+    "name": "Superior branch of right oculomotor nerve",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0132
+  },
+  "superior-cerebral-vein": {
+    "bp": "BP49215",
+    "fileId": "FJ4694",
+    "fma": "FMA50978",
+    "name": "Superior cerebral vein",
+    "origin": "brain-add",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.078
+  },
+  "superior-sagittal-sinus": {
+    "bp": "BP49498",
+    "fileId": "FJ5232",
+    "fma": "FMA50767",
+    "name": "Superior sagittal sinus",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 9.8847
+  },
+  "superior-vein-of-vermis": {
+    "bp": "BP45564",
+    "fileId": "FJ5210",
+    "fma": "FMA51230",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ5210",
+      "FJ5211"
+    ],
+    "name": "Superior vein of vermis",
+    "origin": "archive",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.0855
+  },
+  "superior-vermian-branch-of-medial-branch-of-left-superior-cerebellar-artery": {
+    "bp": "BP48976",
+    "fileId": "FJ1728M",
+    "fma": "FMA50697",
+    "name": "Superior vermian branch of medial branch of left superior cerebellar artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0442
+  },
+  "superior-vermian-branch-of-medial-branch-of-right-superior-cerebellar-artery": {
+    "bp": "BP49028",
+    "fileId": "FJ1728",
+    "fma": "FMA50696",
+    "name": "Superior vermian branch of medial branch of right superior cerebellar artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0442
+  },
+  "temporo-occipital-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP49322",
+    "fileId": "FJ1729M",
+    "fma": "FMA50474",
+    "name": "Temporo-occipital branch of left middle cerebral artery",
+    "origin": "archive",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.3374
+  },
+  "temporo-occipital-branch-of-right-middle-cerebral-artery": {
+    "bp": "BP48897",
+    "fileId": "FJ1729",
+    "fma": "FMA50473",
+    "name": "Temporo-occipital branch of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.3373
+  },
+  "temporo-occipital-branch-of-right-middle-cerebral-artery-v2": {
+    "bp": "BP48897",
+    "fileId": "FJ5214",
+    "fma": "FMA50473",
+    "name": "Temporo-occipital branch of right middle cerebral artery",
+    "origin": "archive",
+    "side": "right",
+    "variant": 2,
+    "volume_cm3": 0.3119
+  },
+  "tentorium-cerebelli": {
+    "bp": "BP48249",
+    "fileId": "FJ1843",
+    "fma": "FMA83966",
+    "laterality_note": "Unpaarige, anatomisch symmetrische Mittellinienstruktur; BodyParts3D liefert sie nur einseitig/stark schief. Schwache Seite durch Reflexion an der Mittelsagittalebene (X_mid=-0.66 mm) ergaenzt — synthetische Gegenseite, reale Anatomie kann abweichen.",
+    "name": "Tentorium cerebelli",
+    "origin": "archive",
+    "reconstructed": true,
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 6.9311
+  },
+  "third-ventricle": {
+    "bp": "BP58267",
+    "fileId": "FJ3787",
+    "fma": "FMA78454",
+    "name": "Third ventricle",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 2.3254
+  },
+  "trunk-of-inferior-terminal-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP45383",
+    "fileId": "FJ1718M",
+    "fma": "FMA76129",
+    "name": "Trunk of inferior terminal branch of left middle cerebral artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.0783
+  },
+  "trunk-of-inferior-terminal-branch-of-right-middle-cerebral-artery": {
+    "bp": "BP45742",
+    "fileId": "FJ1718",
+    "fma": "FMA76128",
+    "name": "Trunk of inferior terminal branch of right middle cerebral artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0783
+  },
+  "trunk-of-medial-branch-of-right-superior-cerebellar-artery": {
+    "bp": "BP49004",
+    "fileId": "FJ5124",
+    "fma": "FMA86079",
+    "name": "Trunk of medial branch of right superior cerebellar artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0526
+  },
+  "trunk-of-middle-temporal-branch-of-left-middle-cerebral-artery": {
+    "bp": "BP45334",
+    "fileId": "FJ4873",
+    "fma": "FMA76135",
+    "name": "Trunk of middle temporal branch of left middle cerebral artery",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 0.2648
+  },
+  "trunk-of-right-anterior-cerebral-artery": {
+    "bp": "BP46372",
+    "fileId": "FJ5043",
+    "fma": "FMA76062",
+    "name": "Trunk of right anterior cerebral artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0005
+  },
+  "trunk-of-right-anterior-choroidal-artery": {
+    "bp": "BP46322",
+    "fileId": "FJ5022",
+    "fma": "FMA76254",
+    "name": "Trunk of right anterior choroidal artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.038
+  },
+  "trunk-of-right-callosomarginal-artery": {
+    "bp": "BP45205",
+    "fileId": "FJ5068",
+    "fma": "FMA76079",
+    "name": "Trunk of right callosomarginal artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0034
+  },
+  "trunk-of-right-middle-cerebral-artery": {
+    "bp": "BP49345",
+    "fileId": "FJ5134",
+    "fma": "FMA61991",
+    "name": "Trunk of right middle cerebral artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.1028
+  },
+  "trunk-of-right-posterior-inferior-cerebellar-artery": {
+    "bp": "BP49744",
+    "fileId": "FJ5003",
+    "fma": "FMA86070",
+    "name": "Trunk of right posterior inferior cerebellar artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0556
+  },
+  "trunk-of-right-superior-cerebellar-artery": {
+    "bp": "BP49331",
+    "fileId": "FJ5199",
+    "fma": "FMA86076",
+    "name": "Trunk of right superior cerebellar artery",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 0.0954
+  },
+  "tuber-cinereum": {
+    "bp": "BP58192",
+    "fileId": "FJ3874",
+    "fma": "FMA62327",
+    "laterality_note": "Unpaariger FMA-Begriff (keine lateralisierten Teilterme in der FMA) — als Mittellinienstruktur gefuehrt. Aus 2 Quell-Meshes zusammengefuehrt.",
+    "merged_from": [
+      "FJ3874",
+      "FJ3833"
+    ],
+    "name": "Tuber cinereum",
+    "origin": "primary",
+    "side": "midline",
+    "variant": 1,
+    "volume_cm3": 0.1489
+  },
+  "white-matter-of-left-temporal-lobe": {
+    "bp": "BP49221",
+    "fileId": "FJ1758",
+    "fma": "FMA261085",
+    "name": "White matter of left temporal lobe",
+    "origin": "brain-add",
+    "side": "left",
+    "variant": 1,
+    "volume_cm3": 174.0944
+  },
+  "white-matter-of-right-temporal-lobe": {
+    "bp": "BP49347",
+    "fileId": "FJ1806",
+    "fma": "FMA261083",
+    "name": "White matter of right temporal lobe",
+    "origin": "brain-add",
+    "side": "right",
+    "variant": 1,
+    "volume_cm3": 174.0011
+  }
+}

@@ -1,0 +1,21 @@
+# ==============================================================================
+# Lokale Entwickler-Overrides — NICHT committen
+# Kopiere diese Datei zu local.toml und passe sie lokal an.
+# Wird ignoriert von .gitignore: public/config/local.toml
+# ==============================================================================
+
+[sync]
+# Seminarraum-WLAN: eigene Laptop-IP eintragen
+# server_url = "ws://192.168.1.42:4000"
+
+[postprocessing]
+# Zum Debuggen: SSAO deaktivieren
+# ssao_samples = 0
+
+[canvas]
+# High-DPI-Monitor: volle Aufloesung
+# dpr_max = 2
+
+[assets]
+# Lokaler Dev-Server: Meshopt aktiv (nach Kompression der Assets)
+# meshopt_enabled = true

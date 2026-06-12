@@ -1,0 +1,19 @@
+{
+  "id": "vcpt", "figure": "11-14", "section": "11.4 · VCPT", "author": "ifland", "order": 20,
+  "title": "Visueller Konzentrationsverlaufstest (VCPT)",
+  "brain": { "regions": ["sma-presma"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "flowchart", "position": "right", "size": "md",
+    "data": { "nodes": [
+      { "id": "go",  "label": "A–A (Tier→Tier)",    "result": "→ Taste drücken (Go)" },
+      { "id": "nogo","label": "A–P (Tier→Pflanze)", "result": "→ Reaktion hemmen (No-go)" },
+      { "id": "ign1","label": "P–P (Pflanze→Pflanze)","result": "→ ignorieren (Kontrolle)" },
+      { "id": "ign2","label": "P–H (Pflanze→Mensch)", "result": "→ ignorieren (Novelty)" }
+    ] },
+    "fallbackImage": "/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg"
+  },
+  "companion": {
+    "summary": "Beim VCPT werden Bilder im Sekundentakt gezeigt. Nur auf das zweite Tierbild (A–A) wird reagiert (Go); folgt auf ein Tier eine Pflanze (A–P), muss die vorbereitete Reaktion gehemmt werden (No-go). Commission errors (fälschliches Drücken bei No-go) und omission errors (fehlende Go-Reaktion) zeigen Inhibitionsschwächen. Entscheidend sind die im Go/No-go evozierten ERPs.",
+    "sources": [{ "key": "mueller_2011", "note": "VCPT, Abb. 11-14" }]
+  }
+}

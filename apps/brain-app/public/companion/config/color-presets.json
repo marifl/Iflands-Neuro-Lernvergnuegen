@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "presets": [
+    {
+      "id": "basalganglienschleifen",
+      "label": "Basalganglienschleifen (Abb. 11-04)",
+      "groups": [
+        { "label": "Kognition", "hue": 210, "buckets": ["dlpfc", "ppc", "striatum-dorsal", "globus-pallidus", "thalamus"] },
+        { "label": "Emotion", "hue": 30, "buckets": ["ofc", "vmpfc", "amygdala", "hippocampus"] },
+        { "label": "Motivation", "hue": 150, "buckets": ["dacc", "nucleus-accumbens"] }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "pfc-petrides",
+      "label": "PFC Petrides (Abb. 11-05)",
+      "groups": [
+        { "label": "DLPFC (Manipulieren)", "hue": 210, "buckets": ["dlpfc"] },
+        { "label": "VLPFC (Halten/Abrufen)", "hue": 30, "buckets": ["vlpfc"] },
+        { "label": "Posterior (Speicher)", "hue": 270, "buckets": ["ppc", "pcc-praecuneus"] }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "badre-rostrokaudal",
+      "label": "Rostro-kaudaler Gradient (Abb. 11-07)",
+      "groups": [
+        { "label": "Frontopolar (BA 10)", "hue": 200, "buckets": ["frontopolar"] },
+        { "label": "DLPFC (BA 9/46)", "hue": 220, "buckets": ["dlpfc"] },
+        { "label": "SMA/preSMA (BA 8/6)", "hue": 260, "buckets": ["sma-presma"] },
+        { "label": "VLPFC (BA 47/45/44)", "hue": 180, "buckets": ["vlpfc"] }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "acc-bush",
+      "label": "ACC Bush (Abb. 11-13)",
+      "groups": [
+        { "label": "Dorsales ACC (kognitiv)", "hue": 210, "buckets": ["dacc"] },
+        { "label": "Ventrales ACC/OFC", "hue": 30, "buckets": ["vmpfc", "ofc"] }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "phineas-gage",
+      "label": "Phineas Gage Laesion",
+      "groups": [
+        { "label": "Laesionsgebiet", "hue": 0, "buckets": ["vmpfc", "ofc", "frontopolar"] },
+        { "label": "Emotion/Motivation", "hue": 30, "buckets": ["amygdala", "hippocampus", "dacc"] },
+        { "label": "Kognition", "hue": 210, "buckets": ["dlpfc", "vlpfc", "ppc"] }
+      ],
+      "dimOthers": true
+    }
+  ]
+}

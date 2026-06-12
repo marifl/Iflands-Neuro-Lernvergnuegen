@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.vite/
+*.log
+tsconfig.tsbuildinfo
+
+# Stray tsc-Emit-Artefakte (Build-Pattern: `tsc -b && vite build`)
+# Source-of-truth ist .ts/.tsx. .js/.jsx in src/ sind Build-Output, nie checken.
+src/**/*.js
+src/**/*.jsx
+src/**/*.d.ts
+src/**/*.d.ts.map
+src/**/*.js.map
+
+# Vite-Config Stray-Emit (vite.config.ts ist Source-of-truth)
+vite.config.js
+vite.config.d.ts
+
+# R-History (versehentlich aus theme-Verzeichnis)
+**/.Rhistory
+
+# Playwright
+test-results/
+playwright-report/
+playwright/.cache/
+
+# Lokale Config-Overrides (kein Commit — local.toml.example als Template)
+public/config/local.toml

@@ -1,0 +1,22 @@
+{
+  "id": "p3z-inhibition", "figure": "11-15(3)", "section": "11.4 · cinguläres Kontrollsystem",
+  "author": "ifland", "order": 60, "title": "P3z — Inhibition (No-go)",
+  "brain": { "regions": ["sma-presma"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "erp", "position": "right", "size": "md",
+    "data": {
+      "x": "ms",
+      "series": [
+        { "label": "No-go (rot)", "color": "#c0392b",
+          "points": [[1,0],[2,0.5],[3,1.5],[4,3],[5,4.2],[6,3.5],[7,2],[8,0.8],[9,0]] },
+        { "label": "Go (grün)", "color": "#2e7d32",
+          "points": [[1,0],[2,0.2],[3,0.5],[4,0.8],[5,1],[6,0.8],[7,0.5],[8,0.2],[9,0]] }
+      ],
+      "markers": ["P3z 300–400 ms", "Maximum über Cz", "Peak ~4.2 µV (schematisch)"]
+    }
+  },
+  "companion": {
+    "summary": "Die Inhibitionskomponente (P3z-No-go) ist eine Positivierung ~300–400 ms nach dem No-go-Reiz, am besten an Cz registrierbar. Die kortikalen Quellen liegen vor allem im **SMA und pre-SMA** (medialer BA6, Julich-Area 6mp/6ma). Sie repräsentiert die neuronalen Ressourcen zur Unterdrückung einer inadäquaten Reaktion.",
+    "sources": [{ "key": "mueller_2011" }, { "key": "kropotov_2011" }]
+  }
+}

@@ -1,0 +1,18 @@
+# ==============================================================================
+# Geräteklasse tablet (z. B. iPad, typische Android-Tablets).
+# Pflicht wenn detectDeviceClass() === "tablet".
+# Mittleres Budget zwischen Desktop-defaults und Phone-mobile.
+# ==============================================================================
+
+[canvas]
+dpr_min = 1
+dpr_max = 1
+precision = "highp"
+
+[postprocessing]
+multisampling = 2
+ssao_samples = 12
+ssao_rings = 3
+
+[lights.editorial]
+cast_shadow = true

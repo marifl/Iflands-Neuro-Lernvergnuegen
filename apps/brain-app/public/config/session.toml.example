@@ -1,0 +1,12 @@
+# ==============================================================================
+# Optional: Kopiere nach session.toml im gleichen Ordner (nicht versioniert empfohlen)
+# oder versioniere nur Defaults — wird nach Geräteklasse und vor local.toml gemerged.
+# Nur Keys aus dem bestehenden AppConfigSchema (siehe appConfig.schema.ts).
+# ==============================================================================
+#
+# Beispiel — eine Vortragssitzung mit reduzierter Postprocessing-Last:
+#
+# [postprocessing]
+# multisampling = 2
+# ssao_samples = 16
+#

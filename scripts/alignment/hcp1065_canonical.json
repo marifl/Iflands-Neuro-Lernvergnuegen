@@ -1,0 +1,397 @@
+{
+  "version": "1.0.0",
+  "sourceOfTruth": "hcp1065-tracts",
+  "generatedAt": "2026-05-24T15:24:27.091620+00:00",
+  "sourceGlb": "figs3d/v2/glb/tracts-hcp1065.glb",
+  "namingNote": "MESH-Namen = trakt-codes (last segment), volle Hierarchie in GLB: fasertrakte/<kategorie>/<code>",
+  "root": {
+    "name": "fasertrakte",
+    "type": "EMPTY",
+    "label": "Fasertrakte (HCP1065)",
+    "children": [
+      {
+        "name": "fasertrakte/assoziationsbahnen",
+        "type": "EMPTY",
+        "label": "Assoziationsbahnen",
+        "children": [
+          {
+            "name": "af-l",
+            "type": "MESH"
+          },
+          {
+            "name": "af-r",
+            "type": "MESH"
+          },
+          {
+            "name": "c-fp-l",
+            "type": "MESH"
+          },
+          {
+            "name": "c-fp-r",
+            "type": "MESH"
+          },
+          {
+            "name": "c-fph-l",
+            "type": "MESH"
+          },
+          {
+            "name": "c-fph-r",
+            "type": "MESH"
+          },
+          {
+            "name": "c-ph-l",
+            "type": "MESH"
+          },
+          {
+            "name": "c-ph-r",
+            "type": "MESH"
+          },
+          {
+            "name": "c-php-l",
+            "type": "MESH"
+          },
+          {
+            "name": "c-php-r",
+            "type": "MESH"
+          },
+          {
+            "name": "c-po-l",
+            "type": "MESH"
+          },
+          {
+            "name": "c-po-r",
+            "type": "MESH"
+          },
+          {
+            "name": "emc-l",
+            "type": "MESH"
+          },
+          {
+            "name": "emc-r",
+            "type": "MESH"
+          },
+          {
+            "name": "fat-l",
+            "type": "MESH"
+          },
+          {
+            "name": "fat-r",
+            "type": "MESH"
+          },
+          {
+            "name": "ifof-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ifof-r",
+            "type": "MESH"
+          },
+          {
+            "name": "ilf-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ilf-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mdlf-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mdlf-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pat-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pat-r",
+            "type": "MESH"
+          },
+          {
+            "name": "slf1-l",
+            "type": "MESH"
+          },
+          {
+            "name": "slf1-r",
+            "type": "MESH"
+          },
+          {
+            "name": "slf2-l",
+            "type": "MESH"
+          },
+          {
+            "name": "slf2-r",
+            "type": "MESH"
+          },
+          {
+            "name": "slf3-l",
+            "type": "MESH"
+          },
+          {
+            "name": "slf3-r",
+            "type": "MESH"
+          },
+          {
+            "name": "uf-l",
+            "type": "MESH"
+          },
+          {
+            "name": "uf-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vof-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vof-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "fasertrakte/projektionsbahnen",
+        "type": "EMPTY",
+        "label": "Projektionsbahnen",
+        "children": [
+          {
+            "name": "ar-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ar-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cbt-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cbt-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-f-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-f-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-o-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-o-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-p-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cpt-p-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-a-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-a-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-p-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-p-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-s-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cs-s-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cst-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cst-r",
+            "type": "MESH"
+          },
+          {
+            "name": "drtt-l",
+            "type": "MESH"
+          },
+          {
+            "name": "drtt-r",
+            "type": "MESH"
+          },
+          {
+            "name": "f-l",
+            "type": "MESH"
+          },
+          {
+            "name": "f-r",
+            "type": "MESH"
+          },
+          {
+            "name": "ml-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ml-r",
+            "type": "MESH"
+          },
+          {
+            "name": "or-l",
+            "type": "MESH"
+          },
+          {
+            "name": "or-r",
+            "type": "MESH"
+          },
+          {
+            "name": "rst-l",
+            "type": "MESH"
+          },
+          {
+            "name": "rst-r",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-a-l",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-a-r",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-p-l",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-p-r",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-s-l",
+            "type": "MESH"
+          },
+          {
+            "name": "tr-s-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "fasertrakte/kommissuren",
+        "type": "EMPTY",
+        "label": "Kommissuren",
+        "children": [
+          {
+            "name": "ac",
+            "type": "MESH"
+          },
+          {
+            "name": "cc",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "fasertrakte/kleinhirnbahnen",
+        "type": "EMPTY",
+        "label": "Kleinhirnbahnen",
+        "children": [
+          {
+            "name": "cb-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cb-r",
+            "type": "MESH"
+          },
+          {
+            "name": "icp-l",
+            "type": "MESH"
+          },
+          {
+            "name": "icp-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mcp",
+            "type": "MESH"
+          },
+          {
+            "name": "scp",
+            "type": "MESH"
+          },
+          {
+            "name": "v",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "fasertrakte/hirnnerven",
+        "type": "EMPTY",
+        "label": "Hirnnerven",
+        "children": [
+          {
+            "name": "cnii-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cnii-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cniii-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cniii-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cnv-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cnv-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cnvii-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cnvii-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cnviii-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cnviii-r",
+            "type": "MESH"
+          }
+        ]
+      }
+    ]
+  }
+}

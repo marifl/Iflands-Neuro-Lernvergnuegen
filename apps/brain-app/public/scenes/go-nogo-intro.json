@@ -1,0 +1,10 @@
+{
+  "id": "go-nogo-intro", "section": "11.4 · cinguläres Kontrollsystem", "author": "ifland", "order": 10,
+  "title": "Go-/No-go-Aufgaben — Reaktion hemmen",
+  "brain": { "regions": ["inhibition-network"], "camera": "medial-midline" },
+  "overlay": { "kind": "prose", "position": "right", "size": "md" },
+  "companion": {
+    "summary": "Go-/No-go-Aufgaben messen die Kontrolle automatischer Reaktionen: Bei einem Go-Reiz wird schnell reagiert, bei einem No-go-Reiz muss die bereits vorbereitete Reaktion gehemmt werden. Cued-Varianten kündigen den Go-Reiz an, sodass sich die Person vorbereitet — und bei einem No-go die vorbereitete Reaktion aktiv unterdrücken muss. So lassen sich Inhibition und die zugrunde liegenden neurophysiologischen Prozesse elegant untersuchen.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.4, Go/No-go" }]
+  }
+}

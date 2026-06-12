@@ -1,0 +1,37 @@
+:root {
+  --motion-fast: 120ms;
+  --motion-base: 180ms;
+  --motion-slow: 280ms;
+  --motion-emphasis: cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reward-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.015);
+  }
+}
+
+.animate-panel-rise {
+  animation: panel-rise var(--motion-slow) var(--motion-emphasis);
+}
+
+.animate-reward-pulse {
+  animation: reward-pulse var(--motion-base) var(--motion-emphasis);
+}

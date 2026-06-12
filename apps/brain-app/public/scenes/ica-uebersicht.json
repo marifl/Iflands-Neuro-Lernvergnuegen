@@ -1,0 +1,17 @@
+{
+  "id": "ica-uebersicht", "section": "11.4 · ICA", "author": "ifland", "order": 30,
+  "title": "ICA — drei ERP-Komponenten",
+  "brain": { "regions": ["inhibition-network"], "camera": "superior" },
+  "overlay": {
+    "kind": "flowchart", "position": "right", "size": "md",
+    "data": { "nodes": [
+      { "id": "p3a", "label": "P3a (fronto-zentral, No-go)", "result": "Konfliktmonitoring" },
+      { "id": "p3b", "label": "P3b (parietal, Go)",          "result": "Engagement" },
+      { "id": "p3z", "label": "P3z (zentro-frontal, No-go)", "result": "Inhibition" }
+    ] }
+  },
+  "companion": {
+    "summary": "Die ERPs aus dem VCPT werden mit Independent Component Analysis (ICA) in unabhängige Teilkomponenten zerlegt — jede mit eigener Topografie und intrakortikaler Quelle. Drei für exekutive Funktionen zentrale Komponenten: die fronto-zentrale P3a-No-go (Konfliktmonitoring), die parietale P3b-Go (Engagement) und die zentro-frontale P3z-No-go (Inhibition).",
+    "sources": [{ "key": "mueller_2011" }, { "key": "kropotov_2011" }]
+  }
+}

@@ -1,0 +1,133 @@
+# ==============================================================================
+# brain-app Render-Konfiguration — defaults.toml
+# Alle Werte koennen durch production.toml (nur Prod-Build), device-{desktop|tablet|mobile}.toml,
+# optional session.toml und optional local.toml ueberschrieben werden.
+# Merge-Reihenfolge: defaults < production < device-<klasse> < session (optional) < local (optional).
+# Pflicht-Schichten: defaults immer; production.toml unter PROD; genau eine device-*.toml je Geräteklasse.
+# Optional: session.toml, local.toml (jeweils HTTP 404 ok). Parse-/Schema-Fehler sind Startblocker.
+# ==============================================================================
+
+[canvas]
+# WebGL-Antialias (MSAA). Teuer auf Phones — in device-mobile.toml deaktiviert.
+antialias = true
+
+# Stencil-Buffer. Nur noetig fuer CutCaps-Rendering.
+stencil = true
+
+# Device-Pixel-Ratio: [min, max]. Mobile: [1, 1]. Desktop: [1, 1.5].
+# P0: dpr_max 1.5 statt 2 — -20% GPU-Last auf Retina-Displays.
+dpr_min = 1
+dpr_max = 1.5
+
+# WebGL-Precision. "highp" | "mediump" | "lowp"
+precision = "highp"
+
+# Hintergrundfarbe der Canvas (CSS-Farbe)
+background = "rgb(245,237,231)"
+
+[camera]
+fov = 42
+near = 1
+far = 2000
+
+# OrbitControls — Damping
+damping_factor = 0.08
+min_distance = 80
+max_distance = 900
+
+[postprocessing]
+# EffectComposer MSAA-Samples. 0 = deaktiviert. Teuer auf Mobile.
+multisampling = 4
+
+# SSAO — P0: 16 Samples statt 32 auf Desktop (-25% Postprocessing-Last).
+# Phone-Override in device-mobile.toml: 8 Samples.
+ssao_samples = 16
+ssao_rings = 5
+ssao_radius = 8
+ssao_world_distance_threshold = 200
+ssao_world_distance_falloff = 20
+ssao_world_proximity_threshold = 50
+ssao_world_proximity_falloff = 5
+
+# Bloom
+bloom_luminance_threshold = 0.2
+bloom_luminance_smoothing = 0.2
+
+# Vignette
+vignette_offset = 0.15
+vignette_darkness = 0.35
+
+[lights.editorial]
+# Key-Light
+key_intensity = 1.4
+key_color = "#fff2e5"
+key_position = [-300, 250, 400]
+
+# Fill-Light
+fill_intensity = 0.45
+fill_color = "#ffddc8"
+fill_position = [400, -50, 150]
+
+# Back-Light
+back_intensity = 0.35
+back_color = "#d8e4f0"
+back_position = [0, 200, -300]
+
+# Ambient
+ambient_intensity = 0.55
+
+# Shadow-Map. P0: false spart kompletten Shadow-Map-Pass (-15% GPU).
+# Fuer bessere Optik: in local.toml auf true setzen.
+cast_shadow = false
+
+[lights.hemispheric]
+sky_color = "#fff5e8"
+ground_color = "#4a3f33"
+hemisphere_intensity = 0.9
+fill_intensity = 0.5
+
+[lights.neutral]
+ambient_intensity = 0.55
+fill_intensity = 0.6
+
+[assets]
+# Preload-Tier-1-GLBs (sofort beim App-Start)
+preload_tier1 = [
+  "/figs3d/v2/glb/mni152-pial.glb",
+  "/figs3d/v2/glb/mni152-brain-master.glb",
+]
+
+# Preload-Tier-2-GLBs (nach idle_delay_ms)
+preload_tier2 = [
+  "/figs3d/v2/glb/glasser.glb",
+  "/figs3d/v2/glb/cit168.glb",
+  "/figs3d/v2/glb/allen-hra-2020.glb",
+  "/figs3d/v2/glb/mni152-skull.glb",
+]
+
+# Verzoegerung in ms bevor Tier-2 geladen wird
+idle_delay_ms = 1500
+
+# Draco/Meshopt Decoder-Pfad (leer = deaktiviert)
+draco_decoder_path = ""
+meshopt_enabled = false
+
+[sync]
+# WebSocket-Server-URL fuer Companion-Sync (Presenter steuert, Studenten folgen).
+# Local-First: Server laeuft auf dem Presenter-Laptop (node server/sync-server.mjs).
+# Leer lassen ("") = kein Sync, Companion laeuft im Offline-/Frei-Browse-Modus.
+server_url = ""
+
+# Beispiel Seminarraum (Laptop-IP im WLAN):
+# server_url = "ws://192.168.1.42:4000"
+# Beispiel Hosting auf Hetzner:
+# server_url = "wss://brain.example.com/sync"
+
+[auth]
+# bcrypt-Hash des Editor-Passworts (fuer /editor-Route, nach 18.06. relevant).
+# Neu generieren: node -e "require('bcryptjs').hash('PASSWORT', 10).then(console.log)"
+# Leer lassen ("") = Editor-Mode deaktiviert.
+editor_password_hash = ""
+
+[build]
+sourcemap = false

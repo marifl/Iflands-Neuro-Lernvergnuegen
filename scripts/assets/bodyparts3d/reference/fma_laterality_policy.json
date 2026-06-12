@@ -1,0 +1,44 @@
+{
+  "_doc": "Autoritative FMA-Lateralitaets-Policy fuer die 54 FMA-ERROR-Strukturen. Quelle: EBI OLS4 (FMA), abgefragt 2026-06-11. 'paired' = FMA fuehrt echte lateralisierte Teilterme (Left/Right X) -> beide Mesh-Haelften behalten, FMA-ID je Seite auf das Kind umhaengen. 'midline' = FMA kennt NUR den unpaarigen Oberbegriff (kein Left/Right) -> als EINE Mittellinienstruktur fuehren (Haelften mergen, Duplikat-Versionen deduplizieren). 'id_remap' = tote/obsolete Quell-IDs auf die gueltige Live-FMA-ID. Verifiziert: jede paired-Kind-ID hat die generische ID als FMA-hierarchicalParent.",
+  "_doc_part_whole": "'part_whole' kollabiert NUR echte geometrische Duplikate: eine 'half/part/portion/segment/division of X'-Struktur, die DASSELBE Objekt wie das ganze X ist (nur unter anderer FMA-ID/Label dupliziert). Kriterium rein datengetrieben (convert.py, kein manueller Fall-Katalog): Teil und Ganzes muessen quasi-deckungsgleich sein — relative Volumendifferenz <= max_rel_volume_delta UND Schwerpunkt-Abstand <= max_centroid_mm. Nur dann wird der Teil verworfen und das Ganze als kanonischer Knoten behalten. Nicht-deckungsgleiche Teile (andere Groesse ODER andere Lage = echte Substruktur, z.B. anteriorer Gyrus-temporalis-superior-Teil, VPLo/VPLc, VPMpc) werden BEWUSST BEHALTEN — sie sind eigene buchrelevante anatomische Entitaeten. fma_audit.py listet alle Teil/Ganzes-Paare generisch ueber den Namen auf (welche kollabiert, welche bewusst behalten). Beispiel-Evidenz: Tentorium 'rechte Haelfte' = volumen- UND lagegleich mit dem ganzen Tentorium -> Duplikat, verworfen; posteriorer STG-Teil ~volumengleich aber raeumlich versetzt -> echte Substruktur, behalten.",
+  "_doc_mirror_complete": "'midline_mirror_complete' rekonstruiert das fehlende Blatt einer UNPAARIGEN, anatomisch symmetrischen Mittellinienstruktur, deren BodyParts3D-Quelle nur EINE Seite liefert. Kein Auto-Detect: 9 als 'midline' gefuehrte Strukturen sind geometrisch einseitig, davon sind die meisten echte einseitige Gefaesse (Set of inferior veins of cerebellar hemisphere, Superior cerebral vein, Portal vein of hypophysis …) — diese DUERFEN NICHT gespiegelt werden, sonst wird falsche Anatomie fabriziert. Daher explizite Whitelist je FMA. Verfahren (convert.py, complete_one_sided_midline): das einseitige Mesh wird an der Mittelsagittalebene (X_mid = Median der Roh-Zentroid-x aller midline-Strukturen) reflektiert und mit dem Original zu einem symmetrischen Knoten gemerged; das Ergebnis traegt reconstructed=true + laterality_note. Lauter Abbruch, falls das Mesh wider Erwarten nicht einseitig ist (Quelle liefert evtl. schon beide Blaetter). Evidenz FMA83966: 'Tentorium cerebelli' (FJ1843) ist trotz 'Ganzes'-Label geometrisch nur das rechte Blatt (alle Verts x<0, x -63..-2), kein linkes Blatt in irgendeinem der Downloads vorhanden.",
+  "part_whole": {
+    "max_rel_volume_delta": 0.01,
+    "max_centroid_mm": 2.0
+  },
+  "paired": {
+    "FMA50544": { "left": "FMA50546", "right": "FMA50545", "label": "Anterior inferior cerebellar artery" },
+    "FMA62488": { "left": "FMA72743", "right": "FMA72742", "label": "Induseum griseum" },
+    "FMA74877": { "left": "FMA273254", "right": "FMA273252", "label": "Mammillary body" },
+    "FMA62485": { "left": "FMA72735", "right": "FMA72734", "label": "Periamygdaloid area" },
+    "FMA74414": { "left": "FMA272419", "right": "FMA272417", "label": "Subiculum" },
+    "FMA74884": { "left": "FMA270684", "right": "FMA270682", "label": "Uncus" },
+    "FMA61934": { "left": "FMA274029", "right": "FMA274027", "label": "Choroid plexus of cerebral hemisphere" }
+  },
+  "midline": {
+    "FMA77439": "Artery of central sulcus",
+    "FMA67944": "Cerebellum",
+    "FMA78462": "Choroid plexus of third ventricle",
+    "FMA62008": "Hypothalamus",
+    "FMA61975": "Lamina terminalis",
+    "FMA77627": "Medial olfactory stria",
+    "FMA62004": "Medulla oblongata",
+    "FMA61993": "Midbrain",
+    "FMA62045": "Optic chiasm",
+    "FMA84354": "Periventricular nucleus",
+    "FMA77524": "Pharyngeal nerve",
+    "FMA67943": "Pons",
+    "FMA51230": "Superior vein of vermis",
+    "FMA62327": "Tuber cinereum",
+    "FMA50531": "Anterior spinal artery"
+  },
+  "midline_mirror_complete": {
+    "FMA83966": "Tentorium cerebelli",
+    "FMA50784": "Sinus confluence",
+    "FMA50781": "Occipital sinus"
+  },
+  "id_remap": {
+    "FMA50532": "FMA50531",
+    "FMA50533": "FMA50531"
+  }
+}

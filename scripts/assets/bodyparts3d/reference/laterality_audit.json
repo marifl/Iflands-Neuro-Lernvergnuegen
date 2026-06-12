@@ -1,0 +1,672 @@
+{
+  "summary": {
+    "total_structures": 600,
+    "sides": {
+      "left": 244,
+      "right": 296,
+      "midline": 60
+    },
+    "missing_side_total": 23,
+    "missing_left": 19,
+    "missing_right": 4,
+    "missing_probable_defect": 0,
+    "missing_dural_sinus": 1,
+    "missing_ok_asym_real": 0,
+    "missing_vascular_maybe_real": 22,
+    "missing_fix_load": 0,
+    "missing_fix_mirror": 22,
+    "volume_asym_total": 13,
+    "volume_asym_left_deficit": 12,
+    "onesided_midline_total": 10,
+    "onesided_dural_sinus": 0,
+    "onesided_parenchymal_vessel": 10,
+    "onesided_non_vascular": 0,
+    "x_mid_mm": -0.68,
+    "vol_ratio_min": 0.6
+  },
+  "findings": {
+    "missing_side": [
+      {
+        "base": "cavernous sinus",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 2.3316,
+        "fma": [
+          "FMA51402"
+        ],
+        "classification": "dural_sinus",
+        "contralateral_in_source": false,
+        "fix": "review",
+        "slugs": [
+          "right-cavernous-sinus",
+          "right-cavernous-sinus-v2",
+          "right-cavernous-sinus-v3",
+          "right-cavernous-sinus-v4",
+          "right-cavernous-sinus-v5",
+          "right-cavernous-sinus-v6",
+          "right-cavernous-sinus-v7"
+        ]
+      },
+      {
+        "base": "trunk of middle temporal branch of middle cerebral artery",
+        "present": "left",
+        "missing": "right",
+        "present_volume_cm3": 0.2648,
+        "fma": [
+          "FMA76135"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-middle-temporal-branch-of-left-middle-cerebral-artery"
+        ]
+      },
+      {
+        "base": "trunk of middle cerebral artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.1028,
+        "fma": [
+          "FMA61991"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-middle-cerebral-artery"
+        ]
+      },
+      {
+        "base": "trunk of superior cerebellar artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0954,
+        "fma": [
+          "FMA86076"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-superior-cerebellar-artery"
+        ]
+      },
+      {
+        "base": "anterior cerebral vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0582,
+        "fma": [
+          "FMA51307"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-anterior-cerebral-vein"
+        ]
+      },
+      {
+        "base": "trunk of posterior inferior cerebellar artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0556,
+        "fma": [
+          "FMA86070"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-posterior-inferior-cerebellar-artery"
+        ]
+      },
+      {
+        "base": "internal cerebral vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.054,
+        "fma": [
+          "FMA51004"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-internal-cerebral-vein"
+        ]
+      },
+      {
+        "base": "trunk of medial branch of superior cerebellar artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0526,
+        "fma": [
+          "FMA86079"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-medial-branch-of-right-superior-cerebellar-artery"
+        ]
+      },
+      {
+        "base": "anterior choroidal artery",
+        "present": "left",
+        "missing": "right",
+        "present_volume_cm3": 0.0406,
+        "fma": [
+          "FMA50089"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "left-anterior-choroidal-artery"
+        ]
+      },
+      {
+        "base": "trunk of anterior choroidal artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.038,
+        "fma": [
+          "FMA76254"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-anterior-choroidal-artery"
+        ]
+      },
+      {
+        "base": "superior cerebellar vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0236,
+        "fma": [
+          "FMA52452"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-superior-cerebellar-vein"
+        ]
+      },
+      {
+        "base": "branch of anterior choroidal artery to posterior limb of internal capsule",
+        "present": "left",
+        "missing": "right",
+        "present_volume_cm3": 0.0086,
+        "fma": [
+          "FMA50147"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "branch-of-left-anterior-choroidal-artery-to-posterior-limb-of-left-internal-capsule"
+        ]
+      },
+      {
+        "base": "transverse pontine vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0085,
+        "fma": [
+          "FMA51355"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-transverse-pontine-vein"
+        ]
+      },
+      {
+        "base": "proximal medial striate artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0066,
+        "fma": [
+          "FMA50315"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-proximal-medial-striate-artery"
+        ]
+      },
+      {
+        "base": "transverse medullary vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0066,
+        "fma": [
+          "FMA51400"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-transverse-medullary-vein"
+        ]
+      },
+      {
+        "base": "posterolateral central branch of posterior cerebral artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0059,
+        "fma": [
+          "FMA50668"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "posterolateral-central-branch-of-right-posterior-cerebral-artery"
+        ]
+      },
+      {
+        "base": "interpeduncular vein",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0059,
+        "fma": [
+          "FMA51378"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-interpeduncular-vein"
+        ]
+      },
+      {
+        "base": "posteromedial central branch of posterior cerebral artery",
+        "present": "left",
+        "missing": "right",
+        "present_volume_cm3": 0.0035,
+        "fma": [
+          "FMA50661"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "posteromedial-central-branch-of-left-posterior-cerebral-artery"
+        ]
+      },
+      {
+        "base": "trunk of callosomarginal artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0034,
+        "fma": [
+          "FMA76079"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-callosomarginal-artery"
+        ]
+      },
+      {
+        "base": "branch of anterior choroidal artery to lateral ventricle",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0022,
+        "fma": [
+          "FMA50131"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "branch-of-right-anterior-choroidal-artery-to-right-lateral-ventricle"
+        ]
+      },
+      {
+        "base": "branch of anterior choroidal artery to optic tract",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.001,
+        "fma": [
+          "FMA50138"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "branch-of-right-anterior-choroidal-artery-to-right-optic-tract"
+        ]
+      },
+      {
+        "base": "mammillary artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0005,
+        "fma": [
+          "FMA50449"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "right-mammillary-artery"
+        ]
+      },
+      {
+        "base": "trunk of anterior cerebral artery",
+        "present": "right",
+        "missing": "left",
+        "present_volume_cm3": 0.0005,
+        "fma": [
+          "FMA76062"
+        ],
+        "classification": "vascular_maybe_real",
+        "contralateral_in_source": false,
+        "fix": "mirror",
+        "slugs": [
+          "trunk-of-right-anterior-cerebral-artery"
+        ]
+      }
+    ],
+    "volume_asym": [
+      {
+        "base": "supra-orbital nerve",
+        "left_volume_cm3": 0.0242,
+        "right_volume_cm3": 0.0909,
+        "ratio": 0.266,
+        "deficit": "left",
+        "vascular": false,
+        "fma": [
+          "FMA52656",
+          "FMA52657"
+        ]
+      },
+      {
+        "base": "sphenoid part of middle cerebral artery",
+        "left_volume_cm3": 0.2242,
+        "right_volume_cm3": 0.6651,
+        "ratio": 0.337,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50366",
+          "FMA50367"
+        ]
+      },
+      {
+        "base": "artery of postcentral sulcus",
+        "left_volume_cm3": 0.0998,
+        "right_volume_cm3": 0.2478,
+        "ratio": 0.403,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50483",
+          "FMA50484"
+        ]
+      },
+      {
+        "base": "anterolateral central branch of middle cerebral artery",
+        "left_volume_cm3": 0.0463,
+        "right_volume_cm3": 0.0192,
+        "ratio": 0.415,
+        "deficit": "right",
+        "vascular": true,
+        "fma": [
+          "FMA50377",
+          "FMA50378"
+        ]
+      },
+      {
+        "base": "postcommunicating part of posterior cerebral artery",
+        "left_volume_cm3": 0.1033,
+        "right_volume_cm3": 0.2194,
+        "ratio": 0.471,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50641",
+          "FMA50642"
+        ]
+      },
+      {
+        "base": "lateral branch of superior cerebellar artery",
+        "left_volume_cm3": 0.0861,
+        "right_volume_cm3": 0.1727,
+        "ratio": 0.499,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50578",
+          "FMA50579"
+        ]
+      },
+      {
+        "base": "posterior communicating artery",
+        "left_volume_cm3": 0.0237,
+        "right_volume_cm3": 0.0474,
+        "ratio": 0.5,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50085",
+          "FMA50086"
+        ]
+      },
+      {
+        "base": "intermediomedial branch of callosomarginal artery",
+        "left_volume_cm3": 0.029,
+        "right_volume_cm3": 0.0577,
+        "ratio": 0.503,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50351",
+          "FMA50352"
+        ]
+      },
+      {
+        "base": "artery of precentral sulcus",
+        "left_volume_cm3": 0.1739,
+        "right_volume_cm3": 0.3436,
+        "ratio": 0.506,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50480",
+          "FMA50481"
+        ]
+      },
+      {
+        "base": "branch of middle cerebral artery to angular gyrus",
+        "left_volume_cm3": 0.04,
+        "right_volume_cm3": 0.0789,
+        "ratio": 0.507,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50476",
+          "FMA50477"
+        ]
+      },
+      {
+        "base": "precommunicating part of posterior cerebral artery",
+        "left_volume_cm3": 0.0355,
+        "right_volume_cm3": 0.0697,
+        "ratio": 0.509,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50639",
+          "FMA50640"
+        ]
+      },
+      {
+        "base": "temporo-occipital branch of middle cerebral artery",
+        "left_volume_cm3": 0.3374,
+        "right_volume_cm3": 0.6492,
+        "ratio": 0.52,
+        "deficit": "left",
+        "vascular": true,
+        "fma": [
+          "FMA50473",
+          "FMA50474"
+        ]
+      },
+      {
+        "base": "ophthalmic nerve",
+        "left_volume_cm3": 0.0923,
+        "right_volume_cm3": 0.1694,
+        "ratio": 0.545,
+        "deficit": "left",
+        "vascular": false,
+        "fma": [
+          "FMA52622",
+          "FMA52623"
+        ]
+      }
+    ],
+    "onesided_midline": [
+      {
+        "slug": "inferior-cerebral-vein",
+        "name": "Inferior cerebral vein",
+        "fma": "FMA50986",
+        "x_min": -63.9,
+        "x_max": -20.0,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.4478
+      },
+      {
+        "slug": "portal-vein-of-hypophysis",
+        "name": "Portal vein of hypophysis",
+        "fma": "FMA50798",
+        "x_min": -17.6,
+        "x_max": -1.7,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0026
+      },
+      {
+        "slug": "set-of-branches-of-cavernous-part-of-internal-carotid-artery-to-nerves",
+        "name": "Set of branches of cavernous part of internal carotid artery to nerves",
+        "fma": "FMA71693",
+        "x_min": -21.0,
+        "x_max": -14.4,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0105
+      },
+      {
+        "slug": "set-of-inferior-veins-of-cerebellar-hemisphere",
+        "name": "Set of inferior veins of cerebellar hemisphere",
+        "fma": "FMA71578",
+        "x_min": -50.7,
+        "x_max": -13.8,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0324
+      },
+      {
+        "slug": "set-of-inferior-veins-of-cerebellar-hemisphere-v2",
+        "name": "Set of inferior veins of cerebellar hemisphere",
+        "fma": "FMA71578",
+        "x_min": -28.9,
+        "x_max": -18.9,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0545
+      },
+      {
+        "slug": "set-of-inferior-veins-of-cerebellar-hemisphere-v3",
+        "name": "Set of inferior veins of cerebellar hemisphere",
+        "fma": "FMA71578",
+        "x_min": -20.2,
+        "x_max": -5.9,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.015
+      },
+      {
+        "slug": "set-of-lateral-direct-veins-of-lateral-ventricle",
+        "name": "Set of lateral direct veins of lateral ventricle",
+        "fma": "FMA71571",
+        "x_min": -10.1,
+        "x_max": -2.6,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0081
+      },
+      {
+        "slug": "superior-cerebral-vein",
+        "name": "Superior cerebral vein",
+        "fma": "FMA50978",
+        "x_min": -64.1,
+        "x_max": -10.8,
+        "dominant_side": "right",
+        "skew_ratio": 0.0,
+        "weak_extent_mm": 0.0,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.078
+      },
+      {
+        "slug": "dorsal-medullary-vein",
+        "name": "Dorsal medullary vein",
+        "fma": "FMA51393",
+        "x_min": -15.9,
+        "x_max": -0.2,
+        "dominant_side": "right",
+        "skew_ratio": 0.03,
+        "weak_extent_mm": 0.5,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.008
+      },
+      {
+        "slug": "inferior-vein-of-vermis",
+        "name": "Inferior vein of vermis",
+        "fma": "FMA51231",
+        "x_min": -13.2,
+        "x_max": -0.1,
+        "dominant_side": "right",
+        "skew_ratio": 0.046,
+        "weak_extent_mm": 0.6,
+        "category": "parenchymal_vessel",
+        "vascular": true,
+        "volume_cm3": 0.0164
+      }
+    ]
+  }
+}

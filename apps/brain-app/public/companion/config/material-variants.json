@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "matte":        { "roughness": 0.85, "metalness": 0.00, "wireframe": false, "transparent": false, "opacity": 1.0, "depthWrite": true },
+    "glossy":       { "roughness": 0.25, "metalness": 0.12, "wireframe": false, "transparent": false, "opacity": 1.0, "depthWrite": true },
+    "laminar":      { "roughness": 0.62, "metalness": 0.04, "wireframe": false, "transparent": false, "opacity": 1.0, "depthWrite": true },
+    "depth":        { "roughness": 0.95, "metalness": 0.00, "wireframe": false, "transparent": false, "opacity": 1.0, "depthWrite": true },
+    "translucent":  { "roughness": 0.70, "metalness": 0.00, "wireframe": false, "transparent": true,  "opacity": 0.45, "depthWrite": false },
+    "wireframe":    { "roughness": 0.85, "metalness": 0.00, "wireframe": true,  "transparent": false, "opacity": 1.0, "depthWrite": true },
+    "x-ray":        { "roughness": 0.90, "metalness": 0.00, "wireframe": false, "transparent": true,  "opacity": 0.15, "depthWrite": false },
+    "atlas-colors": { "roughness": 0.62, "metalness": 0.04, "wireframe": false, "transparent": false, "opacity": 1.0, "depthWrite": true }
+  },
+  "tagDefaults": {
+    "skull":    { "roughness": 0.85, "metalness": 0.00, "color": "#eae0c8" },
+    "skullPre": { "roughness": 0.85, "metalness": 0.00, "color": "#eae0c8" },
+    "iron":     { "roughness": 0.35, "metalness": 0.65, "color": "#33363a" }
+  },
+  "ghost": {
+    "color": "#dadada", "opacity": 0.18, "roughness": 0.85, "depthWrite": false
+  },
+  "skipVariantTags": ["skull", "skullPre", "iron"]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "zusammenfassung", "section": "11.5 · Zusammenfassung", "author": "ifland", "order": 70,
+  "title": "Zusammenfassung — exekutive Funktionen",
+  "brain": { "regions": ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-presma"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "prose", "position": "right", "size": "lg"
+  },
+  "companion": {
+    "summary": "Exekutive Funktionen sind Kontrollprozesse zur situationsgerechten Verhaltensoptimierung. Beteiligt sind v.a. DLPFC, VMPFC, posteriorer Parietallappen und Basalganglien (drei BG-Schleifen: DLPFC-, VMPFC-, ACC-Schleife). Diskutiert werden domänen-/funktionsspezifische und hierarchische PFC-Modelle. Tests (WCST, Stroop, Flüssigkeit, ToL) aktivieren je spezifische Areale. Das cinguläre System bearbeitet Konflikte (dorsal/kognitiv vs. ventral/emotional). Der VCPT evoziert ERPs, die per ICA in drei Komponenten zerlegt werden: P3a (Konfliktmonitoring, Cingulum), P3b (Engagement, Parietal/Frontal), P3z (Inhibition, medialer Frontalkortex/SMA).",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.5 Zusammenfassung" }]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "center_mm": [
+    -0.6506000000000043,
+    -84.0288,
+    1540.4450000000002
+  ],
+  "axis": "zup_to_yup",
+  "note": "Hirn-Build-Offset; (x,y,z)-center subtrahiert, dann (x,z,-y)."
+}

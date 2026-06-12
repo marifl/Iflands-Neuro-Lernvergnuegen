@@ -1,0 +1,5 @@
+# ==============================================================================
+# Geräteklasse desktop — Pflicht wenn detectDeviceClass() === "desktop".
+# Basis liegt in defaults.toml; diese Datei bleibt absichtlich ohne Overrides,
+# bis projekt-spezifische Desktop-Tuning-Werte dokumentiert sind.
+# ==============================================================================

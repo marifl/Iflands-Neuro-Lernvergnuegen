@@ -1,0 +1,3465 @@
+{
+  "version": "1.0.0",
+  "space": "bodyparts3d-taro",
+  "structureCount": 313,
+  "regionLabels": {
+    "eye": "Auge",
+    "muscle": "Muskeln",
+    "ligament": "Baender/Sehnen",
+    "nerve": "Nerven/Ganglien",
+    "gland": "Druesen",
+    "artery": "Arterien",
+    "vein": "Venen/Sinus",
+    "cartilage": "Knorpel",
+    "teeth": "Zaehne/Gingiva",
+    "vertebra": "Halswirbelsaeule",
+    "bone": "Knochen",
+    "ear": "Ohr",
+    "airway": "Mund/Rachen/Nase"
+  },
+  "structures": {
+    "left-salpingopharyngeus": {
+      "fma": "FMA46670",
+      "name": "Left salpingopharyngeus",
+      "side": "left",
+      "region": "airway",
+      "labels": {
+        "de": "Left salpingopharyngeus",
+        "la": "Left salpingopharyngeus",
+        "en": "Left salpingopharyngeus"
+      }
+    },
+    "left-superior-pharyngeal-constrictor": {
+      "fma": "FMA46632",
+      "name": "Left superior pharyngeal constrictor",
+      "side": "left",
+      "region": "airway",
+      "labels": {
+        "de": "Left superior pharyngeal constrictor",
+        "la": "Left superior pharyngeal constrictor",
+        "en": "Left superior pharyngeal constrictor"
+      }
+    },
+    "lip": {
+      "fma": "FMA59816",
+      "name": "Lip",
+      "side": "midline",
+      "region": "airway",
+      "labels": {
+        "de": "Lip",
+        "la": "Lip",
+        "en": "Lip"
+      }
+    },
+    "right-salpingopharyngeus": {
+      "fma": "FMA46669",
+      "name": "Right salpingopharyngeus",
+      "side": "right",
+      "region": "airway",
+      "labels": {
+        "de": "Right salpingopharyngeus",
+        "la": "Right salpingopharyngeus",
+        "en": "Right salpingopharyngeus"
+      }
+    },
+    "right-superior-pharyngeal-constrictor": {
+      "fma": "FMA46631",
+      "name": "Right superior pharyngeal constrictor",
+      "side": "right",
+      "region": "airway",
+      "labels": {
+        "de": "Right superior pharyngeal constrictor",
+        "la": "Right superior pharyngeal constrictor",
+        "en": "Right superior pharyngeal constrictor"
+      }
+    },
+    "anterior-temporal-branch-of-left-lateral-occipital-artery": {
+      "fma": "FMA50679",
+      "name": "Anterior temporal branch of left lateral occipital artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Anterior temporal branch of left lateral occipital artery",
+        "la": "Anterior temporal branch of left lateral occipital artery",
+        "en": "Anterior temporal branch of left lateral occipital artery"
+      }
+    },
+    "anterior-temporal-branch-of-right-lateral-occipital-artery": {
+      "fma": "FMA50678",
+      "name": "Anterior temporal branch of right lateral occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Anterior temporal branch of right lateral occipital artery",
+        "la": "Anterior temporal branch of right lateral occipital artery",
+        "en": "Anterior temporal branch of right lateral occipital artery"
+      }
+    },
+    "dental-branch-of-right-inferior-alveolar-artery": {
+      "fma": "FMA49709",
+      "name": "Dental branch of right inferior alveolar artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Dental branch of right inferior alveolar artery",
+        "la": "Dental branch of right inferior alveolar artery",
+        "en": "Dental branch of right inferior alveolar artery"
+      }
+    },
+    "dental-branch-of-right-posterior-superior-alveolar-artery": {
+      "fma": "FMA49762",
+      "name": "Dental branch of right posterior superior alveolar artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Dental branch of right posterior superior alveolar artery",
+        "la": "Dental branch of right posterior superior alveolar artery",
+        "en": "Dental branch of right posterior superior alveolar artery"
+      }
+    },
+    "frontal-branch-of-right-middle-meningeal-artery": {
+      "fma": "FMA49731",
+      "name": "Frontal branch of right middle meningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Frontal branch of right middle meningeal artery",
+        "la": "Frontal branch of right middle meningeal artery",
+        "en": "Frontal branch of right middle meningeal artery"
+      }
+    },
+    "frontal-branch-of-right-superficial-temporal-artery": {
+      "fma": "FMA49673",
+      "name": "Frontal branch of right superficial temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Frontal branch of right superficial temporal artery",
+        "la": "Frontal branch of right superficial temporal artery",
+        "en": "Frontal branch of right superficial temporal artery"
+      }
+    },
+    "left-anterior-parietal-artery": {
+      "fma": "FMA50487",
+      "name": "Left anterior parietal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left anterior parietal artery",
+        "la": "Left anterior parietal artery",
+        "en": "Left anterior parietal artery"
+      }
+    },
+    "left-anterior-temporal-artery": {
+      "fma": "FMA50384",
+      "name": "Left anterior temporal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left anterior temporal artery",
+        "la": "Left anterior temporal artery",
+        "en": "Left anterior temporal artery"
+      }
+    },
+    "left-lateral-frontobasal-artery": {
+      "fma": "FMA50444",
+      "name": "Left lateral frontobasal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left lateral frontobasal artery",
+        "la": "Left lateral frontobasal artery",
+        "en": "Left lateral frontobasal artery"
+      }
+    },
+    "left-medial-frontobasal-artery": {
+      "fma": "FMA50344",
+      "name": "Left medial frontobasal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left medial frontobasal artery",
+        "la": "Left medial frontobasal artery",
+        "en": "Left medial frontobasal artery"
+      }
+    },
+    "left-ophthalmic-artery": {
+      "fma": "FMA49870",
+      "name": "Left ophthalmic artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left ophthalmic artery",
+        "la": "Left ophthalmic artery",
+        "en": "Left ophthalmic artery"
+      }
+    },
+    "left-polar-temporal-artery": {
+      "fma": "FMA50381",
+      "name": "Left polar temporal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left polar temporal artery",
+        "la": "Left polar temporal artery",
+        "en": "Left polar temporal artery"
+      }
+    },
+    "left-posterior-parietal-artery": {
+      "fma": "FMA50490",
+      "name": "Left posterior parietal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left posterior parietal artery",
+        "la": "Left posterior parietal artery",
+        "en": "Left posterior parietal artery"
+      }
+    },
+    "left-prefrontal-artery": {
+      "fma": "FMA50478",
+      "name": "Left prefrontal artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left prefrontal artery",
+        "la": "Left prefrontal artery",
+        "en": "Left prefrontal artery"
+      }
+    },
+    "left-splenial-artery": {
+      "fma": "FMA50685",
+      "name": "Left splenial artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Left splenial artery",
+        "la": "Left splenial artery",
+        "en": "Left splenial artery"
+      }
+    },
+    "median-commissural-artery": {
+      "fma": "FMA50174",
+      "name": "Median commissural artery",
+      "side": "midline",
+      "region": "artery",
+      "labels": {
+        "de": "Median commissural artery",
+        "la": "Median commissural artery",
+        "en": "Median commissural artery"
+      }
+    },
+    "middle-temporal-branch-of-left-lateral-occipital-artery": {
+      "fma": "FMA50681",
+      "name": "Middle temporal branch of left lateral occipital artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Middle temporal branch of left lateral occipital artery",
+        "la": "Middle temporal branch of left lateral occipital artery",
+        "en": "Middle temporal branch of left lateral occipital artery"
+      }
+    },
+    "middle-temporal-branch-of-right-lateral-occipital-artery": {
+      "fma": "FMA50680",
+      "name": "Middle temporal branch of right lateral occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Middle temporal branch of right lateral occipital artery",
+        "la": "Middle temporal branch of right lateral occipital artery",
+        "en": "Middle temporal branch of right lateral occipital artery"
+      }
+    },
+    "nasal-septal-branch-of-right-superior-labial-artery": {
+      "fma": "FMA49575",
+      "name": "Nasal septal branch of right superior labial artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Nasal septal branch of right superior labial artery",
+        "la": "Nasal septal branch of right superior labial artery",
+        "en": "Nasal septal branch of right superior labial artery"
+      }
+    },
+    "occipitotemporal-branch-of-right-medial-occipital-artery": {
+      "fma": "FMA50692",
+      "name": "Occipitotemporal branch of right medial occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Occipitotemporal branch of right medial occipital artery",
+        "la": "Occipitotemporal branch of right medial occipital artery",
+        "en": "Occipitotemporal branch of right medial occipital artery"
+      }
+    },
+    "orbital-branch-of-right-middle-meningeal-artery": {
+      "fma": "FMA49729",
+      "name": "Orbital branch of right middle meningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Orbital branch of right middle meningeal artery",
+        "la": "Orbital branch of right middle meningeal artery",
+        "en": "Orbital branch of right middle meningeal artery"
+      }
+    },
+    "parietal-branch-of-right-medial-occipital-artery": {
+      "fma": "FMA50686",
+      "name": "Parietal branch of right medial occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Parietal branch of right medial occipital artery",
+        "la": "Parietal branch of right medial occipital artery",
+        "en": "Parietal branch of right medial occipital artery"
+      }
+    },
+    "parietal-branch-of-right-middle-meningeal-artery": {
+      "fma": "FMA49727",
+      "name": "Parietal branch of right middle meningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Parietal branch of right middle meningeal artery",
+        "la": "Parietal branch of right middle meningeal artery",
+        "en": "Parietal branch of right middle meningeal artery"
+      }
+    },
+    "parietal-branch-of-right-superficial-temporal-artery": {
+      "fma": "FMA49671",
+      "name": "Parietal branch of right superficial temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Parietal branch of right superficial temporal artery",
+        "la": "Parietal branch of right superficial temporal artery",
+        "en": "Parietal branch of right superficial temporal artery"
+      }
+    },
+    "peridental-branch-of-right-posterior-superior-alveolar-artery": {
+      "fma": "FMA49765",
+      "name": "Peridental branch of right posterior superior alveolar artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Peridental branch of right posterior superior alveolar artery",
+        "la": "Peridental branch of right posterior superior alveolar artery",
+        "en": "Peridental branch of right posterior superior alveolar artery"
+      }
+    },
+    "right-angular-artery": {
+      "fma": "FMA49584",
+      "name": "Right angular artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right angular artery",
+        "la": "Right angular artery",
+        "en": "Right angular artery"
+      }
+    },
+    "right-anterior-parietal-artery": {
+      "fma": "FMA50486",
+      "name": "Right anterior parietal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right anterior parietal artery",
+        "la": "Right anterior parietal artery",
+        "en": "Right anterior parietal artery"
+      }
+    },
+    "right-anterior-tympanic-artery": {
+      "fma": "FMA49693",
+      "name": "Right anterior tympanic artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right anterior tympanic artery",
+        "la": "Right anterior tympanic artery",
+        "en": "Right anterior tympanic artery"
+      }
+    },
+    "right-ascending-pharyngeal-artery": {
+      "fma": "FMA49498",
+      "name": "Right ascending pharyngeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right ascending pharyngeal artery",
+        "la": "Right ascending pharyngeal artery",
+        "en": "Right ascending pharyngeal artery"
+      }
+    },
+    "right-calcarine-artery": {
+      "fma": "FMA50690",
+      "name": "Right calcarine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right calcarine artery",
+        "la": "Right calcarine artery",
+        "en": "Right calcarine artery"
+      }
+    },
+    "right-collicular-artery": {
+      "fma": "FMA50666",
+      "name": "Right collicular artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right collicular artery",
+        "la": "Right collicular artery",
+        "en": "Right collicular artery"
+      }
+    },
+    "right-deep-auricular-artery": {
+      "fma": "FMA49690",
+      "name": "Right deep auricular artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right deep auricular artery",
+        "la": "Right deep auricular artery",
+        "en": "Right deep auricular artery"
+      }
+    },
+    "right-dorsal-nasal-artery": {
+      "fma": "FMA50001",
+      "name": "Right dorsal nasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right dorsal nasal artery",
+        "la": "Right dorsal nasal artery",
+        "en": "Right dorsal nasal artery"
+      }
+    },
+    "right-inferior-alveolar-artery": {
+      "fma": "FMA49696",
+      "name": "Right inferior alveolar artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right inferior alveolar artery",
+        "la": "Right inferior alveolar artery",
+        "en": "Right inferior alveolar artery"
+      }
+    },
+    "right-inferior-tympanic-artery": {
+      "fma": "FMA49508",
+      "name": "Right inferior tympanic artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right inferior tympanic artery",
+        "la": "Right inferior tympanic artery",
+        "en": "Right inferior tympanic artery"
+      }
+    },
+    "right-lacrimal-artery": {
+      "fma": "FMA49928",
+      "name": "Right lacrimal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right lacrimal artery",
+        "la": "Right lacrimal artery",
+        "en": "Right lacrimal artery"
+      }
+    },
+    "right-lateral-frontobasal-artery": {
+      "fma": "FMA50443",
+      "name": "Right lateral frontobasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right lateral frontobasal artery",
+        "la": "Right lateral frontobasal artery",
+        "en": "Right lateral frontobasal artery"
+      }
+    },
+    "right-lateral-nasal-artery": {
+      "fma": "FMA49581",
+      "name": "Right lateral nasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right lateral nasal artery",
+        "la": "Right lateral nasal artery",
+        "en": "Right lateral nasal artery"
+      }
+    },
+    "right-lesser-palatine-artery": {
+      "fma": "FMA49802",
+      "name": "Right lesser palatine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right lesser palatine artery",
+        "la": "Right lesser palatine artery",
+        "en": "Right lesser palatine artery"
+      }
+    },
+    "right-long-posterior-ciliary-artery": {
+      "fma": "FMA49957",
+      "name": "Right long posterior ciliary artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right long posterior ciliary artery",
+        "la": "Right long posterior ciliary artery",
+        "en": "Right long posterior ciliary artery"
+      }
+    },
+    "right-medial-frontobasal-artery": {
+      "fma": "FMA50343",
+      "name": "Right medial frontobasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right medial frontobasal artery",
+        "la": "Right medial frontobasal artery",
+        "en": "Right medial frontobasal artery"
+      }
+    },
+    "right-ophthalmic-artery": {
+      "fma": "FMA49869",
+      "name": "Right ophthalmic artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right ophthalmic artery",
+        "la": "Right ophthalmic artery",
+        "en": "Right ophthalmic artery"
+      }
+    },
+    "right-posterior-auricular-artery": {
+      "fma": "FMA49625",
+      "name": "Right posterior auricular artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right posterior auricular artery",
+        "la": "Right posterior auricular artery",
+        "en": "Right posterior auricular artery"
+      }
+    },
+    "right-posterior-meningeal-artery": {
+      "fma": "FMA49504",
+      "name": "Right posterior meningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right posterior meningeal artery",
+        "la": "Right posterior meningeal artery",
+        "en": "Right posterior meningeal artery"
+      }
+    },
+    "right-posterior-parietal-artery": {
+      "fma": "FMA50489",
+      "name": "Right posterior parietal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right posterior parietal artery",
+        "la": "Right posterior parietal artery",
+        "en": "Right posterior parietal artery"
+      }
+    },
+    "right-posterior-superior-alveolar-artery": {
+      "fma": "FMA49758",
+      "name": "Right posterior superior alveolar artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right posterior superior alveolar artery",
+        "la": "Right posterior superior alveolar artery",
+        "en": "Right posterior superior alveolar artery"
+      }
+    },
+    "right-prefrontal-artery": {
+      "fma": "FMA50445",
+      "name": "Right prefrontal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right prefrontal artery",
+        "la": "Right prefrontal artery",
+        "en": "Right prefrontal artery"
+      }
+    },
+    "right-splenial-artery": {
+      "fma": "FMA50684",
+      "name": "Right splenial artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right splenial artery",
+        "la": "Right splenial artery",
+        "en": "Right splenial artery"
+      }
+    },
+    "right-stylomastoid-artery": {
+      "fma": "FMA49629",
+      "name": "Right stylomastoid artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right stylomastoid artery",
+        "la": "Right stylomastoid artery",
+        "en": "Right stylomastoid artery"
+      }
+    },
+    "right-sublingual-artery": {
+      "fma": "FMA49544",
+      "name": "Right sublingual artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right sublingual artery",
+        "la": "Right sublingual artery",
+        "en": "Right sublingual artery"
+      }
+    },
+    "right-superior-labial-artery": {
+      "fma": "FMA49571",
+      "name": "Right superior labial artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right superior labial artery",
+        "la": "Right superior labial artery",
+        "en": "Right superior labial artery"
+      }
+    },
+    "right-supra-orbital-artery": {
+      "fma": "FMA49974",
+      "name": "Right supra-orbital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right supra-orbital artery",
+        "la": "Right supra-orbital artery",
+        "en": "Right supra-orbital artery"
+      }
+    },
+    "right-supratrochlear-artery": {
+      "fma": "FMA50026",
+      "name": "Right supratrochlear artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Right supratrochlear artery",
+        "la": "Right supratrochlear artery",
+        "en": "Right supratrochlear artery"
+      }
+    },
+    "set-of-posterior-temporal-branches-of-lateral-occipital-artery": {
+      "fma": "FMA71502",
+      "name": "Set of posterior temporal branches of lateral occipital artery",
+      "side": "midline",
+      "region": "artery",
+      "labels": {
+        "de": "Set of posterior temporal branches of lateral occipital artery",
+        "la": "Set of posterior temporal branches of lateral occipital artery",
+        "en": "Set of posterior temporal branches of lateral occipital artery"
+      }
+    },
+    "third-part-of-right-lingual-artery": {
+      "fma": "FMA49535",
+      "name": "Third part of right lingual artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Third part of right lingual artery",
+        "la": "Third part of right lingual artery",
+        "en": "Third part of right lingual artery"
+      }
+    },
+    "trunk-of-artery-of-left-precentral-sulcus": {
+      "fma": "FMA76156",
+      "name": "Trunk of artery of left precentral sulcus",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of artery of left precentral sulcus",
+        "la": "Trunk of artery of left precentral sulcus",
+        "en": "Trunk of artery of left precentral sulcus"
+      }
+    },
+    "trunk-of-basilar-artery": {
+      "fma": "FMA76647",
+      "name": "Trunk of basilar artery",
+      "side": "midline",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of basilar artery",
+        "la": "Trunk of basilar artery",
+        "en": "Trunk of basilar artery"
+      }
+    },
+    "trunk-of-clivus-branch-of-right-internal-carotid-artery": {
+      "fma": "FMA75908",
+      "name": "Trunk of clivus branch of right internal carotid artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of clivus branch of right internal carotid artery",
+        "la": "Trunk of clivus branch of right internal carotid artery",
+        "en": "Trunk of clivus branch of right internal carotid artery"
+      }
+    },
+    "trunk-of-left-common-carotid-artery": {
+      "fma": "FMA69326",
+      "name": "Trunk of left common carotid artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of left common carotid artery",
+        "la": "Trunk of left common carotid artery",
+        "en": "Trunk of left common carotid artery"
+      }
+    },
+    "trunk-of-left-lateral-occipital-artery": {
+      "fma": "FMA86135",
+      "name": "Trunk of left lateral occipital artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of left lateral occipital artery",
+        "la": "Trunk of left lateral occipital artery",
+        "en": "Trunk of left lateral occipital artery"
+      }
+    },
+    "trunk-of-left-medial-occipital-artery": {
+      "fma": "FMA86137",
+      "name": "Trunk of left medial occipital artery",
+      "side": "left",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of left medial occipital artery",
+        "la": "Trunk of left medial occipital artery",
+        "en": "Trunk of left medial occipital artery"
+      }
+    },
+    "trunk-of-meningeal-branch-of-cavernous-part-of-right-internal-carotid-artery": {
+      "fma": "FMA75886",
+      "name": "Trunk of meningeal branch of cavernous part of right internal carotid artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of meningeal branch of cavernous part of right internal carotid artery",
+        "la": "Trunk of meningeal branch of cavernous part of right internal carotid artery",
+        "en": "Trunk of meningeal branch of cavernous part of right internal carotid artery"
+      }
+    },
+    "trunk-of-posterior-septal-branch-of-right-sphenopalatine-artery": {
+      "fma": "FMA79588",
+      "name": "Trunk of posterior septal branch of right sphenopalatine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of posterior septal branch of right sphenopalatine artery",
+        "la": "Trunk of posterior septal branch of right sphenopalatine artery",
+        "en": "Trunk of posterior septal branch of right sphenopalatine artery"
+      }
+    },
+    "trunk-of-recurrent-meningeal-branch-of-right-lacrimal-artery": {
+      "fma": "FMA75971",
+      "name": "Trunk of recurrent meningeal branch of right lacrimal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of recurrent meningeal branch of right lacrimal artery",
+        "la": "Trunk of recurrent meningeal branch of right lacrimal artery",
+        "en": "Trunk of recurrent meningeal branch of right lacrimal artery"
+      }
+    },
+    "trunk-of-right-anterior-deep-temporal-artery": {
+      "fma": "FMA79529",
+      "name": "Trunk of right anterior deep temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right anterior deep temporal artery",
+        "la": "Trunk of right anterior deep temporal artery",
+        "en": "Trunk of right anterior deep temporal artery"
+      }
+    },
+    "trunk-of-right-buccal-artery": {
+      "fma": "FMA79538",
+      "name": "Trunk of right buccal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right buccal artery",
+        "la": "Trunk of right buccal artery",
+        "en": "Trunk of right buccal artery"
+      }
+    },
+    "trunk-of-right-descending-palatine-artery": {
+      "fma": "FMA79568",
+      "name": "Trunk of right descending palatine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right descending palatine artery",
+        "la": "Trunk of right descending palatine artery",
+        "en": "Trunk of right descending palatine artery"
+      }
+    },
+    "trunk-of-right-facial-artery": {
+      "fma": "FMA66450",
+      "name": "Trunk of right facial artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right facial artery",
+        "la": "Trunk of right facial artery",
+        "en": "Trunk of right facial artery"
+      }
+    },
+    "trunk-of-right-greater-palatine-artery": {
+      "fma": "FMA79572",
+      "name": "Trunk of right greater palatine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right greater palatine artery",
+        "la": "Trunk of right greater palatine artery",
+        "en": "Trunk of right greater palatine artery"
+      }
+    },
+    "trunk-of-right-inferior-hypophyseal-artery": {
+      "fma": "FMA75898",
+      "name": "Trunk of right inferior hypophyseal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right inferior hypophyseal artery",
+        "la": "Trunk of right inferior hypophyseal artery",
+        "en": "Trunk of right inferior hypophyseal artery"
+      }
+    },
+    "trunk-of-right-infra-orbital-artery": {
+      "fma": "FMA79551",
+      "name": "Trunk of right infra-orbital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right infra-orbital artery",
+        "la": "Trunk of right infra-orbital artery",
+        "en": "Trunk of right infra-orbital artery"
+      }
+    },
+    "trunk-of-right-lateral-frontobasal-artery": {
+      "fma": "FMA76149",
+      "name": "Trunk of right lateral frontobasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right lateral frontobasal artery",
+        "la": "Trunk of right lateral frontobasal artery",
+        "en": "Trunk of right lateral frontobasal artery"
+      }
+    },
+    "trunk-of-right-lateral-occipital-artery": {
+      "fma": "FMA86134",
+      "name": "Trunk of right lateral occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right lateral occipital artery",
+        "la": "Trunk of right lateral occipital artery",
+        "en": "Trunk of right lateral occipital artery"
+      }
+    },
+    "trunk-of-right-lingual-artery": {
+      "fma": "FMA66447",
+      "name": "Trunk of right lingual artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right lingual artery",
+        "la": "Trunk of right lingual artery",
+        "en": "Trunk of right lingual artery"
+      }
+    },
+    "trunk-of-right-maxillary-artery": {
+      "fma": "FMA66456",
+      "name": "Trunk of right maxillary artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right maxillary artery",
+        "la": "Trunk of right maxillary artery",
+        "en": "Trunk of right maxillary artery"
+      }
+    },
+    "trunk-of-right-medial-occipital-artery": {
+      "fma": "FMA86136",
+      "name": "Trunk of right medial occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right medial occipital artery",
+        "la": "Trunk of right medial occipital artery",
+        "en": "Trunk of right medial occipital artery"
+      }
+    },
+    "trunk-of-right-middle-meningeal-artery": {
+      "fma": "FMA79494",
+      "name": "Trunk of right middle meningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right middle meningeal artery",
+        "la": "Trunk of right middle meningeal artery",
+        "en": "Trunk of right middle meningeal artery"
+      }
+    },
+    "trunk-of-right-middle-temporal-artery": {
+      "fma": "FMA79455",
+      "name": "Trunk of right middle temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right middle temporal artery",
+        "la": "Trunk of right middle temporal artery",
+        "en": "Trunk of right middle temporal artery"
+      }
+    },
+    "trunk-of-right-occipital-artery": {
+      "fma": "FMA66453",
+      "name": "Trunk of right occipital artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right occipital artery",
+        "la": "Trunk of right occipital artery",
+        "en": "Trunk of right occipital artery"
+      }
+    },
+    "trunk-of-right-ophthalmic-artery": {
+      "fma": "FMA70525",
+      "name": "Trunk of right ophthalmic artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right ophthalmic artery",
+        "la": "Trunk of right ophthalmic artery",
+        "en": "Trunk of right ophthalmic artery"
+      }
+    },
+    "trunk-of-right-polar-frontal-artery": {
+      "fma": "FMA76076",
+      "name": "Trunk of right polar frontal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right polar frontal artery",
+        "la": "Trunk of right polar frontal artery",
+        "en": "Trunk of right polar frontal artery"
+      }
+    },
+    "trunk-of-right-polar-temporal-artery": {
+      "fma": "FMA76113",
+      "name": "Trunk of right polar temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right polar temporal artery",
+        "la": "Trunk of right polar temporal artery",
+        "en": "Trunk of right polar temporal artery"
+      }
+    },
+    "trunk-of-right-posterior-deep-temporal-artery": {
+      "fma": "FMA79532",
+      "name": "Trunk of right posterior deep temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right posterior deep temporal artery",
+        "la": "Trunk of right posterior deep temporal artery",
+        "en": "Trunk of right posterior deep temporal artery"
+      }
+    },
+    "trunk-of-right-posterior-lateral-nasal-artery": {
+      "fma": "FMA79585",
+      "name": "Trunk of right posterior lateral nasal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right posterior lateral nasal artery",
+        "la": "Trunk of right posterior lateral nasal artery",
+        "en": "Trunk of right posterior lateral nasal artery"
+      }
+    },
+    "trunk-of-right-pterygomeningeal-artery": {
+      "fma": "FMA79522",
+      "name": "Trunk of right pterygomeningeal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right pterygomeningeal artery",
+        "la": "Trunk of right pterygomeningeal artery",
+        "en": "Trunk of right pterygomeningeal artery"
+      }
+    },
+    "trunk-of-right-sphenopalatine-artery": {
+      "fma": "FMA79581",
+      "name": "Trunk of right sphenopalatine artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right sphenopalatine artery",
+        "la": "Trunk of right sphenopalatine artery",
+        "en": "Trunk of right sphenopalatine artery"
+      }
+    },
+    "trunk-of-right-superficial-temporal-artery": {
+      "fma": "FMA79429",
+      "name": "Trunk of right superficial temporal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right superficial temporal artery",
+        "la": "Trunk of right superficial temporal artery",
+        "en": "Trunk of right superficial temporal artery"
+      }
+    },
+    "trunk-of-right-superior-tympanic-artery": {
+      "fma": "FMA79516",
+      "name": "Trunk of right superior tympanic artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right superior tympanic artery",
+        "la": "Trunk of right superior tympanic artery",
+        "en": "Trunk of right superior tympanic artery"
+      }
+    },
+    "trunk-of-right-uncal-artery": {
+      "fma": "FMA76193",
+      "name": "Trunk of right uncal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of right uncal artery",
+        "la": "Trunk of right uncal artery",
+        "en": "Trunk of right uncal artery"
+      }
+    },
+    "trunk-of-rightpericallosal-artery": {
+      "fma": "FMA76098",
+      "name": "Trunk of rightpericallosal artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of rightpericallosal artery",
+        "la": "Trunk of rightpericallosal artery",
+        "en": "Trunk of rightpericallosal artery"
+      }
+    },
+    "trunk-of-tentorial-basal-branch-of-right-internal-carotid-artery": {
+      "fma": "FMA75911",
+      "name": "Trunk of tentorial basal branch of right internal carotid artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of tentorial basal branch of right internal carotid artery",
+        "la": "Trunk of tentorial basal branch of right internal carotid artery",
+        "en": "Trunk of tentorial basal branch of right internal carotid artery"
+      }
+    },
+    "trunk-of-tentorial-marginal-branch-of-right-internal-carotid-artery": {
+      "fma": "FMA75914",
+      "name": "Trunk of tentorial marginal branch of right internal carotid artery",
+      "side": "right",
+      "region": "artery",
+      "labels": {
+        "de": "Trunk of tentorial marginal branch of right internal carotid artery",
+        "la": "Trunk of tentorial marginal branch of right internal carotid artery",
+        "en": "Trunk of tentorial marginal branch of right internal carotid artery"
+      }
+    },
+    "left-inferior-nasal-concha": {
+      "fma": "FMA54738",
+      "name": "Left inferior nasal concha",
+      "side": "left",
+      "region": "bone",
+      "labels": {
+        "de": "Left inferior nasal concha",
+        "la": "Left inferior nasal concha",
+        "en": "Left inferior nasal concha"
+      }
+    },
+    "right-inferior-nasal-concha": {
+      "fma": "FMA54737",
+      "name": "Right inferior nasal concha",
+      "side": "right",
+      "region": "bone",
+      "labels": {
+        "de": "Right inferior nasal concha",
+        "la": "Right inferior nasal concha",
+        "en": "Right inferior nasal concha"
+      }
+    },
+    "left-lateral-nasal-cartilage": {
+      "fma": "FMA59513",
+      "name": "Left lateral nasal cartilage",
+      "side": "left",
+      "region": "cartilage",
+      "labels": {
+        "de": "Left lateral nasal cartilage",
+        "la": "Left lateral nasal cartilage",
+        "en": "Left lateral nasal cartilage"
+      }
+    },
+    "left-major-alar-cartilage": {
+      "fma": "FMA59506",
+      "name": "Left major alar cartilage",
+      "side": "left",
+      "region": "cartilage",
+      "labels": {
+        "de": "Left major alar cartilage",
+        "la": "Left major alar cartilage",
+        "en": "Left major alar cartilage"
+      }
+    },
+    "right-lateral-nasal-cartilage": {
+      "fma": "FMA59512",
+      "name": "Right lateral nasal cartilage",
+      "side": "right",
+      "region": "cartilage",
+      "labels": {
+        "de": "Right lateral nasal cartilage",
+        "la": "Right lateral nasal cartilage",
+        "en": "Right lateral nasal cartilage"
+      }
+    },
+    "right-major-alar-cartilage": {
+      "fma": "FMA59505",
+      "name": "Right major alar cartilage",
+      "side": "right",
+      "region": "cartilage",
+      "labels": {
+        "de": "Right major alar cartilage",
+        "la": "Right major alar cartilage",
+        "en": "Right major alar cartilage"
+      }
+    },
+    "septal-nasal-cartilage": {
+      "fma": "FMA59503",
+      "name": "Septal nasal cartilage",
+      "side": "midline",
+      "region": "cartilage",
+      "labels": {
+        "de": "Septal nasal cartilage",
+        "la": "Septal nasal cartilage",
+        "en": "Septal nasal cartilage"
+      }
+    },
+    "external-ear": {
+      "fma": "FMA52781",
+      "name": "External ear",
+      "side": "midline",
+      "region": "ear",
+      "labels": {
+        "de": "External ear",
+        "la": "External ear",
+        "en": "External ear"
+      }
+    },
+    "anterior-chamber-of-left-eyeball": {
+      "fma": "FMA58082",
+      "name": "Anterior chamber of left eyeball",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Anterior chamber of left eyeball",
+        "la": "Anterior chamber of left eyeball",
+        "en": "Anterior chamber of left eyeball"
+      }
+    },
+    "anterior-chamber-of-right-eyeball": {
+      "fma": "FMA58081",
+      "name": "Anterior chamber of right eyeball",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Anterior chamber of right eyeball",
+        "la": "Anterior chamber of right eyeball",
+        "en": "Anterior chamber of right eyeball"
+      }
+    },
+    "eyebrow": {
+      "fma": "FMA54237",
+      "name": "Eyebrow",
+      "side": "midline",
+      "region": "eye",
+      "labels": {
+        "de": "Eyebrow",
+        "la": "Eyebrow",
+        "en": "Eyebrow"
+      }
+    },
+    "inferior-palpebral-branch-of-left-infra-orbital-nerve": {
+      "fma": "FMA52988",
+      "name": "Inferior palpebral branch of left infra-orbital nerve",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Inferior palpebral branch of left infra-orbital nerve",
+        "la": "Inferior palpebral branch of left infra-orbital nerve",
+        "en": "Inferior palpebral branch of left infra-orbital nerve"
+      }
+    },
+    "inferior-palpebral-branch-of-right-infra-orbital-nerve": {
+      "fma": "FMA52987",
+      "name": "Inferior palpebral branch of right infra-orbital nerve",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Inferior palpebral branch of right infra-orbital nerve",
+        "la": "Inferior palpebral branch of right infra-orbital nerve",
+        "en": "Inferior palpebral branch of right infra-orbital nerve"
+      }
+    },
+    "left-choroid": {
+      "fma": "FMA58300",
+      "name": "Left choroid",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left choroid",
+        "la": "Left choroid",
+        "en": "Left choroid"
+      }
+    },
+    "left-cornea": {
+      "fma": "FMA58240",
+      "name": "Left cornea",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left cornea",
+        "la": "Left cornea",
+        "en": "Left cornea"
+      }
+    },
+    "left-corona-ciliaris": {
+      "fma": "FMA58484",
+      "name": "Left corona ciliaris",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left corona ciliaris",
+        "la": "Left corona ciliaris",
+        "en": "Left corona ciliaris"
+      }
+    },
+    "left-iris": {
+      "fma": "FMA58237",
+      "name": "Left iris",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left iris",
+        "la": "Left iris",
+        "en": "Left iris"
+      }
+    },
+    "left-lens": {
+      "fma": "FMA58243",
+      "name": "Left lens",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left lens",
+        "la": "Left lens",
+        "en": "Left lens"
+      }
+    },
+    "left-levator-palpebrae-superioris": {
+      "fma": "FMA49049",
+      "name": "Left levator palpebrae superioris",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left levator palpebrae superioris",
+        "la": "Left levator palpebrae superioris",
+        "en": "Left levator palpebrae superioris"
+      }
+    },
+    "left-sclera": {
+      "fma": "FMA58272",
+      "name": "Left sclera",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left sclera",
+        "la": "Left sclera",
+        "en": "Left sclera"
+      }
+    },
+    "left-vitreous-body": {
+      "fma": "FMA58829",
+      "name": "Left vitreous body",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Left vitreous body",
+        "la": "Left vitreous body",
+        "en": "Left vitreous body"
+      }
+    },
+    "nerve-to-left-levator-palpebrae-superioris": {
+      "fma": "FMA52596",
+      "name": "Nerve to left levator palpebrae superioris",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Nerve to left levator palpebrae superioris",
+        "la": "Nerve to left levator palpebrae superioris",
+        "en": "Nerve to left levator palpebrae superioris"
+      }
+    },
+    "nerve-to-right-levator-palpebrae-superioris": {
+      "fma": "FMA52595",
+      "name": "Nerve to right levator palpebrae superioris",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Nerve to right levator palpebrae superioris",
+        "la": "Nerve to right levator palpebrae superioris",
+        "en": "Nerve to right levator palpebrae superioris"
+      }
+    },
+    "palpebral-branch-of-right-infratrochlear-nerve": {
+      "fma": "FMA52709",
+      "name": "Palpebral branch of right infratrochlear nerve",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Palpebral branch of right infratrochlear nerve",
+        "la": "Palpebral branch of right infratrochlear nerve",
+        "en": "Palpebral branch of right infratrochlear nerve"
+      }
+    },
+    "right-central-retinal-artery": {
+      "fma": "FMA49880",
+      "name": "Right central retinal artery",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right central retinal artery",
+        "la": "Right central retinal artery",
+        "en": "Right central retinal artery"
+      }
+    },
+    "right-central-retinal-vein": {
+      "fma": "FMA51884",
+      "name": "Right central retinal vein",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right central retinal vein",
+        "la": "Right central retinal vein",
+        "en": "Right central retinal vein"
+      }
+    },
+    "right-choroid": {
+      "fma": "FMA58299",
+      "name": "Right choroid",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right choroid",
+        "la": "Right choroid",
+        "en": "Right choroid"
+      }
+    },
+    "right-cornea": {
+      "fma": "FMA58239",
+      "name": "Right cornea",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right cornea",
+        "la": "Right cornea",
+        "en": "Right cornea"
+      }
+    },
+    "right-corona-ciliaris": {
+      "fma": "FMA58483",
+      "name": "Right corona ciliaris",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right corona ciliaris",
+        "la": "Right corona ciliaris",
+        "en": "Right corona ciliaris"
+      }
+    },
+    "right-inferior-palpebral-arch": {
+      "fma": "FMA50021",
+      "name": "Right inferior palpebral arch",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right inferior palpebral arch",
+        "la": "Right inferior palpebral arch",
+        "en": "Right inferior palpebral arch"
+      }
+    },
+    "right-iris": {
+      "fma": "FMA58236",
+      "name": "Right iris",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right iris",
+        "la": "Right iris",
+        "en": "Right iris"
+      }
+    },
+    "right-lateral-palpebral-artery": {
+      "fma": "FMA49941",
+      "name": "Right lateral palpebral artery",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right lateral palpebral artery",
+        "la": "Right lateral palpebral artery",
+        "en": "Right lateral palpebral artery"
+      }
+    },
+    "right-lens": {
+      "fma": "FMA58242",
+      "name": "Right lens",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right lens",
+        "la": "Right lens",
+        "en": "Right lens"
+      }
+    },
+    "right-levator-palpebrae-superioris": {
+      "fma": "FMA49048",
+      "name": "Right levator palpebrae superioris",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right levator palpebrae superioris",
+        "la": "Right levator palpebrae superioris",
+        "en": "Right levator palpebrae superioris"
+      }
+    },
+    "right-medial-palpebral-artery": {
+      "fma": "FMA50013",
+      "name": "Right medial palpebral artery",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right medial palpebral artery",
+        "la": "Right medial palpebral artery",
+        "en": "Right medial palpebral artery"
+      }
+    },
+    "right-sclera": {
+      "fma": "FMA58271",
+      "name": "Right sclera",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right sclera",
+        "la": "Right sclera",
+        "en": "Right sclera"
+      }
+    },
+    "right-superior-palpebral-arch": {
+      "fma": "FMA50023",
+      "name": "Right superior palpebral arch",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right superior palpebral arch",
+        "la": "Right superior palpebral arch",
+        "en": "Right superior palpebral arch"
+      }
+    },
+    "right-superior-palpebral-vein": {
+      "fma": "FMA50908",
+      "name": "Right superior palpebral vein",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right superior palpebral vein",
+        "la": "Right superior palpebral vein",
+        "en": "Right superior palpebral vein"
+      }
+    },
+    "right-vitreous-body": {
+      "fma": "FMA58828",
+      "name": "Right vitreous body",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Right vitreous body",
+        "la": "Right vitreous body",
+        "en": "Right vitreous body"
+      }
+    },
+    "set-of-inferior-palpebral-veins": {
+      "fma": "FMA70847",
+      "name": "Set of inferior palpebral veins",
+      "side": "midline",
+      "region": "eye",
+      "labels": {
+        "de": "Set of inferior palpebral veins",
+        "la": "Set of inferior palpebral veins",
+        "en": "Set of inferior palpebral veins"
+      }
+    },
+    "suspensory-ligament-of-left-lens": {
+      "fma": "FMA58840",
+      "name": "Suspensory ligament of left lens",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Suspensory ligament of left lens",
+        "la": "Suspensory ligament of left lens",
+        "en": "Suspensory ligament of left lens"
+      }
+    },
+    "suspensory-ligament-of-right-lens": {
+      "fma": "FMA58839",
+      "name": "Suspensory ligament of right lens",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Suspensory ligament of right lens",
+        "la": "Suspensory ligament of right lens",
+        "en": "Suspensory ligament of right lens"
+      }
+    },
+    "tarsal-plate-of-left-lower-eyelid": {
+      "fma": "FMA59090",
+      "name": "Tarsal plate of left lower eyelid",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Tarsal plate of left lower eyelid",
+        "la": "Tarsal plate of left lower eyelid",
+        "en": "Tarsal plate of left lower eyelid"
+      }
+    },
+    "tarsal-plate-of-left-upper-eyelid": {
+      "fma": "FMA59092",
+      "name": "Tarsal plate of left upper eyelid",
+      "side": "left",
+      "region": "eye",
+      "labels": {
+        "de": "Tarsal plate of left upper eyelid",
+        "la": "Tarsal plate of left upper eyelid",
+        "en": "Tarsal plate of left upper eyelid"
+      }
+    },
+    "tarsal-plate-of-right-lower-eyelid": {
+      "fma": "FMA59089",
+      "name": "Tarsal plate of right lower eyelid",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Tarsal plate of right lower eyelid",
+        "la": "Tarsal plate of right lower eyelid",
+        "en": "Tarsal plate of right lower eyelid"
+      }
+    },
+    "tarsal-plate-of-right-upper-eyelid": {
+      "fma": "FMA59091",
+      "name": "Tarsal plate of right upper eyelid",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Tarsal plate of right upper eyelid",
+        "la": "Tarsal plate of right upper eyelid",
+        "en": "Tarsal plate of right upper eyelid"
+      }
+    },
+    "tendon-of-right-levator-palpebrae-superioris": {
+      "fma": "FMA54159",
+      "name": "Tendon of right levator palpebrae superioris",
+      "side": "right",
+      "region": "eye",
+      "labels": {
+        "de": "Tendon of right levator palpebrae superioris",
+        "la": "Tendon of right levator palpebrae superioris",
+        "en": "Tendon of right levator palpebrae superioris"
+      }
+    },
+    "left-lacrimal-canaliculus": {
+      "fma": "FMA59583",
+      "name": "Left lacrimal canaliculus",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left lacrimal canaliculus",
+        "la": "Left lacrimal canaliculus",
+        "en": "Left lacrimal canaliculus"
+      }
+    },
+    "left-lacrimal-gland": {
+      "fma": "FMA59103",
+      "name": "Left lacrimal gland",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left lacrimal gland",
+        "la": "Left lacrimal gland",
+        "en": "Left lacrimal gland"
+      }
+    },
+    "left-lacrimal-lake": {
+      "fma": "FMA59542",
+      "name": "Left lacrimal lake",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left lacrimal lake",
+        "la": "Left lacrimal lake",
+        "en": "Left lacrimal lake"
+      }
+    },
+    "left-lacrimal-sac": {
+      "fma": "FMA59546",
+      "name": "Left lacrimal sac",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left lacrimal sac",
+        "la": "Left lacrimal sac",
+        "en": "Left lacrimal sac"
+      }
+    },
+    "left-nasolacrimal-duct": {
+      "fma": "FMA59556",
+      "name": "Left nasolacrimal duct",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left nasolacrimal duct",
+        "la": "Left nasolacrimal duct",
+        "en": "Left nasolacrimal duct"
+      }
+    },
+    "left-sublingual-gland": {
+      "fma": "FMA59805",
+      "name": "Left sublingual gland",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left sublingual gland",
+        "la": "Left sublingual gland",
+        "en": "Left sublingual gland"
+      }
+    },
+    "left-submandibular-gland": {
+      "fma": "FMA59803",
+      "name": "Left submandibular gland",
+      "side": "left",
+      "region": "gland",
+      "labels": {
+        "de": "Left submandibular gland",
+        "la": "Left submandibular gland",
+        "en": "Left submandibular gland"
+      }
+    },
+    "right-lacrimal-canaliculus": {
+      "fma": "FMA59582",
+      "name": "Right lacrimal canaliculus",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right lacrimal canaliculus",
+        "la": "Right lacrimal canaliculus",
+        "en": "Right lacrimal canaliculus"
+      }
+    },
+    "right-lacrimal-gland": {
+      "fma": "FMA59102",
+      "name": "Right lacrimal gland",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right lacrimal gland",
+        "la": "Right lacrimal gland",
+        "en": "Right lacrimal gland"
+      }
+    },
+    "right-lacrimal-lake": {
+      "fma": "FMA59541",
+      "name": "Right lacrimal lake",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right lacrimal lake",
+        "la": "Right lacrimal lake",
+        "en": "Right lacrimal lake"
+      }
+    },
+    "right-lacrimal-sac": {
+      "fma": "FMA59545",
+      "name": "Right lacrimal sac",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right lacrimal sac",
+        "la": "Right lacrimal sac",
+        "en": "Right lacrimal sac"
+      }
+    },
+    "right-nasolacrimal-duct": {
+      "fma": "FMA59555",
+      "name": "Right nasolacrimal duct",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right nasolacrimal duct",
+        "la": "Right nasolacrimal duct",
+        "en": "Right nasolacrimal duct"
+      }
+    },
+    "right-sublingual-gland": {
+      "fma": "FMA59804",
+      "name": "Right sublingual gland",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right sublingual gland",
+        "la": "Right sublingual gland",
+        "en": "Right sublingual gland"
+      }
+    },
+    "right-submandibular-gland": {
+      "fma": "FMA59802",
+      "name": "Right submandibular gland",
+      "side": "right",
+      "region": "gland",
+      "labels": {
+        "de": "Right submandibular gland",
+        "la": "Right submandibular gland",
+        "en": "Right submandibular gland"
+      }
+    },
+    "left-common-tendinous-ring": {
+      "fma": "FMA49073",
+      "name": "Left common tendinous ring",
+      "side": "left",
+      "region": "ligament",
+      "labels": {
+        "de": "Left common tendinous ring",
+        "la": "Left common tendinous ring",
+        "en": "Left common tendinous ring"
+      }
+    },
+    "left-pterygomandibular-raphe": {
+      "fma": "FMA55620",
+      "name": "Left pterygomandibular raphe",
+      "side": "left",
+      "region": "ligament",
+      "labels": {
+        "de": "Left pterygomandibular raphe",
+        "la": "Left pterygomandibular raphe",
+        "en": "Left pterygomandibular raphe"
+      }
+    },
+    "left-stylohyoid-ligament": {
+      "fma": "FMA72311",
+      "name": "Left stylohyoid ligament",
+      "side": "left",
+      "region": "ligament",
+      "labels": {
+        "de": "Left stylohyoid ligament",
+        "la": "Left stylohyoid ligament",
+        "en": "Left stylohyoid ligament"
+      }
+    },
+    "left-stylomandibular-ligament": {
+      "fma": "FMA57086",
+      "name": "Left stylomandibular ligament",
+      "side": "left",
+      "region": "ligament",
+      "labels": {
+        "de": "Left stylomandibular ligament",
+        "la": "Left stylomandibular ligament",
+        "en": "Left stylomandibular ligament"
+      }
+    },
+    "right-common-tendinous-ring": {
+      "fma": "FMA49072",
+      "name": "Right common tendinous ring",
+      "side": "right",
+      "region": "ligament",
+      "labels": {
+        "de": "Right common tendinous ring",
+        "la": "Right common tendinous ring",
+        "en": "Right common tendinous ring"
+      }
+    },
+    "right-pterygomandibular-raphe": {
+      "fma": "FMA55619",
+      "name": "Right pterygomandibular raphe",
+      "side": "right",
+      "region": "ligament",
+      "labels": {
+        "de": "Right pterygomandibular raphe",
+        "la": "Right pterygomandibular raphe",
+        "en": "Right pterygomandibular raphe"
+      }
+    },
+    "right-stylohyoid-ligament": {
+      "fma": "FMA72309",
+      "name": "Right stylohyoid ligament",
+      "side": "right",
+      "region": "ligament",
+      "labels": {
+        "de": "Right stylohyoid ligament",
+        "la": "Right stylohyoid ligament",
+        "en": "Right stylohyoid ligament"
+      }
+    },
+    "right-stylomandibular-ligament": {
+      "fma": "FMA57084",
+      "name": "Right stylomandibular ligament",
+      "side": "right",
+      "region": "ligament",
+      "labels": {
+        "de": "Right stylomandibular ligament",
+        "la": "Right stylomandibular ligament",
+        "en": "Right stylomandibular ligament"
+      }
+    },
+    "artery-of-right-pterygoid-canal": {
+      "fma": "FMA85529",
+      "name": "Artery of right pterygoid canal",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Artery of right pterygoid canal",
+        "la": "Artery of right pterygoid canal",
+        "en": "Artery of right pterygoid canal"
+      }
+    },
+    "check-ligament-of-left-lateral-rectus": {
+      "fma": "FMA49145",
+      "name": "Check ligament of left lateral rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Check ligament of left lateral rectus",
+        "la": "Check ligament of left lateral rectus",
+        "en": "Check ligament of left lateral rectus"
+      }
+    },
+    "check-ligament-of-left-medial-rectus": {
+      "fma": "FMA49148",
+      "name": "Check ligament of left medial rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Check ligament of left medial rectus",
+        "la": "Check ligament of left medial rectus",
+        "en": "Check ligament of left medial rectus"
+      }
+    },
+    "check-ligament-of-right-lateral-rectus": {
+      "fma": "FMA49144",
+      "name": "Check ligament of right lateral rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Check ligament of right lateral rectus",
+        "la": "Check ligament of right lateral rectus",
+        "en": "Check ligament of right lateral rectus"
+      }
+    },
+    "check-ligament-of-right-medial-rectus": {
+      "fma": "FMA49147",
+      "name": "Check ligament of right medial rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Check ligament of right medial rectus",
+        "la": "Check ligament of right medial rectus",
+        "en": "Check ligament of right medial rectus"
+      }
+    },
+    "left-inferior-oblique": {
+      "fma": "FMA49051",
+      "name": "Left inferior oblique",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left inferior oblique",
+        "la": "Left inferior oblique",
+        "en": "Left inferior oblique"
+      }
+    },
+    "left-inferior-rectus": {
+      "fma": "FMA49047",
+      "name": "Left inferior rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left inferior rectus",
+        "la": "Left inferior rectus",
+        "en": "Left inferior rectus"
+      }
+    },
+    "left-lateral-rectus": {
+      "fma": "FMA49055",
+      "name": "Left lateral rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left lateral rectus",
+        "la": "Left lateral rectus",
+        "en": "Left lateral rectus"
+      }
+    },
+    "left-levator-veli-palatini": {
+      "fma": "FMA46729",
+      "name": "Left levator veli palatini",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left levator veli palatini",
+        "la": "Left levator veli palatini",
+        "en": "Left levator veli palatini"
+      }
+    },
+    "left-medial-rectus": {
+      "fma": "FMA49057",
+      "name": "Left medial rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left medial rectus",
+        "la": "Left medial rectus",
+        "en": "Left medial rectus"
+      }
+    },
+    "left-mylohyoid": {
+      "fma": "FMA46322",
+      "name": "Left mylohyoid",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left mylohyoid",
+        "la": "Left mylohyoid",
+        "en": "Left mylohyoid"
+      }
+    },
+    "left-obliquus-capitis-inferior": {
+      "fma": "FMA32537",
+      "name": "Left obliquus capitis inferior",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left obliquus capitis inferior",
+        "la": "Left obliquus capitis inferior",
+        "en": "Left obliquus capitis inferior"
+      }
+    },
+    "left-obliquus-capitis-superior": {
+      "fma": "FMA32535",
+      "name": "Left obliquus capitis superior",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left obliquus capitis superior",
+        "la": "Left obliquus capitis superior",
+        "en": "Left obliquus capitis superior"
+      }
+    },
+    "left-rectus-capitis-anterior": {
+      "fma": "FMA46314",
+      "name": "Left rectus capitis anterior",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left rectus capitis anterior",
+        "la": "Left rectus capitis anterior",
+        "en": "Left rectus capitis anterior"
+      }
+    },
+    "left-rectus-capitis-lateralis": {
+      "fma": "FMA46318",
+      "name": "Left rectus capitis lateralis",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left rectus capitis lateralis",
+        "la": "Left rectus capitis lateralis",
+        "en": "Left rectus capitis lateralis"
+      }
+    },
+    "left-rectus-capitis-posterior-major": {
+      "fma": "FMA32531",
+      "name": "Left rectus capitis posterior major",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left rectus capitis posterior major",
+        "la": "Left rectus capitis posterior major",
+        "en": "Left rectus capitis posterior major"
+      }
+    },
+    "left-rectus-capitis-posterior-minor": {
+      "fma": "FMA32533",
+      "name": "Left rectus capitis posterior minor",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left rectus capitis posterior minor",
+        "la": "Left rectus capitis posterior minor",
+        "en": "Left rectus capitis posterior minor"
+      }
+    },
+    "left-superior-oblique": {
+      "fma": "FMA49053",
+      "name": "Left superior oblique",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left superior oblique",
+        "la": "Left superior oblique",
+        "en": "Left superior oblique"
+      }
+    },
+    "left-superior-rectus": {
+      "fma": "FMA49045",
+      "name": "Left superior rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left superior rectus",
+        "la": "Left superior rectus",
+        "en": "Left superior rectus"
+      }
+    },
+    "left-tensor-veli-palatini": {
+      "fma": "FMA46732",
+      "name": "Left tensor veli palatini",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Left tensor veli palatini",
+        "la": "Left tensor veli palatini",
+        "en": "Left tensor veli palatini"
+      }
+    },
+    "nerve-to-left-inferior-oblique": {
+      "fma": "FMA52604",
+      "name": "Nerve to left inferior oblique",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to left inferior oblique",
+        "la": "Nerve to left inferior oblique",
+        "en": "Nerve to left inferior oblique"
+      }
+    },
+    "nerve-to-left-inferior-rectus": {
+      "fma": "FMA52606",
+      "name": "Nerve to left inferior rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to left inferior rectus",
+        "la": "Nerve to left inferior rectus",
+        "en": "Nerve to left inferior rectus"
+      }
+    },
+    "nerve-to-left-medial-rectus": {
+      "fma": "FMA52602",
+      "name": "Nerve to left medial rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to left medial rectus",
+        "la": "Nerve to left medial rectus",
+        "en": "Nerve to left medial rectus"
+      }
+    },
+    "nerve-to-left-superior-rectus": {
+      "fma": "FMA52584",
+      "name": "Nerve to left superior rectus",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to left superior rectus",
+        "la": "Nerve to left superior rectus",
+        "en": "Nerve to left superior rectus"
+      }
+    },
+    "nerve-to-right-inferior-rectus": {
+      "fma": "FMA52605",
+      "name": "Nerve to right inferior rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to right inferior rectus",
+        "la": "Nerve to right inferior rectus",
+        "en": "Nerve to right inferior rectus"
+      }
+    },
+    "nerve-to-right-medial-rectus": {
+      "fma": "FMA52601",
+      "name": "Nerve to right medial rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to right medial rectus",
+        "la": "Nerve to right medial rectus",
+        "en": "Nerve to right medial rectus"
+      }
+    },
+    "nerve-to-right-superior-rectus": {
+      "fma": "FMA52583",
+      "name": "Nerve to right superior rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Nerve to right superior rectus",
+        "la": "Nerve to right superior rectus",
+        "en": "Nerve to right superior rectus"
+      }
+    },
+    "orbital-branch-of-left-maxillary-nerve-to-left-orbitalis": {
+      "fma": "FMA52774",
+      "name": "Orbital branch of left maxillary nerve to left orbitalis",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Orbital branch of left maxillary nerve to left orbitalis",
+        "la": "Orbital branch of left maxillary nerve to left orbitalis",
+        "en": "Orbital branch of left maxillary nerve to left orbitalis"
+      }
+    },
+    "orbital-branch-of-right-maxillary-nerve-to-right-orbitalis": {
+      "fma": "FMA52773",
+      "name": "Orbital branch of right maxillary nerve to right orbitalis",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Orbital branch of right maxillary nerve to right orbitalis",
+        "la": "Orbital branch of right maxillary nerve to right orbitalis",
+        "en": "Orbital branch of right maxillary nerve to right orbitalis"
+      }
+    },
+    "right-inferior-oblique": {
+      "fma": "FMA49050",
+      "name": "Right inferior oblique",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right inferior oblique",
+        "la": "Right inferior oblique",
+        "en": "Right inferior oblique"
+      }
+    },
+    "right-inferior-rectus": {
+      "fma": "FMA49046",
+      "name": "Right inferior rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right inferior rectus",
+        "la": "Right inferior rectus",
+        "en": "Right inferior rectus"
+      }
+    },
+    "right-lateral-rectus": {
+      "fma": "FMA49054",
+      "name": "Right lateral rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right lateral rectus",
+        "la": "Right lateral rectus",
+        "en": "Right lateral rectus"
+      }
+    },
+    "right-levator-veli-palatini": {
+      "fma": "FMA46728",
+      "name": "Right levator veli palatini",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right levator veli palatini",
+        "la": "Right levator veli palatini",
+        "en": "Right levator veli palatini"
+      }
+    },
+    "right-medial-rectus": {
+      "fma": "FMA49056",
+      "name": "Right medial rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right medial rectus",
+        "la": "Right medial rectus",
+        "en": "Right medial rectus"
+      }
+    },
+    "right-mylohyoid": {
+      "fma": "FMA46321",
+      "name": "Right mylohyoid",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right mylohyoid",
+        "la": "Right mylohyoid",
+        "en": "Right mylohyoid"
+      }
+    },
+    "right-obliquus-capitis-inferior": {
+      "fma": "FMA32536",
+      "name": "Right obliquus capitis inferior",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right obliquus capitis inferior",
+        "la": "Right obliquus capitis inferior",
+        "en": "Right obliquus capitis inferior"
+      }
+    },
+    "right-obliquus-capitis-superior": {
+      "fma": "FMA32534",
+      "name": "Right obliquus capitis superior",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right obliquus capitis superior",
+        "la": "Right obliquus capitis superior",
+        "en": "Right obliquus capitis superior"
+      }
+    },
+    "right-pterygoid-plexus": {
+      "fma": "FMA51123",
+      "name": "Right pterygoid plexus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right pterygoid plexus",
+        "la": "Right pterygoid plexus",
+        "en": "Right pterygoid plexus"
+      }
+    },
+    "right-rectus-capitis-anterior": {
+      "fma": "FMA46313",
+      "name": "Right rectus capitis anterior",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right rectus capitis anterior",
+        "la": "Right rectus capitis anterior",
+        "en": "Right rectus capitis anterior"
+      }
+    },
+    "right-rectus-capitis-lateralis": {
+      "fma": "FMA46317",
+      "name": "Right rectus capitis lateralis",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right rectus capitis lateralis",
+        "la": "Right rectus capitis lateralis",
+        "en": "Right rectus capitis lateralis"
+      }
+    },
+    "right-rectus-capitis-posterior-major": {
+      "fma": "FMA32530",
+      "name": "Right rectus capitis posterior major",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right rectus capitis posterior major",
+        "la": "Right rectus capitis posterior major",
+        "en": "Right rectus capitis posterior major"
+      }
+    },
+    "right-rectus-capitis-posterior-minor": {
+      "fma": "FMA32532",
+      "name": "Right rectus capitis posterior minor",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right rectus capitis posterior minor",
+        "la": "Right rectus capitis posterior minor",
+        "en": "Right rectus capitis posterior minor"
+      }
+    },
+    "right-superior-oblique": {
+      "fma": "FMA49052",
+      "name": "Right superior oblique",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right superior oblique",
+        "la": "Right superior oblique",
+        "en": "Right superior oblique"
+      }
+    },
+    "right-superior-rectus": {
+      "fma": "FMA49044",
+      "name": "Right superior rectus",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right superior rectus",
+        "la": "Right superior rectus",
+        "en": "Right superior rectus"
+      }
+    },
+    "right-tensor-veli-palatini": {
+      "fma": "FMA46731",
+      "name": "Right tensor veli palatini",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Right tensor veli palatini",
+        "la": "Right tensor veli palatini",
+        "en": "Right tensor veli palatini"
+      }
+    },
+    "trochlea-of-left-superior-oblique": {
+      "fma": "FMA49068",
+      "name": "Trochlea of left superior oblique",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Trochlea of left superior oblique",
+        "la": "Trochlea of left superior oblique",
+        "en": "Trochlea of left superior oblique"
+      }
+    },
+    "trochlea-of-right-superior-oblique": {
+      "fma": "FMA49067",
+      "name": "Trochlea of right superior oblique",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Trochlea of right superior oblique",
+        "la": "Trochlea of right superior oblique",
+        "en": "Trochlea of right superior oblique"
+      }
+    },
+    "trunk-of-branch-of-left-mandibular-nerve-to-tensor-tympani": {
+      "fma": "FMA80553",
+      "name": "Trunk of branch of left mandibular nerve to tensor tympani",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Trunk of branch of left mandibular nerve to tensor tympani",
+        "la": "Trunk of branch of left mandibular nerve to tensor tympani",
+        "en": "Trunk of branch of left mandibular nerve to tensor tympani"
+      }
+    },
+    "trunk-of-branch-of-right-mandibular-nerve-to-tensor-tympani": {
+      "fma": "FMA80552",
+      "name": "Trunk of branch of right mandibular nerve to tensor tympani",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Trunk of branch of right mandibular nerve to tensor tympani",
+        "la": "Trunk of branch of right mandibular nerve to tensor tympani",
+        "en": "Trunk of branch of right mandibular nerve to tensor tympani"
+      }
+    },
+    "trunk-of-left-mylohyoid-nerve": {
+      "fma": "FMA80524",
+      "name": "Trunk of left mylohyoid nerve",
+      "side": "left",
+      "region": "muscle",
+      "labels": {
+        "de": "Trunk of left mylohyoid nerve",
+        "la": "Trunk of left mylohyoid nerve",
+        "en": "Trunk of left mylohyoid nerve"
+      }
+    },
+    "trunk-of-right-masseteric-artery": {
+      "fma": "FMA79525",
+      "name": "Trunk of right masseteric artery",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Trunk of right masseteric artery",
+        "la": "Trunk of right masseteric artery",
+        "en": "Trunk of right masseteric artery"
+      }
+    },
+    "trunk-of-right-mylohyoid-nerve": {
+      "fma": "FMA80523",
+      "name": "Trunk of right mylohyoid nerve",
+      "side": "right",
+      "region": "muscle",
+      "labels": {
+        "de": "Trunk of right mylohyoid nerve",
+        "la": "Trunk of right mylohyoid nerve",
+        "en": "Trunk of right mylohyoid nerve"
+      }
+    },
+    "uvular-muscle": {
+      "fma": "FMA46733",
+      "name": "Uvular muscle",
+      "side": "midline",
+      "region": "muscle",
+      "labels": {
+        "de": "Uvular muscle",
+        "la": "Uvular muscle",
+        "en": "Uvular muscle"
+      }
+    },
+    "buccal-branch-of-left-facial-nerve": {
+      "fma": "FMA53312",
+      "name": "Buccal branch of left facial nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Buccal branch of left facial nerve",
+        "la": "Buccal branch of left facial nerve",
+        "en": "Buccal branch of left facial nerve"
+      }
+    },
+    "buccal-branch-of-right-facial-nerve": {
+      "fma": "FMA53311",
+      "name": "Buccal branch of right facial nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Buccal branch of right facial nerve",
+        "la": "Buccal branch of right facial nerve",
+        "en": "Buccal branch of right facial nerve"
+      }
+    },
+    "external-nasal-branch-of-left-infra-orbital-nerve": {
+      "fma": "FMA52991",
+      "name": "External nasal branch of left infra-orbital nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "External nasal branch of left infra-orbital nerve",
+        "la": "External nasal branch of left infra-orbital nerve",
+        "en": "External nasal branch of left infra-orbital nerve"
+      }
+    },
+    "external-nasal-branch-of-right-infra-orbital-nerve": {
+      "fma": "FMA52990",
+      "name": "External nasal branch of right infra-orbital nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "External nasal branch of right infra-orbital nerve",
+        "la": "External nasal branch of right infra-orbital nerve",
+        "en": "External nasal branch of right infra-orbital nerve"
+      }
+    },
+    "internal-nasal-branch-of-left-anterior-ethmoidal-nerve": {
+      "fma": "FMA52687",
+      "name": "Internal nasal branch of left anterior ethmoidal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Internal nasal branch of left anterior ethmoidal nerve",
+        "la": "Internal nasal branch of left anterior ethmoidal nerve",
+        "en": "Internal nasal branch of left anterior ethmoidal nerve"
+      }
+    },
+    "internal-nasal-branch-of-left-infra-orbital-nerve": {
+      "fma": "FMA52993",
+      "name": "Internal nasal branch of left infra-orbital nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Internal nasal branch of left infra-orbital nerve",
+        "la": "Internal nasal branch of left infra-orbital nerve",
+        "en": "Internal nasal branch of left infra-orbital nerve"
+      }
+    },
+    "internal-nasal-branch-of-right-anterior-ethmoidal-nerve": {
+      "fma": "FMA52686",
+      "name": "Internal nasal branch of right anterior ethmoidal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Internal nasal branch of right anterior ethmoidal nerve",
+        "la": "Internal nasal branch of right anterior ethmoidal nerve",
+        "en": "Internal nasal branch of right anterior ethmoidal nerve"
+      }
+    },
+    "internal-nasal-branch-of-right-infra-orbital-nerve": {
+      "fma": "FMA52992",
+      "name": "Internal nasal branch of right infra-orbital nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Internal nasal branch of right infra-orbital nerve",
+        "la": "Internal nasal branch of right infra-orbital nerve",
+        "en": "Internal nasal branch of right infra-orbital nerve"
+      }
+    },
+    "lateral-internal-nasal-branch-of-left-anterior-ethmoidal-nerve": {
+      "fma": "FMA52685",
+      "name": "Lateral internal nasal branch of left anterior ethmoidal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Lateral internal nasal branch of left anterior ethmoidal nerve",
+        "la": "Lateral internal nasal branch of left anterior ethmoidal nerve",
+        "en": "Lateral internal nasal branch of left anterior ethmoidal nerve"
+      }
+    },
+    "lateral-internal-nasal-branch-of-right-anterior-ethmoidal-nerve": {
+      "fma": "FMA52684",
+      "name": "Lateral internal nasal branch of right anterior ethmoidal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Lateral internal nasal branch of right anterior ethmoidal nerve",
+        "la": "Lateral internal nasal branch of right anterior ethmoidal nerve",
+        "en": "Lateral internal nasal branch of right anterior ethmoidal nerve"
+      }
+    },
+    "left-lateral-posterior-superior-nasal-nerve": {
+      "fma": "FMA52784",
+      "name": "Left lateral posterior superior nasal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Left lateral posterior superior nasal nerve",
+        "la": "Left lateral posterior superior nasal nerve",
+        "en": "Left lateral posterior superior nasal nerve"
+      }
+    },
+    "left-long-ciliary-nerve": {
+      "fma": "FMA82735",
+      "name": "Left long ciliary nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Left long ciliary nerve",
+        "la": "Left long ciliary nerve",
+        "en": "Left long ciliary nerve"
+      }
+    },
+    "left-medial-posterior-superior-nasal-nerve": {
+      "fma": "FMA52787",
+      "name": "Left medial posterior superior nasal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Left medial posterior superior nasal nerve",
+        "la": "Left medial posterior superior nasal nerve",
+        "en": "Left medial posterior superior nasal nerve"
+      }
+    },
+    "left-posterior-inferior-nasal-nerve": {
+      "fma": "FMA52825",
+      "name": "Left posterior inferior nasal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Left posterior inferior nasal nerve",
+        "la": "Left posterior inferior nasal nerve",
+        "en": "Left posterior inferior nasal nerve"
+      }
+    },
+    "right-lateral-posterior-superior-nasal-nerve": {
+      "fma": "FMA52785",
+      "name": "Right lateral posterior superior nasal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Right lateral posterior superior nasal nerve",
+        "la": "Right lateral posterior superior nasal nerve",
+        "en": "Right lateral posterior superior nasal nerve"
+      }
+    },
+    "right-long-ciliary-nerve": {
+      "fma": "FMA82734",
+      "name": "Right long ciliary nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Right long ciliary nerve",
+        "la": "Right long ciliary nerve",
+        "en": "Right long ciliary nerve"
+      }
+    },
+    "right-medial-posterior-superior-nasal-nerve": {
+      "fma": "FMA52786",
+      "name": "Right medial posterior superior nasal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Right medial posterior superior nasal nerve",
+        "la": "Right medial posterior superior nasal nerve",
+        "en": "Right medial posterior superior nasal nerve"
+      }
+    },
+    "right-posterior-inferior-nasal-nerve": {
+      "fma": "FMA52824",
+      "name": "Right posterior inferior nasal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Right posterior inferior nasal nerve",
+        "la": "Right posterior inferior nasal nerve",
+        "en": "Right posterior inferior nasal nerve"
+      }
+    },
+    "short-ciliary-nerve": {
+      "fma": "FMA7041",
+      "name": "Short ciliary nerve",
+      "side": "midline",
+      "region": "nerve",
+      "labels": {
+        "de": "Short ciliary nerve",
+        "la": "Short ciliary nerve",
+        "en": "Short ciliary nerve"
+      }
+    },
+    "superior-labial-branch-of-left-infra-orbital-nerve": {
+      "fma": "FMA52995",
+      "name": "Superior labial branch of left infra-orbital nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Superior labial branch of left infra-orbital nerve",
+        "la": "Superior labial branch of left infra-orbital nerve",
+        "en": "Superior labial branch of left infra-orbital nerve"
+      }
+    },
+    "superior-labial-branch-of-right-infra-orbital-nerve": {
+      "fma": "FMA52994",
+      "name": "Superior labial branch of right infra-orbital nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Superior labial branch of right infra-orbital nerve",
+        "la": "Superior labial branch of right infra-orbital nerve",
+        "en": "Superior labial branch of right infra-orbital nerve"
+      }
+    },
+    "trunk-of-left-auriculotemporal-nerve": {
+      "fma": "FMA80541",
+      "name": "Trunk of left auriculotemporal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left auriculotemporal nerve",
+        "la": "Trunk of left auriculotemporal nerve",
+        "en": "Trunk of left auriculotemporal nerve"
+      }
+    },
+    "trunk-of-left-facial-nerve": {
+      "fma": "FMA65422",
+      "name": "Trunk of left facial nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left facial nerve",
+        "la": "Trunk of left facial nerve",
+        "en": "Trunk of left facial nerve"
+      }
+    },
+    "trunk-of-left-hypoglossal-nerve": {
+      "fma": "FMA80483",
+      "name": "Trunk of left hypoglossal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left hypoglossal nerve",
+        "la": "Trunk of left hypoglossal nerve",
+        "en": "Trunk of left hypoglossal nerve"
+      }
+    },
+    "trunk-of-left-inferior-alveolar-nerve": {
+      "fma": "FMA80519",
+      "name": "Trunk of left inferior alveolar nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left inferior alveolar nerve",
+        "la": "Trunk of left inferior alveolar nerve",
+        "en": "Trunk of left inferior alveolar nerve"
+      }
+    },
+    "trunk-of-left-lingual-nerve": {
+      "fma": "FMA80512",
+      "name": "Trunk of left lingual nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left lingual nerve",
+        "la": "Trunk of left lingual nerve",
+        "en": "Trunk of left lingual nerve"
+      }
+    },
+    "trunk-of-left-maxillary-nerve": {
+      "fma": "FMA80595",
+      "name": "Trunk of left maxillary nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left maxillary nerve",
+        "la": "Trunk of left maxillary nerve",
+        "en": "Trunk of left maxillary nerve"
+      }
+    },
+    "trunk-of-left-oculomotor-nerve": {
+      "fma": "FMA65426",
+      "name": "Trunk of left oculomotor nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left oculomotor nerve",
+        "la": "Trunk of left oculomotor nerve",
+        "en": "Trunk of left oculomotor nerve"
+      }
+    },
+    "trunk-of-left-posterior-auricular-nerve": {
+      "fma": "FMA80806",
+      "name": "Trunk of left posterior auricular nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left posterior auricular nerve",
+        "la": "Trunk of left posterior auricular nerve",
+        "en": "Trunk of left posterior auricular nerve"
+      }
+    },
+    "trunk-of-left-trigeminal-nerve": {
+      "fma": "FMA65424",
+      "name": "Trunk of left trigeminal nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of left trigeminal nerve",
+        "la": "Trunk of left trigeminal nerve",
+        "en": "Trunk of left trigeminal nerve"
+      }
+    },
+    "trunk-of-right-auriculotemporal-nerve": {
+      "fma": "FMA80540",
+      "name": "Trunk of right auriculotemporal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right auriculotemporal nerve",
+        "la": "Trunk of right auriculotemporal nerve",
+        "en": "Trunk of right auriculotemporal nerve"
+      }
+    },
+    "trunk-of-right-facial-nerve": {
+      "fma": "FMA65421",
+      "name": "Trunk of right facial nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right facial nerve",
+        "la": "Trunk of right facial nerve",
+        "en": "Trunk of right facial nerve"
+      }
+    },
+    "trunk-of-right-hypoglossal-nerve": {
+      "fma": "FMA80482",
+      "name": "Trunk of right hypoglossal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right hypoglossal nerve",
+        "la": "Trunk of right hypoglossal nerve",
+        "en": "Trunk of right hypoglossal nerve"
+      }
+    },
+    "trunk-of-right-inferior-alveolar-nerve": {
+      "fma": "FMA80518",
+      "name": "Trunk of right inferior alveolar nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right inferior alveolar nerve",
+        "la": "Trunk of right inferior alveolar nerve",
+        "en": "Trunk of right inferior alveolar nerve"
+      }
+    },
+    "trunk-of-right-lingual-nerve": {
+      "fma": "FMA80511",
+      "name": "Trunk of right lingual nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right lingual nerve",
+        "la": "Trunk of right lingual nerve",
+        "en": "Trunk of right lingual nerve"
+      }
+    },
+    "trunk-of-right-maxillary-nerve": {
+      "fma": "FMA80594",
+      "name": "Trunk of right maxillary nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right maxillary nerve",
+        "la": "Trunk of right maxillary nerve",
+        "en": "Trunk of right maxillary nerve"
+      }
+    },
+    "trunk-of-right-oculomotor-nerve": {
+      "fma": "FMA65425",
+      "name": "Trunk of right oculomotor nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right oculomotor nerve",
+        "la": "Trunk of right oculomotor nerve",
+        "en": "Trunk of right oculomotor nerve"
+      }
+    },
+    "trunk-of-right-posterior-auricular-nerve": {
+      "fma": "FMA80805",
+      "name": "Trunk of right posterior auricular nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right posterior auricular nerve",
+        "la": "Trunk of right posterior auricular nerve",
+        "en": "Trunk of right posterior auricular nerve"
+      }
+    },
+    "trunk-of-right-trigeminal-nerve": {
+      "fma": "FMA65423",
+      "name": "Trunk of right trigeminal nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of right trigeminal nerve",
+        "la": "Trunk of right trigeminal nerve",
+        "en": "Trunk of right trigeminal nerve"
+      }
+    },
+    "trunk-of-temporal-branch-of-left-facial-nerve": {
+      "fma": "FMA80828",
+      "name": "Trunk of temporal branch of left facial nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of temporal branch of left facial nerve",
+        "la": "Trunk of temporal branch of left facial nerve",
+        "en": "Trunk of temporal branch of left facial nerve"
+      }
+    },
+    "trunk-of-temporal-branch-of-right-facial-nerve": {
+      "fma": "FMA80827",
+      "name": "Trunk of temporal branch of right facial nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of temporal branch of right facial nerve",
+        "la": "Trunk of temporal branch of right facial nerve",
+        "en": "Trunk of temporal branch of right facial nerve"
+      }
+    },
+    "trunk-of-zygomatic-branch-of-left-facial-nerve": {
+      "fma": "FMA80847",
+      "name": "Trunk of zygomatic branch of left facial nerve",
+      "side": "left",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of zygomatic branch of left facial nerve",
+        "la": "Trunk of zygomatic branch of left facial nerve",
+        "en": "Trunk of zygomatic branch of left facial nerve"
+      }
+    },
+    "trunk-of-zygomatic-branch-of-right-facial-nerve": {
+      "fma": "FMA80846",
+      "name": "Trunk of zygomatic branch of right facial nerve",
+      "side": "right",
+      "region": "nerve",
+      "labels": {
+        "de": "Trunk of zygomatic branch of right facial nerve",
+        "la": "Trunk of zygomatic branch of right facial nerve",
+        "en": "Trunk of zygomatic branch of right facial nerve"
+      }
+    },
+    "left-first-lower-molar-tooth": {
+      "fma": "FMA55704",
+      "name": "Left first lower molar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left first lower molar tooth",
+        "la": "Left first lower molar tooth",
+        "en": "Left first lower molar tooth"
+      }
+    },
+    "left-first-lower-premolar-tooth": {
+      "fma": "FMA55693",
+      "name": "Left first lower premolar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left first lower premolar tooth",
+        "la": "Left first lower premolar tooth",
+        "en": "Left first lower premolar tooth"
+      }
+    },
+    "left-first-upper-molar-tooth": {
+      "fma": "FMA55699",
+      "name": "Left first upper molar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left first upper molar tooth",
+        "la": "Left first upper molar tooth",
+        "en": "Left first upper molar tooth"
+      }
+    },
+    "left-first-upper-premolar-tooth": {
+      "fma": "FMA55690",
+      "name": "Left first upper premolar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left first upper premolar tooth",
+        "la": "Left first upper premolar tooth",
+        "en": "Left first upper premolar tooth"
+      }
+    },
+    "left-second-lower-molar-tooth": {
+      "fma": "FMA55703",
+      "name": "Left second lower molar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left second lower molar tooth",
+        "la": "Left second lower molar tooth",
+        "en": "Left second lower molar tooth"
+      }
+    },
+    "left-second-lower-premolar-tooth": {
+      "fma": "FMA55692",
+      "name": "Left second lower premolar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left second lower premolar tooth",
+        "la": "Left second lower premolar tooth",
+        "en": "Left second lower premolar tooth"
+      }
+    },
+    "left-second-upper-molar-tooth": {
+      "fma": "FMA55700",
+      "name": "Left second upper molar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left second upper molar tooth",
+        "la": "Left second upper molar tooth",
+        "en": "Left second upper molar tooth"
+      }
+    },
+    "left-second-upper-premolar-tooth": {
+      "fma": "FMA55691",
+      "name": "Left second upper premolar tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left second upper premolar tooth",
+        "la": "Left second upper premolar tooth",
+        "en": "Left second upper premolar tooth"
+      }
+    },
+    "left-upper-canine-tooth": {
+      "fma": "FMA55799",
+      "name": "Left upper canine tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left upper canine tooth",
+        "la": "Left upper canine tooth",
+        "en": "Left upper canine tooth"
+      }
+    },
+    "left-upper-central-incisor-tooth": {
+      "fma": "FMA55682",
+      "name": "Left upper central incisor tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left upper central incisor tooth",
+        "la": "Left upper central incisor tooth",
+        "en": "Left upper central incisor tooth"
+      }
+    },
+    "left-upper-lateral-incisor-tooth": {
+      "fma": "FMA55683",
+      "name": "Left upper lateral incisor tooth",
+      "side": "left",
+      "region": "teeth",
+      "labels": {
+        "de": "Left upper lateral incisor tooth",
+        "la": "Left upper lateral incisor tooth",
+        "en": "Left upper lateral incisor tooth"
+      }
+    },
+    "mandibular-gingiva": {
+      "fma": "FMA59764",
+      "name": "Mandibular gingiva",
+      "side": "midline",
+      "region": "teeth",
+      "labels": {
+        "de": "Mandibular gingiva",
+        "la": "Mandibular gingiva",
+        "en": "Mandibular gingiva"
+      }
+    },
+    "maxillary-gingiva": {
+      "fma": "FMA59763",
+      "name": "Maxillary gingiva",
+      "side": "midline",
+      "region": "teeth",
+      "labels": {
+        "de": "Maxillary gingiva",
+        "la": "Maxillary gingiva",
+        "en": "Maxillary gingiva"
+      }
+    },
+    "right-first-lower-molar-tooth": {
+      "fma": "FMA55705",
+      "name": "Right first lower molar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right first lower molar tooth",
+        "la": "Right first lower molar tooth",
+        "en": "Right first lower molar tooth"
+      }
+    },
+    "right-first-lower-premolar-tooth": {
+      "fma": "FMA55694",
+      "name": "Right first lower premolar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right first lower premolar tooth",
+        "la": "Right first lower premolar tooth",
+        "en": "Right first lower premolar tooth"
+      }
+    },
+    "right-first-upper-molar-tooth": {
+      "fma": "FMA55698",
+      "name": "Right first upper molar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right first upper molar tooth",
+        "la": "Right first upper molar tooth",
+        "en": "Right first upper molar tooth"
+      }
+    },
+    "right-first-upper-premolar-tooth": {
+      "fma": "FMA55689",
+      "name": "Right first upper premolar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right first upper premolar tooth",
+        "la": "Right first upper premolar tooth",
+        "en": "Right first upper premolar tooth"
+      }
+    },
+    "right-second-lower-molar-tooth": {
+      "fma": "FMA55706",
+      "name": "Right second lower molar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right second lower molar tooth",
+        "la": "Right second lower molar tooth",
+        "en": "Right second lower molar tooth"
+      }
+    },
+    "right-second-lower-premolar-tooth": {
+      "fma": "FMA55695",
+      "name": "Right second lower premolar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right second lower premolar tooth",
+        "la": "Right second lower premolar tooth",
+        "en": "Right second lower premolar tooth"
+      }
+    },
+    "right-second-upper-molar-tooth": {
+      "fma": "FMA55697",
+      "name": "Right second upper molar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right second upper molar tooth",
+        "la": "Right second upper molar tooth",
+        "en": "Right second upper molar tooth"
+      }
+    },
+    "right-second-upper-premolar-tooth": {
+      "fma": "FMA55688",
+      "name": "Right second upper premolar tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right second upper premolar tooth",
+        "la": "Right second upper premolar tooth",
+        "en": "Right second upper premolar tooth"
+      }
+    },
+    "right-upper-canine-tooth": {
+      "fma": "FMA55798",
+      "name": "Right upper canine tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right upper canine tooth",
+        "la": "Right upper canine tooth",
+        "en": "Right upper canine tooth"
+      }
+    },
+    "right-upper-central-incisor-tooth": {
+      "fma": "FMA55681",
+      "name": "Right upper central incisor tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right upper central incisor tooth",
+        "la": "Right upper central incisor tooth",
+        "en": "Right upper central incisor tooth"
+      }
+    },
+    "right-upper-lateral-incisor-tooth": {
+      "fma": "FMA55680",
+      "name": "Right upper lateral incisor tooth",
+      "side": "right",
+      "region": "teeth",
+      "labels": {
+        "de": "Right upper lateral incisor tooth",
+        "la": "Right upper lateral incisor tooth",
+        "en": "Right upper lateral incisor tooth"
+      }
+    },
+    "right-angular-vein": {
+      "fma": "FMA50895",
+      "name": "Right angular vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right angular vein",
+        "la": "Right angular vein",
+        "en": "Right angular vein"
+      }
+    },
+    "right-deep-lingual-vein": {
+      "fma": "FMA50831",
+      "name": "Right deep lingual vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right deep lingual vein",
+        "la": "Right deep lingual vein",
+        "en": "Right deep lingual vein"
+      }
+    },
+    "right-external-nasal-vein": {
+      "fma": "FMA50911",
+      "name": "Right external nasal vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right external nasal vein",
+        "la": "Right external nasal vein",
+        "en": "Right external nasal vein"
+      }
+    },
+    "right-facial-vein": {
+      "fma": "FMA50876",
+      "name": "Right facial vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right facial vein",
+        "la": "Right facial vein",
+        "en": "Right facial vein"
+      }
+    },
+    "right-inferior-anastomotic-vein": {
+      "fma": "FMA51242",
+      "name": "Right inferior anastomotic vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right inferior anastomotic vein",
+        "la": "Right inferior anastomotic vein",
+        "en": "Right inferior anastomotic vein"
+      }
+    },
+    "right-inferior-labial-vein": {
+      "fma": "FMA52542",
+      "name": "Right inferior labial vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right inferior labial vein",
+        "la": "Right inferior labial vein",
+        "en": "Right inferior labial vein"
+      }
+    },
+    "right-lacrimal-vein": {
+      "fma": "FMA51902",
+      "name": "Right lacrimal vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right lacrimal vein",
+        "la": "Right lacrimal vein",
+        "en": "Right lacrimal vein"
+      }
+    },
+    "right-lingual-vein": {
+      "fma": "FMA52565",
+      "name": "Right lingual vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right lingual vein",
+        "la": "Right lingual vein",
+        "en": "Right lingual vein"
+      }
+    },
+    "right-marginal-sinus": {
+      "fma": "FMA52210",
+      "name": "Right marginal sinus",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right marginal sinus",
+        "la": "Right marginal sinus",
+        "en": "Right marginal sinus"
+      }
+    },
+    "right-mastoid-emissary-vein": {
+      "fma": "FMA52005",
+      "name": "Right mastoid emissary vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right mastoid emissary vein",
+        "la": "Right mastoid emissary vein",
+        "en": "Right mastoid emissary vein"
+      }
+    },
+    "right-middle-temporal-vein": {
+      "fma": "FMA50936",
+      "name": "Right middle temporal vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right middle temporal vein",
+        "la": "Right middle temporal vein",
+        "en": "Right middle temporal vein"
+      }
+    },
+    "right-nasofrontal-vein": {
+      "fma": "FMA51882",
+      "name": "Right nasofrontal vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right nasofrontal vein",
+        "la": "Right nasofrontal vein",
+        "en": "Right nasofrontal vein"
+      }
+    },
+    "right-occipital-diploic-vein": {
+      "fma": "FMA52113",
+      "name": "Right occipital diploic vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right occipital diploic vein",
+        "la": "Right occipital diploic vein",
+        "en": "Right occipital diploic vein"
+      }
+    },
+    "right-parietal-emissary-vein": {
+      "fma": "FMA52003",
+      "name": "Right parietal emissary vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right parietal emissary vein",
+        "la": "Right parietal emissary vein",
+        "en": "Right parietal emissary vein"
+      }
+    },
+    "right-sternocleidomastoid-vein": {
+      "fma": "FMA50814",
+      "name": "Right sternocleidomastoid vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right sternocleidomastoid vein",
+        "la": "Right sternocleidomastoid vein",
+        "en": "Right sternocleidomastoid vein"
+      }
+    },
+    "right-sublingual-vein": {
+      "fma": "FMA50837",
+      "name": "Right sublingual vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right sublingual vein",
+        "la": "Right sublingual vein",
+        "en": "Right sublingual vein"
+      }
+    },
+    "right-superficial-temporal-vein": {
+      "fma": "FMA50933",
+      "name": "Right superficial temporal vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right superficial temporal vein",
+        "la": "Right superficial temporal vein",
+        "en": "Right superficial temporal vein"
+      }
+    },
+    "right-superior-anastomotic-vein": {
+      "fma": "FMA51240",
+      "name": "Right superior anastomotic vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right superior anastomotic vein",
+        "la": "Right superior anastomotic vein",
+        "en": "Right superior anastomotic vein"
+      }
+    },
+    "right-superior-labial-vein": {
+      "fma": "FMA52539",
+      "name": "Right superior labial vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right superior labial vein",
+        "la": "Right superior labial vein",
+        "en": "Right superior labial vein"
+      }
+    },
+    "right-supra-orbital-vein": {
+      "fma": "FMA50905",
+      "name": "Right supra-orbital vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right supra-orbital vein",
+        "la": "Right supra-orbital vein",
+        "en": "Right supra-orbital vein"
+      }
+    },
+    "right-supratrochlear-vein": {
+      "fma": "FMA50900",
+      "name": "Right supratrochlear vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Right supratrochlear vein",
+        "la": "Right supratrochlear vein",
+        "en": "Right supratrochlear vein"
+      }
+    },
+    "superior-bulb-of-right-internal-jugular-vein": {
+      "fma": "FMA50816",
+      "name": "Superior bulb of right internal jugular vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Superior bulb of right internal jugular vein",
+        "la": "Superior bulb of right internal jugular vein",
+        "en": "Superior bulb of right internal jugular vein"
+      }
+    },
+    "trunk-of-right-maxillary-vein": {
+      "fma": "FMA77908",
+      "name": "Trunk of right maxillary vein",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Trunk of right maxillary vein",
+        "la": "Trunk of right maxillary vein",
+        "en": "Trunk of right maxillary vein"
+      }
+    },
+    "vein-of-right-caudate-nucleus": {
+      "fma": "FMA51014",
+      "name": "Vein of right caudate nucleus",
+      "side": "right",
+      "region": "vein",
+      "labels": {
+        "de": "Vein of right caudate nucleus",
+        "la": "Vein of right caudate nucleus",
+        "en": "Vein of right caudate nucleus"
+      }
+    },
+    "atlas": {
+      "fma": "FMA12519",
+      "name": "Atlas",
+      "side": "midline",
+      "region": "vertebra",
+      "labels": {
+        "de": "Atlas",
+        "la": "Atlas",
+        "en": "Atlas"
+      }
+    },
+    "axis": {
+      "fma": "FMA12520",
+      "name": "Axis",
+      "side": "midline",
+      "region": "vertebra",
+      "labels": {
+        "de": "Axis",
+        "la": "Axis",
+        "en": "Axis"
+      }
+    },
+    "intervertebral-disk-of-axis": {
+      "fma": "FMA25058",
+      "name": "Intervertebral disk of axis",
+      "side": "midline",
+      "region": "vertebra",
+      "labels": {
+        "de": "Intervertebral disk of axis",
+        "la": "Intervertebral disk of axis",
+        "en": "Intervertebral disk of axis"
+      }
+    }
+  }
+}

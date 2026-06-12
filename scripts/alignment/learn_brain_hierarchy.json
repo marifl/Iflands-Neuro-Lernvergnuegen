@@ -1,0 +1,3445 @@
+{
+  "version": "1.0.0",
+  "sourceOfTruth": "learn-brain-hierarchy",
+  "root": {
+    "name": "brain",
+    "type": "EMPTY",
+    "id": "brain",
+    "label": "Gehirn",
+    "color": "#D8D3C8",
+    "children": [
+      {
+        "name": "amygdala",
+        "type": "EMPTY",
+        "id": "brain__amygdala",
+        "label": "Amygdala",
+        "children": [
+          {
+            "name": "accessory-basal-l",
+            "type": "MESH"
+          },
+          {
+            "name": "accessory-basal-r",
+            "type": "MESH"
+          },
+          {
+            "name": "anterior-aaa-l",
+            "type": "MESH"
+          },
+          {
+            "name": "anterior-aaa-r",
+            "type": "MESH"
+          },
+          {
+            "name": "basal-nucleus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "basal-nucleus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "central-nucleus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "central-nucleus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cortical-nucleus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cortical-nucleus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "corticoamygdaloid-transition-l",
+            "type": "MESH"
+          },
+          {
+            "name": "corticoamygdaloid-transition-r",
+            "type": "MESH"
+          },
+          {
+            "name": "extended-amygdala",
+            "type": "EMPTY",
+            "id": "brain__amygdala__extended-amygdala",
+            "label": "Erweiterte Amygdala",
+            "children": [
+              {
+                "name": "bnst-l",
+                "type": "MESH"
+              },
+              {
+                "name": "bnst-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "lateral-nucleus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "lateral-nucleus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "paralaminar-nucleus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "paralaminar-nucleus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cytoarch",
+            "type": "EMPTY",
+            "id": "brain__amygdala__bigbrain-cytoarch",
+            "label": "Amygdala-Subkerne (BigBrain/Julich)",
+            "children": [
+              {
+                "name": "bigbrain-amy-aaa-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-aaa-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ahid-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ahid-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ahiv-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ahiv-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-apir-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-apir-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-astr-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-astr-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-bl-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-bl-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-bm-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-bm-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ce-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ce-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ice-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-ice-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-icm-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-icm-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-iol-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-iol-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-la-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-la-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-me-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-me-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-pl-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-pl-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vcod-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vcod-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vcov-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vcov-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vtm-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              },
+              {
+                "name": "bigbrain-amy-vtm-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "regions_bigbrain"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "auge",
+        "type": "EMPTY",
+        "id": "brain__auge",
+        "label": "Auge",
+        "color": "#A7C7E7",
+        "children": [
+          {
+            "name": "cornea-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cornea-r",
+            "type": "MESH"
+          },
+          {
+            "name": "iris-l",
+            "type": "MESH"
+          },
+          {
+            "name": "iris-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pupil-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pupil-r",
+            "type": "MESH"
+          },
+          {
+            "name": "sclera-l",
+            "type": "MESH"
+          },
+          {
+            "name": "sclera-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "basalganglien",
+        "type": "EMPTY",
+        "id": "brain__basalganglien",
+        "label": "Basalganglien",
+        "color": "#FFD54A",
+        "children": [
+          {
+            "name": "accumbens-l",
+            "type": "MESH"
+          },
+          {
+            "name": "accumbens-r",
+            "type": "MESH"
+          },
+          {
+            "name": "caudate-l",
+            "type": "MESH"
+          },
+          {
+            "name": "caudate-r",
+            "type": "MESH"
+          },
+          {
+            "name": "nucleus-subthalamicus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "nucleus-subthalamicus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pallidum",
+            "type": "EMPTY",
+            "id": "brain__basalganglien__pallidum",
+            "label": "Pallidum",
+            "children": [
+              {
+                "name": "globus-pallidus-externus-l",
+                "type": "MESH"
+              },
+              {
+                "name": "globus-pallidus-externus-r",
+                "type": "MESH"
+              },
+              {
+                "name": "globus-pallidus-internus-l",
+                "type": "MESH"
+              },
+              {
+                "name": "globus-pallidus-internus-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "pallidum-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pallidum-r",
+            "type": "MESH"
+          },
+          {
+            "name": "putamen-l",
+            "type": "MESH"
+          },
+          {
+            "name": "putamen-r",
+            "type": "MESH"
+          },
+          {
+            "name": "ventral-dc-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ventral-dc-r",
+            "type": "MESH"
+          },
+          {
+            "name": "ventral-pallidum-l",
+            "type": "MESH"
+          },
+          {
+            "name": "ventral-pallidum-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "corpus-callosum",
+        "type": "EMPTY",
+        "id": "brain__corpus-callosum",
+        "label": "Corpus callosum",
+        "children": [
+          {
+            "name": "anterior",
+            "type": "MESH"
+          },
+          {
+            "name": "central",
+            "type": "MESH"
+          },
+          {
+            "name": "mid-anterior",
+            "type": "MESH"
+          },
+          {
+            "name": "mid-posterior",
+            "type": "MESH"
+          },
+          {
+            "name": "posterior",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "cortex",
+        "type": "EMPTY",
+        "id": "brain__cortex",
+        "label": "Grosshirnrinde",
+        "color": "#E07070",
+        "children": [
+          {
+            "name": "frontallappen",
+            "type": "EMPTY",
+            "id": "brain__cortex__frontallappen",
+            "label": "Frontallappen",
+            "children": [
+              {
+                "name": "caudalmiddlefrontal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "caudalmiddlefrontal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "lateralorbitofrontal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "lateralorbitofrontal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "medialorbitofrontal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "medialorbitofrontal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "paracentral-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__paracentral-l",
+                "label": "Paracentral L",
+                "children": [
+                  {
+                    "name": "brodmann.006",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-4a-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-6-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "paracentral-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "paracentral-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__paracentral-r",
+                "label": "Paracentral R",
+                "children": [
+                  {
+                    "name": "brodmann.019",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-4a-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-6-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "paracentral-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "parsopercularis-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__parsopercularis-l",
+                "label": "Parsopercularis L",
+                "children": [
+                  {
+                    "name": "brodmann.007",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-44-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-45-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parsopercularis-cortex-l-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "parsopercularis-cortex-l-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "parsopercularis-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__parsopercularis-r",
+                "label": "Parsopercularis R",
+                "children": [
+                  {
+                    "name": "brodmann.020",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-44-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-45-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parsopercularis-cortex-r-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "parsopercularis-cortex-r-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "parsorbitalis-l",
+                "type": "MESH"
+              },
+              {
+                "name": "parsorbitalis-r",
+                "type": "MESH"
+              },
+              {
+                "name": "parstriangularis-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__parstriangularis-l",
+                "label": "Parstriangularis L",
+                "children": [
+                  {
+                    "name": "brodmann.008",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-45-l.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parstriangularis-cortex-l-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "parstriangularis-cortex-l-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "parstriangularis-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__parstriangularis-r",
+                "label": "Parstriangularis R",
+                "children": [
+                  {
+                    "name": "brodmann.021",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-45-r.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parstriangularis-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "precentral-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__precentral-l",
+                "label": "Precentral L",
+                "children": [
+                  {
+                    "name": "brodmann.011",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-3a-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-44-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-4a-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-4p-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-6-l.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "precentral-cortex-l-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "precentral-cortex-l-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "precentral-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__precentral-r",
+                "label": "Precentral R",
+                "children": [
+                  {
+                    "name": "brodmann.024",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-3a-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-44-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-4a-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-4p-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-6-r.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "precentral-cortex-r-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "precentral-cortex-r-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "rostralmiddlefrontal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralmiddlefrontal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorfrontal-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__superiorfrontal-l",
+                "label": "Superiorfrontal L",
+                "children": [
+                  {
+                    "name": "brodmann.012",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-6-l.002",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "superiorfrontal-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "superiorfrontal-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__frontallappen__superiorfrontal-r",
+                "label": "Superiorfrontal R",
+                "children": [
+                  {
+                    "name": "brodmann.025",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-6-r.002",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "superiorfrontal-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "gyrus-cinguli",
+            "type": "EMPTY",
+            "id": "brain__cortex__gyrus-cinguli",
+            "label": "Gyrus cinguli",
+            "children": [
+              {
+                "name": "caudalanteriorcingulate-l",
+                "type": "MESH"
+              },
+              {
+                "name": "caudalanteriorcingulate-r",
+                "type": "MESH"
+              },
+              {
+                "name": "isthmuscingulate-l",
+                "type": "MESH"
+              },
+              {
+                "name": "isthmuscingulate-r",
+                "type": "MESH"
+              },
+              {
+                "name": "posteriorcingulate-l",
+                "type": "MESH"
+              },
+              {
+                "name": "posteriorcingulate-r",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralanteriorcingulate-l",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralanteriorcingulate-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "inselrinde",
+            "type": "EMPTY",
+            "id": "brain__cortex__inselrinde",
+            "label": "Inselrinde",
+            "children": [
+              {
+                "name": "insula-l",
+                "type": "MESH"
+              },
+              {
+                "name": "insula-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "okzipitallappen",
+            "type": "EMPTY",
+            "id": "brain__cortex__okzipitallappen",
+            "label": "Okzipitallappen",
+            "children": [
+              {
+                "name": "cuneus-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__cuneus-l",
+                "label": "Cuneus L",
+                "children": [
+                  {
+                    "name": "brodmann",
+                    "type": "EMPTY",
+                    "id": "brain__cortex__okzipitallappen__cuneus-l__brodmann",
+                    "label": "Brodmann-Areale",
+                    "children": [
+                      {
+                        "name": "hoc1-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "cuneus-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "cuneus-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__cuneus-r",
+                "label": "Cuneus R",
+                "children": [
+                  {
+                    "name": "brodmann.013",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-r-anterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc1-r-posterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "cuneus-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "lateraloccipital-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__lateraloccipital-l",
+                "label": "Lateraloccipital L",
+                "children": [
+                  {
+                    "name": "brodmann.003",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc3v-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "mt-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "v2-l-dorsal",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "v2-l-ventral",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lateraloccipital-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "lateraloccipital-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__lateraloccipital-r",
+                "label": "Lateraloccipital R",
+                "children": [
+                  {
+                    "name": "brodmann.016",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc3v-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "mt-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "v2-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lateraloccipital-cortex-r-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "lateraloccipital-cortex-r-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "lingual-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__lingual-l",
+                "label": "Lingual L",
+                "children": [
+                  {
+                    "name": "brodmann.004",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-l.002",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-l-anterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-l-posterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc3v-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-l.002",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lingual-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "lingual-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__lingual-r",
+                "label": "Lingual R",
+                "children": [
+                  {
+                    "name": "brodmann.017",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc2-r.002",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc3v-r.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-r-anterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-r-posterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "v2-r-anterior",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "v2-r-posterior",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "lingual-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "pericalcarine-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__pericalcarine-l",
+                "label": "Pericalcarine L",
+                "children": [
+                  {
+                    "name": "brodmann.009",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-l.003",
+                        "type": "MESH"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "name": "pericalcarine-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__okzipitallappen__pericalcarine-r",
+                "label": "Pericalcarine R",
+                "children": [
+                  {
+                    "name": "brodmann.022",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "hoc1-r.002",
+                        "type": "MESH"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "parietallappen",
+            "type": "EMPTY",
+            "id": "brain__cortex__parietallappen",
+            "label": "Parietallappen",
+            "children": [
+              {
+                "name": "inferiorparietal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "inferiorparietal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "postcentral-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__parietallappen__postcentral-l",
+                "label": "Postcentral L",
+                "children": [
+                  {
+                    "name": "brodmann.010",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-1-l-lateral",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-1-l-medial",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-2-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-3a-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-3b-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "postcentral-cortex-l-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "postcentral-cortex-l-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "postcentral-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__parietallappen__postcentral-r",
+                "label": "Postcentral R",
+                "children": [
+                  {
+                    "name": "brodmann.023",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "ba-1-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-2-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-3a-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "ba-3b-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "postcentral-cortex-r-dorsal",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "postcentral-cortex-r-ventral",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "precuneus-l",
+                "type": "MESH"
+              },
+              {
+                "name": "precuneus-r",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorparietal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorparietal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "supramarginal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "supramarginal-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "temporallappen",
+            "type": "EMPTY",
+            "id": "brain__cortex__temporallappen",
+            "label": "Temporallappen",
+            "children": [
+              {
+                "name": "entorhinal-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__entorhinal-l",
+                "label": "Entorhinal L",
+                "children": [
+                  {
+                    "name": "brodmann.001",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "entorhinal-l.001",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "perirhinal-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "entorhinal-cortex-l-lateral",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "entorhinal-cortex-l-medial",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "entorhinal-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__entorhinal-r",
+                "label": "Entorhinal R",
+                "children": [
+                  {
+                    "name": "brodmann.014",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "entorhinal-r.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "entorhinal-cortex-r-lateral",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "entorhinal-cortex-r-medial",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "fusiform-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__fusiform-l",
+                "label": "Fusiform L",
+                "children": [
+                  {
+                    "name": "brodmann.002",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "fg1-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg2-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg3-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg4-l",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-l",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "fusiform-cortex-l-anterior",
+                    "type": "MESH"
+                  },
+                  {
+                    "name": "fusiform-cortex-l-posterior",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "fusiform-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__fusiform-r",
+                "label": "Fusiform R",
+                "children": [
+                  {
+                    "name": "brodmann.015",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "fg1-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg2-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg3-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "fg4-r",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "hoc4v-r",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "fusiform-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "inferiortemporal-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__inferiortemporal-l",
+                "label": "Inferiortemporal L",
+                "children": [
+                  {
+                    "name": "inferiortemporal-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "inferiortemporal-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__inferiortemporal-r",
+                "label": "Inferiortemporal R",
+                "children": [
+                  {
+                    "name": "inferiortemporal-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "middletemporal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "middletemporal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "parahippocampal-l",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__parahippocampal-l",
+                "label": "Parahippocampal L",
+                "children": [
+                  {
+                    "name": "brodmann.005",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "entorhinal-l.002",
+                        "type": "MESH"
+                      },
+                      {
+                        "name": "perirhinal-l.001",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parahippocampal-cortex-l",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "parahippocampal-r",
+                "type": "EMPTY",
+                "id": "brain__cortex__temporallappen__parahippocampal-r",
+                "label": "Parahippocampal R",
+                "children": [
+                  {
+                    "name": "brodmann.018",
+                    "type": "EMPTY",
+                    "children": [
+                      {
+                        "name": "entorhinal-r.002",
+                        "type": "MESH"
+                      }
+                    ]
+                  },
+                  {
+                    "name": "parahippocampal-cortex-r",
+                    "type": "MESH"
+                  }
+                ]
+              },
+              {
+                "name": "superiortemporal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "superiortemporal-r",
+                "type": "MESH"
+              },
+              {
+                "name": "transversetemporal-l",
+                "type": "MESH"
+              },
+              {
+                "name": "transversetemporal-r",
+                "type": "MESH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "diencephalon",
+        "type": "EMPTY",
+        "id": "brain__diencephalon",
+        "label": "Diencephalon",
+        "color": "#6EC6FF",
+        "children": [
+          {
+            "name": "epiphysis",
+            "type": "MESH"
+          },
+          {
+            "name": "habenula-l",
+            "type": "MESH"
+          },
+          {
+            "name": "habenula-r",
+            "type": "MESH"
+          },
+          {
+            "name": "hypophysis",
+            "type": "MESH"
+          },
+          {
+            "name": "infundibulum",
+            "type": "MESH"
+          },
+          {
+            "name": "mammillary-body-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mammillary-body-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "fasertrakte",
+        "type": "EMPTY",
+        "id": "brain__fasertrakte",
+        "label": "Fasertrakte",
+        "children": [
+          {
+            "name": "legacy",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__legacy",
+            "label": "Legacy-Fasertrakte (vor HCP1065)",
+            "children": [
+              {
+                "name": "anterior-commissure",
+                "type": "MESH"
+              },
+              {
+                "name": "cerebral-peduncle-l",
+                "type": "MESH"
+              },
+              {
+                "name": "cerebral-peduncle-r",
+                "type": "MESH"
+              },
+              {
+                "name": "fornix-l",
+                "type": "MESH"
+              },
+              {
+                "name": "fornix-r",
+                "type": "MESH"
+              },
+              {
+                "name": "mammillothalamic-l",
+                "type": "MESH"
+              },
+              {
+                "name": "mammillothalamic-r",
+                "type": "MESH"
+              },
+              {
+                "name": "mcp-l",
+                "type": "MESH"
+              },
+              {
+                "name": "mcp-r",
+                "type": "MESH"
+              },
+              {
+                "name": "olfactory-tract-l",
+                "type": "MESH"
+              },
+              {
+                "name": "olfactory-tract-r",
+                "type": "MESH"
+              },
+              {
+                "name": "scp-l",
+                "type": "MESH"
+              },
+              {
+                "name": "scp-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "assoziationsbahnen",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__assoziationsbahnen",
+            "label": "Assoziationsbahnen",
+            "children": [
+              {
+                "name": "af-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "af-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-fp-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-fp-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-fph-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-fph-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-ph-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-ph-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-php-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-php-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-po-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "c-po-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "emc-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "emc-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "fat-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "fat-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ifof-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ifof-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ilf-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ilf-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "mdlf-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "mdlf-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "pat-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "pat-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf1-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf1-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf2-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf2-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf3-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "slf3-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "uf-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "uf-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "vof-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "vof-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              }
+            ]
+          },
+          {
+            "name": "projektionsbahnen",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__projektionsbahnen",
+            "label": "Projektionsbahnen",
+            "children": [
+              {
+                "name": "ar-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ar-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cbt-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cbt-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-f-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-f-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-o-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-o-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-p-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cpt-p-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-a-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-a-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-p-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-p-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-s-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cs-s-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cst-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cst-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "drtt-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "drtt-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "f-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "f-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ml-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "ml-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "or-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "or-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "rst-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "rst-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-a-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-a-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-p-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-p-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-s-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "tr-s-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              }
+            ]
+          },
+          {
+            "name": "kommissuren",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__kommissuren",
+            "label": "Kommissuren",
+            "children": [
+              {
+                "name": "ac",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cc",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              }
+            ]
+          },
+          {
+            "name": "kleinhirnbahnen",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__kleinhirnbahnen",
+            "label": "Kleinhirnbahnen",
+            "children": [
+              {
+                "name": "cb-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cb-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "icp-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "icp-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "mcp",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "scp",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "v",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              }
+            ]
+          },
+          {
+            "name": "hirnnerven",
+            "type": "EMPTY",
+            "id": "brain__fasertrakte__hirnnerven",
+            "label": "Hirnnerven",
+            "children": [
+              {
+                "name": "cnii-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnii-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cniii-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cniii-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnv-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnv-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnvii-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnvii-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnviii-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              },
+              {
+                "name": "cnviii-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "tracts-hcp1065.glb"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hippocampus",
+        "type": "EMPTY",
+        "id": "brain__hippocampus",
+        "label": "Hippocampus",
+        "children": [
+          {
+            "name": "cornu-ammonis",
+            "type": "EMPTY",
+            "id": "brain__hippocampus__cornu-ammonis",
+            "label": "Cornu Ammonis",
+            "children": [
+              {
+                "name": "ca1-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca1-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ca1-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca1-head-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ca3-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca3-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ca3-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca3-head-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ca4-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca4-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ca4-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ca4-head-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "fimbria-l",
+            "type": "MESH"
+          },
+          {
+            "name": "fimbria-r",
+            "type": "MESH"
+          },
+          {
+            "name": "gyrus-dentatus",
+            "type": "EMPTY",
+            "id": "brain__hippocampus__gyrus-dentatus",
+            "label": "Gyrus Dentatus",
+            "children": [
+              {
+                "name": "gc-ml-dg-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "gc-ml-dg-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "gc-ml-dg-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "gc-ml-dg-head-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "hata-l",
+            "type": "MESH"
+          },
+          {
+            "name": "hata-r",
+            "type": "MESH"
+          },
+          {
+            "name": "hippocampal-fissure-l",
+            "type": "MESH"
+          },
+          {
+            "name": "hippocampal-fissure-r",
+            "type": "MESH"
+          },
+          {
+            "name": "hippocampal-tail-l",
+            "type": "MESH"
+          },
+          {
+            "name": "hippocampal-tail-r",
+            "type": "MESH"
+          },
+          {
+            "name": "molecular-layer-body-l",
+            "type": "MESH"
+          },
+          {
+            "name": "molecular-layer-body-r",
+            "type": "MESH"
+          },
+          {
+            "name": "molecular-layer-head-l",
+            "type": "MESH"
+          },
+          {
+            "name": "molecular-layer-head-r",
+            "type": "MESH"
+          },
+          {
+            "name": "subiculum-komplex",
+            "type": "EMPTY",
+            "id": "brain__hippocampus__subiculum-komplex",
+            "label": "Subiculum Komplex",
+            "children": [
+              {
+                "name": "parasubiculum-l",
+                "type": "MESH"
+              },
+              {
+                "name": "parasubiculum-r",
+                "type": "MESH"
+              },
+              {
+                "name": "presubiculum-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "presubiculum-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "presubiculum-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "presubiculum-head-r",
+                "type": "MESH"
+              },
+              {
+                "name": "subiculum-body-l",
+                "type": "MESH"
+              },
+              {
+                "name": "subiculum-body-r",
+                "type": "MESH"
+              },
+              {
+                "name": "subiculum-head-l",
+                "type": "MESH"
+              },
+              {
+                "name": "subiculum-head-r",
+                "type": "MESH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hirnstamm",
+        "type": "EMPTY",
+        "id": "brain__hirnstamm",
+        "label": "Hirnstamm",
+        "color": "#7BD88F",
+        "children": [
+          {
+            "name": "medulla",
+            "type": "MESH"
+          },
+          {
+            "name": "midbrain",
+            "type": "MESH"
+          },
+          {
+            "name": "nucleus-ruber-l",
+            "type": "MESH"
+          },
+          {
+            "name": "nucleus-ruber-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pons",
+            "type": "MESH"
+          },
+          {
+            "name": "scp",
+            "type": "MESH"
+          },
+          {
+            "name": "substantia-nigra",
+            "type": "EMPTY",
+            "id": "brain__hirnstamm__substantia-nigra",
+            "label": "Substantia nigra",
+            "children": [
+              {
+                "name": "compacta-l",
+                "type": "MESH"
+              },
+              {
+                "name": "compacta-r",
+                "type": "MESH"
+              },
+              {
+                "name": "reticulata-l",
+                "type": "MESH"
+              },
+              {
+                "name": "reticulata-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "vta-komplex",
+            "type": "EMPTY",
+            "id": "brain__hirnstamm__vta-komplex",
+            "label": "Vta Komplex",
+            "children": [
+              {
+                "name": "pbp-l",
+                "type": "MESH"
+              },
+              {
+                "name": "pbp-r",
+                "type": "MESH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "hypothalamus",
+        "type": "EMPTY",
+        "id": "brain__hypothalamus",
+        "label": "Hypothalamus",
+        "children": [
+          {
+            "name": "anterior-l",
+            "type": "MESH"
+          },
+          {
+            "name": "anterior-r",
+            "type": "MESH"
+          },
+          {
+            "name": "hypothalamus-lateral-l",
+            "type": "MESH"
+          },
+          {
+            "name": "hypothalamus-lateral-r",
+            "type": "MESH"
+          },
+          {
+            "name": "medial-l",
+            "type": "MESH"
+          },
+          {
+            "name": "medial-r",
+            "type": "MESH"
+          },
+          {
+            "name": "posterior-l",
+            "type": "MESH"
+          },
+          {
+            "name": "posterior-r",
+            "type": "MESH"
+          },
+          {
+            "name": "tuberal-region",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "hypothalamus-hra",
+        "type": "EMPTY",
+        "id": "brain__hypothalamus-hra",
+        "label": "Hypothalamus Hra",
+        "children": [
+          {
+            "name": "supraoptic-l",
+            "type": "MESH"
+          },
+          {
+            "name": "supraoptic-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "kleinhirn",
+        "type": "EMPTY",
+        "id": "brain__kleinhirn",
+        "label": "Kleinhirn",
+        "children": [
+          {
+            "name": "lobuli",
+            "type": "EMPTY",
+            "id": "brain__kleinhirn__lobuli",
+            "label": "Lobuli",
+            "children": [
+              {
+                "name": "crus-i-l",
+                "type": "MESH"
+              },
+              {
+                "name": "crus-i-r",
+                "type": "MESH"
+              },
+              {
+                "name": "crus-ii-l",
+                "type": "MESH"
+              },
+              {
+                "name": "crus-ii-r",
+                "type": "MESH"
+              },
+              {
+                "name": "i-iv-l",
+                "type": "MESH"
+              },
+              {
+                "name": "i-iv-r",
+                "type": "MESH"
+              },
+              {
+                "name": "ix-l",
+                "type": "MESH"
+              },
+              {
+                "name": "ix-r",
+                "type": "MESH"
+              },
+              {
+                "name": "v-l",
+                "type": "MESH"
+              },
+              {
+                "name": "v-r",
+                "type": "MESH"
+              },
+              {
+                "name": "vermis-ix",
+                "type": "MESH"
+              },
+              {
+                "name": "vermis-vi",
+                "type": "MESH"
+              },
+              {
+                "name": "vermis-vii",
+                "type": "MESH"
+              },
+              {
+                "name": "vermis-viii",
+                "type": "MESH"
+              },
+              {
+                "name": "vermis-x",
+                "type": "MESH"
+              },
+              {
+                "name": "vi-l",
+                "type": "MESH"
+              },
+              {
+                "name": "vi-r",
+                "type": "MESH"
+              },
+              {
+                "name": "viib-l",
+                "type": "MESH"
+              },
+              {
+                "name": "viib-r",
+                "type": "MESH"
+              },
+              {
+                "name": "viiia-l",
+                "type": "MESH"
+              },
+              {
+                "name": "viiia-r",
+                "type": "MESH"
+              },
+              {
+                "name": "viiib-l",
+                "type": "MESH"
+              },
+              {
+                "name": "viiib-r",
+                "type": "MESH"
+              },
+              {
+                "name": "x-l",
+                "type": "MESH"
+              },
+              {
+                "name": "x-r",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "whitematter-l",
+            "type": "MESH"
+          },
+          {
+            "name": "whitematter-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "olfaktorisches-system",
+        "type": "EMPTY",
+        "id": "brain__olfaktorisches-system",
+        "label": "Olfaktorisches System",
+        "children": [
+          {
+            "name": "aon-l",
+            "type": "MESH"
+          },
+          {
+            "name": "aon-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bulb-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bulb-r",
+            "type": "MESH"
+          },
+          {
+            "name": "lateral-gyrus-l",
+            "type": "MESH"
+          },
+          {
+            "name": "lateral-gyrus-r",
+            "type": "MESH"
+          },
+          {
+            "name": "subcallosal-l",
+            "type": "MESH"
+          },
+          {
+            "name": "subcallosal-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "plexus-choroideus",
+        "type": "EMPTY",
+        "id": "brain__plexus-choroideus",
+        "label": "Plexus Choroideus",
+        "children": [
+          {
+            "name": "left",
+            "type": "MESH"
+          },
+          {
+            "name": "right",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "thalamus",
+        "type": "EMPTY",
+        "id": "brain__thalamus",
+        "label": "Thalamus",
+        "children": [
+          {
+            "name": "av-l",
+            "type": "MESH"
+          },
+          {
+            "name": "av-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cem-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cem-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cl-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cl-r",
+            "type": "MESH"
+          },
+          {
+            "name": "cm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "cm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "l-sg-l",
+            "type": "MESH"
+          },
+          {
+            "name": "l-sg-r",
+            "type": "MESH"
+          },
+          {
+            "name": "lp-l",
+            "type": "MESH"
+          },
+          {
+            "name": "lp-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mdl-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mdl-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mdm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mdm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mv-re-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mv-re-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pf-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pf-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pt-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pt-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pua-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pua-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pui-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pui-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pul-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pul-r",
+            "type": "MESH"
+          },
+          {
+            "name": "pum-l",
+            "type": "MESH"
+          },
+          {
+            "name": "pum-r",
+            "type": "MESH"
+          },
+          {
+            "name": "va-l",
+            "type": "MESH"
+          },
+          {
+            "name": "va-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vamc-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vamc-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vla-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vla-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vlp-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vlp-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "vpl-l",
+            "type": "MESH"
+          },
+          {
+            "name": "vpl-r",
+            "type": "MESH"
+          },
+          {
+            "name": "metathalamus_bigbrain",
+            "type": "EMPTY",
+            "id": "brain__thalamus__metathalamus_bigbrain",
+            "label": "Metathalamus (BigBrain Cytoarchitektonik)",
+            "children": [
+              {
+                "name": "cgl",
+                "type": "EMPTY",
+                "id": "brain__thalamus__metathalamus_bigbrain__cgl",
+                "label": "LGN-Schichten Lam 1-6 (Magno/Parvo)",
+                "children": [
+                  {
+                    "name": "bigbrain-cgl-lam1-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam1-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam2-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam2-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam3-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam3-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam4-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam4-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam5-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam5-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam6-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-cgl-lam6-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  }
+                ]
+              },
+              {
+                "name": "mgb",
+                "type": "EMPTY",
+                "id": "brain__thalamus__metathalamus_bigbrain__mgb",
+                "label": "MGN-Subdivisionen (d/m/v)",
+                "children": [
+                  {
+                    "name": "bigbrain-mgbd-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-mgbd-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-mgbm-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-mgbm-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-mgbv-l",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  },
+                  {
+                    "name": "bigbrain-mgbv-r",
+                    "type": "MESH",
+                    "overlayOnly": true,
+                    "overlayGlb": "regions_bigbrain"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "ventrikel",
+        "type": "EMPTY",
+        "id": "brain__ventrikel",
+        "label": "Ventrikel",
+        "children": [
+          {
+            "name": "fourth",
+            "type": "MESH"
+          },
+          {
+            "name": "lateral-ventricle-l",
+            "type": "MESH"
+          },
+          {
+            "name": "lateral-ventricle-r",
+            "type": "MESH"
+          },
+          {
+            "name": "third",
+            "type": "MESH"
+          },
+          {
+            "name": "cerebral-aqueduct",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "visuelles-system",
+        "type": "EMPTY",
+        "id": "brain__visuelles-system",
+        "label": "Visuelles System",
+        "children": [
+          {
+            "name": "lgn-l",
+            "type": "MESH"
+          },
+          {
+            "name": "lgn-r",
+            "type": "MESH"
+          },
+          {
+            "name": "mgn-l",
+            "type": "MESH"
+          },
+          {
+            "name": "mgn-r",
+            "type": "MESH"
+          },
+          {
+            "name": "optic-tract-l",
+            "type": "MESH"
+          },
+          {
+            "name": "optic-tract-r",
+            "type": "MESH"
+          },
+          {
+            "name": "preoptic-l",
+            "type": "MESH"
+          },
+          {
+            "name": "preoptic-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "weisse-substanz",
+        "type": "EMPTY",
+        "id": "brain__weisse-substanz",
+        "label": "Weisse Substanz",
+        "children": [
+          {
+            "name": "deep-r-wm",
+            "type": "MESH"
+          },
+          {
+            "name": "frontallappen-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__frontallappen-wm",
+            "label": "Frontallappen Wm",
+            "children": [
+              {
+                "name": "caudalmiddlefrontal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "caudalmiddlefrontal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lateralorbitofrontal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lateralorbitofrontal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "medialorbitofrontal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "medialorbitofrontal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "paracentral-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "paracentral-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parsopercularis-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parsopercularis-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parsorbitalis-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parsorbitalis-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parstriangularis-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parstriangularis-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "precentral-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralmiddlefrontal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralmiddlefrontal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorfrontal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorfrontal-r-wm",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "gyrus-cinguli-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__gyrus-cinguli-wm",
+            "label": "Gyrus Cinguli Wm",
+            "children": [
+              {
+                "name": "caudalanteriorcingulate-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "caudalanteriorcingulate-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "isthmuscingulate-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "isthmuscingulate-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "posteriorcingulate-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "posteriorcingulate-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralanteriorcingulate-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "rostralanteriorcingulate-r-wm",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "inselrinde-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__inselrinde-wm",
+            "label": "Inselrinde Wm",
+            "children": [
+              {
+                "name": "insula-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "insula-r-wm",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "okzipitallappen-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__okzipitallappen-wm",
+            "label": "Okzipitallappen Wm",
+            "children": [
+              {
+                "name": "cuneus-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "cuneus-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lateraloccipital-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lateraloccipital-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lingual-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "lingual-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "pericalcarine-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "pericalcarine-r-wm",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "parietallappen-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__parietallappen-wm",
+            "label": "Parietallappen Wm",
+            "children": [
+              {
+                "name": "inferiorparietal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "inferiorparietal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "postcentral-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "postcentral-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "precuneus-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "precuneus-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorparietal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiorparietal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "supramarginal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "supramarginal-r-wm",
+                "type": "MESH"
+              }
+            ]
+          },
+          {
+            "name": "temporallappen-wm",
+            "type": "EMPTY",
+            "id": "brain__weisse-substanz__temporallappen-wm",
+            "label": "Temporallappen Wm",
+            "children": [
+              {
+                "name": "entorhinal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "entorhinal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "fusiform-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "fusiform-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "inferiortemporal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "inferiortemporal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "middletemporal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "middletemporal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parahippocampal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "parahippocampal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiortemporal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "superiortemporal-r-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "transversetemporal-l-wm",
+                "type": "MESH"
+              },
+              {
+                "name": "transversetemporal-r-wm",
+                "type": "MESH"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "meningeal-liquor",
+        "type": "EMPTY",
+        "id": "brain__meningeal-liquor",
+        "label": "Meningen & Liquor",
+        "children": [
+          {
+            "name": "meningen",
+            "type": "EMPTY",
+            "id": "brain__meningeal-liquor__meningen",
+            "label": "Hirnhäute & Subarachnoidalraum",
+            "children": [
+              {
+                "name": "pia-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "pia-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "arachnoid-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "arachnoid-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "dura-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "dura-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "subarachnoidal-l",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "subarachnoidal-r",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              }
+            ]
+          },
+          {
+            "name": "gefaesse",
+            "type": "EMPTY",
+            "id": "brain__meningeal-liquor__gefaesse",
+            "label": "Gefäßsystem",
+            "children": [
+              {
+                "name": "cerebral-arteries",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "cerebral-veins",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              },
+              {
+                "name": "dural-sinuses",
+                "type": "MESH",
+                "overlayOnly": true,
+                "overlayGlb": "vascular-meninges.glb"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "generatedAt": "2026-05-27T09:41:35.890689+00:00"
+}

@@ -1,0 +1,10 @@
+{
+  "_doc": {
+    "BrSt": "Mesh-Acronym 'BrSt' (brainstem) hat kein direktes Allen-Acronym. Allen kennt MES (mesencephalon, id 9001), MET (metencephalon, id 4833), MY (myelencephalon, id 9512). Wir mappen 'BrSt' auf MES als hierarchischen Container — Mesh kann downstream auf den Subtree dieser drei aggregiert werden.",
+    "sfs": "Mesh-Acronym 'sfs' (superior frontal sulcus). Allen-Acronym ist 'sfrs' (id 9356, name 'superior frontal sulcus'). Eindeutiger semantischer Match.",
+    "ventral": "Mesh-Acronym 'ventral' ist ambig (kein Allen-Acronym 'ventral'). Naechstliegender Container im Sulci-&-Spaces-Subtree ist 'Vent' (id 9418, ventricles). Falls Mesh tatsaechlich Ventrikel sind, korrekt; falls anderer Kontext (z.B. Diencephalon-ventral), nachpfegen."
+  },
+  "BrSt": 9001,
+  "sfs": 9356,
+  "ventral": 9418
+}

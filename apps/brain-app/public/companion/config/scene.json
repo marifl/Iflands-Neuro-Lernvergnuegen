@@ -1,0 +1,31 @@
+{
+  "cameras": {
+    "lateral":       { "position": [180, 30, 0], "target": [0, 0, 0] },
+    "medial":        { "position": [-180, 30, 0], "target": [0, 0, 0] },
+    "coronal":       { "position": [0, 30, -180], "target": [0, 0, 0] },
+    "superior":      { "position": [0, 180, 0], "target": [0, 0, 0] },
+    "basal-ganglia": { "position": [125, 90, 155], "target": [0, 0, 0] },
+    "limbic":        { "position": [-155, 95, 130], "target": [0, 0, 0] },
+    "brainstem":     { "position": [85, 70, -190], "target": [0, -20, 0] },
+    "ventricles":    { "position": [95, 140, 120], "target": [0, 0, 0] }
+  },
+  "lights": {
+    "ambient":    { "color": "#ffffff", "intensity": 0.55 },
+    "hemisphere": { "skyColor": "#ffffff", "groundColor": "#444466", "intensity": 0.6 },
+    "main":       { "color": "#ffffff", "intensity": 1.20, "position": [220, 180, 120] },
+    "fill":       { "color": "#c0d8ff", "intensity": 0.55, "position": [-180, 60, -120] },
+    "rim":        { "color": "#ffe8c0", "intensity": 0.45, "position": [50, -120, -200] }
+  },
+  "renderer": {
+    "toneMapping": "ACESFilmic",
+    "colorSpace": "srgb",
+    "antialias": true,
+    "stencil": true
+  },
+  "camera": {
+    "fov": 35,
+    "near": 1,
+    "far": 5000,
+    "defaultPosition": [280, 50, 50]
+  }
+}

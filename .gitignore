@@ -1,0 +1,53 @@
+node_modules/
+dist/
+output/
+test-results/
+playwright-report/
+*.tsbuildinfo
+.DS_Store
+
+# Build-/Tool-Caches
+.vite/
+coverage/
+
+# Debug-Artefakte (gehören nicht ins Repo)
+*-snapshot.md
+/apps/brain-app/*.png
+
+# Rohdaten — Copyright-Material, nicht ins Repo
+raw/
+
+# Playwright MCP Session-Logs
+.playwright-mcp/
+
+# Dev-Artefakte (Root-Level Screenshots + Debug-Snapshots)
+/*.png
+/*.jpeg
+/*.jpg
+apps/brain-app/native-*.md
+
+# AI-Tool-State (lokal, nicht für Repo)
+.superpowers/
+.claude/
+
+# Python-Bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Generierte Artefakte / grosse Binaries (nicht ins Repo)
+scripts/atlas/work/
+outputs/
+docs/vortrag/
+
+# stuff
+.cursor
+.fallow
+.venv
+archive
+docs/plans
+docs/superpowers
+docs/END_SESSION_2026-06-12_Kapitel11-3D-Lern-Experience-Planung.md
+docs/fma-discrepancy-report.md
+docs/KAPITEL11_ABBILDUNGEN_MAPPING.md
+docs/laterality-volume-audit.md

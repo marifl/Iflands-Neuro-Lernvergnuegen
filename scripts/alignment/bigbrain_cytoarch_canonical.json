@@ -1,0 +1,243 @@
+{
+  "version": "1.0.0",
+  "sourceOfTruth": "bigbrain-cytoarch",
+  "generatedAt": "2026-05-24T15:28:24.043402+00:00",
+  "sourceGlbs": "figs3d/v2/glb/regions_bigbrain/<slug>-<lod>.glb (hires/medium/low pro Slug)",
+  "namingNote": "Ein MESH pro Substruktur (52 unique). Drei LOD-Varianten (hires/medium/low) je Slug.",
+  "root": {
+    "name": "bigbrain-cyto",
+    "type": "EMPTY",
+    "label": "BigBrain Cytoarchitectonic (Julich v2.9)",
+    "children": [
+      {
+        "name": "bigbrain-cyto/amy",
+        "type": "EMPTY",
+        "label": "Amygdala-Subkerne (Julich v2.9)",
+        "children": [
+          {
+            "name": "bigbrain-amy-aaa-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-aaa-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ahid-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ahid-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ahiv-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ahiv-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-apir-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-apir-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-astr-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-astr-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-bl-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-bl-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-bm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-bm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ce-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ce-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ice-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-ice-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-icm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-icm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-iol-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-iol-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-la-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-la-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-me-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-me-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-pl-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-pl-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vcod-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vcod-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vcov-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vcov-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vtm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-amy-vtm-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "bigbrain-cyto/cgl",
+        "type": "EMPTY",
+        "label": "Corpus geniculatum laterale (LGN-Schichten Lam 1-6)",
+        "children": [
+          {
+            "name": "bigbrain-cgl-lam1-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam1-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam2-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam2-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam3-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam3-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam4-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam4-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam5-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam5-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam6-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-cgl-lam6-r",
+            "type": "MESH"
+          }
+        ]
+      },
+      {
+        "name": "bigbrain-cyto/mgb",
+        "type": "EMPTY",
+        "label": "Corpus geniculatum mediale (MGN-Subdivisionen d/m/v)",
+        "children": [
+          {
+            "name": "bigbrain-mgbd-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-mgbd-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-mgbm-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-mgbm-r",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-mgbv-l",
+            "type": "MESH"
+          },
+          {
+            "name": "bigbrain-mgbv-r",
+            "type": "MESH"
+          }
+        ]
+      }
+    ]
+  }
+}

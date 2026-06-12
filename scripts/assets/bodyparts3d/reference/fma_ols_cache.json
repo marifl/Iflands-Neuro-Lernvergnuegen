@@ -1,0 +1,6391 @@
+{
+"FMA13889": {
+"definition": null,
+"label": "Pituitary gland",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma55662",
+"label": "Lobular organ"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA223162": {
+"definition": null,
+"label": "Left olfactory tract",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma77626",
+"label": "Olfactory tract"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA223163": {
+"definition": null,
+"label": "Right olfactory tract",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma77626",
+"label": "Olfactory tract"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA235002": {
+"definition": null,
+"label": "Fimbria of right hippocampus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83866",
+"label": "Fimbria of hippocampus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA235004": {
+"definition": null,
+"label": "Fimbria of left hippocampus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83866",
+"label": "Fimbria of hippocampus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA242160": {
+"definition": null,
+"label": "Right cerebral crus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72464",
+"label": "Cerebral crus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA242162": {
+"definition": null,
+"label": "Left cerebral crus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72464",
+"label": "Cerebral crus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA242857": {
+"definition": null,
+"label": "Choroid plexus of right lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83711",
+"label": "Choroid plexus of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA242859": {
+"definition": null,
+"label": "Choroid plexus of left lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83711",
+"label": "Choroid plexus of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA256198": {
+"definition": null,
+"label": "Right anterior orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma256196",
+"label": "Anterior orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA256200": {
+"definition": null,
+"label": "Left anterior orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma256196",
+"label": "Anterior orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA258714": {
+"definition": null,
+"label": "Right thalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62007",
+"label": "Thalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA258716": {
+"definition": null,
+"label": "Left thalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62007",
+"label": "Thalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA261083": {
+"definition": null,
+"label": "White matter of right temporal lobe",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma256186",
+"label": "White matter of temporal lobe"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA261085": {
+"definition": null,
+"label": "White matter of left temporal lobe",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma256186",
+"label": "White matter of temporal lobe"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA266041": {
+"definition": null,
+"label": "Right half of tentorium cerebelli",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma266054",
+"label": "Subdivision of cranial dura mater"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA266056": {
+"definition": null,
+"label": "Cerebral hemisphere segment of dura mater",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma266054",
+"label": "Subdivision of cranial dura mater"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA270682": {
+"definition": null,
+"label": "Right uncus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74884",
+"label": "Uncus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA270684": {
+"definition": null,
+"label": "Left uncus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74884",
+"label": "Uncus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA272417": {
+"definition": null,
+"label": "Right subiculum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74414",
+"label": "Subiculum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA272419": {
+"definition": null,
+"label": "Left subiculum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74414",
+"label": "Subiculum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA273252": {
+"definition": null,
+"label": "Right mammillary body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74877",
+"label": "Mammillary body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA273254": {
+"definition": null,
+"label": "Left mammillary body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74877",
+"label": "Mammillary body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA274027": {
+"definition": null,
+"label": "Choroid plexus of right cerebral hemisphere",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61934",
+"label": "Choroid plexus of cerebral hemisphere"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA274029": {
+"definition": null,
+"label": "Choroid plexus of left cerebral hemisphere",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61934",
+"label": "Choroid plexus of cerebral hemisphere"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA49822": {
+"definition": null,
+"label": "Cavernous branch of right internal carotid artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma49817",
+"label": "Cavernous branch of internal carotid artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA49823": {
+"definition": null,
+"label": "Cavernous branch of left internal carotid artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma49817",
+"label": "Cavernous branch of internal carotid artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA49850": {
+"definition": null,
+"label": "Right superior hypophyseal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma49849",
+"label": "Superior hypophysial artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA49851": {
+"definition": null,
+"label": "Left superior hypophyseal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma49849",
+"label": "Superior hypophysial artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50029": {
+"definition": null,
+"label": "Right anterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50028",
+"label": "Anterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50030": {
+"definition": null,
+"label": "Left anterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50028",
+"label": "Anterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50085": {
+"definition": null,
+"label": "Right posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50084",
+"label": "Posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50086": {
+"definition": null,
+"label": "Left posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50084",
+"label": "Posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50089": {
+"definition": null,
+"label": "Left anterior choroidal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50087",
+"label": "Anterior choroidal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50131": {
+"definition": null,
+"label": "Branch of right anterior choroidal artery to right lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50113",
+"label": "Branch of anterior choroidal artery to lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50138": {
+"definition": null,
+"label": "Branch of right anterior choroidal artery to right optic tract",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50116",
+"label": "Branch of anterior choroidal artery to optic tract"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50147": {
+"definition": null,
+"label": "Branch of left anterior choroidal artery to posterior limb of left internal capsule",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50119",
+"label": "Branch of anterior choroidal artery to posterior limb of internal capsule"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50169": {
+"definition": null,
+"label": "Anterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50031",
+"label": "Branch of anterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50175": {
+"definition": null,
+"label": "Median callosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma79613",
+"label": "Branch of anterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50315": {
+"definition": null,
+"label": "Right proximal medial striate artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50311",
+"label": "Proximal medial striate artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50341": {
+"definition": null,
+"label": "Right distal medial striate artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50327",
+"label": "Distal medial striate artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50342": {
+"definition": null,
+"label": "Left distal medial striate artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50327",
+"label": "Distal medial striate artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50347": {
+"definition": null,
+"label": "Right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50330",
+"label": "Callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50348": {
+"definition": null,
+"label": "Left callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50330",
+"label": "Callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50349": {
+"definition": null,
+"label": "Anteromedial frontal branch of right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50332",
+"label": "Anteromedial frontal branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50350": {
+"definition": null,
+"label": "Anteromedial frontal branch of left callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50332",
+"label": "Anteromedial frontal branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50351": {
+"definition": null,
+"label": "Intermediomedial branch of right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50333",
+"label": "Intermediomedial branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50352": {
+"definition": null,
+"label": "Intermediomedial branch of left callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50333",
+"label": "Intermediomedial branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50353": {
+"definition": null,
+"label": "Posteromedial branch of right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50334",
+"label": "Posteromedial branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50354": {
+"definition": null,
+"label": "Posteromedial branch of left callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50334",
+"label": "Posteromedial branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50357": {
+"definition": null,
+"label": "Paracentral branch of right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50336",
+"label": "Paracentral branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50358": {
+"definition": null,
+"label": "Paracentral branch of left callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50336",
+"label": "Paracentral branch of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50359": {
+"definition": null,
+"label": "Right pericallosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50337",
+"label": "Pericallosal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50360": {
+"definition": null,
+"label": "Left pericallosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50337",
+"label": "Pericallosal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50361": {
+"definition": null,
+"label": "Precuneal branch of right pericallosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50339",
+"label": "Precuneal branch of pericallosal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50362": {
+"definition": null,
+"label": "Precuneal branch of left pericallosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50339",
+"label": "Precuneal branch of pericallosal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50366": {
+"definition": null,
+"label": "Sphenoid part of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50365",
+"label": "Sphenoid part of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50367": {
+"definition": null,
+"label": "Sphenoid part of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50365",
+"label": "Sphenoid part of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50369": {
+"definition": null,
+"label": "Insular part of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50368",
+"label": "Insular part of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50370": {
+"definition": null,
+"label": "Insular part of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50368",
+"label": "Insular part of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50377": {
+"definition": null,
+"label": "Anterolateral central branch of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50376",
+"label": "Anterolateral central branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50378": {
+"definition": null,
+"label": "Anterolateral central branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50376",
+"label": "Anterolateral central branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50412": {
+"definition": null,
+"label": "Chiasmatic branch of right posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50411",
+"label": "Chiasmatic branch of posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50413": {
+"definition": null,
+"label": "Chiasmatic branch of left posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50411",
+"label": "Chiasmatic branch of posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50425": {
+"definition": null,
+"label": "Right thalamotuberal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50424",
+"label": "Thalamotuberal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50426": {
+"definition": null,
+"label": "Left thalamotuberal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50424",
+"label": "Thalamotuberal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50428": {
+"definition": null,
+"label": "Hypothalamic branch of right posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50427",
+"label": "Hypothalamic branch of posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50429": {
+"definition": null,
+"label": "Hypothalamic branch of left posterior communicating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50427",
+"label": "Hypothalamic branch of posterior communicating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50449": {
+"definition": null,
+"label": "Right mammillary artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50448",
+"label": "Mammillary artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50467": {
+"definition": null,
+"label": "Middle temporal branch of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50466",
+"label": "Middle temporal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50468": {
+"definition": null,
+"label": "Middle temporal branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50466",
+"label": "Middle temporal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50470": {
+"definition": null,
+"label": "Posterior temporal branch of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50469",
+"label": "Posterior temporal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50471": {
+"definition": null,
+"label": "Posterior temporal branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50469",
+"label": "Posterior temporal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50473": {
+"definition": null,
+"label": "Temporo-occipital branch of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50472",
+"label": "Temporo-occipital branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50474": {
+"definition": null,
+"label": "Temporo-occipital branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50472",
+"label": "Temporo-occipital branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50476": {
+"definition": null,
+"label": "Branch of right middle cerebral artery to right angular gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50475",
+"label": "Branch of middle cerebral artery to angular gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50477": {
+"definition": null,
+"label": "Branch of left middle cerebral artery to left angular gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50475",
+"label": "Branch of middle cerebral artery to angular gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50480": {
+"definition": null,
+"label": "Artery of right precentral sulcus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50479",
+"label": "Artery of precentral sulcus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50481": {
+"definition": null,
+"label": "Artery of left precentral sulcus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50479",
+"label": "Artery of precentral sulcus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50483": {
+"definition": null,
+"label": "Artery of right postcentral sulcus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50482",
+"label": "Artery of postcentral sulcus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50484": {
+"definition": null,
+"label": "Artery of left postcentral sulcus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50482",
+"label": "Artery of postcentral sulcus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50519": {
+"definition": null,
+"label": "Right posterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50518",
+"label": "Posterior inferior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50520": {
+"definition": null,
+"label": "Left posterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50518",
+"label": "Posterior inferior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50531": {
+"definition": null,
+"label": "Anterior spinal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76264",
+"label": "Intracranial branch of vertebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50532": {
+"status": "not_found"
+},
+"FMA50533": {
+"status": "not_found"
+},
+"FMA50544": {
+"definition": null,
+"label": "Anterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76269",
+"label": "Branch of basilar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50545": {
+"definition": null,
+"label": "Right anterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50544",
+"label": "Anterior inferior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50546": {
+"definition": null,
+"label": "Left anterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50544",
+"label": "Anterior inferior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50566": {
+"definition": null,
+"label": "Medial branch of right pontine artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50564",
+"label": "Medial branch of pontine artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50567": {
+"definition": null,
+"label": "Medial branch of left pontine artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50564",
+"label": "Medial branch of pontine artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50568": {
+"definition": null,
+"label": "Lateral branch of right pontine artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50565",
+"label": "Lateral branch of pontine artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50569": {
+"definition": null,
+"label": "Lateral branch of left pontine artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50565",
+"label": "Lateral branch of pontine artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50574": {
+"definition": null,
+"label": "Right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50573",
+"label": "Superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50575": {
+"definition": null,
+"label": "Left superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50573",
+"label": "Superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50578": {
+"definition": null,
+"label": "Lateral branch of right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50577",
+"label": "Lateral superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50579": {
+"definition": null,
+"label": "Lateral branch of left superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50577",
+"label": "Lateral superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50581": {
+"definition": null,
+"label": "Medial branch of right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50580",
+"label": "Medial branch of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50582": {
+"definition": null,
+"label": "Medial branch of left superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50580",
+"label": "Medial branch of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50639": {
+"definition": null,
+"label": "Precommunicating part of right posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50590",
+"label": "Precommunicating part of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50640": {
+"definition": null,
+"label": "Precommunicating part of left posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50590",
+"label": "Precommunicating part of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50641": {
+"definition": null,
+"label": "Postcommunicating part of right posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50591",
+"label": "Postcommunicating part of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50642": {
+"definition": null,
+"label": "Postcommunicating part of left posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50591",
+"label": "Postcommunicating part of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50661": {
+"definition": null,
+"label": "Posteromedial central branch of left posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50587",
+"label": "Posteromedial central branch of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50664": {
+"definition": null,
+"label": "Right thalamoperforating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50624",
+"label": "Thalamoperforating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50665": {
+"definition": null,
+"label": "Left thalamoperforating artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50624",
+"label": "Thalamoperforating artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50668": {
+"definition": null,
+"label": "Posterolateral central branch of right posterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50628",
+"label": "Posterolateral central branch of posterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50670": {
+"definition": null,
+"label": "Right thalamogeniculate artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50629",
+"label": "Thalamogeniculate artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50671": {
+"definition": null,
+"label": "Left thalamogeniculate artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50629",
+"label": "Thalamogeniculate artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50672": {
+"definition": null,
+"label": "Right posterior medial choroidal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50630",
+"label": "Posterior medial choroidal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50673": {
+"definition": null,
+"label": "Left posterior medial choroidal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50630",
+"label": "Posterior medial choroidal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50696": {
+"definition": null,
+"label": "Superior vermian branch of medial branch of right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50695",
+"label": "Superior vermian branch of medial branch of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50697": {
+"definition": null,
+"label": "Superior vermian branch of medial branch of left superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50695",
+"label": "Superior vermian branch of medial branch of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50764": {
+"definition": null,
+"label": "Right transverse sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50763",
+"label": "Transverse sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50767": {
+"definition": null,
+"label": "Superior sagittal sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma323486",
+"label": "Sagittal sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50768": {
+"definition": null,
+"label": "Inferior sagittal sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma323486",
+"label": "Sagittal sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50769": {
+"definition": null,
+"label": "Straight sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52569",
+"label": "Unpaired dural venous sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50774": {
+"definition": null,
+"label": "Anterior intercavernous sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50773",
+"label": "Intercavernous sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50775": {
+"definition": null,
+"label": "Posterior intercavernous sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50773",
+"label": "Intercavernous sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50781": {
+"definition": null,
+"label": "Occipital sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52569",
+"label": "Unpaired dural venous sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50783": {
+"definition": null,
+"label": "Basilar venous plexus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma4767",
+"label": "Venous plexus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50784": {
+"definition": null,
+"label": "Sinus confluence",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma3729",
+"label": "Venous anastomosis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50798": {
+"definition": null,
+"label": "Portal vein of hypophysis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50790",
+"label": "Emissary vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50875": {
+"definition": null,
+"label": "Right optic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50863",
+"label": "Optic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50878": {
+"definition": null,
+"label": "Left optic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50863",
+"label": "Optic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50881": {
+"definition": null,
+"label": "Right trochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50865",
+"label": "Trochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50882": {
+"definition": null,
+"label": "Left trochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50865",
+"label": "Trochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50886": {
+"definition": null,
+"label": "Right abducens nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50867",
+"label": "Abducens nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50887": {
+"definition": null,
+"label": "Left abducens nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50867",
+"label": "Abducens nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50890": {
+"definition": null,
+"label": "Right vestibulocochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50869",
+"label": "Vestibulocochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50891": {
+"definition": null,
+"label": "Left vestibulocochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50869",
+"label": "Vestibulocochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50978": {
+"definition": null,
+"label": "Superior superficial cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50982",
+"label": "Superficial cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50986": {
+"definition": null,
+"label": "Inferior superficial cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50982",
+"label": "Superficial cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50991": {
+"definition": null,
+"label": "Right basal vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50990",
+"label": "Basal vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50992": {
+"definition": null,
+"label": "Left basal vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50990",
+"label": "Basal vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50994": {
+"definition": null,
+"label": "Right great cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50993",
+"label": "Great cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50995": {
+"definition": null,
+"label": "Left great cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50993",
+"label": "Great cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA50999": {
+"definition": null,
+"label": "Right superior thalamostriate vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50997",
+"label": "Superior thalamostriate vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51000": {
+"definition": null,
+"label": "Left superior thalamostriate vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50997",
+"label": "Superior thalamostriate vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51001": {
+"definition": null,
+"label": "Right inferior choroid vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50998",
+"label": "Inferior choroid vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51002": {
+"definition": null,
+"label": "Left inferior choroid vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50998",
+"label": "Inferior choroid vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51004": {
+"definition": null,
+"label": "Right internal cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51003",
+"label": "Internal cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51012": {
+"definition": null,
+"label": "Anterior vein of right septum pellucidum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51007",
+"label": "Anterior vein of septum pellucidum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51013": {
+"definition": null,
+"label": "Anterior vein of left septum pellucidum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51007",
+"label": "Anterior vein of septum pellucidum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51016": {
+"definition": null,
+"label": "Lateral vein of right lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51010",
+"label": "Lateral vein of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51017": {
+"definition": null,
+"label": "Lateral vein of left lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51010",
+"label": "Lateral vein of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51018": {
+"definition": null,
+"label": "Medial vein of right lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51009",
+"label": "Medial vein of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51019": {
+"definition": null,
+"label": "Medial vein of left lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51009",
+"label": "Medial vein of lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51020": {
+"definition": null,
+"label": "Posterior vein of right septum pellucidum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51008",
+"label": "Posterior vein of septum pellucidum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51021": {
+"definition": null,
+"label": "Posterior vein of left septum pellucidum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51008",
+"label": "Posterior vein of septum pellucidum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51230": {
+"definition": null,
+"label": "Superior vein of vermis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51227",
+"label": "Cerebellar vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51231": {
+"definition": null,
+"label": "Inferior vein of vermis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51227",
+"label": "Cerebellar vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51234": {
+"definition": null,
+"label": "Precentral cerebellar vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51227",
+"label": "Cerebellar vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51289": {
+"definition": null,
+"label": "Right superior petrosal sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50771",
+"label": "Superior petrosal sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51291": {
+"definition": null,
+"label": "Right inferior petrosal sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50770",
+"label": "Inferior petrosal sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51293": {
+"definition": null,
+"label": "Right sigmoid sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50782",
+"label": "Sigmoid sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51307": {
+"definition": null,
+"label": "Right anterior cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51306",
+"label": "Anterior cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51310": {
+"definition": null,
+"label": "Left deep middle cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51309",
+"label": "Deep middle cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51311": {
+"definition": null,
+"label": "Right deep middle cerebral vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51309",
+"label": "Deep middle cerebral vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51330": {
+"definition": null,
+"label": "Right superior choroid vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51329",
+"label": "Superior choroid vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51331": {
+"definition": null,
+"label": "Left superior choroid vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51329",
+"label": "Superior choroid vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51346": {
+"definition": null,
+"label": "Anteromedian pontine vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51342",
+"label": "Pontine vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51355": {
+"definition": null,
+"label": "Right transverse pontine vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51348",
+"label": "Transverse pontine vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51378": {
+"definition": null,
+"label": "Right interpeduncular vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51339",
+"label": "Interpeduncular vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51390": {
+"definition": null,
+"label": "Anteromedian medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51343",
+"label": "Vein of medulla oblongata"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51393": {
+"definition": null,
+"label": "Dorsal medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51343",
+"label": "Vein of medulla oblongata"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51394": {
+"definition": null,
+"label": "Posteromedian medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51343",
+"label": "Vein of medulla oblongata"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51400": {
+"definition": null,
+"label": "Right transverse medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51392",
+"label": "Transverse medullary vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51402": {
+"definition": null,
+"label": "Right cavernous sinus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50772",
+"label": "Cavernous sinus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51635": {
+"definition": null,
+"label": "Right anterolateral pontine vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51347",
+"label": "Anterolateral pontine vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51636": {
+"definition": null,
+"label": "Left anterolateral pontine vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51347",
+"label": "Anterolateral pontine vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51637": {
+"definition": null,
+"label": "Right anterolateral medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51391",
+"label": "Anterolateral medullary vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA51638": {
+"definition": null,
+"label": "Left anterolateral medullary vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51391",
+"label": "Anterolateral medullary vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52452": {
+"definition": null,
+"label": "Right superior cerebellar vein",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma51232",
+"label": "Superior cerebellar vein"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52574": {
+"definition": null,
+"label": "Superior branch of right oculomotor nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52572",
+"label": "Superior branch of oculomotor nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52575": {
+"definition": null,
+"label": "Superior branch of left oculomotor nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52572",
+"label": "Superior branch of oculomotor nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52576": {
+"definition": null,
+"label": "Inferior branch of right oculomotor nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52573",
+"label": "Inferior branch of oculomotor nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52577": {
+"definition": null,
+"label": "Inferior branch of left oculomotor nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52573",
+"label": "Inferior branch of oculomotor nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52579": {
+"definition": null,
+"label": "Nerve to right ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52578",
+"label": "Nerve to ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52580": {
+"definition": null,
+"label": "Nerve to left ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52578",
+"label": "Nerve to ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52592": {
+"definition": null,
+"label": "Right olfactory nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma46787",
+"label": "Olfactory nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52593": {
+"definition": null,
+"label": "Left olfactory nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma46787",
+"label": "Olfactory nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52622": {
+"definition": null,
+"label": "Right ophthalmic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52621",
+"label": "Ophthalmic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52623": {
+"definition": null,
+"label": "Left ophthalmic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52621",
+"label": "Ophthalmic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52629": {
+"definition": null,
+"label": "Right lacrimal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52628",
+"label": "Lacrimal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52630": {
+"definition": null,
+"label": "Left lacrimal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52628",
+"label": "Lacrimal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52639": {
+"definition": null,
+"label": "Right frontal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52638",
+"label": "Frontal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52640": {
+"definition": null,
+"label": "Left frontal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52638",
+"label": "Frontal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52643": {
+"definition": null,
+"label": "Right supratrochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52642",
+"label": "Supratrochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52644": {
+"definition": null,
+"label": "Left supratrochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52642",
+"label": "Supratrochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52656": {
+"definition": null,
+"label": "Right supra-orbital nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52655",
+"label": "Supra-orbital nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52657": {
+"definition": null,
+"label": "Left supra-orbital nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52655",
+"label": "Supra-orbital nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52669": {
+"definition": null,
+"label": "Right nasociliary nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52668",
+"label": "Nasociliary nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52670": {
+"definition": null,
+"label": "Left nasociliary nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52668",
+"label": "Nasociliary nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52673": {
+"definition": null,
+"label": "Communicating branch of right nasociliary nerve with right ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52672",
+"label": "Communicating branch of nasociliary nerve with ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52674": {
+"definition": null,
+"label": "Communicating branch of left nasociliary nerve with left ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52672",
+"label": "Communicating branch of nasociliary nerve with ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52676": {
+"definition": null,
+"label": "Right anterior ethmoidal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52675",
+"label": "Anterior ethmoidal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52677": {
+"definition": null,
+"label": "Left anterior ethmoidal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52675",
+"label": "Anterior ethmoidal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52689": {
+"definition": null,
+"label": "Right external nasal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52688",
+"label": "External nasal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52690": {
+"definition": null,
+"label": "Left external nasal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52688",
+"label": "External nasal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52698": {
+"definition": null,
+"label": "Right infratrochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52693",
+"label": "Infratrochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52699": {
+"definition": null,
+"label": "Left infratrochlear nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52693",
+"label": "Infratrochlear nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52715": {
+"definition": null,
+"label": "Right posterior ethmoidal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52714",
+"label": "Posterior ethmoidal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52716": {
+"definition": null,
+"label": "Left posterior ethmoidal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52714",
+"label": "Posterior ethmoidal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52729": {
+"definition": null,
+"label": "Right middle meningeal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52728",
+"label": "Middle meningeal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52730": {
+"definition": null,
+"label": "Left middle meningeal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52728",
+"label": "Middle meningeal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52732": {
+"definition": null,
+"label": "Ganglionic branch of right maxillary nerve to right pterygopalatine ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52731",
+"label": "Ganglionic branch of maxillary nerve to pterygopalatine ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52733": {
+"definition": null,
+"label": "Ganglionic branch of left maxillary nerve to left pterygopalatine ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52731",
+"label": "Ganglionic branch of maxillary nerve to pterygopalatine ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52798": {
+"definition": null,
+"label": "Right nasopalatine nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52797",
+"label": "Nasopalatine nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52799": {
+"definition": null,
+"label": "Left nasopalatine nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52797",
+"label": "Nasopalatine nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52803": {
+"definition": null,
+"label": "Right greater palatine nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52802",
+"label": "Greater palatine nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52804": {
+"definition": null,
+"label": "Left greater palatine nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52802",
+"label": "Greater palatine nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52936": {
+"definition": null,
+"label": "Right posterior superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52931",
+"label": "Posterior superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52937": {
+"definition": null,
+"label": "Left posterior superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52931",
+"label": "Posterior superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52939": {
+"definition": null,
+"label": "Right middle superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52932",
+"label": "Middle superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52940": {
+"definition": null,
+"label": "Left middle superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52932",
+"label": "Middle superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52941": {
+"definition": null,
+"label": "Right anterior superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52935",
+"label": "Anterior superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52942": {
+"definition": null,
+"label": "Left anterior superior alveolar nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52935",
+"label": "Anterior superior alveolar nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52968": {
+"definition": null,
+"label": "Right zygomatic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52967",
+"label": "Zygomatic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52969": {
+"definition": null,
+"label": "Left zygomatic nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52967",
+"label": "Zygomatic nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52997": {
+"definition": null,
+"label": "Right mandibular nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52996",
+"label": "Mandibular nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA52998": {
+"definition": null,
+"label": "Left mandibular nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52996",
+"label": "Mandibular nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53057": {
+"definition": null,
+"label": "Right medial pterygoid nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53056",
+"label": "Medial pterygoid nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53058": {
+"definition": null,
+"label": "Left medial pterygoid nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53056",
+"label": "Medial pterygoid nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53067": {
+"definition": null,
+"label": "Right buccal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53066",
+"label": "Buccal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53068": {
+"definition": null,
+"label": "Left buccal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53066",
+"label": "Buccal nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53072": {
+"definition": null,
+"label": "Branch of right mandibular nerve to right otic ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53071",
+"label": "Branch of mandibular nerve to otic ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53073": {
+"definition": null,
+"label": "Branch of left mandibular nerve to left otic ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53071",
+"label": "Branch of mandibular nerve to otic ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53076": {
+"definition": null,
+"label": "Nerve to right tensor veli palatini",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53075",
+"label": "Nerve to tensor veli palatini"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53077": {
+"definition": null,
+"label": "Nerve to left tensor veli palatini",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53075",
+"label": "Nerve to tensor veli palatini"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53104": {
+"definition": null,
+"label": "Right masseteric nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53103",
+"label": "Masseteric nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53105": {
+"definition": null,
+"label": "Left masseteric nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53103",
+"label": "Masseteric nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53109": {
+"definition": null,
+"label": "Right lateral pterygoid nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53107",
+"label": "Lateral pterygoid nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53110": {
+"definition": null,
+"label": "Left lateral pterygoid nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53107",
+"label": "Lateral pterygoid nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53286": {
+"definition": null,
+"label": "Occipital branch of right posterior auricular nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53283",
+"label": "Occipital branch of posterior auricular nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53287": {
+"definition": null,
+"label": "Occipital branch of left posterior auricular nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma53283",
+"label": "Occipital branch of posterior auricular nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53549": {
+"definition": null,
+"label": "Right ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma6964",
+"label": "Ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA53550": {
+"definition": null,
+"label": "Left ciliary ganglion",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma6964",
+"label": "Ciliary ganglion"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA58607": {
+"definition": null,
+"label": "Optic part of right retina",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma58604",
+"label": "Optic part of retina"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA58608": {
+"definition": null,
+"label": "Optic part of left retina",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma58604",
+"label": "Optic part of retina"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61842": {
+"definition": null,
+"label": "Septum of telencephalon",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83904",
+"label": "Septum of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61934": {
+"definition": null,
+"label": "Choroid plexus of cerebral hemisphere",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma242770",
+"label": "Region of wall of ventricular system of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61961": {
+"definition": null,
+"label": "Anterior commissure",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83930",
+"label": "White matter of telencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61970": {
+"definition": null,
+"label": "Commissure of fornix of forebrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83906",
+"label": "Commissure of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61975": {
+"definition": null,
+"label": "Lamina terminalis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67951",
+"label": "Lamina of cerebral hemisphere"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61991": {
+"definition": null,
+"label": "Trunk of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61990",
+"label": "Trunk of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA61993": {
+"definition": null,
+"label": "Midbrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61815",
+"label": "Cardinal segment of brain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62004": {
+"definition": null,
+"label": "Medulla oblongata",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61998",
+"label": "Segment of hindbrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62008": {
+"definition": null,
+"label": "Hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83153",
+"label": "Organ component of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62032": {
+"definition": null,
+"label": "Habenula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74866",
+"label": "Zone of diencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62033": {
+"definition": null,
+"label": "Pineal body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma84081",
+"label": "Circumventricular organ of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62045": {
+"definition": null,
+"label": "Optic chiasm",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma5913",
+"label": "Nerve trunk"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62072": {
+"definition": null,
+"label": "Posterior commissure",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62445",
+"label": "Commissure of diencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62327": {
+"definition": null,
+"label": "Tuber cinereum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma74866",
+"label": "Zone of diencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62382": {
+"definition": null,
+"label": "Right optic tract",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62046",
+"label": "Optic tract"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62485": {
+"definition": null,
+"label": "Periamygdaloid area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83911",
+"label": "Gray matter of telencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA62488": {
+"definition": null,
+"label": "Induseum griseum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma277772",
+"label": "Segment of hippocampal formation"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA65389": {
+"definition": null,
+"label": "Left lesser occipital nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma6871",
+"label": "Lesser occipital nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA67936": {
+"definition": null,
+"label": "Left optic tract",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62046",
+"label": "Optic tract"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA67943": {
+"definition": null,
+"label": "Pons",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67942",
+"label": "Segment of metencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA67944": {
+"definition": null,
+"label": "Cerebellum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67942",
+"label": "Segment of metencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA71571": {
+"definition": null,
+"label": "Set of lateral direct veins of lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma63814",
+"label": "Set of systemic veins"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA71578": {
+"definition": null,
+"label": "Set of inferior veins of cerebellar hemisphere",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma63814",
+"label": "Set of systemic veins"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA71693": {
+"definition": null,
+"label": "Set of branches of cavernous part of internal carotid artery to nerves",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma63812",
+"label": "Set of arteries"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72653": {
+"definition": null,
+"label": "Right superior frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61857",
+"label": "Superior frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72654": {
+"definition": null,
+"label": "Left superior frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61857",
+"label": "Superior frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72655": {
+"definition": null,
+"label": "Right middle frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61859",
+"label": "Middle frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72656": {
+"definition": null,
+"label": "Left middle frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61859",
+"label": "Middle frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72657": {
+"definition": null,
+"label": "Right inferior frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61860",
+"label": "Inferior frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72658": {
+"definition": null,
+"label": "Left inferior frontal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61860",
+"label": "Inferior frontal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72659": {
+"definition": null,
+"label": "Right straight gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61893",
+"label": "Straight gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72660": {
+"definition": null,
+"label": "Left straight gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61893",
+"label": "Straight gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72661": {
+"definition": null,
+"label": "Right precentral gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61894",
+"label": "Precentral gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72662": {
+"definition": null,
+"label": "Left precentral gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61894",
+"label": "Precentral gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72665": {
+"definition": null,
+"label": "Right postcentral gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61896",
+"label": "Postcentral gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72666": {
+"definition": null,
+"label": "Left postcentral gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61896",
+"label": "Postcentral gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72667": {
+"definition": null,
+"label": "Right supramarginal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61897",
+"label": "Supramarginal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72668": {
+"definition": null,
+"label": "Left supramarginal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61897",
+"label": "Supramarginal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72669": {
+"definition": null,
+"label": "Right angular gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61898",
+"label": "Angular gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72670": {
+"definition": null,
+"label": "Left angular gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61898",
+"label": "Angular gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72671": {
+"definition": null,
+"label": "Right superior parietal lobule",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61899",
+"label": "Superior parietal lobule"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72672": {
+"definition": null,
+"label": "Left superior parietal lobule",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61899",
+"label": "Superior parietal lobule"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72673": {
+"definition": null,
+"label": "Right precuneus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61900",
+"label": "Precuneus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72674": {
+"definition": null,
+"label": "Left precuneus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61900",
+"label": "Precuneus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72675": {
+"definition": null,
+"label": "Right superior occipital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61901",
+"label": "Superior occipital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72676": {
+"definition": null,
+"label": "Left superior occipital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61901",
+"label": "Superior occipital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72677": {
+"definition": null,
+"label": "Right lateral occipital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61902",
+"label": "Lateral occipital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72678": {
+"definition": null,
+"label": "Left lateral occipital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61902",
+"label": "Lateral occipital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72679": {
+"definition": null,
+"label": "Right cuneus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61903",
+"label": "Cuneus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72680": {
+"definition": null,
+"label": "Left cuneus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61903",
+"label": "Cuneus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72681": {
+"definition": null,
+"label": "Right lingual gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61904",
+"label": "Lingual gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72682": {
+"definition": null,
+"label": "Left lingual gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61904",
+"label": "Lingual gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72683": {
+"definition": null,
+"label": "Right superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61905",
+"label": "Superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72684": {
+"definition": null,
+"label": "Left superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61905",
+"label": "Superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72685": {
+"definition": null,
+"label": "Right middle temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61906",
+"label": "Middle temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72686": {
+"definition": null,
+"label": "Left middle temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61906",
+"label": "Middle temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72687": {
+"definition": null,
+"label": "Right inferior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61907",
+"label": "Inferior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72688": {
+"definition": null,
+"label": "Left inferior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61907",
+"label": "Inferior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72689": {
+"definition": null,
+"label": "Right fusiform gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61908",
+"label": "Fusiform gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72690": {
+"definition": null,
+"label": "Left fusiform gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61908",
+"label": "Fusiform gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72691": {
+"definition": null,
+"label": "Right anterior transverse temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61909",
+"label": "Anterior transverse temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72692": {
+"definition": null,
+"label": "Left anterior transverse temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61909",
+"label": "Anterior transverse temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72693": {
+"definition": null,
+"label": "Right posterior transverse temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61910",
+"label": "Posterior transverse temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72694": {
+"definition": null,
+"label": "Left posterior transverse temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61910",
+"label": "Posterior transverse temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72704": {
+"definition": null,
+"label": "Left anterior accessory gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61915",
+"label": "Anterior accessory gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72705": {
+"definition": null,
+"label": "Right parahippocampal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61918",
+"label": "Parahippocampal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72706": {
+"definition": null,
+"label": "Left parahippocampal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61918",
+"label": "Parahippocampal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72707": {
+"definition": null,
+"label": "Right paraterminal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61919",
+"label": "Paraterminal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72708": {
+"definition": null,
+"label": "Left paraterminal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61919",
+"label": "Paraterminal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72711": {
+"definition": null,
+"label": "Right fasciolar gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61921",
+"label": "Fasciolar gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72712": {
+"definition": null,
+"label": "Left fasciolar gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61921",
+"label": "Fasciolar gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72713": {
+"definition": null,
+"label": "Right hippocampus proper",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62493",
+"label": "Hippocampus proper"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72714": {
+"definition": null,
+"label": "Left hippocampus proper",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62493",
+"label": "Hippocampus proper"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72715": {
+"definition": null,
+"label": "Dentate gyrus of right hippocampus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61922",
+"label": "Dentate gyrus of hippocampus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72716": {
+"definition": null,
+"label": "Dentate gyrus of left hippocampus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61922",
+"label": "Dentate gyrus of hippocampus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72717": {
+"definition": null,
+"label": "Right cingulate gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62434",
+"label": "Cingulate gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72718": {
+"definition": null,
+"label": "Left cingulate gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62434",
+"label": "Cingulate gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72720": {
+"definition": null,
+"label": "Right first posterior central gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67962",
+"label": "First posterior central gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72721": {
+"definition": null,
+"label": "Left first posterior central gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67962",
+"label": "First posterior central gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72722": {
+"definition": null,
+"label": "Right second posterior central gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62482",
+"label": "Second posterior central gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72723": {
+"definition": null,
+"label": "Left second posterior central gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62482",
+"label": "Second posterior central gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72724": {
+"definition": null,
+"label": "Right first short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62435",
+"label": "First short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72725": {
+"definition": null,
+"label": "Left first short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62435",
+"label": "First short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72726": {
+"definition": null,
+"label": "Right second short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62436",
+"label": "Second short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72728": {
+"definition": null,
+"label": "Left second short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62436",
+"label": "Second short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72729": {
+"definition": null,
+"label": "Right intermediate short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62438",
+"label": "Intermediate short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72730": {
+"definition": null,
+"label": "Left intermediate short gyrus of insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62438",
+"label": "Intermediate short gyrus of insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72734": {
+"definition": null,
+"label": "Right periamygdaloid area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62485",
+"label": "Periamygdaloid area"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72735": {
+"definition": null,
+"label": "Left periamygdaloid area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62485",
+"label": "Periamygdaloid area"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72736": {
+"definition": null,
+"label": "Right presubiculum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62486",
+"label": "Presubiculum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72737": {
+"definition": null,
+"label": "Left presubiculum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62486",
+"label": "Presubiculum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72738": {
+"definition": null,
+"label": "Right posterior parahippocampal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67966",
+"label": "Posterior segment of parahippocampal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72739": {
+"definition": null,
+"label": "Left posterior parahippocampal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67966",
+"label": "Posterior segment of parahippocampal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72740": {
+"definition": null,
+"label": "Right entorhinal area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72356",
+"label": "Entorhinal area"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72741": {
+"definition": null,
+"label": "Left entorhinal area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72356",
+"label": "Entorhinal area"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72742": {
+"definition": null,
+"label": "Right induseum griseum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62488",
+"label": "Induseum griseum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72743": {
+"definition": null,
+"label": "Left induseum griseum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62488",
+"label": "Induseum griseum"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72756": {
+"definition": null,
+"label": "Right lateral orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62418",
+"label": "Lateral orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72757": {
+"definition": null,
+"label": "Left lateral orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62418",
+"label": "Lateral orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72758": {
+"definition": null,
+"label": "Right medial orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62419",
+"label": "Medial orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72759": {
+"definition": null,
+"label": "Left medial orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62419",
+"label": "Medial orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72800": {
+"definition": null,
+"label": "Anterior part of right superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma70701",
+"label": "Anterior part of superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72801": {
+"definition": null,
+"label": "Anterior part of left superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma70701",
+"label": "Anterior part of superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72804": {
+"definition": null,
+"label": "Posterior part of right superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma70703",
+"label": "Posterior part of superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72805": {
+"definition": null,
+"label": "Posterior part of left superior temporal gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma70703",
+"label": "Posterior part of superior temporal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72826": {
+"definition": null,
+"label": "Right caudate nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61833",
+"label": "Caudate nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72827": {
+"definition": null,
+"label": "Left caudate nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61833",
+"label": "Caudate nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72828": {
+"definition": null,
+"label": "Right putamen",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61834",
+"label": "Putamen"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72829": {
+"definition": null,
+"label": "Left putamen",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61834",
+"label": "Putamen"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72830": {
+"definition": null,
+"label": "Right globus pallidus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61835",
+"label": "Globus pallidus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72831": {
+"definition": null,
+"label": "Left globus pallidus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61835",
+"label": "Globus pallidus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72832": {
+"definition": null,
+"label": "Right amygdala",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61841",
+"label": "Amygdala"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72833": {
+"definition": null,
+"label": "Left amygdala",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61841",
+"label": "Amygdala"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72849": {
+"definition": null,
+"label": "Left subcallosal area",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61890",
+"label": "Subcallosal area"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72906": {
+"definition": null,
+"label": "Right internal capsule",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61950",
+"label": "Internal capsule"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72907": {
+"definition": null,
+"label": "Left internal capsule",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61950",
+"label": "Internal capsule"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72924": {
+"definition": null,
+"label": "Right fornix of forebrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61965",
+"label": "Fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72925": {
+"definition": null,
+"label": "Left fornix of forebrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61965",
+"label": "Fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72926": {
+"definition": null,
+"label": "Right anterior column of fornix",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61966",
+"label": "Anterior column of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72927": {
+"definition": null,
+"label": "Left anterior column of fornix",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61966",
+"label": "Anterior column of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72930": {
+"definition": null,
+"label": "Body of right fornix of forebrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61968",
+"label": "Body of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72931": {
+"definition": null,
+"label": "Body of left fornix of forebrain",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61968",
+"label": "Body of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72932": {
+"definition": null,
+"label": "Right posterior column of fornix",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61969",
+"label": "Posterior column of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72933": {
+"definition": null,
+"label": "Left posterior column of fornix",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61969",
+"label": "Posterior column of fornix of forebrain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72935": {
+"definition": null,
+"label": "Right lateral olfactory stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61971",
+"label": "Lateral olfactory stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72936": {
+"definition": null,
+"label": "Left lateral olfactory stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61971",
+"label": "Lateral olfactory stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72939": {
+"definition": null,
+"label": "Right stria terminalis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61974",
+"label": "Stria terminalis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72940": {
+"definition": null,
+"label": "Left stria terminalis",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61974",
+"label": "Stria terminalis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72941": {
+"definition": null,
+"label": "Right lateral longitudinal stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62439",
+"label": "Lateral longitudinal stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72942": {
+"definition": null,
+"label": "Left lateral longitudinal stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62439",
+"label": "Lateral longitudinal stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72943": {
+"definition": null,
+"label": "Right medial longitudinal stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67956",
+"label": "Medial longitudinal stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72944": {
+"definition": null,
+"label": "Left medial longitudinal stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67956",
+"label": "Medial longitudinal stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72955": {
+"definition": null,
+"label": "Right diagonal band",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61973",
+"label": "Diagonal band"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72956": {
+"definition": null,
+"label": "Left diagonal band",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma61973",
+"label": "Diagonal band"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72977": {
+"definition": null,
+"label": "Right insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67329",
+"label": "Insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72978": {
+"definition": null,
+"label": "Left insula",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67329",
+"label": "Insula"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72982": {
+"definition": null,
+"label": "Right anterodorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62141",
+"label": "Anterodorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72983": {
+"definition": null,
+"label": "Left anterodorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62141",
+"label": "Anterodorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72984": {
+"definition": null,
+"label": "Right anteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62142",
+"label": "Anteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72985": {
+"definition": null,
+"label": "Left anteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62142",
+"label": "Anteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72986": {
+"definition": null,
+"label": "Right anteroventral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62143",
+"label": "Anteroventral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72987": {
+"definition": null,
+"label": "Left anteroventral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62143",
+"label": "Anteroventral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72988": {
+"definition": null,
+"label": "Right paratenial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62151",
+"label": "Paratenial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA72989": {
+"definition": null,
+"label": "Left paratenial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62151",
+"label": "Paratenial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73000": {
+"definition": null,
+"label": "Paralaminar part of right medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62160",
+"label": "Paralaminar part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73001": {
+"definition": null,
+"label": "Paralaminar part of left medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62160",
+"label": "Paralaminar part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73002": {
+"definition": null,
+"label": "Magnocellular part of right medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62161",
+"label": "Magnocellular part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73003": {
+"definition": null,
+"label": "Magnocellular part of left medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62161",
+"label": "Magnocellular part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73006": {
+"definition": null,
+"label": "Parvicellular part of right medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62162",
+"label": "Parvicellular part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73008": {
+"definition": null,
+"label": "Parvicellular part of left medial dorsal nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62162",
+"label": "Parvicellular part of medial dorsal nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73021": {
+"definition": null,
+"label": "Right oral pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62180",
+"label": "Oral pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73022": {
+"definition": null,
+"label": "Left oral pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62180",
+"label": "Oral pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73026": {
+"definition": null,
+"label": "Right lateral pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62181",
+"label": "Lateral pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73027": {
+"definition": null,
+"label": "Left lateral pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62181",
+"label": "Lateral pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73029": {
+"definition": null,
+"label": "Right medial pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62182",
+"label": "Medial pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73030": {
+"definition": null,
+"label": "Left medial pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62182",
+"label": "Medial pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73031": {
+"definition": null,
+"label": "Right inferior pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62183",
+"label": "Inferior pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73032": {
+"definition": null,
+"label": "Left inferior pulvinar nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62183",
+"label": "Inferior pulvinar nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73045": {
+"definition": null,
+"label": "Right centromedian nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62165",
+"label": "Centromedian nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73046": {
+"definition": null,
+"label": "Left centromedian nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62165",
+"label": "Centromedian nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73047": {
+"definition": null,
+"label": "Right parafascicular nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62166",
+"label": "Parafascicular nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73048": {
+"definition": null,
+"label": "Left parafascicular nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62166",
+"label": "Parafascicular nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73049": {
+"definition": null,
+"label": "Right ventral anterior nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62184",
+"label": "Ventral anterior nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73050": {
+"definition": null,
+"label": "Left ventral anterior nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62184",
+"label": "Ventral anterior nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73063": {
+"definition": null,
+"label": "Caudal part of right ventral lateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62194",
+"label": "Caudal part of ventral lateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73064": {
+"definition": null,
+"label": "Caudal part of left ventral lateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62194",
+"label": "Caudal part of ventral lateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73075": {
+"definition": null,
+"label": "Right ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62200",
+"label": "Ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73076": {
+"definition": null,
+"label": "Left ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62200",
+"label": "Ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73077": {
+"definition": null,
+"label": "Oral part of right ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62205",
+"label": "Oral part of ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73078": {
+"definition": null,
+"label": "Oral part of left ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62205",
+"label": "Oral part of ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73079": {
+"definition": null,
+"label": "Caudal part of right ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62206",
+"label": "Caudal part of ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73080": {
+"definition": null,
+"label": "Caudal part of left ventral posterolateral nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62206",
+"label": "Caudal part of ventral posterolateral nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73081": {
+"definition": null,
+"label": "Right ventral posteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62202",
+"label": "Ventral posteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73082": {
+"definition": null,
+"label": "Left ventral posteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62202",
+"label": "Ventral posteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73083": {
+"definition": null,
+"label": "Parvicellular part of right ventral posteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62207",
+"label": "Parvicellular part of ventral posteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73085": {
+"definition": null,
+"label": "Parvicellular part of left ventral posteromedial nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62207",
+"label": "Parvicellular part of ventral posteromedial nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73303": {
+"definition": null,
+"label": "Right lateral geniculate body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62209",
+"label": "Lateral geniculate body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73304": {
+"definition": null,
+"label": "Left lateral geniculate body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62209",
+"label": "Lateral geniculate body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73309": {
+"definition": null,
+"label": "Right medial geniculate body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62211",
+"label": "Medial geniculate body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73310": {
+"definition": null,
+"label": "Left medial geniculate body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62211",
+"label": "Medial geniculate body"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73323": {
+"definition": null,
+"label": "Right thalamic reticular nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62026",
+"label": "Thalamic reticular nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73324": {
+"definition": null,
+"label": "Left thalamic reticular nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62026",
+"label": "Thalamic reticular nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73325": {
+"definition": null,
+"label": "Right medial preoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67890",
+"label": "Medial preoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73326": {
+"definition": null,
+"label": "Left medial preoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67890",
+"label": "Medial preoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73327": {
+"definition": null,
+"label": "Right lateral preoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62326",
+"label": "Lateral preoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73328": {
+"definition": null,
+"label": "Left lateral preoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62326",
+"label": "Lateral preoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73329": {
+"definition": null,
+"label": "Right suprachiasmatic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67883",
+"label": "Suprachiasmatic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73330": {
+"definition": null,
+"label": "Left suprachiasmatic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67883",
+"label": "Suprachiasmatic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73331": {
+"definition": null,
+"label": "Right supraoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62317",
+"label": "Supraoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73332": {
+"definition": null,
+"label": "Left supraoptic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62317",
+"label": "Supraoptic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73333": {
+"definition": null,
+"label": "Right anterior nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62319",
+"label": "Anterior nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73334": {
+"definition": null,
+"label": "Left anterior nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62319",
+"label": "Anterior nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73335": {
+"definition": null,
+"label": "Right paraventricular nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62320",
+"label": "Paraventricular nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73336": {
+"definition": null,
+"label": "Left paraventricular nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62320",
+"label": "Paraventricular nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73337": {
+"definition": null,
+"label": "Right arcuate nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62329",
+"label": "Arcuate nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73338": {
+"definition": null,
+"label": "Left arcuate nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62329",
+"label": "Arcuate nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73339": {
+"definition": null,
+"label": "Right dorsomedial nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62331",
+"label": "Dorsomedial nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73340": {
+"definition": null,
+"label": "Left dorsomedial nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62331",
+"label": "Dorsomedial nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73341": {
+"definition": null,
+"label": "Right ventromedial nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62332",
+"label": "Ventromedial nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73342": {
+"definition": null,
+"label": "Left ventromedial nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62332",
+"label": "Ventromedial nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73353": {
+"definition": null,
+"label": "Right posterior nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62350",
+"label": "Posterior nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73354": {
+"definition": null,
+"label": "Left posterior nucleus of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62350",
+"label": "Posterior nucleus of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73359": {
+"definition": null,
+"label": "Right lateral hypothalamic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62337",
+"label": "Lateral hypothalamic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73360": {
+"definition": null,
+"label": "Left lateral hypothalamic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62337",
+"label": "Lateral hypothalamic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73367": {
+"definition": null,
+"label": "Right subthalamic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62035",
+"label": "Subthalamic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73368": {
+"definition": null,
+"label": "Left subthalamic nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62035",
+"label": "Subthalamic nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73389": {
+"definition": null,
+"label": "Right mammillothalamic tract of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62059",
+"label": "Mammillothalamic tract of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73390": {
+"definition": null,
+"label": "Left mammillothalamic tract of hypothalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62059",
+"label": "Mammillothalamic tract of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73413": {
+"definition": null,
+"label": "Right stria medullaris of thalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62080",
+"label": "Stria medullaris of thalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73414": {
+"definition": null,
+"label": "Left stria medullaris of thalamus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62080",
+"label": "Stria medullaris of thalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73422": {
+"definition": null,
+"label": "Right superior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62403",
+"label": "Superior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73423": {
+"definition": null,
+"label": "Left superior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62403",
+"label": "Superior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73434": {
+"definition": null,
+"label": "Right inferior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62404",
+"label": "Inferior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73435": {
+"definition": null,
+"label": "Left inferior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62404",
+"label": "Inferior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73461": {
+"definition": null,
+"label": "Brachium of right superior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72417",
+"label": "Brachium of superior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73462": {
+"definition": null,
+"label": "Brachium of left superior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma72417",
+"label": "Brachium of superior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73463": {
+"definition": null,
+"label": "Brachium of right inferior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma71114",
+"label": "Brachium of inferior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73464": {
+"definition": null,
+"label": "Brachium of left inferior colliculus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma71114",
+"label": "Brachium of inferior colliculus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73491": {
+"definition": null,
+"label": "Right red nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62407",
+"label": "Red nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73492": {
+"definition": null,
+"label": "Left red nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62407",
+"label": "Red nucleus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73539": {
+"definition": null,
+"label": "Right substantia nigra",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67947",
+"label": "Substantia nigra"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA73540": {
+"definition": null,
+"label": "Left substantia nigra",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma67947",
+"label": "Substantia nigra"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA74414": {
+"definition": null,
+"label": "Subiculum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma275026",
+"label": "Segment of gyrus of limbic lobe"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA74877": {
+"definition": null,
+"label": "Mammillary body",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83915",
+"label": "Gray matter of hypothalamus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA74884": {
+"definition": null,
+"label": "Uncus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma62478",
+"label": "Segment of parahippocampal gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA75351": {
+"definition": null,
+"label": "Interventricular foramen",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma9338",
+"label": "Anatomical conduit space"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76062": {
+"definition": null,
+"label": "Trunk of right anterior cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76061",
+"label": "Trunk of anterior cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76079": {
+"definition": null,
+"label": "Trunk of right callosomarginal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76078",
+"label": "Trunk of callosomarginal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76098": {
+"definition": null,
+"label": "Trunk of rightpericallosal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76097",
+"label": "Trunk of pericallosal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76128": {
+"definition": null,
+"label": "Trunk of inferior terminal branch of right middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76127",
+"label": "Trunk of inferior terminal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76129": {
+"definition": null,
+"label": "Trunk of inferior terminal branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76127",
+"label": "Trunk of inferior terminal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76135": {
+"definition": null,
+"label": "Trunk of middle temporal branch of left middle cerebral artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76133",
+"label": "Trunk of middle temporal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA76254": {
+"definition": null,
+"label": "Trunk of right anterior choroidal artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma76253",
+"label": "Trunk of anterior choroidal artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA77439": {
+"definition": null,
+"label": "Artery of central sulcus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma50436",
+"label": "Superior terminal branch of middle cerebral artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA77524": {
+"definition": null,
+"label": "Pharyngeal nerve",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma52727",
+"label": "Branch of maxillary nerve"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA77627": {
+"definition": null,
+"label": "Medial olfactory stria",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma323281",
+"label": "Olfactory stria"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78449": {
+"definition": null,
+"label": "Right lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma78448",
+"label": "Lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78450": {
+"definition": null,
+"label": "Left lateral ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma78448",
+"label": "Lateral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78454": {
+"definition": null,
+"label": "Third ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma275917",
+"label": "Cerebral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78462": {
+"definition": null,
+"label": "Choroid plexus of third ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma78460",
+"label": "Region of wall of third ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78467": {
+"definition": null,
+"label": "Cerebral aqueduct",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma78447",
+"label": "Segment of ventricular system of brain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78469": {
+"definition": null,
+"label": "Fourth ventricle",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma275917",
+"label": "Cerebral ventricle"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA78497": {
+"definition": null,
+"label": "Central canal of spinal cord",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma242789",
+"label": "Region of ventricular system of neuraxis"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA80187": {
+"definition": null,
+"label": "Right posterior orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma80184",
+"label": "Posterior orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA80188": {
+"definition": null,
+"label": "Left posterior orbital gyrus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma80184",
+"label": "Posterior orbital gyrus"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA83740": {
+"definition": null,
+"label": "Interpeduncular fossa",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83738",
+"label": "Subarachnoid incisure"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA83966": {
+"definition": null,
+"label": "Tentorium cerebelli",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma266054",
+"label": "Subdivision of cranial dura mater"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA83967": {
+"definition": null,
+"label": "Falx cerebri",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma266054",
+"label": "Subdivision of cranial dura mater"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA84354": {
+"definition": null,
+"label": "Periventricular nucleus",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83840",
+"label": "Nucleus of brain"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA86070": {
+"definition": null,
+"label": "Trunk of right posterior inferior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma86069",
+"label": "Trunk of posterior inferior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA86076": {
+"definition": null,
+"label": "Trunk of right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma86075",
+"label": "Trunk of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA86079": {
+"definition": null,
+"label": "Trunk of medial branch of right superior cerebellar artery",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma86078",
+"label": "Trunk of medial branch of superior cerebellar artery"
+}
+],
+"status": "ok",
+"synonyms": []
+},
+"FMA86464": {
+"definition": null,
+"label": "Corpus callosum",
+"obsolete": false,
+"parents": [
+{
+"fma": "fma83930",
+"label": "White matter of telencephalon"
+}
+],
+"status": "ok",
+"synonyms": []
+}
+}

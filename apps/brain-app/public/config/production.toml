@@ -1,0 +1,5 @@
+# ==============================================================================
+# Production-Overrides (geladen wenn import.meta.env.PROD === true)
+# ==============================================================================
+# dpr_max 1.5 ist jetzt default in defaults.toml — kein Override noetig.
+# Datei bleibt als Vorlage fuer production-spezifische Anpassungen.
