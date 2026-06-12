@@ -4,14 +4,14 @@ import { useViewerStore } from './viewerStore'
 
 const STEP_MS = 5200
 
-export default function PhineasGageScene({ inline = false }: { inline?: boolean } = {}) {
+export default function PhineasGageScene({ inline = false, asMode = false }: { inline?: boolean; asMode?: boolean } = {}) {
   const scene = PHINEAS_GAGE
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const setSkull = useViewerStore((s) => s.setSkull)
   const setRodVisible = useViewerStore((s) => s.setRodVisible)
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState(asMode)
   const [step, setStep] = useState(0)
-  const [playing, setPlaying] = useState(false)
+  const [playing, setPlaying] = useState(asMode)
 
   // Aktiven Schritt in Highlight + Schaedel + Stange spiegeln; beim Schliessen zuruecksetzen.
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function PhineasGageScene({ inline = false }: { inline?: boolean 
     return () => clearInterval(timer)
   }, [active, playing, scene.steps.length])
 
-  if (!active) {
+  if (!active && !asMode) {
     return (
       <button
         type="button"
@@ -59,7 +59,7 @@ export default function PhineasGageScene({ inline = false }: { inline?: boolean 
     <div
       className="ed-panel ed-frame"
       style={
-        inline
+        inline || asMode
           ? { padding: 14 }
           : { position: 'absolute', bottom: 36, left: '50%', transform: 'translateX(-50%)', width: 'min(640px, 90%)', padding: 16 }
       }
@@ -73,9 +73,11 @@ export default function PhineasGageScene({ inline = false }: { inline?: boolean 
           {scene.source} · Schritt {step + 1}/{scene.steps.length}
         </span>
         <span style={{ flex: 1 }} />
-        <button type="button" className="ed-btn" onClick={() => { setActive(false); setPlaying(false) }}>
-          Schliessen
-        </button>
+        {!asMode ? (
+          <button type="button" className="ed-btn" onClick={() => { setActive(false); setPlaying(false) }}>
+            Schliessen
+          </button>
+        ) : null}
       </div>
 
       <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13.5, lineHeight: 1.55, color: 'var(--g800)', minHeight: 84 }}>
