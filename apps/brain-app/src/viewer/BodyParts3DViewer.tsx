@@ -484,7 +484,7 @@ export default function BodyParts3DViewer() {
 
   const selectedNode = selected ? bySlug.get(selected) : null
 
-  const isPresentation = appMode !== 'explore'
+  const isExploreMode = appMode === 'explore'
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
 
@@ -605,10 +605,9 @@ export default function BodyParts3DViewer() {
               <CameraRig />
             </Canvas>
 
-            {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). Im Praesentationsmodus
-                steht die gewaehlte Struktur in der Schriftfeld-Fusszeile und die Vertiefungen
-                in der Inhalts-Spalte — nichts ueberlagert den 3D-Viewport. */}
-            {!isPresentation && (
+            {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). In Lern-/Phineas-Modus
+                liegt die Steuerung in der Sidebar/FooterBar — nichts ueberlagert den 3D-Viewport. */}
+            {isExploreMode && (
               <div
                 className="ed-panel ed-frame"
                 style={{ position: 'absolute', top: 16, left: 16, padding: '11px 15px', pointerEvents: 'none', maxWidth: 420 }}
@@ -626,7 +625,7 @@ export default function BodyParts3DViewer() {
             )}
 
             <IsolationBar />
-            {!isPresentation && <AnimationPlayer />}
+            {isExploreMode && <AnimationPlayer />}
           </div>
 
           {sidebar}
