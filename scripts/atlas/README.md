@@ -87,6 +87,29 @@ Zwei **combined-Host-Fallen** (hier dokumentiert, damit sie nicht neu entdeckt w
    alle Vertices. Nicht figur-kritisch (Runtime nutzt lateral/medial OFC via DKT). Der Ballooning-
    Detektor flaggt es dauerhaft; bei Bedarf via host_restriction/feinerer OFC-Affine fixbar.
 
+## 3c. „<5 mm auf TARO"-Verdikt (NICHT erneut versuchen)
+
+**Frage (2026-06-13):** „Areale mit <5 mm Toleranz auf das TARO-Hirn übertragen." **Antwort: für die
+zytoarchitektonischen Areale NICHT erreichbar** — aus zwei unabhängigen Gründen. Hier festgehalten,
+damit es nicht ein weiteres Mal als „Durchbruch" angegangen wird.
+
+1. **Gemessen reicht es nicht.** Der Voll-Transform-Shelf (Within-Host-Split) liefert pro Parzelle
+   nur **Mediane** in dieser Güte: **Julich 61 % / DKT 72 % der Parzellen <5 mm Median**, p90 = 6,5–10,8 mm,
+   Tails bis 14–22 mm (`work/atlas_residuals_{julich,dkt}.json`). Per-Vertex ist die <5-mm-Abdeckung noch
+   niedriger (Median ⇒ Hälfte der Vertices schlechter).
+2. **Daten-Decke.** TARO stammt aus einem **2-mm-MRT** (NICT-Voxel-Phantom) und das `brain.glb` ist die
+   von Illustratoren **nachbearbeitete** Mesh-Version → kein sauberes 1-mm-T1 / keine FreeSurfer-Cortex-
+   Surface für echte Surface-Registrierung (FreeSurfer/MSM). 2 mm ist zu grob für Recon.
+3. **Biologische Decke.** Selbst perfekte Surface-Registrierung richtet sich nach **Faltung**; zyto-
+   architektonische Areale (gerade **BA44/45, hOC5** — die Kapitel-11-relevanten) variieren relativ zur
+   Faltung um **Zentimeter** zwischen Individuen. <5 mm ist zwischen zwei verschiedenen Hirnen für diese
+   Areale nicht definierbar.
+
+**Konsequenz / Entscheidung:** **fsaverage = der präzise Atlas** (Areale dort nativ, 0 mm — siehe
+Atlas-App-Modus). **TARO = schematischer Figur-Layer** (60 Carve-Patches, „welche Region leuchtet" für
+die schematischen Kapitel-Abbildungen — dafür ausreichend). Beides bleibt getrennt; nicht versuchen,
+den Voll-Atlas <5 mm auf TARO zu zwingen.
+
 ## 4. Artefakt-Inventar
 
 | Datei | Was | Runtime? |

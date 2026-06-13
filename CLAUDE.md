@@ -42,6 +42,19 @@ Julich-Brain v3, Brodmann) + Subkortex (BG/Thalamus). Details + Pipeline-Reprodu
 Quellen/Lizenzen) in [`docs/ATLAS_CANONICAL_FEASIBILITY.md`](docs/ATLAS_CANONICAL_FEASIBILITY.md) §7.
 Build-Skripte: `scripts/atlas/canonical/`. **Nicht mit der TARO-Figur-Pipeline mischen.**
 
+**„<5 mm auf TARO" ist eine Sackgasse** (gemessen + biologische Decke) — siehe
+[`scripts/atlas/README.md`](scripts/atlas/README.md) §3c. fsaverage = präziser Atlas, TARO = schematischer
+Figur-Layer. Nicht erneut versuchen, den Voll-Atlas auf TARO zu zwingen.
+
+## Didaktisches Onboarding
+
+Beim ersten Laden zeigt `ModeLauncher` (`apps/brain-app/src/viewer/ModeLauncher.tsx`) einen Start-Screen
+mit 4 benannten Modus-Karten (Lernen empfohlen / Explorer / Phineas / Atlas) — nimmt die Einstiegslast,
+macht die geführten Modi sichtbar (ADHD: Object Permanence, eine klare Aktion). Deep-Links
+(`?mode=<learn|explore|phineas|atlas>`, `?scene=<id>` ⇒ Lernen) überspringen ihn (`main.tsx`).
+Lern- und Phineas-Modus haben Fortschrittsbalken (Time-Blindness). UI-Stil: Memory
+`brain-app-editorial-design-system` (ed-btn/eyebrow/ed-panel, theme-tokens NICHT editieren).
+
 ## Arbeitsregeln
 
 - **Evidence First:** Keine Aussage über "gefixt"/"getestet" ohne Tool-/Command-Evidenz.
