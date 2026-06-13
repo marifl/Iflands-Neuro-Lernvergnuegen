@@ -3,6 +3,8 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { CanonicalSurface } from './CanonicalSurface'
 import { loadManifest, loadHemi, type AtlasManifest, type HemiData } from './atlasAssets'
+import { faceToLabel } from './atlasPick'
+import { labelName } from './atlasLut'
 
 export default function CanonicalAtlasSpike() {
   const [m, setM] = useState<AtlasManifest | null>(null)
@@ -31,9 +33,9 @@ export default function CanonicalAtlasSpike() {
       <Canvas camera={{ position: [0, 0, 220], fov: 45 }}>
         <ambientLight intensity={0.6} />
         <CanonicalSurface hemi={hemis.L} layer="destrieux" lut={lut}
-          onPick={(f) => setPicked(`face ${f}`)} />
+          onPick={(f) => setPicked(labelName(lut, faceToLabel(hemis.L.faces, hemis.L.labels.destrieux, f)) || '—')} />
         <CanonicalSurface hemi={hemis.R} layer="destrieux" lut={lut}
-          onPick={(f) => setPicked(`face ${f}`)} />
+          onPick={(f) => setPicked(labelName(lut, faceToLabel(hemis.R.faces, hemis.R.labels.destrieux, f)) || '—')} />
         <OrbitControls />
       </Canvas>
     </div>
