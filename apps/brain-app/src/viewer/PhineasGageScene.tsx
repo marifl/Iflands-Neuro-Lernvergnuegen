@@ -110,6 +110,18 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
           ▶
         </button>
       </div>
+
+      {/* Fortschritt durch die Fallstudien-Schritte (konsistent mit dem Lern-Modus; macht den
+          Autoplay-Verlauf sichtbar statt nur „Schritt x/6" als Text). */}
+      <div
+        role="progressbar"
+        aria-valuenow={step + 1}
+        aria-valuemin={1}
+        aria-valuemax={scene.steps.length}
+        style={{ height: 3, width: '100%', marginTop: 12, background: 'var(--line-soft)', borderRadius: 2, overflow: 'hidden' }}
+      >
+        <div style={{ height: '100%', width: `${((step + 1) / scene.steps.length) * 100}%`, background: 'var(--orange)', transition: 'width 220ms ease' }} />
+      </div>
     </div>
   )
 }
