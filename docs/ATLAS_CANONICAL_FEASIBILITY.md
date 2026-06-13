@@ -73,8 +73,10 @@ BrainBrowser, pycortex, Nilearn `view_surf`).
   via Ref aufs Material, nicht über React-State pro Frame.
 
 **Subkortex (BG, Thalamus) ist NICHT auf der Kortexoberfläche** — Kapitel 11 ist aber PFC **+ Basalganglien**.
-→ Hybrid: Kortex = Surface+Labels, subkortikale Kerne = wenige kleine Solid-Meshes (haben wir teils:
-`mni_subcort.json` + CIT168). Das ist sauber trennbar und performant (Handvoll Meshes).
+→ Hybrid: Kortex = Surface+Labels, subkortikale Kerne = wenige kleine Solid-Meshes. **Quelle steht
+fest (Spike S-1, §3.4): Harvard-Oxford Subcortical (MNI152), frame-verifiziert gegen die pial.**
+Die ALTEN Extrakte (`work/mni_subcort.json`, `work/subcort_gp_extra.json`) sind im FALSCHEN Frame
+(~25-35 mm zu tief, Caudat-z=-27 statt ≈+11) → **nicht verwenden**.
 
 ---
 
@@ -120,6 +122,39 @@ Begründung:
 Fsaverage6 (41k) nur als Fallback wenn Mobile-Performance gemessen schlechter.
 
 **Belege:** templateflow S3 (bestätigt via Download 2026-06-13), nibabel `load(label.gii).darrays[0].data.shape = (163842,)` gemessen; siibra Fehler-Trace `MapNotFound` reproduziert; vol_to_surf-Outputs gemessen (163842,).
+
+### 3.4 Subkortex-Sourcing + Frame-Verifikation (Spike S-1, 2026-06-13)
+
+**Quelle: Harvard-Oxford Subcortical (FSL), MNI152, 1mm** via nilearn
+`fetch_atlas_harvard_oxford('sub-maxprob-thr25-1mm')`. Affine bestätigt MNI152
+(`diag=[1,1,1]`, Origin `[-91,-126,-72]`). Kapitel-11-relevante Kerne (Label-IDs):
+Thalamus (4/15), Caudate (5/16), Putamen (6/17), Pallidum (7/18), Accumbens (11/21)
+je L/R; zusätzlich Hippocampus/Amygdala/Brain-Stem verfügbar. **Pallidum ist hier
+NICHT in GPe/GPi getrennt** (ein Pallidum-Label) — für die GP-Subdivision bräuchte es
+CIT168 (nicht in siibra, separater Download).
+
+**Verworfen:** siibra/Julich-v3 hat subkortikal nur **Fragmente** (Ventral Striatum,
+STN, Metathalamus, Dentate) — keine vollständigen Caudate/Putamen/Thalamus-Kerne, da
+zytoarchitektonisch statt vollsegmentiert. CIT168 ist in siibra **nicht** als
+Parcellation vorhanden.
+
+**Volumen→Mesh:** `skimage.measure.marching_cubes` auf der Binärmaske je Kern,
+Voxel→mm via `img.affine`. Liefert Meshes in echtem MNI152 mm.
+
+**Frame-Verifikation gegen `fsavg164_{L,R}_pial.f32` (der Spike-Zweck):**
+- **Zentroide (MNI mm) alle anatomisch korrekt:** Caudate z≈+10.5/+11.2, Putamen
+  x≈±25 z≈+0.2, Pallidum x≈±19 z≈-1, Thalamus zentral y≈-19 z≈+6, Accumbens y≈+12 z≈-7.
+- **100% der Vertices jedes Kerns liegen INNERHALB der pial-Konvexhülle** (Delaunay-Test);
+  Zentroid→nächste-pial-Vertex 6-13mm (tief innen, wie erwartet).
+- **Lokaler Tiefen-Check:** jeder Kern-z-max liegt unter der lokalen pial-z-Obergrenze am
+  XY-Footprint → kein Durchstoßen von Gyri.
+- Frame-Beleg konsistent mit O-4 (pial sampelte das MNI152-Volumen, Area 45 landete im IFG).
+  HO ist FSL-MNI152, unsere pial-Referenz MNI152-2009c; die wenige-mm-Differenz zwischen
+  MNI152-Varianten ist gegenüber cm-Kerntiefe + Kortexhülle vernachlässigbar.
+
+**Empfehlung:** Subkortex-Bake aus **Harvard-Oxford sub-maxprob-thr25-1mm**, Marching-Cubes
+je Kern (Caudate/Putamen/Pallidum/Accumbens/Thalamus L+R), als separate Solid-Meshes neben
+der fsaverage-pial. Frame passt (ja, belegt). GPe/GPi-Split später optional via CIT168.
 
 ### FastSurfer-Rolle (Skill `fastsurfer-overview`)
 FastSurfer ist **nicht** nötig, um den kanonischen Atlas zu *bauen* — die fsaverage-Geometrie und
