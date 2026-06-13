@@ -55,6 +55,10 @@ macht die geführten Modi sichtbar (ADHD: Object Permanence, eine klare Aktion).
 Lern- und Phineas-Modus haben Fortschrittsbalken (Time-Blindness). UI-Stil: Memory
 `brain-app-editorial-design-system` (ed-btn/eyebrow/ed-panel, theme-tokens NICHT editieren).
 
+**Brücke TARO→Atlas:** Für Kapitel-11-PFC/OFC/Cingulum-Regionen zeigt die Explorer-HUD „Im Atlas zeigen →"
+(`apps/brain-app/src/viewer/atlas/atlasBridge.ts`) — springt in den Atlas-Modus und hebt das präzise
+fsaverage-Areal hervor (Funktion→Struktur). Nur kuratierte Areale (kein generisches Mapping zwischen zwei Hirnen).
+
 ## Arbeitsregeln
 
 - **Evidence First:** Keine Aussage über "gefixt"/"getestet" ohne Tool-/Command-Evidenz.
