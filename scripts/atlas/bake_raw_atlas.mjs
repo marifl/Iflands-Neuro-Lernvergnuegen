@@ -13,9 +13,13 @@ const here = dirname(fileURLToPath(import.meta.url))
 const source = process.argv[2]
 if (source !== 'julich' && source !== 'dkt') throw new Error('Aufruf: node bake_raw_atlas.mjs <julich|dkt>')
 
-const parcels = JSON.parse(readFileSync(resolve(here, `work/${source}_parcels.json`)))
+// Bevorzugt die NON-RIGID gewarpte Geometrie (warp_overlay.py: schon in TARO-Raum, Identitaet).
+const warpedPath = resolve(here, `work/${source}_parcels_warped.json`)
+const useWarped = existsSync(warpedPath)
+const parcels = JSON.parse(readFileSync(useWarped ? warpedPath : resolve(here, `work/${source}_parcels.json`)))
+if (useWarped) console.log(`${source}: NON-RIGID gewarpte Geometrie (warp_overlay.py)`)
 
-// Bevorzugt die PER-LAPPEN-Korrespondenz-Affine (fit_overlay_affine.mjs: je Hirnlappen eine eigene
+// (nur falls NICHT gewarpt) Bevorzugt die PER-LAPPEN-Korrespondenz-Affine (fit_overlay_affine.mjs: je Hirnlappen eine eigene
 // Affine ueber Parzelle-MNI-Centroid -> Carve-Patch-TARO-Centroid; anatomisch korrekt orientiert,
 // kein Flip, ~5-7mm). Fallback: Zentroid-Affine (register_atlas.py, unterskaliert).
 const aff = (B, t) => (v) => [
@@ -25,7 +29,10 @@ const aff = (B, t) => (v) => [
 ]
 const lobePath = resolve(here, `work/atlas_overlay_transform_${source}.json`)
 let affineFor
-if (existsSync(lobePath)) {
+if (useWarped) {
+  const id = (v) => v
+  affineFor = () => id
+} else if (existsSync(lobePath)) {
   const T = JSON.parse(readFileSync(lobePath)) // {global:{B,t}, lobes:{lobe:{B,t}}, assign:{name:lobe|'global'}}
   const fns = { global: aff(T.global.B, T.global.t) }
   for (const [lobe, m] of Object.entries(T.lobes)) fns[lobe] = aff(m.B, m.t)

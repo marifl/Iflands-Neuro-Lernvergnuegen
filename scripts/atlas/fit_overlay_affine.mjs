@@ -107,4 +107,8 @@ for (const [lobe, ns] of Object.entries(byLobe)) {
 }
 writeFileSync(resolve(here, `work/atlas_overlay_transform_${source}.json`),
   JSON.stringify({ global: { B: global.B, t: global.t }, lobes, assign }))
-console.log(`  -> work/atlas_overlay_transform_${source}.json`)
+// Carve-Patch-TARO-Centroide (dst) fuer den korrespondenz-getriebenen RBF-Warp (warp_overlay.py).
+const carve = {}
+for (const n of names) carve[n] = dst[n]
+writeFileSync(resolve(here, `work/atlas_carve_centroids_${source}.json`), JSON.stringify(carve))
+console.log(`  -> work/atlas_overlay_transform_${source}.json (+ atlas_carve_centroids_${source}.json)`)
