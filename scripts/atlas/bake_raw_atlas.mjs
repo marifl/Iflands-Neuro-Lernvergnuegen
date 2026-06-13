@@ -15,8 +15,9 @@ if (source !== 'julich' && source !== 'dkt') throw new Error('Aufruf: node bake_
 
 const parcels = JSON.parse(readFileSync(resolve(here, `work/${source}_parcels.json`)))
 
-// Bevorzugt die OBERFLAECHEN-Affine (register_raw_overlay.py, CPD Surface->Surface, ~4.5mm Residuum);
-// faellt zurueck auf die Zentroid-Affine (register_atlas.py), die ein Overlay aber unterskaliert.
+// Bevorzugt die KORRESPONDENZ-Affine (fit_overlay_affine.mjs: Parzelle-MNI-Centroid -> Carve-Patch-
+// TARO-Centroid — anatomisch korrekt orientiert + skaliert, kein 180deg-Flip); faellt zurueck auf
+// die Zentroid-Affine (register_atlas.py), die ein Overlay aber unterskaliert.
 const surfPath = resolve(here, `work/atlas_surface_affine_${source}.json`)
 let applyAffine
 if (existsSync(surfPath)) {
