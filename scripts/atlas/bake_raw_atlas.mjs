@@ -15,26 +15,30 @@ if (source !== 'julich' && source !== 'dkt') throw new Error('Aufruf: node bake_
 
 const parcels = JSON.parse(readFileSync(resolve(here, `work/${source}_parcels.json`)))
 
-// Bevorzugt die KORRESPONDENZ-Affine (fit_overlay_affine.mjs: Parzelle-MNI-Centroid -> Carve-Patch-
-// TARO-Centroid — anatomisch korrekt orientiert + skaliert, kein 180deg-Flip); faellt zurueck auf
-// die Zentroid-Affine (register_atlas.py), die ein Overlay aber unterskaliert.
-const surfPath = resolve(here, `work/atlas_surface_affine_${source}.json`)
-let applyAffine
-if (existsSync(surfPath)) {
-  const { B, t } = JSON.parse(readFileSync(surfPath)) // v' = v @ B + t, B 3x3, t 3
-  applyAffine = (v) => [
-    v[0] * B[0][0] + v[1] * B[1][0] + v[2] * B[2][0] + t[0],
-    v[0] * B[0][1] + v[1] * B[1][1] + v[2] * B[2][1] + t[1],
-    v[0] * B[0][2] + v[1] * B[1][2] + v[2] * B[2][2] + t[2],
-  ]
-  console.log(`${source}: Oberflaechen-Affine (CPD surface->surface)`)
+// Bevorzugt die PER-LAPPEN-Korrespondenz-Affine (fit_overlay_affine.mjs: je Hirnlappen eine eigene
+// Affine ueber Parzelle-MNI-Centroid -> Carve-Patch-TARO-Centroid; anatomisch korrekt orientiert,
+// kein Flip, ~5-7mm). Fallback: Zentroid-Affine (register_atlas.py, unterskaliert).
+const aff = (B, t) => (v) => [
+  v[0] * B[0][0] + v[1] * B[1][0] + v[2] * B[2][0] + t[0],
+  v[0] * B[0][1] + v[1] * B[1][1] + v[2] * B[2][1] + t[1],
+  v[0] * B[0][2] + v[1] * B[1][2] + v[2] * B[2][2] + t[2],
+]
+const lobePath = resolve(here, `work/atlas_overlay_transform_${source}.json`)
+let affineFor
+if (existsSync(lobePath)) {
+  const T = JSON.parse(readFileSync(lobePath)) // {global:{B,t}, lobes:{lobe:{B,t}}, assign:{name:lobe|'global'}}
+  const fns = { global: aff(T.global.B, T.global.t) }
+  for (const [lobe, m] of Object.entries(T.lobes)) fns[lobe] = aff(m.B, m.t)
+  affineFor = (name) => fns[T.assign[name] ?? 'global'] ?? fns.global
+  console.log(`${source}: Per-Lappen-Affine (${Object.keys(T.lobes).length} Lappen + global)`)
 } else {
-  const A = JSON.parse(readFileSync(resolve(here, `work/atlas_affine_${source}.json`))) // 4x3
-  applyAffine = (v) => [
+  const A = JSON.parse(readFileSync(resolve(here, `work/atlas_affine_${source}.json`))) // 4x3 Zentroid-Affine
+  const f = (v) => [
     v[0] * A[0][0] + v[1] * A[1][0] + v[2] * A[2][0] + A[3][0],
     v[0] * A[0][1] + v[1] * A[1][1] + v[2] * A[2][1] + A[3][1],
     v[0] * A[0][2] + v[1] * A[1][2] + v[2] * A[2][2] + A[3][2],
   ]
+  affineFor = () => f
   console.log(`${source}: Zentroid-Affine (Fallback — unterskaliert ein Overlay)`)
 }
 
@@ -46,7 +50,7 @@ let meshes = 0, totalFaces = 0
 for (const [name, geom] of Object.entries(parcels)) {
   const faces = geom.faces
   if (!faces || faces.length === 0) continue
-  const verts = geom.vertices.map(applyAffine)
+  const verts = geom.vertices.map(affineFor(name))
   const normals = computeVertexNormals(verts, faces)
 
   const pos = new Float32Array(verts.flat())
