@@ -2,16 +2,25 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './app.css'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
-import { useViewerStore } from './viewer/viewerStore'
+import { useViewerStore, type AppMode } from './viewer/viewerStore'
 
 // Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
 if (localStorage.getItem('ed-theme') === 'light') {
   document.documentElement.dataset.theme = 'light'
 }
 
-// Start-Grundmodus aus ?mode=explore; sonst die Lern-Experience (Default).
-if (new URLSearchParams(window.location.search).get('mode') === 'explore') {
-  useViewerStore.getState().setAppMode('explore')
+// Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas|atlas> setzt den Modus direkt;
+// ein ?scene=<id>-Link (geteilte Lern-Szene) impliziert den Lern-Modus. Sonst entscheidet der
+// Start-Screen (ModeLauncher).
+{
+  const params = new URLSearchParams(window.location.search)
+  const mode = params.get('mode')
+  const MODES: AppMode[] = ['learn', 'explore', 'phineas', 'atlas']
+  if (mode && MODES.includes(mode as AppMode)) {
+    useViewerStore.getState().setAppMode(mode as AppMode)
+  } else if (params.has('scene')) {
+    useViewerStore.getState().setAppMode('learn')
+  }
 }
 
 const root = document.getElementById('root')!

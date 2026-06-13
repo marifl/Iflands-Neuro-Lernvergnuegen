@@ -7,7 +7,11 @@ export default function PresenterChrome() {
   const { scenes, index, goto } = useSceneStore()
   if (!scenes.length) return null
   const nav: React.CSSProperties = { padding: '4px 9px', flex: 'none' }
+  // Sichtbarer Fortschritt durch die Szenen-Sequenz (gegen Time-Blindness; Lernende sehen,
+  // wie weit sie sind + dass es ein Ende gibt).
+  const progress = ((index + 1) / scenes.length) * 100
   return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 7, width: '100%' }}>
     <div style={{ display: 'flex', gap: 6, alignItems: 'center', width: '100%' }}>
       <button
         type="button"
@@ -45,6 +49,17 @@ export default function PresenterChrome() {
           </option>
         ))}
       </select>
+    </div>
+      {/* Fortschrittsbalken: fuellt sich mit jeder Szene; macht „wie weit / wie lang noch" konkret. */}
+      <div
+        role="progressbar"
+        aria-valuenow={index + 1}
+        aria-valuemin={1}
+        aria-valuemax={scenes.length}
+        style={{ height: 3, width: '100%', background: 'var(--line-soft)', borderRadius: 2, overflow: 'hidden' }}
+      >
+        <div style={{ height: '100%', width: `${progress}%`, background: 'var(--orange)', transition: 'width 220ms ease' }} />
+      </div>
     </div>
   )
 }
