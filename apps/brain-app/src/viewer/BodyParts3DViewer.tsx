@@ -15,6 +15,7 @@ import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
+import ModeLauncher from './ModeLauncher'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
@@ -397,6 +398,7 @@ function IsolationBar() {
 export default function BodyParts3DViewer() {
   const setOntology = useViewerStore((s) => s.setOntology)
   const setContext = useViewerStore((s) => s.setContext)
+  const setAppMode = useViewerStore((s) => s.setAppMode)
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
   const selected = useViewerStore((s) => s.selected)
@@ -407,6 +409,13 @@ export default function BodyParts3DViewer() {
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
+
+  // Start-Screen (Modus-Wahl) beim ersten Laden — nimmt die „wo fange ich an?"-Last ab.
+  // Deep-Links (?mode/?scene/?spike) ueberspringen ihn, damit verlinkte Einstiege direkt landen.
+  const [launched, setLaunched] = useState(() => {
+    const p = new URLSearchParams(window.location.search)
+    return p.has('mode') || p.has('scene') || p.has('spike')
+  })
 
   // Editorial-Theme (hell/dunkel). Persistiert in localStorage; vor-applied in main.tsx.
   const [theme, setTheme] = useState<'dark' | 'light'>(() =>
@@ -508,6 +517,14 @@ export default function BodyParts3DViewer() {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'var(--app-bg)', padding: 10, boxSizing: 'border-box' }}>
+      {!launched && (
+        <ModeLauncher
+          onPick={(m) => {
+            setAppMode(m)
+            setLaunched(true)
+          }}
+        />
+      )}
       {/* Editorial-"Plate": Tinte-Rahmen um die ganze App (fhead / Mitte / Schriftfeld). */}
       <div
         className="ed-frame"
