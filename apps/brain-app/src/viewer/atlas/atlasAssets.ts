@@ -5,8 +5,15 @@ export interface HemiManifest {
   pial: string; infl: string; faces_file: string
   labels: Record<string, string>
 }
+export interface AtlasLayer {
+  id: string
+  axis: 'macro' | 'cyto'
+  label_de: string
+}
 export interface AtlasManifest {
-  space: string; layers: string[]
+  space: string
+  verts_per_hemi: number
+  layers: AtlasLayer[]
   hemis: Record<'L' | 'R', HemiManifest>
   lut: Record<string, AtlasLut>
 }
