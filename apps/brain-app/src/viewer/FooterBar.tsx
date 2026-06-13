@@ -17,7 +17,7 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
   { name: 'medial-midline', label: 'Medial' },
 ]
 
-const MODE_LABEL: Record<AppMode, string> = { learn: 'Lernen', explore: 'Explorer', phineas: 'Phineas Gage' }
+const MODE_LABEL: Record<AppMode, string> = { learn: 'Lernen', explore: 'Explorer', phineas: 'Phineas Gage', atlas: 'Atlas' }
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
 const COLOR_LABEL: Record<ColorMode, string> = {
   anatomical: 'Anatomisch',
@@ -121,7 +121,7 @@ export default function FooterBar() {
       key: 'mode',
       eyebrow: 'Modus',
       label: MODE_LABEL[appMode],
-      content: (['learn', 'explore', 'phineas'] as const).map((m) => (
+      content: (['learn', 'explore', 'phineas', 'atlas'] as const).map((m) => (
         <Item key={m} active={appMode === m} onClick={() => { setAppMode(m); close() }}>
           {MODE_LABEL[m]}
         </Item>

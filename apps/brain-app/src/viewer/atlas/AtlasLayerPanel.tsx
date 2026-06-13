@@ -31,7 +31,7 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
     <div
       className="ed-panel"
       style={{
-        position: 'fixed',
+        position: 'absolute',
         top: 12,
         left: 12,
         zIndex: 10,

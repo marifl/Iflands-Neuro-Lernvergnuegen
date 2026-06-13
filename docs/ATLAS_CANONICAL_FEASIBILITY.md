@@ -214,4 +214,45 @@ FastSurfer-Run**.
    Performance + Pick verifizieren, dann Layer-Switch ergänzen.
 4. Subkortex-Pfad separat anbinden.
 
+---
+
+## 7. Umsetzung — Atlas-App-Modus (Stand 2026-06-13)
+
+Der Atlas ist **gebaut und als echter App-Modus integriert**. Die offenen Entscheidungen aus §5
+sind entschieden: **B) eigener Modus, der den TARO-Viewport ersetzt** (nicht beides gemischt —
+fsaverage ≠ TARO); **C) alle vier Kortex-Layer**; **D) volle fsaverage** (163842 Vtx/Hemi).
+
+### Was der Modus zeigt
+
+Footer → **Modus → „Atlas"** mountet das kanonische fsaverage-Hirn (statt des TARO-Viewers; Kopf-
+und Fussleiste bleiben, sodass der Modus-Wechsel jederzeit möglich ist). Komponente:
+`apps/brain-app/src/viewer/atlas/CanonicalAtlasMode.tsx` (vormals `CanonicalAtlasSpike`, die
+`?spike=atlas`-Dev-Route ist entfernt). Bedienpanel oben links (`AtlasLayerPanel`):
+
+- **Makroanatomie:** DKT (Gyri), Destrieux (Gyri/Sulci)
+- **Zytoarchitektonik:** Julich-Brain v3, Brodmann (klassisch)
+- **Oberfläche:** Inflated / Pial (Inflated lateral getrennt mit ±50-Offset, da um Origin zentriert)
+- **Subkortex:** Basalganglien/Thalamus (nur Pial; erzwingt Pial + ghostet den Kortex, da die
+  Kerne im MNI/pial-Raum liegen)
+- **Areal:** Klick auf die Oberfläche zeigt den Areal-Namen (Raycast → nächste Face-Ecke → Label → Name)
+
+### Pipeline reproduzieren (4 Extraktoren)
+
+Build-Skripte unter `scripts/atlas/canonical/`. Jeder Layer ist 164k-vertex-order-identisch zur
+fsaverage-Oberfläche (verifiziert). Quellen + Lizenzen (Attribution akademisch):
+
+| Layer | Quelle | Methode | Lizenz/Hinweis |
+|-------|--------|---------|----------------|
+| DKT, Destrieux | **templateflow** (GIFTI `label.gii`, Desikan 2006 / Destrieux 2009) | offizielle GIFTI-Label-Farben | permissiv |
+| Julich-Brain v3 | **siibra** — `siibra.get_map(parcellation="julich 3.0.3", space="fsaverage")` (Top-Level-Funktion, kein Auth) | native Surface-MPM, 100 % Coverage | CC BY-NC-SA (Forschung/Lehre) |
+| Brodmann (klassisch) | **PALS_B12_Brodmann.annot** aus `freesurfer/freesurfer:7.4.1` (`subjects/fsaverage/label/`) | pro Hemi auf einheitlichen BA-Nummern-Labelraum umindiziert; 40 BAs, 84,8 % Coverage | FreeSurfer-Lizenz (Image nach Extraktion gelöscht) |
+| Subkortex (BG/Thalamus) | **Harvard-Oxford** `sub-maxprob-thr25-1mm` (nilearn, MNI152) + **GPe/GPi-Split** via CIT168 (`nilearn.fetch_atlas_pauli_2017('deterministic')`) | Marching Cubes → Solid-Meshes; fsaverage-pial ≈ MNI152 mm | permissiv |
+
+Architektur: EIN Mesh + Per-Vertex-`Int`-Label-Attribut pro Layer + Color-LUT-`DataTexture` im
+ShaderMaterial (`flat` varying = harte Grenzen) + Curvature-Shading. Subkortex = separate Solid-Meshes.
+
+> **Hinweis Lizenz/Scope:** Julich/Brodmann sind nicht-kommerziell (NC/SA). Solange die App
+> Lehr-/Forschungskontext bleibt, sind alle vier Layer nutzbar; bei Kommerzialisierung müssten
+> die beiden Zytoarchitektonik-Layer entfallen (§5 A).
+
 → Erst nach Entscheidung §5 in den Design-Doc + Implementierungsplan (writing-plans).

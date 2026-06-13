@@ -33,6 +33,15 @@ ueber Hirn-Atlas-Geometrie behauptest. Die wiederkehrend „neu entdeckten" Fakt
 - **Voll-Transform liegt fertig auf dem Shelf:** `scripts/atlas/work/atlas-{julich,dkt}.glb` (292 + 60 Parzellen) + `atlas-manifest.json`. **NICHT** in der Runtime — `apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` enthaelt nur die 24 figur-genutzten Patches und ist die einzige vom App geladene Sub-Patch-GLB.
 - **`brain.glb` ist unantastbar.** Sub-Patches kommen immer in separate GLBs.
 
+## Kanonischer Atlas-Modus (fsaverage ≠ TARO)
+
+Eigener App-Modus **„Atlas"** (Footer → Modus → Atlas) zeigt das kanonische **fsaverage**-Hirn,
+NICHT TARO — eigener Canvas-Zweig, der den TARO-Viewport ersetzt (Kopf-/Fussleiste bleiben).
+Komponente `apps/brain-app/src/viewer/atlas/CanonicalAtlasMode.tsx`. 4 Kortex-Layer (DKT, Destrieux,
+Julich-Brain v3, Brodmann) + Subkortex (BG/Thalamus). Details + Pipeline-Reproduktion (4 Extraktoren,
+Quellen/Lizenzen) in [`docs/ATLAS_CANONICAL_FEASIBILITY.md`](docs/ATLAS_CANONICAL_FEASIBILITY.md) §7.
+Build-Skripte: `scripts/atlas/canonical/`. **Nicht mit der TARO-Figur-Pipeline mischen.**
+
 ## Arbeitsregeln
 
 - **Evidence First:** Keine Aussage über "gefixt"/"getestet" ohne Tool-/Command-Evidenz.

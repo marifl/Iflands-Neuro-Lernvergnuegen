@@ -7,7 +7,7 @@ import { AtlasLayerPanel } from './AtlasLayerPanel'
 import { loadManifest, loadHemi, loadSubcortical, type AtlasManifest, type HemiData, type SubcorticalMesh } from './atlasAssets'
 import { labelName } from './atlasLut'
 
-export default function CanonicalAtlasSpike() {
+export default function CanonicalAtlasMode() {
   const [m, setM] = useState<AtlasManifest | null>(null)
   const [hemis, setHemis] = useState<{ L: HemiData; R: HemiData } | null>(null)
   const [subMeshes, setSubMeshes] = useState<SubcorticalMesh[]>([])
@@ -34,7 +34,8 @@ export default function CanonicalAtlasSpike() {
   }, [])
 
   if (err) throw err
-  if (!m || !hemis || active === '') return <div style={{ color: '#ccc', padding: 20 }}>Lade fsaverage…</div>
+  if (!m || !hemis || active === '')
+    return <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e', color: '#ccc', padding: 20 }}>Lade fsaverage…</div>
 
   const lut = m.lut[active]
   // Subkortex-Kerne liegen in MNI (= pial-Raum) -> bei aktivem Subkortex Pial erzwingen + Kortex ausgeistern.
@@ -52,7 +53,8 @@ export default function CanonicalAtlasSpike() {
   }
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#0b0b0e' }}>
+    // Fuellt die Viewport-Spalte des BodyParts3DViewer-Layouts (absolute, nicht fixed -> Footer/Kopfleiste bleiben frei).
+    <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e' }}>
       <AtlasLayerPanel
         layers={m.layers}
         active={active}

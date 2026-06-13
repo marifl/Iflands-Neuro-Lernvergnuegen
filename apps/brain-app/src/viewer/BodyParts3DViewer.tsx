@@ -14,6 +14,7 @@ import LearnSidebar from '../scene/LearnSidebar'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import AtlasOverlay from './AtlasOverlay'
+import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
@@ -499,6 +500,9 @@ export default function BodyParts3DViewer() {
   const selectedNode = selected ? bySlug.get(selected) : null
 
   const isExploreMode = appMode === 'explore'
+  // Atlas-Modus zeigt das kanonische fsaverage-Hirn (NICHT TARO) -> eigener Canvas-Zweig statt
+  // TARO-Viewport + Sidebar. Kopfleiste und Fussleiste (Modus-Wechsel) bleiben erhalten.
+  const isAtlas = appMode === 'atlas'
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
 
@@ -594,7 +598,8 @@ export default function BodyParts3DViewer() {
           <div
             style={{
               // Schmal: feste Hoehen-Zone oben; breit: nimmt den Restraum links.
-              flex: isNarrow ? '0 0 42%' : 1,
+              // Atlas-Modus hat keine Sidebar -> Viewport nimmt die volle Breite/Hoehe.
+              flex: isNarrow && !isAtlas ? '0 0 42%' : 1,
               position: 'relative',
               minWidth: 0,
               minHeight: 0,
@@ -604,6 +609,10 @@ export default function BodyParts3DViewer() {
               cursor: selectMode === 'direct' ? 'crosshair' : 'default',
             }}
           >
+            {isAtlas ? (
+              <CanonicalAtlasMode />
+            ) : (
+            <>
             <Canvas
               camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
@@ -653,9 +662,11 @@ export default function BodyParts3DViewer() {
 
             <PresetLegend />
             <IsolationBar />
+            </>
+            )}
           </div>
 
-          {sidebar}
+          {isAtlas ? null : sidebar}
         </div>
 
         {/* ── Steuer-Fussleiste: Atlas-Menue, Werkzeug (nur Explorer), Modus ── */}

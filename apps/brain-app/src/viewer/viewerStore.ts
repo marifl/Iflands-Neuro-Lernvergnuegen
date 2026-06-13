@@ -24,7 +24,7 @@ export type ViewMode = 'full' | 'k11'
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
-export type AppMode = 'learn' | 'explore' | 'phineas'
+export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
 // Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
 // Multi-Axis: jede Achse ist unabhaengig an/aus mit eigener Position (siehe CutAxis/CutConfig).
 function emptyCuts(): Record<CutAxis, CutConfig> {
@@ -245,7 +245,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setLang: (lang) => set({ lang }),
   setMode: (mode) => set({ mode }),
   setAppMode: (appMode) => {
-    if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'phineas') {
+    if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'phineas' && appMode !== 'atlas') {
       throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
     }
     // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
