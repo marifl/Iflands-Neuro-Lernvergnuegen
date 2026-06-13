@@ -97,6 +97,9 @@ interface ViewerState {
   showCarveDkt: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
+  /** Bruecke TARO->Atlas: gewuenschtes Areal (Layer + Label-Name), das der Atlas-Modus beim
+   *  Betreten fokussiert (hervorhebt + benennt). Wird vom Atlas-Modus konsumiert (auf null gesetzt). */
+  atlasFocus: { layer: string; name: string } | null
 
   setOntology: (ontology: Ontology) => void
   /** Kontext-Teilbaum setzen; alle Kontext-Strukturen starten ausgeblendet. */
@@ -143,6 +146,8 @@ interface ViewerState {
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setCarveOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setClipAtlasOverlay: (clip: boolean) => void
+  /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
+  setAtlasFocus: (focus: { layer: string; name: string } | null) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
   setIsolated: (id: string | null) => void
 }
@@ -183,6 +188,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showCarveJulich: false,
   showCarveDkt: false,
   clipAtlasOverlay: true,
+  atlasFocus: null,
 
   setOntology: (ontology) =>
     set({ ontology, ancestors: ancestorMap(ontology.tree), colorIndex: buildColorIndex(ontology.tree) }),
@@ -279,6 +285,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setCarveOverlay: (which, visible) =>
     set(which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
+  setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>
     set((state) => {
       if (!id) return { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }

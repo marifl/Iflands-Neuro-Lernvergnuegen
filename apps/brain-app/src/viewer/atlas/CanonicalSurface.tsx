@@ -8,7 +8,7 @@ import { nearestCornerVertex } from './atlasPick'
 // Curvature-Graustufe als Basis, Arealfarbe (Color-LUT, DataTexture, NearestFilter) darueber gemischt;
 // `flat` Label-Varying -> harte Arealgrenzen, Curvature interpoliert (kein flat).
 export function CanonicalSurface({
-  hemi, layer, surface, lut, offsetX = 0, opacity = 1, onPick,
+  hemi, layer, surface, lut, offsetX = 0, opacity = 1, highlightLabel = -1, onPick,
 }: {
   hemi: HemiData
   layer: string
@@ -16,6 +16,8 @@ export function CanonicalSurface({
   lut: AtlasLut
   offsetX?: number
   opacity?: number
+  /** Label-Id eines fokussierten Areals (Bruecke TARO->Atlas); -1 = kein Fokus. */
+  highlightLabel?: number
   onPick?: (vertex: number) => void
 }) {
   // Geometrie-Basis (Position, Index, Normalen, Curvature) wird gebaut wenn hemi ODER surface wechselt.
@@ -53,7 +55,7 @@ export function CanonicalSurface({
     tex.minFilter = THREE.NearestFilter; tex.magFilter = THREE.NearestFilter
     tex.colorSpace = THREE.SRGBColorSpace; tex.needsUpdate = true
     return new THREE.ShaderMaterial({
-      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.6, 0.8).normalize() }, uOpacity: { value: 1 } },
+      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.6, 0.8).normalize() }, uOpacity: { value: 1 }, uHighlight: { value: -1 } },
       vertexShader: `
         attribute float aLabel;
         attribute float aCurv;
@@ -65,7 +67,7 @@ export function CanonicalSurface({
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }`,
       fragmentShader: `
-        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir; uniform float uOpacity;
+        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir; uniform float uOpacity; uniform float uHighlight;
         flat varying float vLabel; varying float vCurv; varying vec3 vN;
         void main() {
           // Sulcus dunkler, Gyrus heller (FreeSurfer-Look)
@@ -73,6 +75,11 @@ export function CanonicalSurface({
           vec4 area = texture2D(uLut, vec2((vLabel + 0.5) / uLutSize, 0.5));
           // Medialwand/0 zeigt nur Curvature; sonst Arealfarbe ueber die Graustufe legen
           vec3 col = mix(base, area.rgb, 0.82);
+          // Fokus-Modus (Bruecke TARO->Atlas): nicht-fokussierte Areale stark dimmen, damit das
+          // gesuchte Areal herausspringt. uHighlight<0 = kein Fokus (Normaldarstellung).
+          if (uHighlight >= 0.0 && abs(vLabel - uHighlight) > 0.5) {
+            col = base * 0.55; // nicht-fokussiert: nur gedimmte Curvature (grau), Arealfarbe entfaellt
+          }
           float diff = clamp(dot(normalize(vN), uLightDir) * 0.5 + 0.5, 0.0, 1.0);
           gl_FragColor = vec4(col * (0.6 + 0.4 * diff), uOpacity);
         }`,
@@ -87,6 +94,11 @@ export function CanonicalSurface({
     material.depthWrite = opacity >= 1
     material.needsUpdate = true
   }, [material, opacity])
+
+  // Fokus-Areal (Bruecke) als Uniform spiegeln.
+  useEffect(() => {
+    material.uniforms.uHighlight.value = highlightLabel
+  }, [material, highlightLabel])
 
   // Ghost-Kortex nicht pickbar -> Klicks erreichen die Kerne dahinter. Bei opacity>=1 normalen Raycast wiederherstellen.
   const meshRef = useRef<THREE.Mesh>(null)

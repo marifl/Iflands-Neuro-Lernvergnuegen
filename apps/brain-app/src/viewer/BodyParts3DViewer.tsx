@@ -16,6 +16,7 @@ import SubParcels from './SubParcels'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
+import { bridgeFor } from './atlas/atlasBridge'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
@@ -399,6 +400,7 @@ export default function BodyParts3DViewer() {
   const setOntology = useViewerStore((s) => s.setOntology)
   const setContext = useViewerStore((s) => s.setContext)
   const setAppMode = useViewerStore((s) => s.setAppMode)
+  const setAtlasFocus = useViewerStore((s) => s.setAtlasFocus)
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
   const selected = useViewerStore((s) => s.selected)
@@ -673,6 +675,21 @@ export default function BodyParts3DViewer() {
                   <div style={{ marginTop: 8 }}>
                     <span className="ed-pill orange">{selectedNode.k11Role}</span>
                   </div>
+                ) : null}
+                {/* Bruecke Funktion->Struktur: fuer Kapitel-11-Regionen zum praezisen fsaverage-Areal springen. */}
+                {bridgeFor(selected) ? (
+                  <button
+                    type="button"
+                    className="ed-btn"
+                    style={{ pointerEvents: 'auto', marginTop: 10, padding: '5px 11px' }}
+                    onClick={() => {
+                      const t = bridgeFor(selected)!
+                      setAtlasFocus({ layer: t.layer, name: t.name })
+                      setAppMode('atlas')
+                    }}
+                  >
+                    Im Atlas zeigen →
+                  </button>
                 ) : null}
               </div>
             )}

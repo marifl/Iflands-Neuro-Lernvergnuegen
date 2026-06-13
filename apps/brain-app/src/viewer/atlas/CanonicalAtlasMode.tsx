@@ -6,6 +6,13 @@ import { SubcorticalMeshes } from './SubcorticalMeshes'
 import { AtlasLayerPanel } from './AtlasLayerPanel'
 import { loadManifest, loadHemi, loadSubcortical, type AtlasManifest, type HemiData, type SubcorticalMesh } from './atlasAssets'
 import { labelName } from './atlasLut'
+import { useViewerStore } from '../viewerStore'
+
+/** Label-Id eines Areals per Name im LUT (fuer die Bruecke TARO->Atlas); -1 wenn nicht gefunden. */
+function labelIdByName(lut: Record<number, { name: string }>, name: string): number {
+  for (const [id, e] of Object.entries(lut)) if (e.name === name) return Number(id)
+  return -1
+}
 
 export default function CanonicalAtlasMode() {
   const [m, setM] = useState<AtlasManifest | null>(null)
@@ -16,6 +23,8 @@ export default function CanonicalAtlasMode() {
   const [surface, setSurface] = useState<'pial' | 'inflated'>('inflated')
   const [showSub, setShowSub] = useState<boolean>(false)
   const [picked, setPicked] = useState<string>('—')
+  // Fokussiertes Areal (Bruecke TARO->Atlas): Label-Id, das hervorgehoben wird; -1 = kein Fokus.
+  const [highlight, setHighlight] = useState<number>(-1)
 
   useEffect(() => {
     loadManifest()
@@ -27,11 +36,27 @@ export default function CanonicalAtlasMode() {
         setM(man)
         setHemis({ L, R })
         setSubMeshes(sub)
-        // Default: erster Layer aus Manifest
-        setActive(man.layers[0].id)
+        // Bruecke: kam ein Atlas-Fokus aus einem TARO-Modus? -> Layer setzen + Areal hervorheben +
+        // benennen. Sonst Default: erster Layer aus Manifest. Konsum (setAtlasFocus(null)) passiert
+        // NICHT hier, sondern im [m]-Effekt unten — sonst frisst der StrictMode-Doppelmount den Fokus
+        // (erster Mount konsumiert, zweiter sieht null -> Highlight verpufft).
+        const focus = useViewerStore.getState().atlasFocus
+        if (focus && layerIds.includes(focus.layer)) {
+          setActive(focus.layer)
+          setHighlight(labelIdByName(man.lut[focus.layer], focus.name))
+          setPicked(focus.name)
+        } else {
+          setActive(man.layers[0].id)
+        }
       })
       .catch(setErr)
   }, [])
+
+  // Atlas-Fokus erst nach erfolgreichem Laden konsumieren (StrictMode-sicher: laeuft einmal,
+  // nachdem das Manifest gesetzt ist; verhindert Re-Apply beim spaeteren Wieder-Betreten).
+  useEffect(() => {
+    if (m) useViewerStore.getState().setAtlasFocus(null)
+  }, [m])
 
   if (err) throw err
   if (!m || !hemis || active === '')
@@ -44,11 +69,14 @@ export default function CanonicalAtlasMode() {
   const dx = surf === 'inflated' ? 50 : 0
   const cortexOpacity = showSub ? 0.22 : 1
 
+  // Manueller Pick hebt den Bruecken-Fokus auf (freie Exploration -> kein Dimmen mehr).
   function handlePickL(vertex: number) {
+    setHighlight(-1)
     setPicked(labelName(lut, hemis!.L.labels[active][vertex]) || '—')
   }
 
   function handlePickR(vertex: number) {
+    setHighlight(-1)
     setPicked(labelName(lut, hemis!.R.labels[active][vertex]) || '—')
   }
 
@@ -58,7 +86,7 @@ export default function CanonicalAtlasMode() {
       <AtlasLayerPanel
         layers={m.layers}
         active={active}
-        onSelect={(id) => { setActive(id); setPicked('—') }}
+        onSelect={(id) => { setActive(id); setPicked('—'); setHighlight(-1) }}
         surface={surf}
         onSurface={setSurface}
         showSub={m.subcortical ? showSub : undefined}
@@ -69,8 +97,8 @@ export default function CanonicalAtlasMode() {
         <ambientLight intensity={0.6} />
         {/* Gerichtetes Licht modelliert die Subkortex-Kerne (MeshStandardMaterial); Kortex-Shader bleibt unbeeinflusst. */}
         <directionalLight position={[1, 1, 2]} intensity={0.8} />
-        <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} onPick={handlePickL} />
-        <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} onPick={handlePickR} />
+        <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
+        <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
         {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
         <OrbitControls />
       </Canvas>
