@@ -2077,36 +2077,6 @@
       "faces_file": "subcort_putamen_R_faces.u32"
     },
     {
-      "id": "pallidum",
-      "name_de": "Pallidum (Globus pallidus)",
-      "side": "L",
-      "color": [
-        160,
-        110,
-        200
-      ],
-      "verts": 1496,
-      "faces": 2988,
-      "pos": "subcort_pallidum_L.f32",
-      "norm": "subcort_pallidum_L_norm.f32",
-      "faces_file": "subcort_pallidum_L_faces.u32"
-    },
-    {
-      "id": "pallidum",
-      "name_de": "Pallidum (Globus pallidus)",
-      "side": "R",
-      "color": [
-        160,
-        110,
-        200
-      ],
-      "verts": 1480,
-      "faces": 2956,
-      "pos": "subcort_pallidum_R.f32",
-      "norm": "subcort_pallidum_R_norm.f32",
-      "faces_file": "subcort_pallidum_R_faces.u32"
-    },
-    {
       "id": "accumbens",
       "name_de": "Nucleus accumbens",
       "side": "L",
@@ -2135,6 +2105,66 @@
       "pos": "subcort_accumbens_R.f32",
       "norm": "subcort_accumbens_R_norm.f32",
       "faces_file": "subcort_accumbens_R_faces.u32"
+    },
+    {
+      "id": "gpe",
+      "name_de": "Globus pallidus externus (GPe)",
+      "side": "L",
+      "color": [
+        150,
+        100,
+        195
+      ],
+      "verts": 1918,
+      "faces": 3832,
+      "pos": "subcort_gpe_L.f32",
+      "norm": "subcort_gpe_L_norm.f32",
+      "faces_file": "subcort_gpe_L_faces.u32"
+    },
+    {
+      "id": "gpe",
+      "name_de": "Globus pallidus externus (GPe)",
+      "side": "R",
+      "color": [
+        150,
+        100,
+        195
+      ],
+      "verts": 1864,
+      "faces": 3724,
+      "pos": "subcort_gpe_R.f32",
+      "norm": "subcort_gpe_R_norm.f32",
+      "faces_file": "subcort_gpe_R_faces.u32"
+    },
+    {
+      "id": "gpi",
+      "name_de": "Globus pallidus internus (GPi)",
+      "side": "L",
+      "color": [
+        185,
+        130,
+        215
+      ],
+      "verts": 1060,
+      "faces": 2116,
+      "pos": "subcort_gpi_L.f32",
+      "norm": "subcort_gpi_L_norm.f32",
+      "faces_file": "subcort_gpi_L_faces.u32"
+    },
+    {
+      "id": "gpi",
+      "name_de": "Globus pallidus internus (GPi)",
+      "side": "R",
+      "color": [
+        185,
+        130,
+        215
+      ],
+      "verts": 1076,
+      "faces": 2148,
+      "pos": "subcort_gpi_R.f32",
+      "norm": "subcort_gpi_R_norm.f32",
+      "faces_file": "subcort_gpi_R_faces.u32"
     }
   ]
 }
