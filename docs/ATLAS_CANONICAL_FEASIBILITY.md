@@ -63,6 +63,12 @@ BrainBrowser, pycortex, Nilearn `view_surf`).
   `onPointerMove` liefern `faceIndex` + `point` direkt.
 - **Performance:** 327k Vertices in 1 Draw-Call mit **32-bit-Indices** sind unkritisch. Erst bei
   gemessenem Bottleneck (Mobile, mehrere Layer + Postprocessing) auf fsaverage6 runter — nicht prophylaktisch.
+
+> **Spike-Messung (2026-06-13, gemessen):** fsaverage5 (20.484 Vtx gesamt, 2 Meshes, LUT-Shader) —
+> **60 FPS, 16,67 ms/Frame, p95 17,5 ms** (Vsync-gedeckelt → GPU hat reichlich Headroom, Render NICHT
+> der Flaschenhals). Bestaetigt die Architektur: mesh-pro-Areal war das Performance-Problem, nicht die
+> Vertexzahl. Pick (faceIndex→Vertex→Label→Name) liefert korrekte Destrieux-Namen (G_front_sup,
+> S_front_sup, G_front_middle), Medialwand korrekt „—".
 - **R3F-Hygiene:** Geometrie/Material außerhalb des React-Render-Pfads memoisieren; Färbung imperativ
   via Ref aufs Material, nicht über React-State pro Frame.
 
