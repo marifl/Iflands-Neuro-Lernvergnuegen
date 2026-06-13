@@ -15,8 +15,8 @@ from scipy.spatial.distance import cdist
 
 WORK = Path(__file__).parent / "work"
 source = sys.argv[1] if len(sys.argv) > 1 else "julich"
-SIGMA = float(sys.argv[2]) if len(sys.argv) > 2 else 25.0   # RBF-Breite mm (gross=glatter)
-LAM = float(sys.argv[3]) if len(sys.argv) > 3 else 0.5      # Regularisierung (gross=steifer)
+SIGMA = float(sys.argv[2]) if len(sys.argv) > 2 else 16.0   # RBF-Breite mm (gross=glatter)
+LAM = float(sys.argv[3]) if len(sys.argv) > 3 else 0.05     # Regularisierung (gross=steifer)
 
 parcels = json.loads((WORK / f"{source}_parcels.json").read_text())
 hosts = json.loads((WORK / "taro_cortex_hosts.json").read_text())
