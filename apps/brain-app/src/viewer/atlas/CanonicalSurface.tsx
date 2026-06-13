@@ -8,12 +8,13 @@ import { nearestCornerVertex } from './atlasPick'
 // Curvature-Graustufe als Basis, Arealfarbe (Color-LUT, DataTexture, NearestFilter) darueber gemischt;
 // `flat` Label-Varying -> harte Arealgrenzen, Curvature interpoliert (kein flat).
 export function CanonicalSurface({
-  hemi, layer, surface, lut, onPick,
+  hemi, layer, surface, lut, offsetX = 0, onPick,
 }: {
   hemi: HemiData
   layer: string
   surface: 'pial' | 'inflated'
   lut: AtlasLut
+  offsetX?: number
   onPick?: (vertex: number) => void
 }) {
   // Geometrie-Basis (Position, Index, Normalen, Curvature) wird gebaut wenn hemi ODER surface wechselt.
@@ -82,6 +83,7 @@ export function CanonicalSurface({
     <mesh
       geometry={geometry}
       material={material}
+      position={[offsetX, 0, 0]}
       onClick={(e) => {
         e.stopPropagation()
         if (!onPick || e.faceIndex == null || !e.face) return

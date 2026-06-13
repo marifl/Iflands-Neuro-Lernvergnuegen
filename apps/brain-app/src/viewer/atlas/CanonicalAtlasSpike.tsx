@@ -32,6 +32,8 @@ export default function CanonicalAtlasSpike() {
   if (!m || !hemis || active === '') return <div style={{ color: '#ccc', padding: 20 }}>Lade fsaverage…</div>
 
   const lut = m.lut[active]
+  // Inflated-Surfaces sind beide um den Origin zentriert -> lateral trennen. Pial liegt nativ getrennt.
+  const dx = surface === 'inflated' ? 50 : 0
 
   function handlePickL(vertex: number) {
     setPicked(labelName(lut, hemis!.L.labels[active][vertex]) || '—')
@@ -51,10 +53,10 @@ export default function CanonicalAtlasSpike() {
         onSurface={setSurface}
         picked={picked}
       />
-      <Canvas camera={{ position: [0, 0, 220], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 310], fov: 45 }}>
         <ambientLight intensity={0.6} />
-        <CanonicalSurface hemi={hemis.L} layer={active} surface={surface} lut={lut} onPick={handlePickL} />
-        <CanonicalSurface hemi={hemis.R} layer={active} surface={surface} lut={lut} onPick={handlePickR} />
+        <CanonicalSurface hemi={hemis.L} layer={active} surface={surface} lut={lut} offsetX={-dx} onPick={handlePickL} />
+        <CanonicalSurface hemi={hemis.R} layer={active} surface={surface} lut={lut} offsetX={+dx} onPick={handlePickR} />
         <OrbitControls />
       </Canvas>
     </div>
