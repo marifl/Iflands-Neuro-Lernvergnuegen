@@ -1,7 +1,7 @@
 # Kanonischer-Atlas-Extraktor (Phase-1-Spike): fsaverage5-Surface (pial+inflated) + Destrieux-Labels
 # -> kompakte Binaer-Assets + LUT-JSON + Manifest fuer die WebGL-Runtime.
 # Fail-loud: jede Inkonsistenz (Vertexzahl, fehlende Datei) bricht hart ab.
-import json, struct, sys
+import json
 from pathlib import Path
 import numpy as np
 from nilearn import datasets, surface
@@ -31,6 +31,8 @@ for hemi, pial_k, infl_k, map_k in [("L", "pial_left", "infl_left", "map_left"),
     pcoords, faces = surface.load_surf_mesh(fs[pial_k])
     icoords, ifaces = surface.load_surf_mesh(fs[infl_k])
     labels = np.asarray(des[map_k]).astype(np.int16)
+    if labels.min() < 0:
+        raise SystemExit(f"ABBRUCH {hemi}: negative LabelId ({labels.min()}) — i16/LUT-Annahme verletzt")
     n = pcoords.shape[0]
     if not (icoords.shape[0] == n == labels.shape[0]):
         raise SystemExit(f"ABBRUCH {hemi}: Vertexzahl-Mismatch pial={n} infl={icoords.shape[0]} labels={labels.shape[0]}")
@@ -56,5 +58,5 @@ for i, nm in enumerate(names):
         c = rng.integers(60, 230, size=3).tolist()
         lut[i] = {"rgb": c, "name": nm}
 manifest["lut"] = {"destrieux": lut}
-(OUT / "manifest.json").write_text(json.dumps(manifest, indent=2))
+(OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 print(f"OK -> {OUT} ({manifest['hemis']['L']['verts']} verts/Hemi, {len(names)} Destrieux-Labels)")
