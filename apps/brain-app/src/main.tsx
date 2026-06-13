@@ -2,6 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './app.css'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
+import CanonicalAtlasSpike from './viewer/atlas/CanonicalAtlasSpike'
 import { useViewerStore } from './viewer/viewerStore'
 
 // Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
@@ -14,8 +15,17 @@ if (new URLSearchParams(window.location.search).get('mode') === 'explore') {
   useViewerStore.getState().setAppMode('explore')
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BodyParts3DViewer />
-  </StrictMode>,
-)
+const root = document.getElementById('root')!
+if (new URLSearchParams(window.location.search).get('spike') === 'atlas') {
+  createRoot(root).render(
+    <StrictMode>
+      <CanonicalAtlasSpike />
+    </StrictMode>,
+  )
+} else {
+  createRoot(root).render(
+    <StrictMode>
+      <BodyParts3DViewer />
+    </StrictMode>,
+  )
+}
