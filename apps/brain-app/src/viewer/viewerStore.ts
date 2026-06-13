@@ -92,6 +92,9 @@ interface ViewerState {
   /** Roh-Atlas-Overlays (Original-Julich/DKT-Areale, Affine-transformiert): default versteckt. */
   showAtlasJulich: boolean
   showAtlasDkt: boolean
+  /** Carve-Atlas-Overlays (Atlas-Parzellen aus TARO-EIGENEN Vertices gecarvt -> 0 mm Drift): default versteckt. */
+  showCarveJulich: boolean
+  showCarveDkt: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
 
@@ -138,6 +141,7 @@ interface ViewerState {
   setSkull: (visible: boolean, opacity?: number) => void
   setRodVisible: (visible: boolean) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
+  setCarveOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setClipAtlasOverlay: (clip: boolean) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
   setIsolated: (id: string | null) => void
@@ -176,6 +180,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   rodVisible: false,
   showAtlasJulich: false,
   showAtlasDkt: false,
+  showCarveJulich: false,
+  showCarveDkt: false,
   clipAtlasOverlay: true,
 
   setOntology: (ontology) =>
@@ -270,6 +276,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setRodVisible: (rodVisible) => set({ rodVisible }),
   setAtlasOverlay: (which, visible) =>
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
+  setCarveOverlay: (which, visible) =>
+    set(which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
   setIsolated: (id) =>
     set((state) => {

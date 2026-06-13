@@ -214,6 +214,9 @@ export default function StructureTree() {
   const showAtlasJulich = useViewerStore((s) => s.showAtlasJulich)
   const showAtlasDkt = useViewerStore((s) => s.showAtlasDkt)
   const setAtlasOverlay = useViewerStore((s) => s.setAtlasOverlay)
+  const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
+  const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const isNarrow = useIsNarrow()
 
   const visibleTree = useMemo(() => {
@@ -292,6 +295,27 @@ export default function StructureTree() {
             style={sm}
             title="Original-DKT-Areale (Affine-transformiert) ueber TARO ein-/ausblenden — zeigt den Rest-Drift"
             onClick={() => setAtlasOverlay('dkt', !showAtlasDkt)}
+          >
+            DKT
+          </button>
+        </div>
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }} role="group" aria-label="Carve-Atlas-Overlay">
+          <span className="eyebrow" style={{ color: 'var(--g500)', marginRight: 2 }}>Atlas Carve</span>
+          <button
+            type="button"
+            className={`ed-btn${showCarveJulich ? ' active' : ''}`}
+            style={sm}
+            title="Julich-Parzellen aus TARO-eigenen Vertices gecarvt (0 mm Drift) ein-/ausblenden — liegt exakt auf TARO"
+            onClick={() => setCarveOverlay('julich', !showCarveJulich)}
+          >
+            Julich
+          </button>
+          <button
+            type="button"
+            className={`ed-btn${showCarveDkt ? ' active' : ''}`}
+            style={sm}
+            title="DKT-Parzellen aus TARO-eigenen Vertices gecarvt (0 mm Drift) ein-/ausblenden — liegt exakt auf TARO"
+            onClick={() => setCarveOverlay('dkt', !showCarveDkt)}
           >
             DKT
           </button>
