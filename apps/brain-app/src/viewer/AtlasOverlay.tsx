@@ -1,7 +1,8 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
+import { activeCutPlanes } from './cutCapsMerged'
 
 // Roh-Atlas-Overlays: die ORIGINALEN Julich/DKT-Mesh-Areale (eigene Polygonisierung), per globaler
 // Affine MNI->TARO auf das TARO-Hirn gelegt. Halbtransparent + distinkte Farbe, damit der Rest-Drift
@@ -16,18 +17,22 @@ const COLORS = { julich: '#39d3c4', dkt: '#e879c8' } as const
 
 function RawAtlas({ which }: { which: 'julich' | 'dkt' }) {
   const { scene } = useGLTF(URLS[which])
+  const mat = useMemo(
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: COLORS[which],
+        emissive: new THREE.Color(COLORS[which]),
+        emissiveIntensity: 0.18,
+        roughness: 0.7,
+        metalness: 0,
+        transparent: true,
+        opacity: 0.55,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+      }),
+    [which],
+  )
   useMemo(() => {
-    const mat = new THREE.MeshStandardMaterial({
-      color: COLORS[which],
-      emissive: new THREE.Color(COLORS[which]),
-      emissiveIntensity: 0.18,
-      roughness: 0.7,
-      metalness: 0,
-      transparent: true,
-      opacity: 0.55,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-    })
     scene.traverse((o) => {
       const m = o as THREE.Mesh
       if (m.isMesh) {
@@ -36,8 +41,17 @@ function RawAtlas({ which }: { which: 'julich' | 'dkt' }) {
         m.renderOrder = 2
       }
     })
-    return null
-  }, [scene, which])
+  }, [scene, mat])
+
+  // Schnittebenen respektieren: das Overlay wird mit TARO mitgeschnitten (sonst ragt es im
+  // Cut-Modus dort raus, wo TARO weggeschnitten ist, und wirkt faelschlich versetzt).
+  const cuts = useViewerStore((s) => s.cuts)
+  const cutMode = useViewerStore((s) => s.cutMode)
+  useEffect(() => {
+    mat.clippingPlanes = cutMode === 'slice' ? activeCutPlanes(cuts) : []
+    mat.clipIntersection = false
+  }, [mat, cuts, cutMode])
+
   return <primitive object={scene} />
 }
 
