@@ -27,10 +27,12 @@
 
 ### A) Runtime-Pipeline — `register.py` → `k11-subparcels.glb` (in der App)
 Die hand-kuratierten, figur-genutzten Patches. **Diese GLB wird von der App geladen** (`SubParcels.tsx`).
-- **Inhalt (24 Meshes):** 6 Basis (`sma`, `pre-sma`, `anterior-cingulate` je l/r) + W1-B DKT-Splits (pars\*, rostral/caudal ACC, lateral/medial OFC, nucleus-accumbens) + W2 `frontopolar` (geometrischer Pol-Carve).
-- **Targets:** `targets.json` (slug/src/names/host/mode[/group/warp/thresh_mm]). Modi: `absolute` (KDTree-Threshold), `partition` (zentroid-aligned Within-Host-Split), `geometric_pole` (Frontalpol = vorderste SFG+MFG-Spitze), `warp:subcortical` (eigene Striatum/Pallidum-Affine, da kortikale Affine Subkortex ~60 mm verfehlt).
-- **Reproduktion:** `./.venv/bin/python register.py && node build_subparcels.mjs`
-- **NICHT anfassen ausser fuer Runtime-Aenderungen.** W1-B/W2 sind verifiziert (typecheck 0, vitest 48/48, 7 Smokes).
+- **Inhalt (Stand P4: 60 Meshes):**
+  - **28 register.py-Patches** (`build_subparcels.mjs`-Basis, `work/k11-base-28.glb`): 6 Basis (`sma`, `pre-sma`, `anterior-cingulate` je l/r) + W1-B DKT-Splits (pars\*, rostral/caudal ACC, lateral/medial OFC, nucleus-accumbens) + W2 `frontopolar` (geom. Pol-Carve, jetzt ungenutzt) + **P4 GPi/GPe** (`gpi`/`gpe` je l/r — CIT168 within-host-Split des `globus-pallidus`-Hosts via Subkortex-Affine).
+  - **32 Julich-Areale** (`bake_julich_runtime.mjs`, additiv auf die Basis): `julich-fp1/fp2` (Frontopol) + DLPFC-Subareale (`julich-mfg1/2/4`, `8v1/2`, `sfs1/2`, `sfg2/3/4`, `8d1/2`, 2 frontal-gapmaps) je l/r.
+- **Targets:** `targets.json` (slug/src/names/host/mode[/group/warp/thresh_mm]). Modi: `absolute` (KDTree-Threshold), `partition` (zentroid-aligned Within-Host-Split — auch GPi/GPe + `warp:subcortical`), `geometric_pole` (Frontalpol = vorderste SFG+MFG-Spitze), `warp:subcortical` (eigene Striatum/Pallidum-Affine, da kortikale Affine Subkortex ~60 mm verfehlt). GPi/GPe-Quellgeometrie: `work/subcort_gp_extra.json` (CIT168 internus/externus, in `learn` gemerged).
+- **Reproduktion:** `./.venv/bin/python register.py && node build_subparcels.mjs` (28-Patch-Basis) → `cp` nach `work/k11-base-28.glb` → `node bake_julich_runtime.mjs` (+32 Julich = 60). bake_julich ist idempotent (carvt das verwaltete Set immer frisch aus `k11-base-28.glb`).
+- **NICHT anfassen ausser fuer Runtime-Aenderungen.** Verifiziert (typecheck 0, vitest 48/48, 7 Smokes).
 
 ### B) Transform-Pipeline — `register_atlas.py` → `work/atlas-*.glb` (Shelf, NICHT Runtime)
 Das **gesamte** Julich + DKT auf TARO, als wiederverwendbares Artefakt fuer spaetere Integration. Beruehrt die Runtime NICHT.
@@ -89,7 +91,8 @@ Zwei **combined-Host-Fallen** (hier dokumentiert, damit sie nicht neu entdeckt w
 
 | Datei | Was | Runtime? |
 |---|---|---|
-| `apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` | 24 figur-genutzte Patches | **JA (App laedt)** |
+| `apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` | 60 figur-genutzte Patches (28 register.py + 32 Julich) | **JA (App laedt)** |
+| `work/k11-base-28.glb` | register.py-Basis-Snapshot (Input fuer bake_julich) | nein (Build-Input) |
 | `work/atlas-julich.glb` | 292 Julich-Parzellen | nein (Shelf) |
 | `work/atlas-dkt.glb` | 60 DKT-Parzellen | nein (Shelf) |
 | `work/atlas_labels_{julich,dkt}.json` | Parzelle → TARO-Host + Vertex-Indices | nein |

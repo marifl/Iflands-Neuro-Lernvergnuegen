@@ -10,12 +10,13 @@ const PRESETS_PATH = resolve(here, '../../public/companion/config/color-presets.
 
 describe('bucketToMeshes', () => {
   it('loest einen bekannten Bucket auf reale Mesh-Namen auf', () => {
-    expect(bucketToMeshes('dlpfc')).toEqual([
-      'left-middle-frontal-gyrus',
-      'right-middle-frontal-gyrus',
-      'left-superior-frontal-gyrus',
-      'right-superior-frontal-gyrus',
-    ])
+    // P4: dlpfc faerbt sub-gyral ueber die Julich-Subareale (MFG + SFG), nicht mehr die ganzen Gyri.
+    const dlpfc = bucketToMeshes('dlpfc')
+    expect(dlpfc).toContain('left-julich-mfg2')
+    expect(dlpfc).toContain('right-julich-sfg3')
+    expect(dlpfc).toHaveLength(28)
+    // Praemotor/SMA (6*) bleibt aussen vor; die ganzen Gyri sind nicht mehr direkt im Bucket.
+    expect(dlpfc).not.toContain('left-middle-frontal-gyrus')
     // W1-B: vlpfc faerbt sub-gyral ueber die DKT-Sub-Patches (pars op/tri/orbitalis).
     expect(bucketToMeshes('vlpfc')).toEqual([
       'left-parsopercularis',
@@ -36,9 +37,17 @@ describe('bucketToMeshes', () => {
     expect(() => bucketToMeshes('ifj')).toThrow(/keine Geometrie/)
   })
 
-  it('loest nucleus-accumbens (W1-B) + frontopolar (W2) auf reale Sub-Patches auf', () => {
+  it('loest nucleus-accumbens (W1-B) + frontopolar (P4: Julich fp1/fp2) + globus-pallidus (P4: GPi/GPe) auf', () => {
     expect(bucketToMeshes('nucleus-accumbens')).toEqual(['left-nucleus-accumbens', 'right-nucleus-accumbens'])
-    expect(bucketToMeshes('frontopolar')).toEqual(['left-frontopolar', 'right-frontopolar'])
+    // P4: frontopolar zeigt jetzt auf das echte Julich-Areal fp1+fp2 (loest den geometrischen Pol-Carve ab).
+    expect(bucketToMeshes('frontopolar')).toEqual([
+      'left-julich-fp1',
+      'right-julich-fp1',
+      'left-julich-fp2',
+      'right-julich-fp2',
+    ])
+    // P4: globus-pallidus zeigt auf den GPi/GPe-Split (CIT168 within-host) statt das ganze Mesh.
+    expect(bucketToMeshes('globus-pallidus')).toEqual(['left-gpi', 'right-gpi', 'left-gpe', 'right-gpe'])
   })
 })
 
@@ -70,10 +79,10 @@ describe('resolvePresetColors', () => {
   it('faerbt jede Gruppe von pfc-petrides (voll aufloesbar auf vorhandener Geometrie)', () => {
     const petrides = real().find((p) => p.id === 'pfc-petrides')!
     const colors = resolvePresetColors(petrides)
-    // DLPFC-Meshes in DLPFC-Farbe, VLPFC-Sub-Patches (pars*) in eigener Farbe.
-    expect(colors.get('left-middle-frontal-gyrus')).toBe(hueToHex(210))
+    // DLPFC-Sub-Patches (P4: Julich-Subareale) in DLPFC-Farbe, VLPFC-Sub-Patches (pars*) in eigener.
+    expect(colors.get('left-julich-mfg2')).toBe(hueToHex(210))
     expect(colors.get('left-parsopercularis')).toBe(hueToHex(30))
-    expect(colors.get('left-middle-frontal-gyrus')).not.toBe(colors.get('left-parsopercularis'))
+    expect(colors.get('left-julich-mfg2')).not.toBe(colors.get('left-parsopercularis'))
   })
 
   it('loest basalganglienschleifen nach W1-B voll auf (nucleus-accumbens geschlossen)', () => {

@@ -377,6 +377,15 @@ if __name__ == "__main__":
             learn.setdefault(k, v)
         print(f"H1: {added} DKT-Extra-Parzellen in learn gemerged ({list(extra.keys())[:3]} ...)")
 
+    # Subkortex-Quellgeometrie (CIT168 GPi/GPe aus mni152-learn-brain.glb) fuer den
+    # Pallidum-Split — additiv, original mni_learn.json bleibt unangetastet.
+    subcort_gp_path = WORK / "subcort_gp_extra.json"
+    if subcort_gp_path.exists():
+        gp = json.loads(subcort_gp_path.read_text())
+        for k, v in gp.items():
+            learn.setdefault(k, v)
+        print(f"H1: {len(gp)} Subkortex-GP-Quellen in learn gemerged ({list(gp.keys())[:2]} ...)")
+
     print("\n=== H2: Globale Affine learn->TARO ===")
     taro_hosts_raw = json.loads((WORK / "taro_hosts.json").read_text())
     # Additive Erweiterung: neue TARO-Hosts (IFG, orbital-Gyri, caudate) aus taro_hosts_extra.json.

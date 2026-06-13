@@ -64,6 +64,11 @@ const acc = await meshColor('left-nucleus-accumbens')
 check(acc && acc !== '#cdbfb6' && acc !== '#3a3631', '11-04 nucleus-accumbens gefaerbt (Motivations-Gruppe)')
 const cogn = await meshColor('left-caudate-nucleus')
 check(cogn && cogn !== '#cdbfb6' && cogn !== '#3a3631', '11-04 Striatum (Kognitions-Gruppe) gefaerbt')
+// P4: Pallidum-Split — GPi (internus) als echter Sub-Patch sichtbar + in Schleifen-Farbe gefaerbt.
+const gpi = await meshColor('left-gpi')
+check(gpi && gpi !== '#cdbfb6' && gpi !== '#3a3631', `11-04 GPi (Pallidum-Split) gefaerbt (${gpi})`)
+const gpGyrus = await meshColor('left-globus-pallidus')
+check(gpGyrus === null || gpGyrus === '#3a3631', '11-04 ganzes Pallidum gedimmt (GPi/GPe-Sub-Patches tragen die Farbe)')
 
 await page.screenshot({ path: 'scripts/atlas/work/smoke-figures.png' })
 await browser.close()

@@ -1,6 +1,6 @@
-// Smoke W2-FP: frontopolar (BA10) Pol-Carve schaltet Badre 11-07 frei. Prueft, dass das
-// vormals deaktivierte Preset aktivierbar ist, der frontopolar-Sub-Patch sichtbar + gefaerbt
-// ist und als anteriore Frontalpol-Kappe sitzt (carve-Sanity).
+// Smoke FP (P4): frontopolar (BA10) schaltet Badre 11-07 frei. Nach P4 zeigt der Bucket auf das
+// echte Julich-Areal fp1 (statt geometrischer Pol-Carve). Prueft, dass das Preset aktivierbar ist,
+// der fp1-Sub-Patch sichtbar + gefaerbt ist und als anteriore Frontalpol-Kappe sitzt (carve-Sanity).
 import { chromium } from '@playwright/test'
 
 const BASE = process.env.SMOKE_URL ?? 'http://localhost:5188'
@@ -31,7 +31,7 @@ const info = await page.evaluate(() => {
   let root = window.__THREE_SCENE__; while (root.parent) root = root.parent
   let fp = null, sfg = null
   root.traverse((o) => {
-    if (o.isMesh && o.name === 'left-frontopolar') fp = o
+    if (o.isMesh && o.name === 'left-julich-fp1') fp = o
     if (o.isMesh && o.name === 'left-superior-frontal-gyrus') sfg = o
   })
   if (!fp || !sfg) return { error: `fp=${!!fp} sfg=${!!sfg}` }

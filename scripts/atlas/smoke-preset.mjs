@@ -24,7 +24,9 @@ await page.waitForTimeout(400)
 const colors = await page.evaluate(() => {
   // W1-B: VLPFC faerbt sub-gyral ueber die pars-Sub-Patches (SubParcels-GLB liegt als
   // Geschwister neben __THREE_SCENE__) -> vom Wurzelknoten traversieren.
-  const want = ['left-middle-frontal-gyrus', 'right-superior-frontal-gyrus', 'left-parsopercularis', 'left-precuneus', 'left-amygdala']
+  // P4: DLPFC faerbt sub-gyral ueber Julich-Subareale (left-julich-mfg2 = MFG, right-julich-sfg3 = SFG);
+  // der ganze MFG-Gyrus ist jetzt gedimmt (wie IFG bei vlpfc).
+  const want = ['left-julich-mfg2', 'right-julich-sfg3', 'left-middle-frontal-gyrus', 'left-parsopercularis', 'left-precuneus', 'left-amygdala']
   let root = window.__THREE_SCENE__
   while (root.parent) root = root.parent
   const out = {}
@@ -37,15 +39,19 @@ const colors = await page.evaluate(() => {
 console.log('Mesh-Farben nach Preset PFC Petrides:')
 for (const [k, v] of Object.entries(colors)) console.log('  ', k.padEnd(28), v)
 
-const dlpfc = colors['left-middle-frontal-gyrus']
-const sfg = colors['right-superior-frontal-gyrus']
+const dlpfc = colors['left-julich-mfg2']
+const sfg = colors['right-julich-sfg3']
+const mfgGyrus = colors['left-middle-frontal-gyrus'] // ganzer Gyrus -> jetzt gedimmt
 const vlpfc = colors['left-parsopercularis']
 const posterior = colors['left-precuneus']
 const ungrouped = colors['left-amygdala']
+const DIM = '#3a3631' // PRESET_DIM_COLOR
 
 let fails = 0
 const check = (cond, msg) => { if (!cond) { console.log('  FAIL:', msg); fails++ } else console.log('  ok:', msg) }
-check(dlpfc && dlpfc === sfg, 'DLPFC-Gruppe (MFG=SFG) gleiche Farbe')
+check(dlpfc && dlpfc === sfg, 'DLPFC-Gruppe (Julich MFG=SFG Subareale) gleiche Farbe')
+check(dlpfc && dlpfc !== DIM, `DLPFC-Sub-Patch gefaerbt (${dlpfc})`)
+check(mfgGyrus === DIM, 'ganzer MFG-Gyrus gedimmt (Sub-Patches tragen die Farbe)')
 check(dlpfc && vlpfc && dlpfc !== vlpfc, 'DLPFC != VLPFC (distinkte Gruppen)')
 check(posterior && posterior !== dlpfc && posterior !== vlpfc, 'Posterior-Gruppe eigene Farbe')
 check(ungrouped && ungrouped !== dlpfc && ungrouped !== vlpfc && ungrouped !== posterior, 'nicht-gruppiert (Amygdala) gedimmt/abweichend')
