@@ -10,6 +10,7 @@ import { Document, NodeIO } from '@gltf-transform/core'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
+import { computeVertexNormals, ownerMap, assignFacesByOwner, buildPatch, patchCoords } from './subpatch_bake.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 
@@ -90,62 +91,42 @@ for (const runtimeSlug of Object.values(SLUG_MAP)) {
 
 const coordEntries = {}
 
+// Runtime-Slugs nach Host gruppieren — fuer glatte Host-Normalen + lueckenloses Face-Tiling
+// (subpatch_bake.mjs). DLPFC-Subareale tilen MFG/SFG (Partition); fp1/fp2 bewohnen nur die
+// Pol-Kappe der frontal-pole-combined (absolute -> strikt, Extent unveraendert).
+const byHost = new Map()
 for (const [atlasSlug, runtimeSlug] of Object.entries(SLUG_MAP)) {
   const label = labels[atlasSlug]
   if (!label) throw new Error(`bake_julich_runtime: Slug ${atlasSlug} fehlt in atlas_labels_julich.json`)
-  const H = hostGeom(label.host)
-  let keep = new Set(label.vertex_indices)
-  // Strikt: nur Faces, deren 3 Ecken alle behalten sind.
-  let kf = H.faces.filter((f) => keep.has(f[0]) && keep.has(f[1]) && keep.has(f[2]))
-  // Backfill-Fallback (wie atlas_bake.mjs): winzige Crowding-Opfer (z.B. sfg4-r, 12 Vertices)
-  // haben keine Faces mit 3 behaltenen Ecken -> Faces nehmen, die >=1 behaltenen Vertex beruehren.
-  // Loggt laut, damit es keine stille Naeherung ist.
-  if (kf.length === 0) {
-    kf = H.faces.filter((f) => keep.has(f[0]) || keep.has(f[1]) || keep.has(f[2]))
-    keep = new Set(kf.flat())
-    console.log(`  [backfill-fallback] ${runtimeSlug}: 0 strikte Faces -> ${kf.length} inzidente Faces`)
-  }
-  if (kf.length === 0) {
-    throw new Error(`bake_julich_runtime: ${runtimeSlug} hat 0 baubare Faces — Vertex-Set ohne inzidente Geometrie`)
-  }
-  const remap = new Map()
-  const verts = []
-  for (const vi of keep) {
-    remap.set(vi, verts.length)
-    verts.push(H.vertices[vi])
-  }
-  const faces = kf.map((f) => [remap.get(f[0]), remap.get(f[1]), remap.get(f[2])])
+  if (!byHost.has(label.host)) byHost.set(label.host, [])
+  byHost.get(label.host).push([runtimeSlug, label.vertex_indices])
+}
 
-  const pos = new Float32Array(verts.flat())
-  const idx = new Uint32Array(faces.flat())
-  const acc = doc.createAccessor().setType('VEC3').setArray(pos).setBuffer(buf)
-  const iac = doc.createAccessor().setType('SCALAR').setArray(idx).setBuffer(buf)
-  const prim = doc.createPrimitive().setAttribute('POSITION', acc).setIndices(iac)
-  const mesh = doc.createMesh(runtimeSlug).addPrimitive(prim)
-  scene.addChild(doc.createNode(runtimeSlug).setMesh(mesh))
-  console.log('carved', runtimeSlug.padEnd(28), verts.length, 'verts', faces.length, 'faces')
+for (const [host, members] of byHost) {
+  const H = hostGeom(host)
+  const normals = computeVertexNormals(H.vertices, H.faces)
+  const owner = ownerMap(members)
+  const slugs = members.map(([s]) => s)
+  // Alle Julich-Gruppen sind Within-Host-Partitionen -> lueckenlos kacheln (>=2-Mehrheit).
+  const facesBySlug = assignFacesByOwner(H.faces, owner, slugs)
 
-  // Centroid/BBox/Sphere fuer structure-coords.json (Format wie build_subparcels.mjs).
-  let minX = Infinity, minY = Infinity, minZ = Infinity
-  let maxX = -Infinity, maxY = -Infinity, maxZ = -Infinity
-  let sumX = 0, sumY = 0, sumZ = 0
-  for (const [x, y, z] of verts) {
-    if (x < minX) minX = x; if (x > maxX) maxX = x
-    if (y < minY) minY = y; if (y > maxY) maxY = y
-    if (z < minZ) minZ = z; if (z > maxZ) maxZ = z
-    sumX += x; sumY += y; sumZ += z
-  }
-  const n = verts.length
-  const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2, cz = (minZ + maxZ) / 2
-  let maxR = 0
-  for (const [x, y, z] of verts) {
-    const r = Math.sqrt((x - cx) ** 2 + (y - cy) ** 2 + (z - cz) ** 2)
-    if (r > maxR) maxR = r
-  }
-  coordEntries[runtimeSlug] = {
-    centroid: [+(sumX / n).toFixed(3), +(sumY / n).toFixed(3), +(sumZ / n).toFixed(3)],
-    bbox: { min: [+minX.toFixed(3), +minY.toFixed(3), +minZ.toFixed(3)], max: [+maxX.toFixed(3), +maxY.toFixed(3), +maxZ.toFixed(3)] },
-    sphere: +maxR.toFixed(3),
+  for (const slug of slugs) {
+    const faces = facesBySlug.get(slug)
+    if (faces.length === 0) {
+      throw new Error(`bake_julich_runtime: ${slug} hat 0 baubare Faces (host ${host})`)
+    }
+    const { verts, norms, faces: idx } = buildPatch(H.vertices, normals, faces)
+
+    const pos = new Float32Array(verts.flat())
+    const nor = new Float32Array(norms.flat())
+    const ind = new Uint32Array(idx.flat())
+    const acc = doc.createAccessor().setType('VEC3').setArray(pos).setBuffer(buf)
+    const nac = doc.createAccessor().setType('VEC3').setArray(nor).setBuffer(buf)
+    const iac = doc.createAccessor().setType('SCALAR').setArray(ind).setBuffer(buf)
+    const prim = doc.createPrimitive().setAttribute('POSITION', acc).setAttribute('NORMAL', nac).setIndices(iac)
+    scene.addChild(doc.createNode(slug).setMesh(doc.createMesh(slug).addPrimitive(prim)))
+    console.log('carved', slug.padEnd(32), verts.length, 'verts', idx.length, 'faces', '[tiled]')
+    coordEntries[slug] = patchCoords(verts)
   }
 }
 
