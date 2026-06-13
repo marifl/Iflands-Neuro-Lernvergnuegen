@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import type { HemiData } from './atlasAssets'
 import { buildLutTextureData, type AtlasLut } from './atlasLut'
@@ -13,17 +13,31 @@ export function CanonicalSurface({
   lut: AtlasLut
   onPick?: (faceIndex: number) => void
 }) {
+  // Geometrie-Basis (Position, Index, Normalen) wird NUR gebaut wenn hemi wechselt.
+  // Layer-Wechsel beruehrt Positionen/Normalen NICHT — nur das aLabel-Attribut wird hot-geswapped.
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry()
     g.setAttribute('position', new THREE.BufferAttribute(hemi.pial, 3))
     g.setIndex(new THREE.BufferAttribute(hemi.faces, 1))
-    const lab = hemi.labels[layer]
-    const labF = new Float32Array(lab.length)
-    for (let i = 0; i < lab.length; i++) labF[i] = lab[i]
+    // Initiales Label-Attribut (erstes verfuegbares Layer) — wird sofort per useEffect ueberschrieben.
+    const firstLayerKey = Object.keys(hemi.labels)[0]
+    if (!firstLayerKey) throw new Error('CanonicalSurface: hemi.labels ist leer')
+    const firstLab = hemi.labels[firstLayerKey]
+    const labF = new Float32Array(firstLab.length)
     g.setAttribute('aLabel', new THREE.BufferAttribute(labF, 1))
     g.computeVertexNormals()
     return g
-  }, [hemi, layer])
+  }, [hemi])
+
+  // Label-Attribut-Update: nur wenn geometry oder layer wechselt — kein Positions-/Normalen-Rebuild.
+  useEffect(() => {
+    const lab = hemi.labels[layer]
+    if (!lab) throw new Error(`CanonicalSurface: Layer "${layer}" nicht in hemi.labels`)
+    const attr = geometry.getAttribute('aLabel') as THREE.BufferAttribute
+    const dst = attr.array as Float32Array
+    for (let i = 0; i < lab.length; i++) dst[i] = lab[i]
+    attr.needsUpdate = true
+  }, [geometry, hemi, layer])
 
   const material = useMemo(() => {
     const { data, size } = buildLutTextureData(lut)
