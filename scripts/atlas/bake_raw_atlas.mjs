@@ -4,7 +4,7 @@
 // Quelle: work/<source>_parcels.json (decode_glb-Rohgeometrie) + work/atlas_affine_<source>.json.
 // Aufruf: node bake_raw_atlas.mjs julich   |   node bake_raw_atlas.mjs dkt
 import { Document, NodeIO } from '@gltf-transform/core'
-import { readFileSync } from 'node:fs'
+import { readFileSync, existsSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { computeVertexNormals } from './subpatch_bake.mjs'
@@ -14,16 +14,27 @@ const source = process.argv[2]
 if (source !== 'julich' && source !== 'dkt') throw new Error('Aufruf: node bake_raw_atlas.mjs <julich|dkt>')
 
 const parcels = JSON.parse(readFileSync(resolve(here, `work/${source}_parcels.json`)))
-const A = JSON.parse(readFileSync(resolve(here, `work/atlas_affine_${source}.json`))) // 4x3, apply: [x,y,z,1] @ A
 
-// Affine auf einen Vertex anwenden: out[j] = sum_i vh[i]*A[i][j], vh = [x,y,z,1].
-function applyAffine(v) {
-  const x = v[0], y = v[1], z = v[2]
-  return [
-    x * A[0][0] + y * A[1][0] + z * A[2][0] + A[3][0],
-    x * A[0][1] + y * A[1][1] + z * A[2][1] + A[3][1],
-    x * A[0][2] + y * A[1][2] + z * A[2][2] + A[3][2],
+// Bevorzugt die OBERFLAECHEN-Affine (register_raw_overlay.py, CPD Surface->Surface, ~4.5mm Residuum);
+// faellt zurueck auf die Zentroid-Affine (register_atlas.py), die ein Overlay aber unterskaliert.
+const surfPath = resolve(here, `work/atlas_surface_affine_${source}.json`)
+let applyAffine
+if (existsSync(surfPath)) {
+  const { B, t } = JSON.parse(readFileSync(surfPath)) // v' = v @ B + t, B 3x3, t 3
+  applyAffine = (v) => [
+    v[0] * B[0][0] + v[1] * B[1][0] + v[2] * B[2][0] + t[0],
+    v[0] * B[0][1] + v[1] * B[1][1] + v[2] * B[2][1] + t[1],
+    v[0] * B[0][2] + v[1] * B[1][2] + v[2] * B[2][2] + t[2],
   ]
+  console.log(`${source}: Oberflaechen-Affine (CPD surface->surface)`)
+} else {
+  const A = JSON.parse(readFileSync(resolve(here, `work/atlas_affine_${source}.json`))) // 4x3
+  applyAffine = (v) => [
+    v[0] * A[0][0] + v[1] * A[1][0] + v[2] * A[2][0] + A[3][0],
+    v[0] * A[0][1] + v[1] * A[1][1] + v[2] * A[2][1] + A[3][1],
+    v[0] * A[0][2] + v[1] * A[1][2] + v[2] * A[2][2] + A[3][2],
+  ]
+  console.log(`${source}: Zentroid-Affine (Fallback — unterskaliert ein Overlay)`)
 }
 
 const doc = new Document()
