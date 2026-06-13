@@ -965,7 +965,7 @@
           103,
           146
         ],
-        "name": "Area 45 (IFG) left"
+        "name": "Area 45 (IFG)"
       },
       "2": {
         "rgb": [
@@ -973,7 +973,7 @@
           74,
           75
         ],
-        "name": "Area 44 (IFG) left"
+        "name": "Area 44 (IFG)"
       },
       "3": {
         "rgb": [
@@ -981,7 +981,7 @@
           255,
           179
         ],
-        "name": "Area Fo1 (OFC) left"
+        "name": "Area Fo1 (OFC)"
       },
       "4": {
         "rgb": [
@@ -989,7 +989,7 @@
           255,
           0
         ],
-        "name": "Area Fo2 (OFC) left"
+        "name": "Area Fo2 (OFC)"
       },
       "5": {
         "rgb": [
@@ -997,7 +997,7 @@
           189,
           250
         ],
-        "name": "Area Fo3 (OFC) left"
+        "name": "Area Fo3 (OFC)"
       },
       "6": {
         "rgb": [
@@ -1005,7 +1005,7 @@
           0,
           0
         ],
-        "name": "Area hOc5 (LOC) left"
+        "name": "Area hOc5 (LOC)"
       },
       "7": {
         "rgb": [
@@ -1013,7 +1013,7 @@
           110,
           22
         ],
-        "name": "Area hOc2 (V2, 18) left"
+        "name": "Area hOc2 (V2, 18)"
       },
       "8": {
         "rgb": [
@@ -1021,7 +1021,7 @@
           132,
           147
         ],
-        "name": "Area hOc1 (V1, 17, CalcS) left"
+        "name": "Area hOc1 (V1, 17, CalcS)"
       },
       "9": {
         "rgb": [
@@ -1029,7 +1029,7 @@
           77,
           155
         ],
-        "name": "Area hOc4v (LingG) left"
+        "name": "Area hOc4v (LingG)"
       },
       "10": {
         "rgb": [
@@ -1037,7 +1037,7 @@
           179,
           155
         ],
-        "name": "Area hOc3v (LingG) left"
+        "name": "Area hOc3v (LingG)"
       },
       "11": {
         "rgb": [
@@ -1045,7 +1045,7 @@
           84,
           222
         ],
-        "name": "Area TE 1.0 (HESCHL) left"
+        "name": "Area TE 1.0 (HESCHL)"
       },
       "12": {
         "rgb": [
@@ -1053,7 +1053,7 @@
           254,
           44
         ],
-        "name": "Area TE 2.1 (STG) left"
+        "name": "Area TE 2.1 (STG)"
       },
       "13": {
         "rgb": [
@@ -1061,7 +1061,7 @@
           195,
           50
         ],
-        "name": "Area TPJ (STG/SMG) left"
+        "name": "Area TPJ (STG/SMG)"
       },
       "14": {
         "rgb": [
@@ -1069,7 +1069,7 @@
           251,
           192
         ],
-        "name": "Area TE 1.2 (HESCHL) left"
+        "name": "Area TE 1.2 (HESCHL)"
       },
       "15": {
         "rgb": [
@@ -1077,7 +1077,7 @@
           104,
           108
         ],
-        "name": "Area TE 3 (STG) left"
+        "name": "Area TE 3 (STG)"
       },
       "16": {
         "rgb": [
@@ -1085,7 +1085,7 @@
           113,
           68
         ],
-        "name": "Area TE 1.1 (HESCHL) left"
+        "name": "Area TE 1.1 (HESCHL)"
       },
       "17": {
         "rgb": [
@@ -1093,7 +1093,7 @@
           104,
           125
         ],
-        "name": "Area TE 2.2 (STG) left"
+        "name": "Area TE 2.2 (STG)"
       },
       "18": {
         "rgb": [
@@ -1101,7 +1101,7 @@
           57,
           245
         ],
-        "name": "Area 33 (ACC) left"
+        "name": "Area 33 (ACC)"
       },
       "19": {
         "rgb": [
@@ -1109,7 +1109,7 @@
           94,
           250
         ],
-        "name": "Area s32 (sACC) left"
+        "name": "Area s32 (sACC)"
       },
       "20": {
         "rgb": [
@@ -1117,7 +1117,7 @@
           135,
           14
         ],
-        "name": "Area p32 (pACC) left"
+        "name": "Area p32 (pACC)"
       },
       "21": {
         "rgb": [
@@ -1125,7 +1125,7 @@
           126,
           73
         ],
-        "name": "Area Id2 (Insula) left"
+        "name": "Area Id2 (Insula)"
       },
       "22": {
         "rgb": [
@@ -1133,2343 +1133,855 @@
           32,
           58
         ],
-        "name": "Area Id3 (Insula) left"
+        "name": "Area Id3 (Insula)"
       },
       "23": {
-        "rgb": [
-          145,
-          67,
-          101
-        ],
-        "name": "CA2 (Hippocampus) left"
-      },
-      "24": {
-        "rgb": [
-          233,
-          211,
-          221
-        ],
-        "name": "CA3 (Hippocampus) left"
-      },
-      "25": {
-        "rgb": [
-          35,
-          159,
-          214
-        ],
-        "name": "Entorhinal Cortex left"
-      },
-      "26": {
-        "rgb": [
-          149,
-          55,
-          120
-        ],
-        "name": "DG (Hippocampus) left"
-      },
-      "27": {
-        "rgb": [
-          125,
-          9,
-          167
-        ],
-        "name": "CA1 (Hippocampus) left"
-      },
-      "28": {
-        "rgb": [
-          137,
-          12,
-          73
-        ],
-        "name": "HATA (Hippocampus) left"
-      },
-      "29": {
         "rgb": [
           89,
           80,
           132
         ],
-        "name": "Area OP4 (POperc) left"
+        "name": "Area OP4 (POperc)"
       },
-      "30": {
+      "24": {
         "rgb": [
           250,
           182,
           34
         ],
-        "name": "Area OP1 (POperc) left"
+        "name": "Area OP1 (POperc)"
       },
-      "31": {
+      "25": {
         "rgb": [
           36,
           47,
           221
         ],
-        "name": "Area OP2 (POperc) left"
+        "name": "Area OP2 (POperc)"
       },
-      "32": {
+      "26": {
         "rgb": [
           58,
           122,
           80
         ],
-        "name": "Area OP3 (POperc) left"
+        "name": "Area OP3 (POperc)"
       },
-      "33": {
+      "27": {
         "rgb": [
           167,
           94,
           149
         ],
-        "name": "Area FG2 (FusG) left"
+        "name": "Area FG2 (FusG)"
       },
-      "34": {
+      "28": {
         "rgb": [
           131,
           183,
           58
         ],
-        "name": "Area FG1 (FusG) left"
+        "name": "Area FG1 (FusG)"
       },
-      "35": {
+      "29": {
         "rgb": [
           92,
           116,
           83
         ],
-        "name": "Area PGp (IPL) left"
+        "name": "Area PGp (IPL)"
       },
-      "36": {
+      "30": {
         "rgb": [
           120,
           135,
           232
         ],
-        "name": "Area PFt (IPL) left"
+        "name": "Area PFt (IPL)"
       },
-      "37": {
+      "31": {
         "rgb": [
           42,
           236,
           131
         ],
-        "name": "Area PGa (IPL) left"
+        "name": "Area PGa (IPL)"
       },
-      "38": {
+      "32": {
         "rgb": [
           146,
           153,
           177
         ],
-        "name": "Area PFop (IPL) left"
+        "name": "Area PFop (IPL)"
       },
-      "39": {
+      "33": {
         "rgb": [
           53,
           76,
           145
         ],
-        "name": "Area PFm (IPL) left"
+        "name": "Area PFm (IPL)"
       },
-      "40": {
+      "34": {
         "rgb": [
           98,
           128,
           120
         ],
-        "name": "Area PFcm (IPL) left"
+        "name": "Area PFcm (IPL)"
+      },
+      "35": {
+        "rgb": [
+          105,
+          61,
+          82
+        ],
+        "name": "Area Ig2 (Insula)"
+      },
+      "36": {
+        "rgb": [
+          18,
+          111,
+          40
+        ],
+        "name": "Area Ig1 (Insula)"
+      },
+      "37": {
+        "rgb": [
+          141,
+          112,
+          216
+        ],
+        "name": "Area Id1 (Insula)"
+      },
+      "38": {
+        "rgb": [
+          96,
+          113,
+          253
+        ],
+        "name": "Area hOc4lp (LOC)"
+      },
+      "39": {
+        "rgb": [
+          233,
+          168,
+          189
+        ],
+        "name": "Area hOc4la (LOC)"
+      },
+      "40": {
+        "rgb": [
+          109,
+          218,
+          10
+        ],
+        "name": "Area hOc4d (Cuneus)"
       },
       "41": {
         "rgb": [
           105,
-          61,
-          82
-        ],
-        "name": "Area Ig2 (Insula) left"
-      },
-      "42": {
-        "rgb": [
-          18,
-          111,
-          40
-        ],
-        "name": "Area Ig1 (Insula) left"
-      },
-      "43": {
-        "rgb": [
-          141,
-          112,
-          216
-        ],
-        "name": "Area Id1 (Insula) left"
-      },
-      "44": {
-        "rgb": [
-          96,
-          113,
-          253
-        ],
-        "name": "Area hOc4lp (LOC) left"
-      },
-      "45": {
-        "rgb": [
-          233,
-          168,
-          189
-        ],
-        "name": "Area hOc4la (LOC) left"
-      },
-      "46": {
-        "rgb": [
-          109,
-          218,
-          10
-        ],
-        "name": "Area hOc4d (Cuneus) left"
-      },
-      "47": {
-        "rgb": [
-          105,
           191,
           48
         ],
-        "name": "Area hOc3d (Cuneus) left"
+        "name": "Area hOc3d (Cuneus)"
       },
-      "48": {
+      "42": {
         "rgb": [
           116,
           92,
           124
         ],
-        "name": "Area 4p (PreCG) left"
+        "name": "Area 4p (PreCG)"
       },
-      "49": {
+      "43": {
         "rgb": [
           118,
           239,
           183
         ],
-        "name": "Area 4a (PreCG) left"
+        "name": "Area 4a (PreCG)"
       },
-      "50": {
+      "44": {
         "rgb": [
           232,
           185,
           250
         ],
-        "name": "Area 1 (PostCG) left"
+        "name": "Area 1 (PostCG)"
       },
-      "51": {
+      "45": {
         "rgb": [
           187,
           133,
           50
         ],
-        "name": "Area 3a (PostCG) left"
+        "name": "Area 3a (PostCG)"
       },
-      "52": {
+      "46": {
         "rgb": [
           239,
           246,
           155
         ],
-        "name": "Area 3b (PostCG) left"
+        "name": "Area 3b (PostCG)"
       },
-      "53": {
+      "47": {
         "rgb": [
           66,
           149,
           82
         ],
-        "name": "Area hIP1 (IPS) left"
+        "name": "Area hIP1 (IPS)"
       },
-      "54": {
+      "48": {
         "rgb": [
           127,
           245,
           203
         ],
-        "name": "Area hIP2 (IPS) left"
+        "name": "Area hIP2 (IPS)"
       },
-      "55": {
+      "49": {
         "rgb": [
           184,
           185,
           58
         ],
-        "name": "Area 5L (SPL) left"
+        "name": "Area 5L (SPL)"
       },
-      "56": {
+      "50": {
         "rgb": [
           225,
           245,
           76
         ],
-        "name": "Area 5M (SPL) left"
+        "name": "Area 5M (SPL)"
       },
-      "57": {
+      "51": {
         "rgb": [
           252,
           89,
           28
         ],
-        "name": "Area 7PC (SPL) left"
+        "name": "Area 7PC (SPL)"
       },
-      "58": {
+      "52": {
         "rgb": [
           113,
           172,
           229
         ],
-        "name": "Area hIP3 (IPS) left"
+        "name": "Area hIP3 (IPS)"
       },
-      "59": {
+      "53": {
         "rgb": [
           38,
           204,
           19
         ],
-        "name": "Area 7A (SPL) left"
+        "name": "Area 7A (SPL)"
       },
-      "60": {
+      "54": {
         "rgb": [
           205,
           61,
           236
         ],
-        "name": "Area 7M (SPL) left"
+        "name": "Area 7M (SPL)"
       },
-      "61": {
+      "55": {
         "rgb": [
           79,
           242,
           146
         ],
-        "name": "Area 5Ci (SPL) left"
+        "name": "Area 5Ci (SPL)"
       },
-      "62": {
+      "56": {
         "rgb": [
           188,
           250,
           216
         ],
-        "name": "Area Id7 (Insula) left"
+        "name": "Area Id7 (Insula)"
       },
-      "63": {
+      "57": {
         "rgb": [
           133,
           34,
           201
         ],
-        "name": "Area s24 (sACC) left"
+        "name": "Area s24 (sACC)"
       },
-      "64": {
+      "58": {
         "rgb": [
           170,
           68,
           220
         ],
-        "name": "Area 25 (sACC) left"
+        "name": "Area 25 (sACC)"
       },
-      "65": {
-        "rgb": [
-          22,
-          204,
-          194
-        ],
-        "name": "SF (Amygdala) left"
-      },
-      "66": {
-        "rgb": [
-          141,
-          138,
-          254
-        ],
-        "name": "LB (Amygdala) left"
-      },
-      "67": {
-        "rgb": [
-          0,
-          0,
-          255
-        ],
-        "name": "Subiculum (Hippocampus) left"
-      },
-      "68": {
+      "59": {
         "rgb": [
           226,
           211,
           61
         ],
-        "name": "Area PF (IPL) left"
+        "name": "Area PF (IPL)"
       },
-      "69": {
+      "60": {
         "rgb": [
           52,
           20,
           106
         ],
-        "name": "Area 7P (SPL) left"
+        "name": "Area 7P (SPL)"
       },
-      "70": {
+      "61": {
         "rgb": [
           239,
           137,
           211
         ],
-        "name": "Area Fp2 (FPole) left"
+        "name": "Area Fp2 (FPole)"
       },
-      "71": {
+      "62": {
         "rgb": [
           226,
           14,
           200
         ],
-        "name": "Area Fp1 (FPole) left"
+        "name": "Area Fp1 (FPole)"
       },
-      "72": {
-        "rgb": [
-          77,
-          3,
-          15
-        ],
-        "name": "Fastigial Nucleus (Cerebellum) left"
-      },
-      "73": {
-        "rgb": [
-          60,
-          28,
-          100
-        ],
-        "name": "VTM (Amygdala) left"
-      },
-      "74": {
+      "63": {
         "rgb": [
           153,
           195,
           229
         ],
-        "name": "Area p24ab (pACC) left"
+        "name": "Area p24ab (pACC)"
       },
-      "75": {
+      "64": {
         "rgb": [
           241,
           164,
           195
         ],
-        "name": "Area p24c (pACC) left"
+        "name": "Area p24c (pACC)"
       },
-      "76": {
-        "rgb": [
-          120,
-          179,
-          230
-        ],
-        "name": "MF (Amygdala) left"
-      },
-      "77": {
-        "rgb": [
-          204,
-          82,
-          17
-        ],
-        "name": "IF (Amygdala) left"
-      },
-      "78": {
+      "65": {
         "rgb": [
           170,
           220,
           175
         ],
-        "name": "Area FG4 (FusG) left"
+        "name": "Area FG4 (FusG)"
       },
-      "79": {
+      "66": {
         "rgb": [
           120,
           147,
           37
         ],
-        "name": "Area FG3 (FusG) left"
+        "name": "Area FG3 (FusG)"
       },
-      "80": {
-        "rgb": [
-          133,
-          179,
-          114
-        ],
-        "name": "Dorsal Dentate Nucleus (Cerebellum) left"
-      },
-      "81": {
-        "rgb": [
-          96,
-          239,
-          250
-        ],
-        "name": "Ventral Dentate Nucleus (Cerebellum) left"
-      },
-      "82": {
+      "67": {
         "rgb": [
           23,
           78,
           92
         ],
-        "name": "Area TeI (STG) left"
+        "name": "Area TeI (STG)"
       },
-      "83": {
+      "68": {
         "rgb": [
           86,
           101,
           22
         ],
-        "name": "Area TI (STG) left"
+        "name": "Area TI (STG)"
       },
-      "84": {
+      "69": {
         "rgb": [
           112,
           48,
           160
         ],
-        "name": "Area IFS1 (IFS) left"
+        "name": "Area IFS1 (IFS)"
       },
-      "85": {
+      "70": {
         "rgb": [
           255,
           0,
           0
         ],
-        "name": "Area IFS2 (IFS) left"
+        "name": "Area IFS2 (IFS)"
       },
-      "86": {
+      "71": {
         "rgb": [
           2,
           128,
           50
         ],
-        "name": "Area IFS3 (IFS) left"
+        "name": "Area IFS3 (IFS)"
       },
-      "87": {
+      "72": {
         "rgb": [
           31,
           73,
           125
         ],
-        "name": "Area IFS4 (IFS) left"
+        "name": "Area IFS4 (IFS)"
       },
-      "88": {
+      "73": {
         "rgb": [
           229,
           0,
           160
         ],
-        "name": "Area IFJ1 (IFS,PreCS) left"
+        "name": "Area IFJ1 (IFS,PreCS)"
       },
-      "89": {
+      "74": {
         "rgb": [
           223,
           106,
           22
         ],
-        "name": "Area IFJ2 (IFS,PreCS) left"
+        "name": "Area IFJ2 (IFS,PreCS)"
       },
-      "90": {
-        "rgb": [
-          186,
-          53,
-          149
-        ],
-        "name": "Interposed Nucleus (Cerebellum) left"
-      },
-      "91": {
+      "75": {
         "rgb": [
           23,
           13,
           35
         ],
-        "name": "Area 2 (PostCS) left"
+        "name": "Area 2 (PostCS)"
       },
-      "92": {
-        "rgb": [
-          171,
-          71,
-          170
-        ],
-        "name": "Ch 4 (Basal Forebrain) left"
-      },
-      "93": {
+      "76": {
         "rgb": [
           205,
           228,
           4
         ],
-        "name": "Area STS1 (STS) left"
+        "name": "Area STS1 (STS)"
       },
-      "94": {
+      "77": {
         "rgb": [
           62,
           117,
           123
         ],
-        "name": "Area STS2 (STS) left"
+        "name": "Area STS2 (STS)"
       },
-      "95": {
+      "78": {
         "rgb": [
           29,
           76,
           168
         ],
-        "name": "Area Op8 (Frontal Operculum) left"
+        "name": "Area Op8 (Frontal Operculum)"
+      },
+      "79": {
+        "rgb": [
+          175,
+          123,
+          34
+        ],
+        "name": "Area Op9 (Frontal Operculum)"
+      },
+      "80": {
+        "rgb": [
+          45,
+          33,
+          27
+        ],
+        "name": "Area 6d1 (PreCG)"
+      },
+      "81": {
+        "rgb": [
+          170,
+          151,
+          180
+        ],
+        "name": "Area 6d2 (PreCG)"
+      },
+      "82": {
+        "rgb": [
+          55,
+          239,
+          21
+        ],
+        "name": "Area 6d3 (SFS)"
+      },
+      "83": {
+        "rgb": [
+          239,
+          66,
+          26
+        ],
+        "name": "Area hOc6 (POS)"
+      },
+      "84": {
+        "rgb": [
+          237,
+          233,
+          37
+        ],
+        "name": "Area hIP6 (IPS)"
+      },
+      "85": {
+        "rgb": [
+          223,
+          109,
+          3
+        ],
+        "name": "Area hIP8 (IPS)"
+      },
+      "86": {
+        "rgb": [
+          254,
+          52,
+          184
+        ],
+        "name": "Area hIP4 (IPS)"
+      },
+      "87": {
+        "rgb": [
+          217,
+          87,
+          210
+        ],
+        "name": "Area hIP5 (IPS)"
+      },
+      "88": {
+        "rgb": [
+          71,
+          196,
+          218
+        ],
+        "name": "Area hIP7 (IPS)"
+      },
+      "89": {
+        "rgb": [
+          153,
+          232,
+          235
+        ],
+        "name": "Area hPO1 (POS)"
+      },
+      "90": {
+        "rgb": [
+          75,
+          95,
+          87
+        ],
+        "name": "Area 6mp (SMA, mesial SFG)"
+      },
+      "91": {
+        "rgb": [
+          204,
+          108,
+          222
+        ],
+        "name": "Area 6ma (preSMA, mesial SFG)"
+      },
+      "92": {
+        "rgb": [
+          163,
+          204,
+          53
+        ],
+        "name": "Area Fo4 (OFC)"
+      },
+      "93": {
+        "rgb": [
+          219,
+          11,
+          91
+        ],
+        "name": "Area Fo5 (OFC)"
+      },
+      "94": {
+        "rgb": [
+          199,
+          156,
+          187
+        ],
+        "name": "Area Fo6 (OFC)"
+      },
+      "95": {
+        "rgb": [
+          64,
+          211,
+          186
+        ],
+        "name": "Area Fo7 (OFC)"
       },
       "96": {
         "rgb": [
           175,
-          123,
-          34
+          131,
+          102
         ],
-        "name": "Area Op9 (Frontal Operculum) left"
+        "name": "Area 8d1 (SFG)"
       },
       "97": {
         "rgb": [
-          161,
-          148,
-          71
+          192,
+          186,
+          225
         ],
-        "name": "Ch 123 (Basal Forebrain) left"
+        "name": "Area 8d2 (SFG)"
       },
       "98": {
         "rgb": [
-          45,
-          33,
-          27
+          29,
+          109,
+          19
         ],
-        "name": "Area 6d1 (PreCG) left"
+        "name": "Area 8v2 (MFG)"
       },
       "99": {
         "rgb": [
-          170,
-          151,
+          169,
+          187,
           180
         ],
-        "name": "Area 6d2 (PreCG) left"
+        "name": "Area 8v1 (MFG)"
       },
       "100": {
         "rgb": [
-          55,
-          239,
-          21
+          105,
+          253,
+          197
         ],
-        "name": "Area 6d3 (SFS) left"
+        "name": "Area Ig3 (Insula)"
       },
       "101": {
         "rgb": [
-          131,
-          143,
-          115
+          38,
+          174,
+          113
         ],
-        "name": "CM (Amygdala) left"
+        "name": "Area Id4 (Insula)"
       },
       "102": {
         "rgb": [
-          239,
-          66,
-          26
+          112,
+          6,
+          50
         ],
-        "name": "Area hOc6 (POS) left"
+        "name": "Area Id5 (Insula)"
       },
       "103": {
         "rgb": [
-          237,
-          233,
-          37
+          71,
+          217,
+          62
         ],
-        "name": "Area hIP6 (IPS) left"
+        "name": "Area Ia1 (Insula)"
       },
       "104": {
         "rgb": [
-          223,
-          109,
-          3
+          138,
+          127,
+          119
         ],
-        "name": "Area hIP8 (IPS) left"
+        "name": "Area Id6 (Insula)"
       },
       "105": {
         "rgb": [
-          254,
-          52,
-          184
+          0,
+          165,
+          226
         ],
-        "name": "Area hIP4 (IPS) left"
+        "name": "Area SFS1 (SFS)"
       },
       "106": {
         "rgb": [
-          217,
-          87,
-          210
+          242,
+          148,
+          0
         ],
-        "name": "Area hIP5 (IPS) left"
+        "name": "Area SFS2 (SFS)"
       },
       "107": {
         "rgb": [
-          71,
-          196,
-          218
+          98,
+          33,
+          129
         ],
-        "name": "Area hIP7 (IPS) left"
+        "name": "Area MFG1 (MFG)"
       },
       "108": {
         "rgb": [
-          153,
-          232,
-          235
+          255,
+          236,
+          0
         ],
-        "name": "Area hPO1 (POS) left"
+        "name": "Area MFG2 (MFG)"
       },
       "109": {
         "rgb": [
-          75,
-          95,
-          87
+          222,
+          78,
+          253
         ],
-        "name": "Area 6mp (SMA, mesial SFG) left"
+        "name": "Area Op5 (Frontal Operculum)"
       },
       "110": {
         "rgb": [
-          204,
-          108,
-          222
+          138,
+          63,
+          100
         ],
-        "name": "Area 6ma (preSMA, mesial SFG) left"
+        "name": "Area Op6 (Frontal Operculum)"
       },
       "111": {
         "rgb": [
-          109,
-          251,
-          212
+          134,
+          116,
+          192
         ],
-        "name": "HC-Transsubiculum (Hippocampus) left"
+        "name": "Area Op7 (Frontal Operculum)"
       },
       "112": {
         "rgb": [
-          51,
-          91,
-          49
+          0,
+          128,
+          0
         ],
-        "name": "Tuberculum (Basal Forebrain) left"
+        "name": "Area Ph1 (PhG)"
       },
       "113": {
         "rgb": [
-          29,
-          124,
-          250
+          128,
+          128,
+          0
         ],
-        "name": "Terminal islands (Basal Forebrain) left"
+        "name": "Area Ph2 (PhG)"
       },
       "114": {
         "rgb": [
-          163,
-          204,
-          53
+          128,
+          0,
+          0
         ],
-        "name": "Area Fo4 (OFC) left"
+        "name": "Area Ph3 (PhG)"
       },
       "115": {
         "rgb": [
-          219,
-          11,
-          91
+          0,
+          0,
+          128
         ],
-        "name": "Area Fo5 (OFC) left"
+        "name": "Area CoS1 (CoS)"
       },
       "116": {
         "rgb": [
-          199,
-          156,
-          187
+          23,
+          54,
+          170
         ],
-        "name": "Area Fo6 (OFC) left"
+        "name": "Area Id9 (Insula)"
       },
       "117": {
         "rgb": [
-          64,
-          211,
-          186
+          49,
+          247,
+          90
         ],
-        "name": "Area Fo7 (OFC) left"
+        "name": "Area Ia3 (Insula)"
       },
       "118": {
         "rgb": [
-          175,
-          131,
-          102
+          116,
+          24,
+          2
         ],
-        "name": "Area 8d1 (SFG) left"
+        "name": "Area Ia2 (Insula)"
       },
       "119": {
         "rgb": [
-          192,
-          186,
-          225
+          79,
+          187,
+          42
         ],
-        "name": "Area 8d2 (SFG) left"
+        "name": "Area Id8 (Insula)"
       },
       "120": {
         "rgb": [
-          29,
-          109,
-          19
+          179,
+          101,
+          192
         ],
-        "name": "Area 8v2 (MFG) left"
+        "name": "Area Id10 (Insula)"
       },
       "121": {
         "rgb": [
-          169,
-          187,
-          180
+          186,
+          255,
+          25
         ],
-        "name": "Area 8v1 (MFG) left"
+        "name": "Frontal-I (GapMap)"
       },
       "122": {
         "rgb": [
-          105,
-          253,
-          197
+          255,
+          135,
+          15
         ],
-        "name": "Area Ig3 (Insula) left"
+        "name": "Frontal-II (GapMap)"
       },
       "123": {
         "rgb": [
-          38,
-          174,
-          113
+          76,
+          90,
+          161
         ],
-        "name": "Area Id4 (Insula) left"
+        "name": "Temporal-to-Parietal (GapMap)"
       },
       "124": {
         "rgb": [
-          112,
-          6,
-          50
+          104,
+          161,
+          93
         ],
-        "name": "Area Id5 (Insula) left"
+        "name": "Frontal-to-Occipital (GapMap)"
       },
       "125": {
         "rgb": [
-          71,
-          217,
-          62
+          64,
+          126,
+          100
         ],
-        "name": "Area Ia1 (Insula) left"
+        "name": "Frontal-to-Temporal-I (GapMap)"
       },
       "126": {
         "rgb": [
-          138,
-          127,
-          119
+          161,
+          24,
+          74
         ],
-        "name": "Area Id6 (Insula) left"
+        "name": "Frontal-to-Temporal-II (GapMap)"
       },
       "127": {
         "rgb": [
-          0,
-          165,
-          226
+          90,
+          90,
+          96
         ],
-        "name": "Area SFS1 (SFS) left"
+        "name": "nicht kartiert"
       },
       "128": {
         "rgb": [
-          242,
-          148,
-          0
-        ],
-        "name": "Area SFS2 (SFS) left"
-      },
-      "129": {
-        "rgb": [
-          98,
-          33,
-          129
-        ],
-        "name": "Area MFG1 (MFG) left"
-      },
-      "130": {
-        "rgb": [
-          255,
-          236,
-          0
-        ],
-        "name": "Area MFG2 (MFG) left"
-      },
-      "131": {
-        "rgb": [
-          222,
-          78,
-          253
-        ],
-        "name": "Area Op5 (Frontal Operculum) left"
-      },
-      "132": {
-        "rgb": [
-          138,
-          63,
-          100
-        ],
-        "name": "Area Op6 (Frontal Operculum) left"
-      },
-      "133": {
-        "rgb": [
-          134,
-          116,
-          192
-        ],
-        "name": "Area Op7 (Frontal Operculum) left"
-      },
-      "134": {
-        "rgb": [
-          0,
-          128,
-          0
-        ],
-        "name": "Area Ph1 (PhG) left"
-      },
-      "135": {
-        "rgb": [
-          128,
-          128,
-          0
-        ],
-        "name": "Area Ph2 (PhG) left"
-      },
-      "136": {
-        "rgb": [
-          128,
-          0,
-          0
-        ],
-        "name": "Area Ph3 (PhG) left"
-      },
-      "137": {
-        "rgb": [
-          0,
-          0,
-          128
-        ],
-        "name": "Area CoS1 (CoS) left"
-      },
-      "138": {
-        "rgb": [
           90,
           90,
           96
         ],
-        "name": "AcbM (Medial Accumbens, Ventral Striatum) left"
-      },
-      "139": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "FuCd (Fundus of Caudate Nucleus, Ventral Striatum) left"
-      },
-      "140": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "FuP (Fundus of Putamen, Ventral Striatum) left"
-      },
-      "141": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "AcbL (Lateral Accumbens, Ventral Striatum) left"
-      },
-      "142": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "VP (Ventral Pallidum) left"
-      },
-      "143": {
-        "rgb": [
-          250,
-          211,
-          242
-        ],
-        "name": "CGL (Metathalamus) left"
-      },
-      "144": {
-        "rgb": [
-          108,
-          241,
-          204
-        ],
-        "name": "CGM (Metathalamus) left"
-      },
-      "145": {
-        "rgb": [
-          64,
-          208,
-          56
-        ],
-        "name": "STN (Subthalamus) left"
-      },
-      "146": {
-        "rgb": [
-          23,
-          54,
-          170
-        ],
-        "name": "Area Id9 (Insula) left"
-      },
-      "147": {
-        "rgb": [
-          49,
-          247,
-          90
-        ],
-        "name": "Area Ia3 (Insula) left"
-      },
-      "148": {
-        "rgb": [
-          116,
-          24,
-          2
-        ],
-        "name": "Area Ia2 (Insula) left"
-      },
-      "149": {
-        "rgb": [
-          79,
-          187,
-          42
-        ],
-        "name": "Area Id8 (Insula) left"
-      },
-      "150": {
-        "rgb": [
-          179,
-          101,
-          192
-        ],
-        "name": "Area Id10 (Insula) left"
-      },
-      "151": {
-        "rgb": [
-          214,
-          120,
-          42
-        ],
-        "name": "BST (Bed Nucleus) left"
-      },
-      "152": {
-        "rgb": [
-          186,
-          255,
-          25
-        ],
-        "name": "Frontal-I (GapMap) left"
-      },
-      "153": {
-        "rgb": [
-          255,
-          135,
-          15
-        ],
-        "name": "Frontal-II (GapMap) left"
-      },
-      "154": {
-        "rgb": [
-          76,
-          90,
-          161
-        ],
-        "name": "Temporal-to-Parietal (GapMap) left"
-      },
-      "155": {
-        "rgb": [
-          104,
-          161,
-          93
-        ],
-        "name": "Frontal-to-Occipital (GapMap) left"
-      },
-      "156": {
-        "rgb": [
-          64,
-          126,
-          100
-        ],
-        "name": "Frontal-to-Temporal-I (GapMap) left"
-      },
-      "157": {
-        "rgb": [
-          161,
-          24,
-          74
-        ],
-        "name": "Frontal-to-Temporal-II (GapMap) left"
-      },
-      "1001": {
-        "rgb": [
-          167,
-          103,
-          146
-        ],
-        "name": "Area 45 (IFG) right"
-      },
-      "1002": {
-        "rgb": [
-          54,
-          74,
-          75
-        ],
-        "name": "Area 44 (IFG) right"
-      },
-      "1003": {
-        "rgb": [
-          7,
-          255,
-          179
-        ],
-        "name": "Area Fo1 (OFC) right"
-      },
-      "1004": {
-        "rgb": [
-          0,
-          255,
-          0
-        ],
-        "name": "Area Fo2 (OFC) right"
-      },
-      "1005": {
-        "rgb": [
-          182,
-          189,
-          250
-        ],
-        "name": "Area Fo3 (OFC) right"
-      },
-      "1006": {
-        "rgb": [
-          255,
-          0,
-          0
-        ],
-        "name": "Area hOc5 (LOC) right"
-      },
-      "1007": {
-        "rgb": [
-          84,
-          110,
-          22
-        ],
-        "name": "Area hOc2 (V2, 18) right"
-      },
-      "1008": {
-        "rgb": [
-          190,
-          132,
-          147
-        ],
-        "name": "Area hOc1 (V1, 17, CalcS) right"
-      },
-      "1009": {
-        "rgb": [
-          222,
-          77,
-          155
-        ],
-        "name": "Area hOc4v (LingG) right"
-      },
-      "1010": {
-        "rgb": [
-          83,
-          179,
-          155
-        ],
-        "name": "Area hOc3v (LingG) right"
-      },
-      "1011": {
-        "rgb": [
-          252,
-          84,
-          222
-        ],
-        "name": "Area TE 1.0 (HESCHL) right"
-      },
-      "1012": {
-        "rgb": [
-          67,
-          254,
-          44
-        ],
-        "name": "Area TE 2.1 (STG) right"
-      },
-      "1013": {
-        "rgb": [
-          95,
-          195,
-          50
-        ],
-        "name": "Area TPJ (STG/SMG) right"
-      },
-      "1014": {
-        "rgb": [
-          202,
-          251,
-          192
-        ],
-        "name": "Area TE 1.2 (HESCHL) right"
-      },
-      "1015": {
-        "rgb": [
-          159,
-          104,
-          108
-        ],
-        "name": "Area TE 3 (STG) right"
-      },
-      "1016": {
-        "rgb": [
-          8,
-          113,
-          68
-        ],
-        "name": "Area TE 1.1 (HESCHL) right"
-      },
-      "1017": {
-        "rgb": [
-          58,
-          104,
-          125
-        ],
-        "name": "Area TE 2.2 (STG) right"
-      },
-      "1018": {
-        "rgb": [
-          51,
-          57,
-          245
-        ],
-        "name": "Area 33 (ACC) right"
-      },
-      "1019": {
-        "rgb": [
-          193,
-          94,
-          250
-        ],
-        "name": "Area s32 (sACC) right"
-      },
-      "1020": {
-        "rgb": [
-          87,
-          135,
-          14
-        ],
-        "name": "Area p32 (pACC) right"
-      },
-      "1021": {
-        "rgb": [
-          225,
-          126,
-          73
-        ],
-        "name": "Area Id2 (Insula) right"
-      },
-      "1022": {
-        "rgb": [
-          32,
-          32,
-          58
-        ],
-        "name": "Area Id3 (Insula) right"
-      },
-      "1023": {
-        "rgb": [
-          145,
-          67,
-          101
-        ],
-        "name": "CA2 (Hippocampus) right"
-      },
-      "1024": {
-        "rgb": [
-          233,
-          211,
-          221
-        ],
-        "name": "CA3 (Hippocampus) right"
-      },
-      "1025": {
-        "rgb": [
-          35,
-          159,
-          214
-        ],
-        "name": "Entorhinal Cortex right"
-      },
-      "1026": {
-        "rgb": [
-          149,
-          55,
-          120
-        ],
-        "name": "DG (Hippocampus) right"
-      },
-      "1027": {
-        "rgb": [
-          125,
-          9,
-          167
-        ],
-        "name": "CA1 (Hippocampus) right"
-      },
-      "1028": {
-        "rgb": [
-          137,
-          12,
-          73
-        ],
-        "name": "HATA (Hippocampus) right"
-      },
-      "1029": {
-        "rgb": [
-          89,
-          80,
-          132
-        ],
-        "name": "Area OP4 (POperc) right"
-      },
-      "1030": {
-        "rgb": [
-          250,
-          182,
-          34
-        ],
-        "name": "Area OP1 (POperc) right"
-      },
-      "1031": {
-        "rgb": [
-          36,
-          47,
-          221
-        ],
-        "name": "Area OP2 (POperc) right"
-      },
-      "1032": {
-        "rgb": [
-          58,
-          122,
-          80
-        ],
-        "name": "Area OP3 (POperc) right"
-      },
-      "1033": {
-        "rgb": [
-          167,
-          94,
-          149
-        ],
-        "name": "Area FG2 (FusG) right"
-      },
-      "1034": {
-        "rgb": [
-          131,
-          183,
-          58
-        ],
-        "name": "Area FG1 (FusG) right"
-      },
-      "1035": {
-        "rgb": [
-          92,
-          116,
-          83
-        ],
-        "name": "Area PGp (IPL) right"
-      },
-      "1036": {
-        "rgb": [
-          120,
-          135,
-          232
-        ],
-        "name": "Area PFt (IPL) right"
-      },
-      "1037": {
-        "rgb": [
-          42,
-          236,
-          131
-        ],
-        "name": "Area PGa (IPL) right"
-      },
-      "1038": {
-        "rgb": [
-          146,
-          153,
-          177
-        ],
-        "name": "Area PFop (IPL) right"
-      },
-      "1039": {
-        "rgb": [
-          53,
-          76,
-          145
-        ],
-        "name": "Area PFm (IPL) right"
-      },
-      "1040": {
-        "rgb": [
-          98,
-          128,
-          120
-        ],
-        "name": "Area PFcm (IPL) right"
-      },
-      "1041": {
-        "rgb": [
-          105,
-          61,
-          82
-        ],
-        "name": "Area Ig2 (Insula) right"
-      },
-      "1042": {
-        "rgb": [
-          18,
-          111,
-          40
-        ],
-        "name": "Area Ig1 (Insula) right"
-      },
-      "1043": {
-        "rgb": [
-          141,
-          112,
-          216
-        ],
-        "name": "Area Id1 (Insula) right"
-      },
-      "1044": {
-        "rgb": [
-          96,
-          113,
-          253
-        ],
-        "name": "Area hOc4lp (LOC) right"
-      },
-      "1045": {
-        "rgb": [
-          233,
-          168,
-          189
-        ],
-        "name": "Area hOc4la (LOC) right"
-      },
-      "1046": {
-        "rgb": [
-          109,
-          218,
-          10
-        ],
-        "name": "Area hOc4d (Cuneus) right"
-      },
-      "1047": {
-        "rgb": [
-          105,
-          191,
-          48
-        ],
-        "name": "Area hOc3d (Cuneus) right"
-      },
-      "1048": {
-        "rgb": [
-          116,
-          92,
-          124
-        ],
-        "name": "Area 4p (PreCG) right"
-      },
-      "1049": {
-        "rgb": [
-          118,
-          239,
-          183
-        ],
-        "name": "Area 4a (PreCG) right"
-      },
-      "1050": {
-        "rgb": [
-          232,
-          185,
-          250
-        ],
-        "name": "Area 1 (PostCG) right"
-      },
-      "1051": {
-        "rgb": [
-          187,
-          133,
-          50
-        ],
-        "name": "Area 3a (PostCG) right"
-      },
-      "1052": {
-        "rgb": [
-          239,
-          246,
-          155
-        ],
-        "name": "Area 3b (PostCG) right"
-      },
-      "1053": {
-        "rgb": [
-          66,
-          149,
-          82
-        ],
-        "name": "Area hIP1 (IPS) right"
-      },
-      "1054": {
-        "rgb": [
-          127,
-          245,
-          203
-        ],
-        "name": "Area hIP2 (IPS) right"
-      },
-      "1055": {
-        "rgb": [
-          184,
-          185,
-          58
-        ],
-        "name": "Area 5L (SPL) right"
-      },
-      "1056": {
-        "rgb": [
-          225,
-          245,
-          76
-        ],
-        "name": "Area 5M (SPL) right"
-      },
-      "1057": {
-        "rgb": [
-          252,
-          89,
-          28
-        ],
-        "name": "Area 7PC (SPL) right"
-      },
-      "1058": {
-        "rgb": [
-          113,
-          172,
-          229
-        ],
-        "name": "Area hIP3 (IPS) right"
-      },
-      "1059": {
-        "rgb": [
-          38,
-          204,
-          19
-        ],
-        "name": "Area 7A (SPL) right"
-      },
-      "1060": {
-        "rgb": [
-          205,
-          61,
-          236
-        ],
-        "name": "Area 7M (SPL) right"
-      },
-      "1061": {
-        "rgb": [
-          79,
-          242,
-          146
-        ],
-        "name": "Area 5Ci (SPL) right"
-      },
-      "1062": {
-        "rgb": [
-          188,
-          250,
-          216
-        ],
-        "name": "Area Id7 (Insula) right"
-      },
-      "1063": {
-        "rgb": [
-          133,
-          34,
-          201
-        ],
-        "name": "Area s24 (sACC) right"
-      },
-      "1064": {
-        "rgb": [
-          170,
-          68,
-          220
-        ],
-        "name": "Area 25 (sACC) right"
-      },
-      "1065": {
-        "rgb": [
-          22,
-          204,
-          194
-        ],
-        "name": "SF (Amygdala) right"
-      },
-      "1066": {
-        "rgb": [
-          141,
-          138,
-          254
-        ],
-        "name": "LB (Amygdala) right"
-      },
-      "1067": {
-        "rgb": [
-          0,
-          0,
-          255
-        ],
-        "name": "Subiculum (Hippocampus) right"
-      },
-      "1068": {
-        "rgb": [
-          226,
-          211,
-          61
-        ],
-        "name": "Area PF (IPL) right"
-      },
-      "1069": {
-        "rgb": [
-          52,
-          20,
-          106
-        ],
-        "name": "Area 7P (SPL) right"
-      },
-      "1070": {
-        "rgb": [
-          239,
-          137,
-          211
-        ],
-        "name": "Area Fp2 (FPole) right"
-      },
-      "1071": {
-        "rgb": [
-          226,
-          14,
-          200
-        ],
-        "name": "Area Fp1 (FPole) right"
-      },
-      "1072": {
-        "rgb": [
-          77,
-          3,
-          15
-        ],
-        "name": "Fastigial Nucleus (Cerebellum) right"
-      },
-      "1073": {
-        "rgb": [
-          60,
-          28,
-          100
-        ],
-        "name": "VTM (Amygdala) right"
-      },
-      "1074": {
-        "rgb": [
-          153,
-          195,
-          229
-        ],
-        "name": "Area p24ab (pACC) right"
-      },
-      "1075": {
-        "rgb": [
-          241,
-          164,
-          195
-        ],
-        "name": "Area p24c (pACC) right"
-      },
-      "1076": {
-        "rgb": [
-          120,
-          179,
-          230
-        ],
-        "name": "MF (Amygdala) right"
-      },
-      "1077": {
-        "rgb": [
-          204,
-          82,
-          17
-        ],
-        "name": "IF (Amygdala) right"
-      },
-      "1078": {
-        "rgb": [
-          170,
-          220,
-          175
-        ],
-        "name": "Area FG4 (FusG) right"
-      },
-      "1079": {
-        "rgb": [
-          120,
-          147,
-          37
-        ],
-        "name": "Area FG3 (FusG) right"
-      },
-      "1080": {
-        "rgb": [
-          133,
-          179,
-          114
-        ],
-        "name": "Dorsal Dentate Nucleus (Cerebellum) right"
-      },
-      "1081": {
-        "rgb": [
-          96,
-          239,
-          250
-        ],
-        "name": "Ventral Dentate Nucleus (Cerebellum) right"
-      },
-      "1082": {
-        "rgb": [
-          23,
-          78,
-          92
-        ],
-        "name": "Area TeI (STG) right"
-      },
-      "1083": {
-        "rgb": [
-          86,
-          101,
-          22
-        ],
-        "name": "Area TI (STG) right"
-      },
-      "1084": {
-        "rgb": [
-          112,
-          48,
-          160
-        ],
-        "name": "Area IFS1 (IFS) right"
-      },
-      "1085": {
-        "rgb": [
-          255,
-          0,
-          0
-        ],
-        "name": "Area IFS2 (IFS) right"
-      },
-      "1086": {
-        "rgb": [
-          2,
-          128,
-          50
-        ],
-        "name": "Area IFS3 (IFS) right"
-      },
-      "1087": {
-        "rgb": [
-          31,
-          73,
-          125
-        ],
-        "name": "Area IFS4 (IFS) right"
-      },
-      "1088": {
-        "rgb": [
-          229,
-          0,
-          160
-        ],
-        "name": "Area IFJ1 (IFS,PreCS) right"
-      },
-      "1089": {
-        "rgb": [
-          223,
-          106,
-          22
-        ],
-        "name": "Area IFJ2 (IFS,PreCS) right"
-      },
-      "1090": {
-        "rgb": [
-          186,
-          53,
-          149
-        ],
-        "name": "Interposed Nucleus (Cerebellum) right"
-      },
-      "1091": {
-        "rgb": [
-          23,
-          13,
-          35
-        ],
-        "name": "Area 2 (PostCS) right"
-      },
-      "1092": {
-        "rgb": [
-          171,
-          71,
-          170
-        ],
-        "name": "Ch 4 (Basal Forebrain) right"
-      },
-      "1093": {
-        "rgb": [
-          205,
-          228,
-          4
-        ],
-        "name": "Area STS1 (STS) right"
-      },
-      "1094": {
-        "rgb": [
-          62,
-          117,
-          123
-        ],
-        "name": "Area STS2 (STS) right"
-      },
-      "1095": {
-        "rgb": [
-          29,
-          76,
-          168
-        ],
-        "name": "Area Op8 (Frontal Operculum) right"
-      },
-      "1096": {
-        "rgb": [
-          175,
-          123,
-          34
-        ],
-        "name": "Area Op9 (Frontal Operculum) right"
-      },
-      "1097": {
-        "rgb": [
-          161,
-          148,
-          71
-        ],
-        "name": "Ch 123 (Basal Forebrain) right"
-      },
-      "1098": {
-        "rgb": [
-          45,
-          33,
-          27
-        ],
-        "name": "Area 6d1 (PreCG) right"
-      },
-      "1099": {
-        "rgb": [
-          170,
-          151,
-          180
-        ],
-        "name": "Area 6d2 (PreCG) right"
-      },
-      "1100": {
-        "rgb": [
-          55,
-          239,
-          21
-        ],
-        "name": "Area 6d3 (SFS) right"
-      },
-      "1101": {
-        "rgb": [
-          131,
-          143,
-          115
-        ],
-        "name": "CM (Amygdala) right"
-      },
-      "1102": {
-        "rgb": [
-          239,
-          66,
-          26
-        ],
-        "name": "Area hOc6 (POS) right"
-      },
-      "1103": {
-        "rgb": [
-          237,
-          233,
-          37
-        ],
-        "name": "Area hIP6 (IPS) right"
-      },
-      "1104": {
-        "rgb": [
-          223,
-          109,
-          3
-        ],
-        "name": "Area hIP8 (IPS) right"
-      },
-      "1105": {
-        "rgb": [
-          254,
-          52,
-          184
-        ],
-        "name": "Area hIP4 (IPS) right"
-      },
-      "1106": {
-        "rgb": [
-          217,
-          87,
-          210
-        ],
-        "name": "Area hIP5 (IPS) right"
-      },
-      "1107": {
-        "rgb": [
-          71,
-          196,
-          218
-        ],
-        "name": "Area hIP7 (IPS) right"
-      },
-      "1108": {
-        "rgb": [
-          153,
-          232,
-          235
-        ],
-        "name": "Area hPO1 (POS) right"
-      },
-      "1109": {
-        "rgb": [
-          75,
-          95,
-          87
-        ],
-        "name": "Area 6mp (SMA, mesial SFG) right"
-      },
-      "1110": {
-        "rgb": [
-          204,
-          108,
-          222
-        ],
-        "name": "Area 6ma (preSMA, mesial SFG) right"
-      },
-      "1111": {
-        "rgb": [
-          109,
-          251,
-          212
-        ],
-        "name": "HC-Transsubiculum (Hippocampus) right"
-      },
-      "1112": {
-        "rgb": [
-          51,
-          91,
-          49
-        ],
-        "name": "Tuberculum (Basal Forebrain) right"
-      },
-      "1113": {
-        "rgb": [
-          29,
-          124,
-          250
-        ],
-        "name": "Terminal islands (Basal Forebrain) right"
-      },
-      "1114": {
-        "rgb": [
-          163,
-          204,
-          53
-        ],
-        "name": "Area Fo4 (OFC) right"
-      },
-      "1115": {
-        "rgb": [
-          219,
-          11,
-          91
-        ],
-        "name": "Area Fo5 (OFC) right"
-      },
-      "1116": {
-        "rgb": [
-          199,
-          156,
-          187
-        ],
-        "name": "Area Fo6 (OFC) right"
-      },
-      "1117": {
-        "rgb": [
-          64,
-          211,
-          186
-        ],
-        "name": "Area Fo7 (OFC) right"
-      },
-      "1118": {
-        "rgb": [
-          175,
-          131,
-          102
-        ],
-        "name": "Area 8d1 (SFG) right"
-      },
-      "1119": {
-        "rgb": [
-          192,
-          186,
-          225
-        ],
-        "name": "Area 8d2 (SFG) right"
-      },
-      "1120": {
-        "rgb": [
-          29,
-          109,
-          19
-        ],
-        "name": "Area 8v2 (MFG) right"
-      },
-      "1121": {
-        "rgb": [
-          169,
-          187,
-          180
-        ],
-        "name": "Area 8v1 (MFG) right"
-      },
-      "1122": {
-        "rgb": [
-          105,
-          253,
-          197
-        ],
-        "name": "Area Ig3 (Insula) right"
-      },
-      "1123": {
-        "rgb": [
-          38,
-          174,
-          113
-        ],
-        "name": "Area Id4 (Insula) right"
-      },
-      "1124": {
-        "rgb": [
-          112,
-          6,
-          50
-        ],
-        "name": "Area Id5 (Insula) right"
-      },
-      "1125": {
-        "rgb": [
-          71,
-          217,
-          62
-        ],
-        "name": "Area Ia1 (Insula) right"
-      },
-      "1126": {
-        "rgb": [
-          138,
-          127,
-          119
-        ],
-        "name": "Area Id6 (Insula) right"
-      },
-      "1127": {
-        "rgb": [
-          0,
-          165,
-          226
-        ],
-        "name": "Area SFS1 (SFS) right"
-      },
-      "1128": {
-        "rgb": [
-          242,
-          148,
-          0
-        ],
-        "name": "Area SFS2 (SFS) right"
-      },
-      "1129": {
-        "rgb": [
-          98,
-          33,
-          129
-        ],
-        "name": "Area MFG1 (MFG) right"
-      },
-      "1130": {
-        "rgb": [
-          255,
-          236,
-          0
-        ],
-        "name": "Area MFG2 (MFG) right"
-      },
-      "1131": {
-        "rgb": [
-          222,
-          78,
-          253
-        ],
-        "name": "Area Op5 (Frontal Operculum) right"
-      },
-      "1132": {
-        "rgb": [
-          138,
-          63,
-          100
-        ],
-        "name": "Area Op6 (Frontal Operculum) right"
-      },
-      "1133": {
-        "rgb": [
-          134,
-          116,
-          192
-        ],
-        "name": "Area Op7 (Frontal Operculum) right"
-      },
-      "1134": {
-        "rgb": [
-          0,
-          128,
-          0
-        ],
-        "name": "Area Ph1 (PhG) right"
-      },
-      "1135": {
-        "rgb": [
-          128,
-          128,
-          0
-        ],
-        "name": "Area Ph2 (PhG) right"
-      },
-      "1136": {
-        "rgb": [
-          128,
-          0,
-          0
-        ],
-        "name": "Area Ph3 (PhG) right"
-      },
-      "1137": {
-        "rgb": [
-          0,
-          0,
-          128
-        ],
-        "name": "Area CoS1 (CoS) right"
-      },
-      "1138": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "AcbM (Medial Accumbens, Ventral Striatum) right"
-      },
-      "1139": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "FuCd (Fundus of Caudate Nucleus, Ventral Striatum) right"
-      },
-      "1140": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "FuP (Fundus of Putamen, Ventral Striatum) right"
-      },
-      "1141": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "AcbL (Lateral Accumbens, Ventral Striatum) right"
-      },
-      "1142": {
-        "rgb": [
-          90,
-          90,
-          96
-        ],
-        "name": "VP (Ventral Pallidum) right"
-      },
-      "1143": {
-        "rgb": [
-          250,
-          211,
-          242
-        ],
-        "name": "CGL (Metathalamus) right"
-      },
-      "1144": {
-        "rgb": [
-          108,
-          241,
-          204
-        ],
-        "name": "CGM (Metathalamus) right"
-      },
-      "1145": {
-        "rgb": [
-          64,
-          208,
-          56
-        ],
-        "name": "STN (Subthalamus) right"
-      },
-      "1146": {
-        "rgb": [
-          23,
-          54,
-          170
-        ],
-        "name": "Area Id9 (Insula) right"
-      },
-      "1147": {
-        "rgb": [
-          49,
-          247,
-          90
-        ],
-        "name": "Area Ia3 (Insula) right"
-      },
-      "1148": {
-        "rgb": [
-          116,
-          24,
-          2
-        ],
-        "name": "Area Ia2 (Insula) right"
-      },
-      "1149": {
-        "rgb": [
-          79,
-          187,
-          42
-        ],
-        "name": "Area Id8 (Insula) right"
-      },
-      "1150": {
-        "rgb": [
-          179,
-          101,
-          192
-        ],
-        "name": "Area Id10 (Insula) right"
-      },
-      "1151": {
-        "rgb": [
-          214,
-          120,
-          42
-        ],
-        "name": "BST (Bed Nucleus) right"
-      },
-      "1152": {
-        "rgb": [
-          186,
-          255,
-          25
-        ],
-        "name": "Frontal-I (GapMap) right"
-      },
-      "1153": {
-        "rgb": [
-          255,
-          135,
-          15
-        ],
-        "name": "Frontal-II (GapMap) right"
-      },
-      "1154": {
-        "rgb": [
-          76,
-          90,
-          161
-        ],
-        "name": "Temporal-to-Parietal (GapMap) right"
-      },
-      "1155": {
-        "rgb": [
-          104,
-          161,
-          93
-        ],
-        "name": "Frontal-to-Occipital (GapMap) right"
-      },
-      "1156": {
-        "rgb": [
-          64,
-          126,
-          100
-        ],
-        "name": "Frontal-to-Temporal-I (GapMap) right"
-      },
-      "1157": {
-        "rgb": [
-          161,
-          24,
-          74
-        ],
-        "name": "Frontal-to-Temporal-II (GapMap) right"
+        "name": "nicht kartiert"
       }
     }
   }
