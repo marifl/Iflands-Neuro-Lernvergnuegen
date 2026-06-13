@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import type { HemiData } from './atlasAssets'
 import { buildLutTextureData, type AtlasLut } from './atlasLut'
+import { nearestCornerVertex } from './atlasPick'
 
 // EIN Mesh pro Hemisphaere: Positionen (pial) + Normalen + Int-Label-Attribut. Farbe aus Color-LUT
 // (DataTexture, NearestFilter) im Fragment-Shader; `flat` Label-Varying -> harte Arealgrenzen.
@@ -11,7 +12,7 @@ export function CanonicalSurface({
   hemi: HemiData
   layer: string
   lut: AtlasLut
-  onPick?: (faceIndex: number) => void
+  onPick?: (vertex: number) => void
 }) {
   // Geometrie-Basis (Position, Index, Normalen) wird NUR gebaut wenn hemi wechselt.
   // Layer-Wechsel beruehrt Positionen/Normalen NICHT — nur das aLabel-Attribut wird hot-geswapped.
@@ -71,7 +72,15 @@ export function CanonicalSurface({
     <mesh
       geometry={geometry}
       material={material}
-      onClick={(e) => { e.stopPropagation(); if (onPick && e.faceIndex != null) onPick(e.faceIndex) }}
+      onClick={(e) => {
+        e.stopPropagation()
+        if (!onPick || e.faceIndex == null || !e.face) return
+        // Klickpunkt in lokale Mesh-Koordinaten (Mesh hat zwar Identity-Transform, aber korrekt bleiben)
+        const p = (e.object as THREE.Mesh).worldToLocal(e.point.clone())
+        const pos = (e.object as THREE.Mesh).geometry.getAttribute('position') as THREE.BufferAttribute
+        const v = nearestCornerVertex(pos.array as Float32Array, e.face.a, e.face.b, e.face.c, [p.x, p.y, p.z])
+        onPick(v)
+      }}
     />
   )
 }

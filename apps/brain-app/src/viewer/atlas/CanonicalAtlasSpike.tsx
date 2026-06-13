@@ -4,7 +4,6 @@ import { OrbitControls } from '@react-three/drei'
 import { CanonicalSurface } from './CanonicalSurface'
 import { AtlasLayerPanel } from './AtlasLayerPanel'
 import { loadManifest, loadHemi, type AtlasManifest, type HemiData } from './atlasAssets'
-import { faceToLabel } from './atlasPick'
 import { labelName } from './atlasLut'
 
 export default function CanonicalAtlasSpike() {
@@ -33,14 +32,12 @@ export default function CanonicalAtlasSpike() {
 
   const lut = m.lut[active]
 
-  function handlePickL(faceIndex: number) {
-    const label = faceToLabel(hemis!.L.faces, hemis!.L.labels[active], faceIndex)
-    setPicked(labelName(lut, label) || '—')
+  function handlePickL(vertex: number) {
+    setPicked(labelName(lut, hemis!.L.labels[active][vertex]) || '—')
   }
 
-  function handlePickR(faceIndex: number) {
-    const label = faceToLabel(hemis!.R.faces, hemis!.R.labels[active], faceIndex)
-    setPicked(labelName(lut, label) || '—')
+  function handlePickR(vertex: number) {
+    setPicked(labelName(lut, hemis!.R.labels[active][vertex]) || '—')
   }
 
   return (
