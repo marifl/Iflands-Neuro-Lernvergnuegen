@@ -8,13 +8,14 @@ import { nearestCornerVertex } from './atlasPick'
 // Curvature-Graustufe als Basis, Arealfarbe (Color-LUT, DataTexture, NearestFilter) darueber gemischt;
 // `flat` Label-Varying -> harte Arealgrenzen, Curvature interpoliert (kein flat).
 export function CanonicalSurface({
-  hemi, layer, surface, lut, offsetX = 0, onPick,
+  hemi, layer, surface, lut, offsetX = 0, opacity = 1, onPick,
 }: {
   hemi: HemiData
   layer: string
   surface: 'pial' | 'inflated'
   lut: AtlasLut
   offsetX?: number
+  opacity?: number
   onPick?: (vertex: number) => void
 }) {
   // Geometrie-Basis (Position, Index, Normalen, Curvature) wird gebaut wenn hemi ODER surface wechselt.
@@ -52,7 +53,7 @@ export function CanonicalSurface({
     tex.minFilter = THREE.NearestFilter; tex.magFilter = THREE.NearestFilter
     tex.colorSpace = THREE.SRGBColorSpace; tex.needsUpdate = true
     return new THREE.ShaderMaterial({
-      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.6, 0.8).normalize() } },
+      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.6, 0.8).normalize() }, uOpacity: { value: 1 } },
       vertexShader: `
         attribute float aLabel;
         attribute float aCurv;
@@ -64,7 +65,7 @@ export function CanonicalSurface({
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }`,
       fragmentShader: `
-        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir;
+        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir; uniform float uOpacity;
         flat varying float vLabel; varying float vCurv; varying vec3 vN;
         void main() {
           // Sulcus dunkler, Gyrus heller (FreeSurfer-Look)
@@ -73,11 +74,19 @@ export function CanonicalSurface({
           // Medialwand/0 zeigt nur Curvature; sonst Arealfarbe ueber die Graustufe legen
           vec3 col = mix(base, area.rgb, 0.82);
           float diff = clamp(dot(normalize(vN), uLightDir) * 0.5 + 0.5, 0.0, 1.0);
-          gl_FragColor = vec4(col * (0.6 + 0.4 * diff), 1.0);
+          gl_FragColor = vec4(col * (0.6 + 0.4 * diff), uOpacity);
         }`,
       side: THREE.DoubleSide,
     })
   }, [lut])
+
+  // Ghost-Modus: bei opacity<1 transparent + depthWrite aus, sonst der Kortex verdeckt die Kerne.
+  useEffect(() => {
+    material.uniforms.uOpacity.value = opacity
+    material.transparent = opacity < 1
+    material.depthWrite = opacity >= 1
+    material.needsUpdate = true
+  }, [material, opacity])
 
   return (
     <mesh

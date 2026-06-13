@@ -6,6 +6,8 @@ interface Props {
   onSelect: (id: string) => void
   surface: 'pial' | 'inflated'
   onSurface: (s: 'pial' | 'inflated') => void
+  showSub?: boolean
+  onToggleSub: () => void
   picked: string
 }
 
@@ -15,7 +17,7 @@ const AXIS_LABEL: Record<'macro' | 'cyto', string> = {
 }
 
 /** Layer-Umschalt-Panel (oben links, ueber dem 3D-Canvas). Gruppiert nach Achse. */
-export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, picked }: Props) {
+export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, showSub, onToggleSub, picked }: Props) {
   const macroLayers = layers.filter((l) => l.axis === 'macro')
   const cytoLayers = layers.filter((l) => l.axis === 'cyto')
   const groups: { axis: 'macro' | 'cyto'; items: AtlasLayer[] }[] = (
@@ -77,6 +79,22 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
           Pial
         </button>
       </div>
+      {showSub !== undefined ? (
+        <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
+          <div className="eyebrow" style={{ marginBottom: 6 }}>Subkortex</div>
+          <button
+            type="button"
+            className={`ed-btn${showSub ? ' active' : ''}`}
+            onClick={onToggleSub}
+            style={{ width: '100%', textAlign: 'left', padding: '5px 8px', marginBottom: 2 }}
+          >
+            Basalganglien/Thalamus
+          </button>
+          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 8.5, color: 'var(--muted, #888)', marginTop: 2 }}>
+            (nur Pial-Ansicht)
+          </div>
+        </div>
+      ) : null}
       <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
         <div className="eyebrow" style={{ marginBottom: 4 }}>Areal</div>
         <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--ink)', letterSpacing: '0.04em' }}>
