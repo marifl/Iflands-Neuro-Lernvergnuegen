@@ -11,6 +11,7 @@ export default function CanonicalAtlasSpike() {
   const [hemis, setHemis] = useState<{ L: HemiData; R: HemiData } | null>(null)
   const [err, setErr] = useState<Error | null>(null)
   const [active, setActive] = useState<string>('')
+  const [surface, setSurface] = useState<'pial' | 'inflated'>('inflated')
   const [picked, setPicked] = useState<string>('—')
 
   useEffect(() => {
@@ -46,12 +47,14 @@ export default function CanonicalAtlasSpike() {
         layers={m.layers}
         active={active}
         onSelect={(id) => { setActive(id); setPicked('—') }}
+        surface={surface}
+        onSurface={setSurface}
         picked={picked}
       />
       <Canvas camera={{ position: [0, 0, 220], fov: 45 }}>
         <ambientLight intensity={0.6} />
-        <CanonicalSurface hemi={hemis.L} layer={active} lut={lut} onPick={handlePickL} />
-        <CanonicalSurface hemi={hemis.R} layer={active} lut={lut} onPick={handlePickR} />
+        <CanonicalSurface hemi={hemis.L} layer={active} surface={surface} lut={lut} onPick={handlePickL} />
+        <CanonicalSurface hemi={hemis.R} layer={active} surface={surface} lut={lut} onPick={handlePickR} />
         <OrbitControls />
       </Canvas>
     </div>

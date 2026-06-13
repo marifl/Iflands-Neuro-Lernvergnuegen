@@ -4,22 +4,27 @@ import type { HemiData } from './atlasAssets'
 import { buildLutTextureData, type AtlasLut } from './atlasLut'
 import { nearestCornerVertex } from './atlasPick'
 
-// EIN Mesh pro Hemisphaere: Positionen (pial) + Normalen + Int-Label-Attribut. Farbe aus Color-LUT
-// (DataTexture, NearestFilter) im Fragment-Shader; `flat` Label-Varying -> harte Arealgrenzen.
+// EIN Mesh pro Hemisphaere: Positionen (pial/inflated) + Normalen + Curvature + Int-Label-Attribut.
+// Curvature-Graustufe als Basis, Arealfarbe (Color-LUT, DataTexture, NearestFilter) darueber gemischt;
+// `flat` Label-Varying -> harte Arealgrenzen, Curvature interpoliert (kein flat).
 export function CanonicalSurface({
-  hemi, layer, lut, onPick,
+  hemi, layer, surface, lut, onPick,
 }: {
   hemi: HemiData
   layer: string
+  surface: 'pial' | 'inflated'
   lut: AtlasLut
   onPick?: (vertex: number) => void
 }) {
-  // Geometrie-Basis (Position, Index, Normalen) wird NUR gebaut wenn hemi wechselt.
+  // Geometrie-Basis (Position, Index, Normalen, Curvature) wird gebaut wenn hemi ODER surface wechselt.
   // Layer-Wechsel beruehrt Positionen/Normalen NICHT — nur das aLabel-Attribut wird hot-geswapped.
   const geometry = useMemo(() => {
     const g = new THREE.BufferGeometry()
-    g.setAttribute('position', new THREE.BufferAttribute(hemi.pial, 3))
+    const pos = surface === 'inflated' ? hemi.infl : hemi.pial
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3))
     g.setIndex(new THREE.BufferAttribute(hemi.faces, 1))
+    // Curvature (Sulcus-Tiefe) haengt nur an hemi -> direkt setzen, NICHT flat (interpoliert).
+    g.setAttribute('aCurv', new THREE.BufferAttribute(hemi.curv, 1))
     // Initiales Label-Attribut (erstes verfuegbares Layer) — wird sofort per useEffect ueberschrieben.
     const firstLayerKey = Object.keys(hemi.labels)[0]
     if (!firstLayerKey) throw new Error('CanonicalSurface: hemi.labels ist leer')
@@ -28,7 +33,7 @@ export function CanonicalSurface({
     g.setAttribute('aLabel', new THREE.BufferAttribute(labF, 1))
     g.computeVertexNormals()
     return g
-  }, [hemi])
+  }, [hemi, surface])
 
   // Label-Attribut-Update: nur wenn geometry oder layer wechselt — kein Positions-/Normalen-Rebuild.
   useEffect(() => {
@@ -49,20 +54,25 @@ export function CanonicalSurface({
       uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.6, 0.8).normalize() } },
       vertexShader: `
         attribute float aLabel;
+        attribute float aCurv;
         flat varying float vLabel;
+        varying float vCurv;
         varying vec3 vN;
         void main() {
-          vLabel = aLabel; vN = normalize(normalMatrix * normal);
+          vLabel = aLabel; vCurv = aCurv; vN = normalize(normalMatrix * normal);
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }`,
       fragmentShader: `
         uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir;
-        flat varying float vLabel; varying vec3 vN;
+        flat varying float vLabel; varying float vCurv; varying vec3 vN;
         void main() {
-          float u = (vLabel + 0.5) / uLutSize;
-          vec4 col = texture2D(uLut, vec2(u, 0.5));
+          // Sulcus dunkler, Gyrus heller (FreeSurfer-Look)
+          vec3 base = mix(vec3(0.30), vec3(0.62), vCurv);
+          vec4 area = texture2D(uLut, vec2((vLabel + 0.5) / uLutSize, 0.5));
+          // Medialwand/0 zeigt nur Curvature; sonst Arealfarbe ueber die Graustufe legen
+          vec3 col = mix(base, area.rgb, 0.82);
           float diff = clamp(dot(normalize(vN), uLightDir) * 0.5 + 0.5, 0.0, 1.0);
-          gl_FragColor = vec4(col.rgb * (0.55 + 0.45 * diff), 1.0);
+          gl_FragColor = vec4(col * (0.6 + 0.4 * diff), 1.0);
         }`,
       side: THREE.DoubleSide,
     })

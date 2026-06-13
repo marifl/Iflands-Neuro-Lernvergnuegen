@@ -3,6 +3,7 @@ import type { AtlasLut } from './atlasLut'
 export interface HemiManifest {
   verts: number; faces: number
   pial: string; infl: string; faces_file: string
+  curv?: string
   labels: Record<string, string>
 }
 export interface AtlasLayer {
@@ -19,6 +20,7 @@ export interface AtlasManifest {
 }
 export interface HemiData {
   pial: Float32Array; infl: Float32Array; faces: Uint32Array
+  curv: Float32Array
   labels: Record<string, Int16Array>
 }
 
@@ -37,10 +39,13 @@ export async function loadManifest(): Promise<AtlasManifest> {
 }
 
 export async function loadHemi(m: HemiManifest, layers: string[]): Promise<HemiData> {
-  const [pialB, inflB, facesB] = await Promise.all([buf(m.pial), buf(m.infl), buf(m.faces_file)])
+  if (!m.curv) throw new Error('atlasAssets: curv fehlt im Hemi-Manifest (jetzt Pflicht)')
+  const [pialB, inflB, facesB, curvB] = await Promise.all([buf(m.pial), buf(m.infl), buf(m.faces_file), buf(m.curv)])
   const pial = new Float32Array(pialB), infl = new Float32Array(inflB), faces = new Uint32Array(facesB)
+  const curv = new Float32Array(curvB)
   if (pial.length !== m.verts * 3) throw new Error(`atlasAssets: pial-Laenge ${pial.length} != ${m.verts * 3}`)
   if (faces.length !== m.faces * 3) throw new Error(`atlasAssets: faces-Laenge ${faces.length} != ${m.faces * 3}`)
+  if (curv.length !== m.verts) throw new Error(`atlasAssets: curv-Laenge ${curv.length} != ${m.verts}`)
   const labels: Record<string, Int16Array> = {}
   for (const layer of layers) {
     const file = m.labels[layer]
@@ -49,5 +54,5 @@ export async function loadHemi(m: HemiManifest, layers: string[]): Promise<HemiD
     if (lab.length !== m.verts) throw new Error(`atlasAssets: Label "${layer}" Laenge ${lab.length} != ${m.verts}`)
     labels[layer] = lab
   }
-  return { pial, infl, faces, labels }
+  return { pial, infl, faces, curv, labels }
 }

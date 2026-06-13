@@ -4,6 +4,8 @@ interface Props {
   layers: AtlasLayer[]
   active: string
   onSelect: (id: string) => void
+  surface: 'pial' | 'inflated'
+  onSurface: (s: 'pial' | 'inflated') => void
   picked: string
 }
 
@@ -13,7 +15,7 @@ const AXIS_LABEL: Record<'macro' | 'cyto', string> = {
 }
 
 /** Layer-Umschalt-Panel (oben links, ueber dem 3D-Canvas). Gruppiert nach Achse. */
-export function AtlasLayerPanel({ layers, active, onSelect, picked }: Props) {
+export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, picked }: Props) {
   const macroLayers = layers.filter((l) => l.axis === 'macro')
   const cytoLayers = layers.filter((l) => l.axis === 'cyto')
   const groups: { axis: 'macro' | 'cyto'; items: AtlasLayer[] }[] = (
@@ -56,6 +58,25 @@ export function AtlasLayerPanel({ layers, active, onSelect, picked }: Props) {
           ))}
         </div>
       ))}
+      <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
+        <div className="eyebrow" style={{ marginBottom: 6 }}>Oberflaeche</div>
+        <button
+          type="button"
+          className={`ed-btn${surface === 'inflated' ? ' active' : ''}`}
+          onClick={() => onSurface('inflated')}
+          style={{ width: '100%', textAlign: 'left', padding: '5px 8px', marginBottom: 2 }}
+        >
+          Inflated
+        </button>
+        <button
+          type="button"
+          className={`ed-btn${surface === 'pial' ? ' active' : ''}`}
+          onClick={() => onSurface('pial')}
+          style={{ width: '100%', textAlign: 'left', padding: '5px 8px', marginBottom: 2 }}
+        >
+          Pial
+        </button>
+      </div>
       <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
         <div className="eyebrow" style={{ marginBottom: 4 }}>Areal</div>
         <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--ink)', letterSpacing: '0.04em' }}>
