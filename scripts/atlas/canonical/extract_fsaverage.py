@@ -32,10 +32,12 @@ SURF = {
     "L": {
         "pial": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-L_pial.surf.gii",
         "infl": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-L_inflated.surf.gii",
+        "sulc": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-L_desc-sulc_midthickness.shape.gii",
     },
     "R": {
         "pial": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-R_pial.surf.gii",
         "infl": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-R_inflated.surf.gii",
+        "sulc": NEUROMAPS / "tpl-fsaverage_den-164k_hemi-R_desc-sulc_midthickness.shape.gii",
     },
 }
 
@@ -68,6 +70,23 @@ def require(path):
     if not path.exists():
         raise SystemExit(f"ABBRUCH: Quelle fehlt: {path}")
     return path
+
+
+def load_curv_normalized(path, hemi):
+    """Sulc-Shape laden, robust auf [0,1] normalisieren (2./98. Perzentil-Clip).
+    Fail-loud: Laenge != 163842 oder NaN."""
+    d = np.asarray(nib.load(require(path)).darrays[0].data, dtype=np.float64)
+    if d.shape[0] != N_VERTS:
+        raise SystemExit(f"ABBRUCH {hemi}/curv: Laenge {d.shape[0]} != {N_VERTS}")
+    if np.isnan(d).any():
+        raise SystemExit(f"ABBRUCH {hemi}/curv: NaN in Sulc-Quelle")
+    lo, hi = np.percentile(d, [2.0, 98.0])
+    if hi <= lo:
+        raise SystemExit(f"ABBRUCH {hemi}/curv: degenerierte Perzentile lo={lo} hi={hi}")
+    norm = np.clip((d - lo) / (hi - lo), 0.0, 1.0)
+    if np.isnan(norm).any():
+        raise SystemExit(f"ABBRUCH {hemi}/curv: NaN nach Normalisierung")
+    return norm.astype(np.float32)
 
 
 def load_labelgii(path):
@@ -157,6 +176,9 @@ for hemi in ("L", "R"):
         if lab.max() > 32767:
             raise SystemExit(f"ABBRUCH {hemi}/{layer_id}: LabelId {lab.max()} > i16-Max")
 
+    # Curvature/Sulc backen
+    curv = load_curv_normalized(SURF[hemi]["sulc"], hemi)
+
     # Schreiben
     write_f32(OUT / f"fsavg164_{hemi}_pial.f32", pcoords)
     write_f32(OUT / f"fsavg164_{hemi}_infl.f32", icoords)
@@ -164,6 +186,7 @@ for hemi in ("L", "R"):
     write_i16(OUT / f"fsavg164_{hemi}_dkt.i16", dkt)
     write_i16(OUT / f"fsavg164_{hemi}_destrieux.i16", destrieux)
     write_i16(OUT / f"fsavg164_{hemi}_julich.i16", julich)
+    write_f32(OUT / f"fsavg164_{hemi}_curv.f32", curv)
 
     manifest["hemis"][hemi] = {
         "verts": int(N_VERTS),
@@ -171,6 +194,7 @@ for hemi in ("L", "R"):
         "pial": f"fsavg164_{hemi}_pial.f32",
         "infl": f"fsavg164_{hemi}_infl.f32",
         "faces_file": f"fsavg164_{hemi}_faces.u32",
+        "curv": f"fsavg164_{hemi}_curv.f32",
         "labels": {
             "dkt": f"fsavg164_{hemi}_dkt.i16",
             "destrieux": f"fsavg164_{hemi}_destrieux.i16",
@@ -178,43 +202,70 @@ for hemi in ("L", "R"):
         },
     }
     print(f"  [{hemi}] OK: {N_VERTS} Verts, {pfaces.shape[0]} Faces, "
-          f"DKT/Destrieux/Julich Labels max={dkt.max()}/{destrieux.max()}/{julich.max()}")
+          f"DKT/Destrieux/Julich Labels max={dkt.max()}/{destrieux.max()}/{julich.max()}, "
+          f"curv [{curv.min():.3f},{curv.max():.3f}]")
 
-# --- LUTs ------------------------------------------------------------------
+# --- LUTs (offizielle Paletten) --------------------------------------------
 # Konvention: Label 0 = Medialwand/Unknown -> neutral grau "—" medial:true.
-# Sonst seeded-random RGB (reproduzierbar via rng(42)).
-rng = np.random.default_rng(42)
+# DKT/Destrieux: offizielle Farben aus der GIFTI-Label-Tabelle (lab.red/green/blue).
+# Julich: offizielle siibra-Farben via region.rgb. Wenige subkortikale Leak-Regionen
+# (Ventral Striatum/Pallidum) haben in siibra KEINE Farbe -> deterministisches Neutralgrau
+# (KEIN rng), explizit geloggt. Diese Regionen sind keine echten Kortexareale.
+MEDIAL_GREY = [40, 40, 46]
+JULICH_NOCOLOR_GREY = [90, 90, 96]
 
 
-def build_lut(table_or_names):
-    """table_or_names: dict {labelId: name}. Liefert {labelId: {rgb,name[,medial]}}."""
+def build_lut_gifti(table):
+    """table: dict {labelId: (name, rgb255)} aus GIFTI-Label-Tabelle."""
     lut = {}
-    for lid in sorted(table_or_names):
-        name = table_or_names[lid]
+    for lid in sorted(table):
+        name, rgb = table[lid]
         if lid == 0:
-            lut[lid] = {"rgb": [40, 40, 46], "name": "—", "medial": True}
+            lut[lid] = {"rgb": MEDIAL_GREY, "name": "—", "medial": True}
         else:
-            lut[lid] = {"rgb": rng.integers(60, 230, size=3).tolist(), "name": name}
+            lut[lid] = {"rgb": [int(c) for c in rgb], "name": name}
     return lut
 
 
-# DKT/Destrieux: Namen aus GIFTI-Labeltable (key 0 = unknown -> Medial, in build_lut).
-dkt_names = {k: table[0] for k, table in dkt_table.items()}
-destrieux_names = {k: table[0] for k, table in destrieux_table.items()}
+def build_lut_julich(label_to_name, parcellation):
+    """Offizielle siibra-Farben (region.rgb). Uncolored -> Neutralgrau (geloggt)."""
+    lut = {0: {"rgb": MEDIAL_GREY, "name": "—", "medial": True}}
+    no_color = []
+    for lid in sorted(label_to_name):
+        name = label_to_name[lid]
+        reg = parcellation.get_region(name)
+        rgb = getattr(reg, "rgb", None)
+        if rgb is None:
+            lut[lid] = {"rgb": JULICH_NOCOLOR_GREY, "name": name}
+            no_color.append((lid, name))
+        else:
+            lut[lid] = {"rgb": [int(c) for c in rgb], "name": name}
+    if no_color:
+        print(f"  Julich: {len(no_color)} Region(en) ohne siibra-Farbe -> Neutralgrau "
+              f"{JULICH_NOCOLOR_GREY} (subkortikale Leaks, keine Kortexareale):")
+        for lid, name in no_color:
+            print(f"    {lid}: {name}")
+    return lut
 
-# Julich: 0 (Medial/Unbelegt) muss in der LUT existieren, auch wenn nicht in regions.
-julich_names = {0: "—"}
-julich_names.update(JULICH_LABEL_TO_NAME)
+
+print("\n--- LUTs ---")
+print("DKT LUT: GIFTI-Farben (templateflow Desikan2006-Label-Tabelle)")
+print("Destrieux LUT: GIFTI-Farben (templateflow Destrieux2009-Label-Tabelle)")
+print("Julich LUT: siibra region.rgb (offizielle Julich-Brain-v3-Farben)")
+
+dkt_lut = build_lut_gifti(dkt_table)
+destrieux_lut = build_lut_gifti(destrieux_table)
+julich_lut = build_lut_julich(JULICH_LABEL_TO_NAME, _jb)
 
 manifest["lut"] = {
-    "dkt": {str(k): v for k, v in build_lut(dkt_names).items()},
-    "destrieux": {str(k): v for k, v in build_lut(destrieux_names).items()},
-    "julich": {str(k): v for k, v in build_lut(julich_names).items()},
+    "dkt": {str(k): v for k, v in dkt_lut.items()},
+    "destrieux": {str(k): v for k, v in destrieux_lut.items()},
+    "julich": {str(k): v for k, v in julich_lut.items()},
 }
 
 (OUT / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 
 print("\n=== FERTIG ===")
 print(f"Output: {OUT}")
-print(f"Layer: dkt({len(dkt_names)}) destrieux({len(destrieux_names)}) julich({len(julich_names)})")
-print(f"Hemis: L/R @ {N_VERTS} Verts")
+print(f"Layer: dkt({len(dkt_lut)}) destrieux({len(destrieux_lut)}) julich({len(julich_lut)})")
+print(f"Hemis: L/R @ {N_VERTS} Verts + curv-Bake")
