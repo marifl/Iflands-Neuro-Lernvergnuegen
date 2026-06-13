@@ -1,0 +1,641 @@
+{
+  "space": "fsaverage5",
+  "layers": [
+    "destrieux"
+  ],
+  "hemis": {
+    "L": {
+      "verts": 10242,
+      "faces": 20480,
+      "pial": "fsavg5_L_pial.f32",
+      "infl": "fsavg5_L_infl.f32",
+      "faces_file": "fsavg5_L_faces.u32",
+      "labels": {
+        "destrieux": "fsavg5_L_destrieux.i16"
+      }
+    },
+    "R": {
+      "verts": 10242,
+      "faces": 20480,
+      "pial": "fsavg5_R_pial.f32",
+      "infl": "fsavg5_R_infl.f32",
+      "faces_file": "fsavg5_R_faces.u32",
+      "labels": {
+        "destrieux": "fsavg5_R_destrieux.i16"
+      }
+    }
+  },
+  "lut": {
+    "destrieux": {
+      "0": {
+        "rgb": [
+          40,
+          40,
+          46
+        ],
+        "name": "\u2014",
+        "medial": true
+      },
+      "1": {
+        "rgb": [
+          75,
+          191,
+          171
+        ],
+        "name": "G_and_S_frontomargin"
+      },
+      "2": {
+        "rgb": [
+          134,
+          133,
+          205
+        ],
+        "name": "G_and_S_occipital_inf"
+      },
+      "3": {
+        "rgb": [
+          74,
+          178,
+          94
+        ],
+        "name": "G_and_S_paracentral"
+      },
+      "4": {
+        "rgb": [
+          76,
+          149,
+          225
+        ],
+        "name": "G_and_S_subcentral"
+      },
+      "5": {
+        "rgb": [
+          185,
+          189,
+          181
+        ],
+        "name": "G_and_S_transv_frontopol"
+      },
+      "6": {
+        "rgb": [
+          193,
+          147,
+          81
+        ],
+        "name": "G_and_S_cingul-Ant"
+      },
+      "7": {
+        "rgb": [
+          202,
+          136,
+          145
+        ],
+        "name": "G_and_S_cingul-Mid-Ant"
+      },
+      "8": {
+        "rgb": [
+          123,
+          91,
+          217
+        ],
+        "name": "G_and_S_cingul-Mid-Post"
+      },
+      "9": {
+        "rgb": [
+          192,
+          169,
+          128
+        ],
+        "name": "G_cingul-Post-dorsal"
+      },
+      "10": {
+        "rgb": [
+          199,
+          152,
+          135
+        ],
+        "name": "G_cingul-Post-ventral"
+      },
+      "11": {
+        "rgb": [
+          136,
+          98,
+          75
+        ],
+        "name": "G_cuneus"
+      },
+      "12": {
+        "rgb": [
+          154,
+          210,
+          70
+        ],
+        "name": "G_front_inf-Opercular"
+      },
+      "13": {
+        "rgb": [
+          205,
+          200,
+          107
+        ],
+        "name": "G_front_inf-Orbital"
+      },
+      "14": {
+        "rgb": [
+          167,
+          88,
+          188
+        ],
+        "name": "G_front_inf-Triangul"
+      },
+      "15": {
+        "rgb": [
+          179,
+          120,
+          71
+        ],
+        "name": "G_front_middle"
+      },
+      "16": {
+        "rgb": [
+          225,
+          135,
+          211
+        ],
+        "name": "G_front_sup"
+      },
+      "17": {
+        "rgb": [
+          175,
+          192,
+          189
+        ],
+        "name": "G_Ins_lg_and_S_cent_ins"
+      },
+      "18": {
+        "rgb": [
+          93,
+          121,
+          139
+        ],
+        "name": "G_insular_short"
+      },
+      "19": {
+        "rgb": [
+          144,
+          67,
+          152
+        ],
+        "name": "G_occipital_middle"
+      },
+      "20": {
+        "rgb": [
+          86,
+          186,
+          176
+        ],
+        "name": "G_occipital_sup"
+      },
+      "21": {
+        "rgb": [
+          216,
+          186,
+          122
+        ],
+        "name": "G_oc-temp_lat-fusifor"
+      },
+      "22": {
+        "rgb": [
+          224,
+          129,
+          115
+        ],
+        "name": "G_oc-temp_med-Lingual"
+      },
+      "23": {
+        "rgb": [
+          213,
+          122,
+          72
+        ],
+        "name": "G_oc-temp_med-Parahip"
+      },
+      "24": {
+        "rgb": [
+          139,
+          195,
+          92
+        ],
+        "name": "G_orbital"
+      },
+      "25": {
+        "rgb": [
+          138,
+          82,
+          176
+        ],
+        "name": "G_pariet_inf-Angular"
+      },
+      "26": {
+        "rgb": [
+          140,
+          116,
+          98
+        ],
+        "name": "G_pariet_inf-Supramar"
+      },
+      "27": {
+        "rgb": [
+          155,
+          173,
+          219
+        ],
+        "name": "G_parietal_sup"
+      },
+      "28": {
+        "rgb": [
+          134,
+          87,
+          201
+        ],
+        "name": "G_postcentral"
+      },
+      "29": {
+        "rgb": [
+          167,
+          179,
+          76
+        ],
+        "name": "G_precentral"
+      },
+      "30": {
+        "rgb": [
+          113,
+          190,
+          201
+        ],
+        "name": "G_precuneus"
+      },
+      "31": {
+        "rgb": [
+          133,
+          196,
+          203
+        ],
+        "name": "G_rectus"
+      },
+      "32": {
+        "rgb": [
+          125,
+          212,
+          109
+        ],
+        "name": "G_subcallosal"
+      },
+      "33": {
+        "rgb": [
+          100,
+          176,
+          168
+        ],
+        "name": "G_temp_sup-G_T_transv"
+      },
+      "34": {
+        "rgb": [
+          83,
+          201,
+          93
+        ],
+        "name": "G_temp_sup-Lateral"
+      },
+      "35": {
+        "rgb": [
+          196,
+          61,
+          195
+        ],
+        "name": "G_temp_sup-Plan_polar"
+      },
+      "36": {
+        "rgb": [
+          193,
+          192,
+          173
+        ],
+        "name": "G_temp_sup-Plan_tempo"
+      },
+      "37": {
+        "rgb": [
+          140,
+          179,
+          107
+        ],
+        "name": "G_temporal_inf"
+      },
+      "38": {
+        "rgb": [
+          192,
+          154,
+          138
+        ],
+        "name": "G_temporal_middle"
+      },
+      "39": {
+        "rgb": [
+          145,
+          156,
+          66
+        ],
+        "name": "Lat_Fis-ant-Horizont"
+      },
+      "40": {
+        "rgb": [
+          83,
+          101,
+          79
+        ],
+        "name": "Lat_Fis-ant-Vertical"
+      },
+      "41": {
+        "rgb": [
+          134,
+          173,
+          171
+        ],
+        "name": "Lat_Fis-post"
+      },
+      "42": {
+        "rgb": [
+          140,
+          205,
+          156
+        ],
+        "name": "Medial_wall"
+      },
+      "43": {
+        "rgb": [
+          73,
+          190,
+          157
+        ],
+        "name": "Pole_occipital"
+      },
+      "44": {
+        "rgb": [
+          167,
+          156,
+          154
+        ],
+        "name": "Pole_temporal"
+      },
+      "45": {
+        "rgb": [
+          75,
+          155,
+          195
+        ],
+        "name": "S_calcarine"
+      },
+      "46": {
+        "rgb": [
+          111,
+          162,
+          65
+        ],
+        "name": "S_central"
+      },
+      "47": {
+        "rgb": [
+          119,
+          134,
+          227
+        ],
+        "name": "S_cingul-Marginalis"
+      },
+      "48": {
+        "rgb": [
+          96,
+          107,
+          129
+        ],
+        "name": "S_circular_insula_ant"
+      },
+      "49": {
+        "rgb": [
+          228,
+          205,
+          65
+        ],
+        "name": "S_circular_insula_inf"
+      },
+      "50": {
+        "rgb": [
+          99,
+          199,
+          69
+        ],
+        "name": "S_circular_insula_sup"
+      },
+      "51": {
+        "rgb": [
+          205,
+          107,
+          216
+        ],
+        "name": "S_collat_transv_ant"
+      },
+      "52": {
+        "rgb": [
+          109,
+          133,
+          172
+        ],
+        "name": "S_collat_transv_post"
+      },
+      "53": {
+        "rgb": [
+          81,
+          154,
+          145
+        ],
+        "name": "S_front_inf"
+      },
+      "54": {
+        "rgb": [
+          193,
+          229,
+          172
+        ],
+        "name": "S_front_middle"
+      },
+      "55": {
+        "rgb": [
+          129,
+          129,
+          131
+        ],
+        "name": "S_front_sup"
+      },
+      "56": {
+        "rgb": [
+          198,
+          114,
+          88
+        ],
+        "name": "S_interm_prim-Jensen"
+      },
+      "57": {
+        "rgb": [
+          116,
+          63,
+          78
+        ],
+        "name": "S_intrapariet_and_P_trans"
+      },
+      "58": {
+        "rgb": [
+          75,
+          191,
+          182
+        ],
+        "name": "S_oc_middle_and_Lunatus"
+      },
+      "59": {
+        "rgb": [
+          178,
+          138,
+          181
+        ],
+        "name": "S_oc_sup_and_transversal"
+      },
+      "60": {
+        "rgb": [
+          87,
+          213,
+          145
+        ],
+        "name": "S_occipital_ant"
+      },
+      "61": {
+        "rgb": [
+          219,
+          85,
+          144
+        ],
+        "name": "S_oc-temp_lat"
+      },
+      "62": {
+        "rgb": [
+          178,
+          144,
+          135
+        ],
+        "name": "S_oc-temp_med_and_Lingual"
+      },
+      "63": {
+        "rgb": [
+          88,
+          124,
+          100
+        ],
+        "name": "S_orbital_lateral"
+      },
+      "64": {
+        "rgb": [
+          111,
+          176,
+          167
+        ],
+        "name": "S_orbital_med-olfact"
+      },
+      "65": {
+        "rgb": [
+          163,
+          121,
+          223
+        ],
+        "name": "S_orbital-H_Shaped"
+      },
+      "66": {
+        "rgb": [
+          74,
+          118,
+          80
+        ],
+        "name": "S_parieto_occipital"
+      },
+      "67": {
+        "rgb": [
+          117,
+          223,
+          122
+        ],
+        "name": "S_pericallosal"
+      },
+      "68": {
+        "rgb": [
+          214,
+          144,
+          178
+        ],
+        "name": "S_postcentral"
+      },
+      "69": {
+        "rgb": [
+          137,
+          105,
+          189
+        ],
+        "name": "S_precentral-inf-part"
+      },
+      "70": {
+        "rgb": [
+          224,
+          104,
+          192
+        ],
+        "name": "S_precentral-sup-part"
+      },
+      "71": {
+        "rgb": [
+          104,
+          181,
+          194
+        ],
+        "name": "S_suborbital"
+      },
+      "72": {
+        "rgb": [
+          136,
+          185,
+          106
+        ],
+        "name": "S_subparietal"
+      },
+      "73": {
+        "rgb": [
+          73,
+          76,
+          135
+        ],
+        "name": "S_temporal_inf"
+      },
+      "74": {
+        "rgb": [
+          213,
+          81,
+          137
+        ],
+        "name": "S_temporal_sup"
+      },
+      "75": {
+        "rgb": [
+          179,
+          94,
+          182
+        ],
+        "name": "S_temporal_transverse"
+      }
+    }
+  }
+}
