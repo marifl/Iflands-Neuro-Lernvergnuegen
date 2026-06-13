@@ -80,24 +80,46 @@ BrainBrowser, pycortex, Nilearn `view_surf`).
 
 ## 3. Datenquellen — was frei & in der richtigen Form verfügbar ist
 
-| Atlas | fsaverage-Surface? | Granularität | Lizenz | Eignung |
-|---|---|---|---|---|
-| **DKT** (`aparc.DKTatlas.annot`) | **ja, nativ in FreeSurfer** | 31/Hemi (62) — inkl. pars opercularis/triangularis/orbitalis, rostral/caudal ACC, lat/med OFC | **permissiv** (MGH 2011) | ✅ **Fundament** |
-| **Desikan-Killiany** (`aparc.annot`) | ja, nativ | 34/Hemi (68) | permissiv | ✅ optional |
-| **Destrieux** (`aparc.a2009s.annot`) | ja, nativ | 74/Hemi (148, Gyri+Sulci) | permissiv | ✅ feiner gyral |
-| **Julich-Brain v3** | **ja**, via siibra-python (`get_map(space="fsaverage")` → `verts/faces/labels`) | 148 kortikale Areale (zytoarchitektonisch) | **CC BY-NC-SA** (NC + ShareAlike, viral) | ⚠️ nur nicht-kommerziell |
-| **Brodmann** (`BA_exvivo.thresh.annot`) | ja, nativ in FreeSurfer | **nur Subset** der BAs (1,2,3,4,6,44,45,17,18,MT…) | **„no commercial use"** | ⚠️ Subset + NC |
-| **Allen Human** | **nein** (2D-histologisch / grobes MNI-Volumen, 141 Strukturen) | kortikal grob | NC | ❌ als Surface-Layer; nur 2D-Referenzbild |
-| **BigBrain** | via BigBrainWarp möglich | Laminae/Mikrostruktur (Overkill für Lehre) | CC BY-NC-SA | ❌ v1; späteres Nice-to-have |
+> **Sourcing Spike (2026-06-13, verifiziert):** Alle vier Layer wurden mit echten Befehlen getestet
+> (siibra 1.0.1-alpha.17, nibabel, nilearn, templateflow). Kein Eintrag in der Tabelle ist ungeprüft.
 
-**Belege:** DKT/DK/Destrieux/BA + fsaverage-Vertexzahlen + `.annot`-Format (nibabel `read_annot`,
-Falle `orig_ids=False`): surfer.nmr.mgh.harvard.edu (FsTutorial, BrodmannAreaMaps), andysbrainbook,
-nipy.org/nibabel. — Julich v3 auf fsaverage + siibra: search.kg.ebrains.eu/instances/f1fe19e8…,
-juser.fz-juelich.de/record/916305, siibra-python.readthedocs.io (Access surface maps), Amunts et al.
-Science 2020 (doi:10.1126/science.abb4588). — Allen: help.brain-map.org, community.brain-map.org
-(„Allen Human Reference Atlas – 3D, 2020", MNI152, 141 Strukturen, kortikal grob). — BigBrain/
-BigBrainWarp: elifesciences.org/articles/70119, github.com/caseypaquola/BigBrainWarp,
-ftp.bigbrainproject.org/.../License.txt.
+### 3.1 Sourcing-Tabelle (164k = 163.842 Verts/Hemi)
+
+| Layer | Quelle (Befund) | Format | Auflösung | Lizenz | Eignung |
+|---|---|---|---|---|---|
+| **DKT** (Macroanat.) | **templateflow** `tpl-fsaverage_hemi-{L,R}_den-164k_atlas-Desikan2006_seg-aparc_desc-curated_dseg.label.gii` — lokal gecacht `~/Library/Caches/templateflow/tpl-fsaverage/` | GIFTI `label.gii` | 163.842 ✅ | Apache 2 / CC0 | ✅ **primär** |
+| **Destrieux** (Macroanat.) | **templateflow** `tpl-fsaverage_hemi-{L,R}_den-164k_atlas-Destrieux2009_dseg.label.gii` — lokal gecacht | GIFTI `label.gii` | 163.842 ✅ | FreeSurfer (permissiv) | ✅ **primär** |
+| **Julich-Brain v3.0.3** (Zytoarchit.) | **siibra** `parcellations.get("julich 3.0.3")` → `get_map(MNI152)` → NIfTI (193×229×193) → **`nilearn.surface.vol_to_surf(interpolation='nearest_most_frequent')`** → 163.842-Vertex-Array; 163/314 kortikale Labels, 94,9 % Coverage (155.601/163.842 Verts labeled). Label↔Name-Lookup: `m.get_index(region_name)` | NIfTI→vol_to_surf→ndarray | 163.842 ✅ (via vol2surf) | CC BY-NC-SA (NC + ShareAlike) | ⚠️ nur NC |
+| **Brodmann BA** (Zytoarchit.) | **Talairach-Atlas** `https://www.talairach.org/talairach.nii` (Free) → NIfTI (141×172×110) → BA-Level extrahieren → `vol_to_surf(interpolation='linear', round)` → 57 BA-Regionen, 74,7 % Coverage (122.450/163.842). **Alternativ:** `BA_exvivo.annot` (FreeSurfer, 163.842 Verts, 100 % Coverage) — nur verfügbar wenn FreeSurfer installiert. | NIfTI→vol_to_surf→ndarray | 163.842 ✅ (via vol2surf) | Talairach: frei / BA_exvivo: FS-Lizenz (NC) | ⚠️ Coverage 74,7 % (Talairach) **oder** FS-Install nötig |
+
+### 3.2 Was NICHT funktioniert (verifiziert als falsch)
+
+- **siibra `get_map(space="fsaverage")`** für Julich → `MapNotFound`: siibra 1.0.1-alpha.17 hat
+  **keine fsaverage-Surface-Map** für irgendeine Julich-Version (v1.18, v2.9, v3.0.3, v3.1). Die
+  Doku-Beispiele mit fsaverage6 erfordern offenbar EBRAINS-Auth oder beziehen sich auf eine ältere
+  siibra-Version. Getesteter Workaround: MNI152 NIfTI + `vol_to_surf` (funktioniert, s.o.).
+- **nilearn `fetch_atlas_surf_destrieux`** → liefert nur **fsaverage5** (10.242 Verts), nicht 164k.
+- **neuromaps** → enthält keine Julich-, DKT- oder Brodmann-Labels; nur funktionelle Annotationen.
+- **templateflow** → kein Brodmann/BA_exvivo; kein Julich.
+- **FreeSurfer GitHub** (fsaverage.tar.gz) → git-annex (nicht Git LFS), nicht direkt downloadbar
+  ohne git-annex Setup. BA_exvivo.annot nur über echten FS-Install erreichbar.
+
+### 3.3 Auflösungsempfehlung
+
+**Gewählt: 163.842 Verts/Hemi (fsaverage = fsaverage7).**
+
+Begründung:
+- DKT und Destrieux liegen als GIFTI `label.gii` exakt in 163.842 Verts via templateflow — kein
+  Resample nötig.
+- Die lokalen neuromaps-Oberflächen (`~/neuromaps-data/atlases/fsaverage/tpl-fsaverage_den-164k_hemi-*`)
+  sind ebenfalls 163.842 Verts (verifiziert: `coords.shape = (163842, 3)`, `faces.shape = (327680, 3)`).
+- Julich (vol2surf) und Brodmann (vol2surf) landen ohne Resample auf denselben 163.842 Verts →
+  **Vertex-Index-Identität gesichert**.
+- Performance-Spike (§2) bestätigt: 327k Verts in 1 Draw-Call, 60 FPS stabil.
+
+Fsaverage6 (41k) nur als Fallback wenn Mobile-Performance gemessen schlechter.
+
+**Belege:** templateflow S3 (bestätigt via Download 2026-06-13), nibabel `load(label.gii).darrays[0].data.shape = (163842,)` gemessen; siibra Fehler-Trace `MapNotFound` reproduziert; vol_to_surf-Outputs gemessen (163842,).
 
 ### FastSurfer-Rolle (Skill `fastsurfer-overview`)
 FastSurfer ist **nicht** nötig, um den kanonischen Atlas zu *bauen* — die fsaverage-Geometrie und
