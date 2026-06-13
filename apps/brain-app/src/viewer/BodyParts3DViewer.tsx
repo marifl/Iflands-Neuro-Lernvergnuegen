@@ -13,6 +13,7 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
+import AtlasOverlay from './AtlasOverlay'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
@@ -621,6 +622,7 @@ export default function BodyParts3DViewer() {
                 <ContextSkull />
                 <ContextHead />
                 <SubParcels />
+                <AtlasOverlay />
                 <CutCaps />
               </Suspense>
               <TampingIron />

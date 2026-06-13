@@ -211,6 +211,9 @@ export default function StructureTree() {
   const setLang = useViewerStore((s) => s.setLang)
   const setMode = useViewerStore((s) => s.setMode)
   const setSearch = useViewerStore((s) => s.setSearch)
+  const showAtlasJulich = useViewerStore((s) => s.showAtlasJulich)
+  const showAtlasDkt = useViewerStore((s) => s.showAtlasDkt)
+  const setAtlasOverlay = useViewerStore((s) => s.setAtlasOverlay)
   const isNarrow = useIsNarrow()
 
   const visibleTree = useMemo(() => {
@@ -272,6 +275,27 @@ export default function StructureTree() {
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Struktur suchen…"
         />
+        <div style={{ display: 'flex', gap: 6, alignItems: 'center' }} role="group" aria-label="Roh-Atlas-Overlay">
+          <span className="eyebrow" style={{ color: 'var(--g500)', marginRight: 2 }}>Atlas roh</span>
+          <button
+            type="button"
+            className={`ed-btn${showAtlasJulich ? ' active' : ''}`}
+            style={sm}
+            title="Original-Julich-Areale (Affine-transformiert) ueber TARO ein-/ausblenden — zeigt den Rest-Drift"
+            onClick={() => setAtlasOverlay('julich', !showAtlasJulich)}
+          >
+            Julich
+          </button>
+          <button
+            type="button"
+            className={`ed-btn${showAtlasDkt ? ' active' : ''}`}
+            style={sm}
+            title="Original-DKT-Areale (Affine-transformiert) ueber TARO ein-/ausblenden — zeigt den Rest-Drift"
+            onClick={() => setAtlasOverlay('dkt', !showAtlasDkt)}
+          >
+            DKT
+          </button>
+        </div>
       </div>
 
       <div className="scrollbar-thin" style={{ flex: 1, overflowY: 'auto', padding: 8, minHeight: 0 }}>

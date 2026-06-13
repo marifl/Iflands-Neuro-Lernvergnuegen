@@ -89,6 +89,9 @@ interface ViewerState {
   skullOpacity: number
   /** Stange sichtbar (von der Phineas-Gage-Szene gesteuert). */
   rodVisible: boolean
+  /** Roh-Atlas-Overlays (Original-Julich/DKT-Areale, Affine-transformiert): default versteckt. */
+  showAtlasJulich: boolean
+  showAtlasDkt: boolean
 
   setOntology: (ontology: Ontology) => void
   /** Kontext-Teilbaum setzen; alle Kontext-Strukturen starten ausgeblendet. */
@@ -132,6 +135,7 @@ interface ViewerState {
   toggleExpanded: (id: string) => void
   setSkull: (visible: boolean, opacity?: number) => void
   setRodVisible: (visible: boolean) => void
+  setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
   setIsolated: (id: string | null) => void
 }
@@ -167,6 +171,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showSkull: false,
   skullOpacity: 0.25,
   rodVisible: false,
+  showAtlasJulich: false,
+  showAtlasDkt: false,
 
   setOntology: (ontology) =>
     set({ ontology, ancestors: ancestorMap(ontology.tree), colorIndex: buildColorIndex(ontology.tree) }),
@@ -258,6 +264,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setSkull: (visible, opacity) =>
     set((state) => ({ showSkull: visible, skullOpacity: opacity ?? state.skullOpacity })),
   setRodVisible: (rodVisible) => set({ rodVisible }),
+  setAtlasOverlay: (which, visible) =>
+    set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
   setIsolated: (id) =>
     set((state) => {
       if (!id) return { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }

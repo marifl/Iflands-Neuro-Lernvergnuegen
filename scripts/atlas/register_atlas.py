@@ -139,6 +139,8 @@ def main():
     A = R.affine_from_pairs(src_pts, dst_pts)
     det = np.linalg.det(A[:3, :3])
     print(f"  {source}->TARO-Affine: {len(src_pts)} Paare, det={det:.3f} (>0 = kein Flip), exclude={skipped['exclude']} auto={skipped['auto']}")
+    # Affine (4x3, apply: [x,y,z,1] @ A) fuer den Roh-Atlas-Overlay-Bake persistieren.
+    (WORK / f"atlas_affine_{source}.json").write_text(json.dumps(A.tolist()))
 
     # Host-Centroide (alle Kortex-Gyri) fuer AUTO_NEAREST.
     gyrus_stems = sorted({k.split("-", 1)[1] for k in hosts})
