@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import type { HemiData } from './atlasAssets'
 import { buildLutTextureData, type AtlasLut } from './atlasLut'
@@ -88,8 +88,16 @@ export function CanonicalSurface({
     material.needsUpdate = true
   }, [material, opacity])
 
+  // Ghost-Kortex nicht pickbar -> Klicks erreichen die Kerne dahinter. Bei opacity>=1 normalen Raycast wiederherstellen.
+  const meshRef = useRef<THREE.Mesh>(null)
+  useEffect(() => {
+    if (!meshRef.current) return
+    meshRef.current.raycast = opacity < 1 ? (() => {}) : THREE.Mesh.prototype.raycast
+  }, [opacity])
+
   return (
     <mesh
+      ref={meshRef}
       geometry={geometry}
       material={material}
       position={[offsetX, 0, 0]}

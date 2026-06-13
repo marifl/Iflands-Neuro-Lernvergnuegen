@@ -65,6 +65,8 @@ export default function CanonicalAtlasSpike() {
       />
       <Canvas camera={{ position: [0, 0, 310], fov: 45 }}>
         <ambientLight intensity={0.6} />
+        {/* Gerichtetes Licht modelliert die Subkortex-Kerne (MeshStandardMaterial); Kortex-Shader bleibt unbeeinflusst. */}
+        <directionalLight position={[1, 1, 2]} intensity={0.8} />
         <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} onPick={handlePickL} />
         <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} onPick={handlePickR} />
         {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}

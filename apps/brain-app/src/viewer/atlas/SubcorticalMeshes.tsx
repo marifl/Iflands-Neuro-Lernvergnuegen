@@ -21,14 +21,14 @@ export function SubcorticalMeshes({
       roughness: 0.6,
       metalness: 0,
     })
-    return { id: m.entry.id, name: m.entry.name_de, geometry: g, material: mat }
+    return { key: `${m.entry.id}-${m.entry.side}`, name: m.entry.name_de, geometry: g, material: mat }
   }), [meshes])
 
   return (
     <>
       {items.map((it) => (
         <mesh
-          key={it.id}
+          key={it.key}
           geometry={it.geometry}
           material={it.material}
           renderOrder={1}
