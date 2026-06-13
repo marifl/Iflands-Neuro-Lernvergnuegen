@@ -92,6 +92,8 @@ interface ViewerState {
   /** Roh-Atlas-Overlays (Original-Julich/DKT-Areale, Affine-transformiert): default versteckt. */
   showAtlasJulich: boolean
   showAtlasDkt: boolean
+  /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
+  clipAtlasOverlay: boolean
 
   setOntology: (ontology: Ontology) => void
   /** Kontext-Teilbaum setzen; alle Kontext-Strukturen starten ausgeblendet. */
@@ -136,6 +138,7 @@ interface ViewerState {
   setSkull: (visible: boolean, opacity?: number) => void
   setRodVisible: (visible: boolean) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
+  setClipAtlasOverlay: (clip: boolean) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
   setIsolated: (id: string | null) => void
 }
@@ -173,6 +176,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   rodVisible: false,
   showAtlasJulich: false,
   showAtlasDkt: false,
+  clipAtlasOverlay: true,
 
   setOntology: (ontology) =>
     set({ ontology, ancestors: ancestorMap(ontology.tree), colorIndex: buildColorIndex(ontology.tree) }),
@@ -266,6 +270,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setRodVisible: (rodVisible) => set({ rodVisible }),
   setAtlasOverlay: (which, visible) =>
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
+  setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
   setIsolated: (id) =>
     set((state) => {
       if (!id) return { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }

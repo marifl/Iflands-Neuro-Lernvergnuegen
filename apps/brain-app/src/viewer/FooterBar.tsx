@@ -97,6 +97,8 @@ export default function FooterBar() {
   const setCut = useViewerStore((s) => s.setCut)
   const cutMode = useViewerStore((s) => s.cutMode)
   const setCutMode = useViewerStore((s) => s.setCutMode)
+  const clipAtlasOverlay = useViewerStore((s) => s.clipAtlasOverlay)
+  const setClipAtlasOverlay = useViewerStore((s) => s.setClipAtlasOverlay)
   const setCameraView = useViewerStore((s) => s.setCameraView)
   const showSkull = useViewerStore((s) => s.showSkull)
   const skullOpacity = useViewerStore((s) => s.skullOpacity)
@@ -191,6 +193,11 @@ export default function FooterBar() {
               ) : null}
             </div>
           ))}
+          {/* Atlas-Overlays (Julich/DKT) optional vom Schnitt ausnehmen — zum Vergleich ganz zeigen. */}
+          <div style={{ height: 10 }} />
+          <div className="eyebrow" style={{ marginBottom: 4 }}>Atlas-Overlay</div>
+          <Item active={clipAtlasOverlay} onClick={() => setClipAtlasOverlay(true)}>Mitschneiden</Item>
+          <Item active={!clipAtlasOverlay} onClick={() => setClipAtlasOverlay(false)}>Vom Schnitt ausnehmen</Item>
         </>
       ),
     },

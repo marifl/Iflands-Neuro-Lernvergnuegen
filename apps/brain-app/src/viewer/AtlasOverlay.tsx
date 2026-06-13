@@ -47,10 +47,11 @@ function RawAtlas({ which }: { which: 'julich' | 'dkt' }) {
   // Cut-Modus dort raus, wo TARO weggeschnitten ist, und wirkt faelschlich versetzt).
   const cuts = useViewerStore((s) => s.cuts)
   const cutMode = useViewerStore((s) => s.cutMode)
+  const clipAtlas = useViewerStore((s) => s.clipAtlasOverlay)
   useEffect(() => {
-    mat.clippingPlanes = cutMode === 'slice' ? activeCutPlanes(cuts) : []
+    mat.clippingPlanes = clipAtlas && cutMode === 'slice' ? activeCutPlanes(cuts) : []
     mat.clipIntersection = false
-  }, [mat, cuts, cutMode])
+  }, [mat, cuts, cutMode, clipAtlas])
 
   return <primitive object={scene} />
 }
