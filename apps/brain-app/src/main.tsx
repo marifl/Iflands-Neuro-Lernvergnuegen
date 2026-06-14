@@ -9,9 +9,9 @@ if (localStorage.getItem('ed-theme') === 'light') {
   document.documentElement.dataset.theme = 'light'
 }
 
-// Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas|atlas> setzt den Modus direkt;
-// ein ?scene=<id>-Link (geteilte Lern-Szene) impliziert den Lern-Modus. Sonst entscheidet der
-// Start-Screen (ModeLauncher).
+// Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas> setzt den Modus direkt;
+// ?mode=atlas ist DEBUG-ONLY (kanonischer fsaverage-Modus, nicht im Launcher/Modus-Flyout) — nur
+// ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus. Sonst ModeLauncher.
 {
   const params = new URLSearchParams(window.location.search)
   const mode = params.get('mode')

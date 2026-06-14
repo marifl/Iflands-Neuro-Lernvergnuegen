@@ -26,11 +26,8 @@ const CARDS: ModeCard[] = [
     label: 'Phineas Gage',
     blurb: 'Die historische Läsions-Fallstudie als animierte Rekonstruktion.',
   },
-  {
-    mode: 'atlas',
-    label: 'Atlas',
-    blurb: 'Hirnregionen präzise nachschlagen — Standardhirn fsaverage, vier Kartierungen (≠ Lern-Hirn).',
-  },
+  // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> bewusst KEINE Launcher-Karte,
+  // nur per Deep-Link ?mode=atlas erreichbar.
 ]
 
 /** Start-Screen: nimmt dem Lernenden die „wo fange ich an?"-Last ab. Eine klare Aktion

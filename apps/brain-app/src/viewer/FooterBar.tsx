@@ -138,7 +138,9 @@ export default function FooterBar() {
       key: 'mode',
       eyebrow: 'Modus',
       label: MODE_LABEL[appMode],
-      content: (['learn', 'explore', 'phineas', 'atlas'] as const).map((m) => (
+      // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> nicht im normalen Modus-Flyout,
+      // nur per Deep-Link ?mode=atlas erreichbar. Die regulaeren Modi sind learn/explore/phineas.
+      content: (['learn', 'explore', 'phineas'] as const).map((m) => (
         <Item key={m} active={appMode === m} onClick={() => { setAppMode(m); close() }}>
           {MODE_LABEL[m]}
         </Item>
