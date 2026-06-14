@@ -11,17 +11,34 @@
 ---
 
 ## Status-Header
-- Aktive Wave: SP1
-- Letzter Commit: (offen)
-- Backup-Tag: (vor Start setzen)
+- Aktive Wave: SP1 — **DONE**
+- Letzter Commit: `bef189d` (Review-Haertung)
+- Backup-Tag: `backup/pre-sp1-atlas-katalog`
+- Branch: `feature/atlas-config-ontologie`
 - Letzte Update: 2026-06-15
 
 ## Fortschritt
-- [ ] Task 1: `lobe-map.json` (Gyrus→Lappen + Destrieux-Prefix)
-- [ ] Task 2: Parse-/Join-Helfer im Build-Skript (mit `node:test`)
-- [ ] Task 3: Katalog-Assembly + Schreiben von `atlas-ontology.json`
-- [ ] Task 4: TS-Typen + Loader (`atlasCatalog.ts`)
-- [ ] Task 5: Runtime-Invarianten-Tests (`atlasCatalog.test.ts`)
+- [x] Task 1: `lobe-map.json` (Gyrus→Lappen + Destrieux/DKT/Julich/Brodmann-Fallbacks) · `c1be6d3`
+- [x] Task 2: Parse-/Join-Helfer im Build-Skript (mit `node:test`) · `1cc8d6a`
+- [x] Task 3: Katalog-Assembly + `atlas-ontology.json` (590 Areale, Orphan-Check) · `2292521`
+- [x] Task 4: TS-Typen + Loader (`atlasCatalog.ts`) · `4328582`
+- [x] Task 5: Runtime-Invarianten-Tests (`atlasCatalog.test.ts`, vitest 7/7) · `4328582`
+- [x] Review-Haertung: Ueber-Konsumptions-Guard + LOBE_LABEL fail-loud · `bef189d`
+
+## Realisierungs-Abweichungen vom Plan (dokumentiert)
+Beim Erden an echten Daten kamen Julich-Eigenheiten hoch, die der Plan unterschaetzte:
+- **Julich-Join = Prefix-Match aus `julichSlug`** statt Code-Split. Carve-Namen haben variable
+  Host-Suffixe (`julich3-area-te-1-0-heschl`, `julich3-ca1-hippocampus`, `…-gapmap`). Die toten
+  `julich`-Zweige in `lutCode`/`carveCode` wurden entfernt.
+- **Areal-Zahlen** real: dkt 68, destrieux 148, julich 292, brodmann 82 = **590** (nicht „LUT×2"):
+  Non-Region-Eintraege (`corpuscallosum`, `Medial_wall`, 2× `nicht kartiert`) werden explizit +
+  geloggt ausgeschlossen (nicht als `medial` geflaggt, aber keine teachable Region).
+- **Lobe-Fallbacks** erweitert: DKT-Name-Tabelle (alle 35), Julich-Host-Abbrev, **BA33→limbic**
+  (einziger Brodmann ohne Carve), 8 zusaetzliche Destrieux-Sulcus-Praefixe.
+- **Run-Guard-Bugfix:** `file://${argv[1]}` scheiterte an Leerzeichen im Pfad → `pathToFileURL`.
+- **Review-Haertung:** Ueber-Konsumptions-Guard (Prefix-Kollision), `LOBE_LABEL` wirft statt `?? lobe`.
+- **Bekannt/offen (Low, unerreichbar):** `lobeOfJulichName` Multi-Host-Substring ist ordnungs-
+  abhaengig — aktuell **nie erreicht** (0 julich-Areale ohne Carve), daher nicht gefixt.
 
 ---
 
