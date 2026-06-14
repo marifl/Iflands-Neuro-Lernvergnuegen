@@ -8,8 +8,10 @@
 #
 # W0-Prototyp-Modus: `python build_watertight_atlas.py proto`  -> wenige DKT-Areale (L), Watertight-Check,
 #   Mini-GLB work/wt_proto_dkt_L.glb. Validiert die Closing-Methode, bevor auf alle 4 Atlanten skaliert wird.
+import re
 import sys
 import json
+import subprocess
 from pathlib import Path
 import numpy as np
 import trimesh
@@ -19,9 +21,12 @@ import register as R  # apply_affine
 HERE = Path(__file__).parent
 WORK = HERE / "work"
 CANON = HERE.parent.parent / "apps/brain-app/public/assets/atlas-canonical"
+OUT_DIR = HERE.parent.parent / "apps/brain-app/public/assets/bodyparts3d"
 
 N_VERTS = 163842
 THICK_MM = 2.0  # Shell-Dicke (nach innen entlang -Normale)
+ATLASES = ["julich", "dkt", "brodmann", "destrieux"]
+DRACO_LIMIT_BYTES = 8 * 1024 * 1024  # >8 MB -> milde Decimation des Anzeige-Meshes
 
 
 def load_hemi(hemi):
@@ -147,9 +152,192 @@ def proto():
     print(f"-> {out} ({out.stat().st_size // 1024} KB)")
 
 
+def slugify(name):
+    """LUT-Name -> kebab-case slug. 'Area 44 (IFG)' -> 'area-44-ifg'."""
+    s = name.lower()
+    s = s.replace("(", " ").replace(")", " ")
+    s = re.sub(r"[^a-z0-9]+", "-", s)
+    s = s.strip("-")
+    if not s:
+        raise ValueError(f"Slug leer fuer Name {name!r}")
+    return s
+
+
+def labels_to_build(lut):
+    """LUT-Items -> [(label_id, name)] fuer echte Areale (kein Medialwand/nicht kartiert)."""
+    out = []
+    for k, v in lut.items():
+        lid = int(k)
+        if lid == 0 or v.get("medial"):
+            continue
+        nm = v["name"].strip()
+        if nm in ("—", "-", "") or "nicht kartiert" in nm.lower():
+            continue
+        out.append((lid, v["name"]))
+    return out
+
+
+def build_atlas(atlas, A_ft, man):
+    """Baut alle Areale eines Atlas -> trimesh.Scene + Report-Dict."""
+    lut = man["lut"][atlas]
+    targets = labels_to_build(lut)
+    # Per Hemi einmal laden (teuer)
+    hemi_data = {}
+    for hemi in ("L", "R"):
+        pial, faces = load_hemi(hemi)
+        labels = load_labels(hemi, atlas)
+        hemi_data[hemi] = (pial, faces, labels)
+
+    scene = trimesh.Scene()
+    used_names = set()
+    n_built = 0
+    n_watertight = 0
+    n_open_fallback = 0
+    no_surface = []  # LUT-Labels mit 0 Vertices in BEIDEN Hemis -> kein Oberflaechen-Areal (z.B. DKT corpuscallosum)
+
+    for lid, name in targets:
+        slug = slugify(name)
+        # Vorab: hat dieses Label ueberhaupt Vertices auf der Oberflaeche?
+        verts_total = sum(int((hemi_data[h][2] == lid).sum()) for h in ("L", "R"))
+        if verts_total == 0:
+            no_surface.append((lid, name))
+            print(f"  [{atlas}] {name} (id {lid}) NICHT auf der Oberflaeche (0 Vertices L+R) -> SKIP")
+            continue
+        for hemi in ("L", "R"):
+            pial, faces, labels = hemi_data[hemi]
+            p = patch_for_label(pial, faces, labels, lid)
+            if p is None:
+                continue  # dieses Areal nicht in dieser Hemi (z.B. lateralisiert) -> ok
+            pv, pf = p
+            sv, sf, ncomp, nok = close_patch_robust(pv, pf)
+            if nok == ncomp and ncomp > 0:
+                # Alle Komponenten watertight -> geschlossenes Shell verwenden
+                verts, fcs = sv, sf
+                n_watertight += 1
+            else:
+                # Open-DoubleSide-Patch-Fallback: roher Pial-Patch (furchen-echt, nicht volumen-geschlossen)
+                verts, fcs = pv, pf
+                n_open_fallback += 1
+                print(f"  [{atlas}] {name} ({hemi}) open-fallback ({nok}/{ncomp} comps watertight)")
+            verts = R.apply_affine(A_ft, verts)
+            mesh_name = f"{atlas}-{slug}-{hemi.lower()}"
+            if mesh_name in used_names:
+                raise ValueError(f"Doppelter Mesh-Name {mesh_name!r} (slug-Kollision) in {atlas}")
+            used_names.add(mesh_name)
+            m = trimesh.Trimesh(vertices=verts, faces=fcs, process=False)
+            scene.add_geometry(m, node_name=mesh_name, geom_name=mesh_name)
+            n_built += 1
+
+    # Assert: jedes LUT-Areal MIT Oberflaechen-Vertices wurde gebaut (sonst Code-Bug).
+    n_surface_areale = len(targets) - len(no_surface)
+    if n_built == 0:
+        raise SystemExit(f"ABBRUCH {atlas}: 0 Meshes gebaut")
+    if n_surface_areale <= 0:
+        raise SystemExit(f"ABBRUCH {atlas}: keine Oberflaechen-Areale uebrig")
+
+    report = {
+        "atlas": atlas,
+        "n_lut_areale": len(targets),
+        "n_surface_areale": n_surface_areale,
+        "n_no_surface_skipped": len(no_surface),
+        "no_surface": [n for _, n in no_surface],
+        "n_built": n_built,
+        "n_watertight": n_watertight,
+        "n_open_fallback": n_open_fallback,
+        "n_decimated": 0,
+    }
+    return scene, report
+
+
+def residual_fsavg_to_taro(A_ft):
+    """Grobes Registrierungs-Residuum: existiert ein gespeicherter Residuum-Wert? Sonst Spannweite der Affine.
+    Wir loggen den mittleren Skalierungsfaktor + Translation als grobe Charakterisierung (kein Punkt-Fit hier,
+    da W0 das Residuum bereits als 'mehrere mm, anderes Hirn' dokumentiert hat)."""
+    lin = A_ft[:3, :]
+    scale = float(np.mean(np.linalg.norm(lin, axis=0)))
+    trans = A_ft[3, :].tolist()
+    return {"mean_scale": round(scale, 4), "translation_mm": [round(x, 2) for x in trans]}
+
+
+def export_and_compress(scene, atlas):
+    """GLB exportieren, Roh-Groesse messen, Draco komprimieren, Draco-Groesse messen.
+    Wenn Draco > Limit: finales Shell milde dezimieren (~50% faces), neu exportieren+draco.
+    Rueckgabe: (raw_mb, draco_mb, n_decimated)."""
+    out = OUT_DIR / f"atlas3d-{atlas}.glb"
+    out.write_bytes(scene.export(file_type="glb"))
+    raw_bytes = out.stat().st_size
+    draco_bytes = _draco(out)
+    n_decimated = 0
+    if draco_bytes > DRACO_LIMIT_BYTES:
+        print(f"  [{atlas}] Draco {draco_bytes/1048576:.1f} MB > Limit -> milde Decimation (~50% faces)")
+        scene2, n_decimated = _decimate_scene(scene)
+        out.write_bytes(scene2.export(file_type="glb"))
+        raw_bytes = out.stat().st_size
+        draco_bytes = _draco(out)
+    return raw_bytes / 1048576, draco_bytes / 1048576, n_decimated
+
+
+def _decimate_scene(scene):
+    """Jedes Mesh auf ~50% faces dezimieren (Anzeige-Mesh, watertight darf brechen)."""
+    new = trimesh.Scene()
+    n_dec = 0
+    for name, geom in scene.geometry.items():
+        target = max(4, int(geom.faces.shape[0] * 0.5))
+        try:
+            d = geom.simplify_quadric_decimation(face_count=target)
+        except TypeError:
+            d = geom.simplify_quadric_decimation(target)
+        if d.faces.shape[0] < geom.faces.shape[0]:
+            n_dec += 1
+            new.add_geometry(d, node_name=name, geom_name=name)
+        else:
+            new.add_geometry(geom, node_name=name, geom_name=name)
+    return new, n_dec
+
+
+def _draco(path):
+    """draco_compress.mjs in-place aufrufen. Rueckgabe: Datei-Groesse danach (bytes)."""
+    res = subprocess.run(
+        ["node", str(HERE / "draco_compress.mjs"), str(path)],
+        capture_output=True, text=True,
+    )
+    if res.returncode != 0:
+        raise SystemExit(f"ABBRUCH Draco {path.name}: {res.stderr or res.stdout}")
+    print("   " + res.stdout.strip())
+    return path.stat().st_size
+
+
+def full():
+    A_ft = np.asarray(json.loads((WORK / "atlas_affine_fsavg_to_taro.json").read_text()))
+    man = json.loads((CANON / "manifest.json").read_text())
+    resid = residual_fsavg_to_taro(A_ft)
+    reports = []
+    total_draco = 0.0
+    for atlas in ATLASES:
+        print(f"=== {atlas} ===")
+        scene, rep = build_atlas(atlas, A_ft, man)
+        raw_mb, draco_mb, n_dec = export_and_compress(scene, atlas)
+        rep["raw_mb"] = round(raw_mb, 2)
+        rep["draco_mb"] = round(draco_mb, 2)
+        rep["n_decimated"] = n_dec
+        rep["fsavg_to_taro"] = resid
+        reports.append(rep)
+        total_draco += draco_mb
+        print(f"  -> atlas3d-{atlas}.glb  built={rep['n_built']} watertight={rep['n_watertight']} "
+              f"open-fallback={rep['n_open_fallback']} decimated={n_dec}  "
+              f"raw={raw_mb:.2f}MB draco={draco_mb:.2f}MB")
+    (WORK / "atlas3d_report.json").write_text(json.dumps(reports, indent=2))
+    print("\n=== GESAMT ===")
+    print(f"  Total Draco: {total_draco:.2f} MB")
+    print(f"  fsavg->TARO grob: {resid}")
+    print(f"  Report: {WORK / 'atlas3d_report.json'}")
+
+
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "proto"
     if mode == "proto":
         proto()
+    elif mode == "full":
+        full()
     else:
         raise SystemExit(f"Unbekannter Modus: {mode}")
