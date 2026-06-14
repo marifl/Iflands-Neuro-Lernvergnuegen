@@ -137,4 +137,4 @@ Code unter `src/` ist Eigenarbeit fuer das Modul SS26 Kognitive Neurowissenschaf
 
 ## Kontakt
 
-Marcus Ifland · via GitHub @marifl
+Marcus Ifland · via [GitHub @marifl](https://github.com/marifl)
