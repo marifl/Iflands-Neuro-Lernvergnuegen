@@ -1,0 +1,77 @@
+# Atlas-Config (.ini-Style). Authored TOML -> build-config.mjs -> config.json (validiert).
+# Scope-Keys: axis:<id> | atlas:<id> | group:<atlas>:<lobe> | area:<atlas>:<code>:<side>.
+# preset = aktive Default-Basis; configurations.* = benannte Atome; presentation/learning.* = Sequenzen.
+
+preset = "kapitel11"
+
+# --- Presets: benannte Default-Toggle-Sets ---------------------------------
+[presets.kapitel11]
+label_de = "Kapitel 11 (PFC/BG-Fokus)"
+[presets.kapitel11.scopes]
+"axis:macro" = false
+"axis:cyto" = false
+"area:julich:area-44:l" = true
+"area:julich:area-45:l" = true
+"area:dkt:parstriangularis:l" = true
+"area:dkt:parsopercularis:l" = true
+"area:dkt:lateralorbitofrontal:l" = true
+"area:dkt:medialorbitofrontal:l" = true
+"area:dkt:rostralanteriorcingulate:l" = true
+
+[presets.explorer]
+label_de = "Explorer (Makro sichtbar)"
+[presets.explorer.scopes]
+"axis:macro" = true
+"axis:cyto" = false
+
+[presets.voll]
+label_de = "Voll (alle Atlanten)"
+[presets.voll.scopes]
+"axis:macro" = true
+"axis:cyto" = true
+
+# --- Configurations: benannte Atome (Folie / Lernschritt / Abb.-Ersetzung) --
+[configurations.broca-areal]
+label_de = "Broca-Areal (Abb. 11-7)"
+replaces_figure = "11-7"
+[configurations.broca-areal.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.broca-areal.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "julich"
+[configurations.broca-areal.camera]
+target = "julich:area-44:l"
+[configurations.broca-areal.scopes]
+"area:julich:area-44:l" = true
+"area:julich:area-45:l" = true
+
+[configurations.ofc-phineas]
+label_de = "OFC / Phineas Gage"
+replaces_figure = "11-4"
+[configurations.ofc-phineas.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.ofc-phineas.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "dkt"
+[configurations.ofc-phineas.camera]
+target = "dkt:lateralorbitofrontal:l"
+[configurations.ofc-phineas.scopes]
+"area:dkt:lateralorbitofrontal:l" = true
+"area:dkt:medialorbitofrontal:l" = true
+
+# --- Sequenzen: geordnete Configuration-Namen ------------------------------
+[presentation.kapitel11-vorlesung]
+label_de = "Kapitel 11 — Vorlesung"
+steps = ["broca-areal", "ofc-phineas"]
+
+[learning.kapitel11-pfad]
+label_de = "Lernpfad Kapitel 11"
+steps = ["ofc-phineas", "broca-areal"]
