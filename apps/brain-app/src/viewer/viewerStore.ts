@@ -21,6 +21,10 @@ export interface IsolationCrumb {
 }
 
 export type ViewMode = 'full' | 'k11'
+
+// Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die im „Voller Atlas" die Kortex verdecken.
+// Werden ausgeblendet, solange ein Atlas-auf-Hirn-Overlay (Carve) aktiv ist, damit die Areale sichtbar sind.
+const MENINGES_SLUGS = ['cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli']
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
@@ -290,10 +294,14 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setCarveOverlay: (which, visible) =>
     set((s) => {
       const next = which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }
-      // Wird das letzte Carve-Overlay ausgeschaltet -> Areal-Auswahl aufraeumen (kein stiller Rest).
       const julichOn = which === 'julich' ? visible : s.showCarveJulich
       const dktOn = which === 'dkt' ? visible : s.showCarveDkt
-      return julichOn || dktOn ? next : { ...next, pickedAtlasArea: null }
+      const anyOn = julichOn || dktOn
+      // Hirnhaeute ausblenden, solange ein Overlay an ist (sonst verdeckt die Dura die Areale);
+      // beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen (kein stiller Rest).
+      const hidden = new Set(s.hidden)
+      for (const slug of MENINGES_SLUGS) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      return { ...next, hidden, pickedAtlasArea: anyOn ? s.pickedAtlasArea : null }
     }),
   setPickedAtlasArea: (pickedAtlasArea) => set({ pickedAtlasArea }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),

@@ -37,18 +37,18 @@ function AtlasLayer({ kind, which }: { kind: 'raw' | 'carve'; which: 'julich' | 
         })
         m.raycast = () => {} // Roh-Overlay nicht pickbar (Debug)
       } else {
-        // Carve-Areal auf der TARO-Oberflaeche. Damit die umgebende Anatomie (Dura, Sinus,
-        // Marklager …) im „Voller Atlas" die Areale nicht verdeckt: ohne Tiefentest + hohe
-        // renderOrder ZULETZT zeichnen -> die kameranahe Kortex-Seite wird auf alles gemalt.
-        // DoubleSide: auch Sulcus-Innenwaende/abgewandte Flaechen tragen Farbe (keine Luecken).
+        // Carve-Areal: liegt 0 mm auf der TARO-Kortex. Echter Tiefentest -> die kameranahe Seite
+        // verdeckt die Gegenseite korrekt (kein Durchscheinen). polygonOffset zieht die Parzelle
+        // minimal vor die koplanare brain.glb-Kortex (kein z-fight). DoubleSide: auch Sulcus-
+        // Innenwaende tragen Farbe. Die verdeckende Dura/Hirnhaut wird separat ausgeblendet,
+        // solange ein Carve-Overlay aktiv ist (siehe viewerStore.setCarveOverlay).
         m.material = new THREE.MeshStandardMaterial({
           color: parcelColor(m.name), roughness: 0.78, metalness: 0, side: THREE.DoubleSide,
-          depthTest: false, depthWrite: false,
+          polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
         })
         m.userData[ATLAS_PARCEL_FLAG] = true // pickbar via CutPickBridge (zeigt Areal-Name)
-        m.renderOrder = 10
       }
-      m.renderOrder = m.renderOrder || 2
+      m.renderOrder = 2
       mats.push(m.material as THREE.MeshStandardMaterial)
     })
     return mats
