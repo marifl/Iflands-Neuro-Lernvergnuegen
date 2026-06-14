@@ -1,0 +1,41 @@
+# Lizenz
+
+## Creative Commons Attribution-ShareAlike 2.1 Japan (CC BY-SA 2.1 JP)
+
+Dieses Werk — einschliesslich Quellcode, abgeleiteter 3D-Meshes und mitgelieferter
+Daten — wird unter der **Creative Commons Attribution-ShareAlike 2.1 Japan**
+veroeffentlicht.
+
+Voller Lizenztext (rechtsverbindlich):
+<https://creativecommons.org/licenses/by-sa/2.1/jp/legalcode> (JP)
+Zusammenfassung (Deed): <https://creativecommons.org/licenses/by-sa/2.1/jp/deed.de>
+
+Du darfst das Werk teilen und bearbeiten, auch kommerziell, unter den Bedingungen:
+
+- **Namensnennung (BY):** Die unten stehende Pflicht-Attribution muss erhalten bleiben.
+- **Weitergabe unter gleichen Bedingungen (SA):** Bearbeitungen muessen unter
+  CC BY-SA 2.1 JP (oder kompatibel) weitergegeben werden.
+
+### Warum diese Lizenz
+
+Die 3D-Hirnstrukturen stammen aus dem **BodyParts3D**-Datensatz, der unter
+CC BY-SA 2.1 JP steht. ShareAlike ist „ansteckend": Sobald die daraus abgeleiteten
+GLB-Meshes gebuendelt ausgeliefert werden, muss das gesamte verteilte Werk unter
+derselben Lizenz stehen. Daher gilt CC BY-SA 2.1 JP fuer dieses Repository als Ganzes.
+
+### Pflicht-Attribution (woertlich, darf nicht veraendert werden)
+
+> BodyParts3D, Copyright© The Database Center for Life Science licensed by
+> CC Attribution-Share Alike 2.1 Japan
+
+## Weitere Quellen
+
+Dieses Repository buendelt zusaetzliche Datensaetze Dritter (Hirnatlanten,
+Ontologien) mit eigenen Lizenz- und Zitationspflichten. Siehe
+[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) fuer die vollstaendige Liste,
+Zitationen und Quell-Links.
+
+---
+
+© 2026 Marcus Ifland. Wo nicht anders durch die ShareAlike-Pflicht oben gebunden,
+sind eigene Beitraege ebenfalls unter CC BY-SA 2.1 JP freigegeben.
