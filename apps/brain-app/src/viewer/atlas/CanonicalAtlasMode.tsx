@@ -107,12 +107,16 @@ export default function CanonicalAtlasMode() {
         {/* Gerichtetes Licht modelliert die Subkortex-Kerne (MeshStandardMaterial); Kortex-Shader bleibt unbeeinflusst. */}
         <directionalLight position={[1, 1, 2]} intensity={0.8} />
         {/* fsaverage liegt in RAS (superior = +Z, anterior = +Y) = Z-Up. Three.js/OrbitControls
-            sind Y-Up. -90 deg um X kippt superior nach +Y (echtes aufrechtes Hirn), +180 deg um Y
-            dreht die anteriore Seite zur Kamera -> aufrechte Frontalansicht, natuerliches Orbiten. */}
-        <group rotation={[-Math.PI / 2, Math.PI, 0]}>
-          <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
-          <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
-          {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
+            sind Y-Up. Verschachtelte Gruppen komponieren Ry(180)*Rx(-90): die innere -90 deg um X
+            kippt superior nach +Y (aufrecht), die aeussere 180 deg um Y dreht die anteriore Seite
+            zur Kamera. Nesting vermeidet die Euler-Reihenfolge-Falle (ein kombiniertes [x,y,z] in
+            XYZ-Order stellt das Hirn auf den Kopf). */}
+        <group rotation={[0, Math.PI, 0]}>
+          <group rotation={[-Math.PI / 2, 0, 0]}>
+            <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
+            <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
+            {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
+          </group>
         </group>
         <OrbitControls />
       </Canvas>
