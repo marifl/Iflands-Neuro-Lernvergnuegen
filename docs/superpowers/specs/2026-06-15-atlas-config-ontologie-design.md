@@ -10,6 +10,22 @@ Atlas-Kategorien (Atlas → Gruppe → Areal) und allen Facetten (Klinik / Funkt
 Provenienz) klar an/ab — gespeist aus **einem** serialisierten Atlas-Katalog, der alle Atlanten
 und das ergänzende Kontext-Material vereint.
 
+## North Star (Vision — wozu die Granularität dient)
+
+Die ultra-granulare Config ist nicht Selbstzweck, sondern das **Fundament einer voll interaktiven
+Lernplattform für Neuroanatomie & kognitive Neurowissenschaft**. Konkret ermöglicht sie:
+
+- **Konfiguration als atomare Einheit.** Eine benannte `Configuration` (Toggle-Set + View + Kamera +
+  Areal-Visual-Zustand) ist die Einheit, die alles definiert: eine **Präsentationsfolie**, ein
+  **Lernschritt**, eine **interaktive Ersetzung einer Buch-Abbildung**. Präsentation und Lernplattform
+  teilen **eine** Konfigurations-Bibliothek (gleiche Atome, verschiedene Sequenzen).
+- **Smoothe Transitions.** Zwei Konfigurationen unterscheiden sich nur in Zuständen → eine Transition
+  ist die **animierte Interpolation** zwischen ihnen (Kamera-Flug, Ein-/Ausblenden von Arealen,
+  Highlight-Wechsel). Folien-Wechsel und Lernschritt-Wechsel werden derselbe Mechanismus.
+- **Didaktisch wertvolle Grafik-Ersetzungen.** Jede statische Buch-Abbildung (Abb. 11-4…11-15) bekommt
+  eine benannte Konfiguration, die sie **interaktiv reproduziert und ersetzt** — Funktion→Struktur am
+  echten 3D-Hirn statt am gedruckten Schema. (Inhaltliche Kuration, baut auf der Engine auf.)
+
 ## Entscheidungen (aus dem Brainstorming, verbindlich)
 
 | Frage | Entscheidung |
@@ -133,39 +149,60 @@ interface AreaProvenance {
 
 ## Config-Schema (Sub-Projekt 3, hier zur Orientierung)
 
-```toml
-preset = "kapitel11"          # "kapitel11" | "explorer" | "voll" | "custom"
+Eine **Configuration** ist das benannte Atom (eine Folie / ein Lernschritt / eine Abb.-Ersetzung).
+`config.toml` hält eine **Bibliothek** davon, plus Presets, plus Sequenzen (Präsentation/Lernpfad).
 
-[facets]
+```toml
+# --- Presets: benannte Default-Toggle-Sets (wie Grafik-Presets Low/Medium/Ultra) ---
+preset = "kapitel11"          # aktive Basis: "kapitel11" | "explorer" | "voll" | "custom"
+
+# --- Eine konkrete Konfiguration (Folie / Lernschritt / Abb.-Ersetzung) ---
+[configurations.broca-areal]
+label_de = "Broca-Areal (Abb. 11-7)"
+replaces_figure = "11-7"      # bindet diese Config an eine Buch-Abbildung (optional)
+
+[configurations.broca-areal.facets]
 clinic = true
 function = true
 chapter = true
 provenance = false
 
-[view]
+[configurations.broca-areal.view]
 surface = "pial"              # "pial" | "inflated"
-subcortex = true
+subcortex = false
 carve_on_taro = "julich"      # "off" | "dkt" | "julich"
 
-[atlas.julich]
-enabled = true
-[atlas.julich.groups]
-frontal = true
-temporal = false              # ganze Gruppe aus
-[atlas.julich.areas]
-"julich:area-44-ifg:l" = false  # einzelnes Areal aus (Override gegen Gruppe)
+[configurations.broca-areal.camera]
+target = "julich:area-44-ifg:l"   # benanntes Areal ODER explizite Pose
+# pose = { pos = [..], lookat = [..] }   # Alternative zu target
 
-[atlas.dkt]
-enabled = false               # ganzer Atlas aus
+[configurations.broca-areal.atlas.julich]
+enabled = true
+[configurations.broca-areal.atlas.julich.areas]
+"julich:area-44-ifg:l" = true
+"julich:area-45-ifg:l" = true
+# alle anderen geerbt-aus (Preset/Gruppe)
+
+# --- Sequenz: Präsentation oder Lernpfad referenziert Konfigurationen ---
+[presentation.kapitel11-vorlesung]
+label_de = "Kapitel 11 — Vorlesung"
+steps = ["intro", "broca-areal", "wernicke-areal", "phineas-ofc"]
 ```
 
-- **Presets** = benannte Toggle-Sets (wie Grafik-Presets Low/Medium/Ultra). `kapitel11` ist Default.
-- **`custom`** = User hat im Settings-Menü von einem Preset abgewichen.
-- Build validiert jede Areal-/Gruppen-ID im `config.toml` gegen den Katalog → **toter Toggle = lauter Build-Fehler**, kein stilles Ignorieren.
+- **Configuration** = Toggle-Set + Facetten + View + **Kamera** + (später) per-Areal-Visual-Zustand.
+- **Presets** = Default-Basis, von der eine Configuration nur die Abweichungen notiert (Vererbung).
+- **`presentation.*` / `learning.*`** = geordnete Sequenzen von Configuration-Namen — der gemeinsame
+  Atom-Pool für Präsentation **und** Lernplattform.
+- **`replaces_figure`** = bindet eine Configuration an eine Buch-Abbildung (Grafik-Ersetzung, SP2).
+- Die **drei Steuer-Schichten** (Datei < localStorage < URL) wählen/überschreiben die *aktive*
+  Configuration; URL-Deep-Link kann direkt auf `?config=broca-areal` oder `?step=...` zeigen.
+- Build validiert jede Areal-/Gruppen-/Config-/Step-Referenz gegen den Katalog → **tote Referenz =
+  lauter Build-Fehler**, kein stilles Ignorieren.
 
-## Dekomposition — 4 Sub-Projekte (geordnet)
+## Dekomposition — 5 Sub-Projekte (geordnet)
 
 Jedes Sub-Projekt bekommt **eigenen Spec → Plan → Implement**. Reihenfolge ist Abhängigkeits-getrieben.
+SP1–SP4 sind das Fundament; SP5 hebt es zur interaktiven Lernplattform (Transitions/Sequencing).
 
 ### SP1 — Katalog/Ontologie + Build  *(Start)*
 Voll-Baum `Achse → Atlas → Gruppe → Areal`, kanonische IDs + `refs` + Host + Provenienz.
@@ -180,8 +217,9 @@ als Startpunkt der Kuration nutzen.
 **Owned:** `scripts/atlas/atlas-context.yaml`, Build-Merge-Erweiterung.
 
 ### SP3 — Config-System (die `.ini`-Engine)
-TOML-Schema + Build-Validierung (`config.toml` → `config.default.json`) + 3-Schichten-Resolver
-(`config.default.json` < localStorage < URL) + Presets + „effective config"-Hook.
+TOML-Schema + Build-Validierung (`config.toml` → `config.json`) + 3-Schichten-Resolver
+(`config.json` < localStorage < URL) + Presets + **Konfigurations-Bibliothek** (benannte
+`Configuration`-Atome) + **Sequenzen** (`presentation.*` / `learning.*`) + „effective config"-Hook.
 **Owned:** `scripts/atlas/config.default.toml`, `scripts/atlas/build-config.mjs`,
 `apps/brain-app/src/viewer/atlas/atlasConfig.ts` (Resolver + React-Hook).
 
@@ -189,7 +227,17 @@ TOML-Schema + Build-Validierung (`config.toml` → `config.default.json`) + 3-Sc
 `AtlasLayerPanel` → hierarchischer Tree-Browser auf dem Katalog; zeigt effektiven On/Off-Zustand;
 Toggle schreibt Schicht 2. Knoten-Klick treibt fsaverage-Highlight **und** TARO-Carve **und**
 watertight-Objekt (via `refs`). Facetten-Panel zeigt Funktion/Klinik/Kapitel/Provenienz.
+Settings-Menü kann den aktuellen Toggle-Zustand als benannte `Configuration` **speichern** (Autoren-Loop).
 **Owned:** neue `AtlasTreeBrowser.tsx`, `AtlasFacetPanel.tsx`; Anbindung in `CanonicalAtlasMode.tsx`.
+
+### SP5 — Transitions + Sequencing (→ interaktive Lernplattform)
+Animierte Interpolation zwischen zwei `Configuration`-Atomen: Kamera-Flug, Areal-Opacity-Fade,
+Highlight-Wechsel. Treibt Folien-Wechsel (Präsentation) **und** Lernschritt-Wechsel (Lernplattform)
+über denselben Mechanismus. Voraussetzung: `Configuration` trägt per-Areal-Visual-Zustand + Kamera-Pose
+(diffbar/interpolierbar). Grafik-Ersetzungen (Abb. 11-x → `replaces_figure`-Config) sind die erste
+inhaltliche Nutzung. R3F/Three-Best-Practices beachten (Frameloop, kein React-Tax im Render-Pfad).
+**Owned:** `apps/brain-app/src/viewer/atlas/atlasTransition.ts` (Interpolator), Sequencer-UI;
+Erweiterung des `Configuration`-Schemas um Visual-Zustand.
 
 ## Bestehende Realität, die respektiert wird
 
