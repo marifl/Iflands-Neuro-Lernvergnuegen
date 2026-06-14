@@ -106,9 +106,14 @@ export default function CanonicalAtlasMode() {
         <ambientLight intensity={0.6} />
         {/* Gerichtetes Licht modelliert die Subkortex-Kerne (MeshStandardMaterial); Kortex-Shader bleibt unbeeinflusst. */}
         <directionalLight position={[1, 1, 2]} intensity={0.8} />
-        <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
-        <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
-        {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
+        {/* fsaverage liegt in RAS (superior = +Z, anterior = +Y) = Z-Up. Three.js/OrbitControls
+            sind Y-Up. -90 deg um X kippt superior nach +Y (echtes aufrechtes Hirn), +180 deg um Y
+            dreht die anteriore Seite zur Kamera -> aufrechte Frontalansicht, natuerliches Orbiten. */}
+        <group rotation={[-Math.PI / 2, Math.PI, 0]}>
+          <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
+          <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
+          {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
+        </group>
         <OrbitControls />
       </Canvas>
     </div>
