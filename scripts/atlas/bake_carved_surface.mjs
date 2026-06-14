@@ -73,6 +73,27 @@ slugs.forEach((slug, pi) => {
   }
 })
 
+// --- 2b. Seed-Garantie: jede Parzelle MUSS >=1 Vertex haben (User-Vorgabe: kein Areal verloren).
+// First-wins kann winzige/ueberlappende (Backfill-)Slugs vollstaendig schlucken. Hier holt sich jeder
+// leere Slug genau einen Vertex zurueck: den ersten seiner vertex_indices, der im Mesh existiert
+// (ueberschreibt first-wins fuer diesen einen Vertex). LAUTER Fehler, wenn KEIN Vertex auffindbar ist.
+const present = new Set()
+for (let i = 0; i < N; i++) if (vlab[i] >= 0) present.add(vlab[i])
+const claimed = new Int16Array(N).fill(0) // markiert per Seed-Garantie gepinnte Vertices (nicht ueberschreiben)
+slugs.forEach((slug, pi) => {
+  if (present.has(pi)) return // hat schon Vertices
+  let pinned = false
+  for (const li of labels[slug].vertex_indices) {
+    const p = hostGeom(labels[slug].host).vertices[li]
+    if (!p) continue
+    const gi = posMap.get(pkey(p))
+    if (gi === undefined) continue
+    if (claimed[gi]) continue // nicht einem anderen Seed klauen
+    vlab[gi] = pi; claimed[gi] = 1; pinned = true; break
+  }
+  if (!pinned) throw new Error(`bake: Slug ${slug} hat keinen auffindbaren Vertex (Areal verloren) — labels/geom inkonsistent`)
+})
+
 // --- 3. Nearest-Fill der unzugeordneten Vertices (Grid-beschleunigt) -> keine Loecher ---
 const CELL = 6
 const grid = new Map()
