@@ -6,7 +6,7 @@
 // vertex-gefaerbten Flaeche (mni152-pial). Dieses Skript bringt dieselbe Architektur auf TARO:
 // ein Mesh, Farbe je Vertex, keine konkurrierende Geometrie.
 //
-// Aufruf: node bake_carved_surface.mjs <julich|dkt>
+// Aufruf: node bake_carved_surface.mjs <julich|dkt|brodmann>
 import { Document, NodeIO } from '@gltf-transform/core'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
@@ -15,7 +15,7 @@ import { computeVertexNormals } from './subpatch_bake.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const source = process.argv[2]
-if (source !== 'julich' && source !== 'dkt') throw new Error('Aufruf: node bake_carved_surface.mjs <julich|dkt>')
+if (source !== 'julich' && source !== 'dkt' && source !== 'brodmann') throw new Error('Aufruf: node bake_carved_surface.mjs <julich|dkt|brodmann>')
 
 const labels = JSON.parse(readFileSync(resolve(here, `work/atlas_labels_${source}.json`)))
 const hosts = JSON.parse(readFileSync(resolve(here, 'work/taro_cortex_hosts.json')))

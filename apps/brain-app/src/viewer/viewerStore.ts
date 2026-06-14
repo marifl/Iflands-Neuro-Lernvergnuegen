@@ -118,6 +118,7 @@ interface ViewerState {
   /** Carve-Atlas-Overlays (Atlas-Parzellen aus TARO-EIGENEN Vertices gecarvt -> 0 mm Drift): default versteckt. */
   showCarveJulich: boolean
   showCarveDkt: boolean
+  showCarveBrodmann: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
   /** Name des zuletzt angeklickten Atlas-Areals auf TARO (Carve-Overlay); null = keins. */
@@ -176,7 +177,7 @@ interface ViewerState {
   setSkull: (visible: boolean, opacity?: number) => void
   setRodVisible: (visible: boolean) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
-  setCarveOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
+  setCarveOverlay: (which: 'julich' | 'dkt' | 'brodmann', visible: boolean) => void
   /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen (Name + Slug fuer die Bruecke). */
   setPickedAtlasArea: (name: string | null, slug: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
@@ -224,6 +225,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showAtlasDkt: false,
   showCarveJulich: false,
   showCarveDkt: false,
+  showCarveBrodmann: false,
   clipAtlasOverlay: true,
   pickedAtlasArea: null,
   pickedAtlasSlug: null,
@@ -340,10 +342,11 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
   setCarveOverlay: (which, visible) =>
     set((s) => {
-      const next = which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }
+      const next = which === 'julich' ? { showCarveJulich: visible } : which === 'dkt' ? { showCarveDkt: visible } : { showCarveBrodmann: visible }
       const julichOn = which === 'julich' ? visible : s.showCarveJulich
       const dktOn = which === 'dkt' ? visible : s.showCarveDkt
-      const anyOn = julichOn || dktOn
+      const brodmannOn = which === 'brodmann' ? visible : s.showCarveBrodmann
+      const anyOn = julichOn || dktOn || brodmannOn
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)

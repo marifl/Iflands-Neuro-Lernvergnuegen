@@ -13,8 +13,8 @@ import { ATLAS_SURFACE_FLAG, parcelRgb } from './atlasParcels'
 //             Architektur: vertex-gefaerbte Flaeche statt separater Parzellen-Meshes).
 // Lazy: das GLB laedt erst beim Einblenden, weil die Komponente nur dann gemountet wird.
 const RAW_URL = { julich: '/assets/bodyparts3d/atlas-raw-julich.glb', dkt: '/assets/bodyparts3d/atlas-raw-dkt.glb' } as const
-const SURFACE_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich.glb', dkt: '/assets/bodyparts3d/atlas-surface-dkt.glb' } as const
-const PICK_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich-pick.json', dkt: '/assets/bodyparts3d/atlas-surface-dkt-pick.json' } as const
+const SURFACE_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich.glb', dkt: '/assets/bodyparts3d/atlas-surface-dkt.glb', brodmann: '/assets/bodyparts3d/atlas-surface-brodmann.glb' } as const
+const PICK_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich-pick.json', dkt: '/assets/bodyparts3d/atlas-surface-dkt-pick.json', brodmann: '/assets/bodyparts3d/atlas-surface-brodmann-pick.json' } as const
 
 // Roh-Debug: eine kuehle Flachfarbe je Quelle (Drift auf einen Blick erkennbar).
 const RAW_COLOR = { julich: '#39d3c4', dkt: '#e879c8' } as const
@@ -54,7 +54,7 @@ function RawLayer({ which }: { which: 'julich' | 'dkt' }) {
 
 /** Carve-Flaeche: EIN vertex-gefaerbtes Mesh (= die TARO-Kortex, atlas-eingefaerbt). Lueckenlos,
  *  pickbar (Per-Vertex-Label via Sidecar; CutPickBridge liest den Areal-Namen). */
-function CarveSurface({ which }: { which: 'julich' | 'dkt' }) {
+function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
   const { scene } = useGLTF(SURFACE_URL[which])
   const [pick, setPick] = useState<{ slugs: string[]; vlabels: Int16Array } | null>(null)
 
@@ -130,12 +130,14 @@ export default function AtlasOverlay() {
   const showDkt = useViewerStore((s) => s.showAtlasDkt)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   return (
     <>
       {showJulich && <RawLayer which="julich" />}
       {showDkt && <RawLayer which="dkt" />}
       {showCarveJulich && <CarveSurface which="julich" />}
       {showCarveDkt && <CarveSurface which="dkt" />}
+      {showCarveBrodmann && <CarveSurface which="brodmann" />}
     </>
   )
 }

@@ -101,6 +101,7 @@ export default function FooterBar() {
   const setClipAtlasOverlay = useViewerStore((s) => s.setClipAtlasOverlay)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const setCameraView = useViewerStore((s) => s.setCameraView)
   const showSkull = useViewerStore((s) => s.showSkull)
@@ -118,15 +119,16 @@ export default function FooterBar() {
       key: 'atlas',
       eyebrow: 'Atlas',
       // Label zeigt das aktive Atlas-auf-Hirn-Overlay (Carve, 0 mm auf TARO) oder „Menü".
-      label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : 'Menü',
+      label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : showCarveBrodmann ? 'Brodmann' : 'Menü',
       content: (
         <>
           {/* Atlas-Areale direkt auf dem TARO-Hirn (Carve = 0 mm, anklickbar zeigt Namen).
-              Eines zur Zeit — DKT (gyrale Makroebene) oder Julich (zytoarchitektonische Areale). */}
+              Eines zur Zeit — DKT (gyral), Julich (zytoarchitektonisch) oder Brodmann (klassisch). */}
           <div className="eyebrow" style={{ marginBottom: 4 }}>Atlas auf Hirn</div>
-          <Item active={!showCarveJulich && !showCarveDkt} onClick={() => { setCarveOverlay('julich', false); setCarveOverlay('dkt', false); close() }}>Aus</Item>
-          <Item active={showCarveDkt} onClick={() => { setCarveOverlay('dkt', true); setCarveOverlay('julich', false); close() }}>DKT (Gyri)</Item>
-          <Item active={showCarveJulich} onClick={() => { setCarveOverlay('julich', true); setCarveOverlay('dkt', false); close() }}>Julich (Areale)</Item>
+          <Item active={!showCarveJulich && !showCarveDkt && !showCarveBrodmann} onClick={() => { setCarveOverlay('julich', false); setCarveOverlay('dkt', false); setCarveOverlay('brodmann', false); close() }}>Aus</Item>
+          <Item active={showCarveDkt} onClick={() => { setCarveOverlay('dkt', true); setCarveOverlay('julich', false); setCarveOverlay('brodmann', false); close() }}>DKT (Gyri)</Item>
+          <Item active={showCarveJulich} onClick={() => { setCarveOverlay('julich', true); setCarveOverlay('dkt', false); setCarveOverlay('brodmann', false); close() }}>Julich (Areale)</Item>
+          <Item active={showCarveBrodmann} onClick={() => { setCarveOverlay('brodmann', true); setCarveOverlay('julich', false); setCarveOverlay('dkt', false); close() }}>Brodmann (BA)</Item>
           <div style={{ height: 10 }} />
           <Item onClick={() => { setShowSources(true); close() }}>Quellen &amp; Lizenzen</Item>
         </>

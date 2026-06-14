@@ -497,7 +497,8 @@ export default function BodyParts3DViewer() {
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
   const pickedAtlasArea = useViewerStore((s) => s.pickedAtlasArea)
   const pickedAtlasSlug = useViewerStore((s) => s.pickedAtlasSlug)
-  const atlasOnBrain = showCarveJulich || showCarveDkt
+  const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
+  const atlasOnBrain = showCarveJulich || showCarveDkt || showCarveBrodmann
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
@@ -798,7 +799,7 @@ export default function BodyParts3DViewer() {
                 className="ed-panel ed-frame"
                 style={{ position: 'absolute', top: 16, right: 16, padding: '9px 14px', pointerEvents: 'none', maxWidth: 280 }}
               >
-                <div className="eyebrow">Atlas-Areal{showCarveDkt ? ' · DKT' : showCarveJulich ? ' · Julich' : ''}</div>
+                <div className="eyebrow">Atlas-Areal{showCarveDkt ? ' · DKT' : showCarveJulich ? ' · Julich' : showCarveBrodmann ? ' · Brodmann' : ''}</div>
                 <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : 'var(--g600)', marginTop: 4 }}>
                   {pickedAtlasArea ?? 'Areal anklicken'}
                 </div>

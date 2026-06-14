@@ -228,6 +228,7 @@ export default function StructureTree() {
   const setAtlasOverlay = useViewerStore((s) => s.setAtlasOverlay)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const isNarrow = useIsNarrow()
 
@@ -331,6 +332,15 @@ export default function StructureTree() {
             onClick={() => setCarveOverlay('dkt', !showCarveDkt)}
           >
             DKT
+          </button>
+          <button
+            type="button"
+            className={`ed-btn${showCarveBrodmann ? ' active' : ''}`}
+            style={sm}
+            title="Brodmann-Areale aus TARO-eigenen Vertices gecarvt (0 mm Drift) ein-/ausblenden — liegt exakt auf TARO"
+            onClick={() => setCarveOverlay('brodmann', !showCarveBrodmann)}
+          >
+            Brodmann
           </button>
         </div>
       </div>

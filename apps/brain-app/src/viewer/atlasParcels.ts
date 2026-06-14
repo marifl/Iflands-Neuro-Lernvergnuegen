@@ -81,6 +81,12 @@ export function prettyParcel(meshName: string): string {
     const host = parts.slice(1).join(' ').toUpperCase()
     return `Area ${code}${host ? ' · ' + host : ''}${suffix}`
   }
+  // Brodmann-Carve-Slug (`brodmann-ba38-superior-temporal-gyrus`): "BA38 · Superior Temporal Gyrus".
+  const ba = base.match(/^brodmann-ba([0-9]+[a-z]?)-?(.*)$/)
+  if (ba) {
+    const host = ba[2].replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())
+    return `BA${ba[1].toUpperCase()}${host ? ' · ' + host : ''}${suffix}`
+  }
   // DKT-aparc (lowercase, zusammengeschrieben): nur kapitalisieren.
   return `${base.charAt(0).toUpperCase()}${base.slice(1)}${suffix}`
 }
