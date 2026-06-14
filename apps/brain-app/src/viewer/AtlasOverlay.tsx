@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes } from './cutCapsMerged'
-import { ATLAS_SURFACE_FLAG } from './atlasParcels'
+import { ATLAS_SURFACE_FLAG, parcelRgb } from './atlasParcels'
 
 // Zwei Atlas-Overlay-Arten ueber TARO:
 //  - 'raw':   die ORIGINALEN Julich/DKT-Mesh-Areale (fremdes MNI-Hirn), per Affine grob auf TARO
@@ -69,27 +69,58 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' }) {
     return () => { alive = false }
   }, [which])
 
-  const mat = useMemo(
-    () => new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.82, metalness: 0, side: THREE.DoubleSide }),
-    [],
-  )
-  useMemo(() => {
+  // Label-LUT (Areal -> Farbe) + flat-varying-Shader: `flat` schaltet die Vertex-Interpolation aus
+  // -> HARTE Arealgrenzen (keine Farbverlaeufe), genau wie der fsaverage-Atlas-Modus.
+  const mat = useMemo<THREE.Material>(() => {
+    if (!pick) return new THREE.MeshStandardMaterial({ color: '#555', side: THREE.DoubleSide })
+    const size = pick.slugs.length
+    const data = new Uint8Array(size * 4)
+    pick.slugs.forEach((slug, i) => {
+      const [r, g, b] = parcelRgb(slug)
+      data[i * 4] = r; data[i * 4 + 1] = g; data[i * 4 + 2] = b; data[i * 4 + 3] = 255
+    })
+    const tex = new THREE.DataTexture(data, size, 1, THREE.RGBAFormat)
+    tex.minFilter = THREE.NearestFilter; tex.magFilter = THREE.NearestFilter
+    tex.colorSpace = THREE.SRGBColorSpace; tex.needsUpdate = true
+    return new THREE.ShaderMaterial({
+      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.7, 0.8).normalize() } },
+      side: THREE.DoubleSide,
+      vertexShader: `
+        attribute float aLabel;
+        flat varying float vLabel;
+        varying vec3 vN;
+        void main() {
+          vLabel = aLabel; vN = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }`,
+      fragmentShader: `
+        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir;
+        flat varying float vLabel; varying vec3 vN;
+        void main() {
+          vec4 area = texture2D(uLut, vec2((vLabel + 0.5) / uLutSize, 0.5));
+          float diff = clamp(dot(normalize(vN), uLightDir) * 0.5 + 0.5, 0.0, 1.0);
+          gl_FragColor = vec4(area.rgb * (0.5 + 0.5 * diff), 1.0);
+        }`,
+    })
+  }, [pick])
+
+  // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
+  useEffect(() => {
     scene.traverse((o) => {
       const m = o as THREE.Mesh
       if (!m.isMesh) return
       m.material = mat
       m.renderOrder = 2
       m.userData[ATLAS_SURFACE_FLAG] = true // pickbar (Vertex-genau) via CutPickBridge
+      if (!pick) return
+      const posCount = (m.geometry.getAttribute('position') as THREE.BufferAttribute).count
+      if (posCount !== pick.vlabels.length)
+        throw new Error(`atlas-surface ${which}: ${posCount} Vertices != ${pick.vlabels.length} Labels (Bake/Sidecar inkonsistent)`)
+      m.geometry.setAttribute('aLabel', new THREE.BufferAttribute(Float32Array.from(pick.vlabels), 1))
+      m.userData.atlasPick = pick
     })
-  }, [scene, mat])
+  }, [scene, mat, pick, which])
 
-  // Pick-Daten (slugs + per-Vertex-Label) ans Mesh haengen, sobald geladen.
-  useEffect(() => {
-    if (!pick) return
-    scene.traverse((o) => { if ((o as THREE.Mesh).isMesh) (o as THREE.Mesh).userData.atlasPick = pick })
-  }, [scene, pick])
-
-  useClip(useMemo(() => [mat], [mat]))
   return <primitive object={scene} />
 }
 

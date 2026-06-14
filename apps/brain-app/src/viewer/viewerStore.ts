@@ -22,25 +22,21 @@ export interface IsolationCrumb {
 
 export type ViewMode = 'full' | 'k11'
 
-// Strukturen, die ausgeblendet werden, solange ein Atlas-auf-Hirn-Overlay (Carve) aktiv ist:
-//  - Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die die Kortex verdecken.
-//  - die Kortex-Host-Gyri SELBST: der Carve re-segmentiert genau diese TARO-Flaechen. Bleiben sie
-//    sichtbar, konkurrieren sie koplanar mit den Carve-Parzellen (Durchscheinen/„Z-Fighting").
-//    Ausgeblendet -> die Parzellen SIND die Kortex (eine Oberflaeche, kein Konflikt).
-// Host-Gyrus-Basisnamen aus scripts/atlas/host_map.json (l/r werden unten erzeugt).
-const CORTEX_HOST_BASE = [
-  'angular-gyrus', 'anterior-orbital-gyrus', 'anterior-transverse-temporal-gyrus', 'cingulate-gyrus',
-  'cuneus', 'first-short-gyrus-of-insula', 'fusiform-gyrus', 'inferior-frontal-gyrus',
-  'inferior-temporal-gyrus', 'insula', 'intermediate-short-gyrus-of-insula', 'lateral-occipital-gyrus',
-  'lateral-orbital-gyrus', 'lingual-gyrus', 'medial-orbital-gyrus', 'middle-frontal-gyrus',
-  'middle-temporal-gyrus', 'parahippocampal-gyrus', 'postcentral-gyrus', 'posterior-orbital-gyrus',
-  'posterior-transverse-temporal-gyrus', 'precentral-gyrus', 'precuneus', 'second-short-gyrus-of-insula',
-  'straight-gyrus', 'superior-frontal-gyrus', 'superior-temporal-gyrus', 'supramarginal-gyrus',
-]
-const CARVE_HIDE_SLUGS = [
-  'cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli',
-  ...CORTEX_HOST_BASE.flatMap((g) => [`left-${g}`, `right-${g}`]),
-]
+// Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die die Kortex verdecken.
+const MENINGES_HIDE = ['cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli']
+
+// Welche TARO-Strukturen sind Kortex-OBERFLAECHE? Die Atlas-Flaeche re-segmentiert die ganze Kortex;
+// jedes sichtbar bleibende Kortex-Mesh konkurriert koplanar mit ihr (Durchscheinen/„Z-Fighting").
+// Statt pflegebeduerftiger Liste: per Muster aus der Ontologie ableiten (selbst-wartend, fasst auch
+// Sonderfaelle wie `posterior-part-of-...-superior-temporal-gyrus`). Marklager/Gefaesse/Nerven sind
+// KEINE Oberflaeche -> ausgeschlossen.
+const CORTEX_SURFACE_RE = /gyrus|lobule|cuneus|insula|uncus|entorhinal|fasciolar|operculum/i
+const NON_SURFACE_RE = /white-matter|arter|vein|nerve|sinus|aqueduct/i
+function cortexSurfaceSlugs(tree: OntologyNode): string[] {
+  return flattenStructures(tree)
+    .map((n) => n.id)
+    .filter((id) => CORTEX_SURFACE_RE.test(id) && !NON_SURFACE_RE.test(id))
+}
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
@@ -63,6 +59,8 @@ export interface CameraView {
 interface ViewerState {
   ontology: Ontology | null
   ancestors: Map<string, string[]>
+  /** Kortex-Oberflaechen-Slugs (aus der Ontologie); werden bei aktivem Atlas-Overlay ausgeblendet. */
+  cortexHideSlugs: string[]
   /** slug -> {role, side, Top-Gruppe} fuer die Einfaerbung (aus der Ontologie gebaut). */
   colorIndex: Map<string, ColorEntry>
   /** Aktiver Farbgebungsmodus der Hirn-Strukturen (modusuebergreifend). */
@@ -179,6 +177,7 @@ interface ViewerState {
 export const useViewerStore = create<ViewerState>((set, get) => ({
   ontology: null,
   ancestors: new Map(),
+  cortexHideSlugs: [],
   colorIndex: new Map(),
   colorMode: 'region',
   activePreset: null,
@@ -216,7 +215,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   atlasFocus: null,
 
   setOntology: (ontology) =>
-    set({ ontology, ancestors: ancestorMap(ontology.tree), colorIndex: buildColorIndex(ontology.tree) }),
+    set({
+      ontology,
+      ancestors: ancestorMap(ontology.tree),
+      colorIndex: buildColorIndex(ontology.tree),
+      cortexHideSlugs: cortexSurfaceSlugs(ontology.tree),
+    }),
   setContext: (context, slugs) =>
     set((state) => {
       const next = new Set(state.hidden)
@@ -316,7 +320,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)
-      for (const slug of CARVE_HIDE_SLUGS) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      for (const slug of MENINGES_HIDE) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      for (const slug of s.cortexHideSlugs) (anyOn ? hidden.add(slug) : hidden.delete(slug))
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
       return { ...next, hidden, pickedAtlasArea: null }
     }),

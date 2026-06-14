@@ -23,6 +23,19 @@ export function parcelColor(meshName: string): string {
   return `hsl(${hue}, 52%, 56%)`
 }
 
+/** Dieselbe Farbe als RGB-Bytes (0-255) — fuer die Label-LUT-DataTexture der Atlas-Flaeche. */
+export function parcelRgb(meshName: string): [number, number, number] {
+  const base = baseName(meshName)
+  let h = 0
+  for (let i = 0; i < base.length; i++) h = (h * 31 + base.charCodeAt(i)) >>> 0
+  const hue = (h % 360) / 360
+  const s = 0.52, l = 0.56
+  const k = (n: number) => (n + hue * 12) % 12
+  const a = s * Math.min(l, 1 - l)
+  const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
+  return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)]
+}
+
 /** Lateralitaet aus dem Suffix. */
 function side(meshName: string): string {
   if (meshName.endsWith('-l')) return 'L'
