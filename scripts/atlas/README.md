@@ -11,8 +11,7 @@
 ## 0. Die Fakten, die immer wieder „neu entdeckt" wurden (NICHT erneut suchen)
 
 1. **Julich-412-Geometrie EXISTIERT.** Sie fehlt nur im *Archiv dieses Standalone-Repos*. Die echte Mesh-Geometrie liegt unter:
-   - `/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone/public/figs3d/v2/glb/julich3.glb` (Schwester-Standalone, **kanonische Quelle**)
-   - Monorepo: `…/MU - SS26 - Kognitive Neurowissenschaften/deck/brain3d-next/public/figs3d/v2/glb/julich3.glb`
+   - `<julich3.glb>` — extern bereitstellen (EBRAINS Julich-Brain, Amunts et al. 2020; lokal nach `scripts/atlas/work/` legen). **Nicht im Repo gebuendelt** (Lizenz).
    - **2,37 MB, MESHOPT-komprimiert (NICHT Draco!), 292 benannte kortikale Meshes**, MNI152-ICBM-2009c-Asym, Amunts et al. 2020.
    - Namens-Schema: `julich3-area-<arealcode>-<host-suffix>-<l|r>` → **der Host-Gyrus steht im Namen** (z.B. `area-44-ifg`, `op4-poperc`, `fp2-fpole`, `6mp-sma-mesial-sfg`).
 2. **DKT-Geometrie** liegt in `archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-learn-brain.glb` (Draco). Enthaelt DKT-Kortex + Brodmann `ba-*` + Julich-FG/hOc + CIT168-Subkortex. **DKT = die figur-relevante gyrale Granularitaet** (pars opercularis=BA44, triangularis=BA45, orbitalis=BA47, rostral/caudal ACC, lateral/medial OFC). Julich = feinere zytoarchitektonische Ebene.
@@ -39,7 +38,7 @@ Das **gesamte** Julich + DKT auf TARO, als wiederverwendbares Artefakt fuer spae
 - **Reproduktion:**
   ```bash
   # Julich: Meshopt-GLB decoden (kanonische Quelle, s. Abschnitt 0)
-  node decode_glb.mjs "/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone/public/figs3d/v2/glb/julich3.glb" work/julich_parcels.json "^julich3-"
+  node decode_glb.mjs work/julich3.glb work/julich_parcels.json "^julich3-"   # julich3.glb extern bereitstellen (s. Abschnitt 0)
   # Alle TARO-Kortex-Hosts decoden (62 Meshes)
   node decode_glb.mjs ../../apps/brain-app/public/assets/bodyparts3d/brain.glb work/taro_cortex_hosts.json "^(left|right)-(…alle Kortex-Gyri…)$"
   # Transform + Bake

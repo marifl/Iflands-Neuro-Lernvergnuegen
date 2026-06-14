@@ -27,7 +27,7 @@ Alle Quellen für die interaktive 3D-Lern-Experience liegen gesammelt unter [`ra
 **Single Source of Truth:** [`scripts/atlas/README.md`](scripts/atlas/README.md) — zuerst lesen, bevor du etwas
 ueber Hirn-Atlas-Geometrie behauptest. Die wiederkehrend „neu entdeckten" Fakten, festgehalten:
 
-- **Julich-412 EXISTIERT** (fehlt nur im Archiv DIESES Repos): `/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone/public/figs3d/v2/glb/julich3.glb` — **2,37 MB, MESHOPT-komprimiert (nicht Draco!), 292 kortikale Meshes**, Host-Gyrus steht im Namen (`julich3-area-<code>-<host>-<l|r>`).
+- **Julich-412 EXISTIERT** (nicht im Repo gebuendelt): `<julich3.glb>` — extern bereitstellen, s. [`scripts/atlas/README.md`](scripts/atlas/README.md) (Datenbeschaffung). **2,37 MB, MESHOPT-komprimiert (nicht Draco!), 292 kortikale Meshes**, Host-Gyrus steht im Namen (`julich3-area-<code>-<host>-<l|r>`).
 - **DKT** in `archive/2026-06-11-mni-stack/.../mni152-learn-brain.glb` (Draco) — die figur-relevante gyrale Granularitaet (pars\*=BA44/45/47, ACC, OFC).
 - **MNI152 ≠ TARO = zwei verschiedene Hirne** (globale Affine ~22 mm daneben). Methode: **Within-Host-Split** (zentroid-aligned), keine globale Surface-Registrierung. `julich3` und `mni-learn` haben SOGAR UNTERSCHIEDLICHE GLB-Frames → je Quelle eigene `→TARO`-Affine.
 - **Voll-Transform liegt fertig auf dem Shelf:** `scripts/atlas/work/atlas-{julich,dkt}.glb` (292 + 60 Parzellen) + `atlas-manifest.json`. **NICHT** in der Runtime — `apps/brain-app/public/assets/bodyparts3d/k11-subparcels.glb` enthaelt nur die 24 figur-genutzten Patches und ist die einzige vom App geladene Sub-Patch-GLB.
