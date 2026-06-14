@@ -20,7 +20,9 @@ export default function CanonicalAtlasMode() {
   const [subMeshes, setSubMeshes] = useState<SubcorticalMesh[]>([])
   const [err, setErr] = useState<Error | null>(null)
   const [active, setActive] = useState<string>('')
-  const [surface, setSurface] = useState<'pial' | 'inflated'>('inflated')
+  // Default Pial = echtes gefaltetes Hirn mit Furchen (nicht die aufgeblasene "inflated"-Variante).
+  // Das ist der Sinn des praezisen Atlas: wie ein echtes Hirn aussehen, nicht ballooned.
+  const [surface, setSurface] = useState<'pial' | 'inflated'>('pial')
   const [showSub, setShowSub] = useState<boolean>(false)
   const [picked, setPicked] = useState<string>('—')
   // Fokussiertes Areal (Bruecke TARO->Atlas): Label-Id, das hervorgehoben wird; -1 = kein Fokus.
