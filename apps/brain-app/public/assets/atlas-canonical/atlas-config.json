@@ -1,0 +1,97 @@
+{
+  "preset": "kapitel11",
+  "presets": {
+    "kapitel11": {
+      "label_de": "Kapitel 11 (PFC/BG-Fokus)",
+      "scopes": {
+        "axis:macro": false,
+        "axis:cyto": false,
+        "area:julich:area-44:l": true,
+        "area:julich:area-45:l": true,
+        "area:dkt:parstriangularis:l": true,
+        "area:dkt:parsopercularis:l": true,
+        "area:dkt:lateralorbitofrontal:l": true,
+        "area:dkt:medialorbitofrontal:l": true,
+        "area:dkt:rostralanteriorcingulate:l": true
+      }
+    },
+    "explorer": {
+      "label_de": "Explorer (Makro sichtbar)",
+      "scopes": {
+        "axis:macro": true,
+        "axis:cyto": false
+      }
+    },
+    "voll": {
+      "label_de": "Voll (alle Atlanten)",
+      "scopes": {
+        "axis:macro": true,
+        "axis:cyto": true
+      }
+    }
+  },
+  "configurations": {
+    "broca-areal": {
+      "label_de": "Broca-Areal (Abb. 11-7)",
+      "replaces_figure": "11-7",
+      "facets": {
+        "clinic": true,
+        "function": true,
+        "chapter": true,
+        "provenance": false
+      },
+      "view": {
+        "surface": "pial",
+        "subcortex": false,
+        "carve_on_taro": "julich"
+      },
+      "camera": {
+        "target": "julich:area-44:l"
+      },
+      "scopes": {
+        "area:julich:area-44:l": true,
+        "area:julich:area-45:l": true
+      }
+    },
+    "ofc-phineas": {
+      "label_de": "OFC / Phineas Gage",
+      "replaces_figure": "11-4",
+      "facets": {
+        "clinic": true,
+        "function": true,
+        "chapter": true,
+        "provenance": false
+      },
+      "view": {
+        "surface": "pial",
+        "subcortex": false,
+        "carve_on_taro": "dkt"
+      },
+      "camera": {
+        "target": "dkt:lateralorbitofrontal:l"
+      },
+      "scopes": {
+        "area:dkt:lateralorbitofrontal:l": true,
+        "area:dkt:medialorbitofrontal:l": true
+      }
+    }
+  },
+  "presentation": {
+    "kapitel11-vorlesung": {
+      "label_de": "Kapitel 11 — Vorlesung",
+      "steps": [
+        "broca-areal",
+        "ofc-phineas"
+      ]
+    }
+  },
+  "learning": {
+    "kapitel11-pfad": {
+      "label_de": "Lernpfad Kapitel 11",
+      "steps": [
+        "ofc-phineas",
+        "broca-areal"
+      ]
+    }
+  }
+}
