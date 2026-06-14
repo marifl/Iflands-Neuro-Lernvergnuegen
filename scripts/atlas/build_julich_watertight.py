@@ -1,3 +1,8 @@
+# OBSOLET (2026-06-14): Dieses Skript erzeugte das alte glatte volumetrische julich-brain.glb (v3.0.3, OHNE
+# Furchen), das aus der App entfernt wurde. Ersetzt durch `build_watertight_atlas.py` (furchen-echte
+# Pial-Patch-Shells, v3.1, alle 4 Atlanten -> atlas3d-*.glb). Nur fuer historische Referenz / die
+# MNI152->TARO-Affine-Herleitung behalten. NICHT mehr ausfuehren (regeneriert eine geloeschte Datei).
+#
 # Watertight Julich-Brain-CORTEX erzeugen (Monorepo-Methode: volumetrische Segmentierung -> Marching-Cubes
 # -> geschlossene Shell-Meshes). Die rohen Julich-Oberflaechen-Patches (julich3.glb) sind duenne offene
 # Kortex-Baender (NICHT watertight); Marching-Cubes auf der binaeren Areal-Maske liefert pro Areal ein

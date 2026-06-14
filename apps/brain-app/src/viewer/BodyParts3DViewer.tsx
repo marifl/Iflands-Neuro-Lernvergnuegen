@@ -33,8 +33,8 @@ import {
 const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
-// Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt jetzt die
-// furchige v3.1-Variante (loest das alte glatte volumetrische julich-brain.glb ab).
+// Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt die furchige
+// v3.1-Variante; das alte glatte volumetrische julich-brain.glb wurde entfernt (ersetzt).
 const ATLAS3D: { key: 'julich' | 'dkt' | 'brodmann' | 'destrieux'; glb: string; rootLabels: Record<Lang, string> }[] = [
   { key: 'julich', glb: '/assets/bodyparts3d/atlas3d-julich.glb', rootLabels: { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' } },
   { key: 'dkt', glb: '/assets/bodyparts3d/atlas3d-dkt.glb', rootLabels: { de: 'DKT', la: 'Atlas DKT', en: 'DKT' } },
