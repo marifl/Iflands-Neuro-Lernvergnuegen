@@ -10,8 +10,11 @@ sind die jeweils verlinkten Originalbedingungen massgeblich und zu pruefen.
 
 - **Verwendung:** Alle ausgelieferten 3D-Meshes (GLB), abgeleitet aus den OBJ-Dateien
   im BodyParts3D-Eigenraum (TARO).
-- **Lizenz:** Creative Commons Attribution-ShareAlike 2.1 Japan (CC BY-SA 2.1 JP) —
-  <https://creativecommons.org/licenses/by-sa/2.1/jp/>
+- **Original-Lizenz:** Creative Commons Attribution-ShareAlike 2.1 Japan
+  (CC BY-SA 2.1 JP) — <https://creativecommons.org/licenses/by-sa/2.1/jp/>. In diesem
+  Repository unter CC BY-SA 4.0 weitergegeben (zulaessiges Upgrade gemaess der
+  ShareAlike-Klausel „spaetere Version mit gleichen Elementen"); die woertliche
+  Original-Attribution bleibt erhalten.
 - **Pflicht-Attribution (woertlich):**
   > BodyParts3D, Copyright© The Database Center for Life Science licensed by
   > CC Attribution-Share Alike 2.1 Japan
@@ -23,8 +26,9 @@ sind die jeweils verlinkten Originalbedingungen massgeblich und zu pruefen.
   <https://doi.org/10.18908/lsdba.nbdc00837-000>
 - Details: [`apps/brain-app/public/assets/bodyparts3d/ATTRIBUTION.md`](apps/brain-app/public/assets/bodyparts3d/ATTRIBUTION.md)
 
-> **ShareAlike-Hinweis:** Diese Lizenz ist „ansteckend" und gibt damit die Lizenz
-> des gesamten Repositories vor (siehe [`LICENSE`](LICENSE)).
+> **ShareAlike-Hinweis:** Diese Lizenz ist „ansteckend" und gibt — zusammen mit
+> Julich-Brain (CC BY-SA 4.0) — die Lizenz des gesamten Repositories vor:
+> **CC BY-SA 4.0** (siehe [`LICENSE`](LICENSE)).
 
 ---
 
@@ -63,8 +67,9 @@ Oberflaechen im `fsaverage`-Raum mit folgenden Kartierungen
 
 ---
 
-> **Hinweis fuer Weiterverbreitung:** CC BY-SA 2.1 JP (BodyParts3D) und CC BY-SA 4.0
-> (Julich-Brain) sind beide ShareAlike-Lizenzen unterschiedlicher Versionen. Ihre
-> Kombination in einem einzigen verteilten Werk sollte vor einer Veroeffentlichung
-> rechtlich gegengeprueft werden. Im Zweifel die betroffenen Datensaetze separat
-> halten oder die jeweils kompatibelste Lizenzfassung waehlen.
+> **Hinweis fuer Weiterverbreitung:** Das gesamte Werk wird unter **CC BY-SA 4.0**
+> verteilt. Das ist der gemeinsame Nenner: Julich-Brain ist bereits CC BY-SA 4.0,
+> und CC BY-SA 2.1 JP (BodyParts3D) erlaubt die Weitergabe von Bearbeitungen unter
+> einer spaeteren Version mit gleichen Elementen. FreeSurfer-, Allen- und
+> CIT168-Bestandteile verlangen Namensnennung/Zitation (oben dokumentiert) und sind
+> mit dieser Weitergabe vereinbar.

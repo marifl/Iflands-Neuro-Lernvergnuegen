@@ -1,29 +1,33 @@
 # Lizenz
 
-## Creative Commons Attribution-ShareAlike 2.1 Japan (CC BY-SA 2.1 JP)
+## Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 
 Dieses Werk — einschliesslich Quellcode, abgeleiteter 3D-Meshes und mitgelieferter
-Daten — wird unter der **Creative Commons Attribution-ShareAlike 2.1 Japan**
+Daten — wird unter der **Creative Commons Attribution-ShareAlike 4.0 International**
 veroeffentlicht.
 
 Voller Lizenztext (rechtsverbindlich):
-<https://creativecommons.org/licenses/by-sa/2.1/jp/legalcode> (JP)
-Zusammenfassung (Deed): <https://creativecommons.org/licenses/by-sa/2.1/jp/deed.de>
+<https://creativecommons.org/licenses/by-sa/4.0/legalcode>
+Zusammenfassung (Deed): <https://creativecommons.org/licenses/by-sa/4.0/deed.de>
 
 Du darfst das Werk teilen und bearbeiten, auch kommerziell, unter den Bedingungen:
 
-- **Namensnennung (BY):** Die unten stehende Pflicht-Attribution muss erhalten bleiben.
-- **Weitergabe unter gleichen Bedingungen (SA):** Bearbeitungen muessen unter
-  CC BY-SA 2.1 JP (oder kompatibel) weitergegeben werden.
+- **Namensnennung (BY):** Urheber, Lizenz und Quelle nennen; die unten stehende
+  Pflicht-Attribution fuer BodyParts3D muss erhalten bleiben.
+- **Weitergabe unter gleichen Bedingungen (SA):** Bearbeitungen, die verteilt werden,
+  muessen ebenfalls unter CC BY-SA 4.0 stehen.
 
 ### Warum diese Lizenz
 
-Die 3D-Hirnstrukturen stammen aus dem **BodyParts3D**-Datensatz, der unter
-CC BY-SA 2.1 JP steht. ShareAlike ist „ansteckend": Sobald die daraus abgeleiteten
-GLB-Meshes gebuendelt ausgeliefert werden, muss das gesamte verteilte Werk unter
-derselben Lizenz stehen. Daher gilt CC BY-SA 2.1 JP fuer dieses Repository als Ganzes.
+Die gebuendelten Daten stammen aus ShareAlike-Quellen: **BodyParts3D** (urspruenglich
+CC BY-SA 2.1 JP) und **Julich-Brain** (CC BY-SA 4.0). ShareAlike ist „ansteckend":
+Sobald daraus abgeleitete Meshes/Labels gebuendelt ausgeliefert werden, muss das
+gesamte verteilte Werk unter einer kompatiblen ShareAlike-Lizenz stehen. CC BY-SA 4.0
+ist der gemeinsame Nenner — Julich ist bereits 4.0, und CC BY-SA 2.1 erlaubt die
+Weitergabe von Bearbeitungen unter einer spaeteren Version mit gleichen Elementen
+(Upgrade auf 4.0). Daher gilt CC BY-SA 4.0 fuer dieses Repository als Ganzes.
 
-### Pflicht-Attribution (woertlich, darf nicht veraendert werden)
+### Pflicht-Attribution BodyParts3D (woertlich, darf nicht veraendert werden)
 
 > BodyParts3D, Copyright© The Database Center for Life Science licensed by
 > CC Attribution-Share Alike 2.1 Japan
@@ -31,11 +35,10 @@ derselben Lizenz stehen. Daher gilt CC BY-SA 2.1 JP fuer dieses Repository als G
 ## Weitere Quellen
 
 Dieses Repository buendelt zusaetzliche Datensaetze Dritter (Hirnatlanten,
-Ontologien) mit eigenen Lizenz- und Zitationspflichten. Siehe
+Ontologien) mit eigenen Attributions- und Zitationspflichten. Siehe
 [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) fuer die vollstaendige Liste,
 Zitationen und Quell-Links.
 
 ---
 
-© 2026 Marcus Ifland. Wo nicht anders durch die ShareAlike-Pflicht oben gebunden,
-sind eigene Beitraege ebenfalls unter CC BY-SA 2.1 JP freigegeben.
+© 2026 Marcus Ifland. Freigegeben unter CC BY-SA 4.0.

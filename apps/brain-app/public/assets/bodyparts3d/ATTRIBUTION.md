@@ -15,9 +15,10 @@ des Database Center for Life Science (DBCLS), Japan, und werden im BodyParts3D-E
 
 **ShareAlike-Hinweis (wichtig):** CC BY-SA ist „ansteckend". Jedes abgeleitete Werk, das
 verteilt wird — einschließlich der aus den OBJ-Dateien konvertierten und mit der App
-ausgelieferten GLB-Meshes — muss **ebenfalls unter CC BY-SA 2.1 JP** stehen und dieselbe
-Attribution mitführen. Das betrifft die Lizenzwahl der gesamten App, sobald die Meshes
-gebündelt ausgeliefert werden.
+ausgelieferten GLB-Meshes — steht unter ShareAlike und muss dieselbe Attribution
+mitführen. Dieses Repository gibt das Gesamtwerk daher unter **CC BY-SA 4.0** weiter
+(zulässiges Upgrade von 2.1 JP, gemeinsamer Nenner mit Julich-Brain 4.0) — siehe
+Root-[`LICENSE`](../../../../../LICENSE).
 
 ## Wissenschaftliche Zitation (APA7)
 
