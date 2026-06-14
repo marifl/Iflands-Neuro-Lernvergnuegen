@@ -148,7 +148,7 @@ export function buildCatalog() {
     }
     if (L.carve === 'prefix') for (const c of carves) bySide[c.side].push(c)
 
-    const used = new Set()
+    const used = new Map()          // carveKey -> areaId (faengt Ueber-Konsumption: ein Carve in zwei Arealen)
     const groups = new Map()        // lobe -> areas[]
     let nExcluded = 0
 
@@ -157,13 +157,19 @@ export function buildCatalog() {
       if (NON_REGION[L.id]?.test(entry.name)) { nExcluded++; continue }
       const code = L.id === 'julich' ? julichSlug(entry.name) : lutCode(L.id, entry.name)
       for (const side of ['L', 'R']) {
+        const areaId = `${L.id}:${code}:${side.toLowerCase()}`
         let matches = []
         if (L.carve === 'code') matches = byKey.get(`${code}|${side}`) || []
         else if (L.carve === 'prefix') {
           const prefix = `julich3-${code}-`
           matches = bySide[side].filter((c) => c.key.startsWith(prefix))
         }
-        matches.forEach((c) => used.add(c.key))
+        for (const c of matches) {
+          if (used.has(c.key)) {
+            throw new Error(`buildCatalog: Carve-Key "${c.key}" doppelt zugeordnet ("${used.get(c.key)}" und "${areaId}") — Prefix-Kollision`)
+          }
+          used.set(c.key, areaId)
+        }
         const hosts = [...new Set(matches.map((c) => c.host_stem))]
         // Lobe: primaer Carve-Host (groesste Parzelle), sonst Name-Tabelle, sonst lauter Fehler.
         let lobe
@@ -177,7 +183,7 @@ export function buildCatalog() {
         else throw new Error(`buildCatalog: ${L.id}:${code}:${side} ohne Carve-Host und ohne Name-Fallback`)
 
         const area = {
-          id: `${L.id}:${code}:${side.toLowerCase()}`,
+          id: areaId,
           label_de: prettyArea(L.id, entry.name, side),
           side,
           hosts,
@@ -209,10 +215,11 @@ export function buildCatalog() {
       id: L.id, axis: L.axis, label_de: L.label_de,
       groups: [...groups.entries()]
         .sort((a, b) => a[0].localeCompare(b[0]))
-        .map(([lobe, areas]) => ({
-          id: lobe, label_de: LOBE_LABEL[lobe] ?? lobe,
-          areas: areas.sort((x, y) => x.id.localeCompare(y.id)),
-        })),
+        .map(([lobe, areas]) => {
+          const label_de = LOBE_LABEL[lobe]
+          if (!label_de) throw new Error(`buildCatalog: kein LOBE_LABEL fuer Lappen "${lobe}" — LOBE_LABEL ergaenzen`)
+          return { id: lobe, label_de, areas: areas.sort((x, y) => x.id.localeCompare(y.id)) }
+        }),
     })
   }
 

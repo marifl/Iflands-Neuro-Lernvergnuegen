@@ -52,6 +52,19 @@ test('buildCatalog: kein Orphan-Carve (jede Parzelle einem Areal zugeordnet)', (
   assert.deepEqual(orphanCarve, {}, `Orphan-Carve: ${JSON.stringify(orphanCarve)}`)
 })
 
+test('buildCatalog: kein Carve-Key doppelt zugeordnet (keine Prefix-Ueber-Konsumption)', () => {
+  // buildCatalog wirft bereits intern bei Doppel-Zuordnung; hier zusaetzlich als Daten-Invariante.
+  const { catalog } = buildCatalog()
+  const seen = new Map()
+  for (const atlas of catalog.atlases)
+    for (const g of atlas.groups)
+      for (const area of g.areas)
+        for (const key of area.refs.carve) {
+          assert.ok(!seen.has(key), `Carve-Key "${key}" in zwei Arealen: "${seen.get(key)}" und "${area.id}"`)
+          seen.set(key, area.id)
+        }
+})
+
 test('buildCatalog: Areal-Zahl je Atlas (LUT-non-medial minus Non-Region) × 2', () => {
   const { catalog } = buildCatalog()
   const count = (id) => catalog.atlases.find((a) => a.id === id).groups.flatMap((g) => g.areas).length
