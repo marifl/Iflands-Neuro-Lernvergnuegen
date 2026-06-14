@@ -4,6 +4,9 @@
 
 /** userData-Flag: markiert ein Mesh als pickbare Atlas-Parzelle (von CutPickBridge erkannt). */
 export const ATLAS_PARCEL_FLAG = 'atlasParcel'
+/** userData-Flag: durchgehende Atlas-Flaeche (EIN Mesh, Per-Vertex-Label). userData traegt
+ *  zusaetzlich `{ slugs: string[]; vlabels: Int16Array }` fuer den Vertex-genauen Pick. */
+export const ATLAS_SURFACE_FLAG = 'atlasSurface'
 
 /** Basisname ohne Lateralitaets-Suffix (links/rechts teilen Farbe + Identitaet). */
 function baseName(meshName: string): string {

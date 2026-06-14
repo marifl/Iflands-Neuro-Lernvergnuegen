@@ -4,7 +4,8 @@ import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes, CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 import { pickCutAwareHit } from './cutPick'
-import { ATLAS_PARCEL_FLAG, prettyParcel } from './atlasParcels'
+import { ATLAS_PARCEL_FLAG, ATLAS_SURFACE_FLAG, prettyParcel } from './atlasParcels'
+import { nearestCornerVertex } from './atlas/atlasPick'
 
 // Klick-vs-Orbit-Drag: ueber diese Pixel-Distanz gilt ein pointerup als Drag, nicht als Pick.
 const DRAG_PX = 4
@@ -47,20 +48,37 @@ export default function CutPickBridge() {
       return out
     }
 
-    // Liefert TARO-Struktur UND (falls getroffen) Atlas-Parzelle aus EINEM Raycast.
-    const hitAt = (ev: MouseEvent): { taro: string | null; parcel: string | null } => {
+    // Atlas-Areal-Name aus einem Flaechen-Treffer (EIN vertex-gelabeltes Mesh): naechste Face-Ecke
+    // -> Per-Vertex-Label -> Slug -> lesbarer Name.
+    const surfaceArea = (hit: THREE.Intersection): string | null => {
+      const obj = hit.object as THREE.Mesh
+      const pickData = obj.userData.atlasPick as { slugs: string[]; vlabels: Int16Array } | undefined
+      if (!pickData || !hit.face) return null
+      const local = obj.worldToLocal(hit.point.clone())
+      const posAttr = obj.geometry.getAttribute('position') as THREE.BufferAttribute
+      const vi = nearestCornerVertex(posAttr.array as Float32Array, hit.face.a, hit.face.b, hit.face.c, [local.x, local.y, local.z])
+      const lbl = pickData.vlabels[vi]
+      return lbl >= 0 ? prettyParcel(pickData.slugs[lbl]) : null
+    }
+
+    // Liefert TARO-Struktur UND (falls getroffen) den Atlas-Areal-Namen aus EINEM Raycast.
+    const hitAt = (ev: MouseEvent): { taro: string | null; area: string | null } => {
       const rect = el.getBoundingClientRect()
       pointer.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1
       pointer.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1
       raycaster.setFromCamera(pointer, camera)
       const hits = raycaster.intersectObjects(scene.children, true)
-      // Atlas-Parzelle (Carve-Overlay) liegt auf der Oberflaeche -> naechster Parzellen-Treffer.
-      const parcelHit = hits.find((h) => h.object.visible && (h.object as THREE.Mesh).userData[ATLAS_PARCEL_FLAG])
-      const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, collectSources())
-      return {
-        taro: taroHit ? (taroHit.object as THREE.Mesh).name : null,
-        parcel: parcelHit ? (parcelHit.object as THREE.Mesh).name : null,
+      // Atlas-Overlay (Carve) liegt auf der Oberflaeche -> naechster Treffer (Flaeche ODER Parzelle).
+      const atlasHit = hits.find(
+        (h) => h.object.visible && ((h.object as THREE.Mesh).userData[ATLAS_SURFACE_FLAG] || (h.object as THREE.Mesh).userData[ATLAS_PARCEL_FLAG]),
+      )
+      let area: string | null = null
+      if (atlasHit) {
+        const obj = atlasHit.object as THREE.Mesh
+        area = obj.userData[ATLAS_SURFACE_FLAG] ? surfaceArea(atlasHit) : prettyParcel(obj.name)
       }
+      const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, collectSources())
+      return { taro: taroHit ? (taroHit.object as THREE.Mesh).name : null, area }
     }
 
     const onPointerDown = (ev: PointerEvent) => {
@@ -72,9 +90,9 @@ export default function CutPickBridge() {
       const dy = ev.clientY - down.current.y
       down.current = null
       if (dx * dx + dy * dy > DRAG_PX * DRAG_PX) return // Orbit-Drag (Kamera), kein Pick/Deselect
-      const { taro, parcel } = hitAt(ev)
+      const { taro, area } = hitAt(ev)
       // Liegt ein Atlas-Areal (Carve-Overlay) unter dem Klick -> dessen Name hat Vorrang.
-      if (parcel) return setPickedAtlasArea(prettyParcel(parcel))
+      if (area) return setPickedAtlasArea(area)
       if (taro) pick(taro)
       else select(null) // Klick in den leeren Raum hebt die Auswahl auf
     }

@@ -22,9 +22,25 @@ export interface IsolationCrumb {
 
 export type ViewMode = 'full' | 'k11'
 
-// Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die im „Voller Atlas" die Kortex verdecken.
-// Werden ausgeblendet, solange ein Atlas-auf-Hirn-Overlay (Carve) aktiv ist, damit die Areale sichtbar sind.
-const MENINGES_SLUGS = ['cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli']
+// Strukturen, die ausgeblendet werden, solange ein Atlas-auf-Hirn-Overlay (Carve) aktiv ist:
+//  - Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die die Kortex verdecken.
+//  - die Kortex-Host-Gyri SELBST: der Carve re-segmentiert genau diese TARO-Flaechen. Bleiben sie
+//    sichtbar, konkurrieren sie koplanar mit den Carve-Parzellen (Durchscheinen/„Z-Fighting").
+//    Ausgeblendet -> die Parzellen SIND die Kortex (eine Oberflaeche, kein Konflikt).
+// Host-Gyrus-Basisnamen aus scripts/atlas/host_map.json (l/r werden unten erzeugt).
+const CORTEX_HOST_BASE = [
+  'angular-gyrus', 'anterior-orbital-gyrus', 'anterior-transverse-temporal-gyrus', 'cingulate-gyrus',
+  'cuneus', 'first-short-gyrus-of-insula', 'fusiform-gyrus', 'inferior-frontal-gyrus',
+  'inferior-temporal-gyrus', 'insula', 'intermediate-short-gyrus-of-insula', 'lateral-occipital-gyrus',
+  'lateral-orbital-gyrus', 'lingual-gyrus', 'medial-orbital-gyrus', 'middle-frontal-gyrus',
+  'middle-temporal-gyrus', 'parahippocampal-gyrus', 'postcentral-gyrus', 'posterior-orbital-gyrus',
+  'posterior-transverse-temporal-gyrus', 'precentral-gyrus', 'precuneus', 'second-short-gyrus-of-insula',
+  'straight-gyrus', 'superior-frontal-gyrus', 'superior-temporal-gyrus', 'supramarginal-gyrus',
+]
+const CARVE_HIDE_SLUGS = [
+  'cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli',
+  ...CORTEX_HOST_BASE.flatMap((g) => [`left-${g}`, `right-${g}`]),
+]
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
@@ -297,11 +313,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const julichOn = which === 'julich' ? visible : s.showCarveJulich
       const dktOn = which === 'dkt' ? visible : s.showCarveDkt
       const anyOn = julichOn || dktOn
-      // Hirnhaeute ausblenden, solange ein Overlay an ist (sonst verdeckt die Dura die Areale);
-      // beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen (kein stiller Rest).
+      // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
+      // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)
-      for (const slug of MENINGES_SLUGS) (anyOn ? hidden.add(slug) : hidden.delete(slug))
-      return { ...next, hidden, pickedAtlasArea: anyOn ? s.pickedAtlasArea : null }
+      for (const slug of CARVE_HIDE_SLUGS) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
+      return { ...next, hidden, pickedAtlasArea: null }
     }),
   setPickedAtlasArea: (pickedAtlasArea) => set({ pickedAtlasArea }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
