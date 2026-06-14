@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes, CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 import { pickCutAwareHit } from './cutPick'
+import { ATLAS_PARCEL_FLAG, prettyParcel } from './atlasParcels'
 
 // Klick-vs-Orbit-Drag: ueber diese Pixel-Distanz gilt ein pointerup als Drag, nicht als Pick.
 const DRAG_PX = 4
@@ -22,6 +23,7 @@ export default function CutPickBridge() {
   const drill = useViewerStore((s) => s.drill)
   const select = useViewerStore((s) => s.select)
   const setHovered = useViewerStore((s) => s.setHovered)
+  const setPickedAtlasArea = useViewerStore((s) => s.setPickedAtlasArea)
 
   const pointer = useMemo(() => new THREE.Vector2(), [])
   const down = useRef<{ x: number; y: number } | null>(null)
@@ -45,14 +47,20 @@ export default function CutPickBridge() {
       return out
     }
 
-    const nameAt = (ev: MouseEvent): string | null => {
+    // Liefert TARO-Struktur UND (falls getroffen) Atlas-Parzelle aus EINEM Raycast.
+    const hitAt = (ev: MouseEvent): { taro: string | null; parcel: string | null } => {
       const rect = el.getBoundingClientRect()
       pointer.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1
       pointer.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1
       raycaster.setFromCamera(pointer, camera)
       const hits = raycaster.intersectObjects(scene.children, true)
-      const hit = pickCutAwareHit(raycaster, hits, cutPlanes, collectSources())
-      return hit ? (hit.object as THREE.Mesh).name : null
+      // Atlas-Parzelle (Carve-Overlay) liegt auf der Oberflaeche -> naechster Parzellen-Treffer.
+      const parcelHit = hits.find((h) => h.object.visible && (h.object as THREE.Mesh).userData[ATLAS_PARCEL_FLAG])
+      const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, collectSources())
+      return {
+        taro: taroHit ? (taroHit.object as THREE.Mesh).name : null,
+        parcel: parcelHit ? (parcelHit.object as THREE.Mesh).name : null,
+      }
     }
 
     const onPointerDown = (ev: PointerEvent) => {
@@ -64,12 +72,14 @@ export default function CutPickBridge() {
       const dy = ev.clientY - down.current.y
       down.current = null
       if (dx * dx + dy * dy > DRAG_PX * DRAG_PX) return // Orbit-Drag (Kamera), kein Pick/Deselect
-      const name = nameAt(ev)
-      if (name) pick(name)
+      const { taro, parcel } = hitAt(ev)
+      // Liegt ein Atlas-Areal (Carve-Overlay) unter dem Klick -> dessen Name hat Vorrang.
+      if (parcel) return setPickedAtlasArea(prettyParcel(parcel))
+      if (taro) pick(taro)
       else select(null) // Klick in den leeren Raum hebt die Auswahl auf
     }
     const onPointerMove = (ev: PointerEvent) => {
-      const name = nameAt(ev)
+      const name = hitAt(ev).taro
       if (lastHover.current === name) return
       lastHover.current = name
       setHovered(name)
@@ -80,7 +90,7 @@ export default function CutPickBridge() {
       setHovered(null)
     }
     const onDoubleClick = (ev: MouseEvent) => {
-      const name = nameAt(ev)
+      const name = hitAt(ev).taro
       if (name) drill(name)
     }
 
@@ -96,7 +106,7 @@ export default function CutPickBridge() {
       el.removeEventListener('pointerleave', onPointerLeave)
       el.removeEventListener('dblclick', onDoubleClick)
     }
-  }, [gl, camera, raycaster, scene, pointer, cutPlanes, pick, drill, select, setHovered])
+  }, [gl, camera, raycaster, scene, pointer, cutPlanes, pick, drill, select, setHovered, setPickedAtlasArea])
 
   return null
 }

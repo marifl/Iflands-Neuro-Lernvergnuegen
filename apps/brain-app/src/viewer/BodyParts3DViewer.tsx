@@ -408,6 +408,10 @@ export default function BodyParts3DViewer() {
   const selectMode = useViewerStore((s) => s.selectMode)
   const lang = useViewerStore((s) => s.lang)
   const appMode = useViewerStore((s) => s.appMode)
+  const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
+  const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const pickedAtlasArea = useViewerStore((s) => s.pickedAtlasArea)
+  const atlasOnBrain = showCarveJulich || showCarveDkt
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
@@ -696,6 +700,19 @@ export default function BodyParts3DViewer() {
 
             <PresetLegend />
             <IsolationBar />
+            {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
+                Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
+            {atlasOnBrain && (
+              <div
+                className="ed-panel ed-frame"
+                style={{ position: 'absolute', top: 16, right: 16, padding: '9px 14px', pointerEvents: 'none', maxWidth: 280 }}
+              >
+                <div className="eyebrow">Atlas-Areal{showCarveDkt ? ' · DKT' : showCarveJulich ? ' · Julich' : ''}</div>
+                <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : 'var(--g600)', marginTop: 4 }}>
+                  {pickedAtlasArea ?? 'Areal anklicken'}
+                </div>
+              </div>
+            )}
             </>
             )}
           </div>

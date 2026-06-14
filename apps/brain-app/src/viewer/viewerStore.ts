@@ -97,6 +97,8 @@ interface ViewerState {
   showCarveDkt: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
+  /** Name des zuletzt angeklickten Atlas-Areals auf TARO (Carve-Overlay); null = keins. */
+  pickedAtlasArea: string | null
   /** Bruecke TARO->Atlas: gewuenschtes Areal (Layer + Label-Name), das der Atlas-Modus beim
    *  Betreten fokussiert (hervorhebt + benennt). Wird vom Atlas-Modus konsumiert (auf null gesetzt). */
   atlasFocus: { layer: string; name: string } | null
@@ -145,6 +147,8 @@ interface ViewerState {
   setRodVisible: (visible: boolean) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setCarveOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
+  /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen. */
+  setPickedAtlasArea: (name: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
   /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
   setAtlasFocus: (focus: { layer: string; name: string } | null) => void
@@ -188,6 +192,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showCarveJulich: false,
   showCarveDkt: false,
   clipAtlasOverlay: true,
+  pickedAtlasArea: null,
   atlasFocus: null,
 
   setOntology: (ontology) =>
@@ -283,7 +288,14 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setAtlasOverlay: (which, visible) =>
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
   setCarveOverlay: (which, visible) =>
-    set(which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }),
+    set((s) => {
+      const next = which === 'julich' ? { showCarveJulich: visible } : { showCarveDkt: visible }
+      // Wird das letzte Carve-Overlay ausgeschaltet -> Areal-Auswahl aufraeumen (kein stiller Rest).
+      const julichOn = which === 'julich' ? visible : s.showCarveJulich
+      const dktOn = which === 'dkt' ? visible : s.showCarveDkt
+      return julichOn || dktOn ? next : { ...next, pickedAtlasArea: null }
+    }),
+  setPickedAtlasArea: (pickedAtlasArea) => set({ pickedAtlasArea }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
   setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>

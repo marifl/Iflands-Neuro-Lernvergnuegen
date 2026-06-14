@@ -99,6 +99,9 @@ export default function FooterBar() {
   const setCutMode = useViewerStore((s) => s.setCutMode)
   const clipAtlasOverlay = useViewerStore((s) => s.clipAtlasOverlay)
   const setClipAtlasOverlay = useViewerStore((s) => s.setClipAtlasOverlay)
+  const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
+  const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const setCameraView = useViewerStore((s) => s.setCameraView)
   const showSkull = useViewerStore((s) => s.showSkull)
   const skullOpacity = useViewerStore((s) => s.skullOpacity)
@@ -114,8 +117,20 @@ export default function FooterBar() {
     {
       key: 'atlas',
       eyebrow: 'Atlas',
-      label: 'Menü',
-      content: <Item onClick={() => { setShowSources(true); close() }}>Quellen &amp; Lizenzen</Item>,
+      // Label zeigt das aktive Atlas-auf-Hirn-Overlay (Carve, 0 mm auf TARO) oder „Menü".
+      label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : 'Menü',
+      content: (
+        <>
+          {/* Atlas-Areale direkt auf dem TARO-Hirn (Carve = 0 mm, anklickbar zeigt Namen).
+              Eines zur Zeit — DKT (gyrale Makroebene) oder Julich (zytoarchitektonische Areale). */}
+          <div className="eyebrow" style={{ marginBottom: 4 }}>Atlas auf Hirn</div>
+          <Item active={!showCarveJulich && !showCarveDkt} onClick={() => { setCarveOverlay('julich', false); setCarveOverlay('dkt', false); close() }}>Aus</Item>
+          <Item active={showCarveDkt} onClick={() => { setCarveOverlay('dkt', true); setCarveOverlay('julich', false); close() }}>DKT (Gyri)</Item>
+          <Item active={showCarveJulich} onClick={() => { setCarveOverlay('julich', true); setCarveOverlay('dkt', false); close() }}>Julich (Areale)</Item>
+          <div style={{ height: 10 }} />
+          <Item onClick={() => { setShowSources(true); close() }}>Quellen &amp; Lizenzen</Item>
+        </>
+      ),
     },
     {
       key: 'mode',
