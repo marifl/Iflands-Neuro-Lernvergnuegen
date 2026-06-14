@@ -51,6 +51,18 @@ export function prettyJulichRegion(meshName: string): string {
   return `${rest.charAt(0).toUpperCase()}${rest.slice(1)}${s}`
 }
 
+/** Anzeigename fuer ein watertight-3D-Atlas-Mesh (`<atlas>-<slug>-<l|r>`). Julich behaelt die
+ *  Area-Notation (prettyJulichRegion); DKT/Brodmann/Destrieux -> Slug entjargonisiert. */
+export function prettyAtlasRegion(meshName: string): string {
+  if (meshName.startsWith('julich-')) return prettyJulichRegion(meshName)
+  const s = meshName.endsWith('-r') ? ' (R)' : meshName.endsWith('-l') ? ' (L)' : ''
+  let base = meshName.replace(/-(l|r)$/, '').replace(/^(dkt|brodmann|destrieux)-/, '')
+  const ba = base.match(/^ba(\d+[a-z]?)$/i)
+  if (ba) return `BA${ba[1].toUpperCase()}${s}`
+  base = base.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase())
+  return `${base}${s}`
+}
+
 /** Lateralitaet aus dem Suffix. */
 function side(meshName: string): string {
   if (meshName.endsWith('-l')) return 'L'

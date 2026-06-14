@@ -120,7 +120,11 @@ export function buildContextTree(
  * Hemisphaere. `labelOf` liefert den Anzeigenamen je Mesh-Name (z.B. prettyParcel). Leaves tragen
  * `fma`=Mesh-Name (= Struktur-Blatt, pickbar/sichtbar ueber den Mesh-Namen wie der Kontext-Baum).
  */
-export function buildJulichTree(
+/** Generischer Atlas-Ueber-Objekt-Baum (Julich/DKT/Brodmann/Destrieux): Areale nach Hemisphaere
+ *  gruppiert. `atlasId` = Wurzel-Knoten-Id + Hemi-Id-Praefix; `rootLabels` = Anzeigename der Wurzel. */
+export function buildAtlasTree(
+  atlasId: string,
+  rootLabels: Record<Lang, string>,
   names: string[],
   labelOf: (name: string) => string,
 ): { tree: OntologyNode; slugs: string[] } {
@@ -133,7 +137,7 @@ export function buildJulichTree(
     byHemi[side].push({ id: name, slug: name, fma: name, side, labels: { de: label, la: label, en: label } })
   }
   const hemiNode = (side: 'left' | 'right', labels: Record<Lang, string>): OntologyNode => ({
-    id: `julich-${side}`,
+    id: `${atlasId}-${side}`,
     labels,
     children: byHemi[side].sort((a, b) => a.labels.en.localeCompare(b.labels.en)),
   })
@@ -141,14 +145,15 @@ export function buildJulichTree(
     hemiNode('left', { de: 'Linke Hemisphaere', la: 'Hemispherium sinistrum', en: 'Left hemisphere' }),
     hemiNode('right', { de: 'Rechte Hemisphaere', la: 'Hemispherium dextrum', en: 'Right hemisphere' }),
   ].filter((h) => (h.children?.length ?? 0) > 0)
-  return {
-    tree: {
-      id: 'julich',
-      labels: { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' },
-      children,
-    },
-    slugs,
-  }
+  return { tree: { id: atlasId, labels: rootLabels, children }, slugs }
+}
+
+/** Julich-Spezialfall (Rueckwaerts-Kompat): delegiert an buildAtlasTree. */
+export function buildJulichTree(
+  names: string[],
+  labelOf: (name: string) => string,
+): { tree: OntologyNode; slugs: string[] } {
+  return buildAtlasTree('julich', { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' }, names, labelOf)
 }
 
 /** slug -> Liste der Gruppen-IDs vom Wurzel-Pfad (fuer Auto-Expand). */

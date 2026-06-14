@@ -77,6 +77,9 @@ interface ViewerState {
   context: OntologyNode | null
   /** Julich-Brain (Vollausbau): 292 Original-Areal-Meshes als eigenes Objekt (Y-up); default versteckt. */
   julich: OntologyNode | null
+  /** Weitere watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO): DKT/Brodmann/Destrieux.
+   *  Jeweils eigener Teilbaum, default versteckt (separat aktivierbar wie Julich). */
+  atlas3d: { dkt: OntologyNode | null; brodmann: OntologyNode | null; destrieux: OntologyNode | null }
   /** Slugs, die im 3D-View ausgeblendet sind (hierarchisches Ein-/Ausblenden). */
   hidden: Set<string>
   selected: string | null
@@ -131,6 +134,8 @@ interface ViewerState {
   setContext: (context: OntologyNode, slugs: string[]) => void
   /** Julich-Brain-Teilbaum setzen; alle Areale starten ausgeblendet (separat aktivierbar). */
   setJulich: (julich: OntologyNode, slugs: string[]) => void
+  /** Weiteren 3D-Atlas-Teilbaum (dkt/brodmann/destrieux) setzen; Areale starten ausgeblendet. */
+  setAtlas3d: (key: 'dkt' | 'brodmann' | 'destrieux', tree: OntologyNode, slugs: string[]) => void
   /** Slugs ein-/ausblenden (Kaskade aus dem Tree). */
   setHidden: (slugs: string[], hide: boolean) => void
   /** Alles wieder sichtbar machen (Shift+H). */
@@ -193,6 +198,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   cameraView: null,
   context: null,
   julich: null,
+  atlas3d: { dkt: null, brodmann: null, destrieux: null },
   hidden: new Set(),
   selected: null,
   selectedSlugs: new Set(),
@@ -242,6 +248,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       for (const s of slugs) next.add(s) // Julich-Brain startet ausgeblendet (separat aktivierbar)
       return { julich, hidden: next }
     }),
+  setAtlas3d: (key, tree, slugs) =>
+    set((state) => {
+      const next = new Set(state.hidden)
+      for (const s of slugs) next.add(s) // startet ausgeblendet (separat aktivierbar)
+      return { atlas3d: { ...state.atlas3d, [key]: tree }, hidden: next }
+    }),
   setHidden: (slugs, hide) =>
     set((state) => {
       const next = new Set(state.hidden)
@@ -259,7 +271,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set((state) => {
       if (!id) return { selected: null, selectedSlugs: new Set(), selectedLabels: null }
       // Knoten in Hirn- ODER Kontext-Baum aufloesen: Gruppen-Auswahl markiert alle Blaetter.
-      const chain = nodeChain([state.ontology?.tree, state.context, state.julich], id)
+      const chain = nodeChain([state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux], id)
       const node = chain ? chain[chain.length - 1] : null
       const slugs = node ? flattenStructures(node).map((n) => n.id) : [id]
       const expanded = { ...state.expanded }
@@ -272,7 +284,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const st = get()
     if (st.selectMode === 'direct') return st.select(meshName)
     // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
-    const chain = nodeChain([st.ontology?.tree, st.context, st.julich], meshName)
+    const chain = nodeChain([st.ontology?.tree, st.context, st.julich, st.atlas3d.dkt, st.atlas3d.brodmann, st.atlas3d.destrieux], meshName)
     if (!chain) return st.select(meshName)
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
     const target = chain[ctxIdx + 1] ?? chain[chain.length - 1]
@@ -282,7 +294,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const st = get()
     if (st.selectMode === 'direct') return st.setIsolated(meshName)
     // Gruppen-Modus: eine Ebene tiefer betreten (Illustrator-Doppelklick).
-    const chain = nodeChain([st.ontology?.tree, st.context, st.julich], meshName)
+    const chain = nodeChain([st.ontology?.tree, st.context, st.julich, st.atlas3d.dkt, st.atlas3d.brodmann, st.atlas3d.destrieux], meshName)
     if (!chain) return
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
     const target = chain[ctxIdx + 1]
@@ -346,7 +358,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setIsolated: (id) =>
     set((state) => {
       if (!id) return { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }
-      const chain = nodeChain([state.ontology?.tree, state.context, state.julich], id)
+      const chain = nodeChain([state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux], id)
       if (!chain) return { isolated: id, isolatedSlugs: new Set([id]), isolationPath: [] }
       const target = chain[chain.length - 1]
       const slugs = flattenStructures(target).map((n) => n.id)

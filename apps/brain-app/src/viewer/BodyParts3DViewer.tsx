@@ -2,8 +2,8 @@ import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
-import { ANATOMICAL_COLOR, buildContextTree, buildJulichTree, flattenStructures, meshColor, type Ontology, type OntologyNode } from './ontology'
-import { parcelColor, prettyJulichRegion } from './atlasParcels'
+import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
+import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
@@ -33,7 +33,14 @@ import {
 const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
-const JULICH_GLB = '/assets/bodyparts3d/julich-brain.glb'
+// Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt jetzt die
+// furchige v3.1-Variante (loest das alte glatte volumetrische julich-brain.glb ab).
+const ATLAS3D: { key: 'julich' | 'dkt' | 'brodmann' | 'destrieux'; glb: string; rootLabels: Record<Lang, string> }[] = [
+  { key: 'julich', glb: '/assets/bodyparts3d/atlas3d-julich.glb', rootLabels: { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' } },
+  { key: 'dkt', glb: '/assets/bodyparts3d/atlas3d-dkt.glb', rootLabels: { de: 'DKT', la: 'Atlas DKT', en: 'DKT' } },
+  { key: 'brodmann', glb: '/assets/bodyparts3d/atlas3d-brodmann.glb', rootLabels: { de: 'Brodmann', la: 'Areae Brodmann', en: 'Brodmann' } },
+  { key: 'destrieux', glb: '/assets/bodyparts3d/atlas3d-destrieux.glb', rootLabels: { de: 'Destrieux', la: 'Atlas Destrieux', en: 'Destrieux' } },
+]
 const ONTOLOGY_URL = '/assets/bodyparts3d/ontology.json'
 
 useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
@@ -307,13 +314,14 @@ function ContextHead() {
   return <primitive object={scene} />
 }
 
-/** Julich-Brain (Vollausbau): die 292 Original-Julich-Areal-Meshes als eigenes, separat aktivierbares
- *  Objekt (Y-up, eigene saubere Geometrie — NICHT auf TARO gecarvt). Pro Areal eine stabile Farbe;
- *  default versteckt, per Strukturbaum-Toggle einblendbar, anklickbar (Picking ueber Mesh-Name = Slug).
- *  Baut beim ersten Laden den Julich-Teilbaum (aus den Mesh-Namen) und registriert ihn im Store. */
-function JulichBrain() {
-  const { scene } = useGLTF(JULICH_GLB)
+/** Watertight-3D-Atlas-Ueber-Objekt (furchen-echt, Y-up, eigene saubere Geometrie — NICHT auf TARO
+ *  gecarvt). Pro Areal eine stabile Farbe; default versteckt, per Strukturbaum-Toggle einblendbar,
+ *  anklickbar (Picking ueber Mesh-Name = Slug). Baut beim ersten Laden den Atlas-Teilbaum und
+ *  registriert ihn im Store (Julich -> setJulich, sonst -> setAtlas3d). */
+function AtlasOverObject({ atlasKey, glb, rootLabels }: { atlasKey: 'julich' | 'dkt' | 'brodmann' | 'destrieux'; glb: string; rootLabels: Record<Lang, string> }) {
+  const { scene } = useGLTF(glb)
   const setJulich = useViewerStore((s) => s.setJulich)
+  const setAtlas3d = useViewerStore((s) => s.setAtlas3d)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
@@ -349,9 +357,10 @@ function JulichBrain() {
   useEffect(() => {
     const names = meshes.map((m) => m.name).filter(Boolean)
     if (!names.length) return
-    const { tree, slugs } = buildJulichTree(names, prettyJulichRegion)
-    setJulich(tree, slugs)
-  }, [meshes, setJulich])
+    const { tree, slugs } = buildAtlasTree(atlasKey, rootLabels, names, prettyAtlasRegion)
+    if (atlasKey === 'julich') setJulich(tree, slugs)
+    else setAtlas3d(atlasKey, tree, slugs)
+  }, [meshes, atlasKey, rootLabels, setJulich, setAtlas3d])
 
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
@@ -732,7 +741,9 @@ export default function BodyParts3DViewer() {
                 <Brain />
                 <ContextSkull />
                 <ContextHead />
-                <JulichBrain />
+                {ATLAS3D.map((a) => (
+                  <AtlasOverObject key={a.key} atlasKey={a.key} glb={a.glb} rootLabels={a.rootLabels} />
+                ))}
                 <SubParcels />
                 <AtlasOverlay />
                 <CutCaps />

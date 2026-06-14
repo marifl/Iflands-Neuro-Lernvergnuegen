@@ -216,6 +216,7 @@ export default function StructureTree() {
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
   const julich = useViewerStore((s) => s.julich)
+  const atlas3d = useViewerStore((s) => s.atlas3d)
   const lang = useViewerStore((s) => s.lang)
   const mode = useViewerStore((s) => s.mode)
   const search = useViewerStore((s) => s.search)
@@ -240,11 +241,11 @@ export default function StructureTree() {
     const query = search.trim().toLowerCase()
     const brainPool = mode === 'k11' ? (visibleTree ? flattenStructures(visibleTree) : []) : flattenStructures(ontology.tree)
     const ctxPool = context ? flattenStructures(context) : []
-    const julichPool = julich ? flattenStructures(julich) : []
-    return [...brainPool, ...ctxPool, ...julichPool].filter((node) =>
+    const atlasPools = [julich, atlas3d.dkt, atlas3d.brodmann, atlas3d.destrieux].flatMap((t) => (t ? flattenStructures(t) : []))
+    return [...brainPool, ...ctxPool, ...atlasPools].filter((node) =>
       (['de', 'la', 'en'] as const).some((l) => node.labels[l].toLowerCase().includes(query)),
     )
-  }, [ontology, context, julich, search, mode, visibleTree])
+  }, [ontology, context, julich, atlas3d, search, mode, visibleTree])
 
   if (!ontology || !visibleTree) return null
 
@@ -352,9 +353,10 @@ export default function StructureTree() {
             />
             {mode === 'full' ? (
               <div style={{ marginTop: 10, borderTop: '1px solid var(--line-soft)', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                {julich ? <GroupRow node={julich} depth={0} /> : null}
-                <PlaceholderObject label="DKT" />
-                <PlaceholderObject label="Brodmann" />
+                {julich ? <GroupRow node={julich} depth={0} /> : <PlaceholderObject label="Jülich" />}
+                {atlas3d.dkt ? <GroupRow node={atlas3d.dkt} depth={0} /> : <PlaceholderObject label="DKT" />}
+                {atlas3d.brodmann ? <GroupRow node={atlas3d.brodmann} depth={0} /> : <PlaceholderObject label="Brodmann" />}
+                {atlas3d.destrieux ? <GroupRow node={atlas3d.destrieux} depth={0} /> : <PlaceholderObject label="Destrieux" />}
                 {context ? <GroupRow node={context} depth={0} /> : null}
               </div>
             ) : null}
