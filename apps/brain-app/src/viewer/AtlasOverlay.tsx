@@ -40,9 +40,9 @@ function AtlasLayer({ kind, which }: { kind: 'raw' | 'carve'; which: 'julich' | 
         // Carve-Areal auf der TARO-Oberflaeche. Damit die umgebende Anatomie (Dura, Sinus,
         // Marklager …) im „Voller Atlas" die Areale nicht verdeckt: ohne Tiefentest + hohe
         // renderOrder ZULETZT zeichnen -> die kameranahe Kortex-Seite wird auf alles gemalt.
-        // FrontSide cullt die Rueckseite (Hirn ist konvex) -> kein Durchscheinen der Gegenseite.
+        // DoubleSide: auch Sulcus-Innenwaende/abgewandte Flaechen tragen Farbe (keine Luecken).
         m.material = new THREE.MeshStandardMaterial({
-          color: parcelColor(m.name), roughness: 0.78, metalness: 0, side: THREE.FrontSide,
+          color: parcelColor(m.name), roughness: 0.78, metalness: 0, side: THREE.DoubleSide,
           depthTest: false, depthWrite: false,
         })
         m.userData[ATLAS_PARCEL_FLAG] = true // pickbar via CutPickBridge (zeigt Areal-Name)
