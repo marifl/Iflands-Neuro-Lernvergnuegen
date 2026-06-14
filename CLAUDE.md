@@ -59,6 +59,13 @@ Lern- und Phineas-Modus haben Fortschrittsbalken (Time-Blindness). UI-Stil: Memo
 (`apps/brain-app/src/viewer/atlas/atlasBridge.ts`) — springt in den Atlas-Modus und hebt das präzise
 fsaverage-Areal hervor (Funktion→Struktur). Nur kuratierte Areale (kein generisches Mapping zwischen zwei Hirnen).
 
+**Atlas auf Hirn (Carve, 0 mm auf TARO):** Fussleisten-Flyout „Atlas" → „Atlas auf Hirn: Aus / DKT / Julich"
+blendet die vorhandene Carve-Geometrie (`atlas-carved-{dkt,julich}.glb`) farbig pro Areal auf TARO ein;
+Klick zeigt den Areal-Namen (HUD-Chip). Code: `AtlasOverlay.tsx` (carve = per-Areal-Farbe via
+`atlasParcels.ts`, depthTest-frei + FrontSide → sichtbar über die volle Anatomie ohne Dura-Okklusion) +
+`CutPickBridge.tsx` (`ATLAS_PARCEL_FLAG`-Pick). Das ist der direkte „Areale sehen"-Weg; die fsaverage-Brücke
+ist die präzise Zweitsicht. „Atlas roh"-Overlay bleibt Dev-Debug (Drift sichtbar).
+
 ## Arbeitsregeln
 
 - **Evidence First:** Keine Aussage über "gefixt"/"getestet" ohne Tool-/Command-Evidenz.
