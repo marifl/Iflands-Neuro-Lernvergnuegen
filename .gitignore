@@ -56,3 +56,6 @@ apps/brain-app/public/figures/
 
 # Smoke-/Debug-Output unter apps (Artefakte)
 apps/brain-app/scripts/atlas/work/
+
+# Versehentlich getrackter node_modules-Symlink
+scripts/atlas/node_modules
