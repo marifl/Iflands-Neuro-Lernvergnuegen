@@ -43,7 +43,10 @@
     ["G_cuneus", "occipital"], ["G_occipital", "occipital"], ["G_and_S_occipital_inf", "occipital"],
     ["Pole_occipital", "occipital"], ["S_calcarine", "occipital"], ["S_oc_", "occipital"], ["S_oc-", "occipital"],
     ["G_Ins", "insula"], ["G_insular", "insula"], ["S_circular_insula", "insula"],
-    ["G_and_S_cingul", "limbic"], ["G_cingul", "limbic"], ["S_cingul", "limbic"]
+    ["G_and_S_cingul", "limbic"], ["G_cingul", "limbic"], ["S_cingul", "limbic"],
+    ["S_orbital", "frontal"], ["S_suborbital", "frontal"], ["S_precentral", "frontal"],
+    ["S_postcentral", "parietal"], ["S_occipital_ant", "occipital"],
+    ["S_parieto_occipital", "occipital"], ["S_pericallosal", "limbic"]
   ],
   "_doc_name_fallback": "Lobe-Quelle ist primaer der Carve-Host; nur Areale OHNE Carve-Treffer nutzen diese Name->Lappen-Tabellen. dkt_name_to_lobe deckt alle 35 DKT-Gyri; julich_host_abbrev_to_lobe deckt die Parenthese in 'Area X (ABBR)'. Brodmann hat immer Carve -> kein Name-Fallback (sonst lauter Fehler).",
   "dkt_name_to_lobe": {
@@ -60,6 +63,10 @@
     "insula": "insula",
     "rostralanteriorcingulate": "limbic", "caudalanteriorcingulate": "limbic",
     "posteriorcingulate": "limbic", "isthmuscingulate": "limbic"
+  },
+  "_doc_brodmann_fallback": "Nur BAs OHNE Carve-Parzelle brauchen diese Tabelle (Lobe sonst aus Carve-Host). Aktuell nur BA33 (pregenuales ACC).",
+  "brodmann_ba_to_lobe": {
+    "33": "limbic"
   },
   "julich_host_abbrev_to_lobe": {
     "ifg": "frontal", "mfg": "frontal", "sfg": "frontal", "precg": "frontal", "ifs": "frontal",

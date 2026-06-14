@@ -1,19 +1,14 @@
 // scripts/atlas/build-catalog.mjs
 import { readFileSync, writeFileSync } from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const lobeMap = JSON.parse(readFileSync(join(HERE, 'lobe-map.json'), 'utf8'))
 
-/** LUT-Name -> Join-Code (lowercase, ohne Seite). */
+/** LUT-Name -> Join-Code (lowercase, ohne Seite). Julich nutzt julichSlug (irregulaere Namen). */
 export function lutCode(layer, name) {
   if (layer === 'dkt' || layer === 'destrieux') return name.toLowerCase()
-  if (layer === 'julich') {
-    const m = name.match(/^Area\s+(\S+)/)
-    if (!m) throw new Error(`lutCode: julich-Name unerwartet: "${name}"`)
-    return m[1].toLowerCase()
-  }
   if (layer === 'brodmann') {
     const m = name.match(/^BA([0-9]+[a-z]?)$/i)
     if (!m) throw new Error(`lutCode: brodmann-Name unerwartet: "${name}"`)
@@ -22,11 +17,10 @@ export function lutCode(layer, name) {
   throw new Error(`lutCode: unbekannter Layer "${layer}"`)
 }
 
-/** Carve-Key -> Join-Code (ohne Seite). */
+/** Carve-Key -> Join-Code (ohne Seite). Julich nutzt Prefix-Match (julichSlug), nicht diese Funktion. */
 export function carveCode(layer, key) {
   const base = key.replace(/-(l|r)$/, '')
   if (layer === 'dkt') return base
-  if (layer === 'julich') return base.replace(/^julich3-area-/, '').split('-')[0]
   if (layer === 'brodmann') {
     const m = base.match(/^brodmann-ba([0-9]+[a-z]?)-/)
     if (!m) throw new Error(`carveCode: brodmann-Key unerwartet: "${key}"`)
@@ -76,4 +70,176 @@ export function lobeOfJulichName(name) {
   // Mehrteilige Parenthese (z.B. 'preSMA, mesial SFG') -> ueber Schluesselwoerter pruefen.
   for (const [key, lobe] of Object.entries(map)) if (abbr.includes(key)) return lobe
   throw new Error(`lobeOfJulichName: kein Lappen fuer Julich-Host-Abbrev "${abbr}" (aus "${name}") in lobe-map.json`)
+}
+
+/** Brodmann-BA-Code -> Lappen (nur fuer BAs ohne Carve-Parzelle; sonst kommt der Lappen vom Carve-Host). */
+export function lobeOfBrodmannBA(code) {
+  const lobe = lobeMap.brodmann_ba_to_lobe[code]
+  if (!lobe) throw new Error(`lobeOfBrodmannBA: kein Lappen fuer BA "${code}" in lobe-map.json (BA ohne Carve braucht Eintrag)`)
+  return lobe
+}
+
+// --- Julich-Join: Prefix-Match aus LUT-Slug --------------------------------
+// Julich-Carve-Namen haben variable Host-Suffixe (julich3-area-44-ifg, julich3-ca1-hippocampus,
+// julich3-frontal-to-occipital-gapmap). Ein Code-Split ist nicht robust. Stattdessen: aus dem
+// LUT-Namen einen Slug ableiten und die Carve-Keys per Prefix `julich3-<slug>-` matchen.
+
+/** Julich-LUT-Name -> Carve-Slug. 'Area 44 (IFG)' -> 'area-44'; 'CA1 (Hippocampus)' -> 'ca1';
+ *  'Frontal-to-Occipital (GapMap)' -> 'frontal-to-occipital'. */
+export function julichSlug(name) {
+  // Carve normalisiert den Code-Teil: lowercase, Leerzeichen UND Punkt -> Bindestrich
+  // ('Area Te 1.0 (HESCHL)' -> julich3-area-te-1-0-heschl).
+  const norm = (s) => s.trim().toLowerCase().replace(/[(),]/g, '').replace(/[\s.]+/g, '-')
+  const m = name.match(/^Area\s+(.+?)\s*\(/)
+  if (m) return 'area-' + norm(m[1])
+  return norm(name.split('(')[0])
+}
+
+/** LUT-Eintraege ohne echte Region (Medialwand/Kommissur/unkartiert) -> explizit skippen.
+ *  Nicht als `medial` geflaggt, aber keine teachable Parzelle (kein Host, kein Lappen). */
+const NON_REGION = {
+  dkt: /^corpuscallosum$/i,
+  destrieux: /^Medial_wall$/i,
+  julich: /^nicht kartiert$/i,
+}
+
+// --- Katalog-Assembly ------------------------------------------------------
+
+const APP_ASSETS = join(HERE, '../../apps/brain-app/public/assets/atlas-canonical')
+const WORK = join(HERE, 'work')
+const LAYERS = [
+  { id: 'dkt', axis: 'macro', label_de: 'DKT (Gyri)', carve: 'code' },
+  { id: 'destrieux', axis: 'macro', label_de: 'Destrieux (Gyri/Sulci)', carve: null },
+  { id: 'julich', axis: 'cyto', label_de: 'Julich-Brain v3.1', carve: 'prefix' },
+  { id: 'brodmann', axis: 'cyto', label_de: 'Brodmann (klassisch)', carve: 'code' },
+]
+const LOBE_LABEL = {
+  frontal: 'Frontallappen', parietal: 'Parietallappen', temporal: 'Temporallappen',
+  occipital: 'Okzipitallappen', insula: 'Insula', limbic: 'Limbisch / Cingulum',
+}
+
+function loadJson(p) { return JSON.parse(readFileSync(p, 'utf8')) }
+
+/** Carve-Parzellen eines Layers als angereicherte Eintraege (host_stem, backfill, n, side). */
+function loadCarveEntries(layer) {
+  const labels = loadJson(join(WORK, `atlas_labels_${layer}.json`))
+  return Object.entries(labels).map(([key, v]) => ({
+    key, side: sideOf(key), host_stem: v.host_stem, backfill: !!v.backfill, n: v.vertex_indices.length,
+  }))
+}
+
+export function buildCatalog() {
+  const manifest = loadJson(join(APP_ASSETS, 'manifest.json'))
+  const aggManifest = loadJson(join(WORK, 'atlas-manifest.json'))
+  const atlases = []
+  const orphanCarve = {}            // layer -> [unverbrauchte carveKeys]
+  const excluded = {}               // layer -> Anzahl explizit geskippter LUT-Eintraege
+
+  for (const L of LAYERS) {
+    const lut = manifest.lut[L.id]
+    const carves = L.carve ? loadCarveEntries(L.id) : []
+    // Index: code-Layer -> Map "code|side"; prefix-Layer -> Liste je Seite.
+    const byKey = new Map()
+    const bySide = { L: [], R: [] }
+    if (L.carve === 'code') for (const c of carves) {
+      const k = `${carveCode(L.id, c.key)}|${c.side}`
+      if (!byKey.has(k)) byKey.set(k, [])
+      byKey.get(k).push(c)
+    }
+    if (L.carve === 'prefix') for (const c of carves) bySide[c.side].push(c)
+
+    const used = new Set()
+    const groups = new Map()        // lobe -> areas[]
+    let nExcluded = 0
+
+    for (const [labelId, entry] of Object.entries(lut)) {
+      if (entry.medial) continue
+      if (NON_REGION[L.id]?.test(entry.name)) { nExcluded++; continue }
+      const code = L.id === 'julich' ? julichSlug(entry.name) : lutCode(L.id, entry.name)
+      for (const side of ['L', 'R']) {
+        let matches = []
+        if (L.carve === 'code') matches = byKey.get(`${code}|${side}`) || []
+        else if (L.carve === 'prefix') {
+          const prefix = `julich3-${code}-`
+          matches = bySide[side].filter((c) => c.key.startsWith(prefix))
+        }
+        matches.forEach((c) => used.add(c.key))
+        const hosts = [...new Set(matches.map((c) => c.host_stem))]
+        // Lobe: primaer Carve-Host (groesste Parzelle), sonst Name-Tabelle, sonst lauter Fehler.
+        let lobe
+        if (matches.length) {
+          const biggest = matches.slice().sort((a, b) => b.n - a.n)[0]
+          lobe = lobeOfHostStem(biggest.host_stem)
+        } else if (L.id === 'destrieux') lobe = lobeOfDestrieux(entry.name)
+        else if (L.id === 'dkt') lobe = lobeOfDktName(entry.name)
+        else if (L.id === 'julich') lobe = lobeOfJulichName(entry.name)
+        else if (L.id === 'brodmann') lobe = lobeOfBrodmannBA(code)
+        else throw new Error(`buildCatalog: ${L.id}:${code}:${side} ohne Carve-Host und ohne Name-Fallback`)
+
+        const area = {
+          id: `${L.id}:${code}:${side.toLowerCase()}`,
+          label_de: prettyArea(L.id, entry.name, side),
+          side,
+          hosts,
+          taro_present: matches.length > 0,
+          lobe,
+          refs: {
+            canonical_lut: { layer: L.id, label_id: Number(labelId), hemi: side },
+            carve: matches.map((c) => c.key),
+          },
+          context: {},
+          provenance: {
+            source: L.id,
+            affine_det: aggManifest.sources?.[L.id]?.affine_det ?? null,
+            backfill: matches.some((c) => c.backfill),
+          },
+        }
+        if (!groups.has(lobe)) groups.set(lobe, [])
+        groups.get(lobe).push(area)
+      }
+    }
+
+    if (L.carve) {
+      const unused = carves.map((c) => c.key).filter((key) => !used.has(key))
+      if (unused.length) orphanCarve[L.id] = unused.sort()
+    }
+    if (nExcluded) excluded[L.id] = nExcluded
+
+    atlases.push({
+      id: L.id, axis: L.axis, label_de: L.label_de,
+      groups: [...groups.entries()]
+        .sort((a, b) => a[0].localeCompare(b[0]))
+        .map(([lobe, areas]) => ({
+          id: lobe, label_de: LOBE_LABEL[lobe] ?? lobe,
+          areas: areas.sort((x, y) => x.id.localeCompare(y.id)),
+        })),
+    })
+  }
+
+  const catalog = {
+    version: '1',
+    space_note: 'fsaverage != TARO — Areale praezise im Standardraum definiert, Carve liegt auf TARO.',
+    axes: [
+      { id: 'macro', label_de: 'Makroanatomie', sub_de: 'Faltung — Gyri & Sulci' },
+      { id: 'cyto', label_de: 'Zytoarchitektonik', sub_de: 'Zellaufbau — Areale' },
+    ],
+    atlases,
+  }
+  return { catalog, orphanCarve, excluded }
+}
+
+function main() {
+  const { catalog, orphanCarve, excluded } = buildCatalog()
+  if (Object.keys(orphanCarve).length) {
+    throw new Error(`build-catalog: Orphan-Carve-Parzellen (nicht zugeordnet): ${JSON.stringify(orphanCarve)}`)
+  }
+  const out = join(APP_ASSETS, 'atlas-ontology.json')
+  writeFileSync(out, JSON.stringify(catalog, null, 2))
+  const n = catalog.atlases.reduce((s, a) => s + a.groups.reduce((t, g) => t + g.areas.length, 0), 0)
+  console.log(`build-catalog: ${n} Areale in ${catalog.atlases.length} Atlanten -> ${out}`)
+  if (Object.keys(excluded).length) console.log(`build-catalog: explizit ausgeschlossen (keine Region): ${JSON.stringify(excluded)}`)
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  try { main() } catch (e) { console.error(e); process.exit(1) }
 }
