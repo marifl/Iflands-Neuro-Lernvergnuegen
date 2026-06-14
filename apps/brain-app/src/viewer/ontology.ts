@@ -114,6 +114,43 @@ export function buildContextTree(
   }
 }
 
+/**
+ * Julich-Brain-Teilbaum (Vollausbau): die 292 Original-Julich-Areal-Meshes als eigenes, separat
+ * aktivierbares Objekt (NICHT auf TARO gecarvt — eigene saubere Geometrie, Y-up). Gruppiert nach
+ * Hemisphaere. `labelOf` liefert den Anzeigenamen je Mesh-Name (z.B. prettyParcel). Leaves tragen
+ * `fma`=Mesh-Name (= Struktur-Blatt, pickbar/sichtbar ueber den Mesh-Namen wie der Kontext-Baum).
+ */
+export function buildJulichTree(
+  names: string[],
+  labelOf: (name: string) => string,
+): { tree: OntologyNode; slugs: string[] } {
+  const slugs: string[] = []
+  const byHemi: Record<'left' | 'right', OntologyNode[]> = { left: [], right: [] }
+  for (const name of names) {
+    const side: 'left' | 'right' = name.endsWith('-r') ? 'right' : 'left'
+    slugs.push(name)
+    const label = labelOf(name)
+    byHemi[side].push({ id: name, slug: name, fma: name, side, labels: { de: label, la: label, en: label } })
+  }
+  const hemiNode = (side: 'left' | 'right', labels: Record<Lang, string>): OntologyNode => ({
+    id: `julich-${side}`,
+    labels,
+    children: byHemi[side].sort((a, b) => a.labels.en.localeCompare(b.labels.en)),
+  })
+  const children = [
+    hemiNode('left', { de: 'Linke Hemisphaere', la: 'Hemispherium sinistrum', en: 'Left hemisphere' }),
+    hemiNode('right', { de: 'Rechte Hemisphaere', la: 'Hemispherium dextrum', en: 'Right hemisphere' }),
+  ].filter((h) => (h.children?.length ?? 0) > 0)
+  return {
+    tree: {
+      id: 'julich',
+      labels: { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' },
+      children,
+    },
+    slugs,
+  }
+}
+
 /** slug -> Liste der Gruppen-IDs vom Wurzel-Pfad (fuer Auto-Expand). */
 export function ancestorMap(tree: OntologyNode): Map<string, string[]> {
   const map = new Map<string, string[]>()

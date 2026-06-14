@@ -36,6 +36,21 @@ export function parcelRgb(meshName: string): [number, number, number] {
   return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)]
 }
 
+/** Anzeigename fuer ein Mesh des watertight Julich-Brains (Namen: `julich-area-45-ifg-r`,
+ *  `julich-dorsal-dentate-nucleus-cerebellum-l`, `julich-frontal-i-1-gapmap-r`). */
+export function prettyJulichRegion(meshName: string): string {
+  const s = meshName.endsWith('-r') ? ' (R)' : meshName.endsWith('-l') ? ' (L)' : ''
+  const base = meshName.replace(/-(l|r)$/, '')
+  if (base.startsWith('julich-area-')) {
+    const parts = base.replace('julich-area-', '').split('-')
+    const code = parts[0].toUpperCase()
+    const host = parts.slice(1).join(' ').toUpperCase()
+    return `Area ${code}${host ? ' · ' + host : ''}${s}`
+  }
+  const rest = base.replace(/^julich-/, '').replace(/-/g, ' ')
+  return `${rest.charAt(0).toUpperCase()}${rest.slice(1)}${s}`
+}
+
 /** Lateralitaet aus dem Suffix. */
 function side(meshName: string): string {
   if (meshName.endsWith('-l')) return 'L'

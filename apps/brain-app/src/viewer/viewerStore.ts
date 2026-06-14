@@ -75,6 +75,8 @@ interface ViewerState {
   cameraView: CameraView | null
   /** Kontext-Vollausbau (Schaedel + Kopf), aus den Manifesten gebauter Teilbaum. */
   context: OntologyNode | null
+  /** Julich-Brain (Vollausbau): 292 Original-Areal-Meshes als eigenes Objekt (Y-up); default versteckt. */
+  julich: OntologyNode | null
   /** Slugs, die im 3D-View ausgeblendet sind (hierarchisches Ein-/Ausblenden). */
   hidden: Set<string>
   selected: string | null
@@ -124,6 +126,8 @@ interface ViewerState {
   setOntology: (ontology: Ontology) => void
   /** Kontext-Teilbaum setzen; alle Kontext-Strukturen starten ausgeblendet. */
   setContext: (context: OntologyNode, slugs: string[]) => void
+  /** Julich-Brain-Teilbaum setzen; alle Areale starten ausgeblendet (separat aktivierbar). */
+  setJulich: (julich: OntologyNode, slugs: string[]) => void
   /** Slugs ein-/ausblenden (Kaskade aus dem Tree). */
   setHidden: (slugs: string[], hide: boolean) => void
   /** Alles wieder sichtbar machen (Shift+H). */
@@ -185,6 +189,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   cutMode: 'slice',
   cameraView: null,
   context: null,
+  julich: null,
   hidden: new Set(),
   selected: null,
   selectedSlugs: new Set(),
@@ -199,7 +204,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   mode: 'full',
   appMode: 'explore',
   search: '',
-  expanded: { brain: true, telencephalon: true, diencephalon: true, brainstem: true },
+  expanded: { taro: true, brain: true, telencephalon: true, diencephalon: true, brainstem: true },
   isolated: null,
   isolatedSlugs: new Set(),
   isolationPath: [],
@@ -227,6 +232,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       for (const s of slugs) next.add(s) // Kontext startet ausgeblendet
       return { context, hidden: next }
     }),
+  setJulich: (julich, slugs) =>
+    set((state) => {
+      const next = new Set(state.hidden)
+      for (const s of slugs) next.add(s) // Julich-Brain startet ausgeblendet (separat aktivierbar)
+      return { julich, hidden: next }
+    }),
   setHidden: (slugs, hide) =>
     set((state) => {
       const next = new Set(state.hidden)
@@ -244,7 +255,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set((state) => {
       if (!id) return { selected: null, selectedSlugs: new Set(), selectedLabels: null }
       // Knoten in Hirn- ODER Kontext-Baum aufloesen: Gruppen-Auswahl markiert alle Blaetter.
-      const chain = nodeChain([state.ontology?.tree, state.context], id)
+      const chain = nodeChain([state.ontology?.tree, state.context, state.julich], id)
       const node = chain ? chain[chain.length - 1] : null
       const slugs = node ? flattenStructures(node).map((n) => n.id) : [id]
       const expanded = { ...state.expanded }
@@ -257,7 +268,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const st = get()
     if (st.selectMode === 'direct') return st.select(meshName)
     // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
-    const chain = nodeChain([st.ontology?.tree, st.context], meshName)
+    const chain = nodeChain([st.ontology?.tree, st.context, st.julich], meshName)
     if (!chain) return st.select(meshName)
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
     const target = chain[ctxIdx + 1] ?? chain[chain.length - 1]
@@ -267,7 +278,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const st = get()
     if (st.selectMode === 'direct') return st.setIsolated(meshName)
     // Gruppen-Modus: eine Ebene tiefer betreten (Illustrator-Doppelklick).
-    const chain = nodeChain([st.ontology?.tree, st.context], meshName)
+    const chain = nodeChain([st.ontology?.tree, st.context, st.julich], meshName)
     if (!chain) return
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
     const target = chain[ctxIdx + 1]
@@ -331,7 +342,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setIsolated: (id) =>
     set((state) => {
       if (!id) return { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }
-      const chain = nodeChain([state.ontology?.tree, state.context], id)
+      const chain = nodeChain([state.ontology?.tree, state.context, state.julich], id)
       if (!chain) return { isolated: id, isolatedSlugs: new Set([id]), isolationPath: [] }
       const target = chain[chain.length - 1]
       const slugs = flattenStructures(target).map((n) => n.id)

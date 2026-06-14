@@ -2,7 +2,8 @@ import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
-import { ANATOMICAL_COLOR, buildContextTree, flattenStructures, meshColor, type Ontology, type OntologyNode } from './ontology'
+import { ANATOMICAL_COLOR, buildContextTree, buildJulichTree, flattenStructures, meshColor, type Ontology, type OntologyNode } from './ontology'
+import { parcelColor, prettyJulichRegion } from './atlasParcels'
 import { PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
@@ -32,6 +33,7 @@ import {
 const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
+const JULICH_GLB = '/assets/bodyparts3d/julich-brain.glb'
 const ONTOLOGY_URL = '/assets/bodyparts3d/ontology.json'
 
 useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
@@ -305,6 +307,80 @@ function ContextHead() {
   return <primitive object={scene} />
 }
 
+/** Julich-Brain (Vollausbau): die 292 Original-Julich-Areal-Meshes als eigenes, separat aktivierbares
+ *  Objekt (Y-up, eigene saubere Geometrie — NICHT auf TARO gecarvt). Pro Areal eine stabile Farbe;
+ *  default versteckt, per Strukturbaum-Toggle einblendbar, anklickbar (Picking ueber Mesh-Name = Slug).
+ *  Baut beim ersten Laden den Julich-Teilbaum (aus den Mesh-Namen) und registriert ihn im Store. */
+function JulichBrain() {
+  const { scene } = useGLTF(JULICH_GLB)
+  const setJulich = useViewerStore((s) => s.setJulich)
+  const hidden = useViewerStore((s) => s.hidden)
+  const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
+  const cutHidden = useCutHidden()
+  const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const hovered = useViewerStore((s) => s.hovered)
+  const meshes = useMemo(() => {
+    const list: THREE.Mesh[] = []
+    scene.traverse((obj) => {
+      const mesh = obj as THREE.Mesh
+      if (mesh.isMesh) {
+        mesh.material = new THREE.MeshStandardMaterial({
+          // Cerebellum/Hirnstamm = Kontext (gedaempft); GapMaps = "nicht-kartierte" Rest-Zonen (neutral,
+          // damit sie nicht dominieren); echte zytoarchitektonische Areale = stabile Farbe (L/R teilen sie).
+          color: /cerebellum|brainstem/.test(mesh.name)
+            ? '#8d8779'
+            : /gapmap/.test(mesh.name)
+              ? '#7c7a73'
+              : parcelColor(mesh.name),
+          roughness: 0.82,
+          metalness: 0,
+          side: THREE.DoubleSide,
+        })
+        mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
+        list.push(mesh)
+      }
+    })
+    return list
+  }, [scene])
+
+  useClipPlanes(meshes)
+
+  // Teilbaum aus den Mesh-Namen bauen + im Store registrieren (alle Areale starten versteckt).
+  useEffect(() => {
+    const names = meshes.map((m) => m.name).filter(Boolean)
+    if (!names.length) return
+    const { tree, slugs } = buildJulichTree(names, prettyJulichRegion)
+    setJulich(tree, slugs)
+  }, [meshes, setJulich])
+
+  useEffect(() => {
+    const iso = isolatedSlugs.size > 0
+    for (const mesh of meshes) {
+      const visible = !hidden.has(mesh.name) && !cutHidden(mesh)
+      mesh.visible = visible
+      const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
+      setPickable(mesh, visible && !isoDimmed)
+      const material = mesh.material as THREE.MeshStandardMaterial
+      if (selectedSlugs.has(mesh.name)) {
+        material.emissive.set(SELECT_COLOR)
+        material.emissiveIntensity = 0.7
+      } else if (mesh.name === hovered) {
+        material.emissive.set(HOVER_COLOR)
+        material.emissiveIntensity = 0.35
+      } else {
+        material.emissive.set('#000000')
+        material.emissiveIntensity = 0
+      }
+      if (material.transparent !== isoDimmed) material.needsUpdate = true
+      material.transparent = isoDimmed
+      material.opacity = isoDimmed ? 0.12 : 1
+      material.depthWrite = !isoDimmed
+    }
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
+
+  return <primitive object={scene} />
+}
+
 /** Tampiereisen entlang der rekonstruierten Trajektorie (Eintritt Wange -> Austritt Scheitel),
  * spitz zulaufend, ueber den Schaedel hinaus verlaengert. */
 function TampingIron() {
@@ -505,12 +581,14 @@ export default function BodyParts3DViewer() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  const julich = useViewerStore((s) => s.julich)
   const bySlug = useMemo(() => {
     const map = new Map<string, OntologyNode>()
     if (ontology) for (const node of flattenStructures(ontology.tree)) map.set(node.id, node)
     if (context) for (const node of flattenStructures(context)) map.set(node.id, node)
+    if (julich) for (const node of flattenStructures(julich)) map.set(node.id, node)
     return map
-  }, [ontology, context])
+  }, [ontology, context, julich])
 
   const selectedNode = selected ? bySlug.get(selected) : null
 
@@ -653,6 +731,7 @@ export default function BodyParts3DViewer() {
                 <Brain />
                 <ContextSkull />
                 <ContextHead />
+                <JulichBrain />
                 <SubParcels />
                 <AtlasOverlay />
                 <CutCaps />

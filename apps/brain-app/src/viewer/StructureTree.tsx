@@ -202,9 +202,20 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
   )
 }
 
+/** Platzhalter-Ueberobjekt (DKT/Brodmann): noch ohne Inhalt, aber als klares Top-Level sichtbar. */
+function PlaceholderObject({ label }: { label: string }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 9px', opacity: 0.45 }}>
+      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, color: 'var(--ink)' }}>▸ {label}</span>
+      <span className="eyebrow" style={{ fontSize: 9 }}>Inhalt folgt</span>
+    </div>
+  )
+}
+
 export default function StructureTree() {
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
+  const julich = useViewerStore((s) => s.julich)
   const lang = useViewerStore((s) => s.lang)
   const mode = useViewerStore((s) => s.mode)
   const search = useViewerStore((s) => s.search)
@@ -229,10 +240,11 @@ export default function StructureTree() {
     const query = search.trim().toLowerCase()
     const brainPool = mode === 'k11' ? (visibleTree ? flattenStructures(visibleTree) : []) : flattenStructures(ontology.tree)
     const ctxPool = context ? flattenStructures(context) : []
-    return [...brainPool, ...ctxPool].filter((node) =>
+    const julichPool = julich ? flattenStructures(julich) : []
+    return [...brainPool, ...ctxPool, ...julichPool].filter((node) =>
       (['de', 'la', 'en'] as const).some((l) => node.labels[l].toLowerCase().includes(query)),
     )
-  }, [ontology, context, search, mode, visibleTree])
+  }, [ontology, context, julich, search, mode, visibleTree])
 
   if (!ontology || !visibleTree) return null
 
@@ -333,16 +345,17 @@ export default function StructureTree() {
           )
         ) : (
           <>
-            {(visibleTree.children ?? []).map((child) =>
-              isStructure(child) ? (
-                <StructureRow key={child.id} node={child} depth={0} />
-              ) : (
-                <GroupRow key={child.id} node={child} depth={0} />
-              ),
-            )}
-            {context && mode === 'full' ? (
-              <div style={{ marginTop: 10, borderTop: '1px solid var(--line-soft)', paddingTop: 6 }}>
-                <GroupRow node={context} depth={0} />
+            {/* Fuenf klare Ueber-Objekte: TARO · Jülich · DKT · Brodmann · Kontext (Vollausbau). */}
+            <GroupRow
+              node={{ id: 'taro', labels: { de: 'TARO', la: 'TARO', en: 'TARO' }, children: visibleTree.children ?? [] }}
+              depth={0}
+            />
+            {mode === 'full' ? (
+              <div style={{ marginTop: 10, borderTop: '1px solid var(--line-soft)', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                {julich ? <GroupRow node={julich} depth={0} /> : null}
+                <PlaceholderObject label="DKT" />
+                <PlaceholderObject label="Brodmann" />
+                {context ? <GroupRow node={context} depth={0} /> : null}
               </div>
             ) : null}
           </>
