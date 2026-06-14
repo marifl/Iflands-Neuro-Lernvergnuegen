@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { bridgeFor } from './atlasBridge'
+import { bridgeFor, julichBridgeFor } from './atlasBridge'
 
 describe('bridgeFor', () => {
   it('mappt TARO-Gyrus (side-gestrippt) auf DKT-Areal', () => {
@@ -19,5 +19,17 @@ describe('bridgeFor', () => {
     expect(bridgeFor('left-thalamus')).toBeNull()
     expect(bridgeFor('left-occipital-pole')).toBeNull()
     expect(bridgeFor(null)).toBeNull()
+  })
+})
+
+describe('julichBridgeFor', () => {
+  it('mappt Julich-Carve-Slug (side-gestrippt) auf fsaverage-Julich-Areal', () => {
+    expect(julichBridgeFor('julich3-area-44-ifg-l')).toEqual({ layer: 'julich', name: 'Area 44 (IFG)' })
+    expect(julichBridgeFor('julich3-area-45-ifg-r')).toEqual({ layer: 'julich', name: 'Area 45 (IFG)' })
+  })
+
+  it('gibt null fuer GapMaps (kein praezises Areal) und null-Input', () => {
+    expect(julichBridgeFor('julich3-frontal-i-1-gapmap-l')).toBeNull()
+    expect(julichBridgeFor(null)).toBeNull()
   })
 })

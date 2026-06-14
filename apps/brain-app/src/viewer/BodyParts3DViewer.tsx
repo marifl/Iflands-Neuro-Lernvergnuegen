@@ -17,7 +17,7 @@ import SubParcels from './SubParcels'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
-import { bridgeFor } from './atlas/atlasBridge'
+import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
@@ -487,6 +487,7 @@ export default function BodyParts3DViewer() {
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
   const pickedAtlasArea = useViewerStore((s) => s.pickedAtlasArea)
+  const pickedAtlasSlug = useViewerStore((s) => s.pickedAtlasSlug)
   const atlasOnBrain = showCarveJulich || showCarveDkt
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
@@ -790,6 +791,22 @@ export default function BodyParts3DViewer() {
                 <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : 'var(--g600)', marginTop: 4 }}>
                   {pickedAtlasArea ?? 'Areal anklicken'}
                 </div>
+                {/* Bruecke Funktion->Struktur: geklicktes Julich-Carve-Areal im praezisen fsaverage-Atlas
+                    (echte Furchen) zeigen + hervorheben. Nur fuer Slugs mit zuordenbarem Areal (keine GapMaps). */}
+                {julichBridgeFor(pickedAtlasSlug) ? (
+                  <button
+                    type="button"
+                    className="ed-btn"
+                    style={{ pointerEvents: 'auto', marginTop: 9, padding: '5px 11px' }}
+                    onClick={() => {
+                      const t = julichBridgeFor(pickedAtlasSlug)!
+                      setAtlasFocus({ layer: t.layer, name: t.name })
+                      setAppMode('atlas')
+                    }}
+                  >
+                    Im Atlas zeigen →
+                  </button>
+                ) : null}
               </div>
             )}
             </>

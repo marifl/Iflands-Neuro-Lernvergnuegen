@@ -27,19 +27,25 @@ export default function CanonicalAtlasMode() {
   const [highlight, setHighlight] = useState<number>(-1)
 
   useEffect(() => {
+    // StrictMode-Doppelmount: der Effekt laeuft zweimal -> ZWEI loadManifest-Promises. Ohne Guard
+    // gewinnt die spaeter aufloesende und ueberschreibt `active` mit dem Default ('dkt'), waehrend
+    // highlight/picked vom Bruecken-Fokus stehen bleiben (julich) -> Layer-State zerreisst. Der
+    // cancelled-Guard (Standard-React-Async-Pattern) laesst nur den zweiten Lauf State setzen.
+    let cancelled = false
     loadManifest()
       .then(async (man) => {
+        if (cancelled) return
         const layerIds = man.layers.map((l) => l.id)
         const L = await loadHemi(man.hemis.L, layerIds)
         const R = await loadHemi(man.hemis.R, layerIds)
         const sub = man.subcortical ? await loadSubcortical(man.subcortical) : []
+        if (cancelled) return
         setM(man)
         setHemis({ L, R })
         setSubMeshes(sub)
         // Bruecke: kam ein Atlas-Fokus aus einem TARO-Modus? -> Layer setzen + Areal hervorheben +
         // benennen. Sonst Default: erster Layer aus Manifest. Konsum (setAtlasFocus(null)) passiert
-        // NICHT hier, sondern im [m]-Effekt unten — sonst frisst der StrictMode-Doppelmount den Fokus
-        // (erster Mount konsumiert, zweiter sieht null -> Highlight verpufft).
+        // im [m]-Effekt unten.
         const focus = useViewerStore.getState().atlasFocus
         if (focus && layerIds.includes(focus.layer)) {
           setActive(focus.layer)
@@ -49,7 +55,8 @@ export default function CanonicalAtlasMode() {
           setActive(man.layers[0].id)
         }
       })
-      .catch(setErr)
+      .catch((e) => { if (!cancelled) setErr(e) })
+    return () => { cancelled = true }
   }, [])
 
   // Atlas-Fokus erst nach erfolgreichem Laden konsumieren (StrictMode-sicher: laeuft einmal,

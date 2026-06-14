@@ -119,6 +119,9 @@ interface ViewerState {
   clipAtlasOverlay: boolean
   /** Name des zuletzt angeklickten Atlas-Areals auf TARO (Carve-Overlay); null = keins. */
   pickedAtlasArea: string | null
+  /** Slug des zuletzt angeklickten Atlas-Areals (z.B. `julich3-area-44-ifg-l`) — fuer die
+   *  Bruecke zum praezisen fsaverage-Areal. null = keins. */
+  pickedAtlasSlug: string | null
   /** Bruecke TARO->Atlas: gewuenschtes Areal (Layer + Label-Name), das der Atlas-Modus beim
    *  Betreten fokussiert (hervorhebt + benennt). Wird vom Atlas-Modus konsumiert (auf null gesetzt). */
   atlasFocus: { layer: string; name: string } | null
@@ -169,8 +172,8 @@ interface ViewerState {
   setRodVisible: (visible: boolean) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setCarveOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
-  /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen. */
-  setPickedAtlasArea: (name: string | null) => void
+  /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen (Name + Slug fuer die Bruecke). */
+  setPickedAtlasArea: (name: string | null, slug: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
   /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
   setAtlasFocus: (focus: { layer: string; name: string } | null) => void
@@ -217,6 +220,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showCarveDkt: false,
   clipAtlasOverlay: true,
   pickedAtlasArea: null,
+  pickedAtlasSlug: null,
   atlasFocus: null,
 
   setOntology: (ontology) =>
@@ -334,9 +338,9 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       for (const slug of MENINGES_HIDE) (anyOn ? hidden.add(slug) : hidden.delete(slug))
       for (const slug of s.cortexHideSlugs) (anyOn ? hidden.add(slug) : hidden.delete(slug))
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
-      return { ...next, hidden, pickedAtlasArea: null }
+      return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null }
     }),
-  setPickedAtlasArea: (pickedAtlasArea) => set({ pickedAtlasArea }),
+  setPickedAtlasArea: (pickedAtlasArea, pickedAtlasSlug) => set({ pickedAtlasArea, pickedAtlasSlug }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
   setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>
