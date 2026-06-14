@@ -434,19 +434,18 @@ function IsolationBar() {
     letterSpacing: '0.04em',
   }
   return (
+    // Eigenes reserviertes Band direkt unter der Kopfleiste (kein schwebendes Overlay mehr -> keine
+    // Ueberlappung mit der Struktur-HUD). Volle Breite, links ausgerichtet, eigene Trennlinie.
     <div
-      className="ed-panel ed-frame"
       style={{
-        position: 'absolute',
-        top: 14,
-        left: '50%',
-        transform: 'translateX(-50%)',
+        flex: 'none',
         display: 'flex',
         alignItems: 'center',
         gap: 9,
-        maxWidth: '70%',
         flexWrap: 'wrap',
-        padding: '7px 13px',
+        padding: '7px 18px',
+        background: 'var(--paper)',
+        borderBottom: '1.5px solid var(--line)',
       }}
     >
       <span className="eyebrow">Isolation</span>
@@ -704,6 +703,10 @@ export default function BodyParts3DViewer() {
           </div>
         </div>
 
+        {/* ── Breadcrumb-Band: reservierter Bereich direkt unter der Kopfleiste (nur bei aktiver
+            Isolation sichtbar; eigene Zeile, kein Overlay ueber die Struktur-HUD). ── */}
+        <IsolationBar />
+
         {/* ── Mitte: 3D-Viewport (dunkle "Cover-Flaeche") + Struktur-/Inhalts-Spalte ──
             Breit: nebeneinander (Split). Schmal: gestapelt (3D oben, Spalte darunter). */}
         <div style={{ flex: 1, display: 'flex', flexDirection: isNarrow ? 'column' : 'row', minHeight: 0 }}>
@@ -791,7 +794,6 @@ export default function BodyParts3DViewer() {
             )}
 
             <PresetLegend />
-            <IsolationBar />
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (
