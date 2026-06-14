@@ -118,9 +118,13 @@ def remap_medial_to_zero(labels, hemi, layer):
 # SELBE Areal-Typ (symmetrisch, gleiche Farbe) -> geteilte LUT ist korrekt.
 # Labels 127/128 sind nicht in siibras Region-Registry (nicht-kartierter Rest, ~5% Kortex)
 # -> Neutralgrau "nicht kartiert", explizit (kein gefakter Name/Farbe).
-print("Lade Julich-Brain v3.0.3 (native fsaverage-Surface-MPM via siibra)...")
-_jb = siibra.parcellations.get("julich 3.0.3")
-_jsurf = siibra.get_map(parcellation="julich 3.0.3", space="fsaverage")
+print("Lade Julich-Brain v3.1 (native fsaverage-Surface-MPM via siibra)...")
+_jb = siibra.parcellations.get("julich 3.1")
+_jsurf = siibra.get_map(parcellation="julich 3.1", space="fsaverage")
+# v3.1-Bruch: region.rgb ist None (war in v3.0.3 ein RGB-Tupel). Die offiziellen
+# Areal-Farben kommen jetzt aus der Map-Colormap (matplotlib ListedColormap, Label-Index
+# -> RGBA in [0,1]). label 1 -> (167,103,146) == identische v3.0.3-Farbe verifiziert.
+_jcmap = _jsurf.get_colormap()
 _JFRAG = {"L": "left hemisphere", "R": "right hemisphere"}
 # Label -> bilateraler Arealname (ohne " left"/" right"); aus L-Fragment (symmetrisch).
 JULICH_LABEL_TO_NAME = {}
@@ -145,7 +149,7 @@ manifest = {
     "layers": [
         {"id": "dkt", "axis": "macro", "label_de": "DKT (Gyri)"},
         {"id": "destrieux", "axis": "macro", "label_de": "Destrieux (Gyri/Sulci)"},
-        {"id": "julich", "axis": "cyto", "label_de": "Julich-Brain v3"},
+        {"id": "julich", "axis": "cyto", "label_de": "Julich-Brain v3.1"},
     ],
     "hemis": {},
 }
@@ -243,29 +247,28 @@ def build_lut_gifti(table):
     return lut
 
 
-def build_lut_julich(label_to_name, present_labels, parcellation):
-    """Offizielle siibra-Farben (region.rgb). label_to_name: benannte Areale (bilateral).
-    present_labels: alle in den Daten vorkommenden Label-IDs (>0). Labels ohne benannte
-    Region (nicht-kartierter Rest) -> Neutralgrau."""
+def build_lut_julich(label_to_name, present_labels, colormap):
+    """Offizielle Julich-v3.1-Farben aus der Map-Colormap (Label-Index -> RGBA).
+    label_to_name: benannte Areale (bilateral). present_labels: alle in den Daten
+    vorkommenden Label-IDs (>0). Labels ohne benannten Eintrag (nicht-kartierter Rest,
+    z.B. ueber colormap.N hinaus) -> Neutralgrau, explizit geloggt."""
     lut = {0: {"rgb": MEDIAL_GREY, "name": "—", "medial": True}}
     unmapped = []
     for lid in sorted(present_labels):
         if lid == 0:
             continue
         name = label_to_name.get(lid)
-        if name is None:
-            lut[lid] = {"rgb": JULICH_NOCOLOR_GREY, "name": "nicht kartiert"}
-            unmapped.append(lid)
-            continue
-        reg = parcellation.get_region(name)
-        rgb = getattr(reg, "rgb", None)
-        if rgb is None:
-            lut[lid] = {"rgb": JULICH_NOCOLOR_GREY, "name": name}
+        # Farbe aus der Colormap (nur fuer Label-IDs innerhalb cmap.N belastbar).
+        rgb = None
+        if lid < colormap.N:
+            rgb = [int(round(c * 255)) for c in colormap(lid)[:3]]
+        if name is None or rgb is None:
+            lut[lid] = {"rgb": JULICH_NOCOLOR_GREY, "name": name or "nicht kartiert"}
             unmapped.append(lid)
         else:
-            lut[lid] = {"rgb": [int(c) for c in rgb], "name": name}
+            lut[lid] = {"rgb": rgb, "name": name}
     if unmapped:
-        print(f"  Julich: {len(unmapped)} Label-ID(s) ohne benannte/farbige Region -> "
+        print(f"  Julich: {len(unmapped)} Label-ID(s) ohne benannten/farbigen Eintrag -> "
               f"Neutralgrau {JULICH_NOCOLOR_GREY} (nicht-kartierter Kortexrest): {unmapped}")
     return lut
 
@@ -277,7 +280,7 @@ print("Julich LUT: siibra region.rgb (offizielle Julich-Brain-v3-Farben, native 
 
 dkt_lut = build_lut_gifti(dkt_table)
 destrieux_lut = build_lut_gifti(destrieux_table)
-julich_lut = build_lut_julich(JULICH_LABEL_TO_NAME, julich_present, _jb)
+julich_lut = build_lut_julich(JULICH_LABEL_TO_NAME, julich_present, _jcmap)
 
 manifest["lut"] = {
     "dkt": {str(k): v for k, v in dkt_lut.items()},
