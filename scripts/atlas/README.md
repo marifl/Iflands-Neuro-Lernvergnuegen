@@ -8,6 +8,44 @@
 
 ---
 
+## ⚡ Carve-Tool — Bedienung (für Entwickler, copy-paste)
+
+Das **Carve-Tool** färbt den gefurchten TARO-Kortex pro Hirn-Areal ein (`atlas-surface-*.glb`, in der App
+unter Footer → Atlas → „Atlas auf Hirn"). Scharfe Grenzen, saubere Topologie, keine Artefakte. Volle
+Methodik/Begründung: §1C. **Hier nur: wie man es bedient.**
+
+### Voraussetzungen (einmalig, liegen in gitignored `scripts/atlas/work/`)
+Diese Build-Inputs müssen vorhanden sein (regenerierbar via §1B Transform-Pipeline):
+- `work/taro_cortex_hosts.json` — dekodierte TARO-Kortex-Gyri (aus `brain.glb`, `decode_glb.mjs`)
+- `work/atlas_labels_{dkt,julich,brodmann}.json` — registrierte Parzellen-Labels (`register_atlas.py`)
+- `host_map.json` — Mapping Atlas-Host → TARO-Gyrus (getrackt, liegt vor)
+
+### Einen bestehenden Atlas (neu) carven
+```bash
+cd scripts/atlas
+node export_clean_cortex.mjs          # 1× nötig: work/taro_cortex_clean.obj (gefurchtes, verschweisstes Mesh)
+node bake_carve.mjs dkt               # -> apps/.../atlas-surface-dkt.glb + -pick.json   (analog: julich, brodmann)
+node verify_topology.mjs dkt          # GATE: Normalen <0.02% falsch, T-junction-frei, 0 degeneriert
+node audit_carve_fidelity.mjs dkt     # GATE: 0 FEHLEND (kein Areal verloren)
+```
+**Danach PFLICHT:** in `apps/brain-app/src/viewer/AtlasOverlay.tsx` die Konstante **`CARVE_V` hochzählen**
+(Cache-Bust) — sonst serviert der Browser die alte GLB.
+
+### Einen NEUEN Atlas hinzufügen (z. B. „aparc")
+1. `work/atlas_labels_aparc.json` erzeugen (via `register_atlas.py`, s. §1B) + Hosts in `host_map.json` eintragen.
+2. `'aparc'` in die `source`-Whitelist von `bake_carve.mjs`, `verify_topology.mjs`, `audit_carve_fidelity.mjs` aufnehmen.
+3. `node bake_carve.mjs aparc` → `verify_topology.mjs aparc` → `audit_carve_fidelity.mjs aparc`.
+4. In `AtlasOverlay.tsx`: `SURFACE_URL`/`PICK_URL` um `aparc` ergänzen + `CARVE_V` bumpen; Toggle im UI ergänzen.
+
+### Was reinkommt / rauskommt
+| Input | Output |
+|---|---|
+| `work/taro_cortex_hosts.json`, `work/atlas_labels_<src>.json`, `host_map.json` | `apps/brain-app/public/assets/bodyparts3d/atlas-surface-<src>.glb` + `-pick.json` |
+
+Reproduzierbar (deterministisch): gleiche Inputs → byte-identische GLB. Gates müssen grün sein, sonst NICHT committen.
+
+---
+
 ## 0. Die Fakten, die immer wieder „neu entdeckt" wurden (NICHT erneut suchen)
 
 1. **Julich-412-Geometrie EXISTIERT.** Sie fehlt nur im *Archiv dieses Standalone-Repos*. Die echte Mesh-Geometrie liegt unter:
