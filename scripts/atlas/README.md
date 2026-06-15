@@ -59,7 +59,7 @@ Laedt `AtlasOverlay.tsx`. **Ersetzt** die alte `bake_carved_surface.mjs` (splitT
 1. **GRENZ-KONFORMER Cut (`splitTri`) auf dem gefurchten clean-Mesh** → gerade, scharfe Arealgrenzen.
    **T-JUNCTION-FREI per Konstruktion** (geteilte Kante (P,Q) wird von beiden Nachbardreiecken identisch
    am Mittelpunkt geteilt; per-Vertex-Labels → konsistent). Verifiziert: offene Kanten bleiben ~2204
-   (= Basis-Mesh), Normalen-Fehler <0.01 %, 0 degenerierte Dreiecke (`work/verify_topology.mjs`).
+   (= Basis-Mesh), Normalen-Fehler <0.01 %, 0 degenerierte Dreiecke (`verify_topology.mjs`).
 2. **WINDING-Korrektur (entscheidend gegen die „Shards"!):** `splitTri` emittiert manche Sub-Dreiecke
    gegenlaeufig UND die TARO-Gyri haben gemischte Face-Wicklung → falsch orientierte Normalen = gr/oliv-
    gruene Dreiecks-Flaps (im `MeshNormalMaterial` als Fehlfarben sichtbar — DAS war der „Spikes"-Bug).
@@ -80,8 +80,8 @@ Laedt `AtlasOverlay.tsx`. **Ersetzt** die alte `bake_carved_surface.mjs` (splitT
 ```bash
 node export_clean_cortex.mjs                          # work/taro_cortex_clean.obj (Merge + ×64-Weld, gefurcht)
 node bake_carve.mjs dkt                               # + julich + brodmann  -> atlas-surface-*.glb + -pick.json
-node work/audit_carve_fidelity.mjs dkt                # Treue-Audit: registriert vs. Carve (0 FEHLEND erwartet)
-node work/verify_topology.mjs dkt                     # Normalen-Richtung, T-Junctions (offene Kanten ~2204), Slivers
+node audit_carve_fidelity.mjs dkt                # Treue-Audit: registriert vs. Carve (0 FEHLEND erwartet)
+node verify_topology.mjs dkt                     # Normalen-Richtung, T-Junctions (offene Kanten ~2204), Slivers
 ```
 **Audit-Stand:** 0 fehlende Parzellen; Normalen-Fehler <0.01 %; T-junction-frei (offene Kanten ~Basis 2204);
 0 degeneriert, ~60 winzige Tripelpunkt-Slivers (on-surface, unkritisch). Rest-„Drift"/„Erosion" im
