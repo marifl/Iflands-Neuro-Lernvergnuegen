@@ -28,7 +28,7 @@ export function splitTri(A, B, C, la, lb, lc) {
   if (la === lb && lb === lc) return [{ verts: [{ tag: 'A' }, { tag: 'B' }, { tag: 'C' }], label: la }]
   if (la === lb) return twoOne('A', 'B', 'C', A, B, C, la, lc) // C odd
   if (lb === lc) return twoOne('B', 'C', 'A', B, C, A, lb, la) // A odd
-  if (la === lc) return twoOne('A', 'C', 'B', A, C, B, la, lb) // B odd
+  if (la === lc) return twoOne('C', 'A', 'B', C, A, B, la, lb) // B odd
   // Drei verschiedene Labels: Y-Knoten -> Mittelpunkte + Zentroid, je Ecke ein Keil.
   const g = centroid(A, B, C)
   const mab = mid(A, B), mbc = mid(B, C), mca = mid(C, A)
@@ -85,6 +85,58 @@ export function weldedNormals(V, F, keyScale = 64) {
     const n = acc[vNode[i]]
     const L = Math.hypot(n[0], n[1], n[2]) || 1
     out[i] = [n[0] / L, n[1] / L, n[2] / L]
+  }
+  return out
+}
+
+/**
+ * Finale SHADING-Normalen, RICHTUNGS-BEWUSST. Wie weldedNormals verschweisst es koinzidente Vertices
+ * fuer glatte Beleuchtung ueber Arealgrenzen — ABER es trennt pro ×64-Position die Beitraege in
+ * richtungs-konsistente Cluster. Grund: naives Positions-Welding fasst auch GEGENLAEUFIGE Flaechen
+ * zusammen (enge Sulcus-Waende + falsch gewundene Gyrus-Naehte der TARO-Geometrie), deren Normalen
+ * sich aufheben/nach innen kippen -> dunkle "Chevron"-Artefakte bei Smooth-Shading. Gleich gerichtete
+ * Cut-Duplikate verschweissen weiter (glatte Grenze), gegenlaeufige Waende bleiben getrennt.
+ *
+ * WICHTIG: NUR fuer die finale Shading-Normale (Bake Step 5) verwenden — NICHT fuer die Glaettungs-
+ * Normale (Step 3d). Dort wuerden degenerierte Null-Cluster die tangentiale Glaettung kippen lassen
+ * (Positions-Spikes). Diese Funktion aendert ausschliesslich Normalen, nie Positionen.
+ *
+ * Fallback-Kette gegen Null-Normalen (schwarze Vertices): Cluster-Summe -> Vertex-eigene Flaechen-
+ * Summe -> Positions-Gesamtsumme (= weldedNormals-Verhalten) -> [0,0,1].
+ */
+export function weldedNormalsDirectional(V, F, keyScale = 64, cosThresh = 0.3) {
+  const key = (p) => `${Math.round(p[0] * keyScale)},${Math.round(p[1] * keyScale)},${Math.round(p[2] * keyScale)}`
+  // Pro Vertex die Summe seiner inzidenten Flaechen-Normalen (winding-as-is) = eigene Orientierung.
+  const vFace = Array.from({ length: V.length }, () => [0, 0, 0])
+  for (const [a, b, c] of F) {
+    const fa = V[a], fb = V[b], fc = V[c]
+    const ux = fb[0] - fa[0], uy = fb[1] - fa[1], uz = fb[2] - fa[2]
+    const vx = fc[0] - fa[0], vy = fc[1] - fa[1], vz = fc[2] - fa[2]
+    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx
+    for (const idx of [a, b, c]) { vFace[idx][0] += nx; vFace[idx][1] += ny; vFace[idx][2] += nz }
+  }
+  const groups = new Map()
+  for (let i = 0; i < V.length; i++) {
+    const k = key(V[i]); let g = groups.get(k); if (!g) { g = []; groups.set(k, g) }; g.push(i)
+  }
+  const norm = (x) => { const L = Math.hypot(x[0], x[1], x[2]); return L > 1e-9 ? [x[0] / L, x[1] / L, x[2] / L] : null }
+  const out = new Array(V.length)
+  for (const verts of groups.values()) {
+    const posSum = [0, 0, 0]
+    for (const i of verts) { posSum[0] += vFace[i][0]; posSum[1] += vFace[i][1]; posSum[2] += vFace[i][2] }
+    const posDir = norm(posSum) // Fallback = weldedNormals-Verhalten
+    const clusters = [] // { sum:[x,y,z], members:number[] }
+    for (const i of verts) {
+      const fn = norm(vFace[i])
+      let best = null
+      if (fn) for (const c of clusters) { const cn = norm(c.sum); if (cn && (cn[0] * fn[0] + cn[1] * fn[1] + cn[2] * fn[2]) > cosThresh) { best = c; break } }
+      if (!best) { best = { sum: [0, 0, 0], members: [] }; clusters.push(best) }
+      best.sum[0] += vFace[i][0]; best.sum[1] += vFace[i][1]; best.sum[2] += vFace[i][2]; best.members.push(i)
+    }
+    for (const c of clusters) {
+      const cn = norm(c.sum)
+      for (const i of c.members) out[i] = cn || norm(vFace[i]) || posDir || [0, 0, 1]
+    }
   }
   return out
 }
