@@ -5,6 +5,9 @@ import { dirname, join } from 'node:path'
 
 const HERE = dirname(fileURLToPath(import.meta.url))
 const lobeMap = JSON.parse(readFileSync(join(HERE, 'lobe-map.json'), 'utf8'))
+const ATLAS_CONTEXT = join(HERE, 'atlas-context.yaml')
+const CONTEXT_KEYS = new Set(['clinic', 'function', 'chapter', 'aliases'])
+const ARRAY_CONTEXT_KEYS = new Set(['aliases'])
 
 /** LUT-Name -> Join-Code (lowercase, ohne Seite). Julich nutzt julichSlug (irregulaere Namen). */
 export function lutCode(layer, name) {
@@ -120,6 +123,91 @@ const LOBE_LABEL = {
 
 function loadJson(p) { return JSON.parse(readFileSync(p, 'utf8')) }
 
+function yamlKey(raw) {
+  const key = raw.trim()
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    return key.slice(1, -1)
+  }
+  return key
+}
+
+function yamlString(raw, context) {
+  const value = raw.trim()
+  if (value.startsWith('"') && value.endsWith('"')) return JSON.parse(value)
+  if (value.startsWith("'") && value.endsWith("'")) return value.slice(1, -1)
+  if (!value) throw new Error(`atlas-context: ${context} ist leer`)
+  return value
+}
+
+function yamlStringArray(raw, context) {
+  const value = raw.trim()
+  if (!value.startsWith('[') || !value.endsWith(']')) {
+    throw new Error(`atlas-context: ${context} muss eine String-Liste sein`)
+  }
+  const parsed = JSON.parse(value)
+  if (!Array.isArray(parsed) || !parsed.every((entry) => typeof entry === 'string' && entry.trim())) {
+    throw new Error(`atlas-context: ${context} muss nicht-leere Strings enthalten`)
+  }
+  return parsed
+}
+
+export function loadAtlasContext(path = ATLAS_CONTEXT) {
+  const lines = readFileSync(path, 'utf8').split(/\r?\n/)
+  const areas = {}
+  let section = null
+  let areaId = null
+  let version = null
+
+  for (const [index, original] of lines.entries()) {
+    if (/^\s*(#.*)?$/.test(original)) continue
+    const lineNo = index + 1
+    const indent = original.match(/^ */)[0].length
+    const line = original.slice(indent).trimEnd()
+
+    if (indent === 0) {
+      areaId = null
+      if (line === 'areas:') {
+        section = 'areas'
+        continue
+      }
+      const versionMatch = line.match(/^version:\s*([0-9]+)\s*$/)
+      if (versionMatch) {
+        version = Number(versionMatch[1])
+        continue
+      }
+      throw new Error(`atlas-context:${lineNo}: unbekannter Top-Level-Key`)
+    }
+
+    if (section !== 'areas') throw new Error(`atlas-context:${lineNo}: Eintrag ohne areas-Block`)
+    if (indent === 2) {
+      const match = line.match(/^(.+):\s*$/)
+      if (!match) throw new Error(`atlas-context:${lineNo}: Areal-Key braucht einen Block`)
+      areaId = yamlKey(match[1])
+      if (!areaId.includes(':')) throw new Error(`atlas-context:${lineNo}: Areal-ID "${areaId}" ist ungueltig`)
+      if (areas[areaId]) throw new Error(`atlas-context:${lineNo}: Areal-ID "${areaId}" doppelt`)
+      areas[areaId] = {}
+      continue
+    }
+
+    if (indent === 4 && areaId) {
+      const match = line.match(/^([a-z_]+):\s*(.+)$/)
+      if (!match) throw new Error(`atlas-context:${lineNo}: Kontext-Feld braucht key: value`)
+      const [, key, rawValue] = match
+      if (!CONTEXT_KEYS.has(key)) throw new Error(`atlas-context:${lineNo}: unbekanntes Kontext-Feld "${key}"`)
+      areas[areaId][key] = ARRAY_CONTEXT_KEYS.has(key)
+        ? yamlStringArray(rawValue, `${areaId}.${key}`)
+        : yamlString(rawValue, `${areaId}.${key}`)
+      continue
+    }
+
+    throw new Error(`atlas-context:${lineNo}: ungueltige Einrueckung`)
+  }
+
+  if (version !== 1) throw new Error('atlas-context: version muss 1 sein')
+  if (Object.keys(areas).length === 0) throw new Error('atlas-context: areas ist leer')
+  return { version, areas }
+}
+
 /** Carve-Parzellen eines Layers als angereicherte Eintraege (host_stem, backfill, n, side). */
 function loadCarveEntries(layer) {
   const labels = loadJson(join(WORK, `atlas_labels_${layer}.json`))
@@ -131,9 +219,11 @@ function loadCarveEntries(layer) {
 export function buildCatalog() {
   const manifest = loadJson(join(APP_ASSETS, 'manifest.json'))
   const aggManifest = loadJson(join(WORK, 'atlas-manifest.json'))
+  const atlasContext = loadAtlasContext()
   const atlases = []
   const orphanCarve = {}            // layer -> [unverbrauchte carveKeys]
   const excluded = {}               // layer -> Anzahl explizit geskippter LUT-Eintraege
+  const areaIds = new Set()
 
   for (const L of LAYERS) {
     const lut = manifest.lut[L.id]
@@ -193,13 +283,14 @@ export function buildCatalog() {
             canonical_lut: { layer: L.id, label_id: Number(labelId), hemi: side },
             carve: matches.map((c) => c.key),
           },
-          context: {},
+          context: atlasContext.areas[areaId] ?? {},
           provenance: {
             source: L.id,
             affine_det: aggManifest.sources?.[L.id]?.affine_det ?? null,
             backfill: matches.some((c) => c.backfill),
           },
         }
+        areaIds.add(areaId)
         if (!groups.has(lobe)) groups.set(lobe, [])
         groups.get(lobe).push(area)
       }
@@ -231,6 +322,10 @@ export function buildCatalog() {
       { id: 'cyto', label_de: 'Zytoarchitektonik', sub_de: 'Zellaufbau — Areale' },
     ],
     atlases,
+  }
+  const deadContextRefs = Object.keys(atlasContext.areas).filter((id) => !areaIds.has(id)).sort()
+  if (deadContextRefs.length) {
+    throw new Error(`build-catalog: atlas-context.yaml referenziert unbekannte Areale: ${deadContextRefs.join(', ')}`)
   }
   return { catalog, orphanCarve, excluded }
 }

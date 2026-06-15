@@ -82,6 +82,15 @@ export default function FooterBar() {
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const selectMode = useViewerStore((s) => s.selectMode)
   const setSelectMode = useViewerStore((s) => s.setSelectMode)
+  const selected = useViewerStore((s) => s.selected)
+  const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const hidden = useViewerStore((s) => s.hidden)
+  const isolated = useViewerStore((s) => s.isolated)
+  const select = useViewerStore((s) => s.select)
+  const setHidden = useViewerStore((s) => s.setHidden)
+  const clearHidden = useViewerStore((s) => s.clearHidden)
+  const setIsolated = useViewerStore((s) => s.setIsolated)
+  const isolateUp = useViewerStore((s) => s.isolateUp)
   const colorMode = useViewerStore((s) => s.colorMode)
   const setColorMode = useViewerStore((s) => s.setColorMode)
   const activePreset = useViewerStore((s) => s.activePreset)
@@ -112,6 +121,9 @@ export default function FooterBar() {
   const toggle = (which: OpenFlyout) => setOpen((cur) => (cur === which ? null : which))
   const close = () => setOpen(null)
   const isPhone = useIsPhone()
+  const selectedSlugList = [...selectedSlugs]
+  const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
+  const selectionToggleLabel = selectionHasVisibleSlugs ? 'Auswahl ausblenden' : 'Auswahl einblenden'
 
   // Box-Liste in Anzeige-Reihenfolge. Werkzeug (Klickmodus) nur im Explorer sinnvoll.
   const boxes: BoxDef[] = [
@@ -252,6 +264,66 @@ export default function FooterBar() {
               <>
                 <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
                 <Item active={selectMode === 'direct'} onClick={() => { setSelectMode('direct'); close() }}>▹ Direkt</Item>
+                <div style={{ height: 10 }} />
+                <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
+                <Item
+                  disabled={!selectedSlugList.length}
+                  onClick={() => {
+                    if (!selectedSlugList.length) return
+                    setHidden(selectedSlugList, selectionHasVisibleSlugs)
+                    close()
+                  }}
+                >
+                  {selectionToggleLabel}
+                </Item>
+                <Item
+                  disabled={!selected}
+                  onClick={() => {
+                    if (!selected) return
+                    setIsolated(selected)
+                    close()
+                  }}
+                >
+                  Auswahl isolieren
+                </Item>
+                <Item
+                  disabled={!selected}
+                  onClick={() => {
+                    select(null)
+                    close()
+                  }}
+                >
+                  Auswahl lösen
+                </Item>
+                <div style={{ height: 10 }} />
+                <div className="eyebrow" style={{ marginBottom: 4 }}>Ansicht zurücksetzen</div>
+                <Item
+                  disabled={!hidden.size}
+                  onClick={() => {
+                    clearHidden()
+                    close()
+                  }}
+                >
+                  Alles zeigen
+                </Item>
+                <Item
+                  disabled={!isolated}
+                  onClick={() => {
+                    isolateUp()
+                    close()
+                  }}
+                >
+                  Isolationsebene zurück
+                </Item>
+                <Item
+                  disabled={!isolated}
+                  onClick={() => {
+                    setIsolated(null)
+                    close()
+                  }}
+                >
+                  Isolation aus
+                </Item>
               </>
             ),
           },

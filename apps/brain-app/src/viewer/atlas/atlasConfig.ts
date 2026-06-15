@@ -139,6 +139,7 @@ export function loadLocalOverrides(): LocalOverrides {
 }
 
 export interface EffectiveConfig {
+  catalog: AtlasCatalog
   preset: string
   hasUrlConfig: boolean
   activeConfiguration: string | null
@@ -197,6 +198,7 @@ export function computeEffectiveConfig(
     parseUrlScopes(url),
   )
   return {
+    catalog,
     preset,
     hasUrlConfig,
     activeConfiguration,

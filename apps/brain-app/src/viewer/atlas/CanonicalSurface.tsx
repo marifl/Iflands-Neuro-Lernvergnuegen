@@ -8,7 +8,7 @@ import { nearestCornerVertex } from './atlasPick'
 // Curvature-Graustufe als Basis, Arealfarbe (Color-LUT, DataTexture, NearestFilter) darueber gemischt;
 // `flat` Label-Varying -> harte Arealgrenzen, Curvature interpoliert (kein flat).
 export function CanonicalSurface({
-  hemi, layer, surface, lut, offsetX = 0, opacity = 1, highlightLabel = -1, onPick,
+  hemi, layer, surface, lut, offsetX = 0, opacity = 1, highlightLabel = -1, onPick, onHover,
 }: {
   hemi: HemiData
   layer: string
@@ -19,6 +19,7 @@ export function CanonicalSurface({
   /** Label-Id eines fokussierten Areals (Bruecke TARO->Atlas); -1 = kein Fokus. */
   highlightLabel?: number
   onPick?: (vertex: number) => void
+  onHover?: (vertex: number | null) => void
 }) {
   // Geometrie-Basis (Position, Index, Normalen, Curvature) wird gebaut wenn hemi ODER surface wechselt.
   // Layer-Wechsel beruehrt Positionen/Normalen NICHT — nur das aLabel-Attribut wird hot-geswapped.
@@ -113,15 +114,31 @@ export function CanonicalSurface({
       geometry={geometry}
       material={material}
       position={[offsetX, 0, 0]}
+      onPointerMove={(e) => {
+        e.stopPropagation()
+        onHover?.(pickCanonicalSurfaceVertex(e.object as THREE.Mesh, e.point, e.face))
+      }}
+      onPointerOut={(e) => {
+        e.stopPropagation()
+        onHover?.(null)
+      }}
       onClick={(e) => {
         e.stopPropagation()
-        if (!onPick || e.faceIndex == null || !e.face) return
-        // Klickpunkt in lokale Mesh-Koordinaten (Mesh hat zwar Identity-Transform, aber korrekt bleiben)
-        const p = (e.object as THREE.Mesh).worldToLocal(e.point.clone())
-        const pos = (e.object as THREE.Mesh).geometry.getAttribute('position') as THREE.BufferAttribute
-        const v = nearestCornerVertex(pos.array as Float32Array, e.face.a, e.face.b, e.face.c, [p.x, p.y, p.z])
-        onPick(v)
+        const vertex = pickCanonicalSurfaceVertex(e.object as THREE.Mesh, e.point, e.face)
+        if (onPick && vertex != null) onPick(vertex)
       }}
     />
   )
+}
+
+export function pickCanonicalSurfaceVertex(
+  mesh: THREE.Mesh,
+  point: THREE.Vector3,
+  face: { a: number; b: number; c: number } | null | undefined,
+): number | null {
+  if (!face) return null
+  // Pickpunkt in lokale Mesh-Koordinaten; wichtig, sobald Hemisphaeren seitlich versetzt sind.
+  const p = mesh.worldToLocal(point.clone())
+  const pos = mesh.geometry.getAttribute('position') as THREE.BufferAttribute
+  return nearestCornerVertex(pos.array as Float32Array, face.a, face.b, face.c, [p.x, p.y, p.z])
 }

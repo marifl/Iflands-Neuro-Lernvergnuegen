@@ -27,10 +27,16 @@ function renderOverlay(scene: Scene) {
 
 const WIDTH_BY_SIZE: Record<Scene['overlay']['size'], number> = { sm: 360, md: 460, lg: 560 }
 
+export function deepeningIdsForScene(scene: Scene): Array<'basalganglia' | 'phineas'> {
+  if (scene.id === 'zusammenfassung') return ['basalganglia', 'phineas']
+  return []
+}
+
 /** Szenen-Inhalt als feste Spalte rechts (belegt den Layout-Slot der Struktur-Sidebar).
  *  Kein Overlay ueber dem 3D — der Viewport behaelt seinen vollen Raum daneben. */
 export default function OverlayPanel({ scene }: { scene: Scene }) {
   const isNarrow = useIsNarrow()
+  const deepenings = deepeningIdsForScene(scene)
   return (
     <aside
       className="ed-panel"
@@ -60,12 +66,13 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
 
         {renderOverlay(scene)}
 
-        {/* Vertiefungen (kapiteluebergreifend): expandieren im Fluss, kein Overlay. */}
-        <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid var(--line-soft)', paddingTop: 14 }}>
-          <div className="ed-block-label">Vertiefung</div>
-          <AnimationPlayer inline />
-          <PhineasGageScene inline />
-        </div>
+        {deepenings.length ? (
+          <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid var(--line-soft)', paddingTop: 14 }}>
+            <div className="ed-block-label">Kapitelweite Vertiefung</div>
+            {deepenings.includes('basalganglia') ? <AnimationPlayer inline /> : null}
+            {deepenings.includes('phineas') ? <PhineasGageScene inline /> : null}
+          </div>
+        ) : null}
       </div>
     </aside>
   )

@@ -1,0 +1,95 @@
+version: 1
+areas:
+  "dkt:rostralmiddlefrontal:l":
+    clinic: "DLPFC-Läsionen: Arbeitsgedächtnis, Planen, Set-Shifting und Tower-of-London-Leistung."
+    function: "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis."
+    chapter: "Kapitel 11.3.3; Abb. 11-5, 11-9, 11-11."
+  "dkt:rostralmiddlefrontal:r":
+    clinic: "DLPFC-Läsionen: Arbeitsgedächtnis, Planen, Set-Shifting und Tower-of-London-Leistung."
+    function: "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis."
+    chapter: "Kapitel 11.3.3; Abb. 11-5, 11-9, 11-11."
+  "dkt:parstriangularis:l":
+    clinic: "VLPFC/Broca-Nähe: Sprachproduktion und kontrollierter Abruf als prüfungsrelevanter Anker."
+    function: "Ventrolateraler PFC: Aufrechterhalten, Auswählen und Abrufen zielrelevanter Information."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+  "dkt:parstriangularis:r":
+    clinic: "VLPFC: Inhibition und Auswahl konkurrierender Handlungsoptionen."
+    function: "Ventrolateraler PFC: Aufrechterhalten, Auswählen und Abrufen zielrelevanter Information."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+  "dkt:parsopercularis:l":
+    clinic: "Inferiorer Frontalkortex: Sprach- und Inhibitionsbezüge je nach Aufgabe."
+    function: "VLPFC-Anteil für Auswahl, phonologische Kontrolle und response inhibition."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+  "dkt:parsopercularis:r":
+    clinic: "Inferiorer Frontalkortex: Inhibition und Störreizunterdrückung."
+    function: "VLPFC-Anteil für Auswahl, phonologische Kontrolle und response inhibition."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+  "dkt:lateralorbitofrontal:l":
+    clinic: "Orbitofrontale Schädigung: Enthemmung, soziale Fehlentscheidungen und Phineas-Gage-Bezug."
+    function: "Orbitofrontaler Cortex: Bewertung von Konsequenzen, Belohnung/Bestrafung und flexibles Umlernen."
+    chapter: "Kapitel 11.3.3; Phineas-Gage-Abschnitt."
+  "dkt:lateralorbitofrontal:r":
+    clinic: "Orbitofrontale Schädigung: Enthemmung, soziale Fehlentscheidungen und Phineas-Gage-Bezug."
+    function: "Orbitofrontaler Cortex: Bewertung von Konsequenzen, Belohnung/Bestrafung und flexibles Umlernen."
+    chapter: "Kapitel 11.3.3; Phineas-Gage-Abschnitt."
+  "dkt:medialorbitofrontal:l":
+    clinic: "VMPFC/OFC: Affektive Entscheidungsfindung und veränderte Sozialregulation nach Läsion."
+    function: "Ventromedialer PFC: Wertintegration, Emotion und zielgerichtete Entscheidung."
+    chapter: "Kapitel 11.3.3; Basalganglien-Schleifen."
+  "dkt:medialorbitofrontal:r":
+    clinic: "VMPFC/OFC: Affektive Entscheidungsfindung und veränderte Sozialregulation nach Läsion."
+    function: "Ventromedialer PFC: Wertintegration, Emotion und zielgerichtete Entscheidung."
+    chapter: "Kapitel 11.3.3; Basalganglien-Schleifen."
+  "dkt:rostralanteriorcingulate:l":
+    clinic: "ACC: Konfliktmonitoring, Fehlerverarbeitung und VCPT/P3a-Bezug."
+    function: "Anteriorer cingulärer Cortex: Handlungskonflikt, Kontrolle und motivational-affektive Bewertung."
+    chapter: "Kapitel 11.3.3; Abb. 11-13, 11-15."
+    aliases: ["ACC", "anterior cingulate cortex", "anteriorer cingulärer Cortex", "rostraler ACC", "cingulum", "cingulär", "cingullum", "Konfliktmonitoring"]
+  "dkt:rostralanteriorcingulate:r":
+    clinic: "ACC: Konfliktmonitoring, Fehlerverarbeitung und VCPT/P3a-Bezug."
+    function: "Anteriorer cingulärer Cortex: Handlungskonflikt, Kontrolle und motivational-affektive Bewertung."
+    chapter: "Kapitel 11.3.3; Abb. 11-13, 11-15."
+    aliases: ["ACC", "anterior cingulate cortex", "anteriorer cingulärer Cortex", "rostraler ACC", "cingulum", "cingulär", "cingullum", "Konfliktmonitoring"]
+  "julich:area-44:l":
+    clinic: "Broca-Areal: Sprachproduktion und kontrollierte Auswahl als linker IFG-Anker."
+    function: "BA44/IFG: Auswahl, Sequenzierung und phonologische Kontrolle."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+    aliases: ["BA44", "Broca", "Broca-Areal", "inferior frontal gyrus", "IFG", "pars opercularis"]
+  "julich:area-45:l":
+    clinic: "Broca-Areal: semantischer Abruf und kontrollierte Auswahl."
+    function: "BA45/IFG: kontrollierter Abruf und Auswahl zielrelevanter Repräsentationen."
+    chapter: "Kapitel 11.3.3; Abb. 11-5."
+  "julich:area-8v1:l":
+    clinic: "Dorsaler PFC: Arbeitsgedächtnis und kognitive Kontrolle in exekutiven Aufgaben."
+    function: "Frontal eye field / lateraler PFC: Top-down-Aufmerksamkeit und Handlungssteuerung."
+    chapter: "Kapitel 11.3.3; Abb. 11-7."
+  "julich:area-8v1:r":
+    clinic: "Dorsaler PFC: Arbeitsgedächtnis und kognitive Kontrolle in exekutiven Aufgaben."
+    function: "Frontal eye field / lateraler PFC: Top-down-Aufmerksamkeit und Handlungssteuerung."
+    chapter: "Kapitel 11.3.3; Abb. 11-7."
+  "julich:area-fp1:l":
+    clinic: "Frontopolarer Cortex: abstrakte Zielhierarchien und prospektive Kontrolle."
+    function: "BA10/Frontopolar: Integration übergeordneter Ziele und rostrokaudaler Kontrollgradient."
+    chapter: "Kapitel 11.3.3; Abb. 11-7."
+  "julich:area-fp1:r":
+    clinic: "Frontopolarer Cortex: abstrakte Zielhierarchien und prospektive Kontrolle."
+    function: "BA10/Frontopolar: Integration übergeordneter Ziele und rostrokaudaler Kontrollgradient."
+    chapter: "Kapitel 11.3.3; Abb. 11-7."
+  "julich:area-33:l":
+    clinic: "ACC: Fehler- und Konfliktsignale, relevant für No-go/P3a-Konfliktmonitoring."
+    function: "Dorsal/rostral ACC: Konflikt, Fehler und adaptive Kontrolle."
+    chapter: "Kapitel 11.3.3; Abb. 11-13, 11-15."
+    aliases: ["ACC", "dorsaler ACC", "dorsal anterior cingulate cortex", "anterior cingulate", "cingulate cortex", "cingulum", "cingullum"]
+  "julich:area-33:r":
+    clinic: "ACC: Fehler- und Konfliktsignale, relevant für No-go/P3a-Konfliktmonitoring."
+    function: "Dorsal/rostral ACC: Konflikt, Fehler und adaptive Kontrolle."
+    chapter: "Kapitel 11.3.3; Abb. 11-13, 11-15."
+    aliases: ["ACC", "dorsaler ACC", "dorsal anterior cingulate cortex", "anterior cingulate", "cingulate cortex", "cingulum", "cingullum"]
+  "julich:area-s32:l":
+    clinic: "Subgenualer/rostraler ACC: affektive Bewertung und emotionale Kontrollkomponente."
+    function: "ACC/vmPFC-Nähe: Verbindung von Affekt, Wert und Kontrollanforderung."
+    chapter: "Kapitel 11.3.3; Abb. 11-13."
+  "julich:area-s32:r":
+    clinic: "Subgenualer/rostraler ACC: affektive Bewertung und emotionale Kontrollkomponente."
+    function: "ACC/vmPFC-Nähe: Verbindung von Affekt, Wert und Kontrollanforderung."
+    chapter: "Kapitel 11.3.3; Abb. 11-13."

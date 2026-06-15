@@ -9,6 +9,7 @@ interface Props {
   showSub?: boolean
   onToggleSub: () => void
   picked: string
+  hovered?: string
 }
 
 const AXIS_LABEL: Record<'macro' | 'cyto', string> = {
@@ -23,9 +24,12 @@ const AXIS_SUB: Record<'macro' | 'cyto', string> = {
 }
 
 /** Layer-Umschalt-Panel (oben links, ueber dem 3D-Canvas). Gruppiert nach Achse. */
-export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, showSub, onToggleSub, picked }: Props) {
+export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, showSub, onToggleSub, picked, hovered = '—' }: Props) {
   const macroLayers = layers.filter((l) => l.axis === 'macro')
   const cytoLayers = layers.filter((l) => l.axis === 'cyto')
+  const hasHover = hovered !== '—'
+  const hasPick = picked !== '—'
+  const areaLabel = hasHover ? hovered : picked
   const groups: { axis: 'macro' | 'cyto'; items: AtlasLayer[] }[] = (
     [
       { axis: 'macro' as const, items: macroLayers },
@@ -114,14 +118,19 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
       ) : null}
       <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
         <div className="eyebrow" style={{ marginBottom: 4 }}>Areal</div>
-        {picked === '—' ? (
+        {!hasHover && !hasPick ? (
           <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--muted, #888)', letterSpacing: '0.02em' }}>
-            Klicke auf eine Region
+            Bewege oder klicke auf eine Region
           </div>
         ) : (
-          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: 'var(--orange)', letterSpacing: '0.02em' }}>
-            {picked}
-          </div>
+          <>
+            <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: hasHover ? 'var(--ink)' : 'var(--orange)', letterSpacing: '0.02em' }}>
+              {areaLabel}
+            </div>
+            <div className="eyebrow" style={{ marginTop: 3, color: 'var(--muted, #888)' }}>
+              {hasHover ? 'unter Cursor' : 'ausgewählt'}
+            </div>
+          </>
         )}
       </div>
     </div>

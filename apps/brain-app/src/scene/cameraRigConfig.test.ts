@@ -1,8 +1,17 @@
 import { describe, expect, it } from 'vitest'
 import { selectCameraRigConfig } from './cameraRigConfig'
 import type { EffectiveConfig } from '../viewer/atlas/atlasConfig'
+import type { AtlasCatalog } from '../viewer/atlas/atlasCatalog'
+
+const CATALOG: AtlasCatalog = {
+  version: '1',
+  space_note: '',
+  axes: [],
+  atlases: [],
+}
 
 const effectiveConfig = (hasUrlConfig: boolean): EffectiveConfig => ({
+  catalog: CATALOG,
   preset: 'kapitel11',
   hasUrlConfig,
   activeConfiguration: 'local-or-url-config',

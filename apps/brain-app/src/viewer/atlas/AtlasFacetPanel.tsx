@@ -1,14 +1,17 @@
-import type { AreaNode } from './atlasCatalog'
+import type { AreaContext, AreaNode } from './atlasCatalog'
 
 interface Props {
   area: AreaNode | null
 }
 
-const FACET_LABEL: Record<string, string> = {
+type ContextDisplayKey = keyof Pick<AreaContext, 'clinic' | 'function' | 'chapter'>
+
+const CONTEXT_DISPLAY_KEYS: ContextDisplayKey[] = ['clinic', 'function', 'chapter']
+
+const FACET_LABEL: Record<ContextDisplayKey, string> = {
   clinic: 'Klinik',
   function: 'Funktion',
   chapter: 'Kapitel',
-  provenance: 'Provenienz',
 }
 
 /** Facetten-Panel: zeigt Context (Klinik/Funktion/Kapitel) + Provenienz des gepickten Areals.
@@ -16,7 +19,7 @@ const FACET_LABEL: Record<string, string> = {
  *  KEIN maskierender Fallback). Provenienz existiert immer (SP1-Garantie). */
 export function AtlasFacetPanel({ area }: Props) {
   if (!area) return null
-  const contextKeys = Object.keys(area.context)
+  const contextKeys = CONTEXT_DISPLAY_KEYS.filter((key) => area.context[key])
 
   return (
     <div className="ed-panel" style={{ padding: '10px 12px', minWidth: 200 }}>
@@ -31,7 +34,7 @@ export function AtlasFacetPanel({ area }: Props) {
           contextKeys.map((k) => (
             <div key={k} style={{ marginBottom: 4 }}>
               <span className="eyebrow">{FACET_LABEL[k] ?? k}</span>
-              <div style={{ fontSize: 11, color: 'var(--fg, #ddd)' }}>{String(area.context[k])}</div>
+              <div style={{ fontSize: 11, color: 'var(--fg, #ddd)' }}>{area.context[k]}</div>
             </div>
           ))
         )}

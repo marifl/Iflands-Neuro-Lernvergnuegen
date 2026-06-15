@@ -1,8 +1,10 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { resolvePresetColors } from './colorPresets'
+import { approachTransitionValue } from './transitions'
 
 const SUBPARCELS_GLB = '/assets/bodyparts3d/k11-subparcels.glb'
 const SELECT_COLOR = '#f26b1f'
@@ -29,6 +31,8 @@ export default function SubParcels() {
     () => (colorMode === 'preset' && activePreset ? resolvePresetColors(activePreset) : null),
     [colorMode, activePreset],
   )
+  const opacityTargets = useRef(new Map<THREE.Mesh, number>())
+  const transitionActive = useRef(false)
 
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
@@ -39,19 +43,46 @@ export default function SubParcels() {
           color: SELECT_COLOR,
           emissive: new THREE.Color(SELECT_COLOR),
           emissiveIntensity: 0.7,
+          opacity: 0,
           roughness: 0.6,
           metalness: 0,
           side: THREE.DoubleSide,
+          transparent: true,
           polygonOffset: true,
           polygonOffsetFactor: -2,
           polygonOffsetUnits: -2,
         })
+        m.visible = false
         m.raycast = () => {}
         list.push(m)
       }
     })
     return list
   }, [scene])
+
+  const setOpacityTarget = (mesh: THREE.Mesh, targetOpacity: number) => {
+    if (targetOpacity > 0) mesh.visible = true
+    opacityTargets.current.set(mesh, targetOpacity)
+    transitionActive.current = true
+  }
+
+  useFrame((_, delta) => {
+    if (!transitionActive.current) return
+    let stillActive = false
+    for (const [mesh, targetOpacity] of opacityTargets.current) {
+      const mat = mesh.material as THREE.MeshStandardMaterial
+      mat.opacity = approachTransitionValue(mat.opacity, targetOpacity, delta)
+      const transparent = mat.opacity < 0.999
+      if (mat.transparent !== transparent) {
+        mat.transparent = transparent
+        mat.needsUpdate = true
+      }
+      mat.depthWrite = mat.opacity > 0.6
+      if (targetOpacity === 0 && mat.opacity === 0) mesh.visible = false
+      if (mat.opacity !== targetOpacity) stillActive = true
+    }
+    transitionActive.current = stillActive
+  })
 
   useEffect(() => {
     const set = new Set(highlight)
@@ -64,16 +95,16 @@ export default function SubParcels() {
         // Figur-Preset: nur Sub-Patches eines aktiven Buckets sichtbar, in Gruppenfarbe.
         const hex = presetColors.get(m.name)
         if (hex) {
-          m.visible = true
+          setOpacityTarget(m, 1)
           mat.color.set(hex)
           mat.emissive.set(hex)
           mat.emissiveIntensity = 0.22
         } else {
-          m.visible = false
+          setOpacityTarget(m, 0)
         }
       } else {
         // Highlight-/ERP-Modus: orange Quelle nur fuer Meshes im highlight-Set.
-        m.visible = set.has(m.name)
+        setOpacityTarget(m, set.has(m.name) ? 1 : 0)
         mat.color.set(SELECT_COLOR)
         mat.emissive.set(SELECT_COLOR)
         mat.emissiveIntensity = intensity

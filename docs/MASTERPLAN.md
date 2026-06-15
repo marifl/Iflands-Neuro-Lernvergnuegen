@@ -254,7 +254,7 @@ node bake_julich_runtime.mjs                                   # +32 Julich = 60
 ### Phase 9 — Experience-Politur ⬜
 
 - [ ] ⬜ Responsive Adapt: `ed-foot`-Steuerleiste (kein Tablet/Phone-Layout), Touch-Targets < 44 px (`DESIGN.md` §Responsive)
-- [ ] ⬜ Phineas-Szene didaktisch ausbauen
+- [x] ✅ Phineas-Szene didaktisch ausbauen — Rod-Phasen, Quellen-/Asset-Hinweis, OFC-Flyout
 - [ ] ⬜ Export B (PNG/MP4 pro Szene), Topografie-Heatmaps (post-Deadline, dünne Schicht)
 
 ### Phase 10 — Optional (Wave 3) ⬜

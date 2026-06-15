@@ -10,6 +10,7 @@ export interface OntologyNode {
   slug?: string
   side?: Side
   k11Role?: string
+  searchAliases?: string[]
   // Linkes Gegenstueck durch Spiegelung des rechten Mesh erzeugt (synthetisch).
   mirrored?: boolean
   // Schwache/fehlende Seite einer Mittellinienstruktur per Reflexion ergaenzt (synthetisch).
@@ -127,6 +128,7 @@ export function buildAtlasTree(
   rootLabels: Record<Lang, string>,
   names: string[],
   labelOf: (name: string) => string,
+  aliasesByName: ReadonlyMap<string, string[]> = new Map(),
 ): { tree: OntologyNode; slugs: string[] } {
   const slugs: string[] = []
   const byHemi: Record<'left' | 'right', OntologyNode[]> = { left: [], right: [] }
@@ -134,7 +136,14 @@ export function buildAtlasTree(
     const side: 'left' | 'right' = name.endsWith('-r') ? 'right' : 'left'
     slugs.push(name)
     const label = labelOf(name)
-    byHemi[side].push({ id: name, slug: name, fma: name, side, labels: { de: label, la: label, en: label } })
+    byHemi[side].push({
+      id: name,
+      slug: name,
+      fma: name,
+      side,
+      labels: { de: label, la: label, en: label },
+      searchAliases: aliasesByName.get(name),
+    })
   }
   const hemiNode = (side: 'left' | 'right', labels: Record<Lang, string>): OntologyNode => ({
     id: `${atlasId}-${side}`,

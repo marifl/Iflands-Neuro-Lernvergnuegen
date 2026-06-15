@@ -6,8 +6,8 @@ import {
   type OntologyNode,
 } from './ontology'
 import { useViewerStore } from './viewerStore'
+import { filterStructureSearch } from './structureSearch'
 import { useIsNarrow } from '../useMediaQuery'
-import AnimationPlayer from './AnimationPlayer'
 
 const ACCENT = 'var(--orange)'
 
@@ -141,8 +141,13 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
   const expanded = useViewerStore((s) => s.expanded[node.id] ?? false)
   const toggle = useViewerStore((s) => s.toggleExpanded)
   const selected = useViewerStore((s) => s.selected)
+  const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const select = useViewerStore((s) => s.select)
   const leaves = useMemo(() => flattenStructures(node).map((n) => n.id), [node])
   const isSelected = selected === node.id // als Gruppe vom schwarzen Marker gewaehlt
+  const selectedLeafCount = leaves.reduce((count, id) => count + (selectedSlugs.has(id) ? 1 : 0), 0)
+  const isMember = !isSelected && selectedLeafCount > 0
+  const selectionState = selectedLeafCount === 0 ? 'none' : selectedLeafCount === leaves.length ? 'all' : 'partial'
 
   const headRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -153,7 +158,7 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
     <div>
       <div
         ref={headRef}
-        className={`ed-row${isSelected ? ' sel' : ''}`}
+        className={`ed-row${isSelected ? ' sel' : isMember ? ' member' : ''}`}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -162,7 +167,32 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
       >
         <button
           type="button"
+          aria-label={`${expanded ? 'Einklappen' : 'Aufklappen'} ${node.labels[lang]}`}
           onClick={() => toggle(node.id)}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 24,
+            flex: 'none',
+            padding: '6px 0',
+            marginLeft: 8 + depth * 14,
+            border: 'none',
+            background: 'transparent',
+            color: 'var(--g500)',
+            fontFamily: 'var(--ed-display)',
+            fontSize: 13,
+            fontWeight: 700,
+            lineHeight: 1.35,
+            cursor: 'pointer',
+          }}
+        >
+          {expanded ? '▾' : '▸'}
+        </button>
+        <button
+          type="button"
+          aria-pressed={selectionState === 'partial' ? 'mixed' : selectionState === 'all'}
+          onClick={() => select(node.id)}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -171,7 +201,6 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
             minWidth: 0,
             textAlign: 'left',
             padding: '6px 8px',
-            paddingLeft: 8 + depth * 14,
             border: 'none',
             background: 'transparent',
             color: isSelected ? 'var(--orange)' : 'var(--g700)',
@@ -182,9 +211,13 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
             cursor: 'pointer',
           }}
         >
-          <span style={{ width: 12, color: 'var(--g500)' }}>{expanded ? '▾' : '▸'}</span>
           <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node.labels[lang]}</span>
           <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g500)' }}>{leaves.length}</span>
+          {selectionState !== 'none' ? (
+            <span className={`ed-pill ${selectionState === 'all' ? 'orange' : 'out'}`}>
+              {selectionState === 'all' ? 'aktiv' : 'teilweise'}
+            </span>
+          ) : null}
         </button>
         <IsoToggle id={node.id} />
         <VisToggle leaves={leaves} />
@@ -239,13 +272,10 @@ export default function StructureTree() {
 
   const searchHits = useMemo(() => {
     if (!ontology || !search.trim()) return null
-    const query = search.trim().toLowerCase()
     const brainPool = mode === 'k11' ? (visibleTree ? flattenStructures(visibleTree) : []) : flattenStructures(ontology.tree)
     const ctxPool = context ? flattenStructures(context) : []
     const atlasPools = [julich, atlas3d.dkt, atlas3d.brodmann, atlas3d.destrieux].flatMap((t) => (t ? flattenStructures(t) : []))
-    return [...brainPool, ...ctxPool, ...atlasPools].filter((node) =>
-      (['de', 'la', 'en'] as const).some((l) => node.labels[l].toLowerCase().includes(query)),
-    )
+    return filterStructureSearch([...brainPool, ...ctxPool, ...atlasPools], search)
   }, [ontology, context, julich, atlas3d, search, mode, visibleTree])
 
   if (!ontology || !visibleTree) return null
@@ -374,11 +404,6 @@ export default function StructureTree() {
         )}
       </div>
 
-      {/* Vertiefung: Animation — im Explorer-Modus hier in der Sidebar statt im Viewport. */}
-      <div style={{ flex: 'none', borderTop: '1.5px solid var(--line)', padding: 12 }}>
-        <div className="eyebrow" style={{ marginBottom: 8 }}>Vertiefung</div>
-        <AnimationPlayer inline />
-      </div>
     </div>
   )
 }

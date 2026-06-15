@@ -112,6 +112,8 @@ interface ViewerState {
   skullOpacity: number
   /** Stange sichtbar (von der Phineas-Gage-Szene gesteuert). */
   rodVisible: boolean
+  /** Didaktischer Fortschritt der Stangen-Penetration: 0 = Eintritt, 1 = Austritt. */
+  rodPhase: number
   /** Roh-Atlas-Overlays (Original-Julich/DKT-Areale, Affine-transformiert): default versteckt. */
   showAtlasJulich: boolean
   showAtlasDkt: boolean
@@ -126,6 +128,9 @@ interface ViewerState {
   /** Slug des zuletzt angeklickten Atlas-Areals (z.B. `julich3-area-44-ifg-l`) — fuer die
    *  Bruecke zum praezisen fsaverage-Areal. null = keins. */
   pickedAtlasSlug: string | null
+  /** Atlas-Areal unter dem Cursor/Finger-Hover. Pick bleibt separat persistent. */
+  hoveredAtlasArea: string | null
+  hoveredAtlasSlug: string | null
   /** Bruecke TARO->Atlas: gewuenschtes Areal (Layer + Label-Name), das der Atlas-Modus beim
    *  Betreten fokussiert (hervorhebt + benennt). Wird vom Atlas-Modus konsumiert (auf null gesetzt). */
   atlasFocus: { layer: string; name: string } | null
@@ -176,10 +181,13 @@ interface ViewerState {
   toggleExpanded: (id: string) => void
   setSkull: (visible: boolean, opacity?: number) => void
   setRodVisible: (visible: boolean) => void
+  setRodPhase: (phase: number) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setCarveOverlay: (which: 'julich' | 'dkt' | 'brodmann', visible: boolean) => void
   /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen (Name + Slug fuer die Bruecke). */
   setPickedAtlasArea: (name: string | null, slug: string | null) => void
+  /** Nicht-persistentes Hover-Areal auf TARO setzen/loeschen. */
+  setHoveredAtlasArea: (name: string | null, slug: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
   /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
   setAtlasFocus: (focus: { layer: string; name: string } | null) => void
@@ -221,6 +229,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showSkull: false,
   skullOpacity: 0.25,
   rodVisible: false,
+  rodPhase: 0,
   showAtlasJulich: false,
   showAtlasDkt: false,
   showCarveJulich: false,
@@ -229,6 +238,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   clipAtlasOverlay: true,
   pickedAtlasArea: null,
   pickedAtlasSlug: null,
+  hoveredAtlasArea: null,
+  hoveredAtlasSlug: null,
   atlasFocus: null,
 
   setOntology: (ontology) =>
@@ -313,7 +324,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
     }
     // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
-    set({ appMode, highlight: [], showSkull: false, rodVisible: false })
+    set({ appMode, highlight: [], showSkull: false, rodVisible: false, rodPhase: 0 })
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
   setColorMode: (colorMode) => set((s) => ({ colorMode, activePreset: colorMode === 'preset' ? s.activePreset : null })),
@@ -338,14 +349,26 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setSkull: (visible, opacity) =>
     set((state) => ({ showSkull: visible, skullOpacity: opacity ?? state.skullOpacity })),
   setRodVisible: (rodVisible) => set({ rodVisible }),
+  setRodPhase: (phase) =>
+    set({ rodPhase: Number.isNaN(phase) ? 0 : Math.min(1, Math.max(0, phase)) }),
   setAtlasOverlay: (which, visible) =>
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
   setCarveOverlay: (which, visible) =>
     set((s) => {
-      const next = which === 'julich' ? { showCarveJulich: visible } : which === 'dkt' ? { showCarveDkt: visible } : { showCarveBrodmann: visible }
-      const julichOn = which === 'julich' ? visible : s.showCarveJulich
-      const dktOn = which === 'dkt' ? visible : s.showCarveDkt
-      const brodmannOn = which === 'brodmann' ? visible : s.showCarveBrodmann
+      const next = visible
+        ? {
+            showCarveJulich: which === 'julich',
+            showCarveDkt: which === 'dkt',
+            showCarveBrodmann: which === 'brodmann',
+          }
+        : {
+            showCarveJulich: which === 'julich' ? false : s.showCarveJulich,
+            showCarveDkt: which === 'dkt' ? false : s.showCarveDkt,
+            showCarveBrodmann: which === 'brodmann' ? false : s.showCarveBrodmann,
+          }
+      const julichOn = next.showCarveJulich
+      const dktOn = next.showCarveDkt
+      const brodmannOn = next.showCarveBrodmann
       const anyOn = julichOn || dktOn || brodmannOn
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
@@ -353,9 +376,10 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       for (const slug of MENINGES_HIDE) (anyOn ? hidden.add(slug) : hidden.delete(slug))
       for (const slug of s.cortexHideSlugs) (anyOn ? hidden.add(slug) : hidden.delete(slug))
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
-      return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null }
+      return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null, hoveredAtlasArea: null, hoveredAtlasSlug: null }
     }),
   setPickedAtlasArea: (pickedAtlasArea, pickedAtlasSlug) => set({ pickedAtlasArea, pickedAtlasSlug }),
+  setHoveredAtlasArea: (hoveredAtlasArea, hoveredAtlasSlug) => set({ hoveredAtlasArea, hoveredAtlasSlug }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
   setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>

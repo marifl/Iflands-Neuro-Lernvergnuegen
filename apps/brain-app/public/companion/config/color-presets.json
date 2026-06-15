@@ -43,9 +43,9 @@
     },
     {
       "id": "phineas-gage",
-      "label": "Phineas Gage Laesion",
+      "label": "Phineas Gage Läsion",
       "groups": [
-        { "label": "Laesionsgebiet", "hue": 0, "buckets": ["vmpfc", "ofc", "frontopolar"] },
+        { "label": "Läsionsgebiet", "hue": 0, "buckets": ["vmpfc", "ofc", "frontopolar"] },
         { "label": "Emotion/Motivation", "hue": 30, "buckets": ["amygdala", "hippocampus", "dacc"] },
         { "label": "Kognition", "hue": 210, "buckets": ["dlpfc", "vlpfc", "ppc"] }
       ],

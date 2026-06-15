@@ -3,12 +3,12 @@
  * Rekonstruktion des Stangen-Durchschusses von 1848 als didaktischer 3D-Layer.
  *
  * Koordinaten im finalen Viewer-Raum (BodyParts3D/TARO, rezentriert + Y-up):
- *   +X = links, +Y = superior, +Z = anterior. Landmarken aus den Schaedel-Meshes
+ *   +X = links, +Y = superior, +Z = anterior. Landmarken aus den Schädel-Meshes
  *   abgeleitet (linkes Jochbein/Oberkiefer = Eintritt Wange, Stirnbein-Scheitel = Austritt).
  *
  * Quelle der Rekonstruktion: Van Horn, J. D., Irimia, A., Torgerson, C. M., Chambers,
  * M. C., Kikinis, R., & Toga, A. W. (2012). Mapping connectivity damage in the case of
- * Phineas Gage. PLoS ONE, 7(5), e37454. Klassische Laesionsanalyse: Damasio, H., Grabowski,
+ * Phineas Gage. PLoS ONE, 7(5), e37454. Klassische Läsionsanalyse: Damasio, H., Grabowski,
  * T., Frank, R., Galaburda, A. M., & Damasio, A. R. (1994). The return of Phineas Gage.
  * Science, 264(5162), 1102-1105.
  */
@@ -18,21 +18,67 @@ export interface PhineasStep {
   /** Hervorgehobene Hirn-Strukturen (Slugs) in diesem Schritt. */
   highlight: string[]
   showSkull: boolean
-  /** Schaedel-Deckkraft 0..1 (transparent = Hirn/Stange sichtbar). */
+  /** Schädel-Deckkraft 0..1 (transparent = Hirn/Stange sichtbar). */
   skullOpacity: number
   showRod: boolean
+  /** 0 = Spitze am Eintritt, 1 = Spitze über Austritt; wird weich animiert. */
+  rodPhase: number
 }
 
 /** Stangen-Trajektorie (mm, finaler Viewer-Raum): Eintritt linke Wange -> Austritt Scheitel. */
 export const ROD_ENTRY: [number, number, number] = [40, -55, 75]
 export const ROD_EXIT: [number, number, number] = [5, 95, 40]
-/** Die reale Stange war laenger als der Kopf -> ueber Eintritt/Austritt hinaus verlaengern (mm). */
+/** Die reale Stange war länger als der Kopf -> über Eintritt/Austritt hinaus verlängern (mm). */
 export const ROD_OVERSHOOT = 38
-/** Tampiereisen lief spitz zu (Eintritts-Ende duenn, hinteres Ende dick). Radien in mm. */
-export const ROD_RADIUS_ENTRY = 2.6
-export const ROD_RADIUS_EXIT = 7
+/** Tampiereisen lief spitz zu: Spitze vorn, Schaft hinten. Radien in mm. */
+export const ROD_RADIUS_TIP = 2.6
+export const ROD_RADIUS_SHAFT = 7
 
-/** Linker ventromedialer Praefrontalcortex + orbitofrontaler Cortex — die zerstoerte Region. */
+const ROD_PHASE_ENTRY = 0.28
+const ROD_PHASE_THROUGH = 0.68
+const ROD_PHASE_EXIT = 1
+
+function clamp01(value: number): number {
+  if (Number.isNaN(value)) return 0
+  return Math.min(1, Math.max(0, value))
+}
+
+function subtract(a: readonly [number, number, number], b: readonly [number, number, number]): [number, number, number] {
+  return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]
+}
+
+function addScaled(a: readonly [number, number, number], b: readonly [number, number, number], scale: number): [number, number, number] {
+  return [a[0] + b[0] * scale, a[1] + b[1] * scale, a[2] + b[2] * scale]
+}
+
+function length(v: readonly [number, number, number]): number {
+  return Math.hypot(v[0], v[1], v[2])
+}
+
+function normalize(v: readonly [number, number, number]): [number, number, number] {
+  const l = length(v)
+  if (l === 0) return [0, 1, 0]
+  return [v[0] / l, v[1] / l, v[2] / l]
+}
+
+export interface RodSegment {
+  tail: [number, number, number]
+  tip: [number, number, number]
+  length: number
+}
+
+/** Sichtbarer Stangenabschnitt für die didaktische Penetrationsanimation. */
+export function rodSegmentForPhase(phase: number): RodSegment {
+  const clamped = clamp01(phase)
+  const dir = normalize(subtract(ROD_EXIT, ROD_ENTRY))
+  const tail = addScaled(ROD_ENTRY, dir, -ROD_OVERSHOOT)
+  const finalTip = addScaled(ROD_EXIT, dir, ROD_OVERSHOOT)
+  const path = subtract(finalTip, ROD_ENTRY)
+  const tip = addScaled(ROD_ENTRY, path, clamped)
+  return { tail, tip, length: length(subtract(tip, tail)) }
+}
+
+/** Linker ventromedialer Präfrontalcortex + orbitofrontaler Cortex — die zerstörte Region. */
 export const LESION_STRUCTURES: string[] = [
   'left-straight-gyrus',
   'left-medial-orbital-gyrus',
@@ -47,54 +93,62 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
+  assetNoteDe: 'Schematisches TARO-Schädelmodell; kein Original-Gage-CT/GLB im Standalone-Repo.',
+  trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 schematisch in den Viewer-Raum übertragen.',
   steps: [
     {
       captionDe:
-        '1 — 13. September 1848: Beim Sprengen einer Eisenbahntrasse treibt eine Explosion dem Vorarbeiter Phineas Gage eine 1,1 m lange Stopfstange (Tampiereisen, ~6 kg) durch den Kopf. Der Schaedel als anatomischer Kontext.',
+        '1 — 13. September 1848: Beim Sprengen einer Eisenbahntrasse treibt eine Explosion dem Vorarbeiter Phineas Gage eine 1,1 m lange Stopfstange (Tampiereisen, ~6 kg) durch den Kopf. Der Schädel als anatomischer Kontext.',
       highlight: [],
       showSkull: true,
       skullOpacity: 0.95,
       showRod: false,
+      rodPhase: 0,
     },
     {
       captionDe:
-        '2 — Eintritt: Die Stange dringt mit der Spitze voran unter dem linken Jochbogen in die linke Wange ein (Oberkiefer-/Jochbein-Region), schraeg nach oben gerichtet.',
+        '2 — Eintritt: Die Stange dringt mit der Spitze voran unter dem linken Jochbogen in die linke Wange ein (Oberkiefer-/Jochbein-Region), schräg nach oben gerichtet.',
       highlight: [],
       showSkull: true,
       skullOpacity: 0.4,
       showRod: true,
+      rodPhase: ROD_PHASE_ENTRY,
     },
     {
       captionDe:
-        '3 — Durchtritt: hinter der linken Augenhoehle vorbei, durch den linken Frontallappen. Der Schaedel ist hier transparent, damit der Weg durch das Hirn sichtbar wird.',
+        '3 — Durchtritt: hinter der linken Augenhöhle vorbei, durch den linken Frontallappen. Der Schädel ist hier transparent, damit der Weg durch das Hirn sichtbar wird.',
       highlight: [],
       showSkull: true,
       skullOpacity: 0.18,
       showRod: true,
+      rodPhase: ROD_PHASE_THROUGH,
     },
     {
       captionDe:
-        '4 — Austritt: nahe der Mittellinie am hinteren Stirnbein (Naehe Sutura coronalis) tritt die Stange oben aus dem Schaedeldach aus.',
+        '4 — Austritt: nahe der Mittellinie am hinteren Stirnbein (Nähe Sutura coronalis) tritt die Stange oben aus dem Schädeldach aus.',
       highlight: [],
       showSkull: true,
       skullOpacity: 0.18,
       showRod: true,
+      rodPhase: ROD_PHASE_EXIT,
     },
     {
       captionDe:
-        '5 — Laesion: zerstoert wurde vor allem der linke ventromediale Praefrontalcortex und der orbitofrontale Cortex (Gyrus rectus, Gyri orbitales, subkallosales Areal) — hier hervorgehoben.',
+        '5 — Läsion: zerstört wurde vor allem der linke ventromediale Präfrontalcortex und der orbitofrontale Cortex (Gyrus rectus, Gyri orbitales, subkallosales Areal) — hier hervorgehoben.',
       highlight: LESION_STRUCTURES,
       showSkull: false,
       skullOpacity: 0,
       showRod: false,
+      rodPhase: ROD_PHASE_EXIT,
     },
     {
       captionDe:
-        '6 — Bedeutung fuer Kapitel 11: Gage ueberlebte, doch Persoenlichkeit, Sozialverhalten und Handlungsplanung veraenderten sich drastisch ("no longer Gage"). Der Fall wurde zum Schluesselbeleg fuer die Rolle des praefrontalen Cortex bei exekutiven Funktionen und sozialer Selbststeuerung.',
+        '6 — Bedeutung für Kapitel 11: Gage überlebte, doch Persönlichkeit, Sozialverhalten und Handlungsplanung veränderten sich drastisch ("no longer Gage"). Der Fall wurde zum Schlüsselbeleg für die Rolle des präfrontalen Cortex bei exekutiven Funktionen und sozialer Selbststeuerung.',
       highlight: LESION_STRUCTURES,
       showSkull: false,
       skullOpacity: 0,
       showRod: false,
+      rodPhase: ROD_PHASE_EXIT,
     },
   ] as PhineasStep[],
 }

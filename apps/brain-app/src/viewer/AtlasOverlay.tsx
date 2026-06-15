@@ -88,6 +88,8 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -12,
   }), [])
+  const mats = useMemo(() => [mat], [mat])
+  useClip(mats)
 
   // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
   useEffect(() => {

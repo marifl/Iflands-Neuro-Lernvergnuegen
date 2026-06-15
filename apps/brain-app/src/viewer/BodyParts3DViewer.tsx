@@ -1,35 +1,39 @@
 import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
-import { Canvas } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
-import { useEffectiveConfig, type ConfigCuts } from './atlas/atlasConfig'
+import { useEffectiveConfig, type ConfigCuts, type EffectiveConfig } from './atlas/atlasConfig'
+import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
 import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
 import PresetLegend from './PresetLegend'
+import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
+import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
+import { replaceCanonicalLocation } from '../scene/router'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
+import EegHeadset from './EegHeadset'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
 import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
+import { approachTransitionValue } from './transitions'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
 import { useIsNarrow } from '../useMediaQuery'
 import {
-  ROD_ENTRY,
-  ROD_EXIT,
-  ROD_OVERSHOOT,
-  ROD_RADIUS_ENTRY,
-  ROD_RADIUS_EXIT,
+  ROD_RADIUS_SHAFT,
+  ROD_RADIUS_TIP,
+  rodSegmentForPhase,
 } from './phineasGage'
 
 const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
@@ -37,7 +41,9 @@ const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
 // Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt die furchige
 // v3.1-Variante; das alte glatte volumetrische julich-brain.glb wurde entfernt (ersetzt).
-const ATLAS3D: { key: 'julich' | 'dkt' | 'brodmann' | 'destrieux'; glb: string; rootLabels: Record<Lang, string> }[] = [
+type Atlas3dKey = 'julich' | 'dkt' | 'brodmann' | 'destrieux'
+
+const ATLAS3D: { key: Atlas3dKey; glb: string; rootLabels: Record<Lang, string> }[] = [
   { key: 'julich', glb: '/assets/bodyparts3d/atlas3d-julich.glb', rootLabels: { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' } },
   { key: 'dkt', glb: '/assets/bodyparts3d/atlas3d-dkt.glb', rootLabels: { de: 'DKT', la: 'Atlas DKT', en: 'DKT' } },
   { key: 'brodmann', glb: '/assets/bodyparts3d/atlas3d-brodmann.glb', rootLabels: { de: 'Brodmann', la: 'Areae Brodmann', en: 'Brodmann' } },
@@ -90,8 +96,7 @@ function cutsFromConfig(cuts: ConfigCuts | undefined): Record<CutAxis, CutConfig
   return out
 }
 
-function ConfigLinkStateApplier() {
-  const effectiveConfig = useEffectiveConfig()
+function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: EffectiveConfig | null }) {
   const appMode = useViewerStore((s) => s.appMode)
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const setHighlight = useViewerStore((s) => s.setHighlight)
@@ -198,6 +203,8 @@ function Brain() {
   const activePreset = useViewerStore((s) => s.activePreset)
   const erpActive = useViewerStore((s) => s.erpActive)
   const erpPulse = useViewerStore((s) => s.erpPulse)
+  const opacityTargets = useRef(new Map<THREE.Mesh, number>())
+  const opacityTransitionActive = useRef(false)
   // Figur-Preset: Mesh -> Hex. Nur bei colorMode='preset' wirksam; wirft laut bei Luecken-Bucket.
   const presetColors = useMemo(
     () => (activePreset ? resolvePresetColors(activePreset) : null),
@@ -224,6 +231,28 @@ function Brain() {
   }, [scene])
 
   useClipPlanes(meshes)
+
+  const setOpacityTarget = (mesh: THREE.Mesh, targetOpacity: number) => {
+    opacityTargets.current.set(mesh, targetOpacity)
+    opacityTransitionActive.current = true
+  }
+
+  useFrame((_, delta) => {
+    if (!opacityTransitionActive.current) return
+    let stillActive = false
+    for (const [mesh, targetOpacity] of opacityTargets.current) {
+      const material = mesh.material as THREE.MeshStandardMaterial
+      material.opacity = approachTransitionValue(material.opacity, targetOpacity, delta)
+      const transparent = material.opacity < 0.999
+      if (material.transparent !== transparent) {
+        material.transparent = transparent
+        material.needsUpdate = true
+      }
+      material.depthWrite = material.opacity > 0.6
+      if (material.opacity !== targetOpacity) stillActive = true
+    }
+    opacityTransitionActive.current = stillActive
+  })
 
   useEffect(() => {
     const highlightSet = new Set(highlight)
@@ -260,10 +289,7 @@ function Brain() {
         material.emissiveIntensity = 0
       }
       const dim = visible && ((animating && !isActive) || isoDimmed)
-      if (material.transparent !== dim) material.needsUpdate = true
-      material.transparent = dim
-      material.opacity = dim ? 0.12 : 1
-      material.depthWrite = !dim
+      setOpacityTarget(mesh, dim ? 0.12 : 1)
     }
   }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden])
 
@@ -418,7 +444,17 @@ function ContextHead() {
  *  gecarvt). Pro Areal eine stabile Farbe; default versteckt, per Strukturbaum-Toggle einblendbar,
  *  anklickbar (Picking ueber Mesh-Name = Slug). Baut beim ersten Laden den Atlas-Teilbaum und
  *  registriert ihn im Store (Julich -> setJulich, sonst -> setAtlas3d). */
-function AtlasOverObject({ atlasKey, glb, rootLabels }: { atlasKey: 'julich' | 'dkt' | 'brodmann' | 'destrieux'; glb: string; rootLabels: Record<Lang, string> }) {
+function AtlasOverObject({
+  atlasKey,
+  glb,
+  rootLabels,
+  aliasesByName,
+}: {
+  atlasKey: Atlas3dKey
+  glb: string
+  rootLabels: Record<Lang, string>
+  aliasesByName?: ReadonlyMap<string, string[]>
+}) {
   const { scene } = useGLTF(glb)
   const setJulich = useViewerStore((s) => s.setJulich)
   const setAtlas3d = useViewerStore((s) => s.setAtlas3d)
@@ -457,10 +493,10 @@ function AtlasOverObject({ atlasKey, glb, rootLabels }: { atlasKey: 'julich' | '
   useEffect(() => {
     const names = meshes.map((m) => m.name).filter(Boolean)
     if (!names.length) return
-    const { tree, slugs } = buildAtlasTree(atlasKey, rootLabels, names, prettyAtlasRegion)
+    const { tree, slugs } = buildAtlasTree(atlasKey, rootLabels, names, prettyAtlasRegion, aliasesByName)
     if (atlasKey === 'julich') setJulich(tree, slugs)
     else setAtlas3d(atlasKey, tree, slugs)
-  }, [meshes, atlasKey, rootLabels, setJulich, setAtlas3d])
+  }, [meshes, atlasKey, rootLabels, aliasesByName, setJulich, setAtlas3d])
 
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
@@ -494,27 +530,37 @@ function AtlasOverObject({ atlasKey, glb, rootLabels }: { atlasKey: 'julich' | '
  * spitz zulaufend, ueber den Schaedel hinaus verlaengert. */
 function TampingIron() {
   const rodVisible = useViewerStore((s) => s.rodVisible)
-  const { position, quaternion, length } = useMemo(() => {
-    const entry = new THREE.Vector3(...ROD_ENTRY)
-    const exit = new THREE.Vector3(...ROD_EXIT)
-    const dir = exit.clone().sub(entry).normalize()
-    const a = entry.clone().addScaledVector(dir, -ROD_OVERSHOOT) // hinter dem Eintritt
-    const b = exit.clone().addScaledVector(dir, ROD_OVERSHOOT) // ueber dem Austritt
-    return {
-      position: a.clone().add(b).multiplyScalar(0.5),
-      quaternion: new THREE.Quaternion().setFromUnitVectors(
-        new THREE.Vector3(0, 1, 0),
-        b.clone().sub(a).normalize(),
-      ),
-      length: a.distanceTo(b),
-    }
-  }, [])
+  const rodPhase = useViewerStore((s) => s.rodPhase)
+  const meshRef = useRef<THREE.Mesh>(null)
+  const renderedPhase = useRef(0)
+
+  const applySegment = (phase: number) => {
+    const mesh = meshRef.current
+    if (!mesh) return
+    const segment = rodSegmentForPhase(phase)
+    const tail = new THREE.Vector3(...segment.tail)
+    const tip = new THREE.Vector3(...segment.tip)
+    const dir = tip.clone().sub(tail).normalize()
+    mesh.position.copy(tail.clone().add(tip).multiplyScalar(0.5))
+    mesh.quaternion.copy(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir))
+    mesh.scale.set(1, segment.length, 1)
+  }
+
+  useEffect(() => {
+    if (!rodVisible) renderedPhase.current = 0
+  }, [rodVisible])
+
+  useFrame((_, delta) => {
+    if (!rodVisible) return
+    renderedPhase.current = approachTransitionValue(renderedPhase.current, rodPhase, delta, 0.005)
+    applySegment(renderedPhase.current)
+  })
 
   if (!rodVisible) return null
-  // +Y-Ende (radiusTop) liegt am Austritt (dick), -Y-Ende am Eintritt (Spitze, duenn).
+  // +Y-Ende liegt an der vorlaufenden Spitze, -Y-Ende am dickeren Schaft.
   return (
-    <mesh position={position} quaternion={quaternion}>
-      <cylinderGeometry args={[ROD_RADIUS_EXIT, ROD_RADIUS_ENTRY, length, 24]} />
+    <mesh ref={meshRef}>
+      <cylinderGeometry args={[ROD_RADIUS_TIP, ROD_RADIUS_SHAFT, 1, 24]} />
       <meshStandardMaterial color={ROD_COLOR} roughness={0.5} metalness={0.6} />
     </mesh>
   )
@@ -581,6 +627,9 @@ function IsolationBar() {
 
 /** Shell-Komponente: waehlt Sidebar nach appMode, koppelt HUD/Overlays an Modus. */
 export default function BodyParts3DViewer() {
+  const effectiveConfig = useEffectiveConfig()
+  const [catalogForAliases, setCatalogForAliases] = useState<AtlasCatalog | null>(null)
+  const [catalogAliasError, setCatalogAliasError] = useState<Error | null>(null)
   const setOntology = useViewerStore((s) => s.setOntology)
   const setContext = useViewerStore((s) => s.setContext)
   const setAppMode = useViewerStore((s) => s.setAppMode)
@@ -596,8 +645,42 @@ export default function BodyParts3DViewer() {
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
   const pickedAtlasArea = useViewerStore((s) => s.pickedAtlasArea)
   const pickedAtlasSlug = useViewerStore((s) => s.pickedAtlasSlug)
+  const hoveredAtlasArea = useViewerStore((s) => s.hoveredAtlasArea)
+  const setPickedAtlasArea = useViewerStore((s) => s.setPickedAtlasArea)
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const atlasOnBrain = showCarveJulich || showCarveDkt || showCarveBrodmann
+  const atlasAreaLabel = pickedAtlasArea ?? hoveredAtlasArea ?? 'Areal anklicken'
+
+  if (catalogAliasError) throw catalogAliasError
+
+  useEffect(() => {
+    if (effectiveConfig?.catalog) {
+      setCatalogForAliases(effectiveConfig.catalog)
+      return
+    }
+    let active = true
+    loadCatalog()
+      .then((catalog) => {
+        if (active) setCatalogForAliases(catalog)
+      })
+      .catch((error: unknown) => {
+        if (!active) return
+        setCatalogAliasError(error instanceof Error ? error : new Error(String(error)))
+      })
+    return () => {
+      active = false
+    }
+  }, [effectiveConfig?.catalog])
+
+  const atlasAliases = useMemo(() => {
+    const catalog = effectiveConfig?.catalog ?? catalogForAliases
+    return {
+      julich: catalog ? buildAliasMapByCarveSlug(catalog, 'julich') : undefined,
+      dkt: catalog ? buildAliasMapByCarveSlug(catalog, 'dkt') : undefined,
+      brodmann: catalog ? buildAliasMapByCarveSlug(catalog, 'brodmann') : undefined,
+      destrieux: catalog ? buildAliasMapByCarveSlug(catalog, 'destrieux') : undefined,
+    } satisfies Record<Atlas3dKey, ReadonlyMap<string, string[]> | undefined>
+  }, [effectiveConfig?.catalog, catalogForAliases])
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
@@ -608,6 +691,7 @@ export default function BodyParts3DViewer() {
     const p = new URLSearchParams(window.location.search)
     return p.has('mode') || p.has('scene') || p.has('config') || p.has('spike')
   })
+  const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
   // Editorial-Theme (hell/dunkel). Persistiert in localStorage; vor-applied in main.tsx.
   const [theme, setTheme] = useState<'dark' | 'light'>(() =>
@@ -618,6 +702,14 @@ export default function BodyParts3DViewer() {
     else delete document.documentElement.dataset.theme
     localStorage.setItem('ed-theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    if (!isNarrow || appMode !== 'explore') setMobileTreeOpen(false)
+  }, [isNarrow, appMode])
+
+  useEffect(() => {
+    if (isNarrow && appMode === 'explore' && selected) setMobileTreeOpen(false)
+  }, [isNarrow, appMode, selected])
 
   useEffect(() => {
     let active = true
@@ -700,7 +792,12 @@ export default function BodyParts3DViewer() {
     return map
   }, [ontology, context, julich])
 
-  const selectedNode = selected ? bySlug.get(selected) : null
+  const selectedNode = selected ? bySlug.get(selected) ?? null : null
+  const selectedLearningTarget = useMemo(() => learningTargetForNode(selectedNode), [selectedNode])
+  const [closedLearningFlyoutFor, setClosedLearningFlyoutFor] = useState<string | null>(null)
+  useEffect(() => {
+    if (!selected) setClosedLearningFlyoutFor(null)
+  }, [selected])
 
   const isExploreMode = appMode === 'explore'
   // Atlas-Modus zeigt das kanonische fsaverage-Hirn (NICHT TARO) -> eigener Canvas-Zweig statt
@@ -708,6 +805,28 @@ export default function BodyParts3DViewer() {
   const isAtlas = appMode === 'atlas'
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
+  const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, isNarrow })
+  const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, isNarrow, mobileTreeOpen })
+  const atlasTarget = bridgeFor(selected)
+  const showLearningFlyout = Boolean(
+    isExploreMode &&
+    selected &&
+    selectedNode &&
+    selectedLearningTarget &&
+    closedLearningFlyoutFor !== selected,
+  )
+  const openLearningTarget = (target: ExplorerLearningTarget) => {
+    if (target.mode === 'phineas') {
+      window.history.replaceState(null, '', '?mode=phineas')
+      setLaunched(true)
+      setAppMode('phineas')
+      return
+    }
+    if (!target.configName || !target.sceneId) return
+    replaceCanonicalLocation({ configName: target.configName, sceneId: target.sceneId, step: 0 })
+    setLaunched(true)
+    setAppMode('learn')
+  }
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'var(--app-bg)', padding: 10, boxSizing: 'border-box' }}>
@@ -809,12 +928,12 @@ export default function BodyParts3DViewer() {
 
         {/* ── Mitte: 3D-Viewport (dunkle "Cover-Flaeche") + Struktur-/Inhalts-Spalte ──
             Breit: nebeneinander (Split). Schmal: gestapelt (3D oben, Spalte darunter). */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: isNarrow ? 'column' : 'row', minHeight: 0 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: isNarrow ? 'column' : 'row', minHeight: 0, position: 'relative' }}>
           <div
             style={{
               // Schmal: feste Hoehen-Zone oben; breit: nimmt den Restraum links.
               // Atlas-Modus hat keine Sidebar -> Viewport nimmt die volle Breite/Hoehe.
-              flex: isNarrow && !isAtlas ? '0 0 42%' : 1,
+              flex: viewportFlex({ appMode, isAtlas, isNarrow }),
               position: 'relative',
               minWidth: 0,
               minHeight: 0,
@@ -828,7 +947,7 @@ export default function BodyParts3DViewer() {
               <CanonicalAtlasMode />
             ) : (
             <>
-            <ConfigLinkStateApplier />
+            <ConfigLinkStateApplier effectiveConfig={effectiveConfig} />
             <Canvas
               camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
@@ -847,9 +966,16 @@ export default function BodyParts3DViewer() {
                 <ContextSkull />
                 <ContextHead />
                 {ATLAS3D.map((a) => (
-                  <AtlasOverObject key={a.key} atlasKey={a.key} glb={a.glb} rootLabels={a.rootLabels} />
+                  <AtlasOverObject
+                    key={a.key}
+                    atlasKey={a.key}
+                    glb={a.glb}
+                    rootLabels={a.rootLabels}
+                    aliasesByName={atlasAliases[a.key]}
+                  />
                 ))}
                 <SubParcels />
+                <EegHeadset />
                 <AtlasOverlay />
                 <CutCaps />
               </Suspense>
@@ -877,14 +1003,13 @@ export default function BodyParts3DViewer() {
                   </div>
                 ) : null}
                 {/* Bruecke Funktion->Struktur: fuer Kapitel-11-Regionen zum praezisen fsaverage-Areal springen. */}
-                {bridgeFor(selected) ? (
+                {atlasTarget ? (
                   <button
                     type="button"
                     className="ed-btn"
                     style={{ pointerEvents: 'auto', marginTop: 10, padding: '5px 11px' }}
                     onClick={() => {
-                      const t = bridgeFor(selected)!
-                      setAtlasFocus({ layer: t.layer, name: t.name })
+                      setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
                       setAppMode('atlas')
                     }}
                   >
@@ -893,6 +1018,37 @@ export default function BodyParts3DViewer() {
                 ) : null}
               </div>
             )}
+            {isNarrow && isExploreMode ? (
+              <button
+                type="button"
+                className="ed-btn"
+                aria-label={mobileTreeOpen ? 'Strukturbaum schließen' : 'Strukturbaum öffnen'}
+                onClick={() => setMobileTreeOpen((open) => !open)}
+                style={{
+                  position: 'absolute',
+                  right: 16,
+                  bottom: 16,
+                  zIndex: 16,
+                  padding: '7px 11px',
+                }}
+              >
+                Strukturbaum
+              </button>
+            ) : null}
+            {showLearningFlyout && selectedNode && selectedLearningTarget ? (
+              <ExplorerLearningFlyout
+                node={selectedNode}
+                target={selectedLearningTarget}
+                atlasAvailable={Boolean(atlasTarget)}
+                onClose={() => setClosedLearningFlyoutFor(selected)}
+                onOpenAtlas={() => {
+                  if (!atlasTarget) return
+                  setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                  setAppMode('atlas')
+                }}
+                onOpenLearn={openLearningTarget}
+              />
+            ) : null}
 
             <PresetLegend />
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
@@ -903,24 +1059,41 @@ export default function BodyParts3DViewer() {
                 style={{ position: 'absolute', top: 16, right: 16, padding: '9px 14px', pointerEvents: 'none', maxWidth: 280 }}
               >
                 <div className="eyebrow">Atlas-Areal{showCarveDkt ? ' · DKT' : showCarveJulich ? ' · Julich' : showCarveBrodmann ? ' · Brodmann' : ''}</div>
-                <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : 'var(--g600)', marginTop: 4 }}>
-                  {pickedAtlasArea ?? 'Areal anklicken'}
+                <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : hoveredAtlasArea ? 'var(--ink)' : 'var(--g600)', marginTop: 4 }}>
+                  {atlasAreaLabel}
+                </div>
+                <div className="eyebrow" style={{ marginTop: 3, color: 'var(--g500)' }}>
+                  {pickedAtlasArea ? 'ausgewählt' : hoveredAtlasArea ? 'unter Cursor' : 'bereit'}
                 </div>
                 {/* Bruecke Funktion->Struktur: geklicktes Julich-Carve-Areal im praezisen fsaverage-Atlas
                     (echte Furchen) zeigen + hervorheben. Nur fuer Slugs mit zuordenbarem Areal (keine GapMaps). */}
-                {julichBridgeFor(pickedAtlasSlug) ? (
-                  <button
-                    type="button"
-                    className="ed-btn"
-                    style={{ pointerEvents: 'auto', marginTop: 9, padding: '5px 11px' }}
-                    onClick={() => {
-                      const t = julichBridgeFor(pickedAtlasSlug)!
-                      setAtlasFocus({ layer: t.layer, name: t.name })
-                      setAppMode('atlas')
-                    }}
-                  >
-                    Im Atlas zeigen →
-                  </button>
+                {pickedAtlasArea ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7, marginTop: 9, pointerEvents: 'auto' }}>
+                    {julichBridgeFor(pickedAtlasSlug) ? (
+                      <button
+                        type="button"
+                        className="ed-btn"
+                        style={{ padding: '5px 11px' }}
+                        onClick={() => {
+                          const t = julichBridgeFor(pickedAtlasSlug)!
+                          setAtlasFocus({ layer: t.layer, name: t.name })
+                          setAppMode('atlas')
+                        }}
+                      >
+                        Im Atlas zeigen →
+                      </button>
+                    ) : null}
+                    {pickedAtlasArea ? (
+                      <button
+                        type="button"
+                        className="ed-btn"
+                        style={{ padding: '5px 11px' }}
+                        onClick={() => setPickedAtlasArea(null, null)}
+                      >
+                        Areal lösen
+                      </button>
+                    ) : null}
+                  </div>
                 ) : null}
               </div>
             )}
@@ -928,7 +1101,31 @@ export default function BodyParts3DViewer() {
             )}
           </div>
 
-          {isAtlas ? null : sidebar}
+          {renderInlineSidebar ? sidebar : null}
+          {renderMobileTreeDrawer ? (
+            <div
+              className="ed-panel ed-frame"
+              style={{
+                position: 'absolute',
+                left: 8,
+                right: 8,
+                bottom: 8,
+                zIndex: 25,
+                height: 'min(58%, 520px)',
+                display: 'flex',
+                flexDirection: 'column',
+                overflow: 'hidden',
+              }}
+            >
+              <div style={{ flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 10px', borderBottom: '1.5px solid var(--line)' }}>
+                <span className="eyebrow">Strukturbaum</span>
+                <button type="button" className="ed-btn" style={{ padding: '4px 9px' }} onClick={() => setMobileTreeOpen(false)}>
+                  Schließen
+                </button>
+              </div>
+              {sidebar}
+            </div>
+          ) : null}
         </div>
 
         {/* ── Steuer-Fussleiste: Atlas-Menue, Werkzeug (nur Explorer), Modus ── */}

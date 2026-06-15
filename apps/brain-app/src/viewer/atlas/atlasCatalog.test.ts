@@ -3,6 +3,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import type { AtlasCatalog } from './atlasCatalog'
+import { buildAliasMapByCarveSlug } from './atlasCatalog'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const catalog = JSON.parse(
@@ -51,5 +52,34 @@ describe('atlas-ontology.json Invarianten', () => {
     const labels = allAreas('julich').map((a) => a.label_de)
     expect(labels.some((l) => l.includes('GapMap'))).toBe(true)
     expect(labels.some((l) => l.includes('Hippocampus'))).toBe(true)
+  })
+
+  it('enthaelt kuratierte Kapitel-11-Kontexte fuer PFC/ACC-Areale', () => {
+    const all = catalog.atlases.flatMap((a) => a.groups.flatMap((g) => g.areas))
+    const area44 = all.find((a) => a.id === 'julich:area-44:l')
+    const acc = all.find((a) => a.id === 'dkt:rostralanteriorcingulate:l')
+    expect(area44?.context.function).toContain('BA44')
+    expect(acc?.context.chapter).toContain('11-15')
+  })
+
+  it('enthaelt Aliasdaten fuer ACC und einen zweiten Vortragsfall', () => {
+    const all = catalog.atlases.flatMap((a) => a.groups.flatMap((g) => g.areas))
+    const area44 = all.find((a) => a.id === 'julich:area-44:l')
+    const acc = all.find((a) => a.id === 'dkt:rostralanteriorcingulate:l')
+    expect(acc?.context.aliases).toContain('cingullum')
+    expect(acc?.context.aliases).toContain('anterior cingulate cortex')
+    expect(area44?.context.aliases).toContain('Broca-Areal')
+    expect(area44?.context.aliases).toContain('IFG')
+  })
+
+  it('mappt Aliasdaten auf suchbare Atlas-Mesh-Slugs', () => {
+    const julichAliases = buildAliasMapByCarveSlug(catalog, 'julich')
+    const dktAliases = buildAliasMapByCarveSlug(catalog, 'dkt')
+    expect(julichAliases.get('julich3-area-33-acc-l')).toContain('cingullum')
+    expect(julichAliases.get('julich-area-33-acc-l')).toContain('cingullum')
+    expect(julichAliases.get('julich3-area-44-ifg-l')).toContain('Broca-Areal')
+    expect(julichAliases.get('julich-area-44-ifg-l')).toContain('Broca-Areal')
+    expect(dktAliases.get('rostralanteriorcingulate-l')).toContain('anterior cingulate cortex')
+    expect(dktAliases.get('dkt-rostralanteriorcingulate-l')).toContain('anterior cingulate cortex')
   })
 })

@@ -25,8 +25,15 @@ export default function CanonicalAtlasMode() {
   const [surface, setSurface] = useState<'pial' | 'inflated'>('pial')
   const [showSub, setShowSub] = useState<boolean>(false)
   const [picked, setPicked] = useState<string>('—')
+  const [hovered, setHovered] = useState<string>('—')
   // Fokussiertes Areal (Bruecke TARO->Atlas): Label-Id, das hervorgehoben wird; -1 = kein Fokus.
   const [highlight, setHighlight] = useState<number>(-1)
+  const [hoverLabel, setHoverLabel] = useState<number>(-1)
+
+  const clearHover = () => {
+    setHoverLabel(-1)
+    setHovered('—')
+  }
 
   useEffect(() => {
     // StrictMode-Doppelmount: der Effekt laeuft zweimal -> ZWEI loadManifest-Promises. Ohne Guard
@@ -89,18 +96,43 @@ export default function CanonicalAtlasMode() {
     setPicked(labelName(lut, hemis!.R.labels[active][vertex]) || '—')
   }
 
+  function handleHoverL(vertex: number | null) {
+    if (vertex == null) {
+      setHoverLabel(-1)
+      setHovered('—')
+      return
+    }
+    const id = hemis!.L.labels[active][vertex]
+    setHoverLabel(id)
+    setHovered(labelName(lut, id) || '—')
+  }
+
+  function handleHoverR(vertex: number | null) {
+    if (vertex == null) {
+      setHoverLabel(-1)
+      setHovered('—')
+      return
+    }
+    const id = hemis!.R.labels[active][vertex]
+    setHoverLabel(id)
+    setHovered(labelName(lut, id) || '—')
+  }
+
+  const activeHighlight = hoverLabel >= 0 ? hoverLabel : highlight
+
   return (
     // Fuellt die Viewport-Spalte des BodyParts3DViewer-Layouts (absolute, nicht fixed -> Footer/Kopfleiste bleiben frei).
     <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e' }}>
       <AtlasLayerPanel
         layers={m.layers}
         active={active}
-        onSelect={(id) => { setActive(id); setPicked('—'); setHighlight(-1) }}
+        onSelect={(id) => { setActive(id); setPicked('—'); setHighlight(-1); clearHover() }}
         surface={surf}
-        onSurface={setSurface}
+        onSurface={(nextSurface) => { setSurface(nextSurface); clearHover() }}
         showSub={m.subcortical ? showSub : undefined}
-        onToggleSub={() => { setShowSub((v) => !v); setPicked('—') }}
+        onToggleSub={() => { setShowSub((v) => !v); setPicked('—'); clearHover() }}
         picked={picked}
+        hovered={hovered}
       />
       <Canvas camera={{ position: [0, 0, 310], fov: 45 }}>
         <ambientLight intensity={0.6} />
@@ -113,8 +145,8 @@ export default function CanonicalAtlasMode() {
             XYZ-Order stellt das Hirn auf den Kopf). */}
         <group rotation={[0, Math.PI, 0]}>
           <group rotation={[-Math.PI / 2, 0, 0]}>
-            <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickL} />
-            <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={highlight} onPick={handlePickR} />
+            <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={activeHighlight} onPick={handlePickL} onHover={handleHoverL} />
+            <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={activeHighlight} onPick={handlePickR} onHover={handleHoverR} />
             {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
           </group>
         </group>

@@ -1,9 +1,12 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
 import {
   lutCode, carveCode, sideOf, prettyArea, julichSlug,
   lobeOfHostStem, lobeOfDestrieux, lobeOfDktName, lobeOfJulichName, lobeOfBrodmannBA,
-  buildCatalog,
+  loadAtlasContext, buildCatalog,
 } from './build-catalog.mjs'
 
 test('lutCode normalisiert je Layer (dkt/destrieux/brodmann)', () => {
@@ -94,4 +97,46 @@ test('buildCatalog: kanonische IDs eindeutig + carve seitenkonsistent', () => {
     const suffix = a.side === 'L' ? '-l' : '-r'
     assert.ok(a.refs.carve.every((k) => k.endsWith(suffix)), `Seiten-Mismatch in ${a.id}`)
   }
+})
+
+test('loadAtlasContext liest kuratierte Kapitel-11-Facetten', () => {
+  const context = loadAtlasContext()
+  assert.equal(context.version, 1)
+  assert.match(context.areas['julich:area-44:l'].function, /BA44/)
+  assert.match(context.areas['dkt:rostralanteriorcingulate:l'].clinic, /ACC/)
+  assert.ok(context.areas['dkt:rostralanteriorcingulate:l'].aliases.includes('cingullum'))
+  assert.ok(context.areas['julich:area-44:l'].aliases.includes('Broca-Areal'))
+})
+
+test('loadAtlasContext wirft bei unbekannten Kontext-Feldern', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'atlas-context-'))
+  const path = join(dir, 'atlas-context.yaml')
+  try {
+    writeFileSync(path, 'version: 1\nareas:\n  "julich:area-44:l":\n    note: "x"\n')
+    assert.throws(() => loadAtlasContext(path), /unbekanntes Kontext-Feld "note"/)
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
+})
+
+test('loadAtlasContext validiert Alias-Listen', () => {
+  const dir = mkdtempSync(join(tmpdir(), 'atlas-context-'))
+  const path = join(dir, 'atlas-context.yaml')
+  try {
+    writeFileSync(path, 'version: 1\nareas:\n  "julich:area-44:l":\n    aliases: "ACC"\n')
+    assert.throws(() => loadAtlasContext(path), /muss eine String-Liste sein/)
+  } finally {
+    rmSync(dir, { recursive: true, force: true })
+  }
+})
+
+test('buildCatalog: mergt Kontext in Area-Nodes', () => {
+  const { catalog } = buildCatalog()
+  const all = catalog.atlases.flatMap((a) => a.groups.flatMap((g) => g.areas))
+  const area44 = all.find((area) => area.id === 'julich:area-44:l')
+  const acc = all.find((area) => area.id === 'dkt:rostralanteriorcingulate:l')
+  assert.equal(area44.context.chapter, 'Kapitel 11.3.3; Abb. 11-5.')
+  assert.match(acc.context.function, /konflikt/i)
+  assert.ok(area44.context.aliases.includes('IFG'))
+  assert.ok(acc.context.aliases.includes('cingullum'))
 })

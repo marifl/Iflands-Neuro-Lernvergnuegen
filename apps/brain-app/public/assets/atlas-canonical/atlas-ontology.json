@@ -138,7 +138,11 @@
                   "lateralorbitofrontal-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Orbitofrontale Schädigung: Enthemmung, soziale Fehlentscheidungen und Phineas-Gage-Bezug.",
+                "function": "Orbitofrontaler Cortex: Bewertung von Konsequenzen, Belohnung/Bestrafung und flexibles Umlernen.",
+                "chapter": "Kapitel 11.3.3; Phineas-Gage-Abschnitt."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -164,7 +168,11 @@
                   "lateralorbitofrontal-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Orbitofrontale Schädigung: Enthemmung, soziale Fehlentscheidungen und Phineas-Gage-Bezug.",
+                "function": "Orbitofrontaler Cortex: Bewertung von Konsequenzen, Belohnung/Bestrafung und flexibles Umlernen.",
+                "chapter": "Kapitel 11.3.3; Phineas-Gage-Abschnitt."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -190,7 +198,11 @@
                   "medialorbitofrontal-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "VMPFC/OFC: Affektive Entscheidungsfindung und veränderte Sozialregulation nach Läsion.",
+                "function": "Ventromedialer PFC: Wertintegration, Emotion und zielgerichtete Entscheidung.",
+                "chapter": "Kapitel 11.3.3; Basalganglien-Schleifen."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -216,7 +228,11 @@
                   "medialorbitofrontal-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "VMPFC/OFC: Affektive Entscheidungsfindung und veränderte Sozialregulation nach Läsion.",
+                "function": "Ventromedialer PFC: Wertintegration, Emotion und zielgerichtete Entscheidung.",
+                "chapter": "Kapitel 11.3.3; Basalganglien-Schleifen."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -294,7 +310,11 @@
                   "parsopercularis-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Inferiorer Frontalkortex: Sprach- und Inhibitionsbezüge je nach Aufgabe.",
+                "function": "VLPFC-Anteil für Auswahl, phonologische Kontrolle und response inhibition.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -320,7 +340,11 @@
                   "parsopercularis-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Inferiorer Frontalkortex: Inhibition und Störreizunterdrückung.",
+                "function": "VLPFC-Anteil für Auswahl, phonologische Kontrolle und response inhibition.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -398,7 +422,11 @@
                   "parstriangularis-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "VLPFC/Broca-Nähe: Sprachproduktion und kontrollierter Abruf als prüfungsrelevanter Anker.",
+                "function": "Ventrolateraler PFC: Aufrechterhalten, Auswählen und Abrufen zielrelevanter Information.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -424,7 +452,11 @@
                   "parstriangularis-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "VLPFC: Inhibition und Auswahl konkurrierender Handlungsoptionen.",
+                "function": "Ventrolateraler PFC: Aufrechterhalten, Auswählen und Abrufen zielrelevanter Information.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -502,7 +534,11 @@
                   "rostralmiddlefrontal-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "DLPFC-Läsionen: Arbeitsgedächtnis, Planen, Set-Shifting und Tower-of-London-Leistung.",
+                "function": "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5, 11-9, 11-11."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -528,7 +564,11 @@
                   "rostralmiddlefrontal-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "DLPFC-Läsionen: Arbeitsgedächtnis, Planen, Set-Shifting und Tower-of-London-Leistung.",
+                "function": "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5, 11-9, 11-11."
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -826,7 +866,21 @@
                   "rostralanteriorcingulate-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "ACC: Konfliktmonitoring, Fehlerverarbeitung und VCPT/P3a-Bezug.",
+                "function": "Anteriorer cingulärer Cortex: Handlungskonflikt, Kontrolle und motivational-affektive Bewertung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13, 11-15.",
+                "aliases": [
+                  "ACC",
+                  "anterior cingulate cortex",
+                  "anteriorer cingulärer Cortex",
+                  "rostraler ACC",
+                  "cingulum",
+                  "cingulär",
+                  "cingullum",
+                  "Konfliktmonitoring"
+                ]
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -852,7 +906,21 @@
                   "rostralanteriorcingulate-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "ACC: Konfliktmonitoring, Fehlerverarbeitung und VCPT/P3a-Bezug.",
+                "function": "Anteriorer cingulärer Cortex: Handlungskonflikt, Kontrolle und motivational-affektive Bewertung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13, 11-15.",
+                "aliases": [
+                  "ACC",
+                  "anterior cingulate cortex",
+                  "anteriorer cingulärer Cortex",
+                  "rostraler ACC",
+                  "cingulum",
+                  "cingulär",
+                  "cingullum",
+                  "Konfliktmonitoring"
+                ]
+              },
               "provenance": {
                 "source": "dkt",
                 "affine_det": 0.657,
@@ -5120,7 +5188,19 @@
                   "julich3-area-44-ifg-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Broca-Areal: Sprachproduktion und kontrollierte Auswahl als linker IFG-Anker.",
+                "function": "BA44/IFG: Auswahl, Sequenzierung und phonologische Kontrolle.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5.",
+                "aliases": [
+                  "BA44",
+                  "Broca",
+                  "Broca-Areal",
+                  "inferior frontal gyrus",
+                  "IFG",
+                  "pars opercularis"
+                ]
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -5172,7 +5252,11 @@
                   "julich3-area-45-ifg-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Broca-Areal: semantischer Abruf und kontrollierte Auswahl.",
+                "function": "BA45/IFG: kontrollierter Abruf und Auswahl zielrelevanter Repräsentationen.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-5."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -5900,7 +5984,11 @@
                   "julich3-area-8v1-mfg-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Dorsaler PFC: Arbeitsgedächtnis und kognitive Kontrolle in exekutiven Aufgaben.",
+                "function": "Frontal eye field / lateraler PFC: Top-down-Aufmerksamkeit und Handlungssteuerung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-7."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -5926,7 +6014,11 @@
                   "julich3-area-8v1-mfg-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Dorsaler PFC: Arbeitsgedächtnis und kognitive Kontrolle in exekutiven Aufgaben.",
+                "function": "Frontal eye field / lateraler PFC: Top-down-Aufmerksamkeit und Handlungssteuerung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-7."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -6368,7 +6460,11 @@
                   "julich3-area-fp1-fpole-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Frontopolarer Cortex: abstrakte Zielhierarchien und prospektive Kontrolle.",
+                "function": "BA10/Frontopolar: Integration übergeordneter Ziele und rostrokaudaler Kontrollgradient.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-7."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -6394,7 +6490,11 @@
                   "julich3-area-fp1-fpole-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Frontopolarer Cortex: abstrakte Zielhierarchien und prospektive Kontrolle.",
+                "function": "BA10/Frontopolar: Integration übergeordneter Ziele und rostrokaudaler Kontrollgradient.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-7."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -8876,7 +8976,20 @@
                   "julich3-area-33-acc-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "ACC: Fehler- und Konfliktsignale, relevant für No-go/P3a-Konfliktmonitoring.",
+                "function": "Dorsal/rostral ACC: Konflikt, Fehler und adaptive Kontrolle.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13, 11-15.",
+                "aliases": [
+                  "ACC",
+                  "dorsaler ACC",
+                  "dorsal anterior cingulate cortex",
+                  "anterior cingulate",
+                  "cingulate cortex",
+                  "cingulum",
+                  "cingullum"
+                ]
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -8902,7 +9015,20 @@
                   "julich3-area-33-acc-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "ACC: Fehler- und Konfliktsignale, relevant für No-go/P3a-Konfliktmonitoring.",
+                "function": "Dorsal/rostral ACC: Konflikt, Fehler und adaptive Kontrolle.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13, 11-15.",
+                "aliases": [
+                  "ACC",
+                  "dorsaler ACC",
+                  "dorsal anterior cingulate cortex",
+                  "anterior cingulate",
+                  "cingulate cortex",
+                  "cingulum",
+                  "cingullum"
+                ]
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -9136,7 +9262,11 @@
                   "julich3-area-s32-sacc-l"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Subgenualer/rostraler ACC: affektive Bewertung und emotionale Kontrollkomponente.",
+                "function": "ACC/vmPFC-Nähe: Verbindung von Affekt, Wert und Kontrollanforderung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,
@@ -9162,7 +9292,11 @@
                   "julich3-area-s32-sacc-r"
                 ]
               },
-              "context": {},
+              "context": {
+                "clinic": "Subgenualer/rostraler ACC: affektive Bewertung und emotionale Kontrollkomponente.",
+                "function": "ACC/vmPFC-Nähe: Verbindung von Affekt, Wert und Kontrollanforderung.",
+                "chapter": "Kapitel 11.3.3; Abb. 11-13."
+              },
               "provenance": {
                 "source": "julich",
                 "affine_det": 0.603,

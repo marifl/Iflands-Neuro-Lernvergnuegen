@@ -9,23 +9,26 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const setSkull = useViewerStore((s) => s.setSkull)
   const setRodVisible = useViewerStore((s) => s.setRodVisible)
+  const setRodPhase = useViewerStore((s) => s.setRodPhase)
   const [active, setActive] = useState(asMode)
   const [step, setStep] = useState(0)
   const [playing, setPlaying] = useState(asMode)
 
-  // Aktiven Schritt in Highlight + Schaedel + Stange spiegeln; beim Schliessen zuruecksetzen.
+  // Aktiven Schritt in Highlight + Schädel + Stange spiegeln; beim Schließen zurücksetzen.
   useEffect(() => {
     if (!active) {
       setHighlight([])
       setSkull(false)
       setRodVisible(false)
+      setRodPhase(0)
       return
     }
     const s = scene.steps[step]
     setHighlight(s.highlight)
     setSkull(s.showSkull, s.skullOpacity)
     setRodVisible(s.showRod)
-  }, [active, step, scene, setHighlight, setSkull, setRodVisible])
+    setRodPhase(s.rodPhase)
+  }, [active, step, scene, setHighlight, setSkull, setRodVisible, setRodPhase])
 
   useEffect(() => {
     if (!active || !playing) return
@@ -82,6 +85,11 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
 
       <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13.5, lineHeight: 1.55, color: 'var(--g800)', minHeight: 84 }}>
         {current.captionDe}
+      </div>
+
+      <div style={{ marginTop: 10, fontFamily: 'var(--ed-mono)', fontSize: 10.5, lineHeight: 1.45, color: 'var(--g600)' }}>
+        {scene.trajectoryNoteDe}<br />
+        {scene.assetNoteDe}
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
