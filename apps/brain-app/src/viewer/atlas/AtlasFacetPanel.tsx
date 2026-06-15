@@ -1,0 +1,51 @@
+import type { AreaNode } from './atlasCatalog'
+
+interface Props {
+  area: AreaNode | null
+}
+
+const FACET_LABEL: Record<string, string> = {
+  clinic: 'Klinik',
+  function: 'Funktion',
+  chapter: 'Kapitel',
+  provenance: 'Provenienz',
+}
+
+/** Facetten-Panel: zeigt Context (Klinik/Funktion/Kapitel) + Provenienz des gepickten Areals.
+ *  Context ist bis SP2 leer -> explizit "keine kuratierten Daten" (dokumentierte Abwesenheit,
+ *  KEIN maskierender Fallback). Provenienz existiert immer (SP1-Garantie). */
+export function AtlasFacetPanel({ area }: Props) {
+  if (!area) return null
+  const contextKeys = Object.keys(area.context)
+
+  return (
+    <div className="ed-panel" style={{ padding: '10px 12px', minWidth: 200 }}>
+      <div className="eyebrow" style={{ marginBottom: 6 }}>{area.label_de}</div>
+
+      <div style={{ marginBottom: 8 }}>
+        {contextKeys.length === 0 ? (
+          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--muted, #888)' }}>
+            Keine kuratierten Daten (Kontext folgt mit SP2).
+          </div>
+        ) : (
+          contextKeys.map((k) => (
+            <div key={k} style={{ marginBottom: 4 }}>
+              <span className="eyebrow">{FACET_LABEL[k] ?? k}</span>
+              <div style={{ fontSize: 11, color: 'var(--fg, #ddd)' }}>{String(area.context[k])}</div>
+            </div>
+          ))
+        )}
+      </div>
+
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 6 }}>
+        <div className="eyebrow" style={{ marginBottom: 3 }}>Provenienz</div>
+        <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--muted, #888)', lineHeight: 1.5 }}>
+          Quelle: {area.provenance.source}<br />
+          Affine-Det: {area.provenance.affine_det ?? '—'}
+          {area.provenance.backfill ? <><br />Backfill-Patch</> : null}
+          <br />TARO: {area.taro_present ? 'vorhanden' : 'nur fsaverage'}
+        </div>
+      </div>
+    </div>
+  )
+}
