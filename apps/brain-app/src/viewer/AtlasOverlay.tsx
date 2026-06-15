@@ -78,9 +78,12 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
     vertexColors: true,
     side: THREE.DoubleSide,
     shininess: 6,
+    // Z-Fighting mit dem darunterliegenden Kortex: der Schnitt fuegte Mittelpunkt-Vertices ein, die
+    // zwischen den Kortex-Vertices liegen -> an den Grenzen scheint der graue Kortex durch. Kraeftiger
+    // negativer polygonOffset zieht den Carve konsistent davor (-1 reichte an steilen Stellen nicht).
     polygonOffset: true,
-    polygonOffsetFactor: -1,
-    polygonOffsetUnits: -1,
+    polygonOffsetFactor: -4,
+    polygonOffsetUnits: -4,
   }), [])
 
   // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
