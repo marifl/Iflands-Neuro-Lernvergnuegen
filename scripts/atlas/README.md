@@ -51,6 +51,53 @@ Das **gesamte** Julich + DKT auf TARO, als wiederverwendbares Artefakt fuer spae
 
 ---
 
+### C) Carve-Surface-Pipeline — `bake_carve.mjs` → `atlas-surface-*.glb` (in der App)
+Die figur-genaue **Areal-Einfaerbung auf dem gefurchten TARO-Kortex** (Footer → Atlas → „Atlas auf Hirn").
+Laedt `AtlasOverlay.tsx`. **Ersetzt** die alte `bake_carved_surface.mjs` (splitTri-Cut → erzeugte Slivers).
+
+**Vier Prinzipien (teuer erkaempft — NICHT zurueckdrehen):**
+1. **GRENZ-KONFORMER Cut (`splitTri`) auf dem gefurchten clean-Mesh** → gerade, scharfe Arealgrenzen.
+   **T-JUNCTION-FREI per Konstruktion** (geteilte Kante (P,Q) wird von beiden Nachbardreiecken identisch
+   am Mittelpunkt geteilt; per-Vertex-Labels → konsistent). Verifiziert: offene Kanten bleiben ~2204
+   (= Basis-Mesh), Normalen-Fehler <0.01 %, 0 degenerierte Dreiecke (`work/verify_topology.mjs`).
+2. **WINDING-Korrektur (entscheidend gegen die „Shards"!):** `splitTri` emittiert manche Sub-Dreiecke
+   gegenlaeufig UND die TARO-Gyri haben gemischte Face-Wicklung → falsch orientierte Normalen = gr/oliv-
+   gruene Dreiecks-Flaps (im `MeshNormalMaterial` als Fehlfarben sichtbar — DAS war der „Spikes"-Bug).
+   Fix: jedes Sub-Dreieck an der Eltern-Face-Normale ausrichten (Indizes tauschen wenn dot<0). Zusaetzlich
+   ist `splitTri` selbst wicklungs-konsistent (Test in `carve_cut.test.mjs`). KEIN `laplacianSmooth`
+   (off-surface Spikes), KEINE Normal-Inflation (riss Grenz-Duplikate). Mittelpunkte bleiben on-surface.
+3. **Harte Farbkante (kein Batik):** `splitTri` dupliziert Grenz-Mittelpunkte pro Sub-Dreieck mit dessen
+   Label → benachbarte Areale teilen KEINE Vertices an der Grenze → keine Farb-Interpolation. Material
+   simpel: `vertexColors` + smooth NORMAL + `polygonOffset` (z-Fight gegen Cortex, kein Geometrie-Versatz).
+   (Der `flat varying`-Shader-Weg wurde verworfen: `vColor` war nicht im assemblierten Shader → wirkungslos.)
+4. **Wissenschaftlich treue Labels:** exakter Positions-Match der registrierten `atlas_labels_*`
+   + **Nearest-Centroid-Aufloesung der Combined-Host-Overlaps** (Within-Host-Partition; sonst verschluckt
+   z.B. `inferiorparietal`/`ipl-combined` das ganze `supramarginal`) + Seed-Garantie + Nearest-Fill nur
+   fuer Luecken. **Normalen richtungs-bewusst** (`weldedNormalsDirectional`): gegenlaeufige Sulcus-Waende
+   am ×64-Weld nicht zusammenfassen (sonst nach innen kippende Normalen → dunkle Chevrons).
+
+**Reproduktion:**
+```bash
+node export_clean_cortex.mjs                          # work/taro_cortex_clean.obj (Merge + ×64-Weld, gefurcht)
+node bake_carve.mjs dkt                               # + julich + brodmann  -> atlas-surface-*.glb + -pick.json
+node work/audit_carve_fidelity.mjs dkt                # Treue-Audit: registriert vs. Carve (0 FEHLEND erwartet)
+node work/verify_topology.mjs dkt                     # Normalen-Richtung, T-Junctions (offene Kanten ~2204), Slivers
+```
+**Audit-Stand:** 0 fehlende Parzellen; Normalen-Fehler <0.01 %; T-junction-frei (offene Kanten ~Basis 2204);
+0 degeneriert, ~60 winzige Tripelpunkt-Slivers (on-surface, unkritisch). Rest-„Drift"/„Erosion" im
+Fidelity-Audit sind KEINE Fehler (Nearest-Fill-Tiling bzw. korrekte Within-Host-Partition). Decke §3/§3c.
+
+**Verworfen & GELOESCHT (NICHT erneut versuchen):**
+- **Blender-Voxel-Remesh** (`remesh.py`) → ballonte die Furchen weg (Sulci gefuellt).
+- **Label-Textur** (`uv_unwrap.py`+`bake_label_texture.mjs`) → gefalteter Cortex hat keine gute UV (Smart
+  UV Project zersplittert in hunderte Mini-Inseln); ohne FreeSurfer-Inflation nicht bijektiv loesbar.
+- **`flat varying`-Shader** → `vColor` war im assemblierten r184-Shader nicht vorhanden → wirkungslos.
+- **non-indexed flat-per-Dreieck** → harte Farbe ja, aber Dreiecks-Treppe (Zacken).
+- **`laplacianSmooth` / Material-Normal-Inflation** → Spikes/Shards.
+- **`bake_carved_surface.mjs`** → ersetzt durch `bake_carve.mjs`.
+- **Blender `fix_winding.py`** → unnoetig, der Bake-seitige Winding-Flip reicht (kein Blender im Carve-Pfad).
+`carve_cut.mjs::splitTri`/`weldedNormalsDirectional` werden WEITER genutzt.
+
 ## 2. Schluessel-Mechanismen (warum es funktioniert)
 
 - **Within-Host-Partition (zentroid-aligned):** Pro TARO-Host alle zugeordneten Parzellen gemeinsam auf den Host-Schwerpunkt zentrieren (entfernt den ~22 mm Bulk-Offset), dann jeden Host-Vertex der naechsten Parzelle zuweisen. Nur die RELATIVE Anordnung entscheidet die innere Grenze → robust gegen lateralen Registrierungs-Fehler. **Ohne Zentroid-Alignment reisst die am weitesten versetzte Teilregion (z.B. parsorbitalis) auf 0 Vertices.**

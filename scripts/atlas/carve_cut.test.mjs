@@ -35,6 +35,17 @@ test('2-1-Schnitt deckt alle drei odd-Positionen ab', () => {
   }
 })
 
+test('2-1-Schnitt erhaelt die Face-Wicklung fuer alle odd-Positionen', () => {
+  const signedZ = (p, q, r) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0])
+  for (const labels of [[1, 1, 2], [2, 1, 1], [1, 2, 1]]) {
+    const subs = splitTri(A, B, C, labels[0], labels[1], labels[2])
+    for (const sub of subs) {
+      const [p, q, r] = sub.verts.map((v) => resolvePos(v, A, B, C))
+      assert.ok(signedZ(p, q, r) > 0, `Labels ${labels.join(',')} kippen ein Sub-Dreieck`)
+    }
+  }
+})
+
 test('Y-Knoten (drei Labels): 6 Sub-Dreiecke, je Label zwei, Flaeche erhalten', () => {
   const subs = splitTri(A, B, C, 1, 2, 3)
   assert.equal(subs.length, 6)
@@ -83,6 +94,34 @@ test('weldedNormals: koinzidente Vertices teilen sich die gemittelte Normale', (
   assert.deepEqual(N[2], N[3], 'koinzidente Vertices -> gleiche Normale')
   // planar in z=0 -> Normale entlang z.
   assert.ok(Math.abs(Math.abs(N[2][2]) - 1) < 1e-9)
+})
+
+import { weldedNormalsDirectional } from './carve_cut.mjs'
+
+test('weldedNormalsDirectional: gegenlaeufige Flaechen am selben Punkt heben sich NICHT auf', () => {
+  // Zwei Dreiecke an derselben (×64-)Position, aber ENTGEGENGESETZT gewunden -> ihre Face-Normalen
+  // zeigen +z und -z. Naives Welding wuerde 0 mitteln (schwarzer/kippender Vertex). Richtungs-bewusst
+  // bleiben beide getrennt: jeder Vertex behaelt seine eigene (nicht-null) Aussen-Normale.
+  const V = [[0,0,0],[2,0,0],[1,1,0],   [0,0,0],[1,1,0],[2,0,0]] // Tri2 = Tri1 umgekehrt gewunden
+  const F = [[0,1,2],[3,4,5]]
+  const N = weldedNormalsDirectional(V, F)
+  // Index 2 (Tri1, +z) und Index 4 (Tri2, -z) koinzident, aber gegenlaeufig:
+  assert.ok(Math.abs(Math.abs(N[2][2]) - 1) < 1e-9, 'Vertex 2 hat eine echte z-Normale (nicht null)')
+  assert.ok(Math.abs(Math.abs(N[4][2]) - 1) < 1e-9, 'Vertex 4 hat eine echte z-Normale (nicht null)')
+  assert.ok(N[2][2] * N[4][2] < 0, 'die beiden Waende zeigen entgegengesetzt (nicht aufgehoben)')
+})
+
+test('weldedNormalsDirectional: gleich gerichtete Duplikate verschweissen weiter (glatte Grenze)', () => {
+  const V = [[0,0,0],[2,0,0],[1,1,0], [1,1,0],[2,0,0],[3,1,0]] // wie weldedNormals-Test, gleiche Wicklung
+  const F = [[0,1,2],[3,4,5]]
+  const N = weldedNormalsDirectional(V, F)
+  assert.deepEqual(N[2], N[3], 'koinzident + gleich gerichtet -> gemeinsame Normale')
+})
+
+test('weldedNormalsDirectional: keine Null-Normalen (kein schwarzer Vertex)', () => {
+  const V = [[0,0,0],[2,0,0],[1,1,0],   [0,0,0],[1,1,0],[2,0,0]]
+  const F = [[0,1,2],[3,4,5]]
+  for (const n of weldedNormalsDirectional(V, F)) assert.ok(Math.hypot(n[0],n[1],n[2]) > 0.5, 'Normale ist nicht null')
 })
 
 test('laplacianSmooth tangential: kein Versatz entlang der Flaechennormale', () => {

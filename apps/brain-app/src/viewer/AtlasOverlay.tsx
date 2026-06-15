@@ -13,8 +13,10 @@ import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 //             Architektur: vertex-gefaerbte Flaeche statt separater Parzellen-Meshes).
 // Lazy: das GLB laedt erst beim Einblenden, weil die Komponente nur dann gemountet wird.
 const RAW_URL = { julich: '/assets/bodyparts3d/atlas-raw-julich.glb', dkt: '/assets/bodyparts3d/atlas-raw-dkt.glb' } as const
-const SURFACE_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich.glb', dkt: '/assets/bodyparts3d/atlas-surface-dkt.glb', brodmann: '/assets/bodyparts3d/atlas-surface-brodmann.glb' } as const
-const PICK_URL = { julich: '/assets/bodyparts3d/atlas-surface-julich-pick.json', dkt: '/assets/bodyparts3d/atlas-surface-dkt-pick.json', brodmann: '/assets/bodyparts3d/atlas-surface-brodmann-pick.json' } as const
+// Cache-Bust: bei jedem Carve-Rebake hochzaehlen, sonst serviert der Browser die alte GLB/JSON.
+const CARVE_V = '8'
+const SURFACE_URL = { julich: `/assets/bodyparts3d/atlas-surface-julich.glb?v=${CARVE_V}`, dkt: `/assets/bodyparts3d/atlas-surface-dkt.glb?v=${CARVE_V}`, brodmann: `/assets/bodyparts3d/atlas-surface-brodmann.glb?v=${CARVE_V}` } as const
+const PICK_URL = { julich: `/assets/bodyparts3d/atlas-surface-julich-pick.json?v=${CARVE_V}`, dkt: `/assets/bodyparts3d/atlas-surface-dkt-pick.json?v=${CARVE_V}`, brodmann: `/assets/bodyparts3d/atlas-surface-brodmann-pick.json?v=${CARVE_V}` } as const
 
 // Roh-Debug: eine kuehle Flachfarbe je Quelle (Drift auf einen Blick erkennbar).
 const RAW_COLOR = { julich: '#39d3c4', dkt: '#e879c8' } as const
@@ -74,16 +76,17 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
   // getilteten Schnitt-Grenz-Dreiecke gehen NICHT mehr dunkel (Ursache der dunklen Zacken war der
   // ambient-lose Custom-Shader). Jedes Dreieck ist einfarbig (grenz-konformer Cut) -> Arealgrenzen
   // bleiben scharf. polygonOffset haelt den Carve vor der Anatomie (kein z-fighting).
+  // Scharfe Arealgrenzen kommen aus der GEOMETRIE: bake_carve.mjs gibt das Mesh non-indexed mit EINER
+  // Areal-Farbe pro Dreieck aus -> alle 3 Vertices gleich -> keine Interpolation -> harte Kanten, kein
+  // Batik. Material daher schlicht: vertexColors + smooth NORMAL (Furchen-Beleuchtung weich).
+  // polygonOffset gegen z-Fight mit dem koinzidenten TARO-Cortex (reiner Tiefen-Bias, kein Geometrie-Versatz).
   const mat = useMemo<THREE.Material>(() => new THREE.MeshPhongMaterial({
     vertexColors: true,
     side: THREE.DoubleSide,
     shininess: 6,
-    // Z-Fighting mit dem darunterliegenden Kortex: der Schnitt fuegte Mittelpunkt-Vertices ein, die
-    // zwischen den Kortex-Vertices liegen -> an den Grenzen scheint der graue Kortex durch. Kraeftiger
-    // negativer polygonOffset zieht den Carve konsistent davor (-1 reichte an steilen Stellen nicht).
     polygonOffset: true,
-    polygonOffsetFactor: -4,
-    polygonOffsetUnits: -4,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -12,
   }), [])
 
   // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
