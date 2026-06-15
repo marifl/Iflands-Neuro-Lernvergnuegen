@@ -85,6 +85,12 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
     return new THREE.ShaderMaterial({
       uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.7, 0.8).normalize() } },
       side: THREE.DoubleSide,
+      // Z-Fighting-Streifen an den Arealgrenzen: die Schnitt-Mittelpunkte liegen auf der Sehne (leicht
+      // unter dem Bogen der gekruemmten Flaeche) -> Carve sinkt minimal unter die Anatomie -> Tiefen-
+      // Konflikt. Negativer polygonOffset zieht den Carve konsistent nach vorn (gewinnt den Tiefentest).
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
       vertexShader: `
         attribute float aLabel;
         flat varying float vLabel;
