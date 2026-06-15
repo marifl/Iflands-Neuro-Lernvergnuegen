@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes } from './cutCapsMerged'
-import { ATLAS_SURFACE_FLAG, parcelRgb } from './atlasParcels'
+import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 
 // Zwei Atlas-Overlay-Arten ueber TARO:
 //  - 'raw':   die ORIGINALEN Julich/DKT-Mesh-Areale (fremdes MNI-Hirn), per Affine grob auf TARO
@@ -69,51 +69,19 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
     return () => { alive = false }
   }, [which])
 
-  // Label-LUT (Areal -> Farbe) + flat-varying-Shader: `flat` schaltet die Vertex-Interpolation aus
-  // -> HARTE Arealgrenzen (keine Farbverlaeufe), genau wie der fsaverage-Atlas-Modus.
-  const mat = useMemo<THREE.Material>(() => {
-    if (!pick) return new THREE.MeshStandardMaterial({ color: '#555', side: THREE.DoubleSide })
-    const size = pick.slugs.length
-    const data = new Uint8Array(size * 4)
-    pick.slugs.forEach((slug, i) => {
-      const [r, g, b] = parcelRgb(slug)
-      data[i * 4] = r; data[i * 4 + 1] = g; data[i * 4 + 2] = b; data[i * 4 + 3] = 255
-    })
-    const tex = new THREE.DataTexture(data, size, 1, THREE.RGBAFormat)
-    tex.minFilter = THREE.NearestFilter; tex.magFilter = THREE.NearestFilter
-    tex.colorSpace = THREE.SRGBColorSpace; tex.needsUpdate = true
-    return new THREE.ShaderMaterial({
-      uniforms: { uLut: { value: tex }, uLutSize: { value: size }, uLightDir: { value: new THREE.Vector3(0.4, 0.7, 0.8).normalize() } },
-      side: THREE.DoubleSide,
-      // Z-Fighting-Streifen an den Arealgrenzen: die Schnitt-Mittelpunkte liegen auf der Sehne (leicht
-      // unter dem Bogen der gekruemmten Flaeche) -> Carve sinkt minimal unter die Anatomie -> Tiefen-
-      // Konflikt. Negativer polygonOffset zieht den Carve konsistent nach vorn (gewinnt den Tiefentest).
-      polygonOffset: true,
-      polygonOffsetFactor: -1,
-      polygonOffsetUnits: -1,
-      vertexShader: `
-        attribute float aLabel;
-        flat varying float vLabel;
-        varying vec3 vN;
-        void main() {
-          vLabel = aLabel; vN = normalize(normalMatrix * normal);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }`,
-      fragmentShader: `
-        uniform sampler2D uLut; uniform float uLutSize; uniform vec3 uLightDir;
-        flat varying float vLabel; varying vec3 vN;
-        void main() {
-          vec4 area = texture2D(uLut, vec2((vLabel + 0.5) / uLutSize, 0.5));
-          // DoubleSide-Flaeche: die Normale fuer Rueckseiten / umgekehrt-gewickelte Schnitt-Dreiecke
-          // flippen, sonst zeigen sie vom Licht weg -> dunkle Flecken an den Arealgrenzen.
-          // gl_FrontFacing deckt echte Back-Faces UND winding-invertierte Cut-Tris ab.
-          vec3 nn = normalize(vN);
-          if (!gl_FrontFacing) nn = -nn;
-          float diff = clamp(dot(nn, uLightDir) * 0.5 + 0.5, 0.0, 1.0);
-          gl_FragColor = vec4(area.rgb * (0.5 + 0.5 * diff), 1.0);
-        }`,
-    })
-  }, [pick])
+  // MeshPhongMaterial mit den gebackenen Per-Vertex-Farben (COLOR_0, von useGLTF automatisch geladen):
+  // nutzt die SZENEN-Lichter inkl. Ambient statt eines einzelnen hartcodierten Lichts -> die leicht
+  // getilteten Schnitt-Grenz-Dreiecke gehen NICHT mehr dunkel (Ursache der dunklen Zacken war der
+  // ambient-lose Custom-Shader). Jedes Dreieck ist einfarbig (grenz-konformer Cut) -> Arealgrenzen
+  // bleiben scharf. polygonOffset haelt den Carve vor der Anatomie (kein z-fighting).
+  const mat = useMemo<THREE.Material>(() => new THREE.MeshPhongMaterial({
+    vertexColors: true,
+    side: THREE.DoubleSide,
+    shininess: 6,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  }), [])
 
   // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
   useEffect(() => {
