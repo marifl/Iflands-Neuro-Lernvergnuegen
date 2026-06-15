@@ -28,6 +28,22 @@ Tablet und Phone, WCAG-AA-Kontraste.
 
 ---
 
+## Tastatur-Shortcuts
+
+| Taste | Wirkung |
+|-------|---------|
+| `H` | ausgewählte Struktur aus-/einblenden |
+| `Shift` + `H` | alle ausgeblendeten Strukturen wieder zeigen |
+| `I` | ausgewählte Struktur isolieren |
+| `Shift` + `I` | Isolation aufheben |
+| `Esc` | Auswahl aufheben; erneut drücken: eine Ebene zurück (Isolation/Drilldown) bzw. Overlay schließen |
+| `←` / `→` | im Lern-Modus: vorige / nächste Szene |
+| `F` | Vollbild (mit `Esc` beenden) |
+
+> Shortcuts greifen nicht, solange ein Textfeld (z. B. die Suche) fokussiert ist.
+
+---
+
 ## Wegweiser — was finde ich wo?
 
 | Du willst… | Hier |
