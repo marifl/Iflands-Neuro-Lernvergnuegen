@@ -11,8 +11,7 @@ import { Document, NodeIO } from '@gltf-transform/core'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
-import { computeVertexNormals } from './subpatch_bake.mjs'
-import { splitTri, laplacianSmooth } from './carve_cut.mjs'
+import { splitTri, laplacianSmooth, weldedNormals } from './carve_cut.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const source = process.argv[2]
@@ -230,7 +229,7 @@ for (let i = 0; i < M; i++) {
 }
 
 // --- 5. Normalen + GLB (POSITION, NORMAL, COLOR_0) ---
-const normals = computeVertexNormals(outV, outF)
+const normals = weldedNormals(outV, outF)
 const doc = new Document()
 const buf = doc.createBuffer()
 const scene = doc.createScene()

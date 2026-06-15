@@ -57,6 +57,39 @@ export function resolvePos(v, A, B, C) {
 }
 
 /**
+ * Positions-verschweisste Vertex-Normalen: koinzidente Vertices (z.B. die pro Seite duplizierten
+ * Schnitt-Grenzpunkte) teilen sich EINE gemittelte Flaechen-Normale -> glatte Beleuchtung ueber die
+ * Arealgrenze, keine dunklen Schnitt-Dreieck-Schatten. Flaechen-gewichtet (Kreuzprodukt nicht
+ * normiert vor Akkumulation). Farbe bleibt davon unberuehrt (kommt aus dem flat-aLabel).
+ */
+export function weldedNormals(V, F, keyScale = 64) {
+  const key = (p) => `${Math.round(p[0] * keyScale)},${Math.round(p[1] * keyScale)},${Math.round(p[2] * keyScale)}`
+  const nodeOf = new Map()
+  const vNode = new Int32Array(V.length)
+  for (let i = 0; i < V.length; i++) {
+    const k = key(V[i])
+    let id = nodeOf.get(k)
+    if (id === undefined) { id = nodeOf.size; nodeOf.set(k, id) }
+    vNode[i] = id
+  }
+  const acc = Array.from({ length: nodeOf.size }, () => [0, 0, 0])
+  for (const [a, b, c] of F) {
+    const fa = V[a], fb = V[b], fc = V[c]
+    const ux = fb[0] - fa[0], uy = fb[1] - fa[1], uz = fb[2] - fa[2]
+    const vx = fc[0] - fa[0], vy = fc[1] - fa[1], vz = fc[2] - fa[2]
+    const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx
+    for (const idx of [a, b, c]) { const nd = vNode[idx]; acc[nd][0] += nx; acc[nd][1] += ny; acc[nd][2] += nz }
+  }
+  const out = new Array(V.length)
+  for (let i = 0; i < V.length; i++) {
+    const n = acc[vNode[i]]
+    const L = Math.hypot(n[0], n[1], n[2]) || 1
+    out[i] = [n[0] / L, n[1] / L, n[2] / L]
+  }
+  return out
+}
+
+/**
  * Tangentiale Laplacian-Glaettung von Knoten-Positionen entlang ihrer Nachbarschaft.
  * Begradigt die Schnitt-Grenz-Polylinie zu einer weichen Kurve (Labels bleiben unberuehrt).
  * @param nodePos Array<[x,y,z]> @param nodeNbrs Array<number[]> @param iters Iterationen

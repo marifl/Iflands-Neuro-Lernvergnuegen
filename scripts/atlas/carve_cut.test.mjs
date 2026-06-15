@@ -71,3 +71,16 @@ test('laplacianSmooth: gepinnte Endpunkte (leere Nachbarn) bleiben fix, Mitte gl
   assert.deepEqual(out[4], [4, 0, 0])
   assert.ok(Math.abs(out[1][1]) < 1, 'Mitte zur Linie gezogen (y < Ausgangs-1)')
 })
+
+import { weldedNormals } from './carve_cut.mjs'
+
+test('weldedNormals: koinzidente Vertices teilen sich die gemittelte Normale', () => {
+  // Zwei Dreiecke teilen die Kante, aber der Mittelpunkt ist DUPLIZIERT (verschiedene Indizes,
+  // gleiche Position) -> nach Verschweissung identische Normale (keine isolierte Face-Normale).
+  const V = [[0,0,0],[2,0,0],[1,1,0], [1,1,0],[2,0,0],[3,1,0]] // Index 2 und 3 koinzident
+  const F = [[0,1,2],[3,4,5]]
+  const N = weldedNormals(V, F)
+  assert.deepEqual(N[2], N[3], 'koinzidente Vertices -> gleiche Normale')
+  // planar in z=0 -> Normale entlang z.
+  assert.ok(Math.abs(Math.abs(N[2][2]) - 1) < 1e-9)
+})
