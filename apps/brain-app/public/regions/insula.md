@@ -29,5 +29,5 @@
 
 ## Quellen
 
-- Craig, A. D. (2009). How do you feel — now? *Nature Reviews Neuroscience*, 10(1), 59–70. doi: 10.1038/nrn2555
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie* (Vortrag T6).
+- Craig, A. D. (2009). How do you feel — now? The anterior insula and human awareness. *Nature Reviews Neuroscience, 10*(1), 59–70. https://doi.org/10.1038/nrn2555
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe.

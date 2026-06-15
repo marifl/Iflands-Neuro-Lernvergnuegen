@@ -29,6 +29,6 @@ Konfliktmonitoring und Fehlerdetektionion: Der dACC erkennt, wenn konkurrierende
 
 ## Quellen
 
-- Botvinick, M. M., Braver, T. S., Barch, D. M., Carter, C. S., & Cohen, J. D. (2001). doi: 10.1037/0033-295X.108.3.624
-- Carter, C. S., & van Veen, V. (2007). doi: 10.1016/j.tics.2007.11.004
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.5.
+- Botvinick, M. M., Braver, T. S., Barch, D. M., Carter, C. S., & Cohen, J. D. (2001). Conflict monitoring and cognitive control. *Psychological Review, 108*(3), 624–652. https://doi.org/10.1037/0033-295X.108.3.624
+- Carter, C. S., & van Veen, V. (2007). Anterior cingulate cortex and conflict detection: An update of theory and data. *Cognitive, Affective, & Behavioral Neuroscience, 7*(4), 367–379. https://doi.org/10.3758/CABN.7.4.367
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.5)

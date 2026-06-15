@@ -29,7 +29,7 @@ Emotionsbasierte Entscheidungsfindung, Bewertung von Handlungsausgängen, sozial
 
 ## Quellen
 
-- Damasio, A. R. (1994). *Descartes' Error*. New York: Avon Books.
-- Damasio, A. R., Grabowski, T. J., Bechara, A., et al. (1994). doi: 10.1126/science.8079843
-- Van Horn, J. D., et al. (2012). Mapping connectivity damage in the case of Phineas Gage. *PLOS ONE*. doi: 10.1371/journal.pone.0037454
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.4, S. 365–366.
+- Damasio, A. R. (1994). *Descartes' error: Emotion, reason, and the human brain*. Putnam.
+- Damasio, H., Grabowski, T., Frank, R., Galaburda, A. M., & Damasio, A. R. (1994). The return of Phineas Gage: Clues about the brain from the skull of a famous patient. *Science, 264*(5162), 1102–1105. https://doi.org/10.1126/science.8178168
+- Van Horn, J. D., Irimia, A., Torgerson, C. M., Chambers, M. C., Kikinis, R., & Toga, A. W. (2012). Mapping connectivity damage in the case of Phineas Gage. *PLOS ONE, 7*(5), e37454. https://doi.org/10.1371/journal.pone.0037454
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.4)

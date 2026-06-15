@@ -30,5 +30,5 @@ Das Bereitschaftspotenzial (Readiness Potential, Libet et al.) beginnt in der SM
 
 ## Quellen
 
-- Fuster, J. M. (2008). *The Prefrontal Cortex* (4th ed.). Academic Press.
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.2.
+- Fuster, J. M. (2008). *The prefrontal cortex* (4th ed.). Academic Press.
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.2)

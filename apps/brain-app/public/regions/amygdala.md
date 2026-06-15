@@ -29,5 +29,5 @@ Emotionsverarbeitung (v. a. Furcht und Bedrohungserkennung), Konditionierung von
 
 ## Quellen
 
-- LeDoux, J. E. (1996). *The Emotional Brain*. Simon & Schuster.
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie* (Vortrag T6).
+- LeDoux, J. E. (1996). *The emotional brain: The mysterious underpinnings of emotional life*. Simon & Schuster.
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe.

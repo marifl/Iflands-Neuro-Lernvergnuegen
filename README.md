@@ -28,6 +28,20 @@ Tablet und Phone, WCAG-AA-Kontraste.
 
 ---
 
+## Wegweiser — was finde ich wo?
+
+| Du willst… | Hier |
+|------------|------|
+| …die App starten | `apps/brain-app/` → `pnpm install && pnpm dev` (siehe [Quick Start](#quick-start)) |
+| …den Lerninhalt sehen | im laufenden App-UI; Quelltexte unter `apps/brain-app/public/regions/*.md` (Regionen) und `public/scenes/*.json` (Lern-Szenen) |
+| …die Quellen / Zitate (APA7) | je Region im Abschnitt „## Quellen"; Atlas-/Daten-Lizenzen in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) |
+| …den App-Code lesen | `apps/brain-app/src/` (`main.tsx` → `scene/` + `viewer/`) |
+| …die 3D-Daten selbst erzeugen | `scripts/` (siehe [Daten & Asset-Pipelines](#daten--asset-pipelines)) |
+| …Produkt / Design verstehen | [`PRODUCT.md`](PRODUCT.md), [`DESIGN.md`](DESIGN.md) |
+| …die Lizenz | [`LICENSE`](LICENSE) (CC BY-SA 4.0) |
+
+---
+
 ## Quick Start
 
 Voraussetzungen: **Node.js ≥ 20** und **[pnpm](https://pnpm.io/installation) ≥ 9**.

@@ -26,5 +26,5 @@ Aufgabenset-Wechsel (Task-Switching): Der IFJ (Derrfuss et al. 2004, 2005) ist d
 
 ## Quellen
 
-- Derrfuss, J., Brass, M., Neumann, J., & von Cramon, D. Y. (2005). doi: 10.1002/hbm.20152
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.3.
+- Derrfuss, J., Brass, M., Neumann, J., & von Cramon, D. Y. (2005). Involvement of the inferior frontal junction in cognitive control: Meta-analyses of switching and Stroop studies. *Human Brain Mapping, 25*(1), 22–34. https://doi.org/10.1002/hbm.20127
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.3)

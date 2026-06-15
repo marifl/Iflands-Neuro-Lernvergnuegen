@@ -27,6 +27,6 @@ Koordination konkurrierender kognitiver Pläne (Branching): Ermöglicht es, eine
 
 ## Quellen
 
-- Badre, D. (2008). doi: 10.1016/j.tics.2008.02.004
-- Koechlin, E., Ody, C., & Kouneiher, F. (2003). doi: 10.1126/science.1088545
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.2.
+- Badre, D. (2008). Cognitive control, hierarchy, and the rostro-caudal organization of the frontal lobes. *Trends in Cognitive Sciences, 12*(5), 193–200. https://doi.org/10.1016/j.tics.2008.02.004
+- Koechlin, E., Ody, C., & Kouneiher, F. (2003). The architecture of cognitive control in the human prefrontal cortex. *Science, 302*(5648), 1181–1185. https://doi.org/10.1126/science.1088545
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.2)

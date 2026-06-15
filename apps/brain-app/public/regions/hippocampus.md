@@ -29,6 +29,6 @@ Konsolidierung deklarativer Erinnerungen (episodisches und semantisches Gedächt
 
 ## Quellen
 
-- Scoville, W. B., & Milner, B. (1957). doi: 10.1136/jnnp.20.1.11
-- O'Keefe, J., & Dostrovsky, J. (1971). doi: 10.1016/0006-8993(71)90358-1
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie* (Vortrag T6).
+- Scoville, W. B., & Milner, B. (1957). Loss of recent memory after bilateral hippocampal lesions. *Journal of Neurology, Neurosurgery & Psychiatry, 20*(1), 11–21. https://doi.org/10.1136/jnnp.20.1.11
+- O'Keefe, J., & Dostrovsky, J. (1971). The hippocampus as a spatial map: Preliminary evidence from unit activity in the freely-moving rat. *Brain Research, 34*(1), 171–175. https://doi.org/10.1016/0006-8993(71)90358-1
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe.

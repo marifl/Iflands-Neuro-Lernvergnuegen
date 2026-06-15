@@ -26,5 +26,5 @@ Zentraler Knotenpunkt des **Default-Mode-Netzwerks (DMN)**. Aktiv bei Ruhe und D
 
 ## Quellen
 
-- Buckner, R. L., Andrews-Hanna, J. R., & Schacter, D. L. (2008). doi: 10.1111/j.1749-6632.2008.03440.x
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*.
+- Buckner, R. L., Andrews-Hanna, J. R., & Schacter, D. L. (2008). The brain's default network: Anatomy, function, and relevance to disease. *Annals of the New York Academy of Sciences, 1124*(1), 1–38. https://doi.org/10.1196/annals.1440.011
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe.

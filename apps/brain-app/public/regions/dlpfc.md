@@ -30,7 +30,7 @@ Arbeitsgedächtnis (Manipulieren und Monitoring von Inhalten), kognitive Flexibi
 
 ## Quellen
 
-- Petrides, M. (2005). Lateral prefrontal cortex. *PNAS*, 102(46), 16524–16529. doi: 10.1073/pnas.0507648102
-- Goldman-Rakic, P. S. (1996). Regional and cellular fractionation of working memory. *PNAS*, 93(24), 13473–13480. doi: 10.1073/pnas.93.24.13473
-- Badre, D. (2008). Cognitive control, hierarchy, and the rostro-caudal organization of the frontal lobes. *TICS*, 12(5), 193–200. doi: 10.1016/j.tics.2008.02.004
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.3, S. 361–365.
+- Petrides, M. (2005). Lateral prefrontal cortex: Architectonic and functional organization. *Philosophical Transactions of the Royal Society B: Biological Sciences, 360*(1456), 781–795. https://doi.org/10.1098/rstb.2005.1631
+- Goldman-Rakic, P. S. (1996). Regional and cellular fractionation of working memory. *Proceedings of the National Academy of Sciences, 93*(24), 13473–13480. https://doi.org/10.1073/pnas.93.24.13473
+- Badre, D. (2008). Cognitive control, hierarchy, and the rostro-caudal organization of the frontal lobes. *Trends in Cognitive Sciences, 12*(5), 193–200. https://doi.org/10.1016/j.tics.2008.02.004
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.3)

@@ -27,5 +27,5 @@ Aktives Halten und Abrufen von Informationen im Arbeitsgedächtnis. Petrides (20
 
 ## Quellen
 
-- Petrides, M. (2005). Lateral prefrontal cortex. *PNAS*, 102(46), 16524–16529. doi: 10.1073/pnas.0507648102
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.1.
+- Petrides, M. (2005). Lateral prefrontal cortex: Architectonic and functional organization. *Philosophical Transactions of the Royal Society B: Biological Sciences, 360*(1456), 781–795. https://doi.org/10.1098/rstb.2005.1631
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.1)

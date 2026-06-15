@@ -26,6 +26,6 @@ Kodierung des subjektiven Werts von Reizen und Handlungsausgängen, Belohnungser
 
 ## Quellen
 
-- Bechara, A., Damasio, A. R., Damasio, H., & Anderson, S. W. (1994). doi: 10.1016/0010-0277(94)90183-X
-- O'Doherty, J., et al. (2003). doi: 10.1093/cercor/13.11.1174
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.4.
+- Bechara, A., Damasio, A. R., Damasio, H., & Anderson, S. W. (1994). Insensitivity to future consequences following damage to human prefrontal cortex. *Cognition, 50*(1–3), 7–15. https://doi.org/10.1016/0010-0277(94)90018-3
+- Kringelbach, M. L., O'Doherty, J., Rolls, E. T., & Andrews, C. (2003). Activation of the human orbitofrontal cortex to a liquid food stimulus is correlated with its subjective pleasantness. *Cerebral Cortex, 13*(10), 1064–1071. https://doi.org/10.1093/cercor/13.10.1064
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.4)

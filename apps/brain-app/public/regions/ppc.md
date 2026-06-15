@@ -28,5 +28,5 @@ Räumliche Aufmerksamkeit, visuomotorische Integration und Arbeitsgedächtnis-Pu
 
 ## Quellen
 
-- Corbetta, M., & Shulman, G. L. (2002). doi: 10.1038/nrn730
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.4.6.
+- Corbetta, M., & Shulman, G. L. (2002). Control of goal-directed and stimulus-driven attention in the brain. *Nature Reviews Neuroscience, 3*(3), 201–215. https://doi.org/10.1038/nrn755
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.4.6)

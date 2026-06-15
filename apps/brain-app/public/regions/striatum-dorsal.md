@@ -29,4 +29,4 @@ Das Striatum ist Eingangskern der Basalganglien und wirkt durch Disinhibition de
 
 ## Quellen
 
-- Jäncke, L. (2017). *Lehrbuch der Neuropsychologie*, Kap. 11.3.2.
+- Jäncke, L. (2017). *Lehrbuch Kognitive Neurowissenschaften* (2. Aufl.). Hogrefe. (Kap. 11.3.2)
