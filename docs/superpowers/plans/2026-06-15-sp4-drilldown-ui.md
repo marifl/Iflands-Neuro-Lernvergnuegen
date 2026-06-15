@@ -17,13 +17,15 @@
 - Reihenfolge nach Wert/Risiko: rein-logische Module (testbar) → Komponenten → Verdrahtung → Carve-Sync.
 
 ## Fortschritt
-- [ ] Task 1: `atlasConfigStore.ts` — localStorage-Schicht-2-Store (Zustand) + Tests
-- [ ] Task 2: `treeState.ts` — Aggregat all/some/none + Katalog→Baum + Tests
-- [ ] Task 3: `configExport.ts` — effective→TOML-Snippet + Roundtrip-Test
-- [ ] Task 4: `AtlasTreeBrowser.tsx` + `AtlasFacetPanel.tsx` (Render-Komponenten)
-- [ ] Task 5: Verdrahtung `CanonicalAtlasMode.tsx` (Tree/Facet/Highlight/Kamera + Store)
-- [ ] Task 6: Carve-Sync `AtlasOverlay.tsx` (LUT-Alpha per `isAreaEnabled`) — abtrennbar
+- [x] Task 1: `atlasConfigStore.ts` — localStorage-Schicht-2-Store (Zustand) + Tests (5/5)
+- [x] Task 2: `treeState.ts` — Aggregat all/some/none + scopeKey-Bau + Tests (5/5)
+- [x] Task 3: `configExport.ts` — effective→TOML-Snippet + Roundtrip-Test (2/2)
+- [x] Task 4: `AtlasTreeBrowser.tsx` + `AtlasFacetPanel.tsx` (Render-Komponenten, typecheck 0)
+- [ ] Task 5: Verdrahtung `CanonicalAtlasMode.tsx` (Tree/Facet/Highlight/Kamera + Store) — **BROWSER-SMOKE noetig**
+- [ ] Task 6: Carve-Sync `AtlasOverlay.tsx` (LUT-Alpha per `isAreaEnabled`) — abtrennbar, **BROWSER-SMOKE noetig**
 - [ ] Task 7: Verifikation + Plan/Dart-Update
+
+> **STOPP-PUNKT (2026-06-15):** Tasks 1-4 fertig + committed (Logik unit-getestet, Komponenten typecheck-verifiziert, 46 Atlas-Tests gruen). Tasks 5-6 aendern den laufenden R3F-Render-Pfad → Evidence-First verlangt `pnpm dev`-Browser-Smoke (Tree rendert, Toggle persistiert, Carve folgt). Naechste Session mit offenem Browser fortsetzen.
 
 ## Daten-Grundlage (verifiziert)
 - SP3-API in `apps/brain-app/src/viewer/atlas/atlasConfig.ts`: `ScopeMap`, `isAreaEnabled(areaId, scopes, lookup)`, `buildAreaLookup(catalog)`, `LocalOverrides`, `loadLocalOverrides()`, `computeEffectiveConfig`, `useEffectiveConfig`.
