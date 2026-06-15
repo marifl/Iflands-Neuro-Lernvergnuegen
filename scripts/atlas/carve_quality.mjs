@@ -44,13 +44,20 @@ export function carveQuality(idx, vlab, nAreas) {
     for (const w of adj[v]) if (vlab[w] === vlab[v]) { same = true; break }
     if (!same) isolatedSpecks++
   }
+  // Mehr-Label-Dreiecke: nach grenz-konformem Schnitt MUSS das 0 sein (jedes Tri einfarbig ->
+  // flat-Shader rendert scharfe Kanten statt Treppe/Fransen).
+  let mixedTris = 0
+  for (let f = 0; f < idx.length; f += 3) {
+    const la = vlab[idx[f]], lb = vlab[idx[f + 1]], lc = vlab[idx[f + 2]]
+    if (!(la === lb && lb === lc)) mixedTris++
+  }
   const present = new Set()
   for (let v = 0; v < N; v++) if (vlab[v] >= 0) present.add(vlab[v])
   const emptyAreas = nAreas - present.size
   return {
-    nVerts: N, totalEdges, boundaryEdges,
+    nVerts: N, nTris: idx.length / 3, totalEdges, boundaryEdges,
     boundaryEdgeFrac: +(boundaryEdges / totalEdges).toFixed(4),
-    isolatedSpecks, nAreas, emptyAreas,
+    isolatedSpecks, mixedTris, nAreas, emptyAreas,
   }
 }
 

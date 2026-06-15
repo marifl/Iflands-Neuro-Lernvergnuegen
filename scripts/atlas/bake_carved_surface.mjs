@@ -12,6 +12,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { computeVertexNormals } from './subpatch_bake.mjs'
+import { splitTri } from './carve_cut.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const source = process.argv[2]
@@ -153,6 +154,32 @@ for (let iter = 0; iter < RELAX_ITERS; iter++) {
   vlab.set(next)
 }
 
+// --- 3c. Grenz-konformes Re-Meshing: jedes Mehr-Label-Dreieck entlang der Label-Grenze schneiden
+// (carve_cut.splitTri) -> jede Arealgrenze wird eine echte Mesh-Kante (keine Treppe/Fransen),
+// unabhaengig von der Grundaufloesung. Nur Grenz-Dreiecke wachsen; einfarbige bleiben unveraendert
+// (Body grob, nur die Schnittkanten fein). Jedes Sub-Dreieck ist einfarbig -> flat-Shader rendert
+// scharfe Kanten. Original-Ecken behalten Index+Label; neue Grenzpunkte tragen das Sub-Tri-Label.
+const outV = mergedV.map((p) => p)
+const outLab = Array.from(vlab)
+const outF = []
+let cutTris = 0
+for (const [a, b, c] of mergedF) {
+  const subs = splitTri(mergedV[a], mergedV[b], mergedV[c], vlab[a], vlab[b], vlab[c])
+  if (subs.length === 1) { outF.push([a, b, c]); continue }
+  cutTris++
+  const cornerIdx = { A: a, B: b, C: c }
+  for (const sub of subs) {
+    const tri = sub.verts.map((v) => {
+      if (v.tag) return cornerIdx[v.tag]
+      const gi = outV.length
+      outV.push(v.pos); outLab.push(sub.label)
+      return gi
+    })
+    outF.push(tri)
+  }
+}
+const M = outV.length
+
 // --- 4. Per-Vertex-Farbe (identisch zu app parcelColor: HSL-Hash, L/R seitengleich) ---
 function baseName(s) { return s.replace(/-(l|r)$/, '') }
 function hslToRgb(h, s, l) {
@@ -167,22 +194,22 @@ const colCache = slugs.map((slug) => {
   for (let i = 0; i < b.length; i++) hh = (hh * 31 + b.charCodeAt(i)) >>> 0
   return hslToRgb((hh % 360) / 360, 0.52, 0.56)
 })
-const vcol = new Float32Array(N * 3)
-for (let i = 0; i < N; i++) {
-  const pi = vlab[i]
+const vcol = new Float32Array(M * 3)
+for (let i = 0; i < M; i++) {
+  const pi = outLab[i]
   const c = pi >= 0 ? colCache[pi] : [0.12, 0.12, 0.12]
   vcol[i * 3] = c[0]; vcol[i * 3 + 1] = c[1]; vcol[i * 3 + 2] = c[2]
 }
 
 // --- 5. Normalen + GLB (POSITION, NORMAL, COLOR_0) ---
-const normals = computeVertexNormals(mergedV, mergedF)
+const normals = computeVertexNormals(outV, outF)
 const doc = new Document()
 const buf = doc.createBuffer()
 const scene = doc.createScene()
-const acc = doc.createAccessor().setType('VEC3').setArray(new Float32Array(mergedV.flat())).setBuffer(buf)
+const acc = doc.createAccessor().setType('VEC3').setArray(new Float32Array(outV.flat())).setBuffer(buf)
 const nac = doc.createAccessor().setType('VEC3').setArray(new Float32Array(normals.flat())).setBuffer(buf)
 const cac = doc.createAccessor().setType('VEC3').setArray(vcol).setBuffer(buf)
-const iac = doc.createAccessor().setType('SCALAR').setArray(new Uint32Array(mergedF.flat())).setBuffer(buf)
+const iac = doc.createAccessor().setType('SCALAR').setArray(new Uint32Array(outF.flat())).setBuffer(buf)
 const prim = doc.createPrimitive().setAttribute('POSITION', acc).setAttribute('NORMAL', nac).setAttribute('COLOR_0', cac).setIndices(iac)
 const name = `atlas-surface-${source}`
 scene.addChild(doc.createNode(name).setMesh(doc.createMesh(name).addPrimitive(prim)))
@@ -191,5 +218,5 @@ await new NodeIO().write(outGlb, doc)
 
 // --- 6. Pick-Sidecar: slugs + per-Vertex-Label (Reihenfolge == GLB-Vertices) ---
 const outPick = resolve(here, `../../apps/brain-app/public/assets/bodyparts3d/${name}-pick.json`)
-writeFileSync(outPick, JSON.stringify({ slugs, vlabels: Array.from(vlab) }))
-console.log(`${name}: ${N} Vertices, ${slugs.length} Parzellen, ${filled} per Nearest-Fill geschlossen -> ${outGlb}`)
+writeFileSync(outPick, JSON.stringify({ slugs, vlabels: outLab }))
+console.log(`${name}: ${N}->${M} Vertices (${cutTris} Grenz-Dreiecke geschnitten), ${slugs.length} Parzellen, ${filled} Nearest-Fill -> ${outGlb}`)
