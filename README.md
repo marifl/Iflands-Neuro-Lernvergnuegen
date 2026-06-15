@@ -27,6 +27,11 @@ pnpm dev          # Dev-Server auf http://localhost:5173
 ```
 
 > [!TIP]
+> **Keine Vorkenntnisse?** Die ausführliche Schritt-für-Schritt-Anleitung für
+> **macOS, Windows und Linux** (inkl. Node.js & pnpm installieren) steht in
+> **[`docs/INSTALLATION.md`](docs/INSTALLATION.md)**.
+
+> [!TIP]
 > Die 3D-Atlas-Meshes liegen bereits im Repo (`apps/brain-app/public/assets/`) — die
 > App läuft direkt nach `pnpm install`, **ohne separaten Daten-Download oder Build**.
 
