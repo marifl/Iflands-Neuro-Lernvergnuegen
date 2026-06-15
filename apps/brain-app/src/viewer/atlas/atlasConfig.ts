@@ -3,25 +3,70 @@
 // Presets/Configurations/Areale werfen laut.
 import { useEffect, useState } from 'react'
 import { loadCatalog, type AtlasCatalog } from './atlasCatalog'
+import { ROUTE_CHANGE_EVENT } from '../../scene/router'
 
 export type ScopeMap = Record<string, boolean>
 
 export interface PresetNode { label_de: string; scopes: ScopeMap }
 export interface ConfigFacets { clinic?: boolean; function?: boolean; chapter?: boolean; provenance?: boolean }
 export interface ConfigView { surface?: 'pial' | 'inflated'; subcortex?: boolean; carve_on_taro?: 'off' | 'dkt' | 'julich' }
-export interface ConfigCamera { target?: string }
+export interface ConfigCamera {
+  target?: string
+  shot?: string
+  fit?: 'bounds' | 'target'
+  bounds?: { center: [number, number, number]; radius: number }
+  margin?: number
+  fov?: number
+  pose?: { position: [number, number, number]; look_at: [number, number, number] }
+}
+export interface ConfigRegions {
+  areas?: string[]
+  buckets?: string[]
+  meshes?: string[]
+  scene_regions?: string[]
+}
+export interface ConfigColors {
+  enabled?: boolean
+  preset?: string
+  groups?: { label: string; hue: number; buckets: string[] }[]
+  dim_others?: boolean
+}
+export interface ConfigVisibility { dim_others?: boolean; hidden?: string[]; isolated?: string[] }
+export interface ConfigCuts { enabled?: boolean; planes?: { axis: 'x' | 'y' | 'z'; position: number; keep?: 'positive' | 'negative' }[] }
+export interface ConfigOverlay {
+  kind?: 'erp' | 'topography' | 'flowchart' | 'table' | 'image' | 'prose'
+  scene?: string
+  position?: 'left' | 'right' | 'center' | 'bottom'
+  size?: 'sm' | 'md' | 'lg'
+  fallback_image?: string
+}
+export interface ConfigSequencing { presentation?: string; learning?: string; step?: string }
+export interface MeshMappingNode { meshes: string[]; known_gap?: boolean; gap_reason?: string }
+export interface MeshMappings {
+  buckets: Record<string, MeshMappingNode>
+  scene_regions: Record<string, MeshMappingNode>
+}
 export interface ConfigurationNode {
   label_de: string
+  title?: string
+  section?: string
   replaces_figure?: string
   facets?: ConfigFacets
   view?: ConfigView
   camera?: ConfigCamera
+  regions?: ConfigRegions
+  colors?: ConfigColors
+  visibility?: ConfigVisibility
+  cuts?: ConfigCuts
+  overlay?: ConfigOverlay
+  sequencing?: ConfigSequencing
   scopes: ScopeMap
 }
 export interface SequenceNode { label_de: string; steps: string[] }
 export interface AtlasConfigFile {
   preset: string
   presets: Record<string, PresetNode>
+  mesh_mappings: MeshMappings
   configurations: Record<string, ConfigurationNode>
   presentation: Record<string, SequenceNode>
   learning: Record<string, SequenceNode>
@@ -95,15 +140,40 @@ export function loadLocalOverrides(): LocalOverrides {
 
 export interface EffectiveConfig {
   preset: string
+  hasUrlConfig: boolean
   activeConfiguration: string | null
+  configuration: ConfigurationNode | null
   facets: ConfigFacets
   view: ConfigView
   camera: ConfigCamera
+  cameraTargetMeshes: string[]
   scopes: ScopeMap
   isAreaEnabled: (areaId: string) => boolean
 }
 
-/** Mergt die 3 Schichten zu einer effective config. Praezedenz: file < localStorage < url. */
+function findCatalogArea(catalog: AtlasCatalog, areaId: string) {
+  for (const atlas of catalog.atlases) {
+    for (const group of atlas.groups) {
+      for (const area of group.areas) {
+        if (area.id === areaId) return area
+      }
+    }
+  }
+  return null
+}
+
+export function targetMeshesForCamera(catalog: AtlasCatalog, configName: string, camera: ConfigCamera): string[] {
+  if (camera.fit !== 'target') return []
+  if (!camera.target) throw new Error(`computeEffectiveConfig: Configuration "${configName}" camera.fit="target" braucht camera.target`)
+  const area = findCatalogArea(catalog, camera.target)
+  if (!area) throw new Error(`computeEffectiveConfig: camera.target "${camera.target}" im Katalog unbekannt`)
+  if (area.hosts.length === 0) throw new Error(`computeEffectiveConfig: camera.target "${camera.target}" hat keine TARO-Hosts`)
+  const side = area.side === 'L' ? 'left' : 'right'
+  return area.hosts.map((host) => `${side}-${host}`)
+}
+
+/** Mergt die 3 Schichten zu einer effective config. Praezedenz: file < localStorage < url.
+ *  Ein URL-`config` ist ein kanonischer Link: persistierte lokale Overrides duerfen ihn nicht verfaelschen. */
 export function computeEffectiveConfig(
   file: AtlasConfigFile,
   catalog: AtlasCatalog,
@@ -113,25 +183,29 @@ export function computeEffectiveConfig(
   const lookup = buildAreaLookup(catalog)
   const urlPreset = url.get('preset')
   const urlConfig = url.get('config')
-  const preset = urlPreset ?? local.preset ?? file.preset
+  const hasUrlConfig = urlConfig !== null
+  const preset = urlPreset ?? (hasUrlConfig ? file.preset : local.preset ?? file.preset)
   if (!file.presets[preset]) throw new Error(`computeEffectiveConfig: Preset "${preset}" nicht definiert`)
   const activeConfiguration = urlConfig ?? local.configuration ?? null
   if (activeConfiguration && !file.configurations[activeConfiguration]) {
     throw new Error(`computeEffectiveConfig: Configuration "${activeConfiguration}" nicht definiert`)
   }
+  const cfg = activeConfiguration ? file.configurations[activeConfiguration] : null
   const scopes = resolveScopes(
     fileScopes(file, preset, activeConfiguration),
-    local.scopes,
+    hasUrlConfig ? {} : local.scopes,
     parseUrlScopes(url),
   )
-  const cfg = activeConfiguration ? file.configurations[activeConfiguration] : null
   return {
     preset,
+    hasUrlConfig,
     activeConfiguration,
+    configuration: cfg,
     // Eine Configuration ohne facets/view/camera bedeutet fachlich "nichts gesetzt" (kein Bug).
     facets: cfg?.facets ?? {},
     view: cfg?.view ?? {},
     camera: cfg?.camera ?? {},
+    cameraTargetMeshes: cfg ? targetMeshesForCamera(catalog, activeConfiguration!, cfg.camera ?? {}) : [],
     scopes,
     isAreaEnabled: (areaId: string) => isAreaEnabled(areaId, scopes, lookup),
   }
@@ -150,12 +224,23 @@ export function useEffectiveConfig(): EffectiveConfig | null {
   const [eff, setEff] = useState<EffectiveConfig | null>(null)
   useEffect(() => {
     let alive = true
+    let cleanup = () => {}
     Promise.all([loadConfigFile(), loadCatalog()]).then(([file, catalog]) => {
       if (!alive) return
-      const url = new URLSearchParams(window.location.search)
-      setEff(computeEffectiveConfig(file, catalog, loadLocalOverrides(), url))
+      const refresh = () => {
+        if (!alive) return
+        const url = new URLSearchParams(window.location.search)
+        setEff(computeEffectiveConfig(file, catalog, loadLocalOverrides(), url))
+      }
+      refresh()
+      window.addEventListener('popstate', refresh)
+      window.addEventListener(ROUTE_CHANGE_EVENT, refresh)
+      cleanup = () => {
+        window.removeEventListener('popstate', refresh)
+        window.removeEventListener(ROUTE_CHANGE_EVENT, refresh)
+      }
     })
-    return () => { alive = false }
+    return () => { alive = false; cleanup() }
   }, [])
   return eff
 }

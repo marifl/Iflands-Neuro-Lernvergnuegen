@@ -31,3 +31,20 @@ describe('appMode', () => {
     expect(() => useViewerStore.getState().setAppMode('bogus')).toThrow(/appMode/)
   })
 })
+
+describe('cameraView', () => {
+  beforeEach(() => {
+    useViewerStore.setState({ cameraView: null, highlight: [] })
+  })
+
+  it('erneuert den Trigger nur bei explizitem setCameraView', () => {
+    useViewerStore.getState().setCameraView('lateral-left')
+    const first = useViewerStore.getState().cameraView
+
+    useViewerStore.getState().setHighlight(['left-insula'])
+    expect(useViewerStore.getState().cameraView).toBe(first)
+
+    useViewerStore.getState().setCameraView('lateral-left')
+    expect(useViewerStore.getState().cameraView).toEqual({ name: 'lateral-left', nonce: 2 })
+  })
+})

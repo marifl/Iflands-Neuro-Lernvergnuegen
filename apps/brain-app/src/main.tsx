@@ -11,7 +11,8 @@ if (localStorage.getItem('ed-theme') === 'light') {
 
 // Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas> setzt den Modus direkt;
 // ?mode=atlas ist DEBUG-ONLY (kanonischer fsaverage-Modus, nicht im Launcher/Modus-Flyout) — nur
-// ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus. Sonst ModeLauncher.
+// ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus;
+// ein ?config=<id>-Link oeffnet die Explorer-Shell ohne Launcher. Sonst ModeLauncher.
 {
   const params = new URLSearchParams(window.location.search)
   const mode = params.get('mode')
@@ -20,6 +21,8 @@ if (localStorage.getItem('ed-theme') === 'light') {
     useViewerStore.getState().setAppMode(mode as AppMode)
   } else if (params.has('scene')) {
     useViewerStore.getState().setAppMode('learn')
+  } else if (params.has('config')) {
+    useViewerStore.getState().setAppMode('explore')
   }
 }
 

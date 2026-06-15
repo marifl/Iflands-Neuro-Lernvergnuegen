@@ -1,17 +1,19 @@
-import { Suspense, useEffect, useMemo, useState } from 'react'
+import { Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
-import { PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
-import { useViewerStore } from './viewerStore'
+import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
+import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
+import { useEffectiveConfig, type ConfigCuts } from './atlas/atlasConfig'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
 import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
 import PresetLegend from './PresetLegend'
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
+import { configRegionsToMeshes } from '../scene/brainBridge'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import AtlasOverlay from './AtlasOverlay'
@@ -54,12 +56,110 @@ const HOVER_COLOR = '#ffd2a8'
 const BONE_COLOR = '#e9e1d2'
 const CONTEXT_COLOR = '#b8a894'
 const ROD_COLOR = '#2f281f'
+const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
+  x: 'sagittal',
+  y: 'axial',
+  z: 'coronal',
+}
 
 // three.js raycastet unsichtbare Objekte trotzdem -> ausgeblendete Meshes muessen explizit
 // nicht-pickbar werden, sonst bleiben sie anklickbar/hoverbar.
 const NO_RAYCAST = () => {}
 function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
+}
+
+function emptyConfigCuts(): Record<CutAxis, CutConfig> {
+  return {
+    sagittal: { on: false, pos: 0 },
+    coronal: { on: false, pos: 0 },
+    axial: { on: false, pos: 0 },
+  }
+}
+
+function cutsFromConfig(cuts: ConfigCuts | undefined): Record<CutAxis, CutConfig> {
+  const out = emptyConfigCuts()
+  if (!cuts?.enabled) return out
+  if (!cuts.planes?.length) throw new Error('Config-Link: cuts.enabled=true braucht mindestens eine Schnittebene')
+  for (const plane of cuts.planes) {
+    if (plane.keep && plane.keep !== 'positive') {
+      throw new Error(`Config-Link: cuts.keep="${plane.keep}" wird vom Viewer noch nicht unterstuetzt`)
+    }
+    out[CONFIG_AXIS_TO_CUT_AXIS[plane.axis]] = { on: true, pos: plane.position }
+  }
+  return out
+}
+
+function ConfigLinkStateApplier() {
+  const effectiveConfig = useEffectiveConfig()
+  const appMode = useViewerStore((s) => s.appMode)
+  const setAppMode = useViewerStore((s) => s.setAppMode)
+  const setHighlight = useViewerStore((s) => s.setHighlight)
+  const setPreset = useViewerStore((s) => s.setPreset)
+  const setCuts = useViewerStore((s) => s.setCuts)
+  const setCutMode = useViewerStore((s) => s.setCutMode)
+  const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
+  const [error, setError] = useState<Error | null>(null)
+  const routedConfig = useRef<string | null>(null)
+  const hasConfigUrl = effectiveConfig?.hasUrlConfig ?? false
+  const activeConfiguration = effectiveConfig?.activeConfiguration ?? null
+  const configuration = effectiveConfig?.configuration ?? null
+
+  if (error) throw error
+
+  useEffect(() => {
+    if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    setCutMode('slice')
+    setCuts(cutsFromConfig(configuration.cuts))
+    const carveLayer = configuration.colors?.preset ? 'off' : configuration.view?.carve_on_taro
+    setCarveOverlay('julich', carveLayer === 'julich')
+    setCarveOverlay('dkt', carveLayer === 'dkt')
+    setCarveOverlay('brodmann', false)
+
+    if (configuration.overlay?.scene && appMode === 'explore' && routedConfig.current !== activeConfiguration) {
+      routedConfig.current = activeConfiguration
+      setAppMode('learn')
+      return
+    }
+    if (appMode === 'explore') setHighlight(configRegionsToMeshes(configuration.regions))
+  }, [
+    hasConfigUrl,
+    activeConfiguration,
+    configuration,
+    appMode,
+    setAppMode,
+    setHighlight,
+    setCuts,
+    setCutMode,
+    setCarveOverlay,
+  ])
+
+  useEffect(() => {
+    if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    let alive = true
+    const presetId = configuration.colors?.preset
+    if (!presetId) {
+      setPreset(null)
+      return () => { alive = false }
+    }
+    fetchColorPresets()
+      .then((presets) => {
+        if (!alive) return
+        const preset = presets.find((item) => item.id === presetId)
+        if (!preset) throw new Error(`Config-Link: Farb-Preset "${presetId}" nicht gefunden`)
+        setPreset({
+          ...preset,
+          dimOthers: configuration.colors?.dim_others ?? preset.dimOthers,
+        })
+      })
+      .catch((e: unknown) => {
+        if (!alive) return
+        setError(e instanceof Error ? e : new Error(String(e)))
+      })
+    return () => { alive = false }
+  }, [hasConfigUrl, activeConfiguration, configuration, setPreset])
+
+  return null
 }
 
 /** Alle aktiven Schnittebenen auf die Materialien einer Mesh-Liste anwenden (leer = kein Schnitt).
@@ -503,10 +603,10 @@ export default function BodyParts3DViewer() {
   const isNarrow = useIsNarrow()
 
   // Start-Screen (Modus-Wahl) beim ersten Laden — nimmt die „wo fange ich an?"-Last ab.
-  // Deep-Links (?mode/?scene/?spike) ueberspringen ihn, damit verlinkte Einstiege direkt landen.
+  // Deep-Links (?mode/?scene/?config/?spike) ueberspringen ihn, damit verlinkte Einstiege direkt landen.
   const [launched, setLaunched] = useState(() => {
     const p = new URLSearchParams(window.location.search)
-    return p.has('mode') || p.has('scene') || p.has('spike')
+    return p.has('mode') || p.has('scene') || p.has('config') || p.has('spike')
   })
 
   // Editorial-Theme (hell/dunkel). Persistiert in localStorage; vor-applied in main.tsx.
@@ -728,6 +828,7 @@ export default function BodyParts3DViewer() {
               <CanonicalAtlasMode />
             ) : (
             <>
+            <ConfigLinkStateApplier />
             <Canvas
               camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
