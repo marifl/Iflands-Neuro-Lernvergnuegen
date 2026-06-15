@@ -264,29 +264,24 @@ node bake_julich_runtime.mjs                                   # +32 Julich = 60
 
 ---
 
-## 7. Figur-Inventar & Status
+## 7. Figur-Inventar & SP5.1-Abdeckung
 
-21 Lehrbuch-Abbildungen (`docs/KAPITEL11_ABBILDUNGEN_MAPPING.md`).
+Die verbindliche SP5.1-Matrix steht in
+[`docs/SP5_1_FIGURE_MATRIX.md`](SP5_1_FIGURE_MATRIX.md). Das
+Abbildungs-Inventar kommt aus `docs/KAPITEL11_ABBILDUNGEN_MAPPING.md`.
+Für SP5.1 zählt nur `done`, was als `replaces_figure` in der Runtime-Config
+steht und durch Test oder Browser-Smoke nachgewiesen ist. Historische Presets
+ohne Figure-Configuration sind Vorarbeit, aber keine erledigte
+Abbildungs-Ersetzung.
 
-| Abb. | Thema | Form | Status |
-| :-- | :-- | :-- | :-- |
-| 11-04 | Drei Basalganglien-Schleifen | Preset `basalganglienschleifen` | ✅ |
-| 11-05 | PFC Petrides (DLPFC/VLPFC) | Preset `pfc-petrides` | ✅ |
-| 11-06 | Fuster: rostrokaudaler Gradient | Preset/Szene | ⬜ |
-| 11-07 | Badre: BA-Gradient | Preset `badre-rostrokaudal` | ✅ |
-| 11-08 A/B/C/D | Hierarchie/Kaskade/Konflikt-Typen | Flowchart-Szenen | ⬜ |
-| 11-09 | WCST + fMRT | Preset/Szene | 🟡 |
-| 11-10 | Fluency: 5 Foci | Preset/Szene | 🟡 |
-| 11-11 | Tower of London + fMRT | Preset/Szene | 🟡 |
-| 11-12 | Flanker | Szene (neu) | ⬜ |
-| 11-13 | ACC dorsal/ventral | Preset `acc-bush` | ✅ |
-| 11-14 | VCPT (Go/No-go) | Szene `vcpt` / `go-nogo-intro` | ✅ |
-| 11-15 (1) | P3a Konfliktmonitoring | Szene `p3a-konfliktmonitoring` | ✅ |
-| 11-15 (2) | P3b Engagement | Szene `p3b-engagement` | ✅ |
-| 11-15 (3) | P3z Inhibition | Szene `p3z-inhibition` | ✅ |
-| — | Phineas Gage Läsion | Preset `phineas-gage` + Modus | ✅ |
+| Status | Abbildungen |
+| :-- | :-- |
+| `done` | 11-04, 11-14, 11-15(1), 11-15(2), 11-15(3) |
+| `open` | 11-05, 11-06, 11-07, 11-08A, 11-08B, 11-08C, 11-08D, 11-09, 11-10, 11-11A/B, 11-11C, 11-12, 11-13 |
+| `blocked` | keine |
 
-**Abgedeckt:** 8 Abbildungen + Phineas. **Offen:** 11-06, 11-08 (×4), 11-09, 11-10, 11-11, 11-12.
+**Abgedeckt im SP5.1-Config-Sinn:** 5 Figure/Scene-Ersetzungen.
+**Offen für die konkrete Erstellung:** 13 Abbildungs-Einheiten.
 
 ---
 

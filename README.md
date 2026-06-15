@@ -172,10 +172,10 @@ Alle in `apps/brain-app` ausführen:
 | Befehl | Wirkung |
 |--------|---------|
 | `pnpm dev` | Vite-Dev-Server mit Hot-Reload (`localhost:5173`) |
-| `pnpm build` | Production-Build nach `dist/` (`tsc -b && vite build`) |
+| `pnpm build` | Atlas-Config erzeugen, dann Production-Build nach `dist/` (`tsc -b && vite build`) |
 | `pnpm preview` | statischer Server für den `dist/`-Build |
-| `pnpm typecheck` | TypeScript-Strict-Check (`tsc -b --noEmit`) |
-| `pnpm test` | Vitest (Watch-Modus); `pnpm exec vitest run` für einmalig |
+| `pnpm typecheck` | Atlas-Config erzeugen, dann TypeScript-Strict-Check (`tsc -b --noEmit`) |
+| `pnpm test` | Atlas-Config erzeugen, dann Vitest (Watch-Modus); `pnpm test --run` für einmalig |
 | `pnpm test:e2e` | Playwright End-to-End-Smoke-Tests |
 
 ---
@@ -194,7 +194,7 @@ Alle in `apps/brain-app` ausführen:
 ```
 apps/brain-app/              Die App (Vite / React / R3F)
 ├── src/
-│   ├── main.tsx             Einstiegspunkt (Deep-Link-Routing: ?mode=, ?scene=)
+│   ├── main.tsx             Einstiegspunkt (Deep-Link-Routing: ?mode=, ?scene=, ?config=)
 │   ├── scene/               Lern-Szenen, Kamera-Rig, Overlays (ERP-Charts etc.)
 │   ├── viewer/              3D-Viewer, Strukturbaum, FooterBar, Färbe-/Cut-Werkzeuge
 │   └── app.css              app-lokale Editorial-Theme-Schicht
@@ -231,6 +231,37 @@ reproduzieren (man braucht dazu die Original-Quelldaten der jeweiligen Anbieter)
 | [`scripts/assets/bodyparts3d/`](scripts/assets/bodyparts3d/README.md) | BodyParts3D-OBJ → `brain.glb` (+ Kontext-Kopf/Schädel), Spiegelung, FMA-Ontologie | [README](scripts/assets/bodyparts3d/README.md) |
 | [`scripts/atlas/`](scripts/atlas/README.md) | Atlas-Geometrie (Julich / DKT / Destrieux / Brodmann / fsaverage) auf das TARO-Hirn registrieren, Sub-Parzellen carven | [README](scripts/atlas/README.md) |
 | `scripts/alignment/` | kanonische Referenz-JSONs (von Tests genutzt) | — |
+
+### SP3-Configs nach SP5.1 migrieren
+
+SP5.1 macht `mesh_mappings` zum Pflichtteil der kanonischen Atlas-Config.
+Eine alte SP3-Config ohne Root-Key `mesh_mappings` darf nicht mehr still
+geladen werden; der Builder bricht absichtlich mit
+`build-config: mesh_mappings fehlt oder ist kein Objekt` ab.
+
+Migration:
+
+1. `scripts/atlas/config.default.toml` bleibt die einzige Autorenquelle.
+2. Bucket-Mappings unter `[mesh_mappings.buckets.<slug>]` eintragen.
+3. Scene-Region-Mappings unter `[mesh_mappings.scene_regions.<slug>]` eintragen.
+4. Jeder Mapping-Knoten braucht `meshes = [...]`. Bekannte Geometrie-Lücken
+   werden explizit mit `meshes = []`, `known_gap = true` und `gap_reason`
+   dokumentiert.
+5. Configuration-Felder wie `regions.buckets`, `regions.scene_regions` und
+   `colors.groups[].buckets` referenzieren diese Slugs; sie duplizieren keine
+   Mesh-Listen.
+6. Aus dem Repo-Root bauen und prüfen:
+   ```bash
+   node scripts/atlas/build-config.mjs
+   node --test scripts/atlas/build-config.test.mjs
+   pnpm --dir apps/brain-app typecheck
+   ```
+
+Der Builder schreibt `apps/brain-app/public/assets/atlas-canonical/atlas-config.json`
+und `apps/brain-app/src/viewer/meshMappings.generated.json`. Beide sind abgeleitete
+Artefakte; sie werden nicht von Hand als zweite Wahrheit gepflegt. Die
+App-Scripts `dev`, `build`, `typecheck` und `test` führen den Builder vorab aus,
+damit ein frischer Checkout kein lokales Mapping-Artefakt voraussetzt.
 
 > [!NOTE]
 > **Quelldaten** (selbst beziehen, unter deren Lizenzen): BodyParts3D

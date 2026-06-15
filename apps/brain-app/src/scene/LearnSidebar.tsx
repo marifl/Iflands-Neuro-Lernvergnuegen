@@ -1,9 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useViewerStore } from '../viewer/viewerStore'
 import { useSceneStore } from './sceneStore'
-import { loadScenes } from './scenes'
+import { loadScenes, sceneIndexForLocation } from './scenes'
 import { regionsToMeshes } from './brainBridge'
-import { parseLocation } from './router'
+import { parseLocation, replaceCanonicalLocation } from './router'
 import { nextIndex, prevIndex } from './nav'
 import OverlayPanel from './overlays/OverlayPanel'
 import { useIsNarrow } from '../useMediaQuery'
@@ -11,23 +11,28 @@ import { useIsNarrow } from '../useMediaQuery'
 /** Sidebar-Inhalt des Lern-Modus: laedt + spiegelt Szenen (Highlight, Kamera, URL) und
  *  rendert den Szenen-Inhalt. Mountet nur im learn-Modus -> Szenen werden sonst nicht geladen. */
 export default function LearnSidebar() {
+  const [loadError, setLoadError] = useState<Error | null>(null)
   const isNarrow = useIsNarrow()
   const scenes = useSceneStore((s) => s.scenes)
   const index = useSceneStore((s) => s.index)
+  const step = useSceneStore((s) => s.step)
   const setScenes = useSceneStore((s) => s.setScenes)
   const goto = useSceneStore((s) => s.goto)
   const setCameraShot = useSceneStore((s) => s.setCameraShot)
+  const setCameraConfig = useSceneStore((s) => s.setCameraConfig)
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const setMode = useViewerStore((s) => s.setMode)
 
   useEffect(() => {
-    loadScenes().then((all) => {
-      setScenes(all)
-      setMode('k11')
-      const loc = parseLocation(window.location.search)
-      const start = loc.sceneId ? all.findIndex((s) => s.id === loc.sceneId) : 0
-      goto(start >= 0 ? start : 0, loc.step)
-    })
+    loadScenes()
+      .then((all) => {
+        setScenes(all)
+        setMode('k11')
+        const loc = parseLocation(window.location.search)
+        const start = sceneIndexForLocation(all, loc)
+        goto(start >= 0 ? start : 0, loc.step)
+      })
+      .catch((error: unknown) => setLoadError(error instanceof Error ? error : new Error(String(error))))
   }, [setScenes, goto, setMode])
 
   const scene = scenes[index]
@@ -35,7 +40,8 @@ export default function LearnSidebar() {
     if (!scene) return
     setHighlight(regionsToMeshes(scene.brain.regions))
     setCameraShot(scene.brain.camera)
-  }, [scene, setHighlight, setCameraShot])
+    setCameraConfig(scene.configCamera ?? null)
+  }, [scene, setHighlight, setCameraShot, setCameraConfig])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -50,9 +56,10 @@ export default function LearnSidebar() {
   }, [])
 
   useEffect(() => {
-    if (scene) window.history.replaceState(null, '', `?scene=${scene.id}`)
-  }, [scene])
+    if (scene) replaceCanonicalLocation({ configName: scene.configName, sceneId: scene.id, step })
+  }, [scene, step])
 
+  if (loadError) throw loadError
   if (scene) return <OverlayPanel scene={scene} />
   return (
     <aside

@@ -11,8 +11,32 @@ const FILE: AtlasConfigFile = {
     kapitel11: { label_de: 'K11', scopes: { 'axis:cyto': false, 'area:julich:area-44:l': true } },
     voll: { label_de: 'Voll', scopes: { 'axis:cyto': true } },
   },
+  mesh_mappings: { buckets: {}, scene_regions: {} },
   configurations: {
-    'broca-areal': { label_de: 'Broca', scopes: { 'area:julich:area-45:l': true } },
+    'area-44-only': {
+      label_de: 'Area 44',
+      view: { surface: 'pial' },
+      camera: { shot: 'lateral-left' },
+      regions: { areas: ['julich:area-44:l'] },
+      colors: { enabled: false },
+      visibility: { dim_others: true },
+      cuts: { enabled: false },
+      overlay: { kind: 'image' },
+      sequencing: { step: 'area-44-only' },
+      scopes: { 'area:julich:area-45:l': false },
+    },
+    'broca-areal': {
+      label_de: 'Broca',
+      view: { surface: 'pial' },
+      camera: { target: 'julich:area-45:l', shot: 'lateral-left', fit: 'target' },
+      regions: { areas: ['julich:area-45:l'] },
+      colors: { enabled: false },
+      visibility: { dim_others: true },
+      cuts: { enabled: false },
+      overlay: { kind: 'image' },
+      sequencing: { step: 'broca-areal' },
+      scopes: { 'area:julich:area-45:l': true },
+    },
   },
   presentation: {}, learning: {},
 }
@@ -27,8 +51,11 @@ const CATALOG = {
   version: '1', space_note: '', axes: [{ id: 'cyto', label_de: '', sub_de: '' }],
   atlases: [{ id: 'julich', axis: 'cyto', label_de: '', groups: [
     { id: 'frontal', label_de: '', areas: [
-      { id: 'julich:area-44:l', label_de: '', side: 'L', hosts: [], taro_present: true, lobe: 'frontal',
+      { id: 'julich:area-44:l', label_de: '', side: 'L', hosts: ['inferior-frontal-gyrus'], taro_present: true, lobe: 'frontal',
         refs: { canonical_lut: { layer: 'julich', label_id: 1, hemi: 'L' }, carve: [] }, context: {},
+        provenance: { source: 'julich', affine_det: null, backfill: false } },
+      { id: 'julich:area-45:l', label_de: '', side: 'L', hosts: ['inferior-frontal-gyrus'], taro_present: true, lobe: 'frontal',
+        refs: { canonical_lut: { layer: 'julich', label_id: 2, hemi: 'L' }, carve: [] }, context: {},
         provenance: { source: 'julich', affine_det: null, backfill: false } },
     ] },
   ] }],
@@ -104,8 +131,36 @@ describe('computeEffectiveConfig', () => {
       new URLSearchParams(),
     )
     expect(eff.preset).toBe('kapitel11')
+    expect(eff.hasUrlConfig).toBe(false)
     expect(eff.activeConfiguration).toBe('broca-areal')
+    expect(eff.configuration?.label_de).toBe('Broca')
+    expect(eff.cameraTargetMeshes).toEqual(['left-inferior-frontal-gyrus'])
     expect(eff.isAreaEnabled('julich:area-44:l')).toBe(true)
+  })
+  it('URL-config rekonstruiert kanonisch und ignoriert persistierte lokale Overrides', () => {
+    const eff = computeEffectiveConfig(
+      FILE, CATALOG,
+      {
+        preset: 'voll',
+        configuration: 'area-44-only',
+        scopes: { 'area:julich:area-45:l': false },
+      },
+      new URLSearchParams('config=broca-areal'),
+    )
+    expect(eff.preset).toBe('kapitel11')
+    expect(eff.hasUrlConfig).toBe(true)
+    expect(eff.activeConfiguration).toBe('broca-areal')
+    expect(eff.scopes['axis:cyto']).toBe(false)
+    expect(eff.scopes['area:julich:area-44:l']).toBe(true)
+    expect(eff.scopes['area:julich:area-45:l']).toBe(true)
+  })
+  it('explizite URL-Scopes gewinnen weiterhin ueber kanonische Config-Scopes', () => {
+    const eff = computeEffectiveConfig(
+      FILE, CATALOG,
+      { preset: null, configuration: null, scopes: {} },
+      new URLSearchParams('config=broca-areal&off=julich:area-45:l'),
+    )
+    expect(eff.scopes['area:julich:area-45:l']).toBe(false)
   })
   it('URL-preset ueberschreibt localStorage und Datei', () => {
     const eff = computeEffectiveConfig(

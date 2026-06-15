@@ -49,13 +49,13 @@ docs/plans
 docs/superpowers
 docs/END_SESSION_2026-06-12_Kapitel11-3D-Lern-Experience-Planung.md
 docs/fma-discrepancy-report.md
-docs/KAPITEL11_ABBILDUNGEN_MAPPING.md
 docs/laterality-volume-audit.md
 # Buch-Abbildungen (Copyright) — nicht ins Repo
 apps/brain-app/public/figures/
 
 # Smoke-/Debug-Output unter apps (Artefakte)
 apps/brain-app/scripts/atlas/work/
+apps/brain-app/src/viewer/meshMappings.generated.json
 
 # Versehentlich getrackter node_modules-Symlink
 scripts/atlas/node_modules

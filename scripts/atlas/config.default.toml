@@ -1,6 +1,18 @@
 # Atlas-Config (.ini-Style). Authored TOML -> build-config.mjs -> config.json (validiert).
 # Scope-Keys: axis:<id> | atlas:<id> | group:<atlas>:<lobe> | area:<atlas>:<code>:<side>.
-# preset = aktive Default-Basis; configurations.* = benannte Atome; presentation/learning.* = Sequenzen.
+# preset = aktive Default-Basis; configurations.* = benannte Figure/Scene-Atome;
+# presentation/learning.* = Sequenzen.
+#
+# SP5.1 Figure/Scene-Atom-Schema:
+# Required fuer kanonische Atome:
+#   label_de, title, section, view, camera, regions, colors,
+#   visibility, cuts, overlay, sequencing, scopes.
+# Optional bei Bedarf:
+#   replaces_figure, facets, camera.pose, colors.groups, cuts.planes,
+#   overlay.fallback_image.
+# Bestehende SP3-Felder bleiben erhalten: presets, scopes, facets, view, camera
+# und presentation/learning. localStorage ist nur UI-Override und nie kanonische
+# Autorenquelle. Unbekannte Keys sind Build-Fehler.
 
 preset = "kapitel11"
 
@@ -30,10 +42,134 @@ label_de = "Voll (alle Atlanten)"
 "axis:macro" = true
 "axis:cyto" = true
 
+# --- Mesh-Mappings: kanonische Region/Bucket -> Mesh-Aufloesung ------------
+[mesh_mappings.buckets.dlpfc]
+meshes = [
+  "left-julich-mfg1", "right-julich-mfg1",
+  "left-julich-mfg2", "right-julich-mfg2",
+  "left-julich-mfg4", "right-julich-mfg4",
+  "left-julich-8v1", "right-julich-8v1",
+  "left-julich-8v2", "right-julich-8v2",
+  "left-julich-sfs1", "right-julich-sfs1",
+  "left-julich-sfs2", "right-julich-sfs2",
+  "left-julich-frontal-ii-gapmap", "right-julich-frontal-ii-gapmap",
+  "left-julich-sfg2", "right-julich-sfg2",
+  "left-julich-sfg3", "right-julich-sfg3",
+  "left-julich-sfg4", "right-julich-sfg4",
+  "left-julich-8d1", "right-julich-8d1",
+  "left-julich-8d2", "right-julich-8d2",
+  "left-julich-frontal-i-2-gapmap", "right-julich-frontal-i-2-gapmap",
+]
+
+[mesh_mappings.buckets.vlpfc]
+meshes = [
+  "left-parsopercularis", "right-parsopercularis",
+  "left-parstriangularis", "right-parstriangularis",
+  "left-parsorbitalis", "right-parsorbitalis",
+]
+
+[mesh_mappings.buckets.ofc]
+meshes = [
+  "left-lateral-orbitofrontal", "right-lateral-orbitofrontal",
+  "left-medial-orbitofrontal", "right-medial-orbitofrontal",
+  "left-anterior-orbital-gyrus", "right-anterior-orbital-gyrus",
+  "left-posterior-orbital-gyrus", "right-posterior-orbital-gyrus",
+]
+
+[mesh_mappings.buckets.vmpfc]
+meshes = [
+  "left-medial-orbital-gyrus", "right-medial-orbital-gyrus",
+  "left-subcallosal-area", "right-subcallosal-area",
+]
+
+[mesh_mappings.buckets.striatum-dorsal]
+meshes = [
+  "left-caudate-nucleus", "right-caudate-nucleus",
+  "left-putamen", "right-putamen",
+]
+
+[mesh_mappings.buckets.globus-pallidus]
+meshes = ["left-gpi", "right-gpi", "left-gpe", "right-gpe"]
+
+[mesh_mappings.buckets.thalamus]
+meshes = [
+  "left-ventral-anterior-nucleus", "right-ventral-anterior-nucleus",
+  "caudal-part-of-left-ventral-lateral-nucleus",
+  "caudal-part-of-right-ventral-lateral-nucleus",
+]
+
+[mesh_mappings.buckets.amygdala]
+meshes = ["left-amygdala", "right-amygdala"]
+
+[mesh_mappings.buckets.hippocampus]
+meshes = ["left-hippocampus-proper", "right-hippocampus-proper"]
+
+[mesh_mappings.buckets.dacc]
+meshes = ["left-caudal-anterior-cingulate", "right-caudal-anterior-cingulate"]
+
+[mesh_mappings.buckets.ppc]
+meshes = [
+  "left-superior-parietal-lobule", "right-superior-parietal-lobule",
+  "left-supramarginal-gyrus", "right-supramarginal-gyrus",
+  "left-angular-gyrus", "right-angular-gyrus",
+]
+
+[mesh_mappings.buckets.pcc-praecuneus]
+meshes = ["left-precuneus", "right-precuneus"]
+
+[mesh_mappings.buckets.insula]
+meshes = ["left-insula", "right-insula"]
+
+[mesh_mappings.buckets.substantia-nigra]
+meshes = ["left-substantia-nigra", "right-substantia-nigra"]
+
+[mesh_mappings.buckets.sma-presma]
+meshes = ["left-sma", "right-sma", "left-pre-sma", "right-pre-sma"]
+
+[mesh_mappings.buckets.nucleus-accumbens]
+meshes = ["left-nucleus-accumbens", "right-nucleus-accumbens"]
+
+[mesh_mappings.buckets.frontopolar]
+meshes = ["left-julich-fp1", "right-julich-fp1", "left-julich-fp2", "right-julich-fp2"]
+
+[mesh_mappings.buckets.ifj]
+meshes = []
+known_gap = true
+gap_reason = "Inferior frontal junction ist kein eigenes TARO-Mesh"
+
+[mesh_mappings.scene_regions.acc-cingulum]
+meshes = ["left-cingulate-gyrus", "right-cingulate-gyrus"]
+
+[mesh_mappings.scene_regions.parietal-frontal]
+meshes = [
+  "left-superior-parietal-lobule", "right-superior-parietal-lobule",
+  "left-supramarginal-gyrus", "right-supramarginal-gyrus",
+  "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
+]
+
+[mesh_mappings.scene_regions.sma-presma]
+meshes = ["left-sma", "right-sma", "left-pre-sma", "right-pre-sma"]
+
+[mesh_mappings.scene_regions.inhibition-network]
+meshes = [
+  "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
+  "left-cingulate-gyrus", "right-cingulate-gyrus",
+]
+
+[mesh_mappings.scene_regions.acc-anterior]
+meshes = ["left-anterior-cingulate", "right-anterior-cingulate"]
+
+[mesh_mappings.scene_regions.sma]
+meshes = ["left-sma", "right-sma"]
+
+[mesh_mappings.scene_regions.pre-sma]
+meshes = ["left-pre-sma", "right-pre-sma"]
+
 # --- Configurations: benannte Atome (Folie / Lernschritt / Abb.-Ersetzung) --
 [configurations.broca-areal]
-label_de = "Broca-Areal (Abb. 11-7)"
-replaces_figure = "11-7"
+label_de = "Broca-Areal"
+title = "Rostrokaudale Organisation: Broca-Areal"
+section = "11.3.3"
 [configurations.broca-areal.facets]
 clinic = true
 function = true
@@ -45,13 +181,31 @@ subcortex = false
 carve_on_taro = "julich"
 [configurations.broca-areal.camera]
 target = "julich:area-44:l"
+shot = "lateral-left"
+fit = "target"
+margin = 1.4
+[configurations.broca-areal.regions]
+areas = ["julich:area-44:l", "julich:area-45:l"]
+[configurations.broca-areal.colors]
+enabled = false
+[configurations.broca-areal.visibility]
+dim_others = true
+[configurations.broca-areal.cuts]
+enabled = false
+[configurations.broca-areal.overlay]
+kind = "image"
+[configurations.broca-areal.sequencing]
+presentation = "kapitel11-vorlesung"
+learning = "kapitel11-pfad"
+step = "broca-areal"
 [configurations.broca-areal.scopes]
 "area:julich:area-44:l" = true
 "area:julich:area-45:l" = true
 
 [configurations.ofc-phineas]
 label_de = "OFC / Phineas Gage"
-replaces_figure = "11-4"
+title = "Orbitofrontaler Cortex und Phineas Gage"
+section = "11.3.3"
 [configurations.ofc-phineas.facets]
 clinic = true
 function = true
@@ -63,15 +217,329 @@ subcortex = false
 carve_on_taro = "dkt"
 [configurations.ofc-phineas.camera]
 target = "dkt:lateralorbitofrontal:l"
+shot = "lateral-left"
+fit = "target"
+margin = 1.4
+[configurations.ofc-phineas.regions]
+areas = ["dkt:lateralorbitofrontal:l", "dkt:medialorbitofrontal:l"]
+buckets = ["ofc", "vmpfc"]
+[configurations.ofc-phineas.colors]
+preset = "phineas-gage"
+dim_others = true
+[configurations.ofc-phineas.visibility]
+dim_others = true
+[configurations.ofc-phineas.cuts]
+enabled = false
+[configurations.ofc-phineas.overlay]
+kind = "prose"
+[configurations.ofc-phineas.sequencing]
+presentation = "kapitel11-vorlesung"
+learning = "kapitel11-pfad"
+step = "ofc-phineas"
 [configurations.ofc-phineas.scopes]
 "area:dkt:lateralorbitofrontal:l" = true
 "area:dkt:medialorbitofrontal:l" = true
 
+[configurations.basalganglienschleifen]
+label_de = "Basalganglienschleifen (Abb. 11-04)"
+title = "Drei Basalganglien-Schleifen"
+section = "11.3.3"
+replaces_figure = "11-04"
+[configurations.basalganglienschleifen.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.basalganglienschleifen.view]
+surface = "pial"
+subcortex = true
+carve_on_taro = "dkt"
+[configurations.basalganglienschleifen.camera]
+target = "dkt:lateralorbitofrontal:l"
+shot = "lateral-left"
+fit = "bounds"
+margin = 1.4
+[configurations.basalganglienschleifen.regions]
+areas = [
+  "dkt:lateralorbitofrontal:l",
+  "dkt:medialorbitofrontal:l",
+  "dkt:rostralanteriorcingulate:l",
+]
+buckets = [
+  "dlpfc",
+  "ppc",
+  "striatum-dorsal",
+  "globus-pallidus",
+  "thalamus",
+  "ofc",
+  "vmpfc",
+  "amygdala",
+  "hippocampus",
+  "dacc",
+  "nucleus-accumbens",
+]
+[configurations.basalganglienschleifen.colors]
+preset = "basalganglienschleifen"
+dim_others = true
+[configurations.basalganglienschleifen.visibility]
+dim_others = true
+[configurations.basalganglienschleifen.cuts]
+enabled = false
+[configurations.basalganglienschleifen.overlay]
+kind = "flowchart"
+[configurations.basalganglienschleifen.sequencing]
+presentation = "kapitel11-vorlesung"
+learning = "kapitel11-pfad"
+step = "basalganglienschleifen"
+[configurations.basalganglienschleifen.scopes]
+"area:dkt:lateralorbitofrontal:l" = true
+"area:dkt:medialorbitofrontal:l" = true
+"area:dkt:rostralanteriorcingulate:l" = true
+
+[configurations.vcpt]
+label_de = "VCPT (Abb. 11-14)"
+title = "Visueller Konzentrationsverlaufstest (VCPT)"
+section = "11.4"
+replaces_figure = "11-14"
+[configurations.vcpt.facets]
+clinic = false
+function = true
+chapter = true
+provenance = false
+[configurations.vcpt.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.vcpt.camera]
+shot = "medial-midline"
+fit = "bounds"
+margin = 1.4
+[configurations.vcpt.regions]
+scene_regions = ["sma-presma"]
+[configurations.vcpt.colors]
+enabled = false
+[configurations.vcpt.visibility]
+dim_others = true
+[configurations.vcpt.cuts]
+enabled = false
+[configurations.vcpt.overlay]
+kind = "flowchart"
+scene = "vcpt"
+position = "right"
+size = "md"
+fallback_image = "/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg"
+[configurations.vcpt.sequencing]
+presentation = "kapitel11-vorlesung"
+learning = "kapitel11-pfad"
+step = "vcpt"
+[configurations.vcpt.scopes]
+
+[configurations.p3a-konfliktmonitoring]
+label_de = "P3a Konfliktmonitoring (Abb. 11-15(1))"
+title = "P3a - Konfliktmonitoring"
+section = "11.4"
+replaces_figure = "11-15(1)"
+[configurations.p3a-konfliktmonitoring.facets]
+clinic = false
+function = true
+chapter = true
+provenance = true
+[configurations.p3a-konfliktmonitoring.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "dkt"
+[configurations.p3a-konfliktmonitoring.camera]
+target = "dkt:rostralanteriorcingulate:l"
+shot = "medial-midline"
+fit = "target"
+margin = 1.4
+fov = 36
+[configurations.p3a-konfliktmonitoring.regions]
+areas = ["dkt:rostralanteriorcingulate:l"]
+scene_regions = ["acc-anterior"]
+[configurations.p3a-konfliktmonitoring.colors]
+enabled = false
+[configurations.p3a-konfliktmonitoring.visibility]
+dim_others = true
+[configurations.p3a-konfliktmonitoring.cuts]
+enabled = false
+[configurations.p3a-konfliktmonitoring.overlay]
+kind = "erp"
+scene = "p3a-konfliktmonitoring"
+position = "right"
+size = "md"
+[configurations.p3a-konfliktmonitoring.sequencing]
+presentation = "kapitel11-vorlesung"
+learning = "kapitel11-pfad"
+step = "p3a-konfliktmonitoring"
+[configurations.p3a-konfliktmonitoring.scopes]
+"area:dkt:rostralanteriorcingulate:l" = true
+
+[configurations.go-nogo-intro]
+label_de = "Go-/No-go-Aufgaben"
+title = "Go-/No-go-Aufgaben - Reaktion hemmen"
+section = "11.4"
+[configurations.go-nogo-intro.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.go-nogo-intro.camera]
+shot = "medial-midline"
+fit = "bounds"
+margin = 1.4
+[configurations.go-nogo-intro.regions]
+scene_regions = ["inhibition-network"]
+[configurations.go-nogo-intro.colors]
+enabled = false
+[configurations.go-nogo-intro.visibility]
+dim_others = true
+[configurations.go-nogo-intro.cuts]
+enabled = false
+[configurations.go-nogo-intro.overlay]
+kind = "prose"
+scene = "go-nogo-intro"
+position = "right"
+size = "md"
+[configurations.go-nogo-intro.sequencing]
+learning = "kapitel11-pfad"
+step = "go-nogo-intro"
+[configurations.go-nogo-intro.scopes]
+
+[configurations.ica-uebersicht]
+label_de = "ICA - drei ERP-Komponenten"
+title = "ICA - drei ERP-Komponenten"
+section = "11.4"
+[configurations.ica-uebersicht.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.ica-uebersicht.camera]
+shot = "superior"
+fit = "bounds"
+margin = 1.4
+[configurations.ica-uebersicht.regions]
+scene_regions = ["inhibition-network"]
+[configurations.ica-uebersicht.colors]
+enabled = false
+[configurations.ica-uebersicht.visibility]
+dim_others = true
+[configurations.ica-uebersicht.cuts]
+enabled = false
+[configurations.ica-uebersicht.overlay]
+kind = "flowchart"
+scene = "ica-uebersicht"
+position = "right"
+size = "md"
+[configurations.ica-uebersicht.sequencing]
+learning = "kapitel11-pfad"
+step = "ica-uebersicht"
+[configurations.ica-uebersicht.scopes]
+
+[configurations.p3b-engagement]
+label_de = "P3b Engagement (Abb. 11-15(2))"
+title = "P3b - Engagement"
+section = "11.4"
+replaces_figure = "11-15(2)"
+[configurations.p3b-engagement.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.p3b-engagement.camera]
+shot = "lateral-left"
+fit = "bounds"
+margin = 1.4
+[configurations.p3b-engagement.regions]
+scene_regions = ["parietal-frontal"]
+[configurations.p3b-engagement.colors]
+enabled = false
+[configurations.p3b-engagement.visibility]
+dim_others = true
+[configurations.p3b-engagement.cuts]
+enabled = false
+[configurations.p3b-engagement.overlay]
+kind = "erp"
+scene = "p3b-engagement"
+position = "right"
+size = "md"
+[configurations.p3b-engagement.sequencing]
+learning = "kapitel11-pfad"
+step = "p3b-engagement"
+[configurations.p3b-engagement.scopes]
+
+[configurations.p3z-inhibition]
+label_de = "P3z Inhibition (Abb. 11-15(3))"
+title = "P3z - Inhibition"
+section = "11.4"
+replaces_figure = "11-15(3)"
+[configurations.p3z-inhibition.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.p3z-inhibition.camera]
+shot = "medial-midline"
+fit = "bounds"
+margin = 1.4
+[configurations.p3z-inhibition.regions]
+scene_regions = ["sma-presma"]
+[configurations.p3z-inhibition.colors]
+enabled = false
+[configurations.p3z-inhibition.visibility]
+dim_others = true
+[configurations.p3z-inhibition.cuts]
+enabled = false
+[configurations.p3z-inhibition.overlay]
+kind = "erp"
+scene = "p3z-inhibition"
+position = "right"
+size = "md"
+[configurations.p3z-inhibition.sequencing]
+learning = "kapitel11-pfad"
+step = "p3z-inhibition"
+[configurations.p3z-inhibition.scopes]
+
+[configurations.zusammenfassung]
+label_de = "Zusammenfassung - exekutive Funktionen"
+title = "Zusammenfassung - exekutive Funktionen"
+section = "11.5"
+[configurations.zusammenfassung.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.zusammenfassung.camera]
+shot = "lateral-left"
+fit = "bounds"
+margin = 1.4
+[configurations.zusammenfassung.regions]
+scene_regions = ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-presma"]
+[configurations.zusammenfassung.colors]
+enabled = false
+[configurations.zusammenfassung.visibility]
+dim_others = true
+[configurations.zusammenfassung.cuts]
+enabled = false
+[configurations.zusammenfassung.overlay]
+kind = "prose"
+scene = "zusammenfassung"
+position = "right"
+size = "lg"
+[configurations.zusammenfassung.sequencing]
+learning = "kapitel11-pfad"
+step = "zusammenfassung"
+[configurations.zusammenfassung.scopes]
+
 # --- Sequenzen: geordnete Configuration-Namen ------------------------------
 [presentation.kapitel11-vorlesung]
 label_de = "Kapitel 11 — Vorlesung"
-steps = ["broca-areal", "ofc-phineas"]
+steps = ["basalganglienschleifen", "broca-areal", "vcpt", "p3a-konfliktmonitoring"]
 
 [learning.kapitel11-pfad]
 label_de = "Lernpfad Kapitel 11"
-steps = ["ofc-phineas", "broca-areal"]
+steps = [
+  "go-nogo-intro",
+  "vcpt",
+  "ica-uebersicht",
+  "p3a-konfliktmonitoring",
+  "p3b-engagement",
+  "p3z-inhibition",
+  "zusammenfassung",
+]

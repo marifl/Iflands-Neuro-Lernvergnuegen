@@ -1,78 +1,710 @@
 {
-  "preset": "kapitel11",
-  "presets": {
-    "kapitel11": {
-      "label_de": "Kapitel 11 (PFC/BG-Fokus)",
+  "configurations": {
+    "basalganglienschleifen": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-left",
+        "target": "dkt:lateralorbitofrontal:l"
+      },
+      "colors": {
+        "dim_others": true,
+        "preset": "basalganglienschleifen"
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": true,
+        "function": true,
+        "provenance": false
+      },
+      "label_de": "Basalganglienschleifen (Abb. 11-04)",
+      "overlay": {
+        "kind": "flowchart"
+      },
+      "regions": {
+        "areas": [
+          "dkt:lateralorbitofrontal:l",
+          "dkt:medialorbitofrontal:l",
+          "dkt:rostralanteriorcingulate:l"
+        ],
+        "buckets": [
+          "dlpfc",
+          "ppc",
+          "striatum-dorsal",
+          "globus-pallidus",
+          "thalamus",
+          "ofc",
+          "vmpfc",
+          "amygdala",
+          "hippocampus",
+          "dacc",
+          "nucleus-accumbens"
+        ]
+      },
+      "replaces_figure": "11-04",
       "scopes": {
-        "axis:macro": false,
-        "axis:cyto": false,
-        "area:julich:area-44:l": true,
-        "area:julich:area-45:l": true,
-        "area:dkt:parstriangularis:l": true,
-        "area:dkt:parsopercularis:l": true,
         "area:dkt:lateralorbitofrontal:l": true,
         "area:dkt:medialorbitofrontal:l": true,
         "area:dkt:rostralanteriorcingulate:l": true
+      },
+      "section": "11.3.3",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
+        "step": "basalganglienschleifen"
+      },
+      "title": "Drei Basalganglien-Schleifen",
+      "view": {
+        "carve_on_taro": "dkt",
+        "subcortex": true,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
       }
     },
-    "explorer": {
-      "label_de": "Explorer (Makro sichtbar)",
-      "scopes": {
-        "axis:macro": true,
-        "axis:cyto": false
-      }
-    },
-    "voll": {
-      "label_de": "Voll (alle Atlanten)",
-      "scopes": {
-        "axis:macro": true,
-        "axis:cyto": true
-      }
-    }
-  },
-  "configurations": {
     "broca-areal": {
-      "label_de": "Broca-Areal (Abb. 11-7)",
-      "replaces_figure": "11-7",
+      "camera": {
+        "fit": "target",
+        "margin": 1.4,
+        "shot": "lateral-left",
+        "target": "julich:area-44:l"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
       "facets": {
+        "chapter": true,
         "clinic": true,
         "function": true,
-        "chapter": true,
         "provenance": false
       },
-      "view": {
-        "surface": "pial",
-        "subcortex": false,
-        "carve_on_taro": "julich"
+      "label_de": "Broca-Areal",
+      "overlay": {
+        "kind": "image"
       },
-      "camera": {
-        "target": "julich:area-44:l"
+      "regions": {
+        "areas": [
+          "julich:area-44:l",
+          "julich:area-45:l"
+        ]
       },
       "scopes": {
         "area:julich:area-44:l": true,
         "area:julich:area-45:l": true
+      },
+      "section": "11.3.3",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
+        "step": "broca-areal"
+      },
+      "title": "Rostrokaudale Organisation: Broca-Areal",
+      "view": {
+        "carve_on_taro": "julich",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "go-nogo-intro": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "medial-midline"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "label_de": "Go-/No-go-Aufgaben",
+      "overlay": {
+        "kind": "prose",
+        "position": "right",
+        "scene": "go-nogo-intro",
+        "size": "md"
+      },
+      "regions": {
+        "scene_regions": [
+          "inhibition-network"
+        ]
+      },
+      "scopes": {},
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "step": "go-nogo-intro"
+      },
+      "title": "Go-/No-go-Aufgaben - Reaktion hemmen",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "ica-uebersicht": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "superior"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "label_de": "ICA - drei ERP-Komponenten",
+      "overlay": {
+        "kind": "flowchart",
+        "position": "right",
+        "scene": "ica-uebersicht",
+        "size": "md"
+      },
+      "regions": {
+        "scene_regions": [
+          "inhibition-network"
+        ]
+      },
+      "scopes": {},
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "step": "ica-uebersicht"
+      },
+      "title": "ICA - drei ERP-Komponenten",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
       }
     },
     "ofc-phineas": {
-      "label_de": "OFC / Phineas Gage",
-      "replaces_figure": "11-4",
+      "camera": {
+        "fit": "target",
+        "margin": 1.4,
+        "shot": "lateral-left",
+        "target": "dkt:lateralorbitofrontal:l"
+      },
+      "colors": {
+        "dim_others": true,
+        "preset": "phineas-gage"
+      },
+      "cuts": {
+        "enabled": false
+      },
       "facets": {
+        "chapter": true,
         "clinic": true,
         "function": true,
-        "chapter": true,
         "provenance": false
       },
-      "view": {
-        "surface": "pial",
-        "subcortex": false,
-        "carve_on_taro": "dkt"
+      "label_de": "OFC / Phineas Gage",
+      "overlay": {
+        "kind": "prose"
       },
-      "camera": {
-        "target": "dkt:lateralorbitofrontal:l"
+      "regions": {
+        "areas": [
+          "dkt:lateralorbitofrontal:l",
+          "dkt:medialorbitofrontal:l"
+        ],
+        "buckets": [
+          "ofc",
+          "vmpfc"
+        ]
       },
       "scopes": {
         "area:dkt:lateralorbitofrontal:l": true,
         "area:dkt:medialorbitofrontal:l": true
+      },
+      "section": "11.3.3",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
+        "step": "ofc-phineas"
+      },
+      "title": "Orbitofrontaler Cortex und Phineas Gage",
+      "view": {
+        "carve_on_taro": "dkt",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "p3a-konfliktmonitoring": {
+      "camera": {
+        "fit": "target",
+        "fov": 36,
+        "margin": 1.4,
+        "shot": "medial-midline",
+        "target": "dkt:rostralanteriorcingulate:l"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": false,
+        "function": true,
+        "provenance": true
+      },
+      "label_de": "P3a Konfliktmonitoring (Abb. 11-15(1))",
+      "overlay": {
+        "kind": "erp",
+        "position": "right",
+        "scene": "p3a-konfliktmonitoring",
+        "size": "md"
+      },
+      "regions": {
+        "areas": [
+          "dkt:rostralanteriorcingulate:l"
+        ],
+        "scene_regions": [
+          "acc-anterior"
+        ]
+      },
+      "replaces_figure": "11-15(1)",
+      "scopes": {
+        "area:dkt:rostralanteriorcingulate:l": true
+      },
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
+        "step": "p3a-konfliktmonitoring"
+      },
+      "title": "P3a - Konfliktmonitoring",
+      "view": {
+        "carve_on_taro": "dkt",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "p3b-engagement": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-left"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "label_de": "P3b Engagement (Abb. 11-15(2))",
+      "overlay": {
+        "kind": "erp",
+        "position": "right",
+        "scene": "p3b-engagement",
+        "size": "md"
+      },
+      "regions": {
+        "scene_regions": [
+          "parietal-frontal"
+        ]
+      },
+      "replaces_figure": "11-15(2)",
+      "scopes": {},
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "step": "p3b-engagement"
+      },
+      "title": "P3b - Engagement",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "p3z-inhibition": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "medial-midline"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "label_de": "P3z Inhibition (Abb. 11-15(3))",
+      "overlay": {
+        "kind": "erp",
+        "position": "right",
+        "scene": "p3z-inhibition",
+        "size": "md"
+      },
+      "regions": {
+        "scene_regions": [
+          "sma-presma"
+        ]
+      },
+      "replaces_figure": "11-15(3)",
+      "scopes": {},
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "step": "p3z-inhibition"
+      },
+      "title": "P3z - Inhibition",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "vcpt": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "medial-midline"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": false,
+        "function": true,
+        "provenance": false
+      },
+      "label_de": "VCPT (Abb. 11-14)",
+      "overlay": {
+        "fallback_image": "/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg",
+        "kind": "flowchart",
+        "position": "right",
+        "scene": "vcpt",
+        "size": "md"
+      },
+      "regions": {
+        "scene_regions": [
+          "sma-presma"
+        ]
+      },
+      "replaces_figure": "11-14",
+      "scopes": {},
+      "section": "11.4",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
+        "step": "vcpt"
+      },
+      "title": "Visueller Konzentrationsverlaufstest (VCPT)",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    },
+    "zusammenfassung": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-left"
+      },
+      "colors": {
+        "enabled": false
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "label_de": "Zusammenfassung - exekutive Funktionen",
+      "overlay": {
+        "kind": "prose",
+        "position": "right",
+        "scene": "zusammenfassung",
+        "size": "lg"
+      },
+      "regions": {
+        "scene_regions": [
+          "inhibition-network",
+          "acc-cingulum",
+          "parietal-frontal",
+          "sma-presma"
+        ]
+      },
+      "scopes": {},
+      "section": "11.5",
+      "sequencing": {
+        "learning": "kapitel11-pfad",
+        "step": "zusammenfassung"
+      },
+      "title": "Zusammenfassung - exekutive Funktionen",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_others": true
+      }
+    }
+  },
+  "learning": {
+    "kapitel11-pfad": {
+      "label_de": "Lernpfad Kapitel 11",
+      "steps": [
+        "go-nogo-intro",
+        "vcpt",
+        "ica-uebersicht",
+        "p3a-konfliktmonitoring",
+        "p3b-engagement",
+        "p3z-inhibition",
+        "zusammenfassung"
+      ]
+    }
+  },
+  "mesh_mappings": {
+    "buckets": {
+      "amygdala": {
+        "meshes": [
+          "left-amygdala",
+          "right-amygdala"
+        ]
+      },
+      "dacc": {
+        "meshes": [
+          "left-caudal-anterior-cingulate",
+          "right-caudal-anterior-cingulate"
+        ]
+      },
+      "dlpfc": {
+        "meshes": [
+          "left-julich-mfg1",
+          "right-julich-mfg1",
+          "left-julich-mfg2",
+          "right-julich-mfg2",
+          "left-julich-mfg4",
+          "right-julich-mfg4",
+          "left-julich-8v1",
+          "right-julich-8v1",
+          "left-julich-8v2",
+          "right-julich-8v2",
+          "left-julich-sfs1",
+          "right-julich-sfs1",
+          "left-julich-sfs2",
+          "right-julich-sfs2",
+          "left-julich-frontal-ii-gapmap",
+          "right-julich-frontal-ii-gapmap",
+          "left-julich-sfg2",
+          "right-julich-sfg2",
+          "left-julich-sfg3",
+          "right-julich-sfg3",
+          "left-julich-sfg4",
+          "right-julich-sfg4",
+          "left-julich-8d1",
+          "right-julich-8d1",
+          "left-julich-8d2",
+          "right-julich-8d2",
+          "left-julich-frontal-i-2-gapmap",
+          "right-julich-frontal-i-2-gapmap"
+        ]
+      },
+      "frontopolar": {
+        "meshes": [
+          "left-julich-fp1",
+          "right-julich-fp1",
+          "left-julich-fp2",
+          "right-julich-fp2"
+        ]
+      },
+      "globus-pallidus": {
+        "meshes": [
+          "left-gpi",
+          "right-gpi",
+          "left-gpe",
+          "right-gpe"
+        ]
+      },
+      "hippocampus": {
+        "meshes": [
+          "left-hippocampus-proper",
+          "right-hippocampus-proper"
+        ]
+      },
+      "ifj": {
+        "gap_reason": "Inferior frontal junction ist kein eigenes TARO-Mesh",
+        "known_gap": true,
+        "meshes": []
+      },
+      "insula": {
+        "meshes": [
+          "left-insula",
+          "right-insula"
+        ]
+      },
+      "nucleus-accumbens": {
+        "meshes": [
+          "left-nucleus-accumbens",
+          "right-nucleus-accumbens"
+        ]
+      },
+      "ofc": {
+        "meshes": [
+          "left-lateral-orbitofrontal",
+          "right-lateral-orbitofrontal",
+          "left-medial-orbitofrontal",
+          "right-medial-orbitofrontal",
+          "left-anterior-orbital-gyrus",
+          "right-anterior-orbital-gyrus",
+          "left-posterior-orbital-gyrus",
+          "right-posterior-orbital-gyrus"
+        ]
+      },
+      "pcc-praecuneus": {
+        "meshes": [
+          "left-precuneus",
+          "right-precuneus"
+        ]
+      },
+      "ppc": {
+        "meshes": [
+          "left-superior-parietal-lobule",
+          "right-superior-parietal-lobule",
+          "left-supramarginal-gyrus",
+          "right-supramarginal-gyrus",
+          "left-angular-gyrus",
+          "right-angular-gyrus"
+        ]
+      },
+      "sma-presma": {
+        "meshes": [
+          "left-sma",
+          "right-sma",
+          "left-pre-sma",
+          "right-pre-sma"
+        ]
+      },
+      "striatum-dorsal": {
+        "meshes": [
+          "left-caudate-nucleus",
+          "right-caudate-nucleus",
+          "left-putamen",
+          "right-putamen"
+        ]
+      },
+      "substantia-nigra": {
+        "meshes": [
+          "left-substantia-nigra",
+          "right-substantia-nigra"
+        ]
+      },
+      "thalamus": {
+        "meshes": [
+          "left-ventral-anterior-nucleus",
+          "right-ventral-anterior-nucleus",
+          "caudal-part-of-left-ventral-lateral-nucleus",
+          "caudal-part-of-right-ventral-lateral-nucleus"
+        ]
+      },
+      "vlpfc": {
+        "meshes": [
+          "left-parsopercularis",
+          "right-parsopercularis",
+          "left-parstriangularis",
+          "right-parstriangularis",
+          "left-parsorbitalis",
+          "right-parsorbitalis"
+        ]
+      },
+      "vmpfc": {
+        "meshes": [
+          "left-medial-orbital-gyrus",
+          "right-medial-orbital-gyrus",
+          "left-subcallosal-area",
+          "right-subcallosal-area"
+        ]
+      }
+    },
+    "scene_regions": {
+      "acc-anterior": {
+        "meshes": [
+          "left-anterior-cingulate",
+          "right-anterior-cingulate"
+        ]
+      },
+      "acc-cingulum": {
+        "meshes": [
+          "left-cingulate-gyrus",
+          "right-cingulate-gyrus"
+        ]
+      },
+      "inhibition-network": {
+        "meshes": [
+          "left-superior-frontal-gyrus",
+          "right-superior-frontal-gyrus",
+          "left-cingulate-gyrus",
+          "right-cingulate-gyrus"
+        ]
+      },
+      "parietal-frontal": {
+        "meshes": [
+          "left-superior-parietal-lobule",
+          "right-superior-parietal-lobule",
+          "left-supramarginal-gyrus",
+          "right-supramarginal-gyrus",
+          "left-superior-frontal-gyrus",
+          "right-superior-frontal-gyrus"
+        ]
+      },
+      "pre-sma": {
+        "meshes": [
+          "left-pre-sma",
+          "right-pre-sma"
+        ]
+      },
+      "sma": {
+        "meshes": [
+          "left-sma",
+          "right-sma"
+        ]
+      },
+      "sma-presma": {
+        "meshes": [
+          "left-sma",
+          "right-sma",
+          "left-pre-sma",
+          "right-pre-sma"
+        ]
       }
     }
   },
@@ -80,18 +712,42 @@
     "kapitel11-vorlesung": {
       "label_de": "Kapitel 11 — Vorlesung",
       "steps": [
+        "basalganglienschleifen",
         "broca-areal",
-        "ofc-phineas"
+        "vcpt",
+        "p3a-konfliktmonitoring"
       ]
     }
   },
-  "learning": {
-    "kapitel11-pfad": {
-      "label_de": "Lernpfad Kapitel 11",
-      "steps": [
-        "ofc-phineas",
-        "broca-areal"
-      ]
+  "preset": "kapitel11",
+  "presets": {
+    "explorer": {
+      "label_de": "Explorer (Makro sichtbar)",
+      "scopes": {
+        "axis:cyto": false,
+        "axis:macro": true
+      }
+    },
+    "kapitel11": {
+      "label_de": "Kapitel 11 (PFC/BG-Fokus)",
+      "scopes": {
+        "area:dkt:lateralorbitofrontal:l": true,
+        "area:dkt:medialorbitofrontal:l": true,
+        "area:dkt:parsopercularis:l": true,
+        "area:dkt:parstriangularis:l": true,
+        "area:dkt:rostralanteriorcingulate:l": true,
+        "area:julich:area-44:l": true,
+        "area:julich:area-45:l": true,
+        "axis:cyto": false,
+        "axis:macro": false
+      }
+    },
+    "voll": {
+      "label_de": "Voll (alle Atlanten)",
+      "scopes": {
+        "axis:cyto": true,
+        "axis:macro": true
+      }
     }
   }
 }

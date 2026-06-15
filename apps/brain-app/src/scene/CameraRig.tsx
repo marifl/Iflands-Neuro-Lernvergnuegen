@@ -1,10 +1,41 @@
 import { useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import type { ConfigCamera } from '../viewer/atlas/atlasConfig'
+import { useEffectiveConfig } from '../viewer/atlas/atlasConfig'
 import { useViewerStore } from '../viewer/viewerStore'
 import { useSceneStore } from './sceneStore'
-import { directionVec } from './cameraPresets'
 import { loadCoords, unionBounds, type StructureCoords } from './structureCoords'
+import { globalCameraBoundsForConfig, resolveCameraTarget, resolveGlobalCameraViewTarget, type ResolvedCameraTarget } from './cameraResolve'
+import { EMPTY_TARGET_MESHES, selectCameraRigConfig, type CameraConfigSource } from './cameraRigConfig'
+
+const CAMERA_LERP_PER_FRAME_AT_60HZ = 0.12
+
+function perspectiveCamera(camera: THREE.Camera): THREE.PerspectiveCamera {
+  const cam = camera as THREE.PerspectiveCamera
+  if (!cam.isPerspectiveCamera) throw new Error('CameraRig: PerspectiveCamera erwartet')
+  return cam
+}
+
+function frameLerpAlpha(delta: number): number {
+  return 1 - Math.pow(1 - CAMERA_LERP_PER_FRAME_AT_60HZ, delta * 60)
+}
+
+function exposeCameraRigDebug(debug: {
+  source: CameraConfigSource
+  activeConfiguration: string | null
+  config: ConfigCamera
+  fallbackShot: string | null
+  highlight: string[]
+  targetMeshes: string[]
+  figureTargetMeshes: string[]
+  bounds: { center: [number, number, number]; radius: number }
+  targetBounds: { center: [number, number, number]; radius: number } | null
+  resolved: ResolvedCameraTarget
+}) {
+  if (!import.meta.env.DEV) return
+  ;(window as unknown as { __CAMERA_RIG__: unknown }).__CAMERA_RIG__ = debug
+}
 
 /** Framt die Kamera auf die Union-Bounds der aktuell hervorgehobenen Meshes (aus structure-coords.json),
  *  aus der Richtung des aktiven Shots. Animiert per Lerp; nutzt die makeDefault-OrbitControls. */
@@ -13,10 +44,27 @@ export default function CameraRig() {
   const highlight = useViewerStore((s) => s.highlight)
   const cameraView = useViewerStore((s) => s.cameraView)
   const shot = useSceneStore((s) => s.cameraShot)
+  const sceneCameraConfig = useSceneStore((s) => s.cameraConfig)
+  const sceneTargetMeshes = useSceneStore((s) => s.scenes[s.index]?.configCameraTargetMeshes ?? EMPTY_TARGET_MESHES)
+  const effectiveConfig = useEffectiveConfig()
   const [coords, setCoords] = useState<StructureCoords | null>(null)
   const target = useRef(new THREE.Vector3())
   const camGoal = useRef(new THREE.Vector3())
   const want = useRef(false)
+  const cameraConfigRef = useRef<ConfigCamera | null>(null)
+  const legacyCameraConfig = useMemo<ConfigCamera | null>(() => (shot ? { shot } : null), [shot])
+  const {
+    activeConfiguration,
+    figureTargetMeshes,
+    cameraConfig,
+    cameraConfigSource,
+    targetMeshes,
+  } = selectCameraRigConfig({
+    effectiveConfig,
+    sceneCameraConfig,
+    sceneTargetMeshes,
+    legacyCameraConfig,
+  })
 
   useEffect(() => {
     loadCoords().then(setCoords)
@@ -24,38 +72,78 @@ export default function CameraRig() {
 
   // DEV-only: aktive Kamera exponieren (Smoke-Verifikation des Fit-to-Highlight-Framings).
   useEffect(() => {
-    if (import.meta.env.DEV) (window as unknown as { __CAMERA__: unknown }).__CAMERA__ = camera
-  }, [camera])
+    if (!import.meta.env.DEV) return
+    const globals = window as unknown as { __CAMERA__: unknown; __CAMERA_CONTROLS__: unknown }
+    globals.__CAMERA__ = camera
+    globals.__CAMERA_CONTROLS__ = controls
+  }, [camera, controls])
+
+  const setGoal = (resolved: ResolvedCameraTarget) => {
+    const cam = perspectiveCamera(camera)
+    if (cam.fov !== resolved.fov) {
+      cam.fov = resolved.fov
+      cam.updateProjectionMatrix()
+    }
+    target.current.set(...resolved.target)
+    camGoal.current.set(...resolved.position)
+    want.current = true
+  }
+
+  useEffect(() => {
+    cameraConfigRef.current = cameraConfig
+  }, [cameraConfig])
 
   // Bei Highlight-/Shot-Wechsel Ziel deterministisch aus der Tabelle berechnen.
   useEffect(() => {
-    if (!coords || !shot || highlight.length === 0) return
-    const { center, radius } = unionBounds(coords, highlight)
-    const fov = (camera as THREE.PerspectiveCamera).fov
-    const dist = (radius / Math.sin((fov * Math.PI) / 360)) * 1.4
-    target.current.set(...center)
-    camGoal.current.set(...center).addScaledVector(directionVec(shot), dist)
-    want.current = true
-  }, [coords, shot, highlight, camera])
+    if (!cameraConfig) return
+    const hasPose = cameraConfig.pose !== undefined
+    let bounds = globalCameraBoundsForConfig(cameraConfig)
+    let targetBounds = null
+    if (!hasPose) {
+      if (!coords || highlight.length === 0) return
+      bounds = unionBounds(coords, highlight)
+      targetBounds = targetMeshes.length > 0 ? unionBounds(coords, targetMeshes) : null
+      if (cameraConfig.fit === 'target' && !targetBounds) return
+    }
+    const resolved = resolveCameraTarget({
+      config: cameraConfig,
+      bounds,
+      targetBounds,
+      fallbackShot: shot,
+      fallbackFov: perspectiveCamera(camera).fov,
+    })
+    exposeCameraRigDebug({
+      source: cameraConfigSource,
+      activeConfiguration,
+      config: cameraConfig,
+      fallbackShot: shot,
+      highlight,
+      targetMeshes,
+      figureTargetMeshes,
+      bounds,
+      targetBounds,
+      resolved,
+    })
+    setGoal(resolved)
+  }, [coords, cameraConfig, cameraConfigSource, activeConfiguration, shot, highlight, targetMeshes, camera])
 
   // Globale Ansicht-Box: das Gesamt-Hirn aus einer benannten Richtung framen (one-shot, nonce-getriggert).
   useEffect(() => {
     if (!cameraView) return
-    const center = new THREE.Vector3(0, 12, 0)
-    const radius = 85 // grobe Gesamt-Hirn-Ausdehnung; reicht fuer das Anflug-Framing
-    const fov = (camera as THREE.PerspectiveCamera).fov
-    const dist = (radius / Math.sin((fov * Math.PI) / 360)) * 1.4
-    target.current.copy(center)
-    camGoal.current.copy(center).addScaledVector(directionVec(cameraView.name), dist)
-    want.current = true
+    setGoal(resolveGlobalCameraViewTarget({
+      config: cameraConfigRef.current,
+      shot: cameraView.name,
+      fallbackFov: perspectiveCamera(camera).fov,
+    }))
   }, [cameraView, camera])
 
-  useFrame(() => {
+  useFrame((_, delta) => {
     if (!want.current) return
-    camera.position.lerp(camGoal.current, 0.12)
+    const alpha = frameLerpAlpha(delta)
+    camera.position.lerp(camGoal.current, alpha)
     const oc = controls as unknown as { target: THREE.Vector3; update: () => void } | null
     if (oc?.target) {
-      oc.target.lerp(target.current, 0.12)
+      oc.target.lerp(target.current, alpha)
       oc.update()
     }
     if (camera.position.distanceTo(camGoal.current) < 1) want.current = false
