@@ -98,7 +98,12 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
         flat varying float vLabel; varying vec3 vN;
         void main() {
           vec4 area = texture2D(uLut, vec2((vLabel + 0.5) / uLutSize, 0.5));
-          float diff = clamp(dot(normalize(vN), uLightDir) * 0.5 + 0.5, 0.0, 1.0);
+          // DoubleSide-Flaeche: die Normale fuer Rueckseiten / umgekehrt-gewickelte Schnitt-Dreiecke
+          // flippen, sonst zeigen sie vom Licht weg -> dunkle Flecken an den Arealgrenzen.
+          // gl_FrontFacing deckt echte Back-Faces UND winding-invertierte Cut-Tris ab.
+          vec3 nn = normalize(vN);
+          if (!gl_FrontFacing) nn = -nn;
+          float diff = clamp(dot(nn, uLightDir) * 0.5 + 0.5, 0.0, 1.0);
           gl_FragColor = vec4(area.rgb * (0.5 + 0.5 * diff), 1.0);
         }`,
     })
