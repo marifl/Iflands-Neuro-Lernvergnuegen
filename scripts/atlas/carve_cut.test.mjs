@@ -84,3 +84,13 @@ test('weldedNormals: koinzidente Vertices teilen sich die gemittelte Normale', (
   // planar in z=0 -> Normale entlang z.
   assert.ok(Math.abs(Math.abs(N[2][2]) - 1) < 1e-9)
 })
+
+test('laplacianSmooth tangential: kein Versatz entlang der Flaechennormale', () => {
+  // Knoten ueber der Nachbar-Ebene (z=1), Nachbarn bei z=0 -> volle Glaettung wuerde nach z=0 sinken.
+  // Mit Normale [0,0,1] (tangential = xy-Ebene) darf z NICHT sinken.
+  const pos = [[1, 0, 1], [0, 0, 0], [2, 0, 0]]
+  const nbr = [[1, 2], [], []]
+  const normals = [[0, 0, 1], [0, 0, 1], [0, 0, 1]]
+  const out = laplacianSmooth(pos, nbr, 5, 0.5, normals)
+  assert.ok(Math.abs(out[0][2] - 1) < 1e-9, 'z bleibt (kein Sink entlang Normale)')
+})

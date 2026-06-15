@@ -95,7 +95,7 @@ export function weldedNormals(V, F, keyScale = 64) {
  * @param nodePos Array<[x,y,z]> @param nodeNbrs Array<number[]> @param iters Iterationen
  * @param lambda Under-Relaxation (0..1) — klein haelt es stabil (kein Flip/Schrumpf).
  */
-export function laplacianSmooth(nodePos, nodeNbrs, iters, lambda) {
+export function laplacianSmooth(nodePos, nodeNbrs, iters, lambda, normals = null) {
   let pos = nodePos.map((p) => p.slice())
   for (let it = 0; it < iters; it++) {
     const next = pos.map((p) => p.slice())
@@ -105,11 +105,12 @@ export function laplacianSmooth(nodePos, nodeNbrs, iters, lambda) {
       let cx = 0, cy = 0, cz = 0
       for (const j of nb) { cx += pos[j][0]; cy += pos[j][1]; cz += pos[j][2] }
       cx /= nb.length; cy /= nb.length; cz /= nb.length
-      next[i] = [
-        pos[i][0] + lambda * (cx - pos[i][0]),
-        pos[i][1] + lambda * (cy - pos[i][1]),
-        pos[i][2] + lambda * (cz - pos[i][2]),
-      ]
+      let dx = cx - pos[i][0], dy = cy - pos[i][1], dz = cz - pos[i][2]
+      // Tangential: den Anteil entlang der Flaechennormale entfernen -> kein Sink unter die Flaeche
+      // (sonst Rillen an den Grenzen = dunkle Kerben). Nur in der Flaeche begradigen.
+      const n = normals && normals[i]
+      if (n) { const d = dx * n[0] + dy * n[1] + dz * n[2]; dx -= d * n[0]; dy -= d * n[1]; dz -= d * n[2] }
+      next[i] = [pos[i][0] + lambda * dx, pos[i][1] + lambda * dy, pos[i][2] + lambda * dz]
     }
     pos = next
   }

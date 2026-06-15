@@ -189,11 +189,12 @@ const SMOOTH_LAMBDA = 0.5
 const bkey = (p) => `${Math.round(p[0] * 64)},${Math.round(p[1] * 64)},${Math.round(p[2] * 64)}`
 const nodeOfKey = new Map()
 const nodePos = []
+const nodeFirstV = []
 const vNode = new Int32Array(M).fill(-1)
 for (let i = N; i < M; i++) {
   const k = bkey(outV[i])
   let id = nodeOfKey.get(k)
-  if (id === undefined) { id = nodePos.length; nodeOfKey.set(k, id); nodePos.push(outV[i].slice()) }
+  if (id === undefined) { id = nodePos.length; nodeOfKey.set(k, id); nodePos.push(outV[i].slice()); nodeFirstV.push(i) }
   vNode[i] = id
 }
 const nbrSet = Array.from({ length: nodePos.length }, () => new Set())
@@ -203,7 +204,11 @@ for (const [a, b, c] of outF) {
   }
 }
 const nbrLists = nbrSet.map((s) => (s.size === 2 ? [...s] : [])) // nur glatte Ketten bewegen
-const smoothed = laplacianSmooth(nodePos, nbrLists, SMOOTH_ITERS, SMOOTH_LAMBDA)
+// Flaechennormale je Grenzknoten (aus dem ungeglaetteten Cut-Mesh) -> tangentiale Glaettung,
+// damit die Grenzpunkte NICHT unter die Oberflaeche sinken (sonst Rillen = dunkle Kerben).
+const preNormals = weldedNormals(outV, outF)
+const nodeNormal = nodeFirstV.map((v) => preNormals[v])
+const smoothed = laplacianSmooth(nodePos, nbrLists, SMOOTH_ITERS, SMOOTH_LAMBDA, nodeNormal)
 for (let i = N; i < M; i++) outV[i] = smoothed[vNode[i]]
 const movedNodes = nbrLists.filter((l) => l.length === 2).length
 
