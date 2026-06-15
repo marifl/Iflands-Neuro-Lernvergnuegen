@@ -126,6 +126,33 @@ function nearestLabel(p) {
 let filled = 0
 for (let i = 0; i < N; i++) if (vlab[i] === -1) { vlab[i] = nearestLabel(mergedV[i]); filled++ }
 
+// --- 3b. Label-Relaxation: Mehrheits-Vote ueber die 1-Ring-Mesh-Nachbarschaft (K Iterationen).
+// Entfernt Einzelvertex-Inseln (Konfetti) + glaettet die facettierten Arealgrenzen OHNE Geometrie-
+// Aenderung (0 mm auf TARO bleibt — nur Labels werden geglaettet). Seed-Schutz: je vorhandener
+// Parzelle bleibt EIN gepinnter Vertex unveraenderlich -> keine Parzelle geht durch Glaettung verloren.
+const RELAX_ITERS = 3
+const adj = Array.from({ length: N }, () => new Set())
+for (const f of mergedF) {
+  adj[f[0]].add(f[1]); adj[f[1]].add(f[0])
+  adj[f[1]].add(f[2]); adj[f[2]].add(f[1])
+  adj[f[0]].add(f[2]); adj[f[2]].add(f[0])
+}
+const pin = new Uint8Array(N)
+const pinnedParcel = new Set()
+for (let i = 0; i < N; i++) { const pi = vlab[i]; if (pi >= 0 && !pinnedParcel.has(pi)) { pin[i] = 1; pinnedParcel.add(pi) } }
+for (let iter = 0; iter < RELAX_ITERS; iter++) {
+  const next = vlab.slice()
+  for (let v = 0; v < N; v++) {
+    if (pin[v]) continue
+    const counts = new Map([[vlab[v], 1]]) // eigenes Label zaehlt mit -> Tie behaelt aktuell (stabil)
+    for (const w of adj[v]) counts.set(vlab[w], (counts.get(vlab[w]) || 0) + 1)
+    let bestLab = vlab[v], bestN = counts.get(vlab[v])
+    for (const [lab, n] of counts) if (n > bestN) { bestN = n; bestLab = lab }
+    next[v] = bestLab
+  }
+  vlab.set(next)
+}
+
 // --- 4. Per-Vertex-Farbe (identisch zu app parcelColor: HSL-Hash, L/R seitengleich) ---
 function baseName(s) { return s.replace(/-(l|r)$/, '') }
 function hslToRgb(h, s, l) {
