@@ -6,7 +6,29 @@ wie VCPT/ERP, Fallstudie Phineas Gage). Komplexe Neuroanatomie wird räumlich
 begreifbar: anklickbare, isolierbare Strukturen auf einem anatomisch echten
 3D-Hirn, geführte Lern-Szenen und eine editoriale, ruhige Oberfläche.
 
-**Lizenz:** [CC BY-SA 4.0](LICENSE) · **Stack:** React + React Three Fiber + Three.js + Vite
+[![Lizenz: CC BY-SA 4.0](https://img.shields.io/badge/Lizenz-CC%20BY--SA%204.0-blue.svg)](LICENSE)
+![React](https://img.shields.io/badge/React-19-149eca?logo=react&logoColor=white)
+![React Three Fiber](https://img.shields.io/badge/R3F-9-black)
+![Three.js](https://img.shields.io/badge/Three.js-0.184-049ef4?logo=three.js&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-5-646cff?logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178c6?logo=typescript&logoColor=white)
+
+---
+
+## Quick Start
+
+> [!NOTE]
+> Voraussetzungen: **Node.js ≥ 20** und **[pnpm](https://pnpm.io/installation) ≥ 9**.
+
+```bash
+cd apps/brain-app
+pnpm install      # einmalig, ~3-5 min
+pnpm dev          # Dev-Server auf http://localhost:5173
+```
+
+> [!TIP]
+> Die 3D-Atlas-Meshes liegen bereits im Repo (`apps/brain-app/public/assets/`) — die
+> App läuft direkt nach `pnpm install`, **ohne separaten Daten-Download oder Build**.
 
 ---
 
@@ -23,8 +45,7 @@ Drei Grundmodi, umgeschaltet über eine kontextsensitive Steuerleiste am unteren
 Dazu: zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop,
 Tablet und Phone, WCAG-AA-Kontraste.
 
-> Inhaltlicher Fokus und Designprinzipien sind in [`PRODUCT.md`](PRODUCT.md) und
-> [`DESIGN.md`](DESIGN.md) beschrieben.
+> Inhaltlicher Fokus und Designprinzipien: [`PRODUCT.md`](PRODUCT.md) · [`DESIGN.md`](DESIGN.md)
 
 ---
 
@@ -36,10 +57,11 @@ Tablet und Phone, WCAG-AA-Kontraste.
 | `Shift` + `H` | alle ausgeblendeten Strukturen wieder zeigen |
 | `I` | ausgewählte Struktur isolieren |
 | `Shift` + `I` | Isolation aufheben |
-| `Esc` | Auswahl aufheben; erneut drücken: eine Ebene zurück (Isolation/Drilldown) bzw. Overlay schließen |
+| `Esc` | Auswahl aufheben; erneut: eine Ebene zurück (Isolation/Drilldown) bzw. Overlay schließen |
 | `←` / `→` | im Lern-Modus: vorige / nächste Szene |
 | `F` | Vollbild (mit `Esc` beenden) |
 
+> [!NOTE]
 > Shortcuts greifen nicht, solange ein Textfeld (z. B. die Suche) fokussiert ist.
 
 ---
@@ -48,28 +70,14 @@ Tablet und Phone, WCAG-AA-Kontraste.
 
 | Du willst… | Hier |
 |------------|------|
-| …die App starten | `apps/brain-app/` → `pnpm install && pnpm dev` (siehe [Quick Start](#quick-start)) |
-| …den Lerninhalt sehen | im laufenden App-UI; Quelltexte unter `apps/brain-app/public/regions/*.md` (Regionen) und `public/scenes/*.json` (Lern-Szenen) |
+| …die App starten | `apps/brain-app/` → `pnpm install && pnpm dev` ([Quick Start](#quick-start)) |
+| …die 3D-Meshes (`.glb`) | `apps/brain-app/public/assets/bodyparts3d/` und `…/context/`; Atlas-Labels in `…/assets/atlas-canonical/` |
+| …den Lerninhalt sehen | im App-UI; Quelltexte unter `apps/brain-app/public/regions/*.md` und `public/scenes/*.json` |
 | …die Quellen / Zitate (APA7) | je Region im Abschnitt „## Quellen"; Atlas-/Daten-Lizenzen in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) |
 | …den App-Code lesen | `apps/brain-app/src/` (`main.tsx` → `scene/` + `viewer/`) |
-| …die 3D-Daten selbst erzeugen | `scripts/` (siehe [Daten & Asset-Pipelines](#daten--asset-pipelines)) |
+| …die 3D-Daten selbst erzeugen | `scripts/` ([Daten & Asset-Pipelines](#daten--asset-pipelines)) |
 | …Produkt / Design verstehen | [`PRODUCT.md`](PRODUCT.md), [`DESIGN.md`](DESIGN.md) |
 | …die Lizenz | [`LICENSE`](LICENSE) (CC BY-SA 4.0) |
-
----
-
-## Quick Start
-
-Voraussetzungen: **Node.js ≥ 20** und **[pnpm](https://pnpm.io/installation) ≥ 9**.
-
-```bash
-cd apps/brain-app
-pnpm install      # einmalig, ~3-5 min
-pnpm dev          # Dev-Server auf http://localhost:5173
-```
-
-Die 3D-Atlas-Meshes liegen im Repo (`apps/brain-app/public/assets/`) — die App
-läuft also direkt nach `pnpm install`, ohne separaten Daten-Download oder Build.
 
 ---
 
@@ -88,7 +96,16 @@ Alle in `apps/brain-app` ausführen:
 
 ---
 
-## Projektstruktur
+## Tech-Stack
+
+- **React 19** + **TypeScript 5.7** + **Vite 5**
+- **3D:** **Three.js 0.184** über **React Three Fiber 9** + **drei 10**, `three-mesh-bvh` für schnelles Picking
+- **State:** **Zustand 5**
+- **UI:** Radix-Primitives, Tailwind CSS, Editorial-Theme (`src/app.css` + `theme-tokens`)
+- **Tests:** **Vitest 2** (Unit/Integration) + **Playwright 1.49** (E2E)
+
+<details>
+<summary><strong>Projektstruktur</strong> (aufklappen)</summary>
 
 ```
 apps/brain-app/              Die App (Vite / React / R3F)
@@ -98,7 +115,10 @@ apps/brain-app/              Die App (Vite / React / R3F)
 │   ├── viewer/              3D-Viewer, Strukturbaum, FooterBar, Färbe-/Cut-Werkzeuge
 │   └── app.css              app-lokale Editorial-Theme-Schicht
 └── public/
-    ├── assets/              3D-Meshes + Atlas-Label-Daten (BodyParts3D, fsaverage)
+    ├── assets/
+    │   ├── bodyparts3d/     3D-Meshes (.glb): brain, k11-subparcels, atlas-*
+    │   ├── context/         Kopf-/Schädel-Meshes (Phineas-Gage-Kontext)
+    │   └── atlas-canonical/ fsaverage-Atlas-Labels (.i16/.f32/.u32)
     ├── regions/             pro-Region-Markdown (Funktion, Brodmann-Areal, Quellen)
     ├── scenes/              Lern-Szenen als JSON (eigener didaktischer Content)
     ├── companion/           Companion-Atlas-Daten + Presets
@@ -106,22 +126,13 @@ apps/brain-app/              Die App (Vite / React / R3F)
 
 packages/brain-runtime/      Koordinaten-Helfer (file:-Dependency der App)
 packages/theme-tokens/       Design-Tokens (via relativem CSS-Import)
-scripts/                     Asset-Erzeugungs-Pipelines (siehe unten)
+scripts/                     Asset-Erzeugungs-Pipelines
 ```
 
 `brain-runtime` und `theme-tokens` lösen rein über die Verzeichnisstruktur auf —
 **keine `pnpm-workspace.yaml` nötig**.
 
----
-
-## Tech-Stack
-
-- **React 19** + **TypeScript 5.7** + **Vite 5**
-- **3D:** **Three.js 0.184** über **React Three Fiber 9** + **drei 10**,
-  `three-mesh-bvh` für schnelles Picking
-- **State:** **Zustand 5**
-- **UI:** Radix-Primitives, Tailwind CSS, Editorial-Theme (`src/app.css` + `theme-tokens`)
-- **Tests:** **Vitest 2** (Unit/Integration) + **Playwright 1.49** (E2E)
+</details>
 
 ---
 
@@ -133,10 +144,11 @@ reproduzieren (man braucht dazu die Original-Quelldaten der jeweiligen Anbieter)
 
 | Verzeichnis | Zweck | Doku |
 |-------------|-------|------|
-| [`scripts/assets/bodyparts3d/`](scripts/assets/bodyparts3d/README.md) | BodyParts3D-OBJ → `brain.glb` (+ Kontext-Kopf/Schädel), Spiegelung, FMA-Ontologie | `build.sh` + [README](scripts/assets/bodyparts3d/README.md) |
-| [`scripts/atlas/`](scripts/atlas/README.md) | Atlas-Geometrie (Julich / DKT / Destrieux / Brodmann / fsaverage) auf das TARO-Hirn registrieren, Sub-Parzellen carven, kanonischer fsaverage-Modus | ausführliches [README](scripts/atlas/README.md) |
+| [`scripts/assets/bodyparts3d/`](scripts/assets/bodyparts3d/README.md) | BodyParts3D-OBJ → `brain.glb` (+ Kontext-Kopf/Schädel), Spiegelung, FMA-Ontologie | [README](scripts/assets/bodyparts3d/README.md) |
+| [`scripts/atlas/`](scripts/atlas/README.md) | Atlas-Geometrie (Julich / DKT / Destrieux / Brodmann / fsaverage) auf das TARO-Hirn registrieren, Sub-Parzellen carven | [README](scripts/atlas/README.md) |
 | `scripts/alignment/` | kanonische Referenz-JSONs (von Tests genutzt) | — |
 
+> [!NOTE]
 > **Quelldaten** (selbst beziehen, unter deren Lizenzen): BodyParts3D
 > (lifesciencedb.jp/bp3d), FreeSurfer `fsaverage`, EBRAINS Julich-Brain, CIT168.
 > Details + Zitationen in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
@@ -149,10 +161,11 @@ Das gesamte Werk steht unter **[CC BY-SA 4.0](LICENSE)** (Namensnennung +
 Weitergabe unter gleichen Bedingungen). Diese Wahl ergibt sich aus den gebündelten
 ShareAlike-Datensätzen (BodyParts3D, Julich-Brain).
 
-Pflicht-Attribution und alle Drittquellen mit Zitation: **[`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md)**.
-
-> BodyParts3D, Copyright© The Database Center for Life Science licensed by
-> CC Attribution-Share Alike 2.1 Japan
+> [!IMPORTANT]
+> Pflicht-Attribution (darf nicht verändert werden):
+> *BodyParts3D, Copyright© The Database Center for Life Science licensed by
+> CC Attribution-Share Alike 2.1 Japan.*
+> Alle Drittquellen mit Zitation: [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md).
 
 ---
 
