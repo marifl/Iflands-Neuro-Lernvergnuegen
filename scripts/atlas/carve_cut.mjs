@@ -55,3 +55,30 @@ export function resolvePos(v, A, B, C) {
   if (v.pos) return v.pos
   return v.tag === 'A' ? A : v.tag === 'B' ? B : C
 }
+
+/**
+ * Tangentiale Laplacian-Glaettung von Knoten-Positionen entlang ihrer Nachbarschaft.
+ * Begradigt die Schnitt-Grenz-Polylinie zu einer weichen Kurve (Labels bleiben unberuehrt).
+ * @param nodePos Array<[x,y,z]> @param nodeNbrs Array<number[]> @param iters Iterationen
+ * @param lambda Under-Relaxation (0..1) — klein haelt es stabil (kein Flip/Schrumpf).
+ */
+export function laplacianSmooth(nodePos, nodeNbrs, iters, lambda) {
+  let pos = nodePos.map((p) => p.slice())
+  for (let it = 0; it < iters; it++) {
+    const next = pos.map((p) => p.slice())
+    for (let i = 0; i < pos.length; i++) {
+      const nb = nodeNbrs[i]
+      if (!nb || nb.length === 0) continue
+      let cx = 0, cy = 0, cz = 0
+      for (const j of nb) { cx += pos[j][0]; cy += pos[j][1]; cz += pos[j][2] }
+      cx /= nb.length; cy /= nb.length; cz /= nb.length
+      next[i] = [
+        pos[i][0] + lambda * (cx - pos[i][0]),
+        pos[i][1] + lambda * (cy - pos[i][1]),
+        pos[i][2] + lambda * (cz - pos[i][2]),
+      ]
+    }
+    pos = next
+  }
+  return pos
+}

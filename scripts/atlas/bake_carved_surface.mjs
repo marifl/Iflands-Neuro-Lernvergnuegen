@@ -12,7 +12,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { computeVertexNormals } from './subpatch_bake.mjs'
-import { splitTri } from './carve_cut.mjs'
+import { splitTri, laplacianSmooth } from './carve_cut.mjs'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const source = process.argv[2]
@@ -180,6 +180,34 @@ for (const [a, b, c] of mergedF) {
 }
 const M = outV.length
 
+// --- 3d. Tangentiale Grenz-Glaettung: neue Schnitt-Grenzpunkte zu geometrischen Knoten gruppieren,
+// Boundary-Adjazenz aus outF (Kante zwischen zwei verschiedenen neuen Knoten), und die degree-2-
+// Kettenknoten Laplacian-glaetten -> die Grenz-Polylinie wird eine weiche Kurve. Tripelpunkte
+// (Grad != 2) bleiben gepinnt, damit Junctions/Topologie stabil bleiben (kein Flaechen-Kollaps).
+// Labels bleiben unberuehrt (jedes Dreieck weiter einfarbig -> Kanten bleiben scharf).
+const SMOOTH_ITERS = 4
+const SMOOTH_LAMBDA = 0.5
+const bkey = (p) => `${Math.round(p[0] * 64)},${Math.round(p[1] * 64)},${Math.round(p[2] * 64)}`
+const nodeOfKey = new Map()
+const nodePos = []
+const vNode = new Int32Array(M).fill(-1)
+for (let i = N; i < M; i++) {
+  const k = bkey(outV[i])
+  let id = nodeOfKey.get(k)
+  if (id === undefined) { id = nodePos.length; nodeOfKey.set(k, id); nodePos.push(outV[i].slice()) }
+  vNode[i] = id
+}
+const nbrSet = Array.from({ length: nodePos.length }, () => new Set())
+for (const [a, b, c] of outF) {
+  for (const [x, y] of [[a, b], [b, c], [c, a]]) {
+    if (x >= N && y >= N && vNode[x] !== vNode[y]) { nbrSet[vNode[x]].add(vNode[y]); nbrSet[vNode[y]].add(vNode[x]) }
+  }
+}
+const nbrLists = nbrSet.map((s) => (s.size === 2 ? [...s] : [])) // nur glatte Ketten bewegen
+const smoothed = laplacianSmooth(nodePos, nbrLists, SMOOTH_ITERS, SMOOTH_LAMBDA)
+for (let i = N; i < M; i++) outV[i] = smoothed[vNode[i]]
+const movedNodes = nbrLists.filter((l) => l.length === 2).length
+
 // --- 4. Per-Vertex-Farbe (identisch zu app parcelColor: HSL-Hash, L/R seitengleich) ---
 function baseName(s) { return s.replace(/-(l|r)$/, '') }
 function hslToRgb(h, s, l) {
@@ -219,4 +247,4 @@ await new NodeIO().write(outGlb, doc)
 // --- 6. Pick-Sidecar: slugs + per-Vertex-Label (Reihenfolge == GLB-Vertices) ---
 const outPick = resolve(here, `../../apps/brain-app/public/assets/bodyparts3d/${name}-pick.json`)
 writeFileSync(outPick, JSON.stringify({ slugs, vlabels: outLab }))
-console.log(`${name}: ${N}->${M} Vertices (${cutTris} Grenz-Dreiecke geschnitten), ${slugs.length} Parzellen, ${filled} Nearest-Fill -> ${outGlb}`)
+console.log(`${name}: ${N}->${M} Vertices (${cutTris} Grenz-Dreiecke geschnitten, ${movedNodes} Grenzknoten geglaettet), ${slugs.length} Parzellen, ${filled} Nearest-Fill -> ${outGlb}`)

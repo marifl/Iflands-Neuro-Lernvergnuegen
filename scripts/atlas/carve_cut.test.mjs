@@ -50,3 +50,24 @@ test('neue Grenzpunkte liegen auf den Kanten-Mittelpunkten', () => {
   const has = (p) => pts.some((q) => Math.abs(q[0] - p[0]) < 1e-9 && Math.abs(q[1] - p[1]) < 1e-9)
   assert.ok(has([0, 1, 0]) && has([1, 1, 0]), 'Mittelpunkte A-C und B-C vorhanden')
 })
+
+import { laplacianSmooth } from './carve_cut.mjs'
+
+test('laplacianSmooth begradigt eine Zickzack-Polylinie (Pfad wird kuerzer)', () => {
+  // 5 Knoten auf einer Linie, der mittlere ausgelenkt -> Glaettung zieht ihn zur Linie.
+  const pos = [[0, 0, 0], [1, 1, 0], [2, 0, 0], [3, 1, 0], [4, 0, 0]]
+  const nbr = [[1], [0, 2], [1, 3], [2, 4], [3]]
+  const pathLen = (p) => p.slice(1).reduce((s, q, i) => s + Math.hypot(q[0] - p[i][0], q[1] - p[i][1], q[2] - p[i][2]), 0)
+  const before = pathLen(pos)
+  const after = pathLen(laplacianSmooth(pos, nbr, 3, 0.5))
+  assert.ok(after < before, `Pfad kuerzer: ${after} < ${before}`)
+})
+
+test('laplacianSmooth: gepinnte Endpunkte (leere Nachbarn) bleiben fix, Mitte glaettet', () => {
+  const pos = [[0, 0, 0], [1, 1, 0], [2, 0, 0], [3, 1, 0], [4, 0, 0]]
+  const nbr = [[], [0, 2], [1, 3], [2, 4], []] // Enden gepinnt
+  const out = laplacianSmooth(pos, nbr, 5, 0.5)
+  assert.deepEqual(out[0], [0, 0, 0])
+  assert.deepEqual(out[4], [4, 0, 0])
+  assert.ok(Math.abs(out[1][1]) < 1, 'Mitte zur Linie gezogen (y < Ausgangs-1)')
+})
