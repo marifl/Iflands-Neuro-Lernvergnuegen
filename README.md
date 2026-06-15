@@ -26,10 +26,89 @@ pnpm install      # einmalig, ~3-5 min
 pnpm dev          # Dev-Server auf http://localhost:5173
 ```
 
-> [!TIP]
-> **Keine Vorkenntnisse?** Die ausführliche Schritt-für-Schritt-Anleitung für
-> **macOS, Windows und Linux** (inkl. Node.js & pnpm installieren) steht in
-> **[`docs/INSTALLATION.md`](docs/INSTALLATION.md)**.
+<details>
+<summary><strong>📦 Schritt-für-Schritt-Installation für Einsteiger (macOS · Windows · Linux) — aufklappen</strong></summary>
+
+<br>
+
+Diese Anleitung richtet sich an **Einsteiger ohne Vorkenntnisse**. Am Ende läuft die
+App in deinem Browser. Plane beim ersten Mal ca. **15 Minuten** ein.
+
+**Schritt 1 — Projekt herunterladen (alle Systeme)**
+
+1. Öffne <https://github.com/marifl/Iflands-Neuro-Lernvergnuegen>
+2. Grüner Button **`< > Code`** → **`Download ZIP`**.
+3. ZIP **entpacken** (Doppelklick auf macOS; Rechtsklick → „Alle extrahieren" auf Windows).
+4. Du erhältst den Ordner **`Iflands-Neuro-Lernvergnuegen-main`** (z. B. in „Downloads"). Den brauchen wir gleich.
+
+**Schritt 2 — Node.js installieren**
+
+- **macOS:** <https://nodejs.org> → Button **„LTS"** laden → `.pkg` öffnen → durchklicken (Fortfahren → Installieren → Passwort).
+- **Windows:** <https://nodejs.org> → Button **„LTS"** laden → `.msi` öffnen → durchklicken (Next → akzeptieren → Install → Finish).
+- **Linux** (Paketquellen sind oft zu alt → `nvm` nutzen):
+  ```bash
+  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+  export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh"
+  nvm install --lts
+  ```
+
+**Schritt 3 — Terminal öffnen**
+
+- **macOS:** `Cmd`+`Leertaste`, `Terminal` tippen, Enter.
+- **Windows:** `Windows`-Taste, `PowerShell` tippen, Enter. (Oder im Projektordner: `Shift`+Rechtsklick → „PowerShell-Fenster hier öffnen".)
+- **Linux:** `Strg`+`Alt`+`T`, oder im Dateimanager Rechtsklick → „Im Terminal öffnen".
+
+> Alle folgenden Befehle ins Terminal tippen/kopieren und mit `Enter` bestätigen.
+
+**Schritt 4 — pnpm aktivieren (einmalig)**
+
+```bash
+corepack enable pnpm
+```
+> Falls das einen Fehler gibt: stattdessen `npm install -g pnpm`.
+
+**Schritt 5 — In den App-Ordner wechseln**
+
+Tippe `cd ` (mit Leerzeichen), **ziehe den entpackten Ordner ins Terminal** (Pfad erscheint automatisch) und ergänze `/apps/brain-app`:
+
+```bash
+# macOS / Linux (Pfad ggf. anpassen)
+cd ~/Downloads/Iflands-Neuro-Lernvergnuegen-main/apps/brain-app
+```
+```powershell
+# Windows (Pfad ggf. anpassen)
+cd $HOME\Downloads\Iflands-Neuro-Lernvergnuegen-main\apps\brain-app
+```
+
+**Schritt 6 — Installieren und starten**
+
+```bash
+pnpm install      # laedt die Bausteine — beim ersten Mal ~3-5 Min.
+pnpm dev          # startet die App
+```
+
+**Schritt 7 — Im Browser öffnen**
+
+Erscheint im Terminal `Local: http://localhost:5173/`, öffne diese Adresse im Browser. **Die App läuft.** 🎉
+
+> **Beenden:** im Terminal `Strg`+`C` (auch am Mac `Ctrl`+`C`). **Neu starten:** wieder `pnpm dev` im App-Ordner.
+
+---
+
+**Hilfe bei Problemen**
+
+| Problem | Lösung |
+|---------|--------|
+| `command not found: node` / „node nicht erkannt" | Terminal **neu öffnen**; ggf. Node-Installation wiederholen. |
+| `command not found: pnpm` | `corepack enable pnpm` (sonst `npm install -g pnpm`). |
+| `corepack: command not found` | Node zu alt → neueste **LTS** von <https://nodejs.org>. |
+| `5173 is in use` | Läuft schon. Anderes Terminal schließen oder angezeigte Alternativ-Adresse öffnen. |
+| `pnpm install` bricht mit Build-Fehlern ab | **macOS** `xcode-select --install`; **Ubuntu/Debian** `sudo apt install build-essential`; **Windows** Node-Installer erneut + „Tools for Native Modules". |
+| Seite bleibt weiß | Kurz warten (3D-Meshes laden), neu laden; moderner Browser nötig (WebGL2). |
+
+> Prüfen: `node --version` ≥ `v20`, `pnpm --version` ≥ `9`. Es klemmt weiter? Ein [Issue](https://github.com/marifl/Iflands-Neuro-Lernvergnuegen/issues) mit der genauen Fehlermeldung öffnen.
+
+</details>
 
 > [!TIP]
 > Die 3D-Atlas-Meshes liegen bereits im Repo (`apps/brain-app/public/assets/`) — die
