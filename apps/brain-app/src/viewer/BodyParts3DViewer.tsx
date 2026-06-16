@@ -5,7 +5,7 @@ import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
-import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
+import { APP_MODES, useViewerStore, type AppMode, type CutAxis, type CutConfig } from './viewerStore'
 import { useEffectiveConfig, type ConfigCuts, type EffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
@@ -18,6 +18,7 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { replaceCanonicalLocation } from '../scene/router'
+import { setLocalStorageItem } from '../safeLocalStorage'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
@@ -62,6 +63,8 @@ const HOVER_COLOR = '#ffd2a8'
 const BONE_COLOR = '#e9e1d2'
 const CONTEXT_COLOR = '#b8a894'
 const ROD_COLOR = '#2f281f'
+const DEFAULT_DIM_OPACITY = 0.12
+const DIM_DEPTH_WRITE_THRESHOLD = 0.6
 const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
   x: 'sagittal',
   y: 'axial',
@@ -73,6 +76,15 @@ const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
 const NO_RAYCAST = () => {}
 function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
+}
+
+function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null): number {
+  const dimOpacity = effectiveConfig?.configuration?.visibility?.dim_opacity
+  if (dimOpacity === undefined) return DEFAULT_DIM_OPACITY
+  if (!Number.isFinite(dimOpacity) || dimOpacity < 0 || dimOpacity > 1) {
+    throw new Error('Config-Link: visibility.dim_opacity muss zwischen 0 und 1 liegen')
+  }
+  return dimOpacity
 }
 
 function emptyConfigCuts(): Record<CutAxis, CutConfig> {
@@ -190,7 +202,7 @@ function useCutHidden(): (mesh: THREE.Mesh) => boolean {
   }, [cuts, cutMode])
 }
 
-function Brain() {
+function Brain({ dimOpacity }: { dimOpacity: number }) {
   const { scene } = useGLTF(BRAIN_GLB)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
@@ -248,7 +260,7 @@ function Brain() {
         material.transparent = transparent
         material.needsUpdate = true
       }
-      material.depthWrite = material.opacity > 0.6
+      material.depthWrite = material.opacity > DIM_DEPTH_WRITE_THRESHOLD
       if (material.opacity !== targetOpacity) stillActive = true
     }
     opacityTransitionActive.current = stillActive
@@ -289,9 +301,9 @@ function Brain() {
         material.emissiveIntensity = 0
       }
       const dim = visible && ((animating && !isActive) || isoDimmed)
-      setOpacityTarget(mesh, dim ? 0.12 : 1)
+      setOpacityTarget(mesh, dim ? dimOpacity : 1)
     }
-  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden])
+  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden, dimOpacity])
 
   // EEG voll-synchron fuer brain.glb-Quellen (z.B. P3b parietal): pulst NUR die gehighlighteten
   // Meshes mit der ERP-Huellkurve. Bewusst eigener, leichter Effekt (laeuft per Frame ueber
@@ -322,7 +334,7 @@ function Brain() {
 
 /** Kontext-Schaedel (Phineas-Gage-Layer). Default versteckt; nicht anklickbar, damit die
  * Hirn-Auswahl frei bleibt. Deckkraft von der Szene gesteuert (transparent = Hirn sichtbar). */
-function ContextSkull() {
+function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   const { scene } = useGLTF(SKULL_GLB)
   const showSkull = useViewerStore((s) => s.showSkull)
   const skullOpacity = useViewerStore((s) => s.skullOpacity)
@@ -362,9 +374,9 @@ function ContextSkull() {
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
-      const opacity = isoDimmed ? 0.12 : showSkull ? skullOpacity : 1
+      const opacity = isoDimmed ? dimOpacity : showSkull ? skullOpacity : 1
       material.opacity = opacity
-      material.depthWrite = opacity > 0.6
+      material.depthWrite = opacity > DIM_DEPTH_WRITE_THRESHOLD
       if (selectedSlugs.has(mesh.name)) {
         material.emissive.set(SELECT_COLOR)
         material.emissiveIntensity = 0.6
@@ -377,14 +389,14 @@ function ContextSkull() {
       }
       material.needsUpdate = true
     }
-  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
+  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
 }
 
 /** Voller Kopf-Kontext (Vollausbau): per Baum-Toggle ein-/ausblendbar, anklickbar. */
-function ContextHead() {
+function ContextHead({ dimOpacity }: { dimOpacity: number }) {
   const { scene } = useGLTF(HEAD_GLB)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
@@ -431,10 +443,10 @@ function ContextHead() {
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
       material.transparent = isoDimmed
-      material.opacity = isoDimmed ? 0.12 : 1
+      material.opacity = isoDimmed ? dimOpacity : 1
       material.depthWrite = !isoDimmed
     }
-  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -449,11 +461,13 @@ function AtlasOverObject({
   glb,
   rootLabels,
   aliasesByName,
+  dimOpacity,
 }: {
   atlasKey: Atlas3dKey
   glb: string
   rootLabels: Record<Lang, string>
   aliasesByName?: ReadonlyMap<string, string[]>
+  dimOpacity: number
 }) {
   const { scene } = useGLTF(glb)
   const setJulich = useViewerStore((s) => s.setJulich)
@@ -518,10 +532,10 @@ function AtlasOverObject({
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
       material.transparent = isoDimmed
-      material.opacity = isoDimmed ? 0.12 : 1
+      material.opacity = isoDimmed ? dimOpacity : 1
       material.depthWrite = !isoDimmed
     }
-  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden])
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
 
   return <primitive object={scene} />
 }
@@ -650,6 +664,7 @@ export default function BodyParts3DViewer() {
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const atlasOnBrain = showCarveJulich || showCarveDkt || showCarveBrodmann
   const atlasAreaLabel = pickedAtlasArea ?? hoveredAtlasArea ?? 'Areal anklicken'
+  const dimOpacity = dimOpacityFromConfig(effectiveConfig)
 
   if (catalogAliasError) throw catalogAliasError
 
@@ -686,10 +701,11 @@ export default function BodyParts3DViewer() {
   const isNarrow = useIsNarrow()
 
   // Start-Screen (Modus-Wahl) beim ersten Laden — nimmt die „wo fange ich an?"-Last ab.
-  // Deep-Links (?mode/?scene/?config/?spike) ueberspringen ihn, damit verlinkte Einstiege direkt landen.
+  // Nur valide Deep-Links ueberspringen ihn, damit legacy/vertippte mode-Werte nicht leer landen.
   const [launched, setLaunched] = useState(() => {
     const p = new URLSearchParams(window.location.search)
-    return p.has('mode') || p.has('scene') || p.has('config') || p.has('spike')
+    const mode = p.get('mode')
+    return (mode !== null && APP_MODES.includes(mode as AppMode)) || p.has('scene') || p.has('config') || p.has('spike')
   })
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
@@ -700,7 +716,7 @@ export default function BodyParts3DViewer() {
   useEffect(() => {
     if (theme === 'light') document.documentElement.dataset.theme = 'light'
     else delete document.documentElement.dataset.theme
-    localStorage.setItem('ed-theme', theme)
+    setLocalStorageItem('ed-theme', theme)
   }, [theme])
 
   useEffect(() => {
@@ -962,9 +978,9 @@ export default function BodyParts3DViewer() {
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
               <directionalLight position={[-160, -80, -200]} intensity={0.4} />
               <Suspense fallback={null}>
-                <Brain />
-                <ContextSkull />
-                <ContextHead />
+                <Brain dimOpacity={dimOpacity} />
+                <ContextSkull dimOpacity={dimOpacity} />
+                <ContextHead dimOpacity={dimOpacity} />
                 {ATLAS3D.map((a) => (
                   <AtlasOverObject
                     key={a.key}
@@ -972,6 +988,7 @@ export default function BodyParts3DViewer() {
                     glb={a.glb}
                     rootLabels={a.rootLabels}
                     aliasesByName={atlasAliases[a.key]}
+                    dimOpacity={dimOpacity}
                   />
                 ))}
                 <SubParcels />

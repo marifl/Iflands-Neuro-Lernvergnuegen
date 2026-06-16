@@ -263,10 +263,13 @@ if (!mismatchScene) throw new Error('smoke-scenes: config/scene-Mismatch braucht
 pageErrors.length = 0
 await page.goto(`${BASE}/?config=${mismatchConfig.configName}&scene=${mismatchScene.id}`, { waitUntil: 'networkidle' })
 await page.waitForTimeout(700)
-const mismatchOk = pageErrors.some((message) =>
+const mismatchUi = await page.evaluate(() => document.body.innerText)
+const mismatchMessageMatches = (message) =>
   message.includes(`URL-Config "${mismatchConfig.configName}"`) &&
   message.includes(`URL-Scene "${mismatchScene.id}" passt nicht`)
-)
+const mismatchOk =
+  pageErrors.some(mismatchMessageMatches) ||
+  (mismatchUi.includes('Die App konnte nicht starten') && mismatchMessageMatches(mismatchUi))
 if (!mismatchOk) fails++
 console.log(
   `${mismatchOk ? 'PASS' : 'FAIL'} config-scene-mismatch config=${mismatchConfig.configName} scene=${mismatchScene.id} failLoud=${mismatchOk}`,

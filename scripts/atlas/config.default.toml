@@ -190,6 +190,7 @@ areas = ["julich:area-44:l", "julich:area-45:l"]
 enabled = false
 [configurations.broca-areal.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.broca-areal.cuts]
 enabled = false
 [configurations.broca-areal.overlay]
@@ -228,6 +229,7 @@ preset = "phineas-gage"
 dim_others = true
 [configurations.ofc-phineas.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.ofc-phineas.cuts]
 enabled = false
 [configurations.ofc-phineas.overlay]
@@ -283,6 +285,7 @@ preset = "basalganglienschleifen"
 dim_others = true
 [configurations.basalganglienschleifen.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.basalganglienschleifen.cuts]
 enabled = false
 [configurations.basalganglienschleifen.overlay]
@@ -320,6 +323,7 @@ scene_regions = ["sma-presma"]
 enabled = false
 [configurations.vcpt.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.vcpt.cuts]
 enabled = false
 [configurations.vcpt.overlay]
@@ -361,6 +365,7 @@ scene_regions = ["acc-anterior"]
 enabled = false
 [configurations.p3a-konfliktmonitoring.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.p3a-konfliktmonitoring.cuts]
 enabled = false
 [configurations.p3a-konfliktmonitoring.overlay]
@@ -393,6 +398,7 @@ scene_regions = ["inhibition-network"]
 enabled = false
 [configurations.go-nogo-intro.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.go-nogo-intro.cuts]
 enabled = false
 [configurations.go-nogo-intro.overlay]
@@ -423,6 +429,7 @@ scene_regions = ["inhibition-network"]
 enabled = false
 [configurations.ica-uebersicht.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.ica-uebersicht.cuts]
 enabled = false
 [configurations.ica-uebersicht.overlay]
@@ -454,6 +461,7 @@ scene_regions = ["parietal-frontal"]
 enabled = false
 [configurations.p3b-engagement.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.p3b-engagement.cuts]
 enabled = false
 [configurations.p3b-engagement.overlay]
@@ -485,6 +493,7 @@ scene_regions = ["sma-presma"]
 enabled = false
 [configurations.p3z-inhibition.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.p3z-inhibition.cuts]
 enabled = false
 [configurations.p3z-inhibition.overlay]
@@ -515,6 +524,7 @@ scene_regions = ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-
 enabled = false
 [configurations.zusammenfassung.visibility]
 dim_others = true
+dim_opacity = 0.12
 [configurations.zusammenfassung.cuts]
 enabled = false
 [configurations.zusammenfassung.overlay]

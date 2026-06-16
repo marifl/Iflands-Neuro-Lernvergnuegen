@@ -174,8 +174,10 @@ Alle in `apps/brain-app` ausführen:
 | `pnpm dev` | Vite-Dev-Server mit Hot-Reload (`localhost:5173`) |
 | `pnpm build` | Atlas-Config erzeugen, dann Production-Build nach `dist/` (`tsc -b && vite build`) |
 | `pnpm preview` | statischer Server für den `dist/`-Build |
+| `pnpm preview:lan` | statischer Server für den `dist/`-Build im lokalen Netzwerk |
 | `pnpm typecheck` | Atlas-Config erzeugen, dann TypeScript-Strict-Check (`tsc -b --noEmit`) |
-| `pnpm test` | Atlas-Config erzeugen, dann Vitest (Watch-Modus); `pnpm test --run` für einmalig |
+| `pnpm test` | Atlas-Config erzeugen, dann Vitest einmalig (CI-tauglich) |
+| `pnpm test:watch` | Atlas-Config erzeugen, dann Vitest im lokalen Watch-Modus |
 | `pnpm test:e2e` | Playwright End-to-End-Smoke-Tests |
 
 ---

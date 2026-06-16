@@ -41,6 +41,7 @@ function cortexSurfaceSlugs(tree: OntologyNode): string[] {
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
 export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
+export const APP_MODES = ['learn', 'explore', 'phineas', 'atlas'] as const satisfies readonly AppMode[]
 // Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
 // Multi-Axis: jede Achse ist unabhaengig an/aus mit eigener Position (siehe CutAxis/CutConfig).
 function emptyCuts(): Record<CutAxis, CutConfig> {
@@ -54,6 +55,12 @@ function emptyCuts(): Record<CutAxis, CutConfig> {
 export interface CameraView {
   name: string
   nonce: number
+}
+
+export interface CameraPose {
+  position: [number, number, number]
+  target: [number, number, number]
+  fov: number
 }
 
 interface ViewerState {
@@ -73,6 +80,8 @@ interface ViewerState {
   cutMode: CutMode
   /** Letzter Kamera-Ausricht-Befehl (one-shot, von CameraRig konsumiert). */
   cameraView: CameraView | null
+  /** Freie Orbit-Kamera-Pose fuer Unterrichts-Snapshots. Keine THREE-Objekte im Store. */
+  cameraPose: CameraPose | null
   /** Kontext-Vollausbau (Schaedel + Kopf), aus den Manifesten gebauter Teilbaum. */
   context: OntologyNode | null
   /** Julich-Brain (Vollausbau): 292 Original-Areal-Meshes als eigenes Objekt (Y-up); default versteckt. */
@@ -177,6 +186,8 @@ interface ViewerState {
   setCutMode: (mode: CutMode) => void
   /** Kamera auf einen benannten Shot ausrichten (one-shot; null verwirft). */
   setCameraView: (name: string | null) => void
+  /** Aktuelle freie Orbit-Kamera-Pose speichern oder verwerfen. */
+  setCameraPose: (pose: CameraPose | null) => void
   setSearch: (search: string) => void
   toggleExpanded: (id: string) => void
   setSkull: (visible: boolean, opacity?: number) => void
@@ -205,6 +216,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   cuts: emptyCuts(),
   cutMode: 'slice',
   cameraView: null,
+  cameraPose: null,
   context: null,
   julich: null,
   atlas3d: { dkt: null, brodmann: null, destrieux: null },
@@ -343,6 +355,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setCutMode: (cutMode) => set({ cutMode }),
   setCameraView: (name) =>
     set((state) => ({ cameraView: name ? { name, nonce: (state.cameraView?.nonce ?? 0) + 1 } : null })),
+  setCameraPose: (cameraPose) => set({ cameraPose }),
   setSearch: (search) => set({ search }),
   toggleExpanded: (id) =>
     set((state) => ({ expanded: { ...state.expanded, [id]: !state.expanded[id] } })),

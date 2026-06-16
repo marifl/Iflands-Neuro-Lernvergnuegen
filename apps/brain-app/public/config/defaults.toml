@@ -128,6 +128,3 @@ server_url = ""
 # Neu generieren: node -e "require('bcryptjs').hash('PASSWORT', 10).then(console.log)"
 # Leer lassen ("") = Editor-Mode deaktiviert.
 editor_password_hash = ""
-
-[build]
-sourcemap = false

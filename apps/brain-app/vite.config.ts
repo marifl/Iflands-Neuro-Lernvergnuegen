@@ -10,8 +10,11 @@ export default defineConfig({
   },
   server: { port: 5173 },
   build: {
-    sourcemap: true,
+    sourcemap: false,
     target: 'es2022',
+    // Three core liegt mit R3F bereits ueber Vites 500-KiB-Default. Das Budget
+    // bleibt bewusst knapp, damit echtes Wachstum weiterhin im Build auffaellt.
+    chunkSizeWarningLimit: 800,
     rollupOptions: {
       output: {
         manualChunks: {

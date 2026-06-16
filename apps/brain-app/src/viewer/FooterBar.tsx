@@ -1,13 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useViewerStore, type AppMode, type CutAxis, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
+import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
 
-type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'tool' | null
+type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
 
 /** Kamera-Schnellwinkel (Shot-Name aus cameraPresets -> Label). */
 const VIEW_PRESETS: { name: string; label: string }[] = [
@@ -75,6 +76,16 @@ interface BoxDef {
   content: React.ReactNode
 }
 
+function readSnapshotFile(file: File): Promise<string> {
+  if (typeof file.text === 'function') return file.text()
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(String(reader.result ?? ''))
+    reader.onerror = () => reject(reader.error ?? new Error('Snapshot-Datei konnte nicht gelesen werden'))
+    reader.readAsText(file)
+  })
+}
+
 /** Fussleiste als globales Viewport-Cockpit: App-Ebene (Atlas, Modus) plus modusuebergreifende
  *  Darstellungs-Werkzeuge. Box-breite Flyouts klappen nach oben auf; Boxen gleichmaessig verteilt. */
 export default function FooterBar() {
@@ -118,12 +129,36 @@ export default function FooterBar() {
   const setSkull = useViewerStore((s) => s.setSkull)
   const [open, setOpen] = useState<OpenFlyout>(null)
   const [showSources, setShowSources] = useState(false)
+  const [snapshotError, setSnapshotError] = useState<Error | null>(null)
+  const snapshotInputRef = useRef<HTMLInputElement>(null)
   const toggle = (which: OpenFlyout) => setOpen((cur) => (cur === which ? null : which))
   const close = () => setOpen(null)
   const isPhone = useIsPhone()
   const selectedSlugList = [...selectedSlugs]
   const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
   const selectionToggleLabel = selectionHasVisibleSlugs ? 'Auswahl ausblenden' : 'Auswahl einblenden'
+  const exportSnapshot = () => {
+    const blob = new Blob([exportViewerStateSnapshotJson()], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `brain-app-unterricht-${new Date().toISOString().replace(/[:.]/g, '-')}.json`
+    link.click()
+    URL.revokeObjectURL(url)
+  }
+  const importSnapshotFile = async (file: File | null | undefined) => {
+    if (!file) return
+    try {
+      importViewerStateSnapshotJson(await readSnapshotFile(file))
+      close()
+    } catch (error) {
+      setSnapshotError(error instanceof Error ? error : new Error(String(error)))
+    } finally {
+      if (snapshotInputRef.current) snapshotInputRef.current.value = ''
+    }
+  }
+
+  if (snapshotError) throw snapshotError
 
   // Box-Liste in Anzeige-Reihenfolge. Werkzeug (Klickmodus) nur im Explorer sinnvoll.
   const boxes: BoxDef[] = [
@@ -254,6 +289,17 @@ export default function FooterBar() {
         </>
       ),
     },
+    {
+      key: 'snapshot',
+      eyebrow: 'Zustand',
+      label: 'Datei',
+      content: (
+        <>
+          <Item onClick={() => { exportSnapshot(); close() }}>Exportieren</Item>
+          <Item onClick={() => snapshotInputRef.current?.click()}>Importieren</Item>
+        </>
+      ),
+    },
     ...(appMode === 'explore'
       ? [
           {
@@ -333,6 +379,14 @@ export default function FooterBar() {
 
   return (
     <>
+      <input
+        ref={snapshotInputRef}
+        aria-label="Unterrichts-Snapshot-Datei"
+        type="file"
+        accept="application/json,.json"
+        style={{ display: 'none' }}
+        onChange={(event) => { void importSnapshotFile(event.currentTarget.files?.[0]) }}
+      />
       <div className="ed-foot" style={{ gridTemplateColumns: `repeat(${boxes.length}, 1fr)` }}>
         {boxes.map((box, i) => (
           <Flyout

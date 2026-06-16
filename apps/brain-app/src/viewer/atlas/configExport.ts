@@ -96,6 +96,7 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
 
   pushTable(lines, name, 'visibility', [
     ['dim_others', input.visibility?.dim_others?.toString()],
+    ['dim_opacity', input.visibility?.dim_opacity?.toString()],
     ['hidden', input.visibility?.hidden !== undefined ? tomlStringArray(input.visibility.hidden) : undefined],
     ['isolated', input.visibility?.isolated !== undefined ? tomlStringArray(input.visibility.isolated) : undefined],
   ])
