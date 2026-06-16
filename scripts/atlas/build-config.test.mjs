@@ -215,6 +215,24 @@ test('validateConfig wirft bei unbekanntem Configuration-Key', () => {
   assert.throws(() => validateConfig(cfg, idx), /configuration "a" hat unbekannten Key "surprise"/)
 })
 
+test('validateConfig erlaubt konfigurierbare Dim-Opazitaet im Sichtbarkeitsblock', () => {
+  const idx = indexCatalog(CATALOG)
+  const cfg = configWith({ visibility: { dim_others: true, dim_opacity: 0.18 } })
+  assert.doesNotThrow(() => validateConfig(cfg, idx, VALIDATION_CONTEXT))
+})
+
+test('validateConfig wirft bei ungueltiger Dim-Opazitaet', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({ visibility: { dim_others: true, dim_opacity: -0.01 } }), idx, VALIDATION_CONTEXT),
+    /visibility\.dim_opacity muss zwischen 0 und 1 liegen/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({ visibility: { dim_others: true, dim_opacity: 1.01 } }), idx, VALIDATION_CONTEXT),
+    /visibility\.dim_opacity muss zwischen 0 und 1 liegen/,
+  )
+})
+
 test('validateConfig wirft bei unbekanntem Figure-Atom-Subkey', () => {
   const idx = indexCatalog(CATALOG)
   const cfg = baseConfig({

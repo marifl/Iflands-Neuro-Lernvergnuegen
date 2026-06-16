@@ -1,13 +1,13 @@
 // Schicht-2-Store (localStorage) fuer die Atlas-Config. Schreibt die SP3-LocalOverrides, die
 // loadLocalOverrides() liest. KEINE stillen Defaults — korruptes JSON wirft beim Laden (SP3).
 import { create } from 'zustand'
+import { setLocalStorageItem } from '../../safeLocalStorage'
 import { loadLocalOverrides, type LocalOverrides, type ScopeMap } from './atlasConfig'
 
 export const LS_KEY = 'atlas-config-overrides'
 
 function persist(o: LocalOverrides): void {
-  if (typeof localStorage === 'undefined') return
-  localStorage.setItem(LS_KEY, JSON.stringify(o))
+  setLocalStorageItem(LS_KEY, JSON.stringify(o))
 }
 
 interface AtlasConfigStore extends LocalOverrides {
@@ -69,4 +69,3 @@ export const useAtlasConfigStore = create<AtlasConfigStore>((set) => ({
     return next
   }),
 }))
-

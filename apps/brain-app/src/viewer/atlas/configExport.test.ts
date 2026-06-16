@@ -81,7 +81,7 @@ describe('toTomlConfiguration', () => {
       },
       regions: { areas: ['dkt:rostralanteriorcingulate:l'], scene_regions: ['acc-anterior'] },
       colors: { enabled: false, groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }], dim_others: true },
-      visibility: { dim_others: true, hidden: ['left-insula'], isolated: ['left-cingulate-gyrus'] },
+      visibility: { dim_others: true, dim_opacity: 0.18, hidden: ['left-insula'], isolated: ['left-cingulate-gyrus'] },
       cuts: { enabled: true, planes: [{ axis: 'x', position: 12, keep: 'positive' }] },
       overlay: { kind: 'erp', scene: 'p3a-konfliktmonitoring', position: 'right', size: 'md' },
       sequencing: { presentation: 'kapitel11-vorlesung', learning: 'kapitel11-pfad', step: 'p3a-konfliktmonitoring' },
@@ -95,6 +95,7 @@ describe('toTomlConfiguration', () => {
     expect(cfg.camera.pose.position).toEqual([1, 2, 3])
     expect(cfg.regions.scene_regions).toEqual(['acc-anterior'])
     expect(cfg.colors.groups[0]).toEqual({ label: 'ACC', hue: 20, buckets: ['dacc'] })
+    expect(cfg.visibility.dim_opacity).toBe(0.18)
     expect(cfg.visibility.hidden).toEqual(['left-insula'])
     expect(cfg.cuts.planes[0]).toEqual({ axis: 'x', position: 12, keep: 'positive' })
     expect(cfg.overlay.scene).toBe('p3a-konfliktmonitoring')
@@ -110,7 +111,7 @@ describe('toTomlConfiguration', () => {
       camera: { target: 'julich:area-44:l', shot: 'lateral-left', fit: 'bounds', margin: 1.4, fov: 35 },
       regions: { areas: ['julich:area-44:l'] },
       colors: { enabled: false, dim_others: true },
-      visibility: { dim_others: true },
+      visibility: { dim_others: true, dim_opacity: 0.18 },
       cuts: { enabled: false },
       overlay: { kind: 'prose' },
       sequencing: { step: 'builder-roundtrip' },

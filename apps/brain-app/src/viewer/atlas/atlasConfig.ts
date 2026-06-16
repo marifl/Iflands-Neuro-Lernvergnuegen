@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react'
 import { loadCatalog, type AtlasCatalog } from './atlasCatalog'
 import { ROUTE_CHANGE_EVENT } from '../../scene/router'
+import { getLocalStorageItem } from '../../safeLocalStorage'
 
 export type ScopeMap = Record<string, boolean>
 
@@ -31,7 +32,7 @@ export interface ConfigColors {
   groups?: { label: string; hue: number; buckets: string[] }[]
   dim_others?: boolean
 }
-export interface ConfigVisibility { dim_others?: boolean; hidden?: string[]; isolated?: string[] }
+export interface ConfigVisibility { dim_others?: boolean; dim_opacity?: number; hidden?: string[]; isolated?: string[] }
 export interface ConfigCuts { enabled?: boolean; planes?: { axis: 'x' | 'y' | 'z'; position: number; keep?: 'positive' | 'negative' }[] }
 export interface ConfigOverlay {
   kind?: 'erp' | 'topography' | 'flowchart' | 'table' | 'image' | 'prose'
@@ -132,8 +133,7 @@ export function parseUrlScopes(params: URLSearchParams): ScopeMap {
 export interface LocalOverrides { preset: string | null; configuration: string | null; scopes: ScopeMap }
 const LS_KEY = 'atlas-config-overrides'
 export function loadLocalOverrides(): LocalOverrides {
-  if (typeof localStorage === 'undefined') return { preset: null, configuration: null, scopes: {} }
-  const raw = localStorage.getItem(LS_KEY)
+  const raw = getLocalStorageItem(LS_KEY)
   if (!raw) return { preset: null, configuration: null, scopes: {} }
   return JSON.parse(raw) as LocalOverrides
 }
@@ -224,15 +224,24 @@ async function loadConfigFile(): Promise<AtlasConfigFile> {
 /** React-Hook: laedt config.json + Katalog, liefert effective config (oder null waehrend Laden). */
 export function useEffectiveConfig(): EffectiveConfig | null {
   const [eff, setEff] = useState<EffectiveConfig | null>(null)
+  const [error, setError] = useState<Error | null>(null)
   useEffect(() => {
     let alive = true
     let cleanup = () => {}
+    const fail = (err: unknown) => {
+      if (!alive) return
+      setError(err instanceof Error ? err : new Error(String(err)))
+    }
     Promise.all([loadConfigFile(), loadCatalog()]).then(([file, catalog]) => {
       if (!alive) return
       const refresh = () => {
         if (!alive) return
         const url = new URLSearchParams(window.location.search)
-        setEff(computeEffectiveConfig(file, catalog, loadLocalOverrides(), url))
+        try {
+          setEff(computeEffectiveConfig(file, catalog, loadLocalOverrides(), url))
+        } catch (err) {
+          fail(err)
+        }
       }
       refresh()
       window.addEventListener('popstate', refresh)
@@ -241,8 +250,9 @@ export function useEffectiveConfig(): EffectiveConfig | null {
         window.removeEventListener('popstate', refresh)
         window.removeEventListener(ROUTE_CHANGE_EVENT, refresh)
       }
-    })
+    }).catch(fail)
     return () => { alive = false; cleanup() }
   }, [])
+  if (error) throw error
   return eff
 }

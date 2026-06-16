@@ -63,6 +63,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -112,6 +113,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -152,6 +154,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -192,6 +195,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -246,6 +250,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -301,6 +306,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -342,6 +348,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -383,6 +390,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -432,6 +440,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     },
@@ -475,6 +484,7 @@
         "surface": "pial"
       },
       "visibility": {
+        "dim_opacity": 0.12,
         "dim_others": true
       }
     }

@@ -66,7 +66,7 @@ const CAMERA_POSE_KEYS = new Set(['position', 'look_at'])
 const REGION_KEYS = new Set(['areas', 'buckets', 'meshes', 'scene_regions'])
 const COLOR_KEYS = new Set(['enabled', 'preset', 'groups', 'dim_others'])
 const COLOR_GROUP_KEYS = new Set(['label', 'hue', 'buckets'])
-const VISIBILITY_KEYS = new Set(['dim_others', 'hidden', 'isolated'])
+const VISIBILITY_KEYS = new Set(['dim_others', 'dim_opacity', 'hidden', 'isolated'])
 const CUTS_KEYS = new Set(['enabled', 'planes'])
 const CUT_PLANE_KEYS = new Set(['axis', 'position', 'keep'])
 const OVERLAY_KEYS = new Set(['kind', 'scene', 'position', 'size', 'fallback_image'])
@@ -139,6 +139,11 @@ function assertFiniteNumber(value, context) {
 function assertPositiveNumber(value, context) {
   assertFiniteNumber(value, context)
   if (value <= 0) throw new Error(`build-config: ${context} muss groesser 0 sein`)
+}
+
+function assertUnitNumber(value, context) {
+  assertFiniteNumber(value, context)
+  if (value < 0 || value > 1) throw new Error(`build-config: ${context} muss zwischen 0 und 1 liegen`)
 }
 
 function assertCameraFov(value, context) {
@@ -426,6 +431,7 @@ function validateConfigurationSchema(name, c, idx) {
 
   assertPlainObject(c.visibility, `${context}.visibility`)
   assertOptionalBoolean(c.visibility.dim_others, `${context}.visibility.dim_others`)
+  if (c.visibility.dim_opacity !== undefined) assertUnitNumber(c.visibility.dim_opacity, `${context}.visibility.dim_opacity`)
   assertOptionalStringArray(c.visibility.hidden, `${context}.visibility.hidden`)
   assertOptionalStringArray(c.visibility.isolated, `${context}.visibility.isolated`)
 
