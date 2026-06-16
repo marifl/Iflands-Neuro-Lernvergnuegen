@@ -11,6 +11,7 @@ import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atla
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
 import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
+import { hasImportedSnapshotRouteForCurrentLocation } from './viewerStateSnapshot'
 import PresetLegend from './PresetLegend'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
 import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
@@ -19,6 +20,7 @@ import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { replaceCanonicalLocation } from '../scene/router'
 import { setLocalStorageItem } from '../safeLocalStorage'
+import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocation } from './registryLaunch'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
@@ -126,6 +128,7 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
 
   useEffect(() => {
     if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    if (hasImportedSnapshotRouteForCurrentLocation()) return
     setCutMode('slice')
     setCuts(cutsFromConfig(configuration.cuts))
     const carveLayer = configuration.colors?.preset ? 'off' : configuration.view?.carve_on_taro
@@ -153,6 +156,7 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
 
   useEffect(() => {
     if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    if (hasImportedSnapshotRouteForCurrentLocation()) return
     let alive = true
     const presetId = configuration.colors?.preset
     if (!presetId) {
@@ -705,7 +709,13 @@ export default function BodyParts3DViewer() {
   const [launched, setLaunched] = useState(() => {
     const p = new URLSearchParams(window.location.search)
     const mode = p.get('mode')
-    return (mode !== null && APP_MODES.includes(mode as AppMode)) || p.has('scene') || p.has('config') || p.has('spike')
+    return (
+      (mode !== null && APP_MODES.includes(mode as AppMode)) ||
+      p.has('scene') ||
+      p.has('config') ||
+      p.has('spike') ||
+      hasRegistryLaunchSearch(window.location.search)
+    )
   })
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
@@ -832,10 +842,10 @@ export default function BodyParts3DViewer() {
     closedLearningFlyoutFor !== selected,
   )
   const openLearningTarget = (target: ExplorerLearningTarget) => {
-    if (target.mode === 'phineas') {
-      window.history.replaceState(null, '', '?mode=phineas')
+    if (target.launch) {
+      window.history.replaceState(null, '', registryLaunchLocation(target.launch))
       setLaunched(true)
-      setAppMode('phineas')
+      setAppMode(appModeForRegistryLaunch(target.launch))
       return
     }
     if (!target.configName || !target.sceneId) return

@@ -15,6 +15,7 @@ import {
   type BrainAppContractFixture,
 } from './contractValidation'
 import { KNOWLEDGE_REGISTRY_SCHEMA_VERSION } from './knowledgeRegistry'
+import { REGISTRY_LAUNCH_SCHEMA_VERSION } from './registryLaunch'
 import {
   TIMELINE_DOCUMENT_SCHEMA_VERSION,
   type TimelineDocument,
@@ -215,6 +216,7 @@ describe('contract validation', () => {
     expect(BONUS_CONTEXTS_SCHEMA_VERSION).toBe(1)
     expect(ASSET_MANIFEST_SCHEMA_VERSION).toBe(1)
     expect(AUTHORING_SCENE_SCHEMA_VERSION).toBe(1)
+    expect(REGISTRY_LAUNCH_SCHEMA_VERSION).toBe(1)
     expect(TIMELINE_DOCUMENT_SCHEMA_VERSION).toBe(1)
     expect(VIEWER_STATE_SNAPSHOT_VERSION).toBe(1)
     expect(BRAIN_APP_CONTRACT_SCHEMA_VERSION).toBe(1)

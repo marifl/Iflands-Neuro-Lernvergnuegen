@@ -10,6 +10,13 @@ import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMo
 import { sceneIndexForLocation } from '../scene/scenes'
 import { useSceneStore } from '../scene/sceneStore'
 import { parseLocation, replaceCanonicalLocation, SCENE_SEQUENCE_KINDS, type SceneLocation } from '../scene/router'
+import {
+  appModeForRegistryLaunch,
+  parseOptionalRegistryLaunch,
+  parseRegistryLaunchFromSearch,
+  registryLaunchLocation,
+  type RegistryLaunch,
+} from './registryLaunch'
 
 export const VIEWER_STATE_SNAPSHOT_VERSION = 1
 
@@ -34,6 +41,7 @@ export interface ViewerStateSnapshotState {
   highlight: string[]
   isolated: string | null
   lang: Lang
+  launch: RegistryLaunch | null
   mode: ViewMode
   pickedAtlasArea: string | null; pickedAtlasSlug: string | null
   rodPhase: number; rodVisible: boolean
@@ -181,6 +189,10 @@ function currentRoute(): SceneLocation | null {
   return route
 }
 
+function currentLaunch(): RegistryLaunch | null {
+  return parseRegistryLaunchFromSearch(window.location.search)
+}
+
 function parseRoute(value: unknown): SceneLocation | null {
   if (value === undefined || value === null) return null
   if (!isRecord(value)) throw new Error('Viewer-State-Snapshot: route muss ein Objekt sein')
@@ -212,6 +224,12 @@ function applyRoute(route: SceneLocation | null): void {
   sceneStore.goto(index >= 0 ? index : 0, route.step)
 }
 
+function applyLaunch(launch: RegistryLaunch | null): void {
+  if (!launch) return
+  window.history.replaceState(null, '', registryLaunchLocation(launch))
+  importedSnapshotRouteSearch = window.location.search
+}
+
 export function hasImportedSnapshotRouteForCurrentLocation(): boolean {
   if (importedSnapshotRouteSearch === null) return false
   if (importedSnapshotRouteSearch !== window.location.search) {
@@ -241,6 +259,7 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     highlight: [...state.highlight],
     isolated: state.isolated,
     lang: state.lang,
+    launch: currentLaunch(),
     mode: state.mode,
     pickedAtlasArea: state.pickedAtlasArea,
     pickedAtlasSlug: state.pickedAtlasSlug,
@@ -263,10 +282,11 @@ function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): Vi
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: state muss ein Objekt sein')
   const activePreset = parseColorPreset(raw.activePreset)
   const colorMode = enumValue(raw.colorMode, COLOR_MODES, fallback.colorMode, 'colorMode')
+  const launch = parseOptionalRegistryLaunch(raw.launch)
   return {
     activePreset,
     authoring: parseAuthoringSnapshotState(raw.authoring),
-    appMode: enumValue(raw.appMode, APP_MODES, fallback.appMode, 'appMode'),
+    appMode: enumValue(raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : fallback.appMode, 'appMode'),
     cameraPose: parseCameraPose(raw.cameraPose),
     cameraView: optionalString(raw.cameraView, 'cameraView'),
     clipAtlasOverlay: booleanValue(raw.clipAtlasOverlay, fallback.clipAtlasOverlay, 'clipAtlasOverlay'),
@@ -277,6 +297,7 @@ function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): Vi
     highlight: stringArray(raw.highlight, 'highlight'),
     isolated: optionalString(raw.isolated, 'isolated'),
     lang: enumValue(raw.lang, LANGS, fallback.lang, 'lang'),
+    launch,
     mode: enumValue(raw.mode, VIEW_MODES, fallback.mode, 'mode'),
     pickedAtlasArea: optionalString(raw.pickedAtlasArea, 'pickedAtlasArea'),
     pickedAtlasSlug: optionalString(raw.pickedAtlasSlug, 'pickedAtlasSlug'),
@@ -321,6 +342,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
   const snapshot = parseViewerStateSnapshot(raw)
   const snapshotState = snapshot.state
   applyRoute(snapshotState.route)
+  applyLaunch(snapshotState.launch)
   useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(snapshotState.authoring)
   useViewerStore.setState({
     activePreset: snapshotState.activePreset,

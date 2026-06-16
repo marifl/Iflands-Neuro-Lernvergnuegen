@@ -30,14 +30,22 @@ describe('ExplorerLearningFlyout', () => {
       configName: 'p3a-konfliktmonitoring',
       mode: 'learn',
       label: 'P3a - Konfliktmonitoring',
+      bonusContextId: 'eeg-erp-p3a-konfliktmonitoring',
     })
   })
 
-  it('ordnet OFC/vmPFC-Knoten der Phineas-Fallstudie zu', () => {
+  it('ordnet OFC/vmPFC-Knoten dem Phineas-Bonuskontext zu', () => {
     expect(learningTargetForNode(ofcNode)).toEqual({
       mode: 'phineas',
-      label: 'Phineas Gage - OFC/vmPFC',
-      actionLabel: 'Phineas öffnen',
+      label: 'Bonus-Kontext: Phineas Gage (OFC/vmPFC)',
+      actionLabel: 'Bonus-Kontext öffnen',
+      bonusContextId: 'phineas-gage',
+      launch: {
+        schemaVersion: 1,
+        collectionId: 'case-phineas-gage',
+        contextId: 'phineas-gage',
+        entrypoint: { kind: 'app-mode', appMode: 'phineas' },
+      },
     })
   })
 
@@ -66,7 +74,7 @@ describe('ExplorerLearningFlyout', () => {
     expect(onOpenAtlas).toHaveBeenCalledTimes(1)
   })
 
-  it('benennt den Phineas-Modus als eigene Aktion', () => {
+  it('benennt Phineas als Bonus-Kontext-Aktion', () => {
     const onOpenLearn = vi.fn()
     const target = learningTargetForNode(ofcNode)!
     render(
@@ -80,7 +88,7 @@ describe('ExplorerLearningFlyout', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: 'Phineas öffnen' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Bonus-Kontext öffnen' }))
     expect(onOpenLearn).toHaveBeenCalledWith(target)
   })
 

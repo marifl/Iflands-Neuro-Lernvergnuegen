@@ -11,6 +11,7 @@ import {
   hasImportedSnapshotRouteForCurrentLocation,
   importViewerStateSnapshot,
 } from './viewerStateSnapshot'
+import { registryLaunchLocation, resolveRegistryLaunch } from './registryLaunch'
 
 describe('appMode', () => {
   beforeEach(() => {
@@ -248,6 +249,29 @@ describe('viewer state snapshots', () => {
     importViewerStateSnapshot(snapshot)
 
     expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+  })
+
+  it('exportiert und importiert Registry-Launch-Kontext fuer Phineas', () => {
+    const launch = resolveRegistryLaunch({
+      collectionId: 'case-phineas-gage',
+      contextId: 'phineas-gage',
+    })
+    window.history.replaceState(null, '', registryLaunchLocation(launch))
+    useViewerStore.setState({ appMode: 'phineas' })
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.state.launch).toEqual(launch)
+
+    window.history.replaceState(null, '', '/?config=vcpt')
+    useViewerStore.setState({ appMode: 'explore' })
+    importViewerStateSnapshot({
+      version: VIEWER_STATE_SNAPSHOT_VERSION,
+      state: { launch },
+    })
+
+    expect(window.location.search).toBe('?collectionId=case-phineas-gage&contextId=phineas-gage&entrypoint=mode%3Aphineas&mode=phineas')
+    expect(useViewerStore.getState().appMode).toBe('phineas')
   })
 
   it('exportiert und importiert AuthoringScene-State fuer Objekt- und Timeline-Roundtrips', () => {

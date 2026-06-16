@@ -65,6 +65,7 @@ const SNAPSHOT_VALIDATION_FALLBACK: ViewerStateSnapshotState = {
   highlight: [],
   isolated: null,
   lang: 'de',
+  launch: null,
   mode: 'full',
   pickedAtlasArea: null,
   pickedAtlasSlug: null,

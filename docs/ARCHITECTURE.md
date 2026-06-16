@@ -292,6 +292,34 @@ Damit bleiben Verantwortlichkeiten getrennt:
 5. Ein späterer Loader darf fehlende required Assets laut abbrechen, aber keine
    Fallback-Geometrie erfinden.
 
+## Registry-Launch-Vertrag
+
+`apps/brain-app/src/viewer/registryLaunch.ts` ist der generische
+Startvertrag für Registry-Collections und Bonus-Kontexte. Ein Launch besteht
+aus `collectionId`, `contextId` und einem `entrypoint`; Phineas nutzt damit
+`case-phineas-gage` + `phineas-gage` + `entrypoint = mode:phineas`, ohne dass
+Explorer-Flyout oder Snapshot-Import den Fallnamen selbst verzweigen müssen.
+
+EntryPoints sind reine Daten:
+
+1. `app-mode` für bestehende App-Modi wie `phineas`.
+2. `scene` und `config` für bestehende `SceneLocation`-/Config-Routen.
+3. `animation`, `snapshot` und `timeline` als reservierte, validierte
+   Erweiterungspunkte für spätere Consumers.
+
+Die URL trägt den Launch als `collectionId`, `contextId` und `entrypoint`.
+Für aktuelle Runtime-Consumer werden zusätzlich die bestehenden Router-
+Parameter mitgeführt: `mode` bei AppMode-Launches, `config`/`scene`/`step` bei
+Scene- oder Config-Launches. `ViewerStateSnapshot` persistiert `launch`
+separat von `route`; Snapshot-Import stellt die Launch-URL wieder her und
+leitet den `appMode` aus dem EntryPoint ab, wenn kein expliziter `appMode` im
+Snapshot steht.
+
+Unbekannte Collections, unbekannte Kontexte oder Kontexte, die nicht zur
+Collection gehören, werden laut abgelehnt. Für Kontexte mit
+`animationHints.sceneId` kann der EntryPoint aus den Bonus-Kontext-Daten
+abgeleitet werden; ansonsten muss der EntryPoint explizit deklariert sein.
+
 ## Versionierung und Contract-Validation
 
 `apps/brain-app/src/viewer/contractValidation.ts` ist der kleine reine
@@ -310,7 +338,10 @@ Aktuelle Versionen:
 3. `AuthoringCommand` und `AuthoringCommandHistory`: `schemaVersion = 1`,
    weil History-Einträge serialisierbare Daten bleiben und keine Methoden
    speichern.
-4. `ViewerStateSnapshot`: `version = 1`, weil der bestehende Export dieses
+4. `RegistryLaunch`: `schemaVersion = 1`, weil Launches als
+   `collectionId/contextId/entrypoint` versionierte Snapshot- und URL-Daten
+   sind.
+5. `ViewerStateSnapshot`: `version = 1`, weil der bestehende Export dieses
    Feld bereits nutzt. Runtime-Import darf weiterhin gegen den aktuellen
    Sitzungszustand fallbacken; Contract-Validation nutzt einen expliziten
    Fallback und mutiert keinen Store.

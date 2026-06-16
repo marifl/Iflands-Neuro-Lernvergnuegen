@@ -1,5 +1,7 @@
 import { useEffect } from 'react'
+import { bonusContextIdsForNode, resolveBonusContextIds, type BonusContext } from './bonusContexts'
 import type { OntologyNode } from './ontology'
+import { resolveRegistryLaunch, type RegistryLaunch } from './registryLaunch'
 import type { AppMode } from './viewerStore'
 
 export interface ExplorerLearningTarget {
@@ -8,18 +10,40 @@ export interface ExplorerLearningTarget {
   mode: Extract<AppMode, 'learn' | 'phineas'>
   label: string
   actionLabel?: string
+  bonusContextId?: string
+  launch?: RegistryLaunch
 }
 
 const LEARNING_TARGETS = {
   p3a: { sceneId: 'p3a-konfliktmonitoring', configName: 'p3a-konfliktmonitoring', mode: 'learn', label: 'P3a - Konfliktmonitoring' },
   p3b: { sceneId: 'p3b-engagement', configName: 'p3b-engagement', mode: 'learn', label: 'P3b - Engagement' },
   p3z: { sceneId: 'p3z-inhibition', configName: 'p3z-inhibition', mode: 'learn', label: 'P3z - Inhibition' },
-  phineas: { mode: 'phineas', label: 'Phineas Gage - OFC/vmPFC', actionLabel: 'Phineas öffnen' },
   summary: { sceneId: 'zusammenfassung', configName: 'zusammenfassung', mode: 'learn', label: 'Zusammenfassung - exekutive Funktionen' },
 } satisfies Record<string, ExplorerLearningTarget>
 
+function withBonusContext(target: ExplorerLearningTarget, bonusContextId: string | undefined): ExplorerLearningTarget {
+  return bonusContextId ? { ...target, bonusContextId } : target
+}
+
+function launchForContext(context: BonusContext): RegistryLaunch | undefined {
+  const collectionId = context.collectionIds[0]
+  return collectionId ? resolveRegistryLaunch({ collectionId, contextId: context.id }) : undefined
+}
+
 export function learningTargetForNode(node: OntologyNode | null): ExplorerLearningTarget | null {
   if (!node?.k11Role) return null
+  const bonusContexts = resolveBonusContextIds(bonusContextIdsForNode(node))
+  const phineasContext = bonusContexts.find((context) => context.id === 'phineas-gage')
+  if (phineasContext) {
+    return {
+      mode: 'phineas',
+      label: `Bonus-Kontext: ${phineasContext.title}`,
+      actionLabel: 'Bonus-Kontext öffnen',
+      bonusContextId: phineasContext.id,
+      launch: launchForContext(phineasContext),
+    }
+  }
+  const p3aContext = bonusContexts.find((context) => context.id === 'eeg-erp-p3a-konfliktmonitoring')
   const text = [
     node.id,
     node.k11Role,
@@ -27,8 +51,7 @@ export function learningTargetForNode(node: OntologyNode | null): ExplorerLearni
     node.labels.en,
     node.labels.la,
   ].join(' ').toLowerCase()
-  if (/acc|cingul|konflikt/.test(text)) return LEARNING_TARGETS.p3a
-  if (/ofc|vmpfc|orbitofrontal|ventromedial|phineas/.test(text)) return LEARNING_TARGETS.phineas
+  if (/acc|cingul|konflikt/.test(text)) return withBonusContext(LEARNING_TARGETS.p3a, p3aContext?.id)
   if (/sma|pre-sma|inhibition/.test(text)) return LEARNING_TARGETS.p3z
   if (/parietal|engagement|aufmerksamkeit/.test(text)) return LEARNING_TARGETS.p3b
   return LEARNING_TARGETS.summary
