@@ -1,11 +1,12 @@
 import { useMemo } from 'react'
 import * as THREE from 'three'
 import { useSceneStore } from '../scene/sceneStore'
-import { EEG_ELECTRODES, EEG_HEADSET_CONNECTIONS, erpSiteForScene, type EegSite } from './eegElectrodes'
+import { EEG_ELECTRODES, EEG_HEADSET_CONNECTIONS, erpSitesForScene, type EegSite } from './eegElectrodes'
 import { useViewerStore } from './viewerStore'
 
 const BAND_COLOR = '#2f6673'
 const ELECTRODE_COLOR = '#d8ecef'
+const SUPPORT_COLOR = '#f4b66d'
 const ACTIVE_COLOR = '#f26b1f'
 
 function Connector({ from, to }: { from: EegSite; to: EegSite }) {
@@ -32,16 +33,19 @@ function Connector({ from, to }: { from: EegSite; to: EegSite }) {
   )
 }
 
-function Electrode({ site, active, pulse }: { site: EegSite; active: boolean; pulse: number }) {
+function Electrode({ site, role, pulse }: { site: EegSite; role: 'primary' | 'support' | 'reference'; pulse: number }) {
   const electrode = EEG_ELECTRODES[site]
-  const intensity = active ? 0.35 + 1.35 * pulse : 0.08
-  const radius = active ? 3.5 : 2.15
+  const active = role === 'primary'
+  const support = role === 'support'
+  const intensity = active ? 0.35 + 1.35 * pulse : support ? 0.18 + 0.45 * pulse : 0.08
+  const radius = active ? 3.5 : support ? 2.75 : 2.15
+  const color = active ? ACTIVE_COLOR : support ? SUPPORT_COLOR : ELECTRODE_COLOR
   return (
     <mesh name={`eeg-${site}`} position={electrode.position} renderOrder={5}>
       <sphereGeometry args={[radius, 16, 10]} />
       <meshStandardMaterial
-        color={active ? ACTIVE_COLOR : ELECTRODE_COLOR}
-        emissive={active ? ACTIVE_COLOR : ELECTRODE_COLOR}
+        color={color}
+        emissive={color}
         emissiveIntensity={intensity}
         roughness={0.45}
         metalness={0}
@@ -55,9 +59,10 @@ export default function EegHeadset() {
   const erpPulse = useViewerStore((s) => s.erpPulse)
   const scenes = useSceneStore((s) => s.scenes)
   const index = useSceneStore((s) => s.index)
-  const site = erpSiteForScene(scenes[index])
+  const sites = erpSitesForScene(scenes[index])
 
-  if (appMode !== 'learn' || !site) return null
+  if (appMode !== 'learn' || !sites) return null
+  const supportSites = new Set(sites.support)
 
   return (
     <group name="eeg-headset">
@@ -66,7 +71,8 @@ export default function EegHeadset() {
       ))}
       {Object.keys(EEG_ELECTRODES).map((key) => {
         const electrodeSite = key as EegSite
-        return <Electrode key={electrodeSite} site={electrodeSite} active={electrodeSite === site} pulse={erpPulse} />
+        const role = electrodeSite === sites.primary ? 'primary' : supportSites.has(electrodeSite) ? 'support' : 'reference'
+        return <Electrode key={electrodeSite} site={electrodeSite} role={role} pulse={erpPulse} />
       })}
     </group>
   )

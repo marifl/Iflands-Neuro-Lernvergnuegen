@@ -151,7 +151,7 @@ Quellen:
 | Go/No-go | keine | reale Stimulus-Karten statt Prose-Intro | später |
 | VCPT | keine | Tier-/Pflanzenstimuli als kleine Texturkarte | später |
 | ICA | keine | animierte Komponententrennung im 3D-Raum | später |
-| P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später |
+| P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später; aktueller Build zeigt schematische Topografie, Support-Elektroden und Quellenlabels |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
 | Phineas Gage | kein montiertes Original-Gage-CT/GLB im aktuellen Viewer | Standalone-Assets unter `/assets/phineas` plus Quellen unter `raw_protected/phineas-gage`; nächster Schritt wäre Montage nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |

@@ -85,7 +85,7 @@ flowchart TB
 | 3D-Viewer (brain.glb, StructureTree, Flyout) | ✅ | `BodyParts3DViewer.tsx`, `StructureTree.tsx` |
 | Schnittebenen (Cut/Caps/Gizmo/Pick) | ✅ | `CutCaps.tsx`, `CutPlaneFrameGizmo.ts`, `CutPickBridge.tsx` |
 | Figur-Färb-Engine (Presets) | ✅ 5 Presets | `colorPresets.ts`, `bucketMeshes.ts`, `SubParcels.tsx`, `PresetLegend.tsx` |
-| EEG/ERP-Sync (P3a/P3b/P3z) | ✅ | `erpAnimation.ts`, `scene/overlays/ErpChart.tsx` |
+| EEG/ERP-Sync (P3a/P3b/P3z) | ✅ | `erpAnimation.ts`, `scene/overlays/ErpChart.tsx`, `EegHeadset.tsx` |
 | Sub-Patch-Geometrie (Runtime) | ✅ 60 Patches (inkl. P4: Julich + GPi/GPe) | `k11-subparcels.glb`, `scripts/atlas/` |
 | Atlas Voll-Transform (Shelf) | ✅ 352 Parzellen | `work/atlas-{julich,dkt}.glb`, `atlas-manifest.json` |
 | Szenen (Lern-Modus) | ✅ 8 Szenen | `public/scenes/*.json` |
@@ -210,7 +210,7 @@ morphometrisch exakt — nein; `backfill:true` = überlappende Näherung.
 ### Phase 5 — Wave 2 (Teil) ✅
 
 - [x] frontopolar (BA10) · neuer `geometric_pole`-Modus (vorderste SFG+MFG-Spitze, 22 mm), `combined_hosts.json` → schaltet 11-07 Badre + Phineas frei. `smoke-frontopolar`
-- [x] EEG-Sync P3b (parietal) + P3z (SMA/pre-SMA) · `ErpChart` generisch (source/site Cz/Pz), Brain-Puls für brain.glb-Gyri. `smoke-eeg-p3z`, `smoke-eeg-p3b`
+- [x] EEG-Sync P3b (parietal) + P3z (SMA/pre-SMA) · `ErpChart` generisch (source/site Cz/Pz), Brain-Puls für brain.glb-Gyri, Headset-Support-Sites und schematische Topografie-/Quellenlabels. `smoke-eeg-p3z`, `smoke-eeg-p3b`
 
 ### Phase 6 — Atlas Voll-Transform → TARO (Shelf-Artefakt) ✅
 

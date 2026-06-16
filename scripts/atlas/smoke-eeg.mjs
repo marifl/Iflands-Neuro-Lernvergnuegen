@@ -45,6 +45,8 @@ const erpConfigs = Object.entries(config.configurations)
       meshes: expectedMeshes(cfg.regions?.scene_regions ?? [], name),
       source: scene.overlay.data?.source,
       site: scene.overlay.data?.site,
+      component: scene.overlay.data?.component,
+      region: scene.overlay.data?.topography?.region,
     }
   })
 
@@ -159,7 +161,9 @@ for (const cfg of erpConfigs) {
 
   const body = await page.locator('body').innerText()
   check(body.includes(`(${cfg.site})`), `Topografie nennt ${cfg.site}`)
+  check(body.includes(`${cfg.component} · Topografie ${cfg.region}`), `Topografie unterscheidet ${cfg.component}/${cfg.region}`)
   check(body.includes(`Quelle: ${cfg.source}`), `Topografie nennt Quelle "${cfg.source}"`)
+  check(body.includes('Schematisch/didaktisch'), 'Topografie markiert die Darstellung als schematisch')
   await page.screenshot({ path: resolve(here, `work/smoke-eeg-${cfg.scene.id}.png`) })
 }
 
