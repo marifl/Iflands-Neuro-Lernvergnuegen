@@ -1,14 +1,16 @@
 import type { Scene } from '../types'
+import IcaSeparation, { type IcaSeparationNode } from './IcaSeparation'
 
-interface FlowNode {
+interface FlowNode extends IcaSeparationNode {
   id: string
   label: string
   result: string
 }
 
 export default function Flowchart({ scene }: { scene: Scene }) {
-  const data = scene.overlay.data as { nodes?: FlowNode[] } | undefined
+  const data = scene.overlay.data as { mode?: string; nodes?: FlowNode[]; evidence?: string } | undefined
   if (!data?.nodes?.length) throw new Error(`Flowchart: scene ${scene.id} hat keine overlay.data.nodes`)
+  if (data.mode === 'ica-separation') return <IcaSeparation nodes={data.nodes} evidence={data.evidence} />
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {data.nodes.map((n) => (
