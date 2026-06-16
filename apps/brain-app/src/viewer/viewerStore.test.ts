@@ -3,6 +3,7 @@ import { useViewerStore } from './viewerStore'
 import {
   VIEWER_STATE_SNAPSHOT_VERSION,
   exportViewerStateSnapshot,
+  hasImportedSnapshotRouteForCurrentLocation,
   importViewerStateSnapshot,
 } from './viewerStateSnapshot'
 
@@ -124,6 +125,8 @@ describe('carveOverlay', () => {
 
 describe('viewer state snapshots', () => {
   beforeEach(() => {
+    window.history.replaceState(null, '', '/')
+    hasImportedSnapshotRouteForCurrentLocation()
     useViewerStore.setState({
       appMode: 'explore',
       activePreset: null,
@@ -207,6 +210,74 @@ describe('viewer state snapshots', () => {
     expect(snapshot.state.activePreset?.id).toBe('p3a')
     expect(JSON.stringify(snapshot)).not.toContain('hovered')
     expect(JSON.stringify(snapshot)).not.toContain('ontology')
+  })
+
+  it('exportiert und importiert den kanonischen Szenen-Link fuer Unterrichts-Snapshots', () => {
+    window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=2')
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.state.route).toEqual({ configName: 'vcpt', sceneId: 'vcpt', step: 2 })
+
+    window.history.replaceState(null, '', '/?mode=phineas')
+    importViewerStateSnapshot(snapshot)
+
+    expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2')
+  })
+
+  it('laesst Snapshot-Import gegen Config-Link-Defaults gewinnen', () => {
+    window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=2')
+    const snapshot = exportViewerStateSnapshot()
+
+    window.history.replaceState(null, '', '/?config=p3a-konfliktmonitoring')
+    expect(hasImportedSnapshotRouteForCurrentLocation()).toBe(false)
+
+    importViewerStateSnapshot(snapshot)
+
+    expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2')
+    expect(hasImportedSnapshotRouteForCurrentLocation()).toBe(true)
+
+    window.history.replaceState(null, '', '/?config=p3a-konfliktmonitoring')
+    expect(hasImportedSnapshotRouteForCurrentLocation()).toBe(false)
+  })
+
+  it('laesst explizite Snapshot-Felder gegen bestehenden Sitzungs-State gewinnen', () => {
+    useViewerStore.setState({
+      cutMode: 'hide',
+      cuts: {
+        sagittal: { on: false, pos: 0 },
+        coronal: { on: false, pos: 0 },
+        axial: { on: false, pos: 0 },
+      },
+      hidden: new Set(['local-only']),
+      highlight: ['local-highlight'],
+      showCarveJulich: true,
+      showCarveDkt: false,
+    })
+
+    importViewerStateSnapshot({
+      version: VIEWER_STATE_SNAPSHOT_VERSION,
+      state: {
+        cutMode: 'slice',
+        cuts: {
+          sagittal: { on: true, pos: 12 },
+          coronal: { on: false, pos: 0 },
+          axial: { on: false, pos: 0 },
+        },
+        hidden: ['snapshot-hidden'],
+        highlight: ['snapshot-highlight'],
+        showCarveJulich: false,
+        showCarveDkt: true,
+      },
+    })
+
+    const state = useViewerStore.getState()
+    expect(state.cutMode).toBe('slice')
+    expect(state.cuts.sagittal).toEqual({ on: true, pos: 12 })
+    expect([...state.hidden]).toEqual(['snapshot-hidden'])
+    expect(state.highlight).toEqual(['snapshot-highlight'])
+    expect(state.showCarveJulich).toBe(false)
+    expect(state.showCarveDkt).toBe(true)
   })
 
   it('importiert einen Snapshot und normalisiert Sets, Cuts und geklemmte Werte', () => {

@@ -2,8 +2,13 @@ import { CUT_AXES, clampCutPosition, type CutConfig, type CutMode } from './cutC
 import type { ColorPreset } from './colorPresets'
 import type { ColorMode, Lang } from './ontology'
 import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMode, type ViewMode } from './viewerStore'
+import { sceneIndexForLocation } from '../scene/scenes'
+import { useSceneStore } from '../scene/sceneStore'
+import { parseLocation, replaceCanonicalLocation, type SceneLocation } from '../scene/router'
 
 export const VIEWER_STATE_SNAPSHOT_VERSION = 1
+
+let importedSnapshotRouteSearch: string | null = null
 
 const COLOR_MODES = ['anatomical', 'function', 'laterality', 'region', 'preset'] as const satisfies readonly ColorMode[]
 const CUT_MODES = ['slice', 'hide'] as const satisfies readonly CutMode[]
@@ -11,11 +16,10 @@ const LANGS = ['de', 'la', 'en'] as const satisfies readonly Lang[]
 const SELECT_MODES = ['group', 'direct'] as const satisfies readonly SelectMode[]
 const VIEW_MODES = ['full', 'k11'] as const satisfies readonly ViewMode[]
 
-interface ViewerStateSnapshotState {
+export interface ViewerStateSnapshotState {
   activePreset?: ColorPreset | null
   appMode: AppMode
-  cameraPose: CameraPose | null
-  cameraView: string | null
+  cameraPose: CameraPose | null; cameraView: string | null
   clipAtlasOverlay: boolean
   colorMode: ColorMode
   cutMode: CutMode
@@ -25,25 +29,17 @@ interface ViewerStateSnapshotState {
   isolated: string | null
   lang: Lang
   mode: ViewMode
-  pickedAtlasArea: string | null
-  pickedAtlasSlug: string | null
-  rodPhase: number
-  rodVisible: boolean
+  pickedAtlasArea: string | null; pickedAtlasSlug: string | null
+  rodPhase: number; rodVisible: boolean
+  route: SceneLocation | null
   selectMode: SelectMode
   selected: string | null
-  showAtlasDkt: boolean
-  showAtlasJulich: boolean
-  showCarveBrodmann: boolean
-  showCarveDkt: boolean
-  showCarveJulich: boolean
-  showSkull: boolean
-  skullOpacity: number
+  showAtlasDkt: boolean; showAtlasJulich: boolean
+  showCarveBrodmann: boolean; showCarveDkt: boolean; showCarveJulich: boolean
+  showSkull: boolean; skullOpacity: number
 }
 
-export interface ViewerStateSnapshot {
-  version: typeof VIEWER_STATE_SNAPSHOT_VERSION
-  state: ViewerStateSnapshotState
-}
+export interface ViewerStateSnapshot { version: typeof VIEWER_STATE_SNAPSHOT_VERSION; state: ViewerStateSnapshotState }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -85,6 +81,14 @@ function enumValue<T extends string>(value: unknown, allowed: readonly T[], fall
 
 function unitValue(value: unknown, fallback: number, field: string): number {
   return Math.min(1, Math.max(0, numberValue(value, fallback, field)))
+}
+
+function routeStepValue(value: unknown, field: string): number {
+  const step = numberValue(value, 0, field)
+  if (!Number.isSafeInteger(step) || step < 0) {
+    throw new Error(`Viewer-State-Snapshot: ${field} muss ein nicht-negativer Integer sein`)
+  }
+  return step
 }
 
 function vec3Value(value: unknown, field: string): [number, number, number] {
@@ -157,6 +161,46 @@ function parseColorPreset(value: unknown): ColorPreset | null {
   }
 }
 
+function currentRoute(): SceneLocation | null {
+  const route = parseLocation(window.location.search)
+  if (!route.configName && !route.sceneId) return null
+  return route
+}
+
+function parseRoute(value: unknown): SceneLocation | null {
+  if (value === undefined || value === null) return null
+  if (!isRecord(value)) throw new Error('Viewer-State-Snapshot: route muss ein Objekt sein')
+  const configName = optionalString(value.configName, 'route.configName')
+  const sceneId = optionalString(value.sceneId, 'route.sceneId')
+  if (!configName && !sceneId) {
+    throw new Error('Viewer-State-Snapshot: route braucht configName oder sceneId')
+  }
+  return {
+    configName,
+    sceneId,
+    step: routeStepValue(value.step, 'route.step'),
+  }
+}
+
+function applyRoute(route: SceneLocation | null): void {
+  if (!route) return
+  replaceCanonicalLocation(route)
+  importedSnapshotRouteSearch = window.location.search
+  const sceneStore = useSceneStore.getState()
+  if (!sceneStore.scenes.length) return
+  const index = sceneIndexForLocation(sceneStore.scenes, route)
+  sceneStore.goto(index >= 0 ? index : 0, route.step)
+}
+
+export function hasImportedSnapshotRouteForCurrentLocation(): boolean {
+  if (importedSnapshotRouteSearch === null) return false
+  if (importedSnapshotRouteSearch !== window.location.search) {
+    importedSnapshotRouteSearch = null
+    return false
+  }
+  return true
+}
+
 function currentSnapshotState(): ViewerStateSnapshotState {
   const state = useViewerStore.getState()
   return {
@@ -181,6 +225,7 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     pickedAtlasSlug: state.pickedAtlasSlug,
     rodPhase: state.rodPhase,
     rodVisible: state.rodVisible,
+    route: currentRoute(),
     selectMode: state.selectMode,
     selected: state.selected,
     showAtlasDkt: state.showAtlasDkt,
@@ -193,8 +238,7 @@ function currentSnapshotState(): ViewerStateSnapshotState {
   }
 }
 
-function parseSnapshotState(raw: unknown): ViewerStateSnapshotState {
-  const fallback = currentSnapshotState()
+function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): ViewerStateSnapshotState {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: state muss ein Objekt sein')
   const activePreset = parseColorPreset(raw.activePreset)
   const colorMode = enumValue(raw.colorMode, COLOR_MODES, fallback.colorMode, 'colorMode')
@@ -216,6 +260,7 @@ function parseSnapshotState(raw: unknown): ViewerStateSnapshotState {
     pickedAtlasSlug: optionalString(raw.pickedAtlasSlug, 'pickedAtlasSlug'),
     rodPhase: unitValue(raw.rodPhase, fallback.rodPhase, 'rodPhase'),
     rodVisible: booleanValue(raw.rodVisible, fallback.rodVisible, 'rodVisible'),
+    route: parseRoute(raw.route),
     selectMode: enumValue(raw.selectMode, SELECT_MODES, fallback.selectMode, 'selectMode'),
     selected: optionalString(raw.selected, 'selected'),
     showAtlasDkt: booleanValue(raw.showAtlasDkt, fallback.showAtlasDkt, 'showAtlasDkt'),
@@ -239,12 +284,21 @@ export function exportViewerStateSnapshotJson(): string {
   return JSON.stringify(exportViewerStateSnapshot(), null, 2)
 }
 
-export function importViewerStateSnapshot(raw: unknown): void {
+export function parseViewerStateSnapshot(raw: unknown, fallback?: ViewerStateSnapshotState): ViewerStateSnapshot {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: Root muss ein Objekt sein')
   if (raw.version !== VIEWER_STATE_SNAPSHOT_VERSION) {
     throw new Error(`Viewer-State-Snapshot: Snapshot-Version "${String(raw.version)}" wird nicht unterstuetzt`)
   }
-  const snapshotState = parseSnapshotState(raw.state)
+  return {
+    version: VIEWER_STATE_SNAPSHOT_VERSION,
+    state: parseSnapshotState(raw.state, fallback),
+  }
+}
+
+export function importViewerStateSnapshot(raw: unknown): void {
+  const snapshot = parseViewerStateSnapshot(raw)
+  const snapshotState = snapshot.state
+  applyRoute(snapshotState.route)
   useViewerStore.setState({
     activePreset: snapshotState.activePreset,
     appMode: snapshotState.appMode,
