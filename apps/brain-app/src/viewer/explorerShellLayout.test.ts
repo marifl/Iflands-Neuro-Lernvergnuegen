@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
+import { MOBILE_LEARN_VIEWPORT_FLEX, shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
 
 describe('explorerShellLayout', () => {
   it('rendert den Explorer-Tree auf schmalen Viewports nur als Drawer', () => {
@@ -15,7 +15,7 @@ describe('explorerShellLayout', () => {
 
   it('gibt dem mobilen Explorer die volle Viewport-Flaeche', () => {
     expect(viewportFlex({ appMode: 'explore', isAtlas: false, isNarrow: true })).toBe(1)
-    expect(viewportFlex({ appMode: 'learn', isAtlas: false, isNarrow: true })).toBe('0 0 42%')
+    expect(viewportFlex({ appMode: 'learn', isAtlas: false, isNarrow: true })).toBe(MOBILE_LEARN_VIEWPORT_FLEX)
     expect(viewportFlex({ appMode: 'atlas', isAtlas: true, isNarrow: true })).toBe(1)
   })
 })

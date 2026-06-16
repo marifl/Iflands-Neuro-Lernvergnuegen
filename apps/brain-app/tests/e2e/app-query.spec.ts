@@ -352,6 +352,42 @@ test('Strukturbaum-Mehrfachauswahl wirkt auf ein gemeinsames Selection-Set', asy
   await expectMeshVisibility(page, { 'left-insula': false, 'right-insula': false })
 })
 
+test('Mobile Explorer zeigt Auswahlaktionen direkt am Struktur-HUD', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await page.getByRole('button', { name: 'Strukturbaum öffnen' }).click()
+
+  const drawer = page.getByTestId('mobile-structure-drawer')
+  await expect(drawer).toBeVisible()
+  await expect.poll(async () => {
+    const box = await drawer.boundingBox()
+    return box?.height ?? 0
+  }).toBeGreaterThan(500)
+
+  await page.getByPlaceholder('Struktur suchen…').fill('Insel (ganz)')
+  await page.getByRole('button', { name: /Insel \(ganz\) \(links\)/ }).click()
+
+  await expect(page.getByRole('button', { name: 'Ausblenden' })).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Isolieren' })).toBeVisible()
+  await page.getByRole('button', { name: 'Ausblenden' }).click()
+  await expectMeshVisibility(page, { 'left-insula': false })
+})
+
+test('Mobile Lernseite behaelt eine nutzbare 3D-Hoehe', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/?mode=learn&config=vcpt&scene=vcpt')
+
+  await expect(page.getByRole('heading', { name: 'Visueller Konzentrationsverlaufstest (VCPT)' })).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await expect.poll(async () => {
+    const box = await page.locator('canvas').boundingBox()
+    return box?.height ?? 0
+  }).toBeGreaterThan(320)
+})
+
 test('Snapshot-Import gewinnt gegen Config-Sichtbarkeitsdefaults', async ({ page }) => {
   await page.goto('/?config=p3a-konfliktmonitoring')
 

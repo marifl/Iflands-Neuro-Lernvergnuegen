@@ -79,16 +79,23 @@ function AuthoringPartMesh({
   activeTargetId: string | null
 }) {
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const hidden = useViewerStore((s) => s.hidden)
+  const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const targetRef = useMemo(() => sequenceTargetRefFromAssetPart(instance, part), [instance, part])
   const target = useMemo(() => pickTargetFromTargetRef(targetRef, part.label), [targetRef, part.label])
   const pickable = part.pickable && part.role !== 'helper'
   const objectGraphId = target.objectGraphId
+  const visible = !hidden.has(objectGraphId)
+  const isoDimmed = isolatedSlugs.size > 0 && !isolatedSlugs.has(objectGraphId)
   const active = selectedSlugs.has(objectGraphId) || activeTargetId === objectGraphId
   const hover = hovered === objectGraphId
   const color = pickable ? DEVICE_BASE_COLOR : DEVICE_HELPER_COLOR
   const emissive = active ? DEVICE_SELECT_COLOR : hover ? DEVICE_HOVER_COLOR : '#000000'
   const emissiveIntensity = active ? 0.9 : hover ? 0.35 : 0
+  const targetPickable = pickable && visible && !isoDimmed
+
+  if (!visible) return null
 
   return (
     <mesh
@@ -96,7 +103,7 @@ function AuthoringPartMesh({
       position={partPosition(part, index, count)}
       renderOrder={6}
       userData={sequenceTargetUserData(target, pickable)}
-      raycast={pickable ? undefined : NO_RAYCAST}
+      raycast={targetPickable ? undefined : NO_RAYCAST}
     >
       <sphereGeometry args={[pickable ? 5 : 3, 20, 12]} />
       <meshStandardMaterial
@@ -105,9 +112,9 @@ function AuthoringPartMesh({
         emissiveIntensity={emissiveIntensity}
         roughness={0.42}
         metalness={0}
-        transparent={!pickable}
-        opacity={pickable ? 1 : 0.35}
-        depthWrite={pickable}
+        transparent={!pickable || isoDimmed}
+        opacity={isoDimmed ? 0.18 : pickable ? 1 : 0.35}
+        depthWrite={pickable && !isoDimmed}
       />
     </mesh>
   )

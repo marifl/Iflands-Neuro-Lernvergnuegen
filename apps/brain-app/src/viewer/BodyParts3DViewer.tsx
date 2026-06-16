@@ -709,7 +709,12 @@ export default function BodyParts3DViewer() {
   const context = useViewerStore((s) => s.context)
   const selected = useViewerStore((s) => s.selected)
   const selectedLabels = useViewerStore((s) => s.selectedLabels)
+  const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const hidden = useViewerStore((s) => s.hidden)
   const selectMode = useViewerStore((s) => s.selectMode)
+  const select = useViewerStore((s) => s.select)
+  const setHidden = useViewerStore((s) => s.setHidden)
+  const setIsolated = useViewerStore((s) => s.setIsolated)
   const lang = useViewerStore((s) => s.lang)
   const appMode = useViewerStore((s) => s.appMode)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
@@ -887,6 +892,15 @@ export default function BodyParts3DViewer() {
   const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, isNarrow })
   const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, isNarrow, mobileTreeOpen })
   const atlasTarget = bridgeFor(selected)
+  const selectedSlugList = useMemo(() => [...selectedSlugs], [selectedSlugs])
+  const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
+  const toggleSelectedVisibility = () => {
+    if (!selectedSlugList.length) return
+    setHidden(selectedSlugList, selectionHasVisibleSlugs)
+  }
+  const isolateSelected = () => {
+    if (selected) setIsolated(selected)
+  }
   const showLearningFlyout = Boolean(
     isExploreMode &&
     selected &&
@@ -1072,12 +1086,50 @@ export default function BodyParts3DViewer() {
             {isExploreMode && (
               <div
                 className="ed-panel ed-frame"
-                style={{ position: 'absolute', top: 16, left: 16, padding: '11px 15px', pointerEvents: 'none', maxWidth: 420 }}
+                style={{
+                  position: 'absolute',
+                  top: isNarrow ? 8 : 16,
+                  left: isNarrow ? 8 : 16,
+                  right: isNarrow ? 8 : undefined,
+                  padding: isNarrow ? '9px 10px' : '11px 15px',
+                  pointerEvents: 'none',
+                  maxWidth: isNarrow ? undefined : 420,
+                  zIndex: 12,
+                }}
               >
                 <div className="eyebrow">Struktur</div>
                 <div style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, color: 'var(--ink)', marginTop: 5, lineHeight: 1.15 }}>
                   {selectedLabels ? selectedLabels[lang] : 'Struktur anklicken'}
                 </div>
+                {isNarrow && selected ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 9, pointerEvents: 'auto' }}>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      disabled={!selectedSlugList.length}
+                      style={{ padding: '6px 9px' }}
+                      onClick={toggleSelectedVisibility}
+                    >
+                      {selectionHasVisibleSlugs ? 'Ausblenden' : 'Einblenden'}
+                    </button>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      style={{ padding: '6px 9px' }}
+                      onClick={isolateSelected}
+                    >
+                      Isolieren
+                    </button>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      style={{ padding: '6px 9px' }}
+                      onClick={() => select(null)}
+                    >
+                      Lösen
+                    </button>
+                  </div>
+                ) : null}
                 {selectedNode?.k11Role ? (
                   <div style={{ marginTop: 8 }}>
                     <span className="ed-pill orange">{selectedNode.k11Role}</span>
@@ -1186,13 +1238,14 @@ export default function BodyParts3DViewer() {
           {renderMobileTreeDrawer ? (
             <div
               className="ed-panel ed-frame"
+              data-testid="mobile-structure-drawer"
               style={{
                 position: 'absolute',
                 left: 8,
                 right: 8,
+                top: 8,
                 bottom: 8,
                 zIndex: 25,
-                height: 'min(58%, 520px)',
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',
