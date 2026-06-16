@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useViewerStore } from '../viewer/viewerStore'
 import { useSceneStore } from './sceneStore'
 import { loadScenes, sceneIndexForLocation } from './scenes'
 import { regionsToMeshes } from './brainBridge'
-import { parseLocation, replaceCanonicalLocation } from './router'
+import { parseLocation, replaceCanonicalLocation, type CanonicalQueryInput } from './router'
 import { nextIndex, prevIndex } from './nav'
 import OverlayPanel from './overlays/OverlayPanel'
 import { useIsNarrow } from '../useMediaQuery'
@@ -22,13 +22,17 @@ export default function LearnSidebar() {
   const setCameraConfig = useSceneStore((s) => s.setCameraConfig)
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const setMode = useViewerStore((s) => s.setMode)
+  const routeSequenceRef = useRef<Pick<CanonicalQueryInput, 'sequenceKind' | 'sequenceName'> | null>(null)
 
   useEffect(() => {
-    loadScenes()
+    const loc = parseLocation(window.location.search)
+    routeSequenceRef.current = loc.sequenceKind && loc.sequenceName
+      ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName }
+      : null
+    loadScenes({ sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName })
       .then((all) => {
         setScenes(all)
         setMode('k11')
-        const loc = parseLocation(window.location.search)
         const start = sceneIndexForLocation(all, loc)
         goto(start >= 0 ? start : 0, loc.step)
       })
@@ -56,7 +60,7 @@ export default function LearnSidebar() {
   }, [])
 
   useEffect(() => {
-    if (scene) replaceCanonicalLocation({ configName: scene.configName, sceneId: scene.id, step })
+    if (scene) replaceCanonicalLocation({ ...(routeSequenceRef.current ?? {}), configName: scene.configName, sceneId: scene.id, step })
   }, [scene, step])
 
   if (loadError) throw loadError

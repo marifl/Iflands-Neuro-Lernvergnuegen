@@ -158,18 +158,23 @@ describe('loadScenes', () => {
     await expect(loadScenes()).rejects.toThrow('Sequenz-Step "vcpt" hat kein overlay.scene')
   })
 
-  it('lehnt presentation-Sequenzen als Scene-Quelle laut ab', async () => {
+  it('laedt Presentation-Sequenzen als first-class Scene-Quelle', async () => {
     mockFetch({
       '/assets/atlas-canonical/atlas-config.json': {
-        ...configWith([], {}),
-        presentation: { 'kapitel11-vorlesung': { label_de: 'Vorlesung', steps: ['broca-areal'] } },
+        ...configWith([], {
+          vcpt: configNode('vcpt'),
+        }),
+        presentation: { 'kapitel11-vorlesung': { label_de: 'Vorlesung', steps: ['vcpt'] } },
       },
+      '/scenes/vcpt.json': scene('vcpt', 10),
     })
 
     await expect(loadScenes({
-      sequenceKind: 'presentation' as never,
+      sequenceKind: 'presentation',
       sequenceName: 'kapitel11-vorlesung',
-    })).rejects.toThrow('Sequenz-Art "presentation" ist nicht scene-ladbar')
+    })).resolves.toMatchObject([
+      { id: 'vcpt', configName: 'vcpt' },
+    ])
   })
 
   it('wirft laut bei doppelten Sequenz-Steps', async () => {

@@ -1,13 +1,13 @@
 import { targetMeshesForCamera, type AtlasConfigFile, type ConfigCamera, type ConfigurationNode, type SequenceNode } from '../viewer/atlas/atlasConfig'
 import { loadCatalog, type AtlasCatalog } from '../viewer/atlas/atlasCatalog'
-import type { SceneLocation } from './router'
+import type { SceneLocation, SceneSequenceKind } from './router'
 import { SceneSchema, type Scene } from './types'
 
 const CONFIG_URL = '/assets/atlas-canonical/atlas-config.json'
 const DEFAULT_SEQUENCE_KIND = 'learning'
 const DEFAULT_SEQUENCE_NAME = 'kapitel11-pfad'
 
-type SequenceKind = 'learning'
+export type SequenceKind = SceneSequenceKind
 
 export interface LoadScenesOptions {
   sequenceKind?: SequenceKind
@@ -33,8 +33,7 @@ async function fetchJson(url: string): Promise<unknown> {
 }
 
 function sequenceMap(file: AtlasConfigFile, kind: SequenceKind): Record<string, SequenceNode> {
-  if (kind !== 'learning') throw new Error(`scenes: Sequenz-Art "${kind}" ist nicht scene-ladbar`)
-  const sequences = file.learning
+  const sequences = kind === 'learning' ? file.learning : file.presentation
   if (!sequences || typeof sequences !== 'object') {
     throw new Error(`scenes: Config enthaelt keine Sequenzen fuer "${kind}"`)
   }

@@ -4,7 +4,7 @@ import type { ColorMode, Lang } from './ontology'
 import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMode, type ViewMode } from './viewerStore'
 import { sceneIndexForLocation } from '../scene/scenes'
 import { useSceneStore } from '../scene/sceneStore'
-import { parseLocation, replaceCanonicalLocation, type SceneLocation } from '../scene/router'
+import { parseLocation, replaceCanonicalLocation, SCENE_SEQUENCE_KINDS, type SceneLocation } from '../scene/router'
 
 export const VIEWER_STATE_SNAPSHOT_VERSION = 1
 
@@ -91,6 +91,14 @@ function routeStepValue(value: unknown, field: string): number {
   return step
 }
 
+function optionalSequenceKind(value: unknown): SceneLocation['sequenceKind'] {
+  if (value === undefined || value === null) return undefined
+  if (typeof value === 'string' && (SCENE_SEQUENCE_KINDS as readonly string[]).includes(value)) {
+    return value as SceneLocation['sequenceKind']
+  }
+  throw new Error('Viewer-State-Snapshot: route.sequenceKind hat einen ungueltigen Wert')
+}
+
 function vec3Value(value: unknown, field: string): [number, number, number] {
   if (!Array.isArray(value) || value.length !== 3) {
     throw new Error(`Viewer-State-Snapshot: ${field} muss ein [x,y,z]-Array sein`)
@@ -172,10 +180,16 @@ function parseRoute(value: unknown): SceneLocation | null {
   if (!isRecord(value)) throw new Error('Viewer-State-Snapshot: route muss ein Objekt sein')
   const configName = optionalString(value.configName, 'route.configName')
   const sceneId = optionalString(value.sceneId, 'route.sceneId')
+  const sequenceKind = optionalSequenceKind(value.sequenceKind)
+  const sequenceName = optionalString(value.sequenceName, 'route.sequenceName') ?? undefined
+  if ((sequenceKind === undefined) !== (sequenceName === undefined)) {
+    throw new Error('Viewer-State-Snapshot: route.sequenceKind und route.sequenceName muessen gemeinsam gesetzt sein')
+  }
   if (!configName && !sceneId) {
     throw new Error('Viewer-State-Snapshot: route braucht configName oder sceneId')
   }
   return {
+    ...(sequenceKind && sequenceName ? { sequenceKind, sequenceName } : {}),
     configName,
     sceneId,
     step: routeStepValue(value.step, 'route.step'),

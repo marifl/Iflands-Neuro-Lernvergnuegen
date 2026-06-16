@@ -194,7 +194,8 @@ dim_opacity = 0.12
 [configurations.broca-areal.cuts]
 enabled = false
 [configurations.broca-areal.overlay]
-kind = "image"
+kind = "prose"
+scene = "broca-areal"
 [configurations.broca-areal.sequencing]
 presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
@@ -290,6 +291,7 @@ dim_opacity = 0.12
 enabled = false
 [configurations.basalganglienschleifen.overlay]
 kind = "flowchart"
+scene = "basalganglienschleifen"
 [configurations.basalganglienschleifen.sequencing]
 presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"

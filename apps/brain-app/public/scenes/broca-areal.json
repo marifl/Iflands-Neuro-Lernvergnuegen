@@ -1,0 +1,16 @@
+{
+  "id": "broca-areal",
+  "section": "11.3.3 · rostrokaudale Organisation",
+  "author": "ifland",
+  "order": 15,
+  "title": "Broca-Areal — Area 44/45 als VLPFC-Anker",
+  "brain": { "regions": ["inhibition-network"], "camera": "lateral-left" },
+  "overlay": { "kind": "prose", "position": "right", "size": "md" },
+  "companion": {
+    "summary": "Die linke Area 44/45 markiert im Vortrag den lateralen PFC-Anker für Sprache, Handlungsplanung und kontrollierte Sequenzierung. Die Config fokussiert die Jülich-Areale 44 und 45 direkt über Carve, während die Scene den Zusammenhang zur exekutiven Inhibitions- und Kontrollachse sichtbar hält.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, rostrokaudale Organisation" },
+      { "key": "config.default.toml", "note": "configuration broca-areal: Jülich Area 44/45" }
+    ]
+  }
+}

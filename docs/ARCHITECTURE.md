@@ -181,10 +181,10 @@ Viewer-Code geändert werden. Viewer-Code ist erst nötig, wenn ein neuer
 Overlay-Typ, eine neue 3D-Layer-Klasse oder eine neue Interaktion eingeführt
 wird.
 
-Bekannte aktuelle Grenze: `src/scene/scenes.ts` lädt derzeit nur
-`learning`-Sequenzen first-class. `presentation.kapitel11-vorlesung` ist im
-TOML authored, aber der Vortragspfad muss noch als gleichwertige ladbare
-Sequenz verdrahtet werden.
+`src/scene/scenes.ts` lädt `learning`- und `presentation`-Sequenzen
+first-class. Der Sequenzkontext läuft über `?sequence=<kind>.<name>` und wird
+in Unterrichts-Snapshots mitpersistiert; `build-config` verlangt deshalb für
+alle Sequence-Steps ein `overlay.scene`.
 
 Konkretes Beispiel VCPT:
 
@@ -505,10 +505,9 @@ Neue Animation für eine Folie:
 
 Diese Punkte sind bewusst nicht als erledigt dokumentiert:
 
-1. `presentation.kapitel11-vorlesung` muss first-class ladbar werden.
-2. Default-Objekt-Sichtbarkeit muss pro Preset/Scene-Config steuerbar werden,
+1. Default-Objekt-Sichtbarkeit muss pro Preset/Scene-Config steuerbar werden,
    ohne URL- oder Snapshot-State zu überschreiben.
-3. Animationen brauchen eine config-getriebene Registry statt eines
+2. Animationen brauchen eine config-getriebene Registry statt eines
    hardcodierten Einzelplayers.
 4. Timeline-/Keyframe-State muss die gleiche State-Priorität explizit
    übernehmen, sobald Keyframes und GLB/GLTF-Assets persistiert werden.

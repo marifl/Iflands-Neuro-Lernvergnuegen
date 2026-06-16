@@ -78,4 +78,39 @@ describe('LearnSidebar', () => {
     await waitFor(() => expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2'))
     expect(useSceneStore.getState().step).toBe(2)
   })
+
+  it('laedt Presentation-Sequenzen aus dem Deep-Link und erhaelt sie kanonisch', async () => {
+    mockFetch({
+      '/assets/atlas-canonical/atlas-config.json': {
+        preset: 'kapitel11',
+        presets: { kapitel11: { label_de: 'Kapitel 11', scopes: {} } },
+        configurations: {
+          vcpt: configNode('vcpt'),
+        },
+        presentation: {
+          'kapitel11-vorlesung': {
+            label_de: 'Vorlesung Kapitel 11',
+            steps: ['vcpt'],
+          },
+        },
+        learning: {
+          'kapitel11-pfad': {
+            label_de: 'Lernpfad Kapitel 11',
+            steps: [],
+          },
+        },
+      },
+      '/scenes/vcpt.json': scene('vcpt', 10),
+    })
+    window.history.replaceState(null, '', '/?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=1')
+
+    render(<LearnSidebar />)
+
+    await screen.findByTestId('overlay-panel')
+    await waitFor(() =>
+      expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=1'),
+    )
+    expect(useSceneStore.getState().scenes.map((loaded) => loaded.configName)).toEqual(['vcpt'])
+    expect(useSceneStore.getState().step).toBe(1)
+  })
 })

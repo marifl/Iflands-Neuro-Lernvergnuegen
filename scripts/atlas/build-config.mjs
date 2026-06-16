@@ -530,14 +530,13 @@ function validateSequencingRefs(name, c, config) {
   }
 }
 
-function validateSequence(name, sequence, config, { requiresScene }) {
+function validateSequence(name, sequence, config) {
   const steps = new Set()
   for (const step of sequence.steps ?? []) {
     if (steps.has(step)) throw new Error(`build-config: ${name} enthaelt doppelten Step "${step}"`)
     steps.add(step)
     const stepConfig = config.configurations?.[step]
     if (!stepConfig) throw new Error(`build-config: ${name} referenziert unbekannten Step "${step}"`)
-    if (!requiresScene) continue
     const sceneId = stepConfig.overlay?.scene
     if (!sceneId) throw new Error(`build-config: ${name} Step "${step}" hat kein overlay.scene`)
   }
@@ -600,7 +599,7 @@ export function validateConfig(config, idx, ctx = {}) {
       assertKnownKeys(seq, SEQUENCE_KEYS, `${seqKind} "${seqName}"`)
       assertString(seq.label_de, `${seqKind} "${seqName}".label_de`)
       assertStringArray(seq.steps, `${seqKind} "${seqName}".steps`)
-      validateSequence(`${seqKind} "${seqName}"`, seq, config, { requiresScene: seqKind === 'learning' })
+      validateSequence(`${seqKind} "${seqName}"`, seq, config)
     }
   }
 }

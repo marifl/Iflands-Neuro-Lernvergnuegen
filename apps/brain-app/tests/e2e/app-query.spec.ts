@@ -50,6 +50,31 @@ test('Config-Deep-Link rekonstruiert Figur- und Szenenzustand', async ({ page })
   await expectBrainCanvas(page)
 })
 
+test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({ page }) => {
+  await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=basalganglienschleifen')
+
+  await expect(page.getByLabel('Szene springen')).toBeVisible({ timeout: 60_000 })
+  await expect(page.getByRole('heading', { name: 'Drei Basalganglien-Schleifen' })).toBeVisible()
+  await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
+  await expect(page).toHaveURL(/config=basalganglienschleifen/)
+  await expect(page).toHaveURL(/scene=basalganglienschleifen/)
+
+  await page.keyboard.press('ArrowRight')
+
+  await expect(page.getByRole('heading', { name: 'Broca-Areal — Area 44/45 als VLPFC-Anker' })).toBeVisible()
+  await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
+  await expect(page).toHaveURL(/config=broca-areal/)
+  await expect(page).toHaveURL(/scene=broca-areal/)
+
+  await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=0')
+
+  await expect(page.getByRole('heading', { name: 'Visueller Konzentrationsverlaufstest (VCPT)' })).toBeVisible()
+  await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
+  await expect(page).toHaveURL(/config=vcpt/)
+  await expect(page).toHaveURL(/scene=vcpt/)
+  await expectBrainCanvas(page)
+})
+
 test('Explorer-Deep-Link zeigt freie Strukturansicht ohne Presenter-Chrome', async ({ page }) => {
   await page.goto('/?mode=explore')
 

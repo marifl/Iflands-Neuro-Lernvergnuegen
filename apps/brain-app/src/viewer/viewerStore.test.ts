@@ -225,6 +225,25 @@ describe('viewer state snapshots', () => {
     expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2')
   })
 
+  it('erhaelt die first-class Presentation-Sequenz in Unterrichts-Snapshots', () => {
+    window.history.replaceState(null, '', '/?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.state.route).toEqual({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: 'vcpt',
+      sceneId: 'vcpt',
+      step: 2,
+    })
+
+    window.history.replaceState(null, '', '/?mode=phineas')
+    importViewerStateSnapshot(snapshot)
+
+    expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+  })
+
   it('laesst Snapshot-Import gegen Config-Link-Defaults gewinnen', () => {
     window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=2')
     const snapshot = exportViewerStateSnapshot()

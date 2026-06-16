@@ -22,6 +22,23 @@ describe('router', () => {
     expect(query).toBe('?config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring&step=1')
     expect(parseLocation(query)).toEqual({ configName: 'p3a-konfliktmonitoring', sceneId: 'p3a-konfliktmonitoring', step: 1 })
   })
+  it('roundtript Presentation-Sequenzlinks', () => {
+    const query = toCanonicalQuery({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: 'vcpt',
+      sceneId: 'vcpt',
+      step: 2,
+    })
+    expect(query).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+    expect(parseLocation(query)).toEqual({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: 'vcpt',
+      sceneId: 'vcpt',
+      step: 2,
+    })
+  })
   it('serialisiert reine Figure-Config-Links', () => {
     expect(toConfigQuery('basalganglienschleifen')).toBe('?config=basalganglienschleifen')
   })

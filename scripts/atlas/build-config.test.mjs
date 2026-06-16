@@ -144,7 +144,7 @@ test('validateConfig wirft bei totem Preset', () => {
 test('validateConfig wirft bei totem Step-Verweis', () => {
   const idx = indexCatalog(CATALOG)
   const cfg = baseConfig({
-    configurations: { a: VALID_CONFIGURATION },
+    configurations: { a: { ...VALID_CONFIGURATION, overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' } } },
     presentation: { seq: { label_de: 'Sequenz', steps: ['a', 'missing'] } },
   })
   assert.throws(() => validateConfig(cfg, idx), /Step "missing"/)
@@ -166,7 +166,7 @@ test('validateConfig prueft sequencing-Referenzen', () => {
   )
 })
 
-test('validateConfig verlangt overlay.scene fuer learning-Sequenzsteps', () => {
+test('validateConfig verlangt overlay.scene fuer first-class Sequenzsteps', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
     () => validateConfig(baseConfig({
@@ -175,10 +175,17 @@ test('validateConfig verlangt overlay.scene fuer learning-Sequenzsteps', () => {
     }), idx, VALIDATION_CONTEXT),
     /learning "learn" Step "a" hat kein overlay\.scene/,
   )
-  assert.doesNotThrow(() => validateConfig(baseConfig({
-    configurations: { a: VALID_CONFIGURATION },
+  assert.throws(
+    () => validateConfig(baseConfig({
+      configurations: { a: VALID_CONFIGURATION },
       presentation: { seq: { label_de: 'Vorlesung', steps: ['a'] } },
-    }), idx, VALIDATION_CONTEXT))
+    }), idx, VALIDATION_CONTEXT),
+    /presentation "seq" Step "a" hat kein overlay\.scene/,
+  )
+  assert.doesNotThrow(() => validateConfig(baseConfig({
+    configurations: { a: { ...VALID_CONFIGURATION, overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' } } },
+    presentation: { seq: { label_de: 'Vorlesung', steps: ['a'] } },
+  }), idx, VALIDATION_CONTEXT))
 })
 
 test('validateConfig erlaubt wiederverwendete overlay.scene fuer eindeutige Learning-Steps', () => {
