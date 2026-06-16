@@ -3,7 +3,7 @@ import { useViewerStore } from '../viewer/viewerStore'
 import { useSceneStore } from './sceneStore'
 import { loadScenes, sceneIndexForLocation } from './scenes'
 import { regionsToMeshes } from './brainBridge'
-import { parseLocation, replaceCanonicalLocation, type CanonicalQueryInput } from './router'
+import { ROUTE_CHANGE_EVENT, parseLocation, replaceCanonicalLocation, type CanonicalQueryInput } from './router'
 import { nextIndex, prevIndex } from './nav'
 import OverlayPanel from './overlays/OverlayPanel'
 import { useIsNarrow } from '../useMediaQuery'
@@ -38,6 +38,29 @@ export default function LearnSidebar() {
       })
       .catch((error: unknown) => setLoadError(error instanceof Error ? error : new Error(String(error))))
   }, [setScenes, goto, setMode])
+
+  useEffect(() => {
+    const syncFromRoute = () => {
+      const loc = parseLocation(window.location.search)
+      const state = useSceneStore.getState()
+      if (!state.scenes.length) return
+      try {
+        const next = sceneIndexForLocation(state.scenes, loc)
+        const nextIndex = next >= 0 ? next : 0
+        if (state.index !== nextIndex || state.step !== loc.step) {
+          state.goto(nextIndex, loc.step)
+        }
+      } catch (error) {
+        setLoadError(error instanceof Error ? error : new Error(String(error)))
+      }
+    }
+    window.addEventListener(ROUTE_CHANGE_EVENT, syncFromRoute)
+    window.addEventListener('popstate', syncFromRoute)
+    return () => {
+      window.removeEventListener(ROUTE_CHANGE_EVENT, syncFromRoute)
+      window.removeEventListener('popstate', syncFromRoute)
+    }
+  }, [])
 
   const scene = scenes[index]
   useEffect(() => {

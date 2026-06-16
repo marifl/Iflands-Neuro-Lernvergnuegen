@@ -107,8 +107,18 @@ describe('loadScenes', () => {
     })
 
     await expect(loadScenes()).resolves.toMatchObject([
-      { id: 'vcpt', configName: 'vcpt', configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 } },
-      { id: 'p3a-konfliktmonitoring', configName: 'p3a-konfliktmonitoring', configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 } },
+      {
+        id: 'vcpt',
+        configName: 'vcpt',
+        configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 },
+        sequence: { kind: 'learning', name: 'kapitel11-pfad', label: 'Lernpfad Kapitel 11', stepIndex: 0, stepCount: 2 },
+      },
+      {
+        id: 'p3a-konfliktmonitoring',
+        configName: 'p3a-konfliktmonitoring',
+        configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 },
+        sequence: { kind: 'learning', name: 'kapitel11-pfad', label: 'Lernpfad Kapitel 11', stepIndex: 1, stepCount: 2 },
+      },
     ])
   })
 
@@ -173,7 +183,11 @@ describe('loadScenes', () => {
       sequenceKind: 'presentation',
       sequenceName: 'kapitel11-vorlesung',
     })).resolves.toMatchObject([
-      { id: 'vcpt', configName: 'vcpt' },
+      {
+        id: 'vcpt',
+        configName: 'vcpt',
+        sequence: { kind: 'presentation', name: 'kapitel11-vorlesung', label: 'Vorlesung', stepIndex: 0, stepCount: 1 },
+      },
     ])
   })
 
@@ -224,6 +238,13 @@ describe('sceneIndexForLocation', () => {
     ...SceneSchema.parse(scene(id, order)),
     configName,
     configCameraTargetMeshes: [],
+    sequence: {
+      kind: 'learning',
+      name: 'kapitel11-pfad',
+      label: 'Lernpfad Kapitel 11',
+      stepIndex: order,
+      stepCount: 3,
+    },
   })
   const scenes = [
     loaded('vcpt', 50),

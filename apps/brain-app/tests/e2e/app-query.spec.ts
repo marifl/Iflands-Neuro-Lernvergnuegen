@@ -121,6 +121,9 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
   await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=basalganglienschleifen')
 
   await expect(page.getByLabel('Szene springen')).toBeVisible({ timeout: 60_000 })
+  await expect(page.getByText('Vortrag')).toBeVisible()
+  await expect(page.getByText('Kapitel 11 — Vorlesung')).toBeVisible()
+  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 1 / 4 · Step 1')
   await expect(page.getByRole('heading', { name: 'Drei Basalganglien-Schleifen' })).toBeVisible()
   await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
   await expect(page).toHaveURL(/config=basalganglienschleifen/)
@@ -129,6 +132,7 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
   await page.keyboard.press('ArrowRight')
 
   await expect(page.getByRole('heading', { name: 'Broca-Areal — Area 44/45 als VLPFC-Anker' })).toBeVisible()
+  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 2 / 4 · Step 1')
   await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
   await expect(page).toHaveURL(/config=broca-areal/)
   await expect(page).toHaveURL(/scene=broca-areal/)

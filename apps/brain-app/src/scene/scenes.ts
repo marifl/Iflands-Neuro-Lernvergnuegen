@@ -18,6 +18,13 @@ export type LoadedScene = Scene & {
   configName: string
   configCamera?: ConfigCamera
   configCameraTargetMeshes: string[]
+  sequence: {
+    kind: SequenceKind
+    name: string
+    label: string
+    stepIndex: number
+    stepCount: number
+  }
 }
 
 interface SequenceSceneRef {
@@ -77,12 +84,14 @@ function cameraTargetMeshes(ref: SequenceSceneRef, catalog: AtlasCatalog | null)
   return targetMeshesForCamera(catalog, ref.configName, ref.config.camera)
 }
 
-async function loadScene(ref: SequenceSceneRef, catalog: AtlasCatalog | null): Promise<LoadedScene> {
+type LoadedSequenceContext = LoadedScene['sequence']
+
+async function loadScene(ref: SequenceSceneRef, catalog: AtlasCatalog | null, sequence: LoadedSequenceContext): Promise<LoadedScene> {
   const scene = SceneSchema.parse(await fetchJson(`/scenes/${ref.id}.json`))
   if (scene.id !== ref.id) throw new Error(`scenes: ${ref.id}.json enthaelt id "${scene.id}"`)
   const configCameraTargetMeshes = cameraTargetMeshes(ref, catalog)
-  if (!ref.config.camera) return { ...scene, configName: ref.configName, configCameraTargetMeshes }
-  return { ...scene, configName: ref.configName, configCamera: ref.config.camera, configCameraTargetMeshes }
+  if (!ref.config.camera) return { ...scene, configName: ref.configName, configCameraTargetMeshes, sequence }
+  return { ...scene, configName: ref.configName, configCamera: ref.config.camera, configCameraTargetMeshes, sequence }
 }
 
 export function sceneIndexForLocation(scenes: LoadedScene[], loc: SceneLocation): number {
@@ -105,12 +114,20 @@ export function sceneIndexForLocation(scenes: LoadedScene[], loc: SceneLocation)
 /** Laedt + validiert Szenen in der Reihenfolge der versionierten Config-Sequenz. */
 export async function loadScenes(options: LoadScenesOptions = {}): Promise<LoadedScene[]> {
   const file = await loadConfigFile()
+  const kind = options.sequenceKind ?? DEFAULT_SEQUENCE_KIND
+  const name = options.sequenceName ?? DEFAULT_SEQUENCE_NAME
   const sequence = sequenceFor(
     file,
-    options.sequenceKind ?? DEFAULT_SEQUENCE_KIND,
-    options.sequenceName ?? DEFAULT_SEQUENCE_NAME,
+    kind,
+    name,
   )
   const refs = scenesForSequence(file, sequence)
   const catalog = needsCameraTargetMeshes(refs) ? await loadCatalog() : null
-  return Promise.all(refs.map((ref) => loadScene(ref, catalog)))
+  return Promise.all(refs.map((ref, index) => loadScene(ref, catalog, {
+    kind,
+    name,
+    label: sequence.label_de,
+    stepIndex: index,
+    stepCount: refs.length,
+  })))
 }
