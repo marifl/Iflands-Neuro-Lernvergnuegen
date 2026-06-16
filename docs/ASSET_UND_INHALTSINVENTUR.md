@@ -198,8 +198,8 @@ aber kein vollständiger neuroanatomischer Thesaurus.
 
 ## Folgearbeit nach Vortrag
 
-1. DLPFC/VLPFC-Lernpfad für WCST, Fluency und Tower of London didaktisch
-   ausbauen: Übungslogik, Vertiefungsfragen und studentische Progression.
+1. Studentischen Selbstlernmodus auf vorhandene DLPFC/VLPFC-Steps legen:
+   Übungslogik, Vertiefungsfragen und Progression ohne neuen Parallelpfad.
 2. Optionales Destrieux-Carve auf TARO prüfen, wenn Sulcus/Gyrus-Präzision im
    Explorer wirklich gebraucht wird.
 3. Optionaler realistischer Hirnshader erst nach Lesbarkeits- und Mobile-Gate.
