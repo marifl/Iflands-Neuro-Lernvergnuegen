@@ -254,6 +254,49 @@ describe('contract validation', () => {
     ]))
   })
 
+  it('validiert Authoring-State in Snapshots gegen Asset-Manifest und Timeline-Refs', () => {
+    const report = validateBrainAppContracts({
+      ...validFixture,
+      snapshots: [
+        {
+          version: VIEWER_STATE_SNAPSHOT_VERSION,
+          state: {
+            authoring: {
+              schemaVersion: 1,
+              registryContext: {
+                collectionIds: ['device-eeg-10-20'],
+                bonusContextIds: ['eeg-erp-vcpt'],
+              },
+              authoringScenes: [
+                {
+                  ...authoringScene,
+                  assetInstances: [
+                    {
+                      ...authoringScene.assetInstances[0],
+                      assetId: 'asset:missing',
+                    },
+                  ],
+                },
+              ],
+              timelines: [timeline],
+              activeSceneId: authoringScene.sceneId,
+              activeTimeline: {
+                timelineId: timeline.timelineId,
+                stepId: timeline.restore.stepId,
+                keyframeId: timeline.restore.keyframeId,
+              },
+            },
+          },
+        },
+      ],
+    })
+
+    expect(report.ok).toBe(false)
+    expect(report.errors).toContain(
+      'snapshots[0].state.authoring.authoringScenes[0].assetInstances[0].assetId: asset "asset:missing" ist nicht im Asset-Manifest',
+    )
+  })
+
   it('parst Snapshots ohne Store-Mutation und weist unbekannte Versionen laut ab', () => {
     const snapshot = parseViewerStateSnapshot({
       version: VIEWER_STATE_SNAPSHOT_VERSION,

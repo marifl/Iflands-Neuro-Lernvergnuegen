@@ -1,4 +1,5 @@
 import { expect, test, type Page } from '@playwright/test'
+import { readFile } from 'node:fs/promises'
 
 async function expectBrainCanvas(page: Page) {
   const canvas = page.locator('canvas')
@@ -73,6 +74,91 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
   await expect(page).toHaveURL(/config=vcpt/)
   await expect(page).toHaveURL(/scene=vcpt/)
   await expectBrainCanvas(page)
+})
+
+test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async ({ page }) => {
+  const snapshot = {
+    version: 1,
+    state: {
+      authoring: {
+        schemaVersion: 1,
+        registryContext: {
+          collectionIds: ['device-eeg-10-20'],
+          bonusContextIds: ['eeg-erp-vcpt'],
+        },
+        authoringScenes: [
+          {
+            schemaVersion: 1,
+            sceneId: 'vcpt-device-authoring',
+            assetInstances: [
+              {
+                instanceId: 'eeg-cap-01',
+                assetId: 'asset:eeg-cap',
+                collectionId: 'device-eeg-10-20',
+                visible: true,
+                transform: { position: [0, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
+                origin: { policy: 'asset-origin' },
+                parts: [{ partId: 'electrode-fz', label: 'Fz electrode', pickable: true, role: 'selectable' }],
+              },
+            ],
+          },
+        ],
+        timelines: [
+          {
+            schemaVersion: 1,
+            timelineId: 'vcpt-device-timeline',
+            restore: { stepId: 'vcpt-device-step', keyframeId: 'fz-highlight' },
+            steps: [
+              {
+                stepId: 'vcpt-device-step',
+                order: 0,
+                durationMs: 3000,
+                keyframes: [{ keyframeId: 'fz-highlight', atMs: 0, channels: {} }],
+              },
+            ],
+          },
+        ],
+        activeSceneId: 'vcpt-device-authoring',
+        activeTargetRef: {
+          targetKind: 'asset-part',
+          collectionId: 'device-eeg-10-20',
+          instanceId: 'eeg-cap-01',
+          partId: 'electrode-fz',
+        },
+        activeTimeline: {
+          timelineId: 'vcpt-device-timeline',
+          stepId: 'vcpt-device-step',
+          keyframeId: 'fz-highlight',
+        },
+      },
+    },
+  }
+  await page.goto('/?mode=explore')
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+
+  await page.getByLabel('Unterrichts-Snapshot-Datei').setInputFiles({
+    name: 'authoring-snapshot.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(snapshot)),
+  })
+
+  await page.getByRole('button', { name: /Datei/ }).click()
+  const [download] = await Promise.all([
+    page.waitForEvent('download'),
+    page.getByRole('button', { name: 'Exportieren' }).click(),
+  ])
+  const downloadPath = await download.path()
+  expect(downloadPath).toBeTruthy()
+  const exported = JSON.parse(await readFile(downloadPath!, 'utf8'))
+
+  expect(exported.state.authoring.activeSceneId).toBe('vcpt-device-authoring')
+  expect(exported.state.authoring.activeTargetRef).toEqual(snapshot.state.authoring.activeTargetRef)
+  expect(exported.state.authoring.activeTimeline).toEqual(snapshot.state.authoring.activeTimeline)
+  expect(exported.state.authoring.authoringScenes[0].assetInstances[0].transform).toEqual({
+    position: [0, 1.2, 0],
+    rotation: [0, 0.25, 0],
+    scale: [0.8, 0.8, 0.8],
+  })
 })
 
 test('Explorer-Deep-Link zeigt freie Strukturansicht ohne Presenter-Chrome', async ({ page }) => {

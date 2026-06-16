@@ -235,12 +235,20 @@ State-Priorität bleibt dieselbe wie bei Config und Snapshot:
    Sitzungszustand wiederherstellt.
 4. Explizite User-Interaktion gewinnt danach als neuer lokaler Zustand.
 
-Künftiger Authoring-/Sequence-State muss diese Reihenfolge übernehmen. Nach
-einem Snapshot-Import darf `ConfigLinkStateApplier` keine importierten
+`apps/brain-app/src/viewer/authoringSnapshotStore.ts` übernimmt diese
+Reihenfolge für authored Objekt- und Timeline-State. `ViewerStateSnapshot`
+exportiert/importiert `AuthoringSnapshotState` mit Registry-Kontext,
+`AuthoringScene`-Dokumenten, Timeline-Dokumenten, aktivem Target,
+Timeline-Cursor und Animation-State. Fehlende aktive Scenes, Keyframes,
+Objekt- oder Part-IDs werden beim Import laut abgelehnt; ein Browser-Smoke
+importiert und exportiert einen minimalen EEG-Device-Snapshot über die
+Footer-Datei-UI.
+
+Nach einem Snapshot-Import darf `ConfigLinkStateApplier` keine importierten
 AuthoringScene-Felder direkt wieder mit Config-Defaults überschreiben.
 
 Nicht Teil dieses Vertrags: GLB/GLTF-Loader, Picking im Runtime-Viewer,
-TransformControls, Timeline-/Keyframe-Dokumente, Commands/History oder ein
+TransformControls, Commands/History oder ein
 Browser-Editor-Roundtrip. Diese Slices bauen später auf dem Vertrag auf, ohne
 eine zweite Objekt-, Loader- oder Timeline-Architektur einzuführen.
 
@@ -401,8 +409,8 @@ Adapterplan:
    verworfen.
 
 Nicht Teil dieses Slices: Timeline-UI, Player-Migration, Loader, Picking,
-TransformControls, Commands/History, Snapshot-Roundtrip und Browser-Editor-
-Smoke. Diese Arbeiten bleiben Folge-Slices auf Basis dieses Vertrags.
+TransformControls, Commands/History und Browser-Editor-Smoke. Diese Arbeiten
+bleiben Folge-Slices auf Basis dieses Vertrags.
 
 ## Animation-Authoring
 
@@ -509,9 +517,7 @@ Diese Punkte sind bewusst nicht als erledigt dokumentiert:
    ohne URL- oder Snapshot-State zu überschreiben.
 2. Animationen brauchen eine config-getriebene Registry statt eines
    hardcodierten Einzelplayers.
-4. Timeline-/Keyframe-State muss die gleiche State-Priorität explizit
-   übernehmen, sobald Keyframes und GLB/GLTF-Assets persistiert werden.
-5. Visual-Abnahme braucht Browser-Smokes für Dozenten-, Studenten- und
+3. Visual-Abnahme braucht Browser-Smokes für Dozenten-, Studenten- und
    Developer-Happy-Path.
 
 ## Verifikation

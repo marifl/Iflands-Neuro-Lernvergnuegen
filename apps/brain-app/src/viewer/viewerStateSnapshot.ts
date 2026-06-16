@@ -1,6 +1,11 @@
 import { CUT_AXES, clampCutPosition, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
 import type { ColorMode, Lang } from './ontology'
+import {
+  parseAuthoringSnapshotState,
+  useAuthoringSnapshotStore,
+  type AuthoringSnapshotState,
+} from './authoringSnapshotStore'
 import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMode, type ViewMode } from './viewerStore'
 import { sceneIndexForLocation } from '../scene/scenes'
 import { useSceneStore } from '../scene/sceneStore'
@@ -18,6 +23,7 @@ const VIEW_MODES = ['full', 'k11'] as const satisfies readonly ViewMode[]
 
 export interface ViewerStateSnapshotState {
   activePreset?: ColorPreset | null
+  authoring: AuthoringSnapshotState | null
   appMode: AppMode
   cameraPose: CameraPose | null; cameraView: string | null
   clipAtlasOverlay: boolean
@@ -219,6 +225,7 @@ function currentSnapshotState(): ViewerStateSnapshotState {
   const state = useViewerStore.getState()
   return {
     activePreset: state.activePreset,
+    authoring: useAuthoringSnapshotStore.getState().authoring,
     appMode: state.appMode,
     cameraPose: state.cameraPose,
     cameraView: state.cameraView?.name ?? null,
@@ -258,6 +265,7 @@ function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): Vi
   const colorMode = enumValue(raw.colorMode, COLOR_MODES, fallback.colorMode, 'colorMode')
   return {
     activePreset,
+    authoring: parseAuthoringSnapshotState(raw.authoring),
     appMode: enumValue(raw.appMode, APP_MODES, fallback.appMode, 'appMode'),
     cameraPose: parseCameraPose(raw.cameraPose),
     cameraView: optionalString(raw.cameraView, 'cameraView'),
@@ -313,6 +321,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
   const snapshot = parseViewerStateSnapshot(raw)
   const snapshotState = snapshot.state
   applyRoute(snapshotState.route)
+  useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(snapshotState.authoring)
   useViewerStore.setState({
     activePreset: snapshotState.activePreset,
     appMode: snapshotState.appMode,

@@ -1,4 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
+import {
+  AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+  useAuthoringSnapshotStore,
+  type AuthoringSnapshotState,
+} from './authoringSnapshotStore'
 import { useViewerStore } from './viewerStore'
 import {
   VIEWER_STATE_SNAPSHOT_VERSION,
@@ -127,6 +132,7 @@ describe('viewer state snapshots', () => {
   beforeEach(() => {
     window.history.replaceState(null, '', '/')
     hasImportedSnapshotRouteForCurrentLocation()
+    useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
     useViewerStore.setState({
       appMode: 'explore',
       activePreset: null,
@@ -242,6 +248,73 @@ describe('viewer state snapshots', () => {
     importViewerStateSnapshot(snapshot)
 
     expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+  })
+
+  it('exportiert und importiert AuthoringScene-State fuer Objekt- und Timeline-Roundtrips', () => {
+    const authoring: AuthoringSnapshotState = {
+      schemaVersion: AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+      registryContext: {
+        collectionIds: ['device-eeg-10-20'],
+        bonusContextIds: ['eeg-erp-vcpt'],
+      },
+      authoringScenes: [
+        {
+          schemaVersion: 1,
+          sceneId: 'vcpt-device-authoring',
+          assetInstances: [
+            {
+              instanceId: 'eeg-cap-01',
+              assetId: 'asset:eeg-cap',
+              collectionId: 'device-eeg-10-20',
+              visible: true,
+              transform: { position: [0, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
+              origin: { policy: 'asset-origin' },
+              parts: [{ partId: 'electrode-fz', label: 'Fz electrode', pickable: true, role: 'selectable' }],
+            },
+          ],
+        },
+      ],
+      timelines: [
+        {
+          schemaVersion: 1,
+          timelineId: 'vcpt-device-timeline',
+          restore: { stepId: 'vcpt-device-step', keyframeId: 'fz-highlight' },
+          steps: [
+            {
+              stepId: 'vcpt-device-step',
+              order: 0,
+              durationMs: 3000,
+              keyframes: [{ keyframeId: 'fz-highlight', atMs: 0, channels: {} }],
+            },
+          ],
+        },
+      ],
+      activeSceneId: 'vcpt-device-authoring',
+      activeTargetRef: {
+        targetKind: 'asset-part',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+        partId: 'electrode-fz',
+      },
+      activeTimeline: {
+        timelineId: 'vcpt-device-timeline',
+        stepId: 'vcpt-device-step',
+        keyframeId: 'fz-highlight',
+      },
+      animationState: [
+        { bindingId: 'fz-pulse', clipId: 'clip:fz-pulse', action: 'scrub', timeMs: 1200 },
+      ],
+    }
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(authoring)
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.state.authoring).toEqual(authoring)
+
+    useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
+    importViewerStateSnapshot(snapshot)
+
+    expect(useAuthoringSnapshotStore.getState().authoring).toEqual(authoring)
   })
 
   it('laesst Snapshot-Import gegen Config-Link-Defaults gewinnen', () => {

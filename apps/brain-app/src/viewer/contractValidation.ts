@@ -49,6 +49,7 @@ interface ContractContext {
 
 const SNAPSHOT_VALIDATION_FALLBACK: ViewerStateSnapshotState = {
   activePreset: null,
+  authoring: null,
   appMode: 'explore',
   cameraPose: null,
   cameraView: null,
@@ -229,6 +230,10 @@ function validateSnapshot(snapshot: ViewerStateSnapshot, path: string, ctx: Cont
   if (route?.configName && ctx.configNames.size > 0 && !ctx.configNames.has(route.configName)) {
     add(ctx.errors, `${path}.state.route.configName`, `config "${route.configName}" ist nicht bekannt`)
   }
+  const authoring = snapshot.state.authoring
+  if (!authoring) return
+  authoring.authoringScenes.forEach((scene, index) => addAuthoringScene(scene, `${path}.state.authoring.authoringScenes[${index}]`, ctx))
+  authoring.timelines.forEach((timeline, index) => validateTimeline(timeline, `${path}.state.authoring.timelines[${index}]`, ctx))
 }
 
 export function validateBrainAppContracts(input: BrainAppContractFixture): BrainAppContractReport {
