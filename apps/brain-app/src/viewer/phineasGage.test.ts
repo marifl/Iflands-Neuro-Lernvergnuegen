@@ -44,8 +44,8 @@ describe('Phineas-Gage-Szene', () => {
   })
 
   it('macht die Modellannahme explizit statt ein Originalmodell zu behaupten', () => {
-    expect(PHINEAS_GAGE.assetNoteDe).toContain('kein importiertes Original-Gage-CT/GLB')
-    expect(PHINEAS_GAGE.assetNoteDe).toContain('Gage-GLB-Kandidaten liegen im Hauptrepo')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('kein montiertes Original-Gage-CT/GLB')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('Standalone unter /assets/phineas')
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
   })
 

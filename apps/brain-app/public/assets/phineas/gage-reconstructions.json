@@ -1,0 +1,37 @@
+{
+  "damasio1994": {
+    "entry": [-38, -46, -38],
+    "exit": [12, 118, 42],
+    "doi": "10.1126/science.8178168",
+    "note": "Approximation via standard skull + photographs. Earliest CT-informed reconstruction, entry below left zygomatic arch, exit through right frontal calvarium.",
+    "affectedParcels": [
+      "glasser-fp1-l", "glasser-fp2-l", "glasser-OFC-l",
+      "glasser-10v-l", "glasser-a24-l", "glasser-fp1-r"
+    ],
+    "color": "#e07b7b"
+  },
+  "ratiu2004": {
+    "entry": [-38, -42, -40],
+    "exit": [8, 112, 28],
+    "doi": "10.1089/089771504774129964",
+    "note": "Thin-slice CAT scan of actual exhumed skull + forensic analysis. Most anatomically precise trajectory based on physical skull measurements.",
+    "affectedParcels": [
+      "glasser-fp1-l", "glasser-fp2-l", "glasser-OFC-l",
+      "glasser-10v-l", "glasser-a24-l", "glasser-25-l",
+      "glasser-s32-l"
+    ],
+    "color": "#7bc4e0"
+  },
+  "vanhorn2012": {
+    "entry": [-38, -42, -38],
+    "exit": [6, 110, 5],
+    "doi": "10.1371/journal.pone.0037454",
+    "note": "Tractography-based modeling with DTI connectivity analysis. Quantified white-matter disruption affecting ~4% of total cortical connections and ~11% of unique left-hemispheric inter-regional connections.",
+    "affectedParcels": [
+      "glasser-fp1-l", "glasser-fp2-l", "glasser-OFC-l",
+      "glasser-10v-l", "glasser-a24-l", "glasser-25-l",
+      "glasser-s32-l", "glasser-p32-l", "glasser-a10p-l"
+    ],
+    "color": "#a0e07b"
+  }
+}

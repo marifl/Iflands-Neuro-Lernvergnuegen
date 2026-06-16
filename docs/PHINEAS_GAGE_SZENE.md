@@ -18,30 +18,29 @@ Referenzen:
 
 ## Asset-Entscheidung
 
-Im aktuellen Standalone-Runtimepfad ist kein Original-Gage-CT und kein
-Gage-Schädel-GLB importiert. Gerendert werden die generischen Kontextmodelle
+Die Gage-Kandidaten liegen jetzt im Standalone-Repo:
+
+1. `apps/brain-app/public/assets/phineas/phineas-gage-skull-lod.glb`
+2. `apps/brain-app/public/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb`
+3. `apps/brain-app/public/assets/phineas/phineas-gage-iron-rod.glb`
+4. `apps/brain-app/public/assets/phineas/gage-reconstructions.json`
+5. `apps/brain-app/public/assets/phineas/asset-manifest.json`
+
+Die wissenschaftlichen Unterlagen liegen unter `raw_protected/phineas-gage/`.
+Damit verweist der Standalone-Bestand nicht mehr auf lokale Dateien außerhalb
+dieses Repos.
+
+Der aktuelle Viewer rendert trotzdem noch die generischen Kontextmodelle
 `apps/brain-app/public/assets/context/skull.glb`, `head.glb` und die
-Knochen-Metadaten `skull.json`.
-
-Der lokale Hauptrepo-Checkout
-`/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone` enthält aber bereits
-Gage-Kandidaten und Quellenartefakte:
-
-1. `public/figs3d/v2/glb/phineas-gage-skull-lod.glb`
-2. `public/figs3d/v2/glb/phineas-gage-skull-calvarium-cut-lod.glb`
-3. `public/figs3d/v2/glb/phineas-gage-iron-rod.glb`
-4. `public/figs3d/v2/data/gage-reconstructions.json`
-
-Diese Dateien sind ein echter Importpfad für den nächsten Slice, aber noch kein
-Beleg, dass der neue Standalone-Viewer sie korrekt in den TARO-/BodyParts3D-
-Raum montiert. Dafür müssen Koordinatenraum, Skalierung, Layer-Vertrag,
-Attribution und Browser-Smoke separat geprüft werden.
+Knochen-Metadaten `skull.json`. Die Gage-GLBs sind noch nicht in den
+TARO-/BodyParts3D-Raum montiert. Dafür müssen Koordinatenraum, Skalierung,
+Layer-Vertrag, Attribution und Browser-Smoke separat geprüft werden.
 
 Deshalb bleibt die Szene bewusst eine schematische TARO-Viewer-Rekonstruktion.
-Die UI benennt das explizit: Das Schädelmodell ist nicht der historische
-Originalschädel, die Trajektorie ist eine didaktische Übertragung in den
-Viewer-Raum. Zusätzlich weist die UI darauf hin, dass Gage-GLB-Kandidaten im
-Hauptrepo liegen, aber noch nicht in diesen Standalone-Viewer importiert sind.
+Die UI benennt das explizit: Das gerenderte Schädelmodell ist nicht der
+historische Originalschädel, die Trajektorie ist eine didaktische Übertragung in
+den Viewer-Raum, und die echten Gage-Kandidaten liegen erst als Standalone-
+Assets unter `/assets/phineas`.
 
 ## Implementierungsannahmen
 

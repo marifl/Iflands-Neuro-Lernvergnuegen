@@ -22,15 +22,16 @@ Genauigkeit behaupten, als die Assets hergeben.
 | --- | --- | --- |
 | Echte Runtime-Assets | BodyParts3D-/TARO-Hirn, Kopf, Schädel, Atlas-GLBs und Pick-JSONs | Herkunft bleibt über `THIRD-PARTY-NOTICES.md`, Asset-Namen und Pipeline-Doku nachvollziehbar |
 | Registrierte Atlas-Carves | Jülich/DKT/Brodmann auf TARO-Oberfläche übertragen | als didaktisch registrierte Atlasdarstellung behandeln, nicht als morphometrisch exakte Einzelperson |
-| Schematische Fallstudie | Phineas-Gage-Modus mit TARO-/Schädelmodell und animierter Stange | UI und Doku müssen klar machen, dass dies kein echtes Gage-CT/GLB ist |
+| Schematische Fallstudie | Phineas-Gage-Modus mit TARO-/Schädelmodell und animierter Stange | UI und Doku müssen klar machen, dass dies noch kein montiertes echtes Gage-CT/GLB ist |
 | Rekonstruktion/Spiegelung | gespiegelte oder rekonstruierte Strukturen aus Asset-Pipeline | im Audit/Inventar sichtbar halten; nicht still als Originaldaten ausgeben |
 
 Release-Regel: Wenn ein Asset schematisch, registriert, gespiegelt oder
 rekonstruiert ist, muss diese Einschränkung entweder im UI-Kontext, in der
 Quellen-/Inventardoku oder im jeweiligen Lerntext sichtbar sein. Für den
 aktuellen Vortragspfad ist diese Transparenz über Phineas-UI, Atlas-/Pipeline-
-Doku und `THIRD-PARTY-NOTICES.md` ausreichend. Ein echtes Gage-CT-Derivat
-bleibt ein separater Import-/Lizenz-Slice, nicht Release-Blocker.
+Doku und `THIRD-PARTY-NOTICES.md` ausreichend. Die Gage-GLB-Kandidaten sind
+jetzt im Standalone-Repo versioniert; ihre Montage in den aktuellen Viewer
+bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 
 ## Bestand
 
@@ -54,7 +55,7 @@ bleibt ein separater Import-/Lizenz-Slice, nicht Release-Blocker.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
-| Gage-Schädel-Kandidat | nicht im aktuellen Standalone-Runtimepfad; lokal im Hauptrepo und extern über NIH 3D `3DPX-003118` / Harvard-Library-Sketchfab | CT-abgeleitetes Modell verfügbar, aber erst nach eindeutig gepinntem Quell-, Lizenz- und Transformpfad importieren |
+| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist Standalone-Bestand, aber noch nicht in den aktuellen Viewer montiert; Lizenz und Transform vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
@@ -80,22 +81,22 @@ Geprüft am 2026-06-16:
    die App das Modell nicht still übernehmen. Ein Import muss die konkrete
    Quelle pinnen, Attribution und eventuell Share-Alike-Pflichten in
    `THIRD-PARTY-NOTICES.md` nachziehen und das Asset-Manifest ergänzen.
-4. Nach Hinweis von Marcus wurde der lokale Hauptrepo-Checkout geprüft:
-   `/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone` enthält bereits
-   `public/figs3d/v2/glb/phineas-gage-skull-lod.glb`,
+4. Nach Hinweis von Marcus wurden die belastbaren lokalen Artefakte in dieses
+   Standalone-Repo kopiert:
+   `apps/brain-app/public/assets/phineas/phineas-gage-skull-lod.glb`,
    `phineas-gage-skull-calvarium-cut-lod.glb`,
-   `phineas-gage-iron-rod.glb` und
-   `public/figs3d/v2/data/gage-reconstructions.json`. Das ist ein lokaler
-   Importkandidat, aber noch kein fertiger Standalone-Viewer-Import.
+   `phineas-gage-iron-rod.glb`,
+   `gage-reconstructions.json` und `asset-manifest.json`. Die wissenschaftlichen
+   PDFs/OCR-Artefakte liegen unter `raw_protected/phineas-gage/`.
 
 Entscheidung: Im aktuellen Build bleibt der Runtime-Pfad
 `/assets/context/skull.glb` ein BodyParts3D-/TARO-Kontextschädel, kein
-historischer Gage-Schädel. Ein späterer echter Import sollte bevorzugt aus dem
-lokalen Hauptrepo-Bestand kommen, in einen eigenen Pfad wie
-`/assets/phineas/gage-skull.glb` wandern und ein JSON-Manifest mit Quelle,
-Lizenz, Hash, Transform/Skalierung und Viewer-Smoke bekommen. Bis dieser Import
-tatsächlich im Viewer hängt, muss die UI weiterhin ausweisen, dass kein
-Original-Gage-CT/GLB in diesen Standalone-Viewer importiert ist.
+historischer Gage-Schädel. Die historischen Kandidaten liegen jetzt lokal unter
+`/assets/phineas`, sind aber noch nicht in den Viewer montiert. Das Manifest
+pinnt Quelle, Lizenzhinweis, Hash, Transform/Skalierung und Node-Namen; der Test
+`phineasStandaloneAssets.test.ts` prüft die Dateien gegen ihre SHA-256-Hashes.
+Bis die Montage tatsächlich im Viewer hängt, muss die UI weiterhin ausweisen,
+dass kein Original-Gage-CT/GLB gerendert wird.
 
 Quellen:
 
@@ -153,7 +154,7 @@ Quellen:
 | ICA | keine | animierte Komponententrennung im 3D-Raum | später |
 | P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
-| Phineas Gage | kein importiertes Original-Gage-CT/GLB im aktuellen Standalone-Viewer | lokaler Hauptrepo-Import von Gage-Schädel, Calvarium-Cut und Eisenstange nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
+| Phineas Gage | kein montiertes Original-Gage-CT/GLB im aktuellen Viewer | Standalone-Assets unter `/assets/phineas` plus Quellen unter `raw_protected/phineas-gage`; nächster Schritt wäre Montage nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |
 
 ## Shader- und Texturbewertung

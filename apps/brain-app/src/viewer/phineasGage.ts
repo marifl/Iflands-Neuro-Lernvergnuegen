@@ -98,7 +98,7 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
-  assetNoteDe: 'Aktueller Viewer: kein importiertes Original-Gage-CT/GLB, sondern TARO-/BodyParts3D-Kontext; Gage-GLB-Kandidaten liegen im Hauptrepo.',
+  assetNoteDe: 'Aktueller Viewer: das gerenderte Schädelmodell bleibt TARO-/BodyParts3D-Kontext, kein montiertes Original-Gage-CT/GLB; Gage-Schädel, Calvarium-Cut und Eisenstange liegen im Standalone unter /assets/phineas.',
   trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 schematisch in den Viewer-Raum übertragen.',
   rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer als gekürzter, schematischer Trajektorienmarker dargestellt.',
   steps: [

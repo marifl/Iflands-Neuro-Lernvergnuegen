@@ -55,6 +55,31 @@ Oberflaechen im `fsaverage`-Raum mit folgenden Kartierungen
 
 ---
 
+## Phineas-Gage-Schädel und Quellenbestand
+
+- **Verwendung:** Standalone-Kandidaten unter
+  `apps/brain-app/public/assets/phineas/` für Schädel, Calvarium-Cut,
+  Tampiereisen und Rekonstruktionsvergleich. Die wissenschaftlichen
+  Arbeitsquellen liegen unter `raw_protected/phineas-gage/`.
+- **Provenienz:** CT-basierte Rekonstruktionslinie nach Ratiu et al. (2004)
+  sowie Vergleichsdaten nach Damasio et al. (1994) und Van Horn et al. (2012).
+  Die importierten GLBs sind noch nicht als montiertes Runtime-Modell
+  freigegeben; sie sind zuerst ein lokaler, hash-gepinnter Standalone-Bestand.
+- **Lizenzstatus:** Legacy-Manifeste führen `CC-BY-SA-4.0`. Externe Einträge
+  nennen teils abweichende Creative-Commons-Labels. Vor öffentlicher
+  Weiterverbreitung muss die konkrete Quelle samt Attribution endgültig gepinnt
+  werden.
+- **Zitationen:** Ratiu, P., Talos, I. F., Haker, S., Lieberman, D., & Everett,
+  P. (2004). *The tale of Phineas Gage, digitally remastered*. Journal of
+  Neurotrauma, 21(5), 637–643. <https://doi.org/10.1089/089771504774129964>
+  Damasio, H., Grabowski, T., Frank, R., Galaburda, A. M., & Damasio, A. R.
+  (1994). *Science, 264*(5162), 1102–1105.
+  <https://doi.org/10.1126/science.8178168> Van Horn, J. D., Irimia, A.,
+  Torgerson, C. M., Chambers, M. C., Kikinis, R., & Toga, A. W. (2012).
+  *PLOS ONE, 7*(5), e37454. <https://doi.org/10.1371/journal.pone.0037454>
+
+---
+
 ## Weitere Daten
 
 - **Allen Brain Atlas — Ontologie/Graph** (`public/companion/data/allen_graph.json`):
