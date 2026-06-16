@@ -203,7 +203,12 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
   await expectBrainCanvas(page)
 })
 
-test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async ({ page }) => {
+const AUTHORING_ROUNDTRIP_VIEWPORTS = [
+  { name: 'Desktop', size: { width: 1440, height: 900 } },
+  { name: 'Schmal', size: { width: 390, height: 844 } },
+] as const
+
+async function runAuthoringSnapshotRoundtrip(page: Page) {
   const loadedAuthoringScene = createAuthoringSceneFromManifestSlot(eegAssetManifest, 'vcpt-device-authoring', {
     collectionId: 'device-eeg-10-20',
     slotId: 'eeg-device-model',
@@ -308,7 +313,14 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
     buffer: Buffer.from(JSON.stringify(exported)),
   })
   await expectAuthoringInstancePosition(page, 'authoring-instance:device-eeg-10-20:eeg-cap-01', [5, 1.2, 0])
-})
+}
+
+for (const viewport of AUTHORING_ROUNDTRIP_VIEWPORTS) {
+  test(`Authoring-Snapshot roundtript Device-State ueber Import und Export (${viewport.name})`, async ({ page }) => {
+    await page.setViewportSize(viewport.size)
+    await runAuthoringSnapshotRoundtrip(page)
+  })
+}
 
 test('Preset-Deep-Links setzen unterschiedliche Default-Sichtbarkeit', async ({ page }) => {
   await page.goto('/?mode=explore&preset=kapitel11')
