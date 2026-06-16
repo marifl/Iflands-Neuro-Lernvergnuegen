@@ -98,7 +98,7 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
     >
       <button
         type="button"
-        onClick={() => select(node.id)}
+        onClick={(event) => select(node.id, { additive: event.shiftKey || event.metaKey || event.ctrlKey })}
         onMouseEnter={() => setHovered(node.id)}
         onMouseLeave={() => setHovered(null)}
         title={node.lateralityNote ?? undefined}
@@ -193,7 +193,7 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
         <button
           type="button"
           aria-pressed={selectionState === 'partial' ? 'mixed' : selectionState === 'all'}
-          onClick={() => select(node.id)}
+          onClick={(event) => select(node.id, { additive: event.shiftKey || event.metaKey || event.ctrlKey })}
           style={{
             display: 'flex',
             alignItems: 'center',

@@ -26,6 +26,7 @@ describe('target picking', () => {
       activeObjectGraphId: null,
       selectedLabels: null,
       selectedSlugs: new Set(),
+      selectedTargetRefs: [],
       selectMode: 'group',
     })
   })
@@ -42,10 +43,44 @@ describe('target picking', () => {
     })
     expect(state.activeObjectGraphId).toBe('target:ontology-node:taro:left-insula')
     expect([...state.selectedSlugs]).toEqual(['left-insula'])
+    expect(state.selectedTargetRefs).toEqual([
+      {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'left-insula',
+      },
+    ])
+  })
+
+  it('erweitert Hirnstruktur-Picks ueber denselben TargetRef-Auswahlpfad', () => {
+    useViewerStore.getState().pick('left-insula')
+    useViewerStore.getState().pick('right-insula', { additive: true })
+
+    const state = useViewerStore.getState()
+    expect(state.selected).toBe('right-insula')
+    expect(state.activeTargetRef).toEqual({
+      targetKind: 'ontology-node',
+      collectionId: 'taro',
+      ontologyNodeId: 'right-insula',
+    })
+    expect(state.selectedTargetRefs).toEqual([
+      {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'left-insula',
+      },
+      {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'right-insula',
+      },
+    ])
+    expect([...state.selectedSlugs]).toEqual(['left-insula', 'right-insula'])
+    expect(state.selectedLabels?.de).toBe('2 Ziele')
   })
 
   it('selektiert Asset-Parts ohne separaten Device-Auswahlpfad', () => {
-    useViewerStore.getState().pickTarget({
+    const target = {
       targetRef: {
         targetKind: 'asset-part',
         collectionId: 'device-eeg-10-20',
@@ -55,7 +90,8 @@ describe('target picking', () => {
       objectGraphId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
       selectionId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
       label: 'Fz electrode',
-    })
+    } as const
+    useViewerStore.getState().pickTarget(target)
 
     const state = useViewerStore.getState()
     expect(state.selected).toBe('target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz')
@@ -67,9 +103,51 @@ describe('target picking', () => {
     })
     expect(state.selectedLabels?.de).toBe('Fz electrode')
     expect([...state.selectedSlugs]).toEqual(['target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz'])
+    expect(state.selectedTargetRefs).toEqual([target.targetRef])
 
     state.select(null)
     expect(useViewerStore.getState().activeTargetRef).toBeNull()
+  })
+
+  it('mischt Ontologie-Targets und Asset-Parts in einer Mehrfachauswahl', () => {
+    const assetTarget = {
+      targetRef: {
+        targetKind: 'asset-part',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+        partId: 'electrode-fz',
+      },
+      objectGraphId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
+      selectionId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
+      label: 'Fz electrode',
+    } as const
+
+    useViewerStore.getState().pick('left-insula')
+    useViewerStore.getState().pickTarget(assetTarget, { additive: true })
+
+    const mixed = useViewerStore.getState()
+    expect(mixed.selected).toBe(assetTarget.selectionId)
+    expect(mixed.activeTargetRef).toEqual(assetTarget.targetRef)
+    expect(mixed.selectedTargetRefs).toEqual([
+      {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'left-insula',
+      },
+      assetTarget.targetRef,
+    ])
+    expect([...mixed.selectedSlugs]).toEqual(['left-insula', assetTarget.selectionId])
+    expect(mixed.selectedLabels?.de).toBe('2 Ziele')
+
+    mixed.pickTarget(assetTarget, { additive: true })
+    const toggled = useViewerStore.getState()
+    expect(toggled.selected).toBe('left-insula')
+    expect(toggled.activeTargetRef).toEqual({
+      targetKind: 'ontology-node',
+      collectionId: 'taro',
+      ontologyNodeId: 'left-insula',
+    })
+    expect([...toggled.selectedSlugs]).toEqual(['left-insula'])
   })
 })
 
@@ -249,6 +327,7 @@ describe('viewer state snapshots', () => {
       activeObjectGraphId: null,
       selectedLabels: null,
       selectedSlugs: new Set(),
+      selectedTargetRefs: [],
       showAtlasDkt: false,
       showAtlasJulich: false,
       showCarveBrodmann: false,
@@ -563,6 +642,13 @@ describe('viewer state snapshots', () => {
     expect(state.cuts.axial.pos).toBe(-110)
     expect(state.rodPhase).toBe(1)
     expect(state.selected).toBe('left-cingulate-gyrus')
+    expect(state.selectedTargetRefs).toEqual([
+      {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'left-cingulate-gyrus',
+      },
+    ])
     expect(state.isolated).toBe('left-cingulate-gyrus')
     expect(state.showCarveDkt).toBe(true)
     expect(state.pickedAtlasSlug).toBe('julich3-area-44-ifg-l')

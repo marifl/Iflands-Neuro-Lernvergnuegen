@@ -12,7 +12,7 @@ import {
 } from './ontology'
 import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
-import type { SequenceTargetRef } from './sequenceTargetRef'
+import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
 import { pickTargetFromLegacyMeshName, type ViewerPickTarget } from './targetPicking'
 
 export type { CutAxis, CutConfig, CutMode }
@@ -45,6 +45,9 @@ export type SelectMode = 'group' | 'direct'
 export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
 export type AuthoringTransformMode = 'translate' | 'rotate' | 'scale'
 export type AuthoringTransformSpace = 'world' | 'local'
+export interface SelectionOptions {
+  additive?: boolean
+}
 export const APP_MODES = ['learn', 'explore', 'phineas', 'atlas'] as const satisfies readonly AppMode[]
 export const AUTHORING_TRANSFORM_MODES = ['translate', 'rotate', 'scale'] as const satisfies readonly AuthoringTransformMode[]
 export const AUTHORING_TRANSFORM_SPACES = ['world', 'local'] as const satisfies readonly AuthoringTransformSpace[]
@@ -55,6 +58,72 @@ function emptyCuts(): Record<CutAxis, CutConfig> {
     sagittal: { on: false, pos: 0 },
     coronal: { on: false, pos: 0 },
     axial: { on: false, pos: 0 },
+  }
+}
+
+function selectableTrees(state: ViewerState): Array<OntologyNode | null | undefined> {
+  return [state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux]
+}
+
+function sameTargetRef(a: SequenceTargetRef, b: SequenceTargetRef): boolean {
+  return objectGraphIdForTarget(a) === objectGraphIdForTarget(b)
+}
+
+function targetSelectionId(targetRef: SequenceTargetRef): string {
+  return targetRef.targetKind === 'ontology-node' ? targetRef.ontologyNodeId : objectGraphIdForTarget(targetRef)
+}
+
+function targetSlugs(state: ViewerState, targetRef: SequenceTargetRef): string[] {
+  const selectionId = targetSelectionId(targetRef)
+  if (targetRef.targetKind !== 'ontology-node') return [selectionId]
+  const chain = nodeChain(selectableTrees(state), selectionId)
+  const node = chain ? chain[chain.length - 1] : null
+  return node ? flattenStructures(node).map((n) => n.id) : [selectionId]
+}
+
+function targetLabels(state: ViewerState, targetRef: SequenceTargetRef, fallbackLabel?: string): Record<Lang, string> | null {
+  if (targetRef.targetKind === 'ontology-node') {
+    const chain = nodeChain(selectableTrees(state), targetRef.ontologyNodeId)
+    return chain ? chain[chain.length - 1].labels : null
+  }
+  const label = fallbackLabel ?? targetSelectionId(targetRef)
+  return { de: label, la: label, en: label }
+}
+
+function toggleTargetRef(selection: readonly SequenceTargetRef[], targetRef: SequenceTargetRef): SequenceTargetRef[] {
+  if (selection.some((ref) => sameTargetRef(ref, targetRef))) {
+    return selection.filter((ref) => !sameTargetRef(ref, targetRef))
+  }
+  return [...selection, targetRef]
+}
+
+function selectionStateForTargets(
+  state: ViewerState,
+  selectedTargetRefs: readonly SequenceTargetRef[],
+  fallbackLabel?: string,
+): Pick<ViewerState, 'selected' | 'activeTargetRef' | 'activeObjectGraphId' | 'selectedTargetRefs' | 'selectedSlugs' | 'selectedLabels'> {
+  if (selectedTargetRefs.length === 0) {
+    return {
+      selected: null,
+      activeTargetRef: null,
+      activeObjectGraphId: null,
+      selectedTargetRefs: [],
+      selectedSlugs: new Set(),
+      selectedLabels: null,
+    }
+  }
+  const activeTargetRef = selectedTargetRefs[selectedTargetRefs.length - 1]
+  const selectedSlugs = new Set<string>()
+  for (const ref of selectedTargetRefs) for (const slug of targetSlugs(state, ref)) selectedSlugs.add(slug)
+  return {
+    selected: targetSelectionId(activeTargetRef),
+    activeTargetRef,
+    activeObjectGraphId: objectGraphIdForTarget(activeTargetRef),
+    selectedTargetRefs: [...selectedTargetRefs],
+    selectedSlugs,
+    selectedLabels: selectedTargetRefs.length > 1
+      ? { de: `${selectedTargetRefs.length} Ziele`, la: `${selectedTargetRefs.length} Ziele`, en: `${selectedTargetRefs.length} targets` }
+      : targetLabels(state, activeTargetRef, fallbackLabel),
   }
 }
 /** Einmaliger Kamera-Ausricht-Befehl. nonce erlaubt erneutes Ausloesen desselben Shots. */
@@ -115,6 +184,8 @@ interface ViewerState {
   authoringTransformFrozen: boolean
   /** Slugs der aktuellen Auswahl (bei Gruppen-Auswahl alle Blaetter; sonst genau eines). */
   selectedSlugs: Set<string>
+  /** Alle aktuell gewaehlten Targets; activeTargetRef bleibt das Primaerziel. */
+  selectedTargetRefs: SequenceTargetRef[]
   /** Label der Auswahl (auch fuer Gruppen, die nicht im slug->node-Index stehen). */
   selectedLabels: Record<Lang, string> | null
   selectMode: SelectMode
@@ -183,12 +254,12 @@ interface ViewerState {
   /** Eine Isolations-Ebene hoch (Esc); auf oberster Ebene Isolation verlassen. */
   isolateUp: () => void
   /** Auswahl setzen und die Eltern-Gruppen aufklappen (fuer Tree-Sync nach 3D-Klick). */
-  select: (id: string | null) => void
+  select: (id: string | null, options?: SelectionOptions) => void
   setSelectMode: (mode: SelectMode) => void
   /** 3D-Klick: respektiert selectMode (group = Gruppe der aktuellen Ebene, direct = Blatt). */
-  pick: (meshName: string) => void
+  pick: (meshName: string, options?: SelectionOptions) => void
   /** 3D-Klick mit bereits aufgeloestem SequenceTargetRef. */
-  pickTarget: (target: ViewerPickTarget) => void
+  pickTarget: (target: ViewerPickTarget, options?: SelectionOptions) => void
   setAuthoringTransformMode: (mode: AuthoringTransformMode) => void
   setAuthoringTransformSpace: (space: AuthoringTransformSpace) => void
   setAuthoringTransformSnap: (snap: boolean) => void
@@ -263,6 +334,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   authoringTransformSnap: false,
   authoringTransformFrozen: false,
   selectedSlugs: new Set(),
+  selectedTargetRefs: [],
   selectedLabels: null,
   selectMode: 'group',
   hovered: null,
@@ -351,48 +423,61 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     // path[0] ist die Baum-Wurzel (kein Isolations-Ziel) -> ab Laenge>2 eine Ebene hoch, sonst aus.
     st.setIsolated(path.length > 2 ? path[path.length - 2].id : null)
   },
-  select: (id) =>
+  select: (id, options) =>
     set((state) => {
       if (!id) {
         return {
           selected: null,
           activeTargetRef: null,
           activeObjectGraphId: null,
+          selectedTargetRefs: [],
           selectedSlugs: new Set(),
           selectedLabels: null,
         }
       }
       // Knoten in Hirn- ODER Kontext-Baum aufloesen: Gruppen-Auswahl markiert alle Blaetter.
-      const chain = nodeChain([state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux], id)
+      const chain = nodeChain(selectableTrees(state), id)
       const node = chain ? chain[chain.length - 1] : null
       const slugs = node ? flattenStructures(node).map((n) => n.id) : [id]
       const expanded = { ...state.expanded }
       const path = chain ? chain.slice(0, -1).map((n) => n.id) : state.ancestors.get(id) ?? []
       for (const groupId of path) expanded[groupId] = true
       const target = pickTargetFromLegacyMeshName(id)
+      if (options?.additive && target) {
+        return {
+          ...selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), target.label),
+          expanded,
+        }
+      }
       return {
         selected: id,
         activeTargetRef: target?.targetRef ?? null,
         activeObjectGraphId: target?.objectGraphId ?? null,
+        selectedTargetRefs: target ? [target.targetRef] : [],
         selectedSlugs: new Set(slugs),
         selectedLabels: node?.labels ?? null,
         expanded,
       }
     }),
   setSelectMode: (selectMode) => set({ selectMode }),
-  pick: (meshName) => {
+  pick: (meshName, options) => {
     const target = pickTargetFromLegacyMeshName(meshName)
     if (!target) return
-    get().pickTarget(target)
+    get().pickTarget(target, options)
   },
-  pickTarget: (target) => {
+  pickTarget: (target, options) => {
     const st = get()
     if (target.targetRef.targetKind !== 'ontology-node') {
       const label = target.label ?? target.objectGraphId
+      if (options?.additive) {
+        set((state) => selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), label))
+        return
+      }
       set({
         selected: target.selectionId,
         activeTargetRef: target.targetRef,
         activeObjectGraphId: target.objectGraphId,
+        selectedTargetRefs: [target.targetRef],
         selectedSlugs: new Set([target.selectionId]),
         selectedLabels: { de: label, la: label, en: label },
       })
@@ -400,13 +485,13 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     }
 
     const meshName = target.selectionId
-    if (st.selectMode === 'direct') return st.select(meshName)
+    if (st.selectMode === 'direct') return st.select(meshName, options)
     // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
-    const chain = nodeChain([st.ontology?.tree, st.context, st.julich, st.atlas3d.dkt, st.atlas3d.brodmann, st.atlas3d.destrieux], meshName)
-    if (!chain) return st.select(meshName)
+    const chain = nodeChain(selectableTrees(st), meshName)
+    if (!chain) return st.select(meshName, options)
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
     const selectionNode = chain[ctxIdx + 1] ?? chain[chain.length - 1]
-    st.select(selectionNode.id)
+    st.select(selectionNode.id, options)
   },
   setAuthoringTransformMode: (authoringTransformMode) => set({ authoringTransformMode }),
   setAuthoringTransformSpace: (authoringTransformSpace) => set({ authoringTransformSpace }),

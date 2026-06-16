@@ -324,6 +324,22 @@ test('Preset-Deep-Links setzen unterschiedliche Default-Sichtbarkeit', async ({ 
   await expectMeshVisibility(page, { 'left-insula': true, 'right-insula': true })
 })
 
+test('Strukturbaum-Mehrfachauswahl wirkt auf ein gemeinsames Selection-Set', async ({ page }) => {
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await page.getByPlaceholder('Struktur suchen…').fill('Insel (ganz)')
+
+  await page.getByRole('button', { name: /Insel \(ganz\) \(links\)/ }).click()
+  await page.getByRole('button', { name: /Insel \(ganz\) \(rechts\)/ }).click({ modifiers: ['Shift'] })
+
+  await expect(page.getByText('2 Ziele')).toBeVisible()
+  await page.getByRole('button', { name: /Werkzeug/ }).click()
+  await page.getByRole('button', { name: 'Auswahl ausblenden' }).click()
+  await expectMeshVisibility(page, { 'left-insula': false, 'right-insula': false })
+})
+
 test('Snapshot-Import gewinnt gegen Config-Sichtbarkeitsdefaults', async ({ page }) => {
   await page.goto('/?config=p3a-konfliktmonitoring')
 

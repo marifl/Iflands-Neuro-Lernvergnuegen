@@ -169,11 +169,12 @@ export default function CutPickBridge() {
         return
       }
       setPickedAtlasArea(null, null)
+      const additive = ev.shiftKey || ev.metaKey || ev.ctrlKey
       if (target) {
-        pickTarget(target)
+        pickTarget(target, { additive })
         updateAuthoringTarget(target)
         debugPickTarget(target)
-      } else {
+      } else if (!additive) {
         select(null) // Klick in den leeren Raum hebt die Auswahl auf
         debugPickTarget(null)
       }

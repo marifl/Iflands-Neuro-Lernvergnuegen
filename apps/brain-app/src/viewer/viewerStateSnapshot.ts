@@ -380,6 +380,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
     activeObjectGraphId: null,
     selectedLabels: null,
     selectedSlugs: new Set(),
+    selectedTargetRefs: [],
     showAtlasDkt: snapshotState.showAtlasDkt,
     showAtlasJulich: snapshotState.showAtlasJulich,
     showCarveBrodmann: snapshotState.showCarveBrodmann,
