@@ -1,6 +1,6 @@
 # Asset- und Inhaltsinventur
 
-Stand: 2026-06-15. Grundlage sind die aktuellen Runtime-Assets,
+Stand: 2026-06-16. Grundlage sind die aktuellen Runtime-Assets,
 Szenen-JSONs, `atlas-config.json`, `atlas-ontology.json`, Vortragstexte und
 Kapitel-11-Abbildungsmappings im Repo.
 
@@ -29,8 +29,8 @@ Release-Regel: Wenn ein Asset schematisch, registriert, gespiegelt oder
 rekonstruiert ist, muss diese Einschränkung entweder im UI-Kontext, in der
 Quellen-/Inventardoku oder im jeweiligen Lerntext sichtbar sein. Für den
 aktuellen Vortragspfad ist diese Transparenz über Phineas-UI, Atlas-/Pipeline-
-Doku und `THIRD-PARTY-NOTICES.md` ausreichend; echte Gage-Assets bleiben
-Feature-Backlog, nicht Release-Blocker.
+Doku und `THIRD-PARTY-NOTICES.md` ausreichend. Ein echtes Gage-CT-Derivat
+bleibt ein separater Import-/Lizenz-Slice, nicht Release-Blocker.
 
 ## Bestand
 
@@ -54,12 +54,47 @@ Feature-Backlog, nicht Release-Blocker.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
+| Gage-Schädel-Kandidat | nicht im Repo; extern: NIH 3D `3DPX-003118` / Harvard-Library-Sketchfab | CT-abgeleitetes Modell verfügbar, aber erst nach eindeutig gepinntem Quell- und Lizenzpfad importieren |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
 `atlas-surface-julich.glb` (~9 MB), `atlas-surface-dkt.glb` (~6.4 MB) und
 `brain.glb` (~6 MB). Für den Vortragspfad ist das akzeptabel, aber der Roh-Atlas
 bleibt ein Kandidat für späteres Lazy Loading.
+
+### Phineas-Gage-Schädel: Authentizität und Lizenz
+
+Geprüft am 2026-06-16:
+
+1. Die Countway Library beschreibt den 3D-Druckpfad als Datei von Graham Holt
+   auf Basis der 2004er Dünnschicht-CT-Scans von Ratiu und Talos. Das Original
+   bleibt in der Warren Anatomical Museum Collection; die Datei ist als
+   Lehr-/Druckderivat gedacht.
+2. NIH 3D `3DPX-003118` führt den Schädel als CT-Derivat des historischen
+   Gage-Schädels, erstellt mit 3DSlicer, MeshLab und NetFabb Basic, geteilt mit
+   Zustimmung der Warren Anatomical Museum Collection. Die Entry-Seite zeigt
+   `CC-BY-SA`; die NIH-3D-Nutzungsbedingungen delegieren die konkrete
+   Lizenzprüfung an die jeweilige Entry-Lizenz.
+3. Der Harvard-Library-Sketchfab-Mirror zeigt dasselbe Modell als downloadbares
+   3D-Modell mit `CC Attribution`. Wegen dieses Lizenz-Label-Unterschieds darf
+   die App das Modell nicht still übernehmen. Ein Import muss die konkrete
+   Quelle pinnen, Attribution und eventuell Share-Alike-Pflichten in
+   `THIRD-PARTY-NOTICES.md` nachziehen und das Asset-Manifest ergänzen.
+
+Entscheidung: Im aktuellen Build bleibt der Runtime-Pfad
+`/assets/context/skull.glb` ein BodyParts3D-/TARO-Kontextschädel, kein
+historischer Gage-Schädel. Ein späterer echter Import gehört in einen eigenen
+Pfad wie `/assets/phineas/gage-skull.glb` plus JSON-Manifest und Quellenhinweis.
+Bis dieser Import tatsächlich im Viewer hängt, muss die UI weiterhin
+`kein Original-Gage-CT/GLB` ausweisen.
+
+Quellen:
+
+1. Countway Library: <https://countway.harvard.edu/news/phineas-gage-3d-print>
+2. NIH 3D `3DPX-003118`: <https://3d.nih.gov/entries/3DPX-003118>
+3. NIH 3D Terms: <https://3d.nih.gov/terms>
+4. Harvard Library auf Sketchfab:
+   <https://sketchfab.com/3d-models/skull-of-phineas-gage-4299ef89b78a49b8a9ece34839c94ea3>
 
 ### Atlas-Abdeckung
 
@@ -79,7 +114,7 @@ bleibt ein Kandidat für späteres Lazy Loading.
 | ICA | keine | animierte Komponententrennung im 3D-Raum | später |
 | P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
-| Phineas Gage | kein Original-Gage-CT/GLB im Repo | lizenziertes Originalmodell, falls beschaffbar | nicht blockierend, UI dokumentiert schematisches TARO-Modell |
+| Phineas Gage | kein Original-Gage-CT/GLB im Repo | CT-abgeleitetes externes Gage-Modell nach Lizenz-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |
 
 ## Shader- und Texturbewertung
