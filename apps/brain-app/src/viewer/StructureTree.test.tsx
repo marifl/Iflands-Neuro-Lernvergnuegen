@@ -6,6 +6,25 @@ import type { Ontology } from './ontology'
 
 const labels = (value: string) => ({ de: value, la: value, en: value })
 
+function mockViewportWidth(width: number) {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn((query: string) => {
+      const maxWidth = /max-width:\s*(\d+)px/.exec(query)?.[1]
+      return {
+        matches: maxWidth ? width <= Number(maxWidth) : false,
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(() => false),
+      } as unknown as MediaQueryList
+    }),
+  })
+}
+
 const ontology: Ontology = {
   version: 'test',
   space: 'test',
@@ -36,6 +55,7 @@ const ontology: Ontology = {
 describe('StructureTree Gruppenknoten', () => {
   beforeEach(() => {
     HTMLElement.prototype.scrollIntoView = vi.fn()
+    mockViewportWidth(1200)
     useViewerStore.setState({
       ontology,
       context: null,
@@ -66,6 +86,24 @@ describe('StructureTree Gruppenknoten', () => {
     expect(useViewerStore.getState().selected).toBe('frontal')
     expect(useViewerStore.getState().selectedSlugs).toEqual(new Set(['area-a', 'area-b']))
     expect(screen.getAllByText('aktiv').length).toBeGreaterThan(0)
+  })
+
+  it('macht die mobile Expand-Zone als getrenntes 44px-Touch-Target erreichbar', () => {
+    mockViewportWidth(390)
+    render(<StructureTree />)
+
+    const expandButton = screen.getByRole('button', { name: 'Aufklappen Frontal' })
+    expect(expandButton).toHaveStyle({ width: '44px', minHeight: '44px' })
+
+    fireEvent.click(expandButton)
+    expect(screen.getByRole('button', { name: 'Area A' })).toBeInTheDocument()
+    expect(useViewerStore.getState().selected).toBeNull()
+
+    const groupButton = screen.getByRole('button', { name: /^Frontal/ })
+    expect(groupButton).toHaveStyle({ minHeight: '44px' })
+    fireEvent.click(groupButton)
+    expect(useViewerStore.getState().selected).toBe('frontal')
+    expect(useViewerStore.getState().selectedSlugs).toEqual(new Set(['area-a', 'area-b']))
   })
 
   it('aktiviert Atlas-Gruppen ohne fremde Atlanten mitzuschalten', () => {

@@ -12,6 +12,18 @@ if (getLocalStorageItem('ed-theme') === 'light') {
   document.documentElement.dataset.theme = 'light'
 }
 
+function isStandaloneDisplayMode() {
+  const nav = navigator as Navigator & { standalone?: boolean }
+  return window.matchMedia('(display-mode: standalone)').matches || nav.standalone === true
+}
+
+function applyDisplayModeDataset() {
+  document.documentElement.dataset.displayMode = isStandaloneDisplayMode() ? 'standalone' : 'browser'
+}
+
+applyDisplayModeDataset()
+window.matchMedia('(display-mode: standalone)').addEventListener('change', applyDisplayModeDataset)
+
 // Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas> setzt den Modus direkt;
 // ?mode=atlas ist DEBUG-ONLY (kanonischer fsaverage-Modus, nicht im Launcher/Modus-Flyout) — nur
 // ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus;

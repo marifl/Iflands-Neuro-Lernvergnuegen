@@ -933,7 +933,7 @@ export default function BodyParts3DViewer() {
       )}
       {/* Editorial-"Plate": Tinte-Rahmen um die ganze App (fhead / Mitte / Schriftfeld). */}
       <div
-        className="ed-frame"
+        className="ed-frame app-shell"
         style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--paper)' }}
       >
         {/* ── Kopfleiste (fhead) ── */}

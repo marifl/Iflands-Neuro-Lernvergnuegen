@@ -361,13 +361,26 @@ test('Mobile Explorer zeigt Auswahlaktionen direkt am Struktur-HUD', async ({ pa
   await expect.poll(async () => {
     const box = await page.locator('.ed-foot').boundingBox()
     return Math.round(box?.height ?? 0)
-  }).toBeLessThan(90)
+  }).toBeLessThan(156)
+  await expect.poll(async () => (
+    page.locator('.app-shell').evaluate((element) => getComputedStyle(element).borderBottomLeftRadius)
+  )).toBe('0px')
   await expect.poll(async () => (
     page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).display)
-  )).toBe('flex')
+  )).toBe('grid')
   await expect.poll(async () => (
     page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).overflowX)
-  )).toBe('auto')
+  )).toBe('visible')
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length)
+  )).toBe(4)
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => {
+      const footer = element.getBoundingClientRect()
+      const lastButton = element.querySelector('.col:last-child .flyout-trigger')?.getBoundingClientRect()
+      return lastButton ? Math.round(footer.bottom - lastButton.bottom) : -1
+    })
+  )).toBeLessThanOrEqual(2)
   await expect.poll(async () => (
     page.locator('.ed-foot .flyout-icon').first().evaluate((element) => getComputedStyle(element).display)
   )).toBe('flex')
@@ -401,6 +414,22 @@ test('Mobile Explorer zeigt Auswahlaktionen direkt am Struktur-HUD', async ({ pa
     return box?.height ?? 0
   }).toBeGreaterThan(500)
 
+  const expandHit = drawer.locator('.structure-expand-hit').first()
+  const labelHit = expandHit.locator('xpath=following-sibling::button[contains(@class, "structure-label-hit")]')
+  await expect(expandHit).toBeVisible()
+  await expect.poll(async () => {
+    const box = await expandHit.boundingBox()
+    return Math.min(box?.width ?? 0, box?.height ?? 0)
+  }).toBeGreaterThanOrEqual(44)
+  await expandHit.click()
+  await expect(labelHit).toHaveAttribute('aria-pressed', 'false')
+
+  await expect(labelHit).toBeVisible()
+  await expect.poll(async () => {
+    const box = await labelHit.boundingBox()
+    return box?.height ?? 0
+  }).toBeGreaterThanOrEqual(44)
+
   await page.getByPlaceholder('Struktur suchen…').fill('Insel (ganz)')
   await page.getByRole('button', { name: /Insel \(ganz\) \(links\)/ }).click()
 
@@ -408,6 +437,113 @@ test('Mobile Explorer zeigt Auswahlaktionen direkt am Struktur-HUD', async ({ pa
   await expect(page.getByRole('button', { name: 'Isolieren' })).toBeVisible()
   await page.getByRole('button', { name: 'Ausblenden' }).click()
   await expectMeshVisibility(page, { 'left-insula': false })
+})
+
+test('Mobile Footer-Menue reagiert auf echte Touch-Taps', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
+  })
+  const page = await context.newPage()
+  try {
+    await page.goto('http://127.0.0.1:5174/?mode=explore&preset=explorer')
+
+    await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+    await expectBrainCanvas(page)
+    await expect.poll(async () => (
+      page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).overflowX)
+    )).toBe('visible')
+    await page.getByRole('button', { name: /Werkzeug/ }).tap()
+    await expect(page.getByRole('button', { name: 'Verschieben' })).toBeVisible()
+  } finally {
+    await context.close()
+  }
+})
+
+test('Mobile Rahmen ist nur in installierter PWA unten gerundet', async ({ browser }) => {
+  const browserContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
+  })
+  const browserPage = await browserContext.newPage()
+  try {
+    await browserPage.goto('http://127.0.0.1:5174/?mode=explore&preset=explorer')
+    await expect(browserPage.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+    await expect.poll(async () => (
+      browserPage.locator('.app-shell').evaluate((element) => getComputedStyle(element).borderBottomLeftRadius)
+    )).toBe('0px')
+  } finally {
+    await browserContext.close()
+  }
+
+  const standaloneContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
+  })
+  await standaloneContext.addInitScript(() => {
+    const originalMatchMedia = window.matchMedia.bind(window)
+    window.matchMedia = (query: string) => {
+      if (query === '(display-mode: standalone)') {
+        return {
+          matches: true,
+          media: query,
+          onchange: null,
+          addEventListener: () => {},
+          removeEventListener: () => {},
+          addListener: () => {},
+          removeListener: () => {},
+          dispatchEvent: () => false,
+        } as MediaQueryList
+      }
+      return originalMatchMedia(query)
+    }
+  })
+  const standalonePage = await standaloneContext.newPage()
+  try {
+    await standalonePage.goto('http://127.0.0.1:5174/?mode=explore&preset=explorer')
+    await expect(standalonePage.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+    await expect.poll(async () => (
+      standalonePage.locator('.app-shell').evaluate((element) => getComputedStyle(element).borderBottomLeftRadius)
+    )).toBe('28px')
+    await expect.poll(async () => (
+      standalonePage.locator('.app-shell').evaluate((element) => getComputedStyle(element).borderTopLeftRadius)
+    )).toBe('0px')
+  } finally {
+    await standaloneContext.close()
+  }
+})
+
+test('Touch-Landscape nutzt kompakten Dock und breitere Ontologie', async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: { width: 932, height: 430 },
+    hasTouch: true,
+    isMobile: true,
+  })
+  const page = await context.newPage()
+  try {
+    await page.goto('http://127.0.0.1:5174/?mode=explore&preset=explorer')
+
+    await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+    await expectBrainCanvas(page)
+    await expect(page.getByTestId('structure-tree-panel')).toBeVisible()
+    await expect.poll(async () => {
+      const box = await page.getByTestId('structure-tree-panel').boundingBox()
+      return Math.round(box?.width ?? 0)
+    }).toBeGreaterThanOrEqual(390)
+    await expect.poll(async () => (
+      page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).display)
+    )).toBe('flex')
+    await expect.poll(async () => (
+      page.locator('.ed-foot .flyout-icon').first().evaluate((element) => getComputedStyle(element).display)
+    )).toBe('flex')
+    await page.getByRole('button', { name: /Werkzeug/ }).tap()
+    await expect(page.getByRole('button', { name: 'Verschieben' })).toBeVisible()
+  } finally {
+    await context.close()
+  }
 })
 
 test('Mobile Lernseite behaelt eine nutzbare 3D-Hoehe', async ({ page }) => {
@@ -419,7 +555,7 @@ test('Mobile Lernseite behaelt eine nutzbare 3D-Hoehe', async ({ page }) => {
   await expect.poll(async () => {
     const box = await page.locator('.ed-foot').boundingBox()
     return Math.round(box?.height ?? 0)
-  }).toBeLessThan(90)
+  }).toBeLessThan(150)
   await expect.poll(async () => {
     const box = await page.locator('canvas').boundingBox()
     return box?.height ?? 0

@@ -18,6 +18,10 @@ interface FlyoutProps {
  *  Viewport-Ueberlauf. Schliesst bei Escape und Aussenklick. Der Trigger fuellt die Box. */
 export default function Flyout({ eyebrow, label, icon, open, onToggle, onClose, disabled, align = 'left', children }: FlyoutProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const lastTouchToggleAt = useRef(0)
+  const activate = () => {
+    if (!disabled) onToggle()
+  }
 
   useEffect(() => {
     if (!open) return
@@ -40,7 +44,16 @@ export default function Flyout({ eyebrow, label, icon, open, onToggle, onClose, 
       <button
         type="button"
         className="flyout-trigger"
-        onClick={() => !disabled && onToggle()}
+        onPointerUp={(event) => {
+          if (event.pointerType !== 'touch') return
+          event.preventDefault()
+          lastTouchToggleAt.current = Date.now()
+          activate()
+        }}
+        onClick={() => {
+          if (Date.now() - lastTouchToggleAt.current < 500) return
+          activate()
+        }}
         disabled={disabled}
         style={{
           display: 'block',
