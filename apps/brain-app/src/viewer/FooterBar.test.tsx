@@ -1,10 +1,47 @@
-import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { Component, act, type ReactNode } from 'react'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import FooterBar from './FooterBar'
+import { fetchColorPresets } from './colorPresets'
 import { useViewerStore } from './viewerStore'
+import { VIEWER_STATE_SNAPSHOT_VERSION } from './viewerStateSnapshot'
+
+vi.mock('./colorPresets', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('./colorPresets')>()
+  return {
+    ...actual,
+    fetchColorPresets: vi.fn().mockResolvedValue([]),
+  }
+})
+
+const fetchColorPresetsMock = vi.mocked(fetchColorPresets)
+
+class TestErrorBoundary extends Component<{ children: ReactNode }, { message: string | null }> {
+  state = { message: null }
+
+  static getDerivedStateFromError(error: Error) {
+    return { message: error.message }
+  }
+
+  render() {
+    if (this.state.message) return <div role="alert">{this.state.message}</div>
+    return this.props.children
+  }
+}
+
+async function renderFooterBar() {
+  let view: ReturnType<typeof render> | null = null
+  await act(async () => {
+    view = render(<FooterBar />)
+    await Promise.resolve()
+  })
+  return view!
+}
 
 describe('FooterBar', () => {
   beforeEach(() => {
+    fetchColorPresetsMock.mockReset()
+    fetchColorPresetsMock.mockResolvedValue([])
     useViewerStore.setState({
       appMode: 'explore',
       hidden: new Set(),
@@ -18,34 +55,34 @@ describe('FooterBar', () => {
     })
   })
 
-  it('zeigt die Werkzeug-Box im Explorer', () => {
-    render(<FooterBar />)
+  it('zeigt die Werkzeug-Box im Explorer', async () => {
+    await renderFooterBar()
     expect(screen.getByText('Werkzeug')).toBeInTheDocument()
   })
 
-  it('blendet die Werkzeug-Box ausserhalb des Explorers aus', () => {
+  it('blendet die Werkzeug-Box ausserhalb des Explorers aus', async () => {
     useViewerStore.setState({ appMode: 'learn' })
-    render(<FooterBar />)
+    await renderFooterBar()
     expect(screen.queryByText('Werkzeug')).not.toBeInTheDocument()
   })
 
-  it('wechselt den appMode ueber das Modus-Flyout', () => {
-    render(<FooterBar />)
+  it('wechselt den appMode ueber das Modus-Flyout', async () => {
+    await renderFooterBar()
     fireEvent.click(screen.getByRole('button', { name: /Explorer/ })) // Modus-Box-Trigger oeffnen
     fireEvent.click(screen.getByRole('button', { name: /^Lernen$/ })) // Eintrag im Flyout
     expect(useViewerStore.getState().appMode).toBe('learn')
   })
 
-  it('oeffnet die Quellen-Page ueber das Atlas-Menue', () => {
-    render(<FooterBar />)
+  it('oeffnet die Quellen-Page ueber das Atlas-Menue', async () => {
+    await renderFooterBar()
     fireEvent.click(screen.getByRole('button', { name: /Atlas/ }))
     fireEvent.click(screen.getByRole('button', { name: /Quellen/ }))
     expect(screen.getByText(/CC Attribution-Share Alike 2\.1 Japan/)).toBeInTheDocument()
   })
 
-  it('macht Auswahl-Shortcuts im Werkzeug-Flyout mobil erreichbar', () => {
+  it('macht Auswahl-Shortcuts im Werkzeug-Flyout mobil erreichbar', async () => {
     useViewerStore.setState({ selected: 'area-a', selectedSlugs: new Set(['area-a']) })
-    render(<FooterBar />)
+    await renderFooterBar()
 
     fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Auswahl ausblenden' }))
@@ -56,9 +93,9 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().hidden.has('area-a')).toBe(false)
   })
 
-  it('macht Isolation und Reset ohne Tastatur erreichbar', () => {
+  it('macht Isolation und Reset ohne Tastatur erreichbar', async () => {
     useViewerStore.setState({ selected: 'area-a', selectedSlugs: new Set(['area-a']), hidden: new Set(['area-b']) })
-    render(<FooterBar />)
+    await renderFooterBar()
 
     fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Auswahl isolieren' }))
@@ -71,5 +108,50 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Isolation aus' }))
     expect(useViewerStore.getState().isolated).toBeNull()
+  })
+
+  it('bietet Snapshot-Export und -Import in der Fussleiste an', async () => {
+    await renderFooterBar()
+    fireEvent.click(screen.getByRole('button', { name: /Zustand/ }))
+    expect(screen.getByRole('button', { name: 'Exportieren' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Importieren' })).toBeInTheDocument()
+  })
+
+  it('importiert eine Unterrichts-Snapshot-Datei', async () => {
+    await renderFooterBar()
+    const file = new File([
+      JSON.stringify({
+        version: VIEWER_STATE_SNAPSHOT_VERSION,
+        state: {
+          appMode: 'phineas',
+          hidden: ['left-insula'],
+          showSkull: true,
+          skullOpacity: 0.5,
+        },
+      }),
+    ], 'unterricht.json', { type: 'application/json' })
+
+    fireEvent.change(screen.getByLabelText('Unterrichts-Snapshot-Datei'), { target: { files: [file] } })
+
+    await waitFor(() => expect(useViewerStore.getState().appMode).toBe('phineas'))
+    expect(useViewerStore.getState().hidden.has('left-insula')).toBe(true)
+    expect(useViewerStore.getState().showSkull).toBe(true)
+    expect(useViewerStore.getState().skullOpacity).toBe(0.5)
+  })
+
+  it('meldet Preset-Ladefehler an die naechste Error Boundary', async () => {
+    fetchColorPresetsMock.mockRejectedValueOnce(new Error('preset load failed'))
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    try {
+      render(
+        <TestErrorBoundary>
+          <FooterBar />
+        </TestErrorBoundary>,
+      )
+      expect(await screen.findByRole('alert')).toHaveTextContent('preset load failed')
+    } finally {
+      consoleError.mockRestore()
+    }
   })
 })

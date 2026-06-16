@@ -1,6 +1,6 @@
 import { useThree, useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import type { ConfigCamera } from '../viewer/atlas/atlasConfig'
 import { useEffectiveConfig } from '../viewer/atlas/atlasConfig'
 import { useViewerStore } from '../viewer/viewerStore'
@@ -43,6 +43,8 @@ export default function CameraRig() {
   const { camera, controls } = useThree()
   const highlight = useViewerStore((s) => s.highlight)
   const cameraView = useViewerStore((s) => s.cameraView)
+  const cameraPose = useViewerStore((s) => s.cameraPose)
+  const setCameraPose = useViewerStore((s) => s.setCameraPose)
   const shot = useSceneStore((s) => s.cameraShot)
   const sceneCameraConfig = useSceneStore((s) => s.cameraConfig)
   const sceneTargetMeshes = useSceneStore((s) => s.scenes[s.index]?.configCameraTargetMeshes ?? EMPTY_TARGET_MESHES)
@@ -88,6 +90,17 @@ export default function CameraRig() {
     camGoal.current.set(...resolved.position)
     want.current = true
   }
+
+  const captureCameraPose = useCallback(() => {
+    const cam = perspectiveCamera(camera)
+    const oc = controls as unknown as { target?: THREE.Vector3 } | null
+    const lookTarget = oc?.target ?? target.current
+    setCameraPose({
+      position: [cam.position.x, cam.position.y, cam.position.z],
+      target: [lookTarget.x, lookTarget.y, lookTarget.z],
+      fov: cam.fov,
+    })
+  }, [camera, controls, setCameraPose])
 
   useEffect(() => {
     cameraConfigRef.current = cameraConfig
@@ -137,6 +150,24 @@ export default function CameraRig() {
     }))
   }, [cameraView, camera])
 
+  useEffect(() => {
+    if (!cameraPose) return
+    const cam = perspectiveCamera(camera)
+    cam.position.set(...cameraPose.position)
+    cam.fov = cameraPose.fov
+    cam.updateProjectionMatrix()
+    const oc = controls as unknown as { target?: THREE.Vector3; update?: () => void } | null
+    if (oc?.target) oc.target.set(...cameraPose.target)
+    oc?.update?.()
+    want.current = false
+  }, [cameraPose, camera, controls])
+
+  useEffect(() => {
+    const evented = controls as unknown as { addEventListener?: (event: string, listener: () => void) => void; removeEventListener?: (event: string, listener: () => void) => void } | null
+    evented?.addEventListener?.('end', captureCameraPose)
+    return () => evented?.removeEventListener?.('end', captureCameraPose)
+  }, [controls, captureCameraPose])
+
   useFrame((_, delta) => {
     if (!want.current) return
     const alpha = frameLerpAlpha(delta)
@@ -146,7 +177,10 @@ export default function CameraRig() {
       oc.target.lerp(target.current, alpha)
       oc.update()
     }
-    if (camera.position.distanceTo(camGoal.current) < 1) want.current = false
+    if (camera.position.distanceTo(camGoal.current) < 1) {
+      want.current = false
+      captureCameraPose()
+    }
   })
   return null
 }

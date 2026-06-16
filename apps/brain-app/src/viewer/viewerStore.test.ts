@@ -1,5 +1,10 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { useViewerStore } from './viewerStore'
+import {
+  VIEWER_STATE_SNAPSHOT_VERSION,
+  exportViewerStateSnapshot,
+  importViewerStateSnapshot,
+} from './viewerStateSnapshot'
 
 describe('appMode', () => {
   beforeEach(() => {
@@ -114,5 +119,164 @@ describe('carveOverlay', () => {
 
     expect(useViewerStore.getState().showCarveJulich).toBe(false)
     expect(useViewerStore.getState().hidden.has('left-cortex')).toBe(false)
+  })
+})
+
+describe('viewer state snapshots', () => {
+  beforeEach(() => {
+    useViewerStore.setState({
+      appMode: 'explore',
+      activePreset: null,
+      cameraView: null,
+      clipAtlasOverlay: true,
+      colorMode: 'region',
+      cutMode: 'slice',
+      cuts: {
+        sagittal: { on: false, pos: 0 },
+        coronal: { on: false, pos: 0 },
+        axial: { on: false, pos: 0 },
+      },
+      hidden: new Set(),
+      highlight: [],
+      isolated: null,
+      isolatedSlugs: new Set(),
+      isolationPath: [],
+      lang: 'de',
+      mode: 'full',
+      pickedAtlasArea: null,
+      pickedAtlasSlug: null,
+      rodPhase: 0,
+      rodVisible: false,
+      selectMode: 'group',
+      selected: null,
+      selectedLabels: null,
+      selectedSlugs: new Set(),
+      showAtlasDkt: false,
+      showAtlasJulich: false,
+      showCarveBrodmann: false,
+      showCarveDkt: false,
+      showCarveJulich: false,
+      showSkull: false,
+      skullOpacity: 0.25,
+    })
+  })
+
+  it('exportiert nur stabile, versionierte Unterrichts-State-Felder', () => {
+    useViewerStore.setState({
+      appMode: 'phineas',
+      activePreset: {
+        id: 'p3a',
+        label: 'P3a',
+        dimOthers: false,
+        groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }],
+      },
+      cameraView: { name: 'lateral-left', nonce: 7 },
+      clipAtlasOverlay: false,
+      colorMode: 'preset',
+      cutMode: 'hide',
+      cuts: {
+        sagittal: { on: true, pos: 12 },
+        coronal: { on: false, pos: 0 },
+        axial: { on: true, pos: -18 },
+      },
+      hidden: new Set(['left-insula', 'right-insula']),
+      highlight: ['left-cingulate-gyrus'],
+      isolated: 'left-cingulate-gyrus',
+      pickedAtlasArea: 'Area 44 (L)',
+      pickedAtlasSlug: 'julich3-area-44-ifg-l',
+      rodPhase: 0.4,
+      rodVisible: true,
+      selected: 'left-cingulate-gyrus',
+      selectMode: 'direct',
+      showCarveDkt: true,
+      showSkull: true,
+      skullOpacity: 0.5,
+      cameraPose: {
+        position: [10, 20, 30],
+        target: [1, 2, 3],
+        fov: 45,
+      },
+    })
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.version).toBe(VIEWER_STATE_SNAPSHOT_VERSION)
+    expect(snapshot.state.hidden).toEqual(['left-insula', 'right-insula'])
+    expect(snapshot.state.cameraView).toBe('lateral-left')
+    expect(snapshot.state.cameraPose).toEqual({ position: [10, 20, 30], target: [1, 2, 3], fov: 45 })
+    expect(snapshot.state.activePreset?.id).toBe('p3a')
+    expect(JSON.stringify(snapshot)).not.toContain('hovered')
+    expect(JSON.stringify(snapshot)).not.toContain('ontology')
+  })
+
+  it('importiert einen Snapshot und normalisiert Sets, Cuts und geklemmte Werte', () => {
+    importViewerStateSnapshot({
+      version: VIEWER_STATE_SNAPSHOT_VERSION,
+      state: {
+        appMode: 'phineas',
+        cameraView: 'medial-midline',
+        clipAtlasOverlay: false,
+        colorMode: 'region',
+        cutMode: 'hide',
+        cuts: {
+          sagittal: { on: true, pos: 220 },
+          coronal: { on: false, pos: 0 },
+          axial: { on: true, pos: -220 },
+        },
+        hidden: ['right-insula', 'left-insula'],
+        highlight: ['left-cingulate-gyrus'],
+        isolated: 'left-cingulate-gyrus',
+        lang: 'en',
+        mode: 'k11',
+        pickedAtlasArea: 'Area 44 (L)',
+        pickedAtlasSlug: 'julich3-area-44-ifg-l',
+        cameraPose: {
+          position: [10, 20, 30],
+          target: [1, 2, 3],
+          fov: 45,
+        },
+        rodPhase: 2,
+        rodVisible: true,
+        selectMode: 'direct',
+        selected: 'left-cingulate-gyrus',
+        showAtlasDkt: true,
+        showAtlasJulich: false,
+        showCarveBrodmann: false,
+        showCarveDkt: true,
+        showCarveJulich: false,
+        showSkull: true,
+        skullOpacity: 0.5,
+      },
+    })
+
+    const state = useViewerStore.getState()
+    expect(state.appMode).toBe('phineas')
+    expect(state.cameraView).toEqual({ name: 'medial-midline', nonce: 1 })
+    expect(state.cameraPose).toEqual({ position: [10, 20, 30], target: [1, 2, 3], fov: 45 })
+    expect([...state.hidden].sort()).toEqual(['left-insula', 'right-insula'])
+    expect(state.cuts.sagittal.pos).toBe(110)
+    expect(state.cuts.axial.pos).toBe(-110)
+    expect(state.rodPhase).toBe(1)
+    expect(state.selected).toBe('left-cingulate-gyrus')
+    expect(state.isolated).toBe('left-cingulate-gyrus')
+    expect(state.showCarveDkt).toBe(true)
+    expect(state.pickedAtlasSlug).toBe('julich3-area-44-ifg-l')
+  })
+
+  it('weist unbekannte Snapshot-Versionen laut zurueck', () => {
+    expect(() => importViewerStateSnapshot({ version: 999, state: {} })).toThrow(/Snapshot-Version/)
+  })
+
+  it('weist ungueltige Kamera-Posen laut zurueck', () => {
+    expect(() => importViewerStateSnapshot({
+      version: VIEWER_STATE_SNAPSHOT_VERSION,
+      state: {
+        cameraPose: {
+          position: [0, 0, 0],
+          target: [0, 0, 0],
+          fov: 180,
+        },
+      },
+    })).toThrow(/cameraPose\.fov/)
   })
 })
