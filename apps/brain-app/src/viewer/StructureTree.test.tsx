@@ -19,7 +19,14 @@ const ontology: Ontology = {
         labels: labels('Frontal'),
         children: [
           { id: 'area-a', slug: 'area-a', fma: 'area-a', side: 'left', labels: labels('Area A') },
-          { id: 'area-b', slug: 'area-b', fma: 'area-b', side: 'right', labels: labels('Area B') },
+          {
+            id: 'area-b',
+            slug: 'area-b',
+            fma: 'area-b',
+            side: 'right',
+            labels: labels('Area B'),
+            searchAliases: ['ACC', 'cingullum'],
+          },
         ],
       },
     ],
@@ -91,6 +98,94 @@ describe('StructureTree Gruppenknoten', () => {
 
     expect(useViewerStore.getState().selected).toBe('julich')
     expect(useViewerStore.getState().selectedSlugs).toEqual(new Set(['julich-area-a-l', 'julich-area-b-l']))
+  })
+
+  it('rendert Explorer-Roots in Registry-Reihenfolge und behaelt Atlas-Platzhalter bei', () => {
+    useViewerStore.setState({
+      context: {
+        id: 'context',
+        labels: labels('Kontext (Vollausbau)'),
+        children: [
+          { id: 'ctx-eye-l', slug: 'ctx-eye-l', fma: 'ctx-eye-l', side: 'left', labels: labels('Auge') },
+        ],
+      },
+      julich: null,
+      atlas3d: {
+        dkt: {
+          id: 'dkt-runtime',
+          labels: labels('DKT runtime'),
+          children: [
+            { id: 'dkt-area-a-l', slug: 'dkt-area-a-l', fma: 'dkt-area-a-l', side: 'left', labels: labels('DKT A') },
+          ],
+        },
+        brodmann: null,
+        destrieux: {
+          id: 'destrieux-runtime',
+          labels: labels('Destrieux runtime'),
+          children: [
+            { id: 'destrieux-area-a-l', slug: 'destrieux-area-a-l', fma: 'destrieux-area-a-l', side: 'left', labels: labels('Destrieux A') },
+          ],
+        },
+      },
+      expanded: {},
+    })
+
+    const { container } = render(<StructureTree />)
+
+    const text = container.textContent ?? ''
+    let cursor = 0
+    for (const label of ['TARO', 'Jülich', 'DKT', 'Brodmann', 'Destrieux', 'Kontext (Vollausbau)']) {
+      const position = text.indexOf(label, cursor)
+      expect(position).toBeGreaterThanOrEqual(cursor)
+      cursor = position + label.length
+    }
+    expect(screen.getAllByText('Inhalt folgt')).toHaveLength(2)
+  })
+
+  it('findet sichtbare Kapitelrollen ueber die Strukturbaum-Suche', () => {
+    useViewerStore.setState({
+      ontology: {
+        version: 'test',
+        space: 'test',
+        structureCount: 1,
+        tree: {
+          id: 'brain',
+          labels: labels('Brain'),
+          children: [
+            {
+              id: 'left-middle-frontal-gyrus',
+              slug: 'left-middle-frontal-gyrus',
+              fma: 'FMA:61806',
+              side: 'left',
+              labels: labels('Gyrus frontalis medius links'),
+              k11Role: 'DLPFC',
+            },
+          ],
+        },
+      },
+      search: 'DLPFC',
+    })
+
+    render(<StructureTree />)
+
+    expect(screen.getByRole('button', { name: 'Gyrus frontalis medius links DLPFC' })).toBeInTheDocument()
+  })
+
+  it('bindet die Suche an den Store und rendert Label-, Alias- und Nulltreffer', () => {
+    render(<StructureTree />)
+
+    const searchInput = screen.getByPlaceholderText('Struktur suchen…')
+    fireEvent.change(searchInput, { target: { value: 'Area A' } })
+    expect(useViewerStore.getState().search).toBe('Area A')
+    expect(screen.getByRole('button', { name: 'Area A' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Area B' })).not.toBeInTheDocument()
+
+    fireEvent.change(searchInput, { target: { value: 'cingullum' } })
+    expect(screen.getByRole('button', { name: 'Area B' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Area A' })).not.toBeInTheDocument()
+
+    fireEvent.change(searchInput, { target: { value: 'kein-treffer' } })
+    expect(screen.getByText('Keine Treffer.')).toBeInTheDocument()
   })
 
   it('rendert keine kapitelweite Vertiefung im Explorer-Baum', () => {

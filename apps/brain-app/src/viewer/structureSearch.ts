@@ -21,7 +21,14 @@ export function normalizedSearchForms(value: string): string[] {
 }
 
 function nodeSearchValues(node: OntologyNode): string[] {
-  return [...Object.values(node.labels), ...(node.searchAliases ?? [])]
+  return [
+    ...Object.values(node.labels),
+    node.id,
+    node.slug,
+    node.fma,
+    node.k11Role,
+    ...(node.searchAliases ?? []),
+  ].filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
 }
 
 export function matchesStructureSearch(node: OntologyNode, query: string): boolean {

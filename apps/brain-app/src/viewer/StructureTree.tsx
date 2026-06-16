@@ -8,6 +8,7 @@ import {
 import { useViewerStore } from './viewerStore'
 import { filterStructureSearch } from './structureSearch'
 import { useIsNarrow } from '../useMediaQuery'
+import { buildExplorerTreeRoots, type ExplorerTreeRoot } from './knowledgeRuntimeAdapter'
 
 const ACCENT = 'var(--orange)'
 
@@ -245,6 +246,10 @@ function PlaceholderObject({ label }: { label: string }) {
   )
 }
 
+function ExplorerTreeRootRow({ root }: { root: ExplorerTreeRoot }) {
+  return root.kind === 'tree' ? <GroupRow node={root.node} depth={0} /> : <PlaceholderObject label={root.label} />
+}
+
 export default function StructureTree() {
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
@@ -277,6 +282,11 @@ export default function StructureTree() {
     const atlasPools = [julich, atlas3d.dkt, atlas3d.brodmann, atlas3d.destrieux].flatMap((t) => (t ? flattenStructures(t) : []))
     return filterStructureSearch([...brainPool, ...ctxPool, ...atlasPools], search)
   }, [ontology, context, julich, atlas3d, search, mode, visibleTree])
+
+  const explorerRoots = useMemo(() => {
+    if (!visibleTree) return []
+    return buildExplorerTreeRoots({ visibleTree, mode, julich, atlas3d, context })
+  }, [visibleTree, mode, julich, atlas3d, context])
 
   if (!ontology || !visibleTree) return null
 
@@ -386,18 +396,12 @@ export default function StructureTree() {
           )
         ) : (
           <>
-            {/* Fuenf klare Ueber-Objekte: TARO · Jülich · DKT · Brodmann · Kontext (Vollausbau). */}
-            <GroupRow
-              node={{ id: 'taro', labels: { de: 'TARO', la: 'TARO', en: 'TARO' }, children: visibleTree.children ?? [] }}
-              depth={0}
-            />
-            {mode === 'full' ? (
+            {explorerRoots[0] ? <ExplorerTreeRootRow root={explorerRoots[0]} /> : null}
+            {explorerRoots.length > 1 ? (
               <div style={{ marginTop: 10, borderTop: '1px solid var(--line-soft)', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                {julich ? <GroupRow node={julich} depth={0} /> : <PlaceholderObject label="Jülich" />}
-                {atlas3d.dkt ? <GroupRow node={atlas3d.dkt} depth={0} /> : <PlaceholderObject label="DKT" />}
-                {atlas3d.brodmann ? <GroupRow node={atlas3d.brodmann} depth={0} /> : <PlaceholderObject label="Brodmann" />}
-                {atlas3d.destrieux ? <GroupRow node={atlas3d.destrieux} depth={0} /> : <PlaceholderObject label="Destrieux" />}
-                {context ? <GroupRow node={context} depth={0} /> : null}
+                {explorerRoots.slice(1).map((root) => (
+                  <ExplorerTreeRootRow key={root.collectionId} root={root} />
+                ))}
               </div>
             ) : null}
           </>
