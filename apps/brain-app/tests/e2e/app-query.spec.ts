@@ -115,6 +115,24 @@ async function clickProjectedMesh(page: Page, meshName: string) {
   await page.mouse.click(point!.x, point!.y)
 }
 
+async function expectAuthoringInstancePosition(page: Page, instanceName: string, expected: [number, number, number]) {
+  await page.waitForFunction(({ name, position }) => {
+    let root = (window as any).__THREE_SCENE__
+    if (!root) return false
+    while (root.parent) root = root.parent
+    let found: any = null
+    root.traverse((obj: any) => {
+      if (obj?.name === name) found = obj
+    })
+    if (!found) return false
+    return (
+      Math.abs(found.position.x - position[0]) < 0.001 &&
+      Math.abs(found.position.y - position[1]) < 0.001 &&
+      Math.abs(found.position.z - position[2]) < 0.001
+    )
+  }, { name: instanceName, position: expected }, { timeout: 60_000 })
+}
+
 test('Startscreen startet den Lernmodus', async ({ page }) => {
   await page.goto('/')
 
@@ -254,6 +272,16 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
     partId: 'electrode-fz',
   })
 
+  await page.getByRole('button', { name: /Werkzeug/ }).click()
+  await page.getByRole('button', { name: 'Verschieben' }).click()
+  await page.getByRole('button', { name: 'X +5' }).click()
+  await expect.poll(async () => page.evaluate(() => (window as any).__BRAIN_LAST_AUTHORING_COMMAND__)).toMatchObject({
+    kind: 'set-transform',
+    targetRef: { targetKind: 'asset-instance', collectionId: 'device-eeg-10-20', instanceId: 'eeg-cap-01' },
+    after: { position: [5, 1.2, 0] },
+  })
+  await expectAuthoringInstancePosition(page, 'authoring-instance:device-eeg-10-20:eeg-cap-01', [5, 1.2, 0])
+
   await page.getByRole('button', { name: /Datei/ }).click()
   const [download] = await Promise.all([
     page.waitForEvent('download'),
@@ -267,10 +295,19 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
   expect(exported.state.authoring.activeTargetRef).toEqual(snapshot.state.authoring.activeTargetRef)
   expect(exported.state.authoring.activeTimeline).toEqual(snapshot.state.authoring.activeTimeline)
   expect(exported.state.authoring.authoringScenes[0].assetInstances[0].transform).toEqual({
-    position: [0, 1.2, 0],
+    position: [5, 1.2, 0],
     rotation: [0, 0.25, 0],
     scale: [0.8, 0.8, 0.8],
   })
+
+  await page.goto('/?mode=explore')
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await page.getByLabel('Unterrichts-Snapshot-Datei').setInputFiles({
+    name: 'authoring-snapshot-exported.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(exported)),
+  })
+  await expectAuthoringInstancePosition(page, 'authoring-instance:device-eeg-10-20:eeg-cap-01', [5, 1.2, 0])
 })
 
 test('Preset-Deep-Links setzen unterschiedliche Default-Sichtbarkeit', async ({ page }) => {

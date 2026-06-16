@@ -1,10 +1,17 @@
-import { useMemo } from 'react'
+import { TransformControls } from '@react-three/drei'
+import { useEffect, useMemo, useRef } from 'react'
+import * as THREE from 'three'
 import { EEG_ELECTRODES, isEegSite, type EegSite } from './eegElectrodes'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
 import type { AuthoringAssetInstance, AuthoringSelectablePart, AuthoringTransform, Vec3 } from './authoringScene'
 import { objectGraphIdForTarget, sequenceTargetRefFromAssetPart } from './sequenceTargetRef'
 import { useViewerStore } from './viewerStore'
 import { pickTargetFromTargetRef, sequenceTargetUserData } from './targetPicking'
+import {
+  activeAuthoringTransformTarget,
+  applyAuthoringTransformCommand,
+  type ActiveAuthoringTransformTarget,
+} from './authoringTransformRuntime'
 
 const DEVICE_BASE_COLOR = '#d8ecef'
 const DEVICE_HELPER_COLOR = '#6d7c82'
@@ -40,6 +47,22 @@ function transformProps(transform: AuthoringTransform): {
     rotation: transform.rotation,
     scale: transform.scale,
   }
+}
+
+function transformFromGroup(group: THREE.Group): AuthoringTransform {
+  return {
+    position: [group.position.x, group.position.y, group.position.z],
+    rotation: [group.rotation.x, group.rotation.y, group.rotation.z],
+    scale: [group.scale.x, group.scale.y, group.scale.z],
+  }
+}
+
+function sameTransform(a: AuthoringTransform, b: AuthoringTransform): boolean {
+  return (
+    a.position.every((value, index) => value === b.position[index]) &&
+    a.rotation.every((value, index) => value === b.rotation[index]) &&
+    a.scale.every((value, index) => value === b.scale[index])
+  )
 }
 
 function AuthoringPartMesh({
@@ -90,11 +113,34 @@ function AuthoringPartMesh({
   )
 }
 
-function AuthoringInstance({ instance, activeTargetId }: { instance: AuthoringAssetInstance; activeTargetId: string | null }) {
+function AuthoringInstance({
+  instance,
+  activeTargetId,
+  activeTransformTarget,
+}: {
+  instance: AuthoringAssetInstance
+  activeTargetId: string | null
+  activeTransformTarget: ActiveAuthoringTransformTarget | null
+}) {
   const parts = instance.parts ?? []
+  const groupRef = useRef<THREE.Group>(null)
+  const controlsRef = useRef<any>(null)
+  const beforeRef = useRef<AuthoringTransform | null>(null)
+  const mode = useViewerStore((s) => s.authoringTransformMode)
+  const space = useViewerStore((s) => s.authoringTransformSpace)
+  const snap = useViewerStore((s) => s.authoringTransformSnap)
+  const frozen = useViewerStore((s) => s.authoringTransformFrozen)
+  const transformActive = Boolean(
+    activeTransformTarget
+      && activeTransformTarget.instance.collectionId === instance.collectionId
+      && activeTransformTarget.instance.instanceId === instance.instanceId
+      && !frozen,
+  )
+
   if (!instance.visible || parts.length === 0) return null
-  return (
-    <group name={`authoring-instance:${instance.collectionId}:${instance.instanceId}`} {...transformProps(instance.transform)}>
+
+  const group = (
+    <group ref={groupRef} name={`authoring-instance:${instance.collectionId}:${instance.instanceId}`} {...transformProps(instance.transform)}>
       {parts.map((part, index) => (
         <AuthoringPartMesh
           key={part.partId}
@@ -107,6 +153,55 @@ function AuthoringInstance({ instance, activeTargetId }: { instance: AuthoringAs
       ))}
     </group>
   )
+
+  useEffect(() => {
+    if (!transformActive) return
+    const controls = controlsRef.current
+    if (!controls) return
+    const onMouseDown = () => {
+      beforeRef.current = groupRef.current ? transformFromGroup(groupRef.current) : instance.transform
+    }
+    const onMouseUp = () => {
+      const groupObject = groupRef.current
+      if (!groupObject || !beforeRef.current) return
+      const after = transformFromGroup(groupObject)
+      if (sameTransform(beforeRef.current, after)) return
+      const current = useAuthoringSnapshotStore.getState().authoring
+      const target = activeAuthoringTransformTarget(current)
+      if (!current || !target) return
+      const result = applyAuthoringTransformCommand(
+        current,
+        target,
+        after,
+        `cmd:transform:${target.instance.instanceId}:${Date.now()}`,
+        `Transform ${target.instance.instanceId}`,
+      )
+      useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(result.authoring)
+      if (import.meta.env.DEV) {
+        ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
+      }
+    }
+    controls.addEventListener('mouseDown', onMouseDown)
+    controls.addEventListener('mouseUp', onMouseUp)
+    return () => {
+      controls.removeEventListener('mouseDown', onMouseDown)
+      controls.removeEventListener('mouseUp', onMouseUp)
+    }
+  }, [instance.transform, transformActive])
+
+  if (!transformActive) return group
+  return (
+    <TransformControls
+      ref={controlsRef}
+      mode={mode}
+      space={space}
+      translationSnap={snap ? 5 : undefined}
+      rotationSnap={snap ? Math.PI / 12 : undefined}
+      scaleSnap={snap ? 0.05 : undefined}
+    >
+      {group}
+    </TransformControls>
+  )
 }
 
 export default function AuthoringSceneObjects() {
@@ -118,6 +213,7 @@ export default function AuthoringSceneObjects() {
       ?? null
   }, [authoring])
   const activeTargetId = authoring?.activeTargetRef ? objectGraphIdForTarget(authoring.activeTargetRef) : null
+  const activeTransformTarget = useMemo(() => activeAuthoringTransformTarget(authoring), [authoring])
 
   if (!activeScene) return null
   return (
@@ -127,6 +223,7 @@ export default function AuthoringSceneObjects() {
           key={`${instance.collectionId}:${instance.instanceId}`}
           instance={instance}
           activeTargetId={activeTargetId}
+          activeTransformTarget={activeTransformTarget}
         />
       ))}
     </group>

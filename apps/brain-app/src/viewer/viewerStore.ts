@@ -43,7 +43,11 @@ function cortexSurfaceSlugs(tree: OntologyNode): string[] {
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
 export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
+export type AuthoringTransformMode = 'translate' | 'rotate' | 'scale'
+export type AuthoringTransformSpace = 'world' | 'local'
 export const APP_MODES = ['learn', 'explore', 'phineas', 'atlas'] as const satisfies readonly AppMode[]
+export const AUTHORING_TRANSFORM_MODES = ['translate', 'rotate', 'scale'] as const satisfies readonly AuthoringTransformMode[]
+export const AUTHORING_TRANSFORM_SPACES = ['world', 'local'] as const satisfies readonly AuthoringTransformSpace[]
 // Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
 // Multi-Axis: jede Achse ist unabhaengig an/aus mit eigener Position (siehe CutAxis/CutConfig).
 function emptyCuts(): Record<CutAxis, CutConfig> {
@@ -104,6 +108,11 @@ interface ViewerState {
   /** Stabiler Target-Vertrag zur aktuellen Auswahl; legacy Mesh-Namen werden auf Ontologie-Refs gemappt. */
   activeTargetRef: SequenceTargetRef | null
   activeObjectGraphId: string | null
+  /** Minimaler Authoring-Transform-Modus fuer TransformControls. */
+  authoringTransformMode: AuthoringTransformMode
+  authoringTransformSpace: AuthoringTransformSpace
+  authoringTransformSnap: boolean
+  authoringTransformFrozen: boolean
   /** Slugs der aktuellen Auswahl (bei Gruppen-Auswahl alle Blaetter; sonst genau eines). */
   selectedSlugs: Set<string>
   /** Label der Auswahl (auch fuer Gruppen, die nicht im slug->node-Index stehen). */
@@ -180,6 +189,10 @@ interface ViewerState {
   pick: (meshName: string) => void
   /** 3D-Klick mit bereits aufgeloestem SequenceTargetRef. */
   pickTarget: (target: ViewerPickTarget) => void
+  setAuthoringTransformMode: (mode: AuthoringTransformMode) => void
+  setAuthoringTransformSpace: (space: AuthoringTransformSpace) => void
+  setAuthoringTransformSnap: (snap: boolean) => void
+  setAuthoringTransformFrozen: (frozen: boolean) => void
   /** 3D-Doppelklick: group = eine Ebene tiefer betreten (isolieren), direct = Blatt isolieren. */
   drill: (meshName: string) => void
   setHovered: (id: string | null) => void
@@ -245,6 +258,10 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   selected: null,
   activeTargetRef: null,
   activeObjectGraphId: null,
+  authoringTransformMode: 'translate',
+  authoringTransformSpace: 'world',
+  authoringTransformSnap: false,
+  authoringTransformFrozen: false,
   selectedSlugs: new Set(),
   selectedLabels: null,
   selectMode: 'group',
@@ -391,6 +408,10 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const selectionNode = chain[ctxIdx + 1] ?? chain[chain.length - 1]
     st.select(selectionNode.id)
   },
+  setAuthoringTransformMode: (authoringTransformMode) => set({ authoringTransformMode }),
+  setAuthoringTransformSpace: (authoringTransformSpace) => set({ authoringTransformSpace }),
+  setAuthoringTransformSnap: (authoringTransformSnap) => set({ authoringTransformSnap }),
+  setAuthoringTransformFrozen: (authoringTransformFrozen) => set({ authoringTransformFrozen }),
   drill: (meshName) => {
     const st = get()
     if (st.selectMode === 'direct') return st.setIsolated(meshName)

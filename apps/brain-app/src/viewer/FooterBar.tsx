@@ -4,6 +4,13 @@ import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
+import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
+import {
+  IDENTITY_AUTHORING_TRANSFORM,
+  activeAuthoringTransformTarget,
+  applyAuthoringTransformCommand,
+  nudgeAuthoringTransform,
+} from './authoringTransformRuntime'
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
@@ -20,6 +27,8 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
 
 const MODE_LABEL: Record<AppMode, string> = { learn: 'Lernen', explore: 'Explorer', phineas: 'Phineas Gage', atlas: 'Atlas' }
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
+const TRANSFORM_MODE_LABEL = { translate: 'Verschieben', rotate: 'Drehen', scale: 'Skalieren' } as const
+const TRANSFORM_SPACE_LABEL = { world: 'Welt', local: 'Lokal' } as const
 const COLOR_LABEL: Record<ColorMode, string> = {
   anatomical: 'Anatomisch',
   function: 'Funktionssystem',
@@ -93,6 +102,14 @@ export default function FooterBar() {
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const selectMode = useViewerStore((s) => s.selectMode)
   const setSelectMode = useViewerStore((s) => s.setSelectMode)
+  const authoringTransformMode = useViewerStore((s) => s.authoringTransformMode)
+  const setAuthoringTransformMode = useViewerStore((s) => s.setAuthoringTransformMode)
+  const authoringTransformSpace = useViewerStore((s) => s.authoringTransformSpace)
+  const setAuthoringTransformSpace = useViewerStore((s) => s.setAuthoringTransformSpace)
+  const authoringTransformSnap = useViewerStore((s) => s.authoringTransformSnap)
+  const setAuthoringTransformSnap = useViewerStore((s) => s.setAuthoringTransformSnap)
+  const authoringTransformFrozen = useViewerStore((s) => s.authoringTransformFrozen)
+  const setAuthoringTransformFrozen = useViewerStore((s) => s.setAuthoringTransformFrozen)
   const selected = useViewerStore((s) => s.selected)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hidden = useViewerStore((s) => s.hidden)
@@ -131,6 +148,8 @@ export default function FooterBar() {
   const [showSources, setShowSources] = useState(false)
   const [snapshotError, setSnapshotError] = useState<Error | null>(null)
   const snapshotInputRef = useRef<HTMLInputElement>(null)
+  const authoring = useAuthoringSnapshotStore((s) => s.authoring)
+  const activeTransformTarget = activeAuthoringTransformTarget(authoring)
   const toggle = (which: OpenFlyout) => setOpen((cur) => (cur === which ? null : which))
   const close = () => setOpen(null)
   const isPhone = useIsPhone()
@@ -155,6 +174,25 @@ export default function FooterBar() {
       setSnapshotError(error instanceof Error ? error : new Error(String(error)))
     } finally {
       if (snapshotInputRef.current) snapshotInputRef.current.value = ''
+    }
+  }
+  const applyActiveTransform = (
+    transform: typeof IDENTITY_AUTHORING_TRANSFORM,
+    label: string,
+  ) => {
+    const current = useAuthoringSnapshotStore.getState().authoring
+    const target = activeAuthoringTransformTarget(current)
+    if (!current || !target) return
+    const result = applyAuthoringTransformCommand(
+      current,
+      target,
+      transform,
+      `cmd:transform:${target.instance.instanceId}:${Date.now()}`,
+      label,
+    )
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(result.authoring)
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
     }
   }
 
@@ -310,6 +348,60 @@ export default function FooterBar() {
               <>
                 <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
                 <Item active={selectMode === 'direct'} onClick={() => { setSelectMode('direct'); close() }}>▹ Direkt</Item>
+                <div style={{ height: 10 }} />
+                <div className="eyebrow" style={{ marginBottom: 4 }}>Transform</div>
+                {(['translate', 'rotate', 'scale'] as const).map((mode) => (
+                  <Item
+                    key={mode}
+                    active={authoringTransformMode === mode}
+                    disabled={!activeTransformTarget}
+                    onClick={() => setAuthoringTransformMode(mode)}
+                  >
+                    {TRANSFORM_MODE_LABEL[mode]}
+                  </Item>
+                ))}
+                {(['world', 'local'] as const).map((space) => (
+                  <Item
+                    key={space}
+                    active={authoringTransformSpace === space}
+                    disabled={!activeTransformTarget}
+                    onClick={() => setAuthoringTransformSpace(space)}
+                  >
+                    {TRANSFORM_SPACE_LABEL[space]}
+                  </Item>
+                ))}
+                <Item
+                  active={authoringTransformSnap}
+                  disabled={!activeTransformTarget}
+                  onClick={() => setAuthoringTransformSnap(!authoringTransformSnap)}
+                >
+                  Snap {authoringTransformSnap ? 'an' : 'aus'}
+                </Item>
+                <Item
+                  active={authoringTransformFrozen}
+                  disabled={!activeTransformTarget}
+                  onClick={() => setAuthoringTransformFrozen(!authoringTransformFrozen)}
+                >
+                  {authoringTransformFrozen ? 'Gizmo fixiert' : 'Gizmo frei'}
+                </Item>
+                <Item
+                  disabled={!activeTransformTarget || authoringTransformFrozen}
+                  onClick={() => {
+                    if (!activeTransformTarget) return
+                    applyActiveTransform(
+                      nudgeAuthoringTransform(activeTransformTarget.instance.transform, 0, 5),
+                      'Nudge X',
+                    )
+                  }}
+                >
+                  X +5
+                </Item>
+                <Item
+                  disabled={!activeTransformTarget || authoringTransformFrozen}
+                  onClick={() => applyActiveTransform(IDENTITY_AUTHORING_TRANSFORM, 'Reset Transform')}
+                >
+                  Reset Transform
+                </Item>
                 <div style={{ height: 10 }} />
                 <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
                 <Item
