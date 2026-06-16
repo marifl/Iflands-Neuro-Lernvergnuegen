@@ -17,8 +17,10 @@ pnpm dev          # http://localhost:5173
 | `pnpm dev` | Dev-Server mit Hot-Reload |
 | `pnpm build` | Production-Build → `dist/` (`tsc -b && vite build`) |
 | `pnpm preview` | statischer Server für `dist/` |
+| `pnpm preview:lan` | statischer Server für `dist/` im lokalen Netzwerk |
 | `pnpm typecheck` | `tsc -b --noEmit` |
-| `pnpm test` | Vitest (Watch); `pnpm exec vitest run` einmalig |
+| `pnpm test` | Vitest einmalig (CI-tauglich) |
+| `pnpm test:watch` | Vitest im lokalen Watch-Modus |
 | `pnpm test:e2e` | Playwright E2E |
 
 ## Struktur
