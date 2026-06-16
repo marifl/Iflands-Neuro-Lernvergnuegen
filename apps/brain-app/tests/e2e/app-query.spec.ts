@@ -461,6 +461,23 @@ test('Mobile Footer-Menue reagiert auf echte Touch-Taps', async ({ browser }) =>
   }
 })
 
+test('Mobile Lernbezug dupliziert die Struktur-Beschriftung nicht', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await page.getByRole('button', { name: 'Strukturbaum öffnen' }).click()
+  await page.getByPlaceholder('Struktur suchen…').fill('Obere Stirnwindung rechts')
+  await page.getByRole('button', { name: /Obere Stirnwindung \(rechts\)/ }).click()
+
+  await expect(page.getByRole('dialog', { name: 'Lernbezug Obere Stirnwindung (rechts)' })).toBeVisible()
+  await expect(page.getByText('Obere Stirnwindung (rechts)')).toHaveCount(1)
+  await expect(page.getByText('DLPFC / SMA-Region (medial)')).toHaveCount(1)
+  await expect(page.getByText('P3z - Inhibition')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Strukturbaum öffnen' })).toBeHidden()
+})
+
 test('Mobile Rahmen ist nur in installierter PWA unten gerundet', async ({ browser }) => {
   const browserContext = await browser.newContext({
     viewport: { width: 390, height: 844 },

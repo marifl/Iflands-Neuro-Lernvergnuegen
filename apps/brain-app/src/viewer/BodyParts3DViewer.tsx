@@ -1151,7 +1151,7 @@ export default function BodyParts3DViewer() {
                 ) : null}
               </div>
             )}
-            {isNarrow && isExploreMode ? (
+            {isNarrow && isExploreMode && !showLearningFlyout ? (
               <button
                 type="button"
                 className="ed-btn"
@@ -1173,6 +1173,7 @@ export default function BodyParts3DViewer() {
                 node={selectedNode}
                 target={selectedLearningTarget}
                 atlasAvailable={Boolean(atlasTarget)}
+                compact={isNarrow}
                 onClose={() => setClosedLearningFlyoutFor(selected)}
                 onOpenAtlas={() => {
                   if (!atlasTarget) return

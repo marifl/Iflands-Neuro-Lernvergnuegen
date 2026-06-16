@@ -61,6 +61,7 @@ interface ExplorerLearningFlyoutProps {
   node: OntologyNode
   target: ExplorerLearningTarget
   atlasAvailable: boolean
+  compact?: boolean
   onClose: () => void
   onOpenAtlas: () => void
   onOpenLearn: (target: ExplorerLearningTarget) => void
@@ -70,6 +71,7 @@ export default function ExplorerLearningFlyout({
   node,
   target,
   atlasAvailable,
+  compact = false,
   onClose,
   onOpenAtlas,
   onOpenLearn,
@@ -103,9 +105,11 @@ export default function ExplorerLearningFlyout({
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="eyebrow">Lernbezug</div>
-          <div style={{ marginTop: 5, fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 16, lineHeight: 1.2, color: 'var(--ink)' }}>
-            {node.labels.de}
-          </div>
+          {!compact ? (
+            <div style={{ marginTop: 5, fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 16, lineHeight: 1.2, color: 'var(--ink)' }}>
+              {node.labels.de}
+            </div>
+          ) : null}
         </div>
         <button
           type="button"
@@ -117,9 +121,11 @@ export default function ExplorerLearningFlyout({
           X
         </button>
       </div>
-      <div>
-        <span className="ed-pill orange">{node.k11Role}</span>
-      </div>
+      {!compact ? (
+        <div>
+          <span className="ed-pill orange">{node.k11Role}</span>
+        </div>
+      ) : null}
       <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10.5, lineHeight: 1.5, color: 'var(--g700)' }}>
         {target.label}
       </div>

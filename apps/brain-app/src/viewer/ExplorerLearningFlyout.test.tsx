@@ -74,6 +74,28 @@ describe('ExplorerLearningFlyout', () => {
     expect(onOpenAtlas).toHaveBeenCalledTimes(1)
   })
 
+  it('rendert kompakt ohne doppelte Struktur-Beschriftung', () => {
+    const target = learningTargetForNode(accNode)!
+
+    render(
+      <ExplorerLearningFlyout
+        node={accNode}
+        target={target}
+        atlasAvailable
+        compact
+        onClose={() => {}}
+        onOpenAtlas={() => {}}
+        onOpenLearn={() => {}}
+      />,
+    )
+
+    expect(screen.queryByText('Anteriores Cingulum')).not.toBeInTheDocument()
+    expect(screen.queryByText('ACC · Konfliktmonitoring')).not.toBeInTheDocument()
+    expect(screen.getByText('P3a - Konfliktmonitoring')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Lernen öffnen' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Atlas öffnen' })).toBeInTheDocument()
+  })
+
   it('benennt Phineas als Bonus-Kontext-Aktion', () => {
     const onOpenLearn = vi.fn()
     const target = learningTargetForNode(ofcNode)!
