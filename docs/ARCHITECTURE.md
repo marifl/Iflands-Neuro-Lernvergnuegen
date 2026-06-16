@@ -247,10 +247,21 @@ Footer-Datei-UI.
 Nach einem Snapshot-Import darf `ConfigLinkStateApplier` keine importierten
 AuthoringScene-Felder direkt wieder mit Config-Defaults überschreiben.
 
+`apps/brain-app/src/viewer/authoringCommands.ts` und
+`apps/brain-app/src/viewer/authoringCommandHistory.ts` bilden den kleinen
+Command-/History-Kern für authored Objekt-Edits. Commands sind reine Daten:
+`set-transform` trägt `targetRef`, `before` und `after`, `batch` gruppiert
+mehrere `set-transform`-Commands für spätere Mehrfachauswahl. Execute, Undo,
+Redo, History-Cursor und JSON-Roundtrip laufen über reine Helper und schreiben
+immer zurück in `AuthoringScene`; Gizmos oder Drag-Handler dürfen dadurch
+keinen dauerhaften Neben-State neben `AuthoringScene` halten. Drag-Streams
+werden am Ende explizit über `coalesceSetTransformTransaction(...)` zu einem
+Command verdichtet.
+
 Nicht Teil dieses Vertrags: GLB/GLTF-Loader, Picking im Runtime-Viewer,
-TransformControls, Commands/History oder ein
-Browser-Editor-Roundtrip. Diese Slices bauen später auf dem Vertrag auf, ohne
-eine zweite Objekt-, Loader- oder Timeline-Architektur einzuführen.
+TransformControls oder ein Browser-Editor-Roundtrip. Diese Slices bauen später
+auf dem Vertrag auf, ohne eine zweite Objekt-, Loader- oder
+Timeline-Architektur einzuführen.
 
 ## Asset-Manifest-Vertrag
 
@@ -296,7 +307,10 @@ Aktuelle Versionen:
 1. `KnowledgeRegistry` und `BonusContexts`: statische v1-Registry-Konstante.
 2. `AssetManifest`, `AuthoringScene`, `TimelineDocument`: `schemaVersion = 1`,
    unbekannte Versionen werden laut abgelehnt.
-3. `ViewerStateSnapshot`: `version = 1`, weil der bestehende Export dieses
+3. `AuthoringCommand` und `AuthoringCommandHistory`: `schemaVersion = 1`,
+   weil History-Einträge serialisierbare Daten bleiben und keine Methoden
+   speichern.
+4. `ViewerStateSnapshot`: `version = 1`, weil der bestehende Export dieses
    Feld bereits nutzt. Runtime-Import darf weiterhin gegen den aktuellen
    Sitzungszustand fallbacken; Contract-Validation nutzt einen expliziten
    Fallback und mutiert keinen Store.
@@ -339,8 +353,9 @@ Der Object-Graph aus `AuthoringScene` erzeugt Import-Root-Knoten für
 Asset-Instanzen und Part-Knoten für `parts`. Parent-Bezüge folgen
 `parentId`, Helper-Parts bleiben `pickable = false` und sind nicht im
 Outliner sichtbar. Das ist nur der Adress- und Graph-Vertrag; Runtime-Picking,
-Multiselect, TransformControls, Loader, Commands/History und Timeline-
-Keyframes bleiben separate Slices.
+Multiselect, TransformControls, Loader und Timeline-Keyframes bleiben separate
+Slices. Commands nutzen aktuell `asset-instance`-TargetRefs aus diesem Vertrag
+für Transform-Edits.
 
 ## Timeline-/Keyframe-Vertrag
 
@@ -409,8 +424,8 @@ Adapterplan:
    verworfen.
 
 Nicht Teil dieses Slices: Timeline-UI, Player-Migration, Loader, Picking,
-TransformControls, Commands/History und Browser-Editor-Smoke. Diese Arbeiten
-bleiben Folge-Slices auf Basis dieses Vertrags.
+TransformControls und Browser-Editor-Smoke. Diese Arbeiten bleiben Folge-
+Slices auf Basis dieses Vertrags.
 
 ## Animation-Authoring
 

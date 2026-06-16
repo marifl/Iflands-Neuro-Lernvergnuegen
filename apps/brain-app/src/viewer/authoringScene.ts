@@ -134,6 +134,10 @@ function parseTransform(raw: unknown, field: string): AuthoringTransform {
   }
 }
 
+export function parseAuthoringTransform(raw: unknown, field = 'transform'): AuthoringTransform {
+  return parseTransform(raw, field)
+}
+
 function parseOrigin(raw: unknown, field: string): AuthoringOriginPolicy {
   const value = assertRecord(raw, field)
   assertKnownKeys(value, ['policy', 'offset'], field)
