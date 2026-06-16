@@ -2,11 +2,12 @@ import { useEffect, useMemo, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
-import { activeCutPlanes, CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
+import { activeCutPlanes } from './cutCapsMerged'
 import { pickCutAwareHit } from './cutPick'
 import { ATLAS_SURFACE_FLAG, prettyParcel } from './atlasParcels'
 import { nearestCornerVertex } from './atlas/atlasPick'
 import { pickFirstAtlasHit } from './atlasInteraction'
+import { createCutPickTargetCache } from './cutPickTargets'
 
 // Klick-vs-Orbit-Drag: ueber diese Pixel-Distanz gilt ein pointerup als Drag, nicht als Pick.
 const DRAG_PX = 4
@@ -27,8 +28,17 @@ export default function CutPickBridge() {
   const setHovered = useViewerStore((s) => s.setHovered)
   const setPickedAtlasArea = useViewerStore((s) => s.setPickedAtlasArea)
   const setHoveredAtlasArea = useViewerStore((s) => s.setHoveredAtlasArea)
+  const hidden = useViewerStore((s) => s.hidden)
+  const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
+  const showSkull = useViewerStore((s) => s.showSkull)
+  const showAtlasJulich = useViewerStore((s) => s.showAtlasJulich)
+  const showAtlasDkt = useViewerStore((s) => s.showAtlasDkt)
+  const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
+  const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
+  const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
 
   const pointer = useMemo(() => new THREE.Vector2(), [])
+  const targetCache = useMemo(() => createCutPickTargetCache(scene), [scene])
   const down = useRef<{ x: number; y: number } | null>(null)
   const lastHover = useRef<string | null>(null)
   const lastAtlasHover = useRef<string | null>(null)
@@ -37,20 +47,23 @@ export default function CutPickBridge() {
   const cutPlanes = useMemo(() => (cutMode === 'slice' ? activeCutPlanes(cuts) : []), [cuts, cutMode])
 
   useEffect(() => {
+    targetCache.markDirty()
+  }, [
+    targetCache,
+    hidden,
+    isolatedSlugs,
+    cuts,
+    cutMode,
+    showSkull,
+    showAtlasJulich,
+    showAtlasDkt,
+    showCarveJulich,
+    showCarveDkt,
+    showCarveBrodmann,
+  ])
+
+  useEffect(() => {
     const el = gl.domElement
-
-    const collectSources = (): THREE.Mesh[] => {
-      const out: THREE.Mesh[] = []
-      scene.traverse((obj) => {
-        const m = obj as THREE.Mesh
-        if (!m.isMesh || !m.visible || !m.geometry) return
-        if (m.userData[CUT_CAP_HELPER_FLAG]) return
-        if (!m.userData[CUT_SOURCE_FLAG]) return
-        out.push(m)
-      })
-      return out
-    }
-
     // Atlas-Areal aus einem Flaechen-Treffer (EIN vertex-gelabeltes Mesh): naechste Face-Ecke
     // -> Per-Vertex-Label -> Slug -> lesbarer Name + roher Slug (fuer die Bruecke).
     const surfaceArea = (hit: THREE.Intersection): { name: string; slug: string } | null => {
@@ -72,7 +85,8 @@ export default function CutPickBridge() {
       pointer.x = ((ev.clientX - rect.left) / rect.width) * 2 - 1
       pointer.y = -((ev.clientY - rect.top) / rect.height) * 2 + 1
       raycaster.setFromCamera(pointer, camera)
-      const hits = raycaster.intersectObjects(scene.children, true)
+      const targets = targetCache.get()
+      const hits = raycaster.intersectObjects(targets.raycastTargets, false)
       // Atlas-Overlay (Carve) liegt auf der Oberflaeche -> naechster Treffer (Flaeche ODER Parzelle).
       const atlasHit = pickFirstAtlasHit(hits)
       let area: string | null = null
@@ -86,7 +100,7 @@ export default function CutPickBridge() {
           area = prettyParcel(obj.name); areaSlug = obj.name
         }
       }
-      const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, collectSources())
+      const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, targets.cutSources)
       return { taro: taroHit ? (taroHit.object as THREE.Mesh).name : null, area, areaSlug }
     }
 
@@ -144,7 +158,7 @@ export default function CutPickBridge() {
       el.removeEventListener('pointerleave', onPointerLeave)
       el.removeEventListener('dblclick', onDoubleClick)
     }
-  }, [gl, camera, raycaster, scene, pointer, cutPlanes, pick, drill, select, setHovered, setPickedAtlasArea, setHoveredAtlasArea])
+  }, [gl, camera, raycaster, pointer, targetCache, cutPlanes, pick, drill, select, setHovered, setPickedAtlasArea, setHoveredAtlasArea])
 
   return null
 }
