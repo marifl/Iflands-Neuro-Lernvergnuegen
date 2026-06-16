@@ -7,13 +7,12 @@
   "title": "DLPFC-Reaktion nach Aufgaben-Schwierigkeit",
   "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
   "overlay": {
-    "kind": "image",
+    "kind": "prose",
     "position": "right",
-    "size": "md",
-    "fallbackImage": "/figures/20a933cb9eda249c0993dd11f7285880173dec2a6ba4bae331ee23cfce844772.jpg"
+    "size": "md"
   },
   "companion": {
-    "summary": "Abb. 11-11C zeigt die hämodynamische DLPFC-Reaktion in Abhängigkeit von der Schwierigkeit. Da der native Scatter-Renderer noch nicht existiert, bleibt die Originalgrafik lokal sichtbar; die 3D-Seite fokussiert den DLPFC-Kontext.",
+    "summary": "Abb. 11-11C zeigt die hämodynamische DLPFC-Reaktion in Abhängigkeit von der Schwierigkeit. Bis ein nativer Scatter-Renderer existiert, erklärt die Szene den Befund als Text und fokussiert den DLPFC-Kontext im 3D-Modell.",
     "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-11C" }]
   }
 }

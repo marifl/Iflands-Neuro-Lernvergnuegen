@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/5fdc4a70d5d1728e7fc65bd8cbffb90c0363108c0bde2b7980a93e481420814d.jpg",
     "data": {
       "nodes": [
         { "id": "sensorik", "label": "Sensorik", "result": "posteriorer Wahrnehmungspol" },

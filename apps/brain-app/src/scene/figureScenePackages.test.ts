@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs'
+import { readFileSync } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import type { AtlasConfigFile } from '../viewer/atlas/atlasConfig'
@@ -7,29 +7,27 @@ import { SceneSchema } from './types'
 const PUBLIC_ROOT = resolve('public')
 
 const FIGURE_PACKAGES = [
-  { figure: '11-05', configName: 'pfc-petrides', sceneId: 'pfc-petrides', fallback: true },
-  { figure: '11-06', configName: 'fuster-gradient', sceneId: 'fuster-gradient', fallback: true },
-  { figure: '11-07', configName: 'badre-rostrokaudal', sceneId: 'badre-rostrokaudal', fallback: true },
-  { figure: '11-08A', configName: 'badre-domainen', sceneId: 'badre-domainen', fallback: true },
+  { figure: '11-05', configName: 'pfc-petrides', sceneId: 'pfc-petrides' },
+  { figure: '11-06', configName: 'fuster-gradient', sceneId: 'fuster-gradient' },
+  { figure: '11-07', configName: 'badre-rostrokaudal', sceneId: 'badre-rostrokaudal' },
+  { figure: '11-08A', configName: 'badre-domainen', sceneId: 'badre-domainen' },
   {
     figure: '11-08B',
     configName: 'badre-relationale-komplexitaet',
     sceneId: 'badre-relationale-komplexitaet',
-    fallback: true,
   },
-  { figure: '11-08C', configName: 'badre-kaskade', sceneId: 'badre-kaskade', fallback: true },
-  { figure: '11-08D', configName: 'badre-konflikttypen', sceneId: 'badre-konflikttypen', fallback: true },
-  { figure: '11-09', configName: 'wcst-frontoparietal', sceneId: 'wcst-frontoparietal', fallback: true },
-  { figure: '11-10', configName: 'fluency-foci', sceneId: 'fluency-foci', fallback: true },
-  { figure: '11-11A/B', configName: 'tower-of-london-dlpfc', sceneId: 'tower-of-london-dlpfc', fallback: true },
+  { figure: '11-08C', configName: 'badre-kaskade', sceneId: 'badre-kaskade' },
+  { figure: '11-08D', configName: 'badre-konflikttypen', sceneId: 'badre-konflikttypen' },
+  { figure: '11-09', configName: 'wcst-frontoparietal', sceneId: 'wcst-frontoparietal' },
+  { figure: '11-10', configName: 'fluency-foci', sceneId: 'fluency-foci' },
+  { figure: '11-11A/B', configName: 'tower-of-london-dlpfc', sceneId: 'tower-of-london-dlpfc' },
   {
     figure: '11-11C',
     configName: 'tower-of-london-schweregrad',
     sceneId: 'tower-of-london-schweregrad',
-    fallback: true,
   },
-  { figure: '11-12', configName: 'flanker-aufgabe', sceneId: 'flanker-aufgabe', fallback: false },
-  { figure: '11-13', configName: 'acc-bush', sceneId: 'acc-bush', fallback: true },
+  { figure: '11-12', configName: 'flanker-aufgabe', sceneId: 'flanker-aufgabe' },
+  { figure: '11-13', configName: 'acc-bush', sceneId: 'acc-bush' },
 ]
 
 function readJson<T>(path: string): T {
@@ -52,7 +50,7 @@ describe('Kapitel-11 Figure-Scene-Packages', () => {
     }
   })
 
-  it('liefert passende Scene-JSONs und lokale Figure-Fallbacks', () => {
+  it('liefert passende Scene-JSONs ohne Buchbild-Fallbacks', () => {
     const config = readJson<AtlasConfigFile>(join(PUBLIC_ROOT, 'assets/atlas-canonical/atlas-config.json'))
 
     for (const pkg of FIGURE_PACKAGES) {
@@ -61,17 +59,10 @@ describe('Kapitel-11 Figure-Scene-Packages', () => {
       expect(scene.id).toBe(pkg.sceneId)
       expect(scene.figure).toBe(pkg.figure)
 
-      const sceneFallback = scene.overlay.fallbackImage
-      const configFallback = cfg.overlay?.fallback_image
-      if (!pkg.fallback) {
-        expect(sceneFallback).toBeUndefined()
-        expect(configFallback).toBeUndefined()
-        continue
-      }
-
-      expect(sceneFallback).toBeTruthy()
-      expect(configFallback).toBe(sceneFallback)
-      expect(existsSync(join(PUBLIC_ROOT, sceneFallback!.slice(1)))).toBe(true)
+      expect(scene.overlay.kind).not.toBe('image')
+      expect(cfg.overlay?.kind).not.toBe('image')
+      expect('fallbackImage' in scene.overlay).toBe(false)
+      expect('fallback_image' in (cfg.overlay ?? {})).toBe(false)
     }
   })
 })

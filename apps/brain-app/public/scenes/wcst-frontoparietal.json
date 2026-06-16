@@ -7,13 +7,12 @@
   "title": "WCST: frontoparietales Kontrollnetzwerk",
   "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
   "overlay": {
-    "kind": "image",
+    "kind": "prose",
     "position": "right",
-    "size": "md",
-    "fallbackImage": "/figures/030ea139d0d04e151335d8c190783d837b9bc1878b2f991b96774d2bd136f0d5.jpg"
+    "size": "md"
   },
   "companion": {
-    "summary": "Abb. 11-09 verbindet den Wisconsin-Card-Sorting-Test mit einem frontoparietalen Aktivierungsmuster. Die App zeigt das Quellbild lokal und hebt DLPFC/VLPFC/parietale Buckets als didaktische, nicht datengenaue 3D-Kontextualisierung hervor.",
+    "summary": "Abb. 11-09 verbindet den Wisconsin-Card-Sorting-Test mit einem frontoparietalen Aktivierungsmuster. Die App zeigt kein Buchbild, sondern hebt DLPFC/VLPFC/parietale Buckets als didaktische, nicht datengenaue 3D-Kontextualisierung hervor.",
     "sources": [
       { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-09" },
       { "key": "specht_2009", "note": "WCST/fMRT-Kontext laut Lehrbuchcaption" }

@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/9b562107d9696999a038a7712f82f0793d77fdb3d6c88b517793df559dc7b3be.jpg",
     "data": {
       "nodes": [
         { "id": "dorsal", "label": "dorsales ACC", "result": "kognitive Konflikte, Stroop/Flanker" },
@@ -19,7 +18,7 @@
     }
   },
   "companion": {
-    "summary": "Abb. 11-13 unterscheidet dorsale, eher kognitive ACC-Anteile von ventralen, stärker emotionalen Anteilen. Die 3D-Config nutzt das bestehende ACC-Bush-Farbpreset und zeigt das Lehrbuchbild lokal als Fallback.",
+    "summary": "Abb. 11-13 unterscheidet dorsale, eher kognitive ACC-Anteile von ventralen, stärker emotionalen Anteilen. Die 3D-Config nutzt das bestehende ACC-Bush-Farbpreset und ersetzt das Lehrbuchbild durch ein eigenes Flowchart.",
     "sources": [
       { "key": "jaencke_kap11", "note": "Kap. 11.4, Abb. 11-13" },
       { "key": "bush_2000", "note": "dorsal/ventral ACC-Kontrast laut Lehrbuchcaption" }

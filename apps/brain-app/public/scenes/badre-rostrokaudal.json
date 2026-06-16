@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/c199e8b6e09269d8db8263ab99e1bae16bfe7d204eb6f8dd77534b39a541713d.jpg",
     "data": {
       "nodes": [
         { "id": "ba6-8", "label": "BA 6/8", "result": "motorische und prämotorische Kontrolle" },

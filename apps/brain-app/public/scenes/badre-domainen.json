@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/99c5fe610c47fccd3b3a1536633fa0615a7c33905572925f8f723b5b1c49bcfd.jpg",
     "data": {
       "nodes": [
         { "id": "domain", "label": "domänenspezifisch", "result": "konkrete Reiz- oder Aufgabenklasse" },

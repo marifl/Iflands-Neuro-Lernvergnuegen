@@ -7,13 +7,12 @@
   "title": "Tower of London und DLPFC-Aktivierung",
   "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
   "overlay": {
-    "kind": "image",
+    "kind": "prose",
     "position": "right",
-    "size": "md",
-    "fallbackImage": "/figures/ccc3a6c057a8b2394c40aa3f8dde3a9a3fad945026cc4a4cc7bfcb617962b031.jpg"
+    "size": "md"
   },
   "companion": {
-    "summary": "Abb. 11-11A/B koppelt eine Tower-of-London-Aufgabe mit typischer DLPFC-Aktivierung. Das App-Paket zeigt das lokale Quellpanel und fokussiert den DLPFC als schematische Planungsregion.",
+    "summary": "Abb. 11-11A/B koppelt eine Tower-of-London-Aufgabe mit typischer DLPFC-Aktivierung. Das App-Paket zeigt kein Buchbild und fokussiert den DLPFC als schematische Planungsregion im 3D-Kontext.",
     "sources": [
       { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-11A/B" },
       { "key": "unterrainer_owen_2006", "note": "ToL/fMRT-Kontext laut Lehrbuchcaption" }

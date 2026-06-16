@@ -15,8 +15,7 @@
         { "id": "novelty", "cue": "Pflanze", "probe": "Mensch", "kind": "novelty", "expected": "ignorieren", "outcome": "correct-reject" },
         { "id": "go-omission", "cue": "Tier", "probe": "Tier", "kind": "go", "expected": "Taste drücken", "outcome": "omission-error" }
       ]
-    },
-    "fallbackImage": "/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg"
+    }
   },
   "companion": {
     "summary": "Beim VCPT werden Bilder im Sekundentakt gezeigt. Nur auf das zweite Tierbild (A–A) wird reagiert (Go); folgt auf ein Tier eine Pflanze (A–P), muss die vorbereitete Reaktion gehemmt werden (No-go). Commission errors (fälschliches Drücken bei No-go) und omission errors (fehlende Go-Reaktion) zeigen Inhibitionsschwächen. Entscheidend sind die im Go/No-go evozierten ERPs.",

@@ -117,7 +117,6 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
     ['scene', input.overlay?.scene !== undefined ? tomlStr(input.overlay.scene) : undefined],
     ['position', input.overlay?.position !== undefined ? tomlStr(input.overlay.position) : undefined],
     ['size', input.overlay?.size !== undefined ? tomlStr(input.overlay.size) : undefined],
-    ['fallback_image', input.overlay?.fallback_image !== undefined ? tomlStr(input.overlay.fallback_image) : undefined],
   ])
 
   pushTable(lines, name, 'sequencing', [

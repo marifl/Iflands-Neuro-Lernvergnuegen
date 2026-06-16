@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/db4b9ce428d63d7d6f13a4d17982d274ba576c1a7efa25a89675e419305c5d47.jpg",
     "data": {
       "nodes": [
         { "id": "antwort", "label": "Antwortkonflikt", "result": "Reaktion konkurriert" },

@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/2a5a810b09684343c3152eff59c792cce2221a73b43254557a546623eccd03c8.jpg",
     "data": {
       "nodes": [
         { "id": "phonologisch", "label": "phonologisch", "result": "dorsaler IFG/PFC" },

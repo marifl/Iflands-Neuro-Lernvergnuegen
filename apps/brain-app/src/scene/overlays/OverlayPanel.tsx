@@ -1,6 +1,5 @@
 import type { Scene } from '../types'
 import Prose from './Prose'
-import ImageFallback from './ImageFallback'
 import ErpChart from './ErpChart'
 import Flowchart from './Flowchart'
 import AnimationPlayer from '../../viewer/AnimationPlayer'
@@ -13,15 +12,13 @@ function renderOverlay(scene: Scene) {
   switch (scene.overlay.kind) {
     case 'prose':
       return <Prose scene={scene} />
-    case 'image':
-      return <ImageFallback scene={scene} />
     case 'erp':
       return <ErpChart scene={scene} />
     case 'flowchart':
       return <Flowchart scene={scene} />
-    // table/topography: spaeter; bis dahin Bild-Fallback wenn vorhanden, sonst Prose.
+    // table/topography: spaeter; bis dahin kompakte Textfassung statt Buchbild-Fallback.
     default:
-      return scene.overlay.fallbackImage ? <ImageFallback scene={scene} /> : <Prose scene={scene} />
+      return <Prose scene={scene} />
   }
 }
 

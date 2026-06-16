@@ -248,6 +248,18 @@ test('validateConfig wirft bei unbekanntem Figure-Atom-Subkey', () => {
   assert.throws(() => validateConfig(cfg, idx), /configuration "a"\.overlay hat unbekannten Key "surprise"/)
 })
 
+test('validateConfig verbietet Buchbild-Fallbacks im Overlay', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({ overlay: { kind: 'image' } }), idx, VALIDATION_CONTEXT),
+    /overlay\.kind "image" ungueltig/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({ overlay: { kind: 'prose', fallback_image: '/figures/book.jpg' } }), idx, VALIDATION_CONTEXT),
+    /overlay hat unbekannten Key "fallback_image"/,
+  )
+})
+
 test('validateConfig wirft bei unbekanntem nested Config-Key', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(

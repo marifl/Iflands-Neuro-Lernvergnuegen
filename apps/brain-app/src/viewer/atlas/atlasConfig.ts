@@ -35,11 +35,10 @@ export interface ConfigColors {
 export interface ConfigVisibility { dim_others?: boolean; dim_opacity?: number; hidden?: string[]; isolated?: string[] }
 export interface ConfigCuts { enabled?: boolean; planes?: { axis: 'x' | 'y' | 'z'; position: number; keep?: 'positive' | 'negative' }[] }
 export interface ConfigOverlay {
-  kind?: 'erp' | 'topography' | 'flowchart' | 'table' | 'image' | 'prose'
+  kind?: 'erp' | 'topography' | 'flowchart' | 'table' | 'prose'
   scene?: string
   position?: 'left' | 'right' | 'center' | 'bottom'
   size?: 'sm' | 'md' | 'lg'
-  fallback_image?: string
 }
 export interface ConfigSequencing { presentation?: string; learning?: string; step?: string }
 export interface MeshMappingNode { meshes: string[]; known_gap?: boolean; gap_reason?: string }

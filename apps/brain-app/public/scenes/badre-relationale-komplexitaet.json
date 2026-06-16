@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/9c0dc239d5615465902789a4339ebcde18e4b161cdbda80d2916cd50fa1489cb.jpg",
     "data": {
       "nodes": [
         { "id": "feature", "label": "Merkmal", "result": "ein einzelnes Reizmerkmal" },

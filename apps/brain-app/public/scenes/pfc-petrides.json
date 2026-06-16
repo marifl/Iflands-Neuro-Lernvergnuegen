@@ -10,7 +10,6 @@
     "kind": "flowchart",
     "position": "right",
     "size": "md",
-    "fallbackImage": "/figures/eb504a5327eaa2753742667cfaebbd53963b28961a54b352c8263878188d73b9.jpg",
     "data": {
       "nodes": [
         { "id": "dlpfc", "label": "DLPFC", "result": "Manipulieren von Arbeitsgedächtnisinhalten" },
@@ -20,7 +19,7 @@
     }
   },
   "companion": {
-    "summary": "Abb. 11-05 ist ein schematisches Petrides-Modell: DLPFC und VLPFC werden nicht als Messdaten, sondern als funktionelle Arbeitsteilung für Manipulieren, Halten und Abrufen gezeigt. Die 3D-Config nutzt lokale Buckets für DLPFC, VLPFC und posterior-parietale Kontextareale; das Originalbild bleibt als lokaler Fallback verlinkt.",
+    "summary": "Abb. 11-05 ist ein schematisches Petrides-Modell: DLPFC und VLPFC werden nicht als Messdaten, sondern als funktionelle Arbeitsteilung für Manipulieren, Halten und Abrufen gezeigt. Die 3D-Config nutzt lokale Buckets für DLPFC, VLPFC und posterior-parietale Kontextareale; die App ersetzt das Buchbild durch ein eigenes Flowchart plus 3D-Kontext.",
     "sources": [
       { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-05" },
       { "key": "petrides_2005", "note": "funktionsspezifisches PFC-Modell" }
