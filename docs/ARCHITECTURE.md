@@ -169,6 +169,22 @@ Sidebar und Viewport-Zuschnitt nach `appMode`.
 Farbe, Schnitt, Ansicht, Kontext und Snapshot. Neue globale Werkzeuge gehören
 hier nur hin, wenn sie den Dozenten- oder Studentenfluss vereinfachen.
 
+### Studentischer Fortschritt
+
+Studentisches Lernen nutzt denselben `learn`-Modus und denselben
+`learning.kapitel11-pfad` wie der Dozenten-Companion. Der erste Vertrag liegt
+in `src/viewer/studentProgress.ts`:
+
+1. `StudentProgressState` ist versioniert, `learning`-only und referenziert
+   bestehende `configName`-/`sceneId`-Steps.
+2. Status bleibt klein: `not-started`, `seen`, `checked`.
+3. Lernchecks speichern `checkId`, Ergebnis, Versuchszahl und Zeitstempel.
+4. Persistenz läuft über `ViewerStateSnapshot.state.studentProgress`.
+
+Entscheidung: kein stilles `localStorage` für Lernfortschritt und kein
+Cloud-Sync in diesem Slice. Snapshots sind der kanonische erste
+Persistenzpfad, bis ein echtes Nutzer-/Kursmodell existiert.
+
 ## Visual-Authoring
 
 Neue Visuals sollen aus Config- und Scene-Daten entstehen. Der Standardweg:

@@ -6,6 +6,11 @@ import {
   useAuthoringSnapshotStore,
   type AuthoringSnapshotState,
 } from './authoringSnapshotStore'
+import {
+  parseStudentProgressState,
+  useStudentProgressStore,
+  type StudentProgressState,
+} from './studentProgress'
 import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMode, type ViewMode } from './viewerStore'
 import { sceneIndexForLocation } from '../scene/scenes'
 import { useSceneStore } from '../scene/sceneStore'
@@ -51,6 +56,7 @@ export interface ViewerStateSnapshotState {
   showAtlasDkt: boolean; showAtlasJulich: boolean
   showCarveBrodmann: boolean; showCarveDkt: boolean; showCarveJulich: boolean
   showSkull: boolean; skullOpacity: number
+  studentProgress: StudentProgressState | null
 }
 
 export interface ViewerStateSnapshot { version: typeof VIEWER_STATE_SNAPSHOT_VERSION; state: ViewerStateSnapshotState }
@@ -275,6 +281,7 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     showCarveJulich: state.showCarveJulich,
     showSkull: state.showSkull,
     skullOpacity: state.skullOpacity,
+    studentProgress: useStudentProgressStore.getState().progress,
   }
 }
 
@@ -313,6 +320,7 @@ function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): Vi
     showCarveJulich: booleanValue(raw.showCarveJulich, fallback.showCarveJulich, 'showCarveJulich'),
     showSkull: booleanValue(raw.showSkull, fallback.showSkull, 'showSkull'),
     skullOpacity: unitValue(raw.skullOpacity, fallback.skullOpacity, 'skullOpacity'),
+    studentProgress: parseStudentProgressState(raw.studentProgress),
   }
 }
 
@@ -344,6 +352,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
   applyRoute(snapshotState.route)
   applyLaunch(snapshotState.launch)
   useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(snapshotState.authoring)
+  useStudentProgressStore.getState().setStudentProgress(snapshotState.studentProgress)
   useViewerStore.setState({
     activePreset: snapshotState.activePreset,
     appMode: snapshotState.appMode,

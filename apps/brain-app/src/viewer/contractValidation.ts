@@ -91,6 +91,7 @@ const SNAPSHOT_VALIDATION_FALLBACK: ViewerStateSnapshotState = {
   showCarveJulich: false,
   showSkull: false,
   skullOpacity: 1,
+  studentProgress: null,
 }
 
 function add(errors: string[], path: string, message: string): void {

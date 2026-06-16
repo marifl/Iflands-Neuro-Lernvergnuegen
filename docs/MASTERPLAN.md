@@ -315,9 +315,10 @@ flowchart TB
 
 1. **direkter/indirekter-Pfad-Preset** — kleinster Schritt, hoher didaktischer Wert (GPi/GPe-Geometrie steht jetzt).
 2. **ppc/vmpfc/insula aus dem Shelf** — analog dlpfc, rein additiv, hebt mehrere Presets.
-3. **WCST/Fluency/ToL didaktisch vertiefen** — Figure-Packages existieren,
-   jetzt fehlen Übungslogik und studentische Progression.
-4. **Studentischer Selbstlernmodus** — Fortschritt, Wiederholung und Checks.
+3. **Studentische Check-UI** — Vertrag steht in `docs/STUDENTENMODUS_KONZEPT.md`,
+   jetzt fehlen sichtbare Check-Blöcke und Progress-Anzeige.
+4. **WCST/Fluency/ToL vertiefen** — vorhandene DLPFC/VLPFC-Steps als erste
+   Check-Kandidaten nutzen.
 5. **Responsive Adapt** — vor Abgabe/Portfolio einplanen.
 
 ---

@@ -4,6 +4,11 @@ import {
   useAuthoringSnapshotStore,
   type AuthoringSnapshotState,
 } from './authoringSnapshotStore'
+import {
+  createStudentProgressState,
+  recordStudentCheck,
+  useStudentProgressStore,
+} from './studentProgress'
 import { useViewerStore } from './viewerStore'
 import {
   VIEWER_STATE_SNAPSHOT_VERSION,
@@ -158,6 +163,7 @@ describe('viewer state snapshots', () => {
     window.history.replaceState(null, '', '/')
     hasImportedSnapshotRouteForCurrentLocation()
     useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
+    useStudentProgressStore.getState().resetStudentProgress()
     useViewerStore.setState({
       appMode: 'explore',
       activePreset: null,
@@ -240,6 +246,7 @@ describe('viewer state snapshots', () => {
     expect(snapshot.state.cameraView).toBe('lateral-left')
     expect(snapshot.state.cameraPose).toEqual({ position: [10, 20, 30], target: [1, 2, 3], fov: 45 })
     expect(snapshot.state.activePreset?.id).toBe('p3a')
+    expect(snapshot.state.studentProgress).toBeNull()
     expect(JSON.stringify(snapshot)).not.toContain('hovered')
     expect(JSON.stringify(snapshot)).not.toContain('ontology')
   })
@@ -364,6 +371,33 @@ describe('viewer state snapshots', () => {
     importViewerStateSnapshot(snapshot)
 
     expect(useAuthoringSnapshotStore.getState().authoring).toEqual(authoring)
+  })
+
+  it('exportiert und importiert Studentenfortschritt im Unterrichts-Snapshot', () => {
+    const progress = recordStudentCheck(
+      createStudentProgressState('kapitel11-pfad', [
+        {
+          configName: 'wcst-frontoparietal',
+          sceneId: 'wcst-frontoparietal',
+          title: 'WCST: frontoparietales Kontrollnetzwerk',
+          figure: '11-09',
+        },
+      ]),
+      'wcst-frontoparietal',
+      'wcst-sort-rule',
+      'passed',
+      '2026-06-16T20:01:00.000Z',
+    )
+    useStudentProgressStore.getState().setStudentProgress(progress)
+
+    const snapshot = exportViewerStateSnapshot()
+
+    expect(snapshot.state.studentProgress).toEqual(progress)
+
+    useStudentProgressStore.getState().resetStudentProgress()
+    importViewerStateSnapshot(snapshot)
+
+    expect(useStudentProgressStore.getState().progress).toEqual(progress)
   })
 
   it('laesst Snapshot-Import gegen Config-Link-Defaults gewinnen', () => {
