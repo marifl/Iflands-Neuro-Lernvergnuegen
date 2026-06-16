@@ -4,6 +4,7 @@ import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes } from './cutCapsMerged'
 import { ATLAS_SURFACE_FLAG } from './atlasParcels'
+import { ATLAS_CAP_SOURCE_FLAG, buildAtlasCapProxyBundle, type AtlasCapProxyBundle } from './atlasCapProxies'
 
 // Zwei Atlas-Overlay-Arten ueber TARO:
 //  - 'raw':   die ORIGINALEN Julich/DKT-Mesh-Areale (fremdes MNI-Hirn), per Affine grob auf TARO
@@ -17,6 +18,7 @@ const RAW_URL = { julich: '/assets/bodyparts3d/atlas-raw-julich.glb', dkt: '/ass
 const CARVE_V = '8'
 const SURFACE_URL = { julich: `/assets/bodyparts3d/atlas-surface-julich.glb?v=${CARVE_V}`, dkt: `/assets/bodyparts3d/atlas-surface-dkt.glb?v=${CARVE_V}`, brodmann: `/assets/bodyparts3d/atlas-surface-brodmann.glb?v=${CARVE_V}` } as const
 const PICK_URL = { julich: `/assets/bodyparts3d/atlas-surface-julich-pick.json?v=${CARVE_V}`, dkt: `/assets/bodyparts3d/atlas-surface-dkt-pick.json?v=${CARVE_V}`, brodmann: `/assets/bodyparts3d/atlas-surface-brodmann-pick.json?v=${CARVE_V}` } as const
+const CUT_SOURCES_CHANGED_EVENT = 'brain-app:cut-sources-changed'
 
 // Roh-Debug: eine kuehle Flachfarbe je Quelle (Drift auf einen Blick erkennbar).
 const RAW_COLOR = { julich: '#39d3c4', dkt: '#e879c8' } as const
@@ -59,6 +61,8 @@ function RawLayer({ which }: { which: 'julich' | 'dkt' }) {
 function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
   const { scene } = useGLTF(SURFACE_URL[which])
   const [pick, setPick] = useState<{ slugs: string[]; vlabels: Int16Array } | null>(null)
+  const [capProxyMaterials, setCapProxyMaterials] = useState<THREE.Material[]>([])
+  const bumpCutSourceRevision = useViewerStore((s) => s.bumpCutSourceRevision)
 
   useEffect(() => {
     let alive = true
@@ -88,14 +92,26 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -12,
   }), [])
-  const mats = useMemo(() => [mat], [mat])
+  const mats = useMemo(() => [mat, ...capProxyMaterials], [mat, capProxyMaterials])
   useClip(mats)
+
+  useEffect(() => {
+    if (capProxyMaterials.length === 0) return
+    const id = window.setTimeout(() => {
+      bumpCutSourceRevision()
+      window.dispatchEvent(new Event(CUT_SOURCES_CHANGED_EVENT))
+    }, 0)
+    return () => window.clearTimeout(id)
+  }, [capProxyMaterials, bumpCutSourceRevision])
 
   // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
   useEffect(() => {
+    const bundles: AtlasCapProxyBundle[] = []
+    const proxyMaterials: THREE.Material[] = []
     scene.traverse((o) => {
       const m = o as THREE.Mesh
       if (!m.isMesh) return
+      if (m.userData[ATLAS_CAP_SOURCE_FLAG]) return
       m.material = mat
       m.renderOrder = 2
       m.userData[ATLAS_SURFACE_FLAG] = true // pickbar (Vertex-genau) via CutPickBridge
@@ -105,8 +121,17 @@ function CarveSurface({ which }: { which: 'julich' | 'dkt' | 'brodmann' }) {
         throw new Error(`atlas-surface ${which}: ${posCount} Vertices != ${pick.vlabels.length} Labels (Bake/Sidecar inkonsistent)`)
       m.geometry.setAttribute('aLabel', new THREE.BufferAttribute(Float32Array.from(pick.vlabels), 1))
       m.userData.atlasPick = pick
+      const bundle = buildAtlasCapProxyBundle(m, pick)
+      bundles.push(bundle)
+      proxyMaterials.push(...bundle.materials)
     })
-  }, [scene, mat, pick, which])
+    setCapProxyMaterials(proxyMaterials)
+    return () => {
+      for (const bundle of bundles) bundle.dispose()
+      bumpCutSourceRevision()
+      window.dispatchEvent(new Event(CUT_SOURCES_CHANGED_EVENT))
+    }
+  }, [scene, mat, pick, which, bumpCutSourceRevision])
 
   return <primitive object={scene} />
 }

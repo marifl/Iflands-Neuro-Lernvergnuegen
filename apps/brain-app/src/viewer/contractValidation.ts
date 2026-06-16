@@ -199,6 +199,16 @@ function validateTarget(target: BonusContextTarget, path: string, ctx: ContractC
   if (target.kind === 'ontology-node' && !ctx.ontologyNodeIds.has(target.id)) {
     add(ctx.errors, path, `ontology-node "${target.id}" ist nicht bekannt`)
   }
+  if (target.kind === 'device-target') {
+    const collection = ctx.collections.find((candidate) => candidate.id === target.collectionId)
+    if (!collection) {
+      add(ctx.errors, `${path}.collectionId`, `collection "${target.collectionId}" ist nicht bekannt`)
+      return
+    }
+    if (!collection.assetSlots?.some((slot) => slot.id === target.slotId)) {
+      add(ctx.errors, `${path}.slotId`, `slot "${target.collectionId}/${target.slotId}" ist nicht in der Registry deklariert`)
+    }
+  }
 }
 
 function validateBonusContexts(contexts: readonly BonusContext[], ctx: ContractContext): void {

@@ -13,6 +13,25 @@ keinen aktuellen Pflicht-Assetblocker.
 Offene Punkte sind Erweiterungen für eine vollständige Kapitel-11-Abdeckung,
 nicht Blocker für den Produktiveinsatz im aktuellen Vortragspfad.
 
+## Transparenz für Produktiveinsatz
+
+Die App darf im Vortrag und in der späteren Lernapp keine stärkere fachliche
+Genauigkeit behaupten, als die Assets hergeben.
+
+| Ebene | Bedeutung | Produktregel |
+| --- | --- | --- |
+| Echte Runtime-Assets | BodyParts3D-/TARO-Hirn, Kopf, Schädel, Atlas-GLBs und Pick-JSONs | Herkunft bleibt über `THIRD-PARTY-NOTICES.md`, Asset-Namen und Pipeline-Doku nachvollziehbar |
+| Registrierte Atlas-Carves | Jülich/DKT/Brodmann auf TARO-Oberfläche übertragen | als didaktisch registrierte Atlasdarstellung behandeln, nicht als morphometrisch exakte Einzelperson |
+| Schematische Fallstudie | Phineas-Gage-Modus mit TARO-/Schädelmodell und animierter Stange | UI und Doku müssen klar machen, dass dies kein echtes Gage-CT/GLB ist |
+| Rekonstruktion/Spiegelung | gespiegelte oder rekonstruierte Strukturen aus Asset-Pipeline | im Audit/Inventar sichtbar halten; nicht still als Originaldaten ausgeben |
+
+Release-Regel: Wenn ein Asset schematisch, registriert, gespiegelt oder
+rekonstruiert ist, muss diese Einschränkung entweder im UI-Kontext, in der
+Quellen-/Inventardoku oder im jeweiligen Lerntext sichtbar sein. Für den
+aktuellen Vortragspfad ist diese Transparenz über Phineas-UI, Atlas-/Pipeline-
+Doku und `THIRD-PARTY-NOTICES.md` ausreichend; echte Gage-Assets bleiben
+Feature-Backlog, nicht Release-Blocker.
+
 ## Bestand
 
 ### Szenen und Configs

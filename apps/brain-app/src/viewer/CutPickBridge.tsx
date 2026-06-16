@@ -6,7 +6,7 @@ import { activeCutPlanes } from './cutCapsMerged'
 import { pickCutAwareHit } from './cutPick'
 import { ATLAS_SURFACE_FLAG, prettyParcel } from './atlasParcels'
 import { nearestCornerVertex } from './atlas/atlasPick'
-import { pickFirstAtlasHit } from './atlasInteraction'
+import { isAtlasHit, pickFirstAtlasHit } from './atlasInteraction'
 import { createCutPickTargetCache } from './cutPickTargets'
 
 // Klick-vs-Orbit-Drag: ueber diese Pixel-Distanz gilt ein pointerup als Drag, nicht als Pick.
@@ -36,6 +36,8 @@ export default function CutPickBridge() {
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
   const showCarveDkt = useViewerStore((s) => s.showCarveDkt)
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
+  const clipAtlasOverlay = useViewerStore((s) => s.clipAtlasOverlay)
+  const cutSourceRevision = useViewerStore((s) => s.cutSourceRevision)
 
   const pointer = useMemo(() => new THREE.Vector2(), [])
   const targetCache = useMemo(() => createCutPickTargetCache(scene), [scene])
@@ -60,6 +62,8 @@ export default function CutPickBridge() {
     showCarveJulich,
     showCarveDkt,
     showCarveBrodmann,
+    clipAtlasOverlay,
+    cutSourceRevision,
   ])
 
   useEffect(() => {
@@ -101,6 +105,15 @@ export default function CutPickBridge() {
         }
       }
       const taroHit = pickCutAwareHit(raycaster, hits, cutPlanes, targets.cutSources)
+      if (!area && taroHit && isAtlasHit(taroHit)) {
+        const obj = taroHit.object as THREE.Mesh
+        if (obj.userData[ATLAS_SURFACE_FLAG]) {
+          const sa = surfaceArea(taroHit)
+          if (sa) { area = sa.name; areaSlug = sa.slug }
+        } else {
+          area = prettyParcel(obj.name); areaSlug = obj.name
+        }
+      }
       return { taro: taroHit ? (taroHit.object as THREE.Mesh).name : null, area, areaSlug }
     }
 

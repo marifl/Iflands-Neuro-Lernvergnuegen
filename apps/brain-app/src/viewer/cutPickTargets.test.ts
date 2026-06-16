@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { BufferGeometry, Group, Mesh, MeshBasicMaterial } from 'three'
+import { BufferGeometry, Group, Mesh, MeshBasicMaterial, Plane, Vector3 } from 'three'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 import { ATLAS_SURFACE_FLAG } from './atlasParcels'
-import { createCutPickTargetCache } from './cutPickTargets'
+import { createCutPickTargetCache, isCutCapSource } from './cutPickTargets'
 
 const geometry = new BufferGeometry()
 
@@ -42,5 +42,41 @@ describe('createCutPickTargetCache', () => {
     cache.markDirty()
     expect(cache.get()).not.toBe(first)
     expect(traversals).toBe(2)
+  })
+
+  it('nimmt Atlas-Carve-Meshes nur mit aktiver Clipping-Plane als Cap-Source auf', () => {
+    const root = new Group()
+    const unclipped = mesh('atlas-unclipped')
+    unclipped.userData[ATLAS_SURFACE_FLAG] = true
+    const clipped = mesh('atlas-clipped')
+    clipped.userData[ATLAS_SURFACE_FLAG] = true
+    clipped.material = new MeshBasicMaterial({ clippingPlanes: [new Plane(new Vector3(1, 0, 0), 0)] })
+    root.add(unclipped, clipped)
+
+    const targets = createCutPickTargetCache(root).get()
+
+    expect(targets.raycastTargets).toEqual([unclipped, clipped])
+    expect(targets.cutSources).toEqual([clipped])
+  })
+
+  it('nutzt Atlas-Cap-Proxies nur fuer Render-Caps und behaelt das Original als Pick-Quelle', () => {
+    const original = mesh('atlas-original')
+    original.userData[ATLAS_SURFACE_FLAG] = true
+    original.userData.atlasCapProxyOwner = true
+    original.material = new MeshBasicMaterial({ clippingPlanes: [new Plane(new Vector3(1, 0, 0), 0)] })
+
+    const proxy = mesh('atlas-area-proxy')
+    proxy.userData.atlasCapSource = true
+    proxy.material = new MeshBasicMaterial({ clippingPlanes: [new Plane(new Vector3(1, 0, 0), 0)] })
+
+    const root = new Group()
+    root.add(original, proxy)
+
+    expect(isCutCapSource(original)).toBe(false)
+    expect(isCutCapSource(proxy)).toBe(true)
+    expect(createCutPickTargetCache(root).get()).toEqual({
+      raycastTargets: [original],
+      cutSources: [original],
+    })
   })
 })

@@ -11,6 +11,7 @@ export type BonusContextTarget =
   | { kind: 'atlas-role'; id: string }
   | { kind: 'scene'; id: string }
   | { kind: 'eeg-site'; id: EegSite }
+  | { kind: 'device-target'; collectionId: string; slotId: string; partId?: string }
 
 export interface BonusContextAnimationHints {
   highlightSlugs?: string[]
@@ -67,6 +68,7 @@ export const BONUS_CONTEXTS: BonusContext[] = [
       { kind: 'eeg-site', id: 'Fz' },
       { kind: 'eeg-site', id: 'Cz' },
       { kind: 'eeg-site', id: 'Pz' },
+      { kind: 'device-target', collectionId: 'device-eeg-10-20', slotId: 'eeg-device-model' },
     ],
     sourceRefs: [
       'apps/brain-app/public/scenes/vcpt.json',
@@ -80,16 +82,43 @@ export const BONUS_CONTEXTS: BonusContext[] = [
     },
   },
   {
+    id: 'eeg-erp-p3a-novelty',
+    kind: 'eeg-erp',
+    collectionIds: ['device-eeg-10-20'],
+    title: 'P3a: fronto-zentrale Orientierungsantwort',
+    summaryDe:
+      'Kuratierter P3a-Kontext für fronto-zentrale Novelty-/Orientierungsantworten, getrennt vom allgemeineren Konfliktmonitoring-Pfad.',
+    targets: [
+      { kind: 'scene', id: 'p3a-konfliktmonitoring' },
+      { kind: 'atlas-role', id: 'ACC' },
+      { kind: 'eeg-site', id: 'Fz' },
+      { kind: 'eeg-site', id: 'Cz' },
+      { kind: 'device-target', collectionId: 'device-eeg-10-20', slotId: 'eeg-device-model' },
+    ],
+    sourceRefs: [
+      'apps/brain-app/public/scenes/p3a-konfliktmonitoring.json',
+      'apps/brain-app/src/viewer/eegElectrodes.ts',
+      'Kapitel 11 · P3a / fronto-zentrale Orientierungsantwort',
+    ],
+    animationHints: {
+      sceneId: 'p3a-konfliktmonitoring',
+      configName: 'p3a-konfliktmonitoring',
+      eegSites: ['Fz', 'Cz'],
+    },
+  },
+  {
     id: 'eeg-erp-p3a-konfliktmonitoring',
     kind: 'eeg-erp',
     collectionIds: ['device-eeg-10-20'],
-    title: 'P3a: Konfliktmonitoring',
+    title: 'Konfliktmonitoring: ACC und No-go-P3a',
     summaryDe:
       'ERP-Kontext für fronto-zentrale P3a-Aktivität im Konfliktmonitoring mit ACC-Bezug.',
     targets: [
       { kind: 'scene', id: 'p3a-konfliktmonitoring' },
       { kind: 'atlas-role', id: 'ACC' },
+      { kind: 'ontology-node', id: 'left-anterior-cingulate-gyrus' },
       { kind: 'eeg-site', id: 'Cz' },
+      { kind: 'device-target', collectionId: 'device-eeg-10-20', slotId: 'eeg-device-model' },
     ],
     sourceRefs: [
       'apps/brain-app/public/scenes/p3a-konfliktmonitoring.json',
@@ -121,8 +150,27 @@ export function resolveBonusContextIds(ids: readonly string[]): BonusContext[] {
 
 export function bonusContextsForTarget(target: BonusContextTarget): BonusContext[] {
   return BONUS_CONTEXTS.filter((context) =>
-    context.targets.some((candidate) => candidate.kind === target.kind && candidate.id === target.id),
+    context.targets.some((candidate) => sameBonusContextTarget(candidate, target)),
   )
+}
+
+function sameBonusContextTarget(a: BonusContextTarget, b: BonusContextTarget): boolean {
+  if (a.kind !== b.kind) return false
+  switch (a.kind) {
+    case 'ontology-node':
+      return b.kind === 'ontology-node' && a.id === b.id
+    case 'atlas-role':
+      return b.kind === 'atlas-role' && a.id === b.id
+    case 'scene':
+      return b.kind === 'scene' && a.id === b.id
+    case 'eeg-site':
+      return b.kind === 'eeg-site' && a.id === b.id
+    case 'device-target':
+      return b.kind === 'device-target'
+        && a.collectionId === b.collectionId
+        && a.slotId === b.slotId
+        && a.partId === b.partId
+  }
 }
 
 export function bonusContextIdsForNode(node: OntologyNode): string[] {

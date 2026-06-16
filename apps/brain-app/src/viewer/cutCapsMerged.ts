@@ -292,6 +292,8 @@ export class CutCapsMerged {
     unit.stencilBack.renderOrder = ro
     unit.stencilFront.renderOrder = ro
     unit.cap.renderOrder = ro + 1
+    unit.cap.userData.cutCapSourceName = mesh.name
+    unit.cap.userData.atlasCapSource = mesh.userData.atlasCapSource === true
 
     unit.stencilBack.visible = true
     unit.stencilFront.visible = true
@@ -361,6 +363,8 @@ export class CutCapsMerged {
       u.stencilBack.visible = false
       u.stencilFront.visible = false
       u.cap.visible = false
+      delete u.cap.userData.cutCapSourceName
+      delete u.cap.userData.atlasCapSource
       u.srcMesh = null
       if (this._pool.length < MAX_POOL) this._pool.push(u)
       else this._disposeUnit(u)

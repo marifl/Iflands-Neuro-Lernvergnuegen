@@ -2,6 +2,8 @@
 
 Die App selbst (Vite / React / React Three Fiber / Three.js). Produkt-Überblick,
 Lizenz und Asset-Pipelines stehen im **[Repo-README](../../README.md)**.
+Die zentrale Runtime-, State-, Config- und Visual-Authoring-Karte steht in
+**[docs/ARCHITECTURE.md](../../docs/ARCHITECTURE.md)**.
 
 ## Entwickeln
 
@@ -38,6 +40,8 @@ public/
 ├── companion/    Companion-Atlas + Presets
 └── config/       Presets / Szenen-Config
 ```
+
+Architektur-Details und Authoring-Happy-Paths: [`../../docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md).
 
 Die App ist `@mu-kn/brain-app` und nutzt `@mu-kn/brain-runtime`
 (`file:../../packages/brain-runtime`) sowie `theme-tokens` über relativen

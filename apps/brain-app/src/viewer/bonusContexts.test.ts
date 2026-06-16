@@ -30,12 +30,25 @@ describe('bonusContexts', () => {
   })
 
   it('stellt EEG/ERP-Kontexte ueber Scene und Elektroden-Ziele bereit', () => {
-    expect(bonusContextsForTarget({ kind: 'scene', id: 'p3a-konfliktmonitoring' }).map((context) => context.id)).toContain(
+    expect(bonusContextsForTarget({ kind: 'scene', id: 'p3a-konfliktmonitoring' }).map((context) => context.id)).toEqual([
+      'eeg-erp-p3a-novelty',
       'eeg-erp-p3a-konfliktmonitoring',
-    )
+    ])
     expect(bonusContextsForTarget({ kind: 'eeg-site', id: 'Cz' }).map((context) => context.id)).toContain(
       'eeg-erp-p3a-konfliktmonitoring',
     )
+  })
+
+  it('macht EEG-Kontexte ueber den Device-Slot adressierbar', () => {
+    expect(bonusContextsForTarget({
+      kind: 'device-target',
+      collectionId: 'device-eeg-10-20',
+      slotId: 'eeg-device-model',
+    }).map((context) => context.id)).toEqual([
+      'eeg-erp-vcpt',
+      'eeg-erp-p3a-novelty',
+      'eeg-erp-p3a-konfliktmonitoring',
+    ])
   })
 
   it('ignoriert unbekannte Kontext-IDs beim Aufloesen fuer robuste Snapshots', () => {
@@ -46,6 +59,7 @@ describe('bonusContexts', () => {
     expect(BONUS_CONTEXTS.map((context) => context.id)).toEqual([
       'phineas-gage',
       'eeg-erp-vcpt',
+      'eeg-erp-p3a-novelty',
       'eeg-erp-p3a-konfliktmonitoring',
     ])
   })

@@ -35,6 +35,7 @@ describe('knowledgeRegistry', () => {
     expect(bonusContextsForCollection('case-phineas-gage').map((context) => context.id)).toEqual(['phineas-gage'])
     expect(bonusContextsForCollection('device-eeg-10-20').map((context) => context.id)).toEqual([
       'eeg-erp-vcpt',
+      'eeg-erp-p3a-novelty',
       'eeg-erp-p3a-konfliktmonitoring',
     ])
   })

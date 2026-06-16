@@ -132,6 +132,8 @@ interface ViewerState {
   showCarveBrodmann: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
+  /** Revision fuer Scene-Graph-Aenderungen an Cut-Quellen (z.B. Atlas-Cap-Proxies nach Pick-JSON). */
+  cutSourceRevision: number
   /** Name des zuletzt angeklickten Atlas-Areals auf TARO (Carve-Overlay); null = keins. */
   pickedAtlasArea: string | null
   /** Slug des zuletzt angeklickten Atlas-Areals (z.B. `julich3-area-44-ifg-l`) — fuer die
@@ -200,6 +202,8 @@ interface ViewerState {
   /** Nicht-persistentes Hover-Areal auf TARO setzen/loeschen. */
   setHoveredAtlasArea: (name: string | null, slug: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
+  /** CutCaps/CutPickBridge neu synchronisieren, wenn Runtime-Cut-Quellen nachgeladen wurden. */
+  bumpCutSourceRevision: () => void
   /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
   setAtlasFocus: (focus: { layer: string; name: string } | null) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
@@ -248,6 +252,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showCarveDkt: false,
   showCarveBrodmann: false,
   clipAtlasOverlay: true,
+  cutSourceRevision: 0,
   pickedAtlasArea: null,
   pickedAtlasSlug: null,
   hoveredAtlasArea: null,
@@ -394,6 +399,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setPickedAtlasArea: (pickedAtlasArea, pickedAtlasSlug) => set({ pickedAtlasArea, pickedAtlasSlug }),
   setHoveredAtlasArea: (hoveredAtlasArea, hoveredAtlasSlug) => set({ hoveredAtlasArea, hoveredAtlasSlug }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
+  bumpCutSourceRevision: () => set((s) => ({ cutSourceRevision: s.cutSourceRevision + 1 })),
   setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>
     set((state) => {

@@ -83,7 +83,7 @@ cd $HOME\Downloads\Iflands-Neuro-Lernvergnuegen-main\apps\brain-app
 **Schritt 6 — Installieren und starten**
 
 ```bash
-pnpm install      # laedt die Bausteine — beim ersten Mal ~3-5 Min.
+pnpm install      # lädt die Bausteine — beim ersten Mal ~3-5 Min.
 pnpm dev          # startet die App
 ```
 
@@ -129,7 +129,8 @@ Drei Grundmodi, umgeschaltet über eine kontextsensitive Steuerleiste am unteren
 Dazu: zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop,
 Tablet und Phone, WCAG-AA-Kontraste.
 
-> Inhaltlicher Fokus und Designprinzipien: [`PRODUCT.md`](PRODUCT.md) · [`DESIGN.md`](DESIGN.md)
+> Inhaltlicher Fokus und Designprinzipien: [`PRODUCT.md`](PRODUCT.md) · [`DESIGN.md`](DESIGN.md) ·
+> zentrale Architekturkarte: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
 
 ---
 
@@ -159,7 +160,9 @@ Tablet und Phone, WCAG-AA-Kontraste.
 | …den Lerninhalt sehen | im App-UI; Quelltexte unter `apps/brain-app/public/regions/*.md` und `public/scenes/*.json` |
 | …die Quellen / Zitate (APA7) | je Region im Abschnitt „## Quellen"; Atlas-/Daten-Lizenzen in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) |
 | …den App-Code lesen | `apps/brain-app/src/` (`main.tsx` → `scene/` + `viewer/`) |
+| …Architektur, State, Config, Snapshots und Visual-Authoring verstehen | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
 | …die 3D-Daten selbst erzeugen | `scripts/` ([Daten & Asset-Pipelines](#daten--asset-pipelines)) |
+| …Deployment, Base-Path und Cache-Regeln prüfen | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) |
 | …Produkt / Design verstehen | [`PRODUCT.md`](PRODUCT.md), [`DESIGN.md`](DESIGN.md) |
 | …die Lizenz | [`LICENSE`](LICENSE) (CC BY-SA 4.0) |
 

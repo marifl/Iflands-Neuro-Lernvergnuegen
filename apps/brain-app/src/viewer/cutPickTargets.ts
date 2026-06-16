@@ -1,5 +1,6 @@
 import type { Mesh, Object3D } from 'three'
 import { ATLAS_PARCEL_FLAG, ATLAS_SURFACE_FLAG } from './atlasParcels'
+import { ATLAS_CAP_PROXY_OWNER_FLAG, ATLAS_CAP_SOURCE_FLAG } from './atlasCapProxies'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 
 export interface CutPickTargets {
@@ -12,6 +13,31 @@ export interface CutPickTargetCache {
   markDirty: () => void
 }
 
+function hasActiveClippingPlanes(mesh: Mesh): boolean {
+  const materials = Array.isArray(mesh.material) ? mesh.material : [mesh.material]
+  return materials.some((material) => {
+    const planes = (material as { clippingPlanes?: unknown }).clippingPlanes
+    return Array.isArray(planes) && planes.length > 0
+  })
+}
+
+export function isAtlasTarget(mesh: Mesh): boolean {
+  return mesh.userData[ATLAS_SURFACE_FLAG] === true || mesh.userData[ATLAS_PARCEL_FLAG] === true
+}
+
+export function isCutCapSource(mesh: Mesh): boolean {
+  if (mesh.userData[ATLAS_CAP_SOURCE_FLAG] === true) return hasActiveClippingPlanes(mesh)
+  if (mesh.userData[ATLAS_CAP_PROXY_OWNER_FLAG] === true) return false
+  if (mesh.userData[CUT_SOURCE_FLAG] === true) return true
+  return isAtlasTarget(mesh) && hasActiveClippingPlanes(mesh)
+}
+
+function isCutPickSource(mesh: Mesh): boolean {
+  if (mesh.userData[ATLAS_CAP_SOURCE_FLAG] === true) return false
+  if (mesh.userData[CUT_SOURCE_FLAG] === true) return true
+  return isAtlasTarget(mesh) && hasActiveClippingPlanes(mesh)
+}
+
 export function collectCutPickTargets(root: Object3D): CutPickTargets {
   const raycastTargets: Mesh[] = []
   const cutSources: Mesh[] = []
@@ -20,9 +46,9 @@ export function collectCutPickTargets(root: Object3D): CutPickTargets {
     if (!mesh.isMesh || !mesh.visible || !mesh.geometry) return
     if (mesh.userData[CUT_CAP_HELPER_FLAG]) return
     const isCutSource = mesh.userData[CUT_SOURCE_FLAG] === true
-    const isAtlasTarget = mesh.userData[ATLAS_SURFACE_FLAG] === true || mesh.userData[ATLAS_PARCEL_FLAG] === true
-    if (isCutSource) cutSources.push(mesh)
-    if (isCutSource || isAtlasTarget) raycastTargets.push(mesh)
+    const atlasTarget = isAtlasTarget(mesh)
+    if (isCutPickSource(mesh)) cutSources.push(mesh)
+    if (mesh.userData[ATLAS_CAP_SOURCE_FLAG] !== true && (isCutSource || atlasTarget)) raycastTargets.push(mesh)
   })
   return { raycastTargets, cutSources }
 }
