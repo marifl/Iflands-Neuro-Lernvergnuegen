@@ -1,0 +1,30 @@
+{
+  "id": "fuster-gradient",
+  "figure": "11-06",
+  "section": "11.3.3 · hierarchische PFC-Modelle",
+  "author": "ifland",
+  "order": 7,
+  "title": "Fuster-Modell: Wahrnehmungs-Handlungs-Zyklus",
+  "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "fallbackImage": "/figures/5fdc4a70d5d1728e7fc65bd8cbffb90c0363108c0bde2b7980a93e481420814d.jpg",
+    "data": {
+      "nodes": [
+        { "id": "sensorik", "label": "Sensorik", "result": "posteriorer Wahrnehmungspol" },
+        { "id": "assoziation", "label": "Assoziation", "result": "parietale Integration" },
+        { "id": "pfc", "label": "PFC", "result": "Handlungskontrolle" },
+        { "id": "frontalpol", "label": "Frontalpol", "result": "höchste Integrationsstufe" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Fusters Modell ordnet Frontal- und Posteriorareale hierarchisch und verbindet sie im perception-action-cycle. Die Szene behandelt die Abbildung als didaktischen Gradienten, nicht als empirische Aktivierungskarte.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-06" },
+      { "key": "fuster_2001", "note": "perception-action-cycle und PFC-Hierarchie" }
+    ]
+  }
+}

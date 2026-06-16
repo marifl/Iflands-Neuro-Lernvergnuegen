@@ -1,0 +1,27 @@
+{
+  "id": "badre-konflikttypen",
+  "figure": "11-08D",
+  "section": "11.3.3 · Badre-Modelle",
+  "author": "ifland",
+  "order": 12,
+  "title": "Konflikttypen entlang der Kontrollhierarchie",
+  "brain": { "regions": ["inhibition-network"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "fallbackImage": "/figures/db4b9ce428d63d7d6f13a4d17982d274ba576c1a7efa25a89675e419305c5d47.jpg",
+    "data": {
+      "nodes": [
+        { "id": "antwort", "label": "Antwortkonflikt", "result": "Reaktion konkurriert" },
+        { "id": "merkmal", "label": "Merkmalskonflikt", "result": "Reizmerkmale konkurrieren" },
+        { "id": "dimension", "label": "Dimensionskonflikt", "result": "Aufgabendimension konkurriert" },
+        { "id": "kontext", "label": "Kontextkonflikt", "result": "Regelkontext konkurriert" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-08D ordnet Konflikttypen didaktisch, nicht quantitativ. Die Szene legt die vier Konfliktarten als kurze, vortragstaugliche Stufen frei und nutzt das Inhibitionsnetzwerk als 3D-Kontext.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-08D" }]
+  }
+}

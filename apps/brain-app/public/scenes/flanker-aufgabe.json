@@ -1,0 +1,26 @@
+{
+  "id": "flanker-aufgabe",
+  "figure": "11-12",
+  "section": "11.4 · ACC und Konflikt",
+  "author": "ifland",
+  "order": 18,
+  "title": "Flanker-Aufgabe: kongruent vs. inkongruent",
+  "brain": { "regions": ["acc-anterior", "inhibition-network"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "sssss", "label": "SSSSS", "result": "kongruent: rechts reagieren" },
+        { "id": "hhhhh", "label": "HHHHH", "result": "kongruent: links reagieren" },
+        { "id": "hhshh", "label": "HHSHH", "result": "inkongruent: Konflikt" },
+        { "id": "sshss", "label": "SSHSS", "result": "inkongruent: Konflikt" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-12 hat kein Bildasset im OCR. Die Szene rekonstruiert die Aufgabe aus dem Lehrbuchtext: Entscheidend ist der mittlere Buchstabe, flankierende Buchstaben erzeugen in inkongruenten Durchgängen einen ACC-relevanten Konflikt.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.4, Abb. 11-12, textuell im OCR" }]
+  }
+}

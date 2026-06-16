@@ -1,0 +1,27 @@
+{
+  "id": "badre-kaskade",
+  "figure": "11-08C",
+  "section": "11.3.3 · Badre-Modelle",
+  "author": "ifland",
+  "order": 11,
+  "title": "Kaskadenmodell der Kontrolle",
+  "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "fallbackImage": "/figures/1221ce7a4a0b93936bc0c5d0d727340555926a92e06979dbb1d7cbaf3ecafdb0.jpg",
+    "data": {
+      "nodes": [
+        { "id": "sensorisch", "label": "sensorisch", "result": "aktueller Reiz" },
+        { "id": "kontext", "label": "Kontext", "result": "Aufgabenregel" },
+        { "id": "episodisch", "label": "episodisch", "result": "vorheriger Verlauf" },
+        { "id": "entscheidung", "label": "Entscheidung", "result": "Handlungsauswahl" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-08C zeigt ein Kaskadenmodell: Kontrolle wird von sensorischer Information über Kontext und episodische Information bis zur Entscheidung geschichtet. Die Szene ist ein schematisches Flowchart mit lokalem Fallbackbild.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-08C" }]
+  }
+}

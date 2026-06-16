@@ -276,12 +276,12 @@ Abbildungs-Ersetzung.
 
 | Status | Abbildungen |
 | :-- | :-- |
-| `done` | 11-04, 11-14, 11-15(1), 11-15(2), 11-15(3) |
-| `open` | 11-05, 11-06, 11-07, 11-08A, 11-08B, 11-08C, 11-08D, 11-09, 11-10, 11-11A/B, 11-11C, 11-12, 11-13 |
+| `done` | 11-04, 11-05, 11-06, 11-07, 11-08A, 11-08B, 11-08C, 11-08D, 11-09, 11-10, 11-11A/B, 11-11C, 11-12, 11-13, 11-14, 11-15(1), 11-15(2), 11-15(3) |
+| `open` | keine |
 | `blocked` | keine |
 
-**Abgedeckt im SP5.1-Config-Sinn:** 5 Figure/Scene-Ersetzungen.
-**Offen für die konkrete Erstellung:** 13 Abbildungs-Einheiten.
+**Abgedeckt im SP5.1-Config-Sinn:** 18 Figure/Scene-Ersetzungen.
+**Offen für die konkrete Erstellung:** 0 Abbildungs-Einheiten.
 
 ---
 
@@ -297,14 +297,14 @@ flowchart TB
         D5["P4: frontopolar→fp1/fp2 · dlpfc→Julich · GPi/GPe"]
     end
 
-    subgraph Next["🟡 Als Nächstes (Geometrie steht)"]
+    subgraph Next["🟡 Als Nächstes (Didaktik vertiefen)"]
         N1["direkter/indirekter Pfad-Preset"]
         N2["ppc/vmpfc/insula aus Shelf"]
-        N3["11-09 WCST · 11-10 Fluency · 11-11 ToL"]
+        N3["WCST · Fluency · ToL Uebungslogik"]
     end
 
     subgraph New["⬜ Neu konzipieren"]
-        F1["11-06 Fuster · 11-08 Flowcharts · 11-12 Flanker"]
+        F1["Studentischer Selbstlernmodus"]
         F2["Responsive Adapt (ed-foot, Touch)"]
     end
 
@@ -315,8 +315,9 @@ flowchart TB
 
 1. **direkter/indirekter-Pfad-Preset** — kleinster Schritt, hoher didaktischer Wert (GPi/GPe-Geometrie steht jetzt).
 2. **ppc/vmpfc/insula aus dem Shelf** — analog dlpfc, rein additiv, hebt mehrere Presets.
-3. **Figuren 11-09/10/11** — Geometrie da, „nur" Preset+Legende.
-4. **11-06 / 11-08 / 11-12** — konzeptionelle Szenen-Arbeit.
+3. **WCST/Fluency/ToL didaktisch vertiefen** — Figure-Packages existieren,
+   jetzt fehlen Übungslogik und studentische Progression.
+4. **Studentischer Selbstlernmodus** — Fortschritt, Wiederholung und Checks.
 5. **Responsive Adapt** — vor Abgabe/Portfolio einplanen.
 
 ---

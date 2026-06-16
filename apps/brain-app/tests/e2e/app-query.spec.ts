@@ -83,7 +83,7 @@ test('Startscreen startet den Lernmodus', async ({ page }) => {
   await page.getByRole('button', { name: /^Lernen/ }).click()
 
   await expect(page.getByLabel('Szene springen')).toBeVisible({ timeout: 60_000 })
-  await expect(page.getByRole('heading', { name: 'Go-/No-go-Aufgaben — Reaktion hemmen' })).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Drei Basalganglien-Schleifen' })).toBeVisible()
   await expectBrainCanvas(page)
 })
 

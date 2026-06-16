@@ -7,11 +7,9 @@ Kapitel-11-Abbildungsmappings im Repo.
 ## Kurzentscheidung
 
 Die App ist für den Marcus-Teil des Vortrags mit VCPT, P3a/P3b/P3z, Explorer,
-Atlas-Carve, Phineas-Gage-Fallstudie und Zusammenfassung vortragsreif. Es gibt
-keinen aktuellen Pflicht-Assetblocker.
-
-Offene Punkte sind Erweiterungen für eine vollständige Kapitel-11-Abdeckung,
-nicht Blocker für den Produktiveinsatz im aktuellen Vortragspfad.
+Atlas-Carve, Phineas-Gage-Fallstudie und Zusammenfassung vortragsreif. Die
+Kapitel-11-Abbildungen 11-04 bis 11-15 sind jetzt als lokale Runtime-
+Figure-Packages abgedeckt. Es gibt keinen aktuellen Pflicht-Assetblocker.
 
 ## Transparenz für Produktiveinsatz
 
@@ -39,10 +37,10 @@ bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 
 | Bereich | Bestand | Befund |
 | --- | ---: | --- |
-| Lernszenen | 7 | Go/No-go, VCPT, ICA, P3a, P3b, P3z, Zusammenfassung |
-| Runtime-Konfigurationen | 10 | inklusive `ofc-phineas`, `broca-areal`, `basalganglienschleifen` |
-| Figure-Ersetzungen | 5 | 11-04, 11-14, 11-15(1), 11-15(2), 11-15(3) |
-| Offene Abbildungseinheiten | 13 | 11-05 bis 11-13 laut Masterplan |
+| Lernszenen | 23 | 21-Step-Lernpfad plus Phineas/OFC- und Broca-Kontexte |
+| Runtime-Konfigurationen | 23 | inklusive `ofc-phineas`, `broca-areal` und 18 Figure-Replacements |
+| Figure-Ersetzungen | 18 | 11-04 bis 11-15 inklusive 11-08A-D und 11-11A/B/C |
+| Offene Abbildungseinheiten | 0 | SP5.1-Figure-Matrix ist vollständig geschlossen |
 
 ### 3D-Assets
 
@@ -55,6 +53,7 @@ bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
+| Kapitel-11-Figure-Fallbacks | 13 lokale JPGs unter `apps/brain-app/public/figures/` | versionierte Runtime-Fallbacks für 11-05 bis 11-11C, 11-13, 11-14; 11-12 ist textuell neu gebaut |
 | Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist Standalone-Bestand, aber noch nicht in den aktuellen Viewer montiert; Lizenz und Transform vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
@@ -195,13 +194,12 @@ aber kein vollständiger neuroanatomischer Thesaurus.
 | SMA / pre-SMA | P3z, Inhibition | Explorer-Flyout -> P3z |
 | OFC / VMPFC | Phineas Gage, somatische Marker, Sozialverhalten | Explorer-Flyout -> Phineas-Modus |
 | Basalganglien-Schleifen | DLPFC/VMPFC/ACC-Schleifen | Abb. 11-04-Konfiguration |
-| DLPFC/VLPFC | WCST, Arbeitsgedächtnis, ToL | noch kein eigener Lernpfad |
+| DLPFC/VLPFC | WCST, Arbeitsgedächtnis, ToL | Lernpfad 11-05, 11-09, 11-10, 11-11A/B/C |
 
 ## Folgearbeit nach Vortrag
 
-1. Vollständige Kapitel-11-Abdeckung: 11-05 bis 11-13 als eigene
-   Config-/Scene-Pakete priorisieren.
-2. DLPFC/VLPFC-Lernpfad für WCST, Fluency und Tower of London ausbauen.
-3. Optionales Destrieux-Carve auf TARO prüfen, wenn Sulcus/Gyrus-Präzision im
+1. DLPFC/VLPFC-Lernpfad für WCST, Fluency und Tower of London didaktisch
+   ausbauen: Übungslogik, Vertiefungsfragen und studentische Progression.
+2. Optionales Destrieux-Carve auf TARO prüfen, wenn Sulcus/Gyrus-Präzision im
    Explorer wirklich gebraucht wird.
-4. Optionaler realistischer Hirnshader erst nach Lesbarkeits- und Mobile-Gate.
+3. Optionaler realistischer Hirnshader erst nach Lesbarkeits- und Mobile-Gate.

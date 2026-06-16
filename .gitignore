@@ -50,8 +50,23 @@ docs/superpowers
 docs/END_SESSION_2026-06-12_Kapitel11-3D-Lern-Experience-Planung.md
 docs/fma-discrepancy-report.md
 docs/laterality-volume-audit.md
-# Buch-Abbildungen (Copyright) — nicht ins Repo
-apps/brain-app/public/figures/
+# Buch-Abbildungen bleiben default-ignoriert. Explizite Runtime-Fallbacks,
+# die in config.default.toml referenziert sind, werden versioniert, damit die
+# Standalone-App keine externen Pfade braucht.
+apps/brain-app/public/figures/*
+!apps/brain-app/public/figures/030ea139d0d04e151335d8c190783d837b9bc1878b2f991b96774d2bd136f0d5.jpg
+!apps/brain-app/public/figures/1221ce7a4a0b93936bc0c5d0d727340555926a92e06979dbb1d7cbaf3ecafdb0.jpg
+!apps/brain-app/public/figures/20a933cb9eda249c0993dd11f7285880173dec2a6ba4bae331ee23cfce844772.jpg
+!apps/brain-app/public/figures/2a5a810b09684343c3152eff59c792cce2221a73b43254557a546623eccd03c8.jpg
+!apps/brain-app/public/figures/5fdc4a70d5d1728e7fc65bd8cbffb90c0363108c0bde2b7980a93e481420814d.jpg
+!apps/brain-app/public/figures/99c5fe610c47fccd3b3a1536633fa0615a7c33905572925f8f723b5b1c49bcfd.jpg
+!apps/brain-app/public/figures/9b562107d9696999a038a7712f82f0793d77fdb3d6c88b517793df559dc7b3be.jpg
+!apps/brain-app/public/figures/9c0dc239d5615465902789a4339ebcde18e4b161cdbda80d2916cd50fa1489cb.jpg
+!apps/brain-app/public/figures/c199e8b6e09269d8db8263ab99e1bae16bfe7d204eb6f8dd77534b39a541713d.jpg
+!apps/brain-app/public/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg
+!apps/brain-app/public/figures/ccc3a6c057a8b2394c40aa3f8dde3a9a3fad945026cc4a4cc7bfcb617962b031.jpg
+!apps/brain-app/public/figures/db4b9ce428d63d7d6f13a4d17982d274ba576c1a7efa25a89675e419305c5d47.jpg
+!apps/brain-app/public/figures/eb504a5327eaa2753742667cfaebbd53963b28961a54b352c8263878188d73b9.jpg
 
 # Smoke-/Debug-Output unter apps (Artefakte)
 apps/brain-app/scripts/atlas/work/
