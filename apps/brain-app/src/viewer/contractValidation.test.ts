@@ -103,6 +103,13 @@ const authoringScene: AuthoringScene = {
           role: 'selectable',
         },
       ],
+      clipBindings: [
+        {
+          bindingId: 'fz-pulse',
+          clipId: 'clip:fz-pulse',
+          targetPartId: 'electrode-fz',
+        },
+      ],
     },
   ],
 }
@@ -254,6 +261,35 @@ describe('contract validation', () => {
       'timelines[0].steps[0].keyframes[0].channels.overlay.sceneId: scene "vcpt" ist nicht bekannt',
       'assetManifest.assets[0]: optional false passt nicht zu Slot device-eeg-10-20/eeg-device-model optional true',
     ]))
+  })
+
+  it('meldet Timeline-Animationen ohne registriertes ClipBinding', () => {
+    const report = validateBrainAppContracts({
+      ...validFixture,
+      timelines: [
+        {
+          ...timeline,
+          steps: [{
+            ...timeline.steps[0],
+            keyframes: [{
+              ...timeline.steps[0].keyframes[0],
+              channels: {
+                animation: [{
+                  bindingId: 'ghost-pulse',
+                  clipId: 'clip:ghost-pulse',
+                  action: 'play',
+                }],
+              },
+            }],
+          }],
+        },
+      ],
+    })
+
+    expect(report.ok).toBe(false)
+    expect(report.errors).toContain(
+      'timelines[0].steps.vcpt-device.keyframes.start.channels.animation.ghost-pulse: bindingId "ghost-pulse" mit clipId "clip:ghost-pulse" ist nicht definiert',
+    )
   })
 
   it('validiert Authoring-State in Snapshots gegen Asset-Manifest und Timeline-Refs', () => {

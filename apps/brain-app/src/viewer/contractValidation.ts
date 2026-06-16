@@ -3,6 +3,8 @@ import {
   type AssetManifestDocument,
   type AssetManifestEntry,
 } from './assetManifest'
+import { ANIMATIONS } from './animations'
+import { resolveTimelineAnimationBindings } from './animationSystem'
 import {
   parseAuthoringScene,
   type AuthoringAssetInstance,
@@ -49,6 +51,7 @@ interface ContractContext {
   sceneIds: Set<string>
   configNames: Set<string>
   assetManifest: AssetManifestDocument | null
+  authoringScenes: AuthoringScene[]
   authoringInstances: Set<string>
   authoringParts: Set<string>
   errors: string[]
@@ -294,6 +297,22 @@ function validateTimeline(timeline: TimelineDocument, path: string, ctx: Contrac
       if (entry.targetRef) validateTargetRef(entry.targetRef, `${base}.animation[${index}].targetRef`, ctx)
     })
   }))
+  resolveTimelineAnimationBindings(timeline, {
+    legacyAnimations: ANIMATIONS,
+    authoringScenes: ctx.authoringScenes,
+    collections: [...ctx.collectionIds],
+    ontologyNodeIds: [...ctx.ontologyNodeIds],
+    atlasRoles: [...ctx.atlasRoles],
+    assetInstanceIds: [...ctx.authoringInstances],
+    assetPartIds: [...ctx.authoringParts],
+  }).forEach((entry) => {
+    if (entry.status === 'resolved') return
+    add(
+      ctx.errors,
+      `${path}.steps.${entry.stepId}.keyframes.${entry.keyframeId}.channels.animation.${entry.bindingId}`,
+      entry.reason,
+    )
+  })
 }
 
 function validateSnapshot(snapshot: ViewerStateSnapshot, path: string, ctx: ContractContext): void {
@@ -305,7 +324,8 @@ function validateSnapshot(snapshot: ViewerStateSnapshot, path: string, ctx: Cont
   const authoring = snapshot.state.authoring
   if (!authoring) return
   authoring.authoringScenes.forEach((scene, index) => addAuthoringScene(scene, `${path}.state.authoring.authoringScenes[${index}]`, ctx))
-  authoring.timelines.forEach((timeline, index) => validateTimeline(timeline, `${path}.state.authoring.timelines[${index}]`, ctx))
+  const snapshotCtx = { ...ctx, authoringScenes: authoring.authoringScenes }
+  authoring.timelines.forEach((timeline, index) => validateTimeline(timeline, `${path}.state.authoring.timelines[${index}]`, snapshotCtx))
 }
 
 export function validateBrainAppContracts(input: BrainAppContractFixture): BrainAppContractReport {
@@ -325,6 +345,7 @@ export function validateBrainAppContracts(input: BrainAppContractFixture): Brain
     sceneIds: new Set(input.sceneIds),
     configNames: new Set(input.configNames ?? []),
     assetManifest,
+    authoringScenes: [],
     authoringInstances: new Set(),
     authoringParts: new Set(),
     errors,
@@ -333,7 +354,10 @@ export function validateBrainAppContracts(input: BrainAppContractFixture): Brain
   validateBonusContexts(bonusContexts, ctx)
   input.authoringScenes?.forEach((raw, index) => {
     const scene = parseOrReport(`authoringScenes[${index}]`, raw, parseAuthoringScene, errors)
-    if (scene) addAuthoringScene(scene, `authoringScenes[${index}]`, ctx)
+    if (scene) {
+      ctx.authoringScenes.push(scene)
+      addAuthoringScene(scene, `authoringScenes[${index}]`, ctx)
+    }
   })
   input.timelines?.forEach((raw, index) => {
     const timeline = parseOrReport(`timelines[${index}]`, raw, parseTimelineDocument, errors)
