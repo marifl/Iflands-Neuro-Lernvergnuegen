@@ -358,6 +358,40 @@ test('Mobile Explorer zeigt Auswahlaktionen direkt am Struktur-HUD', async ({ pa
 
   await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
   await expectBrainCanvas(page)
+  await expect.poll(async () => {
+    const box = await page.locator('.ed-foot').boundingBox()
+    return Math.round(box?.height ?? 0)
+  }).toBeLessThan(90)
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).display)
+  )).toBe('flex')
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).overflowX)
+  )).toBe('auto')
+  await expect.poll(async () => (
+    page.locator('.ed-foot .flyout-icon').first().evaluate((element) => getComputedStyle(element).display)
+  )).toBe('flex')
+  await expect.poll(async () => (
+    page.locator('.ed-foot .flyout-caret').first().evaluate((element) => getComputedStyle(element).display)
+  )).toBe('none')
+  const mobileDockLabels = await page.locator('.ed-foot > .col').evaluateAll((nodes) => (
+    nodes.map((node) => node.textContent?.replace(/\s+/g, ' ').trim() ?? '')
+  ))
+  expect(mobileDockLabels[0]).toContain('Modus')
+  expect(mobileDockLabels[1]).toContain('Werkzeug')
+  expect(mobileDockLabels[2]).toContain('Ansicht')
+  await expect(page.getByRole('button', { name: /Werkzeug/ })).toBeVisible()
+  await page.locator('.ed-foot').evaluate((element) => { element.scrollLeft = element.scrollWidth })
+  await page.getByRole('button', { name: /Zustand/ }).click()
+  const footerFlyout = page.locator('.ed-foot .ed-panel')
+  await expect.poll(async () => (
+    footerFlyout.boundingBox()
+  )).toMatchObject({ x: expect.any(Number), width: expect.any(Number) })
+  const flyoutBox = await footerFlyout.boundingBox()
+  const viewport = page.viewportSize()
+  expect(flyoutBox?.x ?? -1).toBeGreaterThanOrEqual(0)
+  expect((flyoutBox?.x ?? 0) + (flyoutBox?.width ?? 0)).toBeLessThanOrEqual(viewport?.width ?? 0)
+  await page.keyboard.press('Escape')
   await page.getByRole('button', { name: 'Strukturbaum öffnen' }).click()
 
   const drawer = page.getByTestId('mobile-structure-drawer')
@@ -383,9 +417,49 @@ test('Mobile Lernseite behaelt eine nutzbare 3D-Hoehe', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Visueller Konzentrationsverlaufstest (VCPT)' })).toBeVisible({ timeout: 60_000 })
   await expectBrainCanvas(page)
   await expect.poll(async () => {
+    const box = await page.locator('.ed-foot').boundingBox()
+    return Math.round(box?.height ?? 0)
+  }).toBeLessThan(90)
+  await expect.poll(async () => {
     const box = await page.locator('canvas').boundingBox()
     return box?.height ?? 0
   }).toBeGreaterThan(320)
+})
+
+test('Tablet-Narrow nutzt Drawer, aber noch kein Phone-Dock', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 1024 })
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await expect(page.getByRole('button', { name: 'Strukturbaum öffnen' })).toBeVisible()
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).display)
+  )).toBe('grid')
+  await expect.poll(async () => (
+    page.locator('.ed-foot .flyout-icon').first().evaluate((element) => getComputedStyle(element).display)
+  )).toBe('none')
+})
+
+test('Desktop Footer bleibt Raster statt Mobile-Dock', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expect(page.getByRole('button', { name: 'Strukturbaum öffnen' })).toBeHidden()
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).display)
+  )).toBe('grid')
+  await expect.poll(async () => (
+    page.locator('.ed-foot').evaluate((element) => getComputedStyle(element).overflowX)
+  )).not.toBe('auto')
+  await expect.poll(async () => (
+    page.locator('.ed-foot .flyout-icon').first().evaluate((element) => getComputedStyle(element).display)
+  )).toBe('none')
+  await expect.poll(async () => {
+    const box = await page.locator('.ed-foot > .col').first().boundingBox()
+    return box?.width ?? 0
+  }).toBeGreaterThan(100)
 })
 
 test('Snapshot-Import gewinnt gegen Config-Sichtbarkeitsdefaults', async ({ page }) => {

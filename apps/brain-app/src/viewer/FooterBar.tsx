@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
 import { useViewerStore, type AppMode, type CutAxis, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
@@ -82,8 +83,12 @@ interface BoxDef {
   key: Exclude<OpenFlyout, null>
   eyebrow: string
   label: string
+  icon: React.ReactNode
   content: React.ReactNode
 }
+
+const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
+const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot']
 
 function readSnapshotFile(file: File): Promise<string> {
   if (typeof file.text === 'function') return file.text()
@@ -205,6 +210,7 @@ export default function FooterBar() {
       eyebrow: 'Atlas',
       // Label zeigt das aktive Atlas-auf-Hirn-Overlay (Carve, 0 mm auf TARO) oder „Menü".
       label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : showCarveBrodmann ? 'Brodmann' : 'Menü',
+      icon: <Map {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {/* Atlas-Areale direkt auf dem TARO-Hirn (Carve = 0 mm, anklickbar zeigt Namen).
@@ -223,6 +229,7 @@ export default function FooterBar() {
       key: 'mode',
       eyebrow: 'Modus',
       label: MODE_LABEL[appMode],
+      icon: <BookOpen {...FOOTER_ICON_PROPS} />,
       // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> nicht im normalen Modus-Flyout,
       // nur per Deep-Link ?mode=atlas erreichbar. Die regulaeren Modi sind learn/explore/phineas.
       content: (['learn', 'explore', 'phineas'] as const).map((m) => (
@@ -235,6 +242,7 @@ export default function FooterBar() {
       key: 'color',
       eyebrow: 'Farbe',
       label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_LABEL[colorMode],
+      icon: <Palette {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {BASE_COLOR_MODES.map((c) => (
@@ -271,6 +279,7 @@ export default function FooterBar() {
       key: 'cut',
       eyebrow: 'Schnitte',
       label: CUT_AXES.filter((a) => cuts[a].on).map((a) => CUT_LABEL[a]).join(' · ') || 'Aus',
+      icon: <Scissors {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {/* Wirkung der Ebenen: schneiden (mit Cap) ODER dahinterliegende Strukturen ausblenden. */}
@@ -309,6 +318,7 @@ export default function FooterBar() {
       key: 'view',
       eyebrow: 'Ansicht',
       label: 'Ausrichten',
+      icon: <Camera {...FOOTER_ICON_PROPS} />,
       content: VIEW_PRESETS.map((v) => (
         <Item key={v.name} onClick={() => { setCameraView(v.name); close() }}>
           {v.label}
@@ -319,6 +329,7 @@ export default function FooterBar() {
       key: 'context',
       eyebrow: 'Kontext',
       label: showSkull ? 'Schädel' : 'Aus',
+      icon: <Skull {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           <Item active={!showSkull} onClick={() => { setSkull(false); close() }}>Aus</Item>
@@ -331,6 +342,7 @@ export default function FooterBar() {
       key: 'snapshot',
       eyebrow: 'Zustand',
       label: 'Datei',
+      icon: <FileJson {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           <Item onClick={() => { exportSnapshot(); close() }}>Exportieren</Item>
@@ -344,6 +356,7 @@ export default function FooterBar() {
             key: 'tool' as const,
             eyebrow: 'Werkzeug',
             label: TOOL_LABEL[selectMode],
+            icon: <MousePointer2 {...FOOTER_ICON_PROPS} />,
             content: (
               <>
                 <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
@@ -468,6 +481,12 @@ export default function FooterBar() {
         ]
       : []),
   ]
+  const visibleBoxes = isPhone
+    ? MOBILE_BOX_ORDER.flatMap((key) => {
+        const box = boxes.find((candidate) => candidate.key === key)
+        return box ? [box] : []
+      })
+    : boxes
 
   return (
     <>
@@ -479,15 +498,16 @@ export default function FooterBar() {
         style={{ display: 'none' }}
         onChange={(event) => { void importSnapshotFile(event.currentTarget.files?.[0]) }}
       />
-      <div className="ed-foot" style={{ gridTemplateColumns: `repeat(${boxes.length}, 1fr)` }}>
-        {boxes.map((box, i) => (
+      <div className="ed-foot" style={{ gridTemplateColumns: `repeat(${visibleBoxes.length}, 1fr)` }}>
+        {visibleBoxes.map((box, i) => (
           <Flyout
             key={box.key}
             eyebrow={box.eyebrow}
             label={box.label}
+            icon={box.icon}
             // Popover rechts verankern, wenn die Box am rechten Rand sitzt (kein Viewport-Ueberlauf).
-            // Phone: 3 Boxen pro Reihe (flex-wrap) -> jede 3. Spalte rechts. Sonst: rechte Haelfte.
-            align={(isPhone ? i % 3 === 2 : i >= boxes.length / 2) ? 'right' : 'left'}
+            // Phone: horizontaler Icon-Dock -> rechte Hälfte rechts ankern. Sonst: rechte Hälfte.
+            align={i >= visibleBoxes.length / 2 ? 'right' : 'left'}
             open={open === box.key}
             onToggle={() => toggle(box.key)}
             onClose={close}

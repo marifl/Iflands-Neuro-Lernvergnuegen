@@ -266,7 +266,12 @@
   .ed-pill.out { border: 1px solid var(--ink); color: var(--ink); }
 
   /* ── Schriftfeld-Fusszeile (Titelblock, Mono-Raster) ── */
-  .ed-foot { display: grid; border-top: 1.5px solid var(--line); }
+  .ed-foot {
+    display: grid;
+    position: relative;
+    z-index: 30;
+    border-top: 1.5px solid var(--line);
+  }
   .ed-foot .col {
     padding: 9px 14px;
     border-right: 1px solid var(--line-soft);
@@ -288,6 +293,7 @@
   .ed-foot .col b { color: var(--ink); font-weight: 600; }
   .ed-foot .col .v { color: var(--ink); }
   .ed-foot .col .ellip { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ed-foot .flyout-icon { display: none; }
 
   /* ── Baumzeile: Hover/Auswahl ueber Klassen (Inline-Styles blockieren :hover) ── */
   .ed-row:hover { background: var(--orange-wash-soft); }
@@ -325,17 +331,72 @@
 }
 
 /* =====================================================================
-   Phone: viele Steuer-Boxen passen nicht in eine Reihe. Statt Schrumpfen/
-   Trunkieren -> Umbruch in Reihen zu je drei Boxen (alle sichtbar erreichbar).
+   Phone: Steuer-Boxen als horizontaler Icon-Dock. Die Flyouts bleiben gleich,
+   aber der Footer belegt nur eine Zeile und gibt der 3D-Bühne Höhe zurück.
    ===================================================================== */
 @media (max-width: 600px) {
   .ed-foot {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    min-height: 62px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
   }
+  .ed-foot::-webkit-scrollbar { display: none; }
   .ed-foot > * {
-    flex: 1 1 33%;
+    flex: 0 0 56px;
     min-width: 0;
-    border-bottom: 1px solid var(--line-soft);
+    border-bottom: 0;
+  }
+  .ed-foot .col {
+    padding: 7px 6px 6px;
+    font-size: 7.5px;
+    letter-spacing: 0.06em;
+    line-height: 1;
+  }
+  .ed-foot .col:last-child { border-right: 1px solid var(--line-soft); }
+  .ed-foot .flyout-trigger {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-height: 48px;
+    text-align: center !important;
+  }
+  .ed-foot .flyout-icon {
+    display: inline-flex;
+    color: var(--g700);
+  }
+  .ed-foot .col .h {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .ed-foot .col .ellip {
+    max-width: 100%;
+    line-height: 1;
+    text-align: center;
+  }
+  .ed-foot .flyout-caret {
+    display: none;
+  }
+  .ed-foot .flyout-popover {
+    position: fixed !important;
+    right: 12px !important;
+    bottom: 78px !important;
+    left: 12px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    max-height: min(52vh, 420px);
+    overflow-y: auto;
+    z-index: 80 !important;
   }
 }
