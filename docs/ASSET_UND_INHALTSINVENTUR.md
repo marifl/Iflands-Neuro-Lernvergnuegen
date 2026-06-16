@@ -54,7 +54,7 @@ bleibt ein separater Import-/Lizenz-Slice, nicht Release-Blocker.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
-| Gage-Schädel-Kandidat | nicht im Repo; extern: NIH 3D `3DPX-003118` / Harvard-Library-Sketchfab | CT-abgeleitetes Modell verfügbar, aber erst nach eindeutig gepinntem Quell- und Lizenzpfad importieren |
+| Gage-Schädel-Kandidat | nicht im aktuellen Standalone-Runtimepfad; lokal im Hauptrepo und extern über NIH 3D `3DPX-003118` / Harvard-Library-Sketchfab | CT-abgeleitetes Modell verfügbar, aber erst nach eindeutig gepinntem Quell-, Lizenz- und Transformpfad importieren |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
@@ -80,13 +80,22 @@ Geprüft am 2026-06-16:
    die App das Modell nicht still übernehmen. Ein Import muss die konkrete
    Quelle pinnen, Attribution und eventuell Share-Alike-Pflichten in
    `THIRD-PARTY-NOTICES.md` nachziehen und das Asset-Manifest ergänzen.
+4. Nach Hinweis von Marcus wurde der lokale Hauptrepo-Checkout geprüft:
+   `/Users/marcusifland/CFH_REAL_LOCAL/brain-app-standalone` enthält bereits
+   `public/figs3d/v2/glb/phineas-gage-skull-lod.glb`,
+   `phineas-gage-skull-calvarium-cut-lod.glb`,
+   `phineas-gage-iron-rod.glb` und
+   `public/figs3d/v2/data/gage-reconstructions.json`. Das ist ein lokaler
+   Importkandidat, aber noch kein fertiger Standalone-Viewer-Import.
 
 Entscheidung: Im aktuellen Build bleibt der Runtime-Pfad
 `/assets/context/skull.glb` ein BodyParts3D-/TARO-Kontextschädel, kein
-historischer Gage-Schädel. Ein späterer echter Import gehört in einen eigenen
-Pfad wie `/assets/phineas/gage-skull.glb` plus JSON-Manifest und Quellenhinweis.
-Bis dieser Import tatsächlich im Viewer hängt, muss die UI weiterhin
-`kein Original-Gage-CT/GLB` ausweisen.
+historischer Gage-Schädel. Ein späterer echter Import sollte bevorzugt aus dem
+lokalen Hauptrepo-Bestand kommen, in einen eigenen Pfad wie
+`/assets/phineas/gage-skull.glb` wandern und ein JSON-Manifest mit Quelle,
+Lizenz, Hash, Transform/Skalierung und Viewer-Smoke bekommen. Bis dieser Import
+tatsächlich im Viewer hängt, muss die UI weiterhin ausweisen, dass kein
+Original-Gage-CT/GLB in diesen Standalone-Viewer importiert ist.
 
 Quellen:
 
@@ -95,6 +104,36 @@ Quellen:
 3. NIH 3D Terms: <https://3d.nih.gov/terms>
 4. Harvard Library auf Sketchfab:
    <https://sketchfab.com/3d-models/skull-of-phineas-gage-4299ef89b78a49b8a9ece34839c94ea3>
+
+### Phineas-Gage-Stange: Maße und Modellgrenze
+
+Geprüft am 2026-06-16:
+
+1. Van Horn et al. 2012 beschreiben die Stange als ca. 110 cm lang, 3,2 cm im
+   Durchmesser und 13 lb schwer. Das deckt die App-Texte `1,1 m` und `~6 kg`.
+2. Bigelow 1850 ist als historische Sekundärquelle enger am Objekt: 3 ft 7 in
+   Länge, 1,25 in Schaftdurchmesser, 13,25 lb, mit verjüngter Spitze. Umgerechnet
+   sind das ca. 109,2 cm, 3,18 cm und 6,0 kg.
+3. Der aktuelle Viewer rendert nicht die volle 1,09-m-Stange. `phineasGage.ts`
+   verwendet `ROD_ENTRY`, `ROD_EXIT`, `ROD_OVERSHOOT = 38`,
+   `ROD_RADIUS_SHAFT = 7` und `ROD_RADIUS_TIP = 2.6`; bei voller Phase ist das
+   ein ca. 234-mm-Trajektorienmarker mit 14 mm Schaftdurchmesser.
+
+Entscheidung: Die Textmaße bleiben historisch, die 3D-Stange bleibt bewusst
+schematisch gekürzt. Die UI weist das jetzt explizit aus:
+`Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer
+als gekürzter, schematischer Trajektorienmarker dargestellt.` Eine spätere
+maßstabsgetreue Darstellung müsste die volle Stange als eigenes Modell oder als
+umschaltbaren Maßstabsmodus ergänzen.
+
+Quellen:
+
+1. Van Horn et al. 2012:
+   <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0037454>
+2. Harvard Countway / Warren Anatomical Museum:
+   <https://collections.countway.harvard.edu/onview/exhibits/show/beyond-the-bone-box/the-case-of-phineas-gage>
+3. Bigelow 1850, Harvard-Digitalisat:
+   <https://collections.countway.harvard.edu/onview/files/original/fc61f61c95e9f2d82160a86b1f168664.pdf>
 
 ### Atlas-Abdeckung
 
@@ -114,7 +153,7 @@ Quellen:
 | ICA | keine | animierte Komponententrennung im 3D-Raum | später |
 | P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
-| Phineas Gage | kein Original-Gage-CT/GLB im Repo | CT-abgeleitetes externes Gage-Modell nach Lizenz-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell |
+| Phineas Gage | kein importiertes Original-Gage-CT/GLB im aktuellen Standalone-Viewer | lokaler Hauptrepo-Import von Gage-Schädel, Calvarium-Cut und Eisenstange nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |
 
 ## Shader- und Texturbewertung

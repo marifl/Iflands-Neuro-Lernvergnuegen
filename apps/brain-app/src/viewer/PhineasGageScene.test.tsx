@@ -19,7 +19,9 @@ describe('PhineasGageScene', () => {
 
     render(<PhineasGageScene asMode />)
 
-    expect(screen.getByText(/kein Original-Gage-CT\/GLB/)).toBeInTheDocument()
+    expect(screen.getByText(/kein importiertes Original-Gage-CT\/GLB/)).toBeInTheDocument()
+    expect(screen.getByText(/Gage-GLB-Kandidaten liegen im Hauptrepo/)).toBeInTheDocument()
+    expect(screen.getByText(/gekürzter, schematischer Trajektorienmarker/)).toBeInTheDocument()
     expect(useViewerStore.getState().showSkull).toBe(true)
     expect(useViewerStore.getState().rodVisible).toBe(false)
 

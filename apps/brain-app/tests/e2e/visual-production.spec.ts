@@ -112,7 +112,8 @@ test('Phineas-Modus rendert im Phone-Viewport mit Asset-Hinweis', async ({ page 
   await page.goto('/?mode=phineas')
 
   await expect(page.getByText('Phineas Gage (1848)')).toBeVisible({ timeout: 60_000 })
-  await expect(page.getByText(/kein Original-Gage-CT\/GLB/)).toBeVisible()
+  await expect(page.getByText(/kein importiertes Original-Gage-CT\/GLB/)).toBeVisible()
+  await expect(page.getByText(/Gage-GLB-Kandidaten liegen im Hauptrepo/)).toBeVisible()
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'phone-phineas')
 })

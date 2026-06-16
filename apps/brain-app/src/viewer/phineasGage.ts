@@ -33,6 +33,11 @@ export const ROD_OVERSHOOT = 38
 /** Tampiereisen lief spitz zu: Spitze vorn, Schaft hinten. Radien in mm. */
 export const ROD_RADIUS_TIP = 2.6
 export const ROD_RADIUS_SHAFT = 7
+/** Historische Maße nach Van Horn et al. 2012 / Bigelow 1850. */
+export const HISTORICAL_ROD_LENGTH_MM = 1100
+export const HISTORICAL_ROD_SHAFT_DIAMETER_MM = 32
+export const HISTORICAL_ROD_TIP_DIAMETER_MM = 6.4
+export const HISTORICAL_ROD_WEIGHT_KG = 5.9
 
 const ROD_PHASE_ENTRY = 0.28
 const ROD_PHASE_THROUGH = 0.68
@@ -93,8 +98,9 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
-  assetNoteDe: 'Schematisches TARO-Schädelmodell; kein Original-Gage-CT/GLB im Standalone-Repo.',
+  assetNoteDe: 'Aktueller Viewer: kein importiertes Original-Gage-CT/GLB, sondern TARO-/BodyParts3D-Kontext; Gage-GLB-Kandidaten liegen im Hauptrepo.',
   trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 schematisch in den Viewer-Raum übertragen.',
+  rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer als gekürzter, schematischer Trajektorienmarker dargestellt.',
   steps: [
     {
       captionDe:

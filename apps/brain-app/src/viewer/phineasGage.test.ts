@@ -1,5 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import {
+  HISTORICAL_ROD_LENGTH_MM,
+  HISTORICAL_ROD_SHAFT_DIAMETER_MM,
+  HISTORICAL_ROD_TIP_DIAMETER_MM,
+  HISTORICAL_ROD_WEIGHT_KG,
   LESION_STRUCTURES,
   PHINEAS_GAGE,
   ROD_ENTRY,
@@ -40,7 +44,20 @@ describe('Phineas-Gage-Szene', () => {
   })
 
   it('macht die Modellannahme explizit statt ein Originalmodell zu behaupten', () => {
-    expect(PHINEAS_GAGE.assetNoteDe).toContain('kein Original-Gage-CT/GLB')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('kein importiertes Original-Gage-CT/GLB')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('Gage-GLB-Kandidaten liegen im Hauptrepo')
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
+  })
+
+  it('trennt historische Stangenmaße vom gekürzten Trajektorienmarker', () => {
+    const final = rodSegmentForPhase(1)
+
+    expect(HISTORICAL_ROD_LENGTH_MM).toBe(1100)
+    expect(HISTORICAL_ROD_SHAFT_DIAMETER_MM).toBe(32)
+    expect(HISTORICAL_ROD_TIP_DIAMETER_MM).toBeCloseTo(6.4)
+    expect(HISTORICAL_ROD_WEIGHT_KG).toBeCloseTo(5.9)
+    expect(final.length).toBeLessThan(HISTORICAL_ROD_LENGTH_MM / 3)
+    expect(ROD_RADIUS_SHAFT * 2).toBeLessThan(HISTORICAL_ROD_SHAFT_DIAMETER_MM)
+    expect(PHINEAS_GAGE.rodScaleNoteDe).toContain('gekürzter, schematischer Trajektorienmarker')
   })
 })
