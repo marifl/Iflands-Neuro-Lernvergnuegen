@@ -212,6 +212,7 @@ morphometrisch exakt — nein; `backfill:true` = überlappende Näherung.
 - [x] frontopolar (BA10) · neuer `geometric_pole`-Modus (vorderste SFG+MFG-Spitze, 22 mm), `combined_hosts.json` → schaltet 11-07 Badre + Phineas frei. `smoke-frontopolar`
 - [x] EEG-Sync P3b (parietal) + P3z (SMA/pre-SMA) · `ErpChart` generisch (source/site Cz/Pz), Brain-Puls für brain.glb-Gyri, Headset-Support-Sites und schematische Topografie-/Quellenlabels. `smoke-eeg-p3z`, `smoke-eeg-p3b`
 - [x] ICA-Overlay als pausierbare schematische Signal-zu-Komponenten-Animation · gemischtes VCPT-ERP → P3a/P3b/P3z, ohne Rohdatenanalyse-Claim. `smoke-ica`
+- [x] VCPT-Overlay als pausierbare/scrubbare Cue-Probe-Folge · Go, No-go, Kontroll-/Novelty-Reize, Kommissions- und Auslassungsfehler. `smoke-vcpt`
 
 ### Phase 6 — Atlas Voll-Transform → TARO (Shelf-Artefakt) ✅
 

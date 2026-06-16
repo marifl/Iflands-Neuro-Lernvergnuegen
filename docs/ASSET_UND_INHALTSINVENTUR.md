@@ -149,7 +149,7 @@ Quellen:
 | Szene/Modus | Pflichtlücke | Optional | Entscheidung |
 | --- | --- | --- | --- |
 | Go/No-go | keine | reale Stimulus-Karten statt Prose-Intro | später |
-| VCPT | keine | Tier-/Pflanzenstimuli als kleine Texturkarte | später |
+| VCPT | keine | echte Stimulus-Bildkarten | später; aktueller Build zeigt eine pausierbare schematische Cue-Probe-Folge mit Go/No-go-Fehlerzuständen |
 | ICA | keine | 3D-Komponententrennung im Raum | später; aktueller Build zeigt eine pausierbare schematische Signal-zu-Komponenten-Animation im Overlay |
 | P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später; aktueller Build zeigt schematische Topografie, Support-Elektroden und Quellenlabels |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |

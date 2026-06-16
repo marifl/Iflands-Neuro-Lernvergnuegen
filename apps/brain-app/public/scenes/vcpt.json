@@ -4,12 +4,18 @@
   "brain": { "regions": ["sma-presma"], "camera": "medial-midline" },
   "overlay": {
     "kind": "flowchart", "position": "right", "size": "md",
-    "data": { "nodes": [
-      { "id": "go",  "label": "A–A (Tier→Tier)",    "result": "→ Taste drücken (Go)" },
-      { "id": "nogo","label": "A–P (Tier→Pflanze)", "result": "→ Reaktion hemmen (No-go)" },
-      { "id": "ign1","label": "P–P (Pflanze→Pflanze)","result": "→ ignorieren (Kontrolle)" },
-      { "id": "ign2","label": "P–H (Pflanze→Mensch)", "result": "→ ignorieren (Novelty)" }
-    ] },
+    "data": {
+      "mode": "vcpt-sequence",
+      "evidence": "Schematisch/didaktisch nach Müller et al. 2011; keine Rohmesswerte",
+      "stimuli": [
+        { "id": "go-hit", "cue": "Tier", "probe": "Tier", "kind": "go", "expected": "Taste drücken", "outcome": "hit" },
+        { "id": "nogo-ok", "cue": "Tier", "probe": "Pflanze", "kind": "nogo", "expected": "Reaktion hemmen", "outcome": "correct-reject" },
+        { "id": "nogo-commission", "cue": "Tier", "probe": "Pflanze", "kind": "nogo", "expected": "nicht drücken", "outcome": "commission-error" },
+        { "id": "ignore", "cue": "Pflanze", "probe": "Pflanze", "kind": "ignore", "expected": "ignorieren", "outcome": "correct-reject" },
+        { "id": "novelty", "cue": "Pflanze", "probe": "Mensch", "kind": "novelty", "expected": "ignorieren", "outcome": "correct-reject" },
+        { "id": "go-omission", "cue": "Tier", "probe": "Tier", "kind": "go", "expected": "Taste drücken", "outcome": "omission-error" }
+      ]
+    },
     "fallbackImage": "/figures/c7b758a875edd35f0bc340ed00c27499dae4f4cada37b5e38a01b19b554c98dd.jpg"
   },
   "companion": {
