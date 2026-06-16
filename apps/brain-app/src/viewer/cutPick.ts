@@ -6,6 +6,7 @@ import { Box3, Raycaster, Vector3 } from 'three'
 import type { Intersection, Mesh, Plane, Ray } from 'three'
 import { ATLAS_PARCEL_FLAG, ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
+import { isSequenceTargetPickableMesh } from './targetPicking'
 
 const PLANE_TOL_MM = 2
 const PROBE_MM = 0.4
@@ -34,7 +35,7 @@ export function isClippedRaycastHit(hit: Intersection): boolean {
 
 /** Nur benannte Cut-Source-Strukturen sind pickbar (wie das bisherige onClick auf Brain/Skull/Head). */
 function isPickableSource(obj: Mesh): boolean {
-  return obj.userData[CUT_SOURCE_FLAG] === true
+  return obj.userData[CUT_SOURCE_FLAG] === true || isSequenceTargetPickableMesh(obj)
 }
 
 function isPickableCutCapSource(obj: Mesh): boolean {

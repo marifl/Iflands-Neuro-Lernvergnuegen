@@ -376,6 +376,8 @@ export function importViewerStateSnapshot(raw: unknown): void {
     rodVisible: snapshotState.rodVisible,
     selectMode: snapshotState.selectMode,
     selected: null,
+    activeTargetRef: null,
+    activeObjectGraphId: null,
     selectedLabels: null,
     selectedSlugs: new Set(),
     showAtlasDkt: snapshotState.showAtlasDkt,

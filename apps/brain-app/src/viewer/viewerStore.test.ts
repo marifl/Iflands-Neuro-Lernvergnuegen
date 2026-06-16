@@ -18,6 +18,61 @@ import {
 } from './viewerStateSnapshot'
 import { registryLaunchLocation, resolveRegistryLaunch } from './registryLaunch'
 
+describe('target picking', () => {
+  beforeEach(() => {
+    useViewerStore.setState({
+      selected: null,
+      activeTargetRef: null,
+      activeObjectGraphId: null,
+      selectedLabels: null,
+      selectedSlugs: new Set(),
+      selectMode: 'group',
+    })
+  })
+
+  it('setzt fuer Legacy-Hirn-Picks denselben TargetRef-Vertrag', () => {
+    useViewerStore.getState().pick('left-insula')
+
+    const state = useViewerStore.getState()
+    expect(state.selected).toBe('left-insula')
+    expect(state.activeTargetRef).toEqual({
+      targetKind: 'ontology-node',
+      collectionId: 'taro',
+      ontologyNodeId: 'left-insula',
+    })
+    expect(state.activeObjectGraphId).toBe('target:ontology-node:taro:left-insula')
+    expect([...state.selectedSlugs]).toEqual(['left-insula'])
+  })
+
+  it('selektiert Asset-Parts ohne separaten Device-Auswahlpfad', () => {
+    useViewerStore.getState().pickTarget({
+      targetRef: {
+        targetKind: 'asset-part',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+        partId: 'electrode-fz',
+      },
+      objectGraphId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
+      selectionId: 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz',
+      label: 'Fz electrode',
+    })
+
+    const state = useViewerStore.getState()
+    expect(state.selected).toBe('target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz')
+    expect(state.activeTargetRef).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'electrode-fz',
+    })
+    expect(state.selectedLabels?.de).toBe('Fz electrode')
+    expect([...state.selectedSlugs]).toEqual(['target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz'])
+
+    state.select(null)
+    expect(useViewerStore.getState().activeTargetRef).toBeNull()
+  })
+})
+
 describe('appMode', () => {
   beforeEach(() => {
     // Store auf modus-fremde Reststaende setzen, um den Reset zu pruefen.
@@ -190,6 +245,8 @@ describe('viewer state snapshots', () => {
       rodVisible: false,
       selectMode: 'group',
       selected: null,
+      activeTargetRef: null,
+      activeObjectGraphId: null,
       selectedLabels: null,
       selectedSlugs: new Set(),
       showAtlasDkt: false,

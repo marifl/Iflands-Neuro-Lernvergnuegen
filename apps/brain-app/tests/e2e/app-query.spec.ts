@@ -76,6 +76,45 @@ async function expectMeshVisibility(page: Page, expected: Record<string, boolean
   }, expected, { timeout: 60_000 })
 }
 
+async function clickProjectedMesh(page: Page, meshName: string) {
+  await page.waitForFunction((name) => {
+    let root = (window as unknown as { __THREE_SCENE__?: { parent?: unknown; traverse: (cb: (obj: any) => void) => void } }).__THREE_SCENE__
+    if (!root) return false
+    while ((root as any).parent) root = (root as any).parent
+    let found = false
+    root.traverse((obj: any) => {
+      if (obj?.isMesh && obj.name === name && obj.visible && obj.userData?.targetPickable === true) found = true
+    })
+    return found
+  }, meshName, { timeout: 60_000 })
+
+  const point = await page.evaluate((name) => {
+    const canvas = document.querySelector('canvas')
+    const THREE = (window as any).__THREE__
+    const camera = (window as any).__THREE_CAMERA__
+    let root = (window as any).__THREE_SCENE__
+    if (!canvas || !THREE || !camera || !root) return null
+    while (root.parent) root = root.parent
+    let target: any = null
+    root.traverse((obj: any) => {
+      if (obj?.isMesh && obj.name === name) target = obj
+    })
+    if (!target) return null
+    target.updateWorldMatrix(true, false)
+    camera.updateMatrixWorld?.()
+    const world = new THREE.Vector3()
+    target.getWorldPosition(world)
+    world.project(camera)
+    const rect = canvas.getBoundingClientRect()
+    return {
+      x: rect.left + ((world.x + 1) / 2) * rect.width,
+      y: rect.top + ((-world.y + 1) / 2) * rect.height,
+    }
+  }, meshName)
+  expect(point).toBeTruthy()
+  await page.mouse.click(point!.x, point!.y)
+}
+
 test('Startscreen startet den Lernmodus', async ({ page }) => {
   await page.goto('/')
 
@@ -202,6 +241,17 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
     name: 'authoring-snapshot.json',
     mimeType: 'application/json',
     buffer: Buffer.from(JSON.stringify(snapshot)),
+  })
+
+  await page.getByRole('button', { name: /Datei/ }).click()
+  const devicePartTarget = 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz'
+  await clickProjectedMesh(page, devicePartTarget)
+  await expect(page.getByText('Fz electrode')).toBeVisible()
+  await expect.poll(async () => page.evaluate(() => (window as any).__BRAIN_LAST_PICK_TARGET__)).toEqual({
+    targetKind: 'asset-part',
+    collectionId: 'device-eeg-10-20',
+    instanceId: 'eeg-cap-01',
+    partId: 'electrode-fz',
   })
 
   await page.getByRole('button', { name: /Datei/ }).click()

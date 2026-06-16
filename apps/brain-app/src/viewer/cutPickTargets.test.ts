@@ -3,6 +3,7 @@ import { BufferGeometry, Group, Mesh, MeshBasicMaterial, Plane, Vector3 } from '
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { createCutPickTargetCache, isCutCapSource } from './cutPickTargets'
+import { sequenceTargetUserData } from './targetPicking'
 
 const geometry = new BufferGeometry()
 
@@ -77,6 +78,30 @@ describe('createCutPickTargetCache', () => {
     expect(createCutPickTargetCache(root).get()).toEqual({
       raycastTargets: [original],
       cutSources: [original],
+    })
+  })
+
+  it('nimmt pickbare SequenceTargetRef-Meshes in denselben Raycast-Pfad auf', () => {
+    const root = new Group()
+    const part = mesh('target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz')
+    part.userData = sequenceTargetUserData({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'electrode-fz',
+    })
+    const helper = mesh('target:asset-part:device-eeg-10-20:eeg-cap-01:alignment-helper-ring')
+    helper.userData = sequenceTargetUserData({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'alignment-helper-ring',
+    }, false)
+    root.add(part, helper)
+
+    expect(createCutPickTargetCache(root).get()).toEqual({
+      raycastTargets: [part],
+      cutSources: [part],
     })
   })
 })

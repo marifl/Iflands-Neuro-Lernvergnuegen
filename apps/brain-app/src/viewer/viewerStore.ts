@@ -12,6 +12,8 @@ import {
 } from './ontology'
 import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
+import type { SequenceTargetRef } from './sequenceTargetRef'
+import { pickTargetFromLegacyMeshName, type ViewerPickTarget } from './targetPicking'
 
 export type { CutAxis, CutConfig, CutMode }
 
@@ -99,6 +101,9 @@ interface ViewerState {
   /** Zuletzt durch Preset/Config gesetzte Start-Sichtbarkeit; nicht Teil von Snapshots. */
   defaultVisibility: AppliedDefaultVisibility | null
   selected: string | null
+  /** Stabiler Target-Vertrag zur aktuellen Auswahl; legacy Mesh-Namen werden auf Ontologie-Refs gemappt. */
+  activeTargetRef: SequenceTargetRef | null
+  activeObjectGraphId: string | null
   /** Slugs der aktuellen Auswahl (bei Gruppen-Auswahl alle Blaetter; sonst genau eines). */
   selectedSlugs: Set<string>
   /** Label der Auswahl (auch fuer Gruppen, die nicht im slug->node-Index stehen). */
@@ -173,6 +178,8 @@ interface ViewerState {
   setSelectMode: (mode: SelectMode) => void
   /** 3D-Klick: respektiert selectMode (group = Gruppe der aktuellen Ebene, direct = Blatt). */
   pick: (meshName: string) => void
+  /** 3D-Klick mit bereits aufgeloestem SequenceTargetRef. */
+  pickTarget: (target: ViewerPickTarget) => void
   /** 3D-Doppelklick: group = eine Ebene tiefer betreten (isolieren), direct = Blatt isolieren. */
   drill: (meshName: string) => void
   setHovered: (id: string | null) => void
@@ -236,6 +243,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   hidden: new Set(),
   defaultVisibility: null,
   selected: null,
+  activeTargetRef: null,
+  activeObjectGraphId: null,
   selectedSlugs: new Set(),
   selectedLabels: null,
   selectMode: 'group',
@@ -327,7 +336,15 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   },
   select: (id) =>
     set((state) => {
-      if (!id) return { selected: null, selectedSlugs: new Set(), selectedLabels: null }
+      if (!id) {
+        return {
+          selected: null,
+          activeTargetRef: null,
+          activeObjectGraphId: null,
+          selectedSlugs: new Set(),
+          selectedLabels: null,
+        }
+      }
       // Knoten in Hirn- ODER Kontext-Baum aufloesen: Gruppen-Auswahl markiert alle Blaetter.
       const chain = nodeChain([state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux], id)
       const node = chain ? chain[chain.length - 1] : null
@@ -335,18 +352,44 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const expanded = { ...state.expanded }
       const path = chain ? chain.slice(0, -1).map((n) => n.id) : state.ancestors.get(id) ?? []
       for (const groupId of path) expanded[groupId] = true
-      return { selected: id, selectedSlugs: new Set(slugs), selectedLabels: node?.labels ?? null, expanded }
+      const target = pickTargetFromLegacyMeshName(id)
+      return {
+        selected: id,
+        activeTargetRef: target?.targetRef ?? null,
+        activeObjectGraphId: target?.objectGraphId ?? null,
+        selectedSlugs: new Set(slugs),
+        selectedLabels: node?.labels ?? null,
+        expanded,
+      }
     }),
   setSelectMode: (selectMode) => set({ selectMode }),
   pick: (meshName) => {
+    const target = pickTargetFromLegacyMeshName(meshName)
+    if (!target) return
+    get().pickTarget(target)
+  },
+  pickTarget: (target) => {
     const st = get()
+    if (target.targetRef.targetKind !== 'ontology-node') {
+      const label = target.label ?? target.objectGraphId
+      set({
+        selected: target.selectionId,
+        activeTargetRef: target.targetRef,
+        activeObjectGraphId: target.objectGraphId,
+        selectedSlugs: new Set([target.selectionId]),
+        selectedLabels: { de: label, la: label, en: label },
+      })
+      return
+    }
+
+    const meshName = target.selectionId
     if (st.selectMode === 'direct') return st.select(meshName)
     // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
     const chain = nodeChain([st.ontology?.tree, st.context, st.julich, st.atlas3d.dkt, st.atlas3d.brodmann, st.atlas3d.destrieux], meshName)
     if (!chain) return st.select(meshName)
     const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
-    const target = chain[ctxIdx + 1] ?? chain[chain.length - 1]
-    st.select(target.id)
+    const selectionNode = chain[ctxIdx + 1] ?? chain[chain.length - 1]
+    st.select(selectionNode.id)
   },
   drill: (meshName) => {
     const st = get()

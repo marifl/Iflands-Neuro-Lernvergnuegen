@@ -2,6 +2,7 @@ import type { Mesh, Object3D } from 'three'
 import { ATLAS_PARCEL_FLAG, ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { ATLAS_CAP_PROXY_OWNER_FLAG, ATLAS_CAP_SOURCE_FLAG } from './atlasCapProxies'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
+import { isSequenceTargetPickableMesh } from './targetPicking'
 
 export interface CutPickTargets {
   raycastTargets: Mesh[]
@@ -35,6 +36,7 @@ export function isCutCapSource(mesh: Mesh): boolean {
 function isCutPickSource(mesh: Mesh): boolean {
   if (mesh.userData[ATLAS_CAP_SOURCE_FLAG] === true) return false
   if (mesh.userData[CUT_SOURCE_FLAG] === true) return true
+  if (isSequenceTargetPickableMesh(mesh)) return true
   return isAtlasTarget(mesh) && hasActiveClippingPlanes(mesh)
 }
 
@@ -45,7 +47,7 @@ export function collectCutPickTargets(root: Object3D): CutPickTargets {
     const mesh = obj as Mesh
     if (!mesh.isMesh || !mesh.visible || !mesh.geometry) return
     if (mesh.userData[CUT_CAP_HELPER_FLAG]) return
-    const isCutSource = mesh.userData[CUT_SOURCE_FLAG] === true
+    const isCutSource = mesh.userData[CUT_SOURCE_FLAG] === true || isSequenceTargetPickableMesh(mesh)
     const atlasTarget = isAtlasTarget(mesh)
     if (isCutPickSource(mesh)) cutSources.push(mesh)
     if (mesh.userData[ATLAS_CAP_SOURCE_FLAG] !== true && (isCutSource || atlasTarget)) raycastTargets.push(mesh)

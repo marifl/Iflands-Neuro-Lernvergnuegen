@@ -4,6 +4,7 @@ import type { Intersection } from 'three'
 import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
 import { isClippedRaycastHit, pickAtActiveCutPlanes, pickFirstSurfaceHit } from './cutPick'
+import { sequenceTargetUserData } from './targetPicking'
 
 const testGeom = new BufferGeometry()
 
@@ -68,6 +69,19 @@ describe('pickFirstSurfaceHit', () => {
     const nonSource = new Mesh(testGeom, new MeshBasicMaterial())
     nonSource.visible = true
     expect(pickFirstSurfaceHit([hit(nonSource, new Vector3(0, 0, 0))])).toBeNull()
+  })
+
+  it('akzeptiert pickbare SequenceTargetRef-Meshes ohne zweiten Pickpfad', () => {
+    const part = new Mesh(testGeom, new MeshBasicMaterial())
+    part.visible = true
+    part.userData = sequenceTargetUserData({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'electrode-fz',
+    })
+
+    expect(pickFirstSurfaceHit([hit(part, new Vector3(0, 0, 0))])?.object).toBe(part)
   })
 })
 

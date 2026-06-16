@@ -24,6 +24,7 @@ import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocati
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
+import AuthoringSceneObjects from './AuthoringSceneObjects'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
@@ -1055,6 +1056,7 @@ export default function BodyParts3DViewer() {
                 ))}
                 <SubParcels />
                 <EegHeadset />
+                <AuthoringSceneObjects />
                 <AtlasOverlay />
                 <CutCaps />
               </Suspense>
