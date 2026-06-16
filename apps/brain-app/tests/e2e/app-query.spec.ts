@@ -63,6 +63,19 @@ async function expectBrainCanvas(page: Page) {
   }).toBeGreaterThan(100)
 }
 
+async function expectMeshVisibility(page: Page, expected: Record<string, boolean>) {
+  await page.waitForFunction((visibility) => {
+    let root = (window as unknown as { __THREE_SCENE__?: { parent?: unknown; traverse: (cb: (obj: any) => void) => void } }).__THREE_SCENE__
+    if (!root) return false
+    while ((root as any).parent) root = (root as any).parent
+    const seen: Record<string, boolean> = {}
+    root.traverse((obj: any) => {
+      if (obj?.isMesh && obj.name in visibility) seen[obj.name] = obj.visible === true
+    })
+    return Object.entries(visibility).every(([name, visible]) => seen[name] === visible)
+  }, expected, { timeout: 60_000 })
+}
+
 test('Startscreen startet den Lernmodus', async ({ page }) => {
   await page.goto('/')
 
@@ -204,6 +217,43 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
     rotation: [0, 0.25, 0],
     scale: [0.8, 0.8, 0.8],
   })
+})
+
+test('Preset-Deep-Links setzen unterschiedliche Default-Sichtbarkeit', async ({ page }) => {
+  await page.goto('/?mode=explore&preset=kapitel11')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await expectMeshVisibility(page, { 'left-insula': false, 'right-insula': false })
+
+  await page.goto('/?mode=explore&preset=explorer')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await expectMeshVisibility(page, { 'left-insula': true, 'right-insula': true })
+})
+
+test('Snapshot-Import gewinnt gegen Config-Sichtbarkeitsdefaults', async ({ page }) => {
+  await page.goto('/?config=p3a-konfliktmonitoring')
+
+  await expect(page.getByRole('heading', { name: 'P3a — Konfliktmonitoring (No-go)' })).toBeVisible({ timeout: 60_000 })
+  await expectMeshVisibility(page, { 'left-insula': false, 'right-insula': false })
+
+  const snapshot = {
+    version: 1,
+    state: {
+      route: { configName: 'p3a-konfliktmonitoring', sceneId: 'p3a-konfliktmonitoring', step: 0 },
+      hidden: [],
+    },
+  }
+  await page.getByLabel('Unterrichts-Snapshot-Datei').setInputFiles({
+    name: 'visible-insula-snapshot.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(JSON.stringify(snapshot)),
+  })
+  await page.getByRole('button', { name: /Datei/ }).click()
+
+  await expectMeshVisibility(page, { 'left-insula': true, 'right-insula': true })
 })
 
 test('Explorer-Deep-Link zeigt freie Strukturansicht ohne Presenter-Chrome', async ({ page }) => {

@@ -309,7 +309,11 @@
       },
       "visibility": {
         "dim_opacity": 0.12,
-        "dim_others": true
+        "dim_others": true,
+        "hidden": [
+          "left-insula",
+          "right-insula"
+        ]
       }
     },
     "p3b-engagement": {
@@ -738,6 +742,9 @@
       "scopes": {
         "axis:cyto": false,
         "axis:macro": true
+      },
+      "visibility": {
+        "hidden": []
       }
     },
     "kapitel11": {
@@ -752,6 +759,12 @@
         "area:julich:area-45:l": true,
         "axis:cyto": false,
         "axis:macro": false
+      },
+      "visibility": {
+        "hidden": [
+          "left-insula",
+          "right-insula"
+        ]
       }
     },
     "voll": {
@@ -759,6 +772,9 @@
       "scopes": {
         "axis:cyto": true,
         "axis:macro": true
+      },
+      "visibility": {
+        "hidden": []
       }
     }
   }

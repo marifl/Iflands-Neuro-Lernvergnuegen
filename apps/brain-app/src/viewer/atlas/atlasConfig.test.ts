@@ -8,8 +8,12 @@ import type { AtlasCatalog } from './atlasCatalog'
 const FILE: AtlasConfigFile = {
   preset: 'kapitel11',
   presets: {
-    kapitel11: { label_de: 'K11', scopes: { 'axis:cyto': false, 'area:julich:area-44:l': true } },
-    voll: { label_de: 'Voll', scopes: { 'axis:cyto': true } },
+    kapitel11: {
+      label_de: 'K11',
+      scopes: { 'axis:cyto': false, 'area:julich:area-44:l': true },
+      visibility: { hidden: ['left-insula'] },
+    },
+    voll: { label_de: 'Voll', scopes: { 'axis:cyto': true }, visibility: { hidden: [] } },
   },
   mesh_mappings: { buckets: {}, scene_regions: {} },
   configurations: {
@@ -19,7 +23,7 @@ const FILE: AtlasConfigFile = {
       camera: { shot: 'lateral-left' },
       regions: { areas: ['julich:area-44:l'] },
       colors: { enabled: false },
-      visibility: { dim_others: true },
+      visibility: { dim_others: true, hidden: ['right-insula'] },
       cuts: { enabled: false },
       overlay: { kind: 'image' },
       sequencing: { step: 'area-44-only' },
@@ -31,7 +35,7 @@ const FILE: AtlasConfigFile = {
       camera: { target: 'julich:area-45:l', shot: 'lateral-left', fit: 'target' },
       regions: { areas: ['julich:area-45:l'] },
       colors: { enabled: false },
-      visibility: { dim_others: true },
+      visibility: { dim_others: true, hidden: ['right-insula'] },
       cuts: { enabled: false },
       overlay: { kind: 'image' },
       sequencing: { step: 'broca-areal' },
@@ -135,6 +139,7 @@ describe('computeEffectiveConfig', () => {
     expect(eff.activeConfiguration).toBe('broca-areal')
     expect(eff.configuration?.label_de).toBe('Broca')
     expect(eff.cameraTargetMeshes).toEqual(['left-inferior-frontal-gyrus'])
+    expect(eff.visibility.hidden).toEqual(['right-insula'])
     expect(eff.isAreaEnabled('julich:area-44:l')).toBe(true)
   })
   it('URL-config rekonstruiert kanonisch und ignoriert persistierte lokale Overrides', () => {
@@ -150,6 +155,7 @@ describe('computeEffectiveConfig', () => {
     expect(eff.preset).toBe('kapitel11')
     expect(eff.hasUrlConfig).toBe(true)
     expect(eff.activeConfiguration).toBe('broca-areal')
+    expect(eff.visibility.hidden).toEqual(['right-insula'])
     expect(eff.scopes['axis:cyto']).toBe(false)
     expect(eff.scopes['area:julich:area-44:l']).toBe(true)
     expect(eff.scopes['area:julich:area-45:l']).toBe(true)
@@ -169,6 +175,8 @@ describe('computeEffectiveConfig', () => {
       new URLSearchParams('preset=voll'),
     )
     expect(eff.preset).toBe('voll')
+    expect(eff.hasUrlPreset).toBe(true)
+    expect(eff.visibility.hidden).toEqual([])
   })
   it('wirft bei unbekanntem URL-preset', () => {
     expect(() => computeEffectiveConfig(

@@ -353,6 +353,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
     colorMode: snapshotState.colorMode,
     cutMode: snapshotState.cutMode,
     cuts: snapshotState.cuts,
+    defaultVisibility: null,
     hidden: new Set(snapshotState.hidden),
     highlight: snapshotState.highlight,
     isolated: null,

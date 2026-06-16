@@ -129,6 +129,30 @@ describe('carveOverlay', () => {
   })
 })
 
+describe('default visibility', () => {
+  beforeEach(() => {
+    useViewerStore.setState({
+      defaultVisibility: null,
+      hidden: new Set(['manual-hidden']),
+      isolated: null,
+      isolatedSlugs: new Set(),
+      isolationPath: [],
+    })
+  })
+
+  it('wendet Preset-Defaults an und raeumt nur alte Default-Hidden-Werte beim Wechsel weg', () => {
+    useViewerStore.getState().applyDefaultVisibility('preset:kapitel11', ['left-insula'], 'left-cingulate-gyrus')
+
+    expect([...useViewerStore.getState().hidden].sort()).toEqual(['left-insula', 'manual-hidden'])
+    expect(useViewerStore.getState().isolated).toBe('left-cingulate-gyrus')
+
+    useViewerStore.getState().applyDefaultVisibility('preset:explorer', [], null)
+
+    expect([...useViewerStore.getState().hidden]).toEqual(['manual-hidden'])
+    expect(useViewerStore.getState().isolated).toBeNull()
+  })
+})
+
 describe('viewer state snapshots', () => {
   beforeEach(() => {
     window.history.replaceState(null, '', '/')
@@ -147,6 +171,7 @@ describe('viewer state snapshots', () => {
         axial: { on: false, pos: 0 },
       },
       hidden: new Set(),
+      defaultVisibility: null,
       highlight: [],
       isolated: null,
       isolatedSlugs: new Set(),
@@ -366,6 +391,7 @@ describe('viewer state snapshots', () => {
         axial: { on: false, pos: 0 },
       },
       hidden: new Set(['local-only']),
+      defaultVisibility: { key: 'preset:kapitel11', hidden: ['local-only'] },
       highlight: ['local-highlight'],
       showCarveJulich: true,
       showCarveDkt: false,
@@ -391,6 +417,7 @@ describe('viewer state snapshots', () => {
     expect(state.cutMode).toBe('slice')
     expect(state.cuts.sagittal).toEqual({ on: true, pos: 12 })
     expect([...state.hidden]).toEqual(['snapshot-hidden'])
+    expect(state.defaultVisibility).toBeNull()
     expect(state.highlight).toEqual(['snapshot-highlight'])
     expect(state.showCarveJulich).toBe(false)
     expect(state.showCarveDkt).toBe(true)

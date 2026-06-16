@@ -8,7 +8,7 @@ import { getLocalStorageItem } from '../../safeLocalStorage'
 
 export type ScopeMap = Record<string, boolean>
 
-export interface PresetNode { label_de: string; scopes: ScopeMap }
+export interface PresetNode { label_de: string; scopes: ScopeMap; visibility?: ConfigVisibility }
 export interface ConfigFacets { clinic?: boolean; function?: boolean; chapter?: boolean; provenance?: boolean }
 export interface ConfigView { surface?: 'pial' | 'inflated'; subcortex?: boolean; carve_on_taro?: 'off' | 'dkt' | 'julich' }
 export interface ConfigCamera {
@@ -141,6 +141,7 @@ export function loadLocalOverrides(): LocalOverrides {
 export interface EffectiveConfig {
   catalog: AtlasCatalog
   preset: string
+  hasUrlPreset: boolean
   hasUrlConfig: boolean
   activeConfiguration: string | null
   configuration: ConfigurationNode | null
@@ -148,6 +149,7 @@ export interface EffectiveConfig {
   view: ConfigView
   camera: ConfigCamera
   cameraTargetMeshes: string[]
+  visibility: ConfigVisibility
   scopes: ScopeMap
   isAreaEnabled: (areaId: string) => boolean
 }
@@ -173,6 +175,13 @@ export function targetMeshesForCamera(catalog: AtlasCatalog, configName: string,
   return area.hosts.map((host) => `${side}-${host}`)
 }
 
+function mergeVisibility(base: ConfigVisibility | undefined, override: ConfigVisibility | undefined): ConfigVisibility {
+  return {
+    ...(base ?? {}),
+    ...(override ?? {}),
+  }
+}
+
 /** Mergt die 3 Schichten zu einer effective config. Praezedenz: file < localStorage < url.
  *  Ein URL-`config` ist ein kanonischer Link: persistierte lokale Overrides duerfen ihn nicht verfaelschen. */
 export function computeEffectiveConfig(
@@ -184,6 +193,7 @@ export function computeEffectiveConfig(
   const lookup = buildAreaLookup(catalog)
   const urlPreset = url.get('preset')
   const urlConfig = url.get('config')
+  const hasUrlPreset = urlPreset !== null
   const hasUrlConfig = urlConfig !== null
   const preset = urlPreset ?? (hasUrlConfig ? file.preset : local.preset ?? file.preset)
   if (!file.presets[preset]) throw new Error(`computeEffectiveConfig: Preset "${preset}" nicht definiert`)
@@ -200,6 +210,7 @@ export function computeEffectiveConfig(
   return {
     catalog,
     preset,
+    hasUrlPreset,
     hasUrlConfig,
     activeConfiguration,
     configuration: cfg,
@@ -208,6 +219,7 @@ export function computeEffectiveConfig(
     view: cfg?.view ?? {},
     camera: cfg?.camera ?? {},
     cameraTargetMeshes: cfg ? targetMeshesForCamera(catalog, activeConfiguration!, cfg.camera ?? {}) : [],
+    visibility: mergeVisibility(file.presets[preset]?.visibility, cfg?.visibility),
     scopes,
     isAreaEnabled: (areaId: string) => isAreaEnabled(areaId, scopes, lookup),
   }

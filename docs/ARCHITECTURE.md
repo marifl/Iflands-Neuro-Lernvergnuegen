@@ -105,14 +105,15 @@ State-Priorität über Resolver-Grenzen hinweg:
    reproduzierbare Review- und Unterrichtseinstiege sind.
 4. Snapshot-Import gewinnt gegen URL-Config-Defaults, weil der Snapshot den
    konkreten Sitzungszustand eines Dozenten speichert. Nach dem Import darf
-   `ConfigLinkStateApplier` Cuts, Highlight oder Preset nicht wieder aus der
-   Config überschreiben.
+   `ConfigLinkStateApplier` Cuts, Highlight, Preset oder Start-Sichtbarkeit
+   nicht wieder aus der Config überschreiben.
 5. Explizite User-Interaktion nach Import gewinnt ab diesem Moment wieder als
    neuer lokaler Sitzungszustand.
 
 Config-Bausteine:
 
-1. `presets.*`: Default-Scope-Sets wie `kapitel11`, `explorer`, `voll`.
+1. `presets.*`: Default-Scope- und Start-Sichtbarkeits-Sets wie `kapitel11`,
+   `explorer`, `voll`.
 2. `mesh_mappings.*`: kanonische Bucket- und Scene-Region-Auflösung zu Meshes.
 3. `configurations.*`: fachliche Atome für Folie, Lernschritt oder
    Abbildungsersatz.
@@ -121,6 +122,15 @@ Config-Bausteine:
 
 Unbekannte Presets, Configurations, Areas oder invalides JSON sollen laut
 fehlschlagen. Stille Reparaturpfade sind nicht Teil der Architektur.
+
+`visibility.hidden` und `visibility.isolated` dürfen auf Preset- und
+Configuration-Ebene stehen. `atlasConfig.ts` mergt Preset-Defaults mit der
+aktiven Configuration; Configuration-Felder überschreiben Preset-Felder.
+`ConfigLinkStateApplier` wendet diese Start-Sichtbarkeit nur für explizite
+`?preset=...`- oder `?config=...`-Links an. Er merkt sich dabei ausschließlich
+die zuletzt gesetzten Config-Defaults, damit ein Preset-/Config-Wechsel alte
+Defaults entfernt, aber manuell versteckte Strukturen nicht als Config-State
+behandelt.
 
 ## Snapshot-Vertrag
 
@@ -140,8 +150,8 @@ Snapshot ersetzt keinen kanonischen Config-Step: Config definiert das
 unterrichtbare Atom, Snapshot speichert den konkreten Zustand einer Sitzung.
 Deshalb setzt `viewerStateSnapshot.ts` beim Import einen kurzlebigen
 Route-Guard: Solange die importierte Snapshot-Route aktiv ist, überspringt
-`ConfigLinkStateApplier` seine Config-Default-Anwendung für Cuts, Highlight
-und Preset.
+`ConfigLinkStateApplier` seine Config-Default-Anwendung für Cuts, Highlight,
+Preset und Start-Sichtbarkeit.
 
 ## Modi und Bedienflächen
 
@@ -559,11 +569,9 @@ Neue Animation für eine Folie:
 
 Diese Punkte sind bewusst nicht als erledigt dokumentiert:
 
-1. Default-Objekt-Sichtbarkeit muss pro Preset/Scene-Config steuerbar werden,
-   ohne URL- oder Snapshot-State zu überschreiben.
-2. Animationen brauchen eine config-getriebene Registry statt eines
+1. Animationen brauchen eine config-getriebene Registry statt eines
    hardcodierten Einzelplayers.
-3. Visual-Abnahme braucht Browser-Smokes für Dozenten-, Studenten- und
+2. Visual-Abnahme braucht Browser-Smokes für Dozenten-, Studenten- und
    Developer-Happy-Path.
 
 ## Verifikation

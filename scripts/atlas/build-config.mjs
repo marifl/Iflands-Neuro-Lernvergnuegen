@@ -52,7 +52,7 @@ const FACET_KEYS = new Set(['clinic', 'function', 'chapter', 'provenance'])
 const SURFACES = new Set(['pial', 'inflated'])
 const CARVE = new Set(['off', 'dkt', 'julich'])
 const ROOT_KEYS = new Set(['preset', 'presets', 'mesh_mappings', 'configurations', 'presentation', 'learning'])
-const PRESET_KEYS = new Set(['label_de', 'scopes'])
+const PRESET_KEYS = new Set(['label_de', 'scopes', 'visibility'])
 const MESH_MAPPINGS_KEYS = new Set(['buckets', 'scene_regions'])
 const MESH_MAPPING_KEYS = new Set(['meshes', 'known_gap', 'gap_reason'])
 const CONFIGURATION_KEYS = new Set([
@@ -429,11 +429,7 @@ function validateConfigurationSchema(name, c, idx) {
     })
   }
 
-  assertPlainObject(c.visibility, `${context}.visibility`)
-  assertOptionalBoolean(c.visibility.dim_others, `${context}.visibility.dim_others`)
-  if (c.visibility.dim_opacity !== undefined) assertUnitNumber(c.visibility.dim_opacity, `${context}.visibility.dim_opacity`)
-  assertOptionalStringArray(c.visibility.hidden, `${context}.visibility.hidden`)
-  assertOptionalStringArray(c.visibility.isolated, `${context}.visibility.isolated`)
+  validateVisibilitySchema(c.visibility, `${context}.visibility`, true)
 
   assertPlainObject(c.cuts, `${context}.cuts`)
   assertOptionalBoolean(c.cuts.enabled, `${context}.cuts.enabled`)
@@ -457,6 +453,24 @@ function validateConfigurationSchema(name, c, idx) {
   assertOptionalString(c.sequencing.learning, `${context}.sequencing.learning`)
   assertOptionalString(c.sequencing.step, `${context}.sequencing.step`)
   validateScopeMap(c.scopes, idx, context)
+}
+
+function validateVisibilitySchema(visibility, context, required = false) {
+  if (visibility === undefined) {
+    if (required) throw new Error(`build-config: ${context} muss ein Objekt sein`)
+    return
+  }
+  assertPlainObject(visibility, context)
+  assertKnownKeys(visibility, VISIBILITY_KEYS, context)
+  assertOptionalBoolean(visibility.dim_others, `${context}.dim_others`)
+  if (visibility.dim_opacity !== undefined) assertUnitNumber(visibility.dim_opacity, `${context}.dim_opacity`)
+  assertOptionalStringArray(visibility.hidden, `${context}.hidden`)
+  assertOptionalStringArray(visibility.isolated, `${context}.isolated`)
+}
+
+function validateVisibilityMeshRefs(visibility, ctx, context) {
+  for (const mesh of visibility?.hidden ?? []) assertKnownMesh(mesh, ctx, `${context}.hidden`)
+  for (const mesh of visibility?.isolated ?? []) assertKnownMesh(mesh, ctx, `${context}.isolated`)
 }
 
 function validateFigureFields(name, c, idx, ctx) {
@@ -504,8 +518,7 @@ function validateFigureFields(name, c, idx, ctx) {
   for (const group of c.colors?.groups ?? []) {
     for (const bucket of group.buckets ?? []) assertKnownBucket(bucket, ctx, `configuration "${name}" colors.groups Bucket`)
   }
-  for (const mesh of c.visibility?.hidden ?? []) assertKnownMesh(mesh, ctx, `configuration "${name}" visibility.hidden`)
-  for (const mesh of c.visibility?.isolated ?? []) assertKnownMesh(mesh, ctx, `configuration "${name}" visibility.isolated`)
+  validateVisibilityMeshRefs(c.visibility, ctx, `configuration "${name}" visibility`)
   for (const [i, plane] of (c.cuts?.planes ?? []).entries()) {
     if (!CUT_AXES.has(plane.axis)) throw new Error(`build-config: configuration "${name}" cuts.planes[${i}].axis ungueltig`)
     assertFiniteNumber(plane.position, `configuration "${name}" cuts.planes[${i}].position`)
@@ -565,6 +578,8 @@ export function validateConfig(config, idx, ctx = {}) {
     assertPlainObject(p, `preset "${name}"`)
     assertString(p.label_de, `preset "${name}".label_de`)
     assertKnownKeys(p, PRESET_KEYS, `preset "${name}"`)
+    validateVisibilitySchema(p.visibility, `preset "${name}".visibility`)
+    validateVisibilityMeshRefs(p.visibility, validationCtx, `preset "${name}" visibility`)
     validateScopeMap(p.scopes, idx, `preset "${name}"`)
   }
   for (const [name, c] of Object.entries(config.configurations ?? {})) {

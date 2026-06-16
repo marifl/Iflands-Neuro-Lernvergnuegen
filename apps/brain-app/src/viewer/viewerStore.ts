@@ -63,6 +63,11 @@ export interface CameraPose {
   fov: number
 }
 
+interface AppliedDefaultVisibility {
+  key: string
+  hidden: string[]
+}
+
 interface ViewerState {
   ontology: Ontology | null
   ancestors: Map<string, string[]>
@@ -91,6 +96,8 @@ interface ViewerState {
   atlas3d: { dkt: OntologyNode | null; brodmann: OntologyNode | null; destrieux: OntologyNode | null }
   /** Slugs, die im 3D-View ausgeblendet sind (hierarchisches Ein-/Ausblenden). */
   hidden: Set<string>
+  /** Zuletzt durch Preset/Config gesetzte Start-Sichtbarkeit; nicht Teil von Snapshots. */
+  defaultVisibility: AppliedDefaultVisibility | null
   selected: string | null
   /** Slugs der aktuellen Auswahl (bei Gruppen-Auswahl alle Blaetter; sonst genau eines). */
   selectedSlugs: Set<string>
@@ -157,6 +164,8 @@ interface ViewerState {
   setHidden: (slugs: string[], hide: boolean) => void
   /** Alles wieder sichtbar machen (Shift+H). */
   clearHidden: () => void
+  /** Start-Sichtbarkeit aus Preset/Config anwenden, ohne Snapshot-State zu erfinden. */
+  applyDefaultVisibility: (key: string, hidden: string[], isolated: string | null) => void
   /** Eine Isolations-Ebene hoch (Esc); auf oberster Ebene Isolation verlassen. */
   isolateUp: () => void
   /** Auswahl setzen und die Eltern-Gruppen aufklappen (fuer Tree-Sync nach 3D-Klick). */
@@ -225,6 +234,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   julich: null,
   atlas3d: { dkt: null, brodmann: null, destrieux: null },
   hidden: new Set(),
+  defaultVisibility: null,
   selected: null,
   selectedSlugs: new Set(),
   selectedLabels: null,
@@ -291,6 +301,24 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       return { hidden: next }
     }),
   clearHidden: () => set({ hidden: new Set() }),
+  applyDefaultVisibility: (key, hidden, isolated) => {
+    const uniqueHidden = [...new Set(hidden)]
+    set((state) => {
+      const nextHidden = new Set(state.hidden)
+      for (const slug of state.defaultVisibility?.hidden ?? []) {
+        if (!uniqueHidden.includes(slug)) nextHidden.delete(slug)
+      }
+      for (const slug of uniqueHidden) nextHidden.add(slug)
+      return {
+        hidden: nextHidden,
+        defaultVisibility: { key, hidden: uniqueHidden },
+        ...(isolated
+          ? {}
+          : { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }),
+      }
+    })
+    if (isolated) get().setIsolated(isolated)
+  },
   isolateUp: () => {
     const st = get()
     const path = st.isolationPath
