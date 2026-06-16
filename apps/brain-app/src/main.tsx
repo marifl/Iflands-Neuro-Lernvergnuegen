@@ -1,11 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './app.css'
+import AppErrorBoundary from './AppErrorBoundary'
+import { getLocalStorageItem } from './safeLocalStorage'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
-import { useViewerStore, type AppMode } from './viewer/viewerStore'
+import { APP_MODES, useViewerStore, type AppMode } from './viewer/viewerStore'
 
 // Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
-if (localStorage.getItem('ed-theme') === 'light') {
+if (getLocalStorageItem('ed-theme') === 'light') {
   document.documentElement.dataset.theme = 'light'
 }
 
@@ -16,8 +18,7 @@ if (localStorage.getItem('ed-theme') === 'light') {
 {
   const params = new URLSearchParams(window.location.search)
   const mode = params.get('mode')
-  const MODES: AppMode[] = ['learn', 'explore', 'phineas', 'atlas']
-  if (mode && MODES.includes(mode as AppMode)) {
+  if (mode && APP_MODES.includes(mode as AppMode)) {
     useViewerStore.getState().setAppMode(mode as AppMode)
   } else if (params.has('scene')) {
     useViewerStore.getState().setAppMode('learn')
@@ -29,6 +30,8 @@ if (localStorage.getItem('ed-theme') === 'light') {
 const root = document.getElementById('root')!
 createRoot(root).render(
   <StrictMode>
-    <BodyParts3DViewer />
+    <AppErrorBoundary>
+      <BodyParts3DViewer />
+    </AppErrorBoundary>
   </StrictMode>,
 )

@@ -8,6 +8,12 @@ describe('router', () => {
   it('default step=0 wenn fehlend', () => {
     expect(parseLocation('?scene=vcpt')).toEqual({ sceneId: 'vcpt', configName: null, step: 0 })
   })
+  it('normalisiert ungueltige step-Werte auf 0', () => {
+    expect(parseLocation('?scene=vcpt&step=-1').step).toBe(0)
+    expect(parseLocation('?scene=vcpt&step=1.5').step).toBe(0)
+    expect(parseLocation('?scene=vcpt&step=Infinity').step).toBe(0)
+    expect(parseLocation('?scene=vcpt&step=9007199254740993').step).toBe(0)
+  })
   it('serialisiert zurueck', () => {
     expect(toQuery('p3a', 2)).toBe('?scene=p3a&step=2')
   })
