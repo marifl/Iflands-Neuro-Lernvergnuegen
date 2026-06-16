@@ -299,6 +299,44 @@ describe('contract validation', () => {
     )
   })
 
+  it('meldet Drift zwischen manifest-backed Authoring-Instanz und Asset-Manifest', () => {
+    const report = validateBrainAppContracts({
+      ...validFixture,
+      authoringScenes: [
+        {
+          ...authoringScene,
+          assetInstances: [
+            {
+              ...authoringScene.assetInstances[0],
+              origin: { policy: 'bounds-center' },
+              parts: [
+                {
+                  ...authoringScene.assetInstances[0].parts![0],
+                  nodeName: 'EEG_Fz_renamed',
+                },
+                {
+                  partId: 'extra-electrode',
+                  label: 'Extra electrode',
+                  nodeName: 'EEG_Extra',
+                  pickable: true,
+                  role: 'selectable',
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    })
+
+    expect(report.ok).toBe(false)
+    expect(report.errors).toEqual(expect.arrayContaining([
+      'authoringScenes[0].assetInstances[0].origin: origin passt nicht zum Asset-Manifest fuer "asset:eeg-cap-v1"',
+      'authoringScenes[0].assetInstances[0].parts: Part-Anzahl passt nicht zum Asset-Manifest fuer "asset:eeg-cap-v1"',
+      'authoringScenes[0].assetInstances[0].parts.electrode-fz: Part-Metadaten passen nicht zum Asset-Manifest',
+      'authoringScenes[0].assetInstances[0].parts.extra-electrode: Part ist nicht im Asset-Manifest definiert',
+    ]))
+  })
+
   it('parst Snapshots ohne Store-Mutation und weist unbekannte Versionen laut ab', () => {
     const snapshot = parseViewerStateSnapshot({
       version: VIEWER_STATE_SNAPSHOT_VERSION,

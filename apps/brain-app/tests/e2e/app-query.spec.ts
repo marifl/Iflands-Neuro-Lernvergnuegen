@@ -1,5 +1,58 @@
 import { expect, test, type Page } from '@playwright/test'
 import { readFile } from 'node:fs/promises'
+import {
+  ASSET_MANIFEST_SCHEMA_VERSION,
+  type AssetManifestDocument,
+} from '../../src/viewer/assetManifest'
+import { createAuthoringSceneFromManifestSlot } from '../../src/viewer/authoringAssetLoader'
+
+const eegAssetManifest: AssetManifestDocument = {
+  schemaVersion: ASSET_MANIFEST_SCHEMA_VERSION,
+  manifestId: 'browser-smoke-assets',
+  assets: [
+    {
+      assetId: 'asset:eeg-cap-v1',
+      collectionId: 'device-eeg-10-20',
+      slotId: 'eeg-device-model',
+      label: 'EEG cap device',
+      uri: '/assets/devices/eeg/eeg-cap-v1.glb',
+      format: 'glb',
+      optional: true,
+      version: '1.0.0',
+      source: {
+        kind: 'curated',
+        provenance: 'synthetic EEG cap fixture for browser smoke',
+        license: 'internal-test-fixture',
+        hash: `sha256:${'a'.repeat(64)}`,
+      },
+      normalization: {
+        unit: 'millimeter',
+        upAxis: 'y-up',
+        scale: 1,
+        spaceId: 'bodyparts3d-taro',
+        defaultPivot: { policy: 'asset-origin' },
+        rootTransform: {
+          position: [0, 1.2, 0],
+          rotation: [0, 0.25, 0],
+          scale: [0.8, 0.8, 0.8],
+        },
+      },
+      materialPolicy: {
+        materials: 'source-materials',
+        transparency: 'alpha-blend',
+        shareMaterials: true,
+      },
+      nodeNaming: {
+        requireStableNodeNames: true,
+        nodeNamePattern: '^[A-Za-z0-9_.:-]+$',
+        partIdPattern: '^[a-z0-9][a-z0-9-]*$',
+      },
+      parts: [
+        { partId: 'electrode-fz', label: 'Fz electrode', nodeName: 'EEG_Fz', pickable: true, role: 'selectable' },
+      ],
+    },
+  ],
+}
 
 async function expectBrainCanvas(page: Page) {
   const canvas = page.locator('canvas')
@@ -77,6 +130,14 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
 })
 
 test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async ({ page }) => {
+  const loadedAuthoringScene = createAuthoringSceneFromManifestSlot(eegAssetManifest, 'vcpt-device-authoring', {
+    collectionId: 'device-eeg-10-20',
+    slotId: 'eeg-device-model',
+    assetId: 'asset:eeg-cap-v1',
+    optional: true,
+    instanceId: 'eeg-cap-01',
+  })
+  if (loadedAuthoringScene.status !== 'loaded') throw new Error(loadedAuthoringScene.reason)
   const snapshot = {
     version: 1,
     state: {
@@ -86,23 +147,7 @@ test('Authoring-Snapshot roundtript Device-State ueber Import und Export', async
           collectionIds: ['device-eeg-10-20'],
           bonusContextIds: ['eeg-erp-vcpt'],
         },
-        authoringScenes: [
-          {
-            schemaVersion: 1,
-            sceneId: 'vcpt-device-authoring',
-            assetInstances: [
-              {
-                instanceId: 'eeg-cap-01',
-                assetId: 'asset:eeg-cap',
-                collectionId: 'device-eeg-10-20',
-                visible: true,
-                transform: { position: [0, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
-                origin: { policy: 'asset-origin' },
-                parts: [{ partId: 'electrode-fz', label: 'Fz electrode', pickable: true, role: 'selectable' }],
-              },
-            ],
-          },
-        ],
+        authoringScenes: [loadedAuthoringScene.scene],
         timelines: [
           {
             schemaVersion: 1,

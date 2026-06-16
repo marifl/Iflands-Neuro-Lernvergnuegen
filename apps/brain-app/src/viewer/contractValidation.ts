@@ -3,7 +3,14 @@ import {
   type AssetManifestDocument,
   type AssetManifestEntry,
 } from './assetManifest'
-import { parseAuthoringScene, type AuthoringScene } from './authoringScene'
+import {
+  parseAuthoringScene,
+  type AuthoringAssetInstance,
+  type AuthoringOriginPolicy,
+  type AuthoringSelectablePart,
+  type AuthoringScene,
+  type Vec3,
+} from './authoringScene'
 import { BONUS_CONTEXTS, type BonusContext, type BonusContextTarget } from './bonusContexts'
 import { isEegSite } from './eegElectrodes'
 import { KNOWLEDGE_COLLECTIONS, type KnowledgeCollection, type KnowledgeAssetSlot } from './knowledgeRegistry'
@@ -110,6 +117,56 @@ function assetMatchesSlot(asset: AssetManifestEntry, slot: KnowledgeAssetSlot, p
   }
 }
 
+function vec3Equals(a: Vec3 | undefined, b: Vec3 | undefined): boolean {
+  if (a === undefined || b === undefined) return a === b
+  return a.length === b.length && a.every((value, index) => value === b[index])
+}
+
+function originEquals(a: AuthoringOriginPolicy, b: AuthoringOriginPolicy): boolean {
+  return a.policy === b.policy && vec3Equals(a.offset, b.offset)
+}
+
+function partMatchesManifest(
+  part: AuthoringSelectablePart,
+  manifestPart: AssetManifestEntry['parts'][number],
+): boolean {
+  return part.label === manifestPart.label
+    && part.nodeName === manifestPart.nodeName
+    && part.pickable === manifestPart.pickable
+    && part.role === manifestPart.role
+}
+
+function validateManifestBackedInstance(
+  instance: AuthoringAssetInstance,
+  asset: AssetManifestEntry,
+  path: string,
+  ctx: ContractContext,
+): void {
+  if (!originEquals(instance.origin, asset.normalization.defaultPivot)) {
+    add(ctx.errors, `${path}.origin`, `origin passt nicht zum Asset-Manifest fuer "${asset.assetId}"`)
+  }
+  const parts = instance.parts ?? []
+  const partsById = new Map(parts.map((part) => [part.partId, part]))
+  if (parts.length !== asset.parts.length) {
+    add(ctx.errors, `${path}.parts`, `Part-Anzahl passt nicht zum Asset-Manifest fuer "${asset.assetId}"`)
+  }
+  asset.parts.forEach((manifestPart) => {
+    const part = partsById.get(manifestPart.partId)
+    if (!part) {
+      add(ctx.errors, `${path}.parts.${manifestPart.partId}`, 'Manifest-Part fehlt in AuthoringScene')
+      return
+    }
+    if (!partMatchesManifest(part, manifestPart)) {
+      add(ctx.errors, `${path}.parts.${manifestPart.partId}`, 'Part-Metadaten passen nicht zum Asset-Manifest')
+    }
+  })
+  parts.forEach((part) => {
+    if (!asset.parts.some((manifestPart) => manifestPart.partId === part.partId)) {
+      add(ctx.errors, `${path}.parts.${part.partId}`, 'Part ist nicht im Asset-Manifest definiert')
+    }
+  })
+}
+
 function validateAssetManifest(ctx: ContractContext): void {
   const manifest = ctx.assetManifest
   if (!manifest) return
@@ -170,10 +227,14 @@ function addAuthoringScene(scene: AuthoringScene, path: string, ctx: ContractCon
   scene.assetInstances.forEach((instance, index) => {
     const instancePath = `${path}.assetInstances[${index}]`
     if (!ctx.collectionIds.has(instance.collectionId)) add(ctx.errors, `${instancePath}.collectionId`, `collection "${instance.collectionId}" ist nicht bekannt`)
-    if (ctx.assetManifest && !ctx.assetManifest.assets.some((asset) =>
-      asset.collectionId === instance.collectionId && asset.assetId === instance.assetId,
-    )) {
+    const manifestAsset = ctx.assetManifest?.assets.find((asset) =>
+      asset.collectionId === instance.collectionId && asset.assetId === instance.assetId
+    )
+    if (ctx.assetManifest && !manifestAsset) {
       add(ctx.errors, `${instancePath}.assetId`, `asset "${instance.assetId}" ist nicht im Asset-Manifest`)
+    }
+    if (manifestAsset) {
+      validateManifestBackedInstance(instance, manifestAsset, instancePath, ctx)
     }
     ctx.authoringInstances.add(idKey(instance.collectionId, instance.instanceId))
     instance.parts?.forEach((part) => ctx.authoringParts.add(idKey(instance.collectionId, instance.instanceId, part.partId)))
