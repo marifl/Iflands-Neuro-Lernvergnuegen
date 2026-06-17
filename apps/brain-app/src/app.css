@@ -292,6 +292,45 @@
   .ed-btn.active { background: var(--orange); color: var(--on-accent); border-color: var(--orange); }
   .ed-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; }
 
+  .cut-plane-frame-tab {
+    font-family: var(--ed-mono);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--paper) 82%, var(--cut-axis-color-wash));
+    border: 1px solid var(--line-soft);
+    white-space: nowrap;
+    touch-action: none;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--line) 24%, transparent), 0 3px 12px rgba(0,0,0,0.32);
+  }
+  .cut-plane-frame-tab[data-cut-active='true'] {
+    border-color: var(--cut-axis-color);
+  }
+  .cut-plane-frame-tab[data-cut-highlighted='true'] {
+    box-shadow: inset 0 0 0 1px var(--line), 0 0 0 2px var(--cut-axis-color-soft), 0 6px 18px rgba(0,0,0,0.38);
+  }
+  .cut-plane-frame-tab:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+  [data-theme='light'] .cut-plane-frame-tab {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.88), 0 4px 14px rgba(0,0,0,0.18);
+  }
+  [data-contrast='high'] .cut-plane-frame-tab {
+    background: var(--paper);
+    border-color: var(--line);
+  }
+  [data-contrast='high'] .cut-plane-frame-tab[data-cut-active='true'] {
+    box-shadow: inset 0 0 0 2px var(--cut-axis-color), 0 0 0 1px var(--line);
+  }
+  [data-motion='reduce'] .cut-plane-frame-tab {
+    transition: none !important;
+  }
+  [data-focus-rings='off'] .cut-plane-frame-tab:focus-visible {
+    outline: none;
+  }
+
   /* ── Eingabefeld ── */
   .ed-input {
     font-family: var(--ed-mono);
