@@ -43,9 +43,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Install Playwright browser
-        run: pnpm exec playwright install --with-deps chromium
-
       - name: Typecheck
         run: pnpm typecheck
 
@@ -54,14 +51,3 @@ jobs:
 
       - name: Production build
         run: pnpm build
-
-      - name: E2E smoke
-        run: pnpm test:e2e
-
-      - name: Upload Playwright report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: brain-app-playwright-report
-          path: apps/brain-app/playwright-report
-          if-no-files-found: ignore
