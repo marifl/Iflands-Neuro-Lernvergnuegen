@@ -6,7 +6,7 @@ import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, 
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
-import { APP_MODES, useViewerStore, type AppMode, type CutAxis, type CutConfig } from './viewerStore'
+import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
 import { useEffectiveConfig, type ConfigCuts, type ConfigVisibility, type EffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
@@ -21,7 +21,17 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { setLocalStorageItem } from '../safeLocalStorage'
-import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocation } from './registryLaunch'
+import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
+import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
+import {
+  applyAtlasDefaults,
+  applyColoringDefaults,
+  applyLanguageDefault,
+  applyViewportDefaults,
+  canApplyFunctionalDefaults,
+  rememberAppMode,
+  shouldShowModeLauncher,
+} from './settingsRuntime'
 import { createAnatomicalMaterial, contextAnatomicalMaterialRole, contextColorForMode } from './anatomicalMaterials'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
@@ -67,7 +77,6 @@ const SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
 const HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
 const EMISSIVE_OFF_COLOR = ATLAS_VIEWER_COLORS.emissiveOff
 const ROD_COLOR = ATLAS_VIEWER_COLORS.rod
-const DEFAULT_DIM_OPACITY = 0.12
 const DIM_DEPTH_WRITE_THRESHOLD = 0.6
 const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
   x: 'sagittal',
@@ -86,13 +95,19 @@ function hasUvAttribute(mesh: THREE.Mesh): boolean {
   return Boolean(mesh.geometry.getAttribute('uv'))
 }
 
-function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null): number {
+function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null, fallback: number): number {
   const dimOpacity = effectiveConfig?.visibility.dim_opacity
-  if (dimOpacity === undefined) return DEFAULT_DIM_OPACITY
+  if (dimOpacity === undefined) return fallback
   if (!Number.isFinite(dimOpacity) || dimOpacity < 0 || dimOpacity > 1) {
     throw new Error('Config-Link: visibility.dim_opacity muss zwischen 0 und 1 liegen')
   }
   return dimOpacity
+}
+
+function dprForRenderQuality(renderQuality: RenderQuality): number | [number, number] {
+  if (renderQuality === 'battery') return 1
+  if (renderQuality === 'quality') return [1, 2]
+  return [1, 1.5]
 }
 
 function emptyConfigCuts(): Record<CutAxis, CutConfig> {
@@ -752,7 +767,22 @@ export default function BodyParts3DViewer() {
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const atlasOnBrain = showCarveJulich || showCarveDkt || showCarveBrodmann
   const atlasAreaLabel = pickedAtlasArea ?? hoveredAtlasArea ?? 'Areal anklicken'
-  const dimOpacity = dimOpacityFromConfig(effectiveConfig)
+  const defaultCameraView = useSettingsStore((s) => s.viewport.defaultCameraView)
+  const skullContext = useSettingsStore((s) => s.viewport.skullContext)
+  const autoRotate = useSettingsStore((s) => s.viewport.autoRotate)
+  const renderQuality = useSettingsStore((s) => s.viewport.renderQuality)
+  const defaultColorMode = useSettingsStore((s) => s.coloring.defaultColorMode)
+  const dimOthers = useSettingsStore((s) => s.coloring.dimOthers)
+  const settingsDimOpacity = useSettingsStore((s) => s.coloring.dimOpacity)
+  const primaryLanguage = useSettingsStore((s) => s.language.primary)
+  const defaultAtlasLayer = useSettingsStore((s) => s.atlas.defaultLayer)
+  const visibleCollectionsKey = useSettingsStore((s) => s.atlas.visibleCollections.join('\u0000'))
+  const visibleCollections = useMemo(
+    () => (visibleCollectionsKey ? visibleCollectionsKey.split('\u0000') : []),
+    [visibleCollectionsKey],
+  )
+  const dimOpacity = dimOpacityFromConfig(effectiveConfig, settingsDimOpacity)
+  const renderDpr = dprForRenderQuality(renderQuality)
 
   if (catalogAliasError) throw catalogAliasError
 
@@ -788,19 +818,9 @@ export default function BodyParts3DViewer() {
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
 
-  // Start-Screen (Modus-Wahl) beim ersten Laden — nimmt die „wo fange ich an?"-Last ab.
-  // Nur valide Deep-Links ueberspringen ihn, damit legacy/vertippte mode-Werte nicht leer landen.
-  const [launched, setLaunched] = useState(() => {
-    const p = new URLSearchParams(window.location.search)
-    const mode = p.get('mode')
-    return (
-      (mode !== null && APP_MODES.includes(mode as AppMode)) ||
-      p.has('scene') ||
-      p.has('config') ||
-      p.has('spike') ||
-      hasRegistryLaunchSearch(window.location.search)
-    )
-  })
+  // Start-Screen (Modus-Wahl) beim ersten Laden — Settings duerfen nur beim normalen App-Start
+  // ueberspringen, Deep-Links behalten immer Vorrang.
+  const [launched, setLaunched] = useState(() => !shouldShowModeLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
   // Editorial-Theme (hell/dunkel). Persistiert in localStorage; vor-applied in main.tsx.
@@ -816,6 +836,34 @@ export default function BodyParts3DViewer() {
   useEffect(() => {
     if (!isNarrow || appMode !== 'explore') setMobileTreeOpen(false)
   }, [isNarrow, appMode])
+
+  useEffect(() => {
+    if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
+    if (!canApplyFunctionalDefaults()) return
+    applyViewportDefaults({ viewport: { defaultCameraView, skullContext } })
+  }, [defaultCameraView, launched, skullContext])
+
+  useEffect(() => {
+    if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
+    if (!canApplyFunctionalDefaults()) return
+    applyColoringDefaults({ coloring: { defaultColorMode, dimOthers } })
+  }, [defaultColorMode, dimOthers, launched])
+
+  useEffect(() => {
+    if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
+    if (!canApplyFunctionalDefaults()) return
+    applyLanguageDefault({ language: { primary: primaryLanguage } })
+  }, [launched, primaryLanguage])
+
+  useEffect(() => {
+    if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
+    if (!canApplyFunctionalDefaults()) return
+    applyAtlasDefaults({ atlas: { defaultLayer: defaultAtlasLayer, visibleCollections } })
+  }, [defaultAtlasLayer, launched, visibleCollections])
+
+  useEffect(() => {
+    if (launched) rememberAppMode(appMode)
+  }, [appMode, launched])
 
   useEffect(() => {
     if (isNarrow && appMode === 'explore' && selected) setMobileTreeOpen(false)
@@ -1063,10 +1111,11 @@ export default function BodyParts3DViewer() {
             <ConfigLinkStateApplier effectiveConfig={effectiveConfig} />
             <Canvas
               camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
+              dpr={renderDpr}
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
               // Schnittflaechen ueber den Stencil-Buffer. R3F erstellt den Context sonst
               // ohne Stencil (stencilBits=0), wodurch die Caps unmaskiert als volle Plane rendern.
-              gl={{ stencil: true, powerPreference: 'high-performance' }}
+              gl={{ stencil: true, powerPreference: renderQuality === 'battery' ? 'low-power' : 'high-performance' }}
               onCreated={({ gl }) => {
                 gl.localClippingEnabled = true // Schnittebenen (Clipping) aktivieren
                 gl.outputColorSpace = THREE.SRGBColorSpace
@@ -1101,7 +1150,7 @@ export default function BodyParts3DViewer() {
               </Suspense>
               <TampingIron />
               <CutPickBridge />
-              <OrbitControls makeDefault enableDamping />
+              <OrbitControls makeDefault enableDamping autoRotate={autoRotate} autoRotateSpeed={0.35} />
               <CutPlaneGizmoBridge />
               <CameraRig />
             </Canvas>

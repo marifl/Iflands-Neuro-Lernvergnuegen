@@ -7,6 +7,13 @@ import { ROUTE_CHANGE_EVENT, parseLocation, replaceCanonicalLocation, type Canon
 import { nextIndex, prevIndex } from './nav'
 import OverlayPanel from './overlays/OverlayPanel'
 import { useIsNarrow } from '../useMediaQuery'
+import { useSettingsStore } from '../viewer/settingsStore'
+import {
+  createStudentProgressState,
+  markStudentStepSeen,
+  useStudentProgressStore,
+  type StudentProgressStepSource,
+} from '../viewer/studentProgress'
 
 /** Sidebar-Inhalt des Lern-Modus: laedt + spiegelt Szenen (Highlight, Kamera, URL) und
  *  rendert den Szenen-Inhalt. Mountet nur im learn-Modus -> Szenen werden sonst nicht geladen. */
@@ -22,6 +29,7 @@ export default function LearnSidebar() {
   const setCameraConfig = useSceneStore((s) => s.setCameraConfig)
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const setMode = useViewerStore((s) => s.setMode)
+  const saveProgress = useSettingsStore((s) => s.learning.saveProgress)
   const routeSequenceRef = useRef<Pick<CanonicalQueryInput, 'sequenceKind' | 'sequenceName'> | null>(null)
 
   useEffect(() => {
@@ -69,6 +77,21 @@ export default function LearnSidebar() {
     setCameraShot(scene.brain.camera)
     setCameraConfig(scene.configCamera ?? null)
   }, [scene, setHighlight, setCameraShot, setCameraConfig])
+
+  useEffect(() => {
+    if (!scene || !saveProgress || scene.sequence.kind !== 'learning') return
+    const sources: StudentProgressStepSource[] = scenes.map((loaded) => ({
+      configName: loaded.configName,
+      sceneId: loaded.id,
+      title: loaded.title,
+      ...(loaded.figure === undefined ? {} : { figure: loaded.figure }),
+    }))
+    const progressStore = useStudentProgressStore.getState()
+    const current = progressStore.progress?.sequenceName === scene.sequence.name
+      ? progressStore.progress
+      : createStudentProgressState(scene.sequence.name, sources)
+    progressStore.setStudentProgress(markStudentStepSeen(current, scene.configName, new Date().toISOString()))
+  }, [scene, scenes, saveProgress])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {

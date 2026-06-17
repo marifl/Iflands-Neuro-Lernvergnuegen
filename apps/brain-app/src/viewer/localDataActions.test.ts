@@ -7,6 +7,7 @@ import {
   THEME_STORAGE_KEY,
 } from './localDataActions'
 import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
+import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
 import {
   createStudentProgressState,
   recordStudentCheck,
@@ -59,6 +60,7 @@ describe('localDataActions', () => {
     useSettingsStore.getState().updateCategory('dataAccount', { role: 'dozent' })
     useStudentProgressStore.getState().setStudentProgress(checkedProgress())
     useAtlasConfigStore.getState().setPreset('voll')
+    localStorage.setItem(LAST_APP_MODE_STORAGE_KEY, 'phineas')
     localStorage.setItem(THEME_STORAGE_KEY, 'light')
     localStorage.setItem('unrelated-key', 'bleibt')
     document.documentElement.dataset.theme = 'light'
@@ -71,6 +73,7 @@ describe('localDataActions', () => {
     expect(useAtlasConfigStore.getState().scopes).toEqual({})
     expect(localStorage.getItem(SETTINGS_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)).toBeNull()
+    expect(localStorage.getItem(LAST_APP_MODE_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem('unrelated-key')).toBe('bleibt')
     expect(document.documentElement.dataset.theme).toBeUndefined()

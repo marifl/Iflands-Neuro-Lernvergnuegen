@@ -1,6 +1,7 @@
 import { removeLocalStorageItem } from '../safeLocalStorage'
 import { useAtlasConfigStore, LS_KEY as ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from './atlas/atlasConfigStore'
 import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
+import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
 import {
   studentCompletionRatio,
   useStudentProgressStore,
@@ -56,6 +57,7 @@ export function clearLocalBrainAppData(): void {
   useStudentProgressStore.getState().resetStudentProgress()
   useAtlasConfigStore.getState().reset()
   removeLocalStorageItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)
+  removeLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
   removeLocalStorageItem(SETTINGS_STORAGE_KEY)
   removeLocalStorageItem(THEME_STORAGE_KEY)
   if (typeof document !== 'undefined') delete document.documentElement.dataset.theme
