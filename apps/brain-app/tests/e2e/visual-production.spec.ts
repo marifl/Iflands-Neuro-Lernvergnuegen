@@ -290,8 +290,45 @@ test('Phineas-Modus rendert im Phone-Viewport mit Asset-Hinweis', async ({ page 
   await page.goto('/?mode=phineas')
 
   await expect(page.getByText('Phineas Gage (1848)')).toBeVisible({ timeout: 60_000 })
-  await expect(page.getByText(/kein montiertes Original-Gage-CT\/GLB/)).toBeVisible()
-  await expect(page.getByText(/Standalone unter \/assets\/phineas/)).toBeVisible()
+  await expect(page.getByText(/Standalone-Gage-GLBs aus \/assets\/phineas/)).toBeVisible()
+  await expect.poll(async () => page.evaluate(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    while (root?.parent) root = root.parent
+    const visible: Record<string, boolean> = {
+      'phineas-gage-skull': false,
+      'phineas-gage-skull-calvarium-cut': false,
+      'phineas-gage-iron-rod': false,
+    }
+    root?.traverse((obj: any) => {
+      if (!obj?.isMesh || !(obj.name in visible)) return
+      visible[obj.name] = obj.visible === true
+    })
+    return visible
+  }), { timeout: 60_000 }).toEqual({
+    'phineas-gage-skull': true,
+    'phineas-gage-skull-calvarium-cut': false,
+    'phineas-gage-iron-rod': false,
+  })
+
+  await page.getByRole('button', { name: '▶' }).click()
+  await expect.poll(async () => page.evaluate(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    while (root?.parent) root = root.parent
+    const visible: Record<string, boolean> = {
+      'phineas-gage-skull': false,
+      'phineas-gage-skull-calvarium-cut': false,
+      'phineas-gage-iron-rod': false,
+    }
+    root?.traverse((obj: any) => {
+      if (!obj?.isMesh || !(obj.name in visible)) return
+      visible[obj.name] = obj.visible === true
+    })
+    return visible
+  }), { timeout: 60_000 }).toEqual({
+    'phineas-gage-skull': false,
+    'phineas-gage-skull-calvarium-cut': true,
+    'phineas-gage-iron-rod': true,
+  })
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'phone-phineas')
 })

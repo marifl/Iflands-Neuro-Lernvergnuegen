@@ -6,6 +6,7 @@ import {
   HISTORICAL_ROD_WEIGHT_KG,
   LESION_STRUCTURES,
   PHINEAS_GAGE,
+  PHINEAS_GAGE_ASSETS,
   ROD_ENTRY,
   ROD_EXIT,
   ROD_RADIUS_SHAFT,
@@ -43,13 +44,18 @@ describe('Phineas-Gage-Szene', () => {
     }
   })
 
-  it('macht die Modellannahme explizit statt ein Originalmodell zu behaupten', () => {
-    expect(PHINEAS_GAGE.assetNoteDe).toContain('kein montiertes Original-Gage-CT/GLB')
-    expect(PHINEAS_GAGE.assetNoteDe).toContain('Standalone unter /assets/phineas')
+  it('verweist auf die montierten Standalone-Gage-Assets', () => {
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('Standalone-Gage-GLBs')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('/assets/phineas')
+    expect(PHINEAS_GAGE_ASSETS).toEqual({
+      skull: '/assets/phineas/phineas-gage-skull-lod.glb',
+      calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
+      ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
+    })
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
   })
 
-  it('trennt historische Stangenmaße vom gekürzten Trajektorienmarker', () => {
+  it('trennt historische Stangenmaße vom importierten Runtime-Modell', () => {
     const final = rodSegmentForPhase(1)
 
     expect(HISTORICAL_ROD_LENGTH_MM).toBe(1100)
@@ -58,6 +64,6 @@ describe('Phineas-Gage-Szene', () => {
     expect(HISTORICAL_ROD_WEIGHT_KG).toBeCloseTo(5.9)
     expect(final.length).toBeLessThan(HISTORICAL_ROD_LENGTH_MM / 3)
     expect(ROD_RADIUS_SHAFT * 2).toBeLessThan(HISTORICAL_ROD_SHAFT_DIAMETER_MM)
-    expect(PHINEAS_GAGE.rodScaleNoteDe).toContain('gekürzter, schematischer Trajektorienmarker')
+    expect(PHINEAS_GAGE.rodScaleNoteDe).toContain('importierte Eisenstangen-GLB')
   })
 })

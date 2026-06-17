@@ -54,7 +54,7 @@ bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
 | Kapitel-11-Figure-Fallbacks | 13 lokale JPGs unter `apps/brain-app/public/figures/` | versionierte Runtime-Fallbacks für 11-05 bis 11-11C, 11-13, 11-14; 11-12 ist textuell neu gebaut |
-| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist Standalone-Bestand, aber noch nicht in den aktuellen Viewer montiert; Lizenz und Transform vor Public-Claim final pinnen |
+| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist im Phineas-Modus montiert; Lizenz/Attribution vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
@@ -88,14 +88,15 @@ Geprüft am 2026-06-16:
    `gage-reconstructions.json` und `asset-manifest.json`. Die wissenschaftlichen
    PDFs/OCR-Artefakte liegen unter `raw_protected/phineas-gage/`.
 
-Entscheidung: Im aktuellen Build bleibt der Runtime-Pfad
-`/assets/context/skull.glb` ein BodyParts3D-/TARO-Kontextschädel, kein
-historischer Gage-Schädel. Die historischen Kandidaten liegen jetzt lokal unter
-`/assets/phineas`, sind aber noch nicht in den Viewer montiert. Das Manifest
-pinnt Quelle, Lizenzhinweis, Hash, Transform/Skalierung und Node-Namen; der Test
+Entscheidung: Im aktuellen Build rendert der Phineas-Modus die Standalone-GLBs
+unter `/assets/phineas`: Vollschädel im ersten Schritt, Calvarium-Cut plus
+Eisenstange in den Trajektorien-Schritten. Der normale Kontextpfad
+`/assets/context/skull.glb` bleibt für Explorer/Strukturbaum erhalten, wird im
+Phineas-Modus aber nicht mehr als Gage-Ersatz gezeigt. Das Manifest pinnt
+Quelle, Lizenzhinweis, Hash, Transform/Skalierung und Node-Namen; der Test
 `phineasStandaloneAssets.test.ts` prüft die Dateien gegen ihre SHA-256-Hashes.
-Bis die Montage tatsächlich im Viewer hängt, muss die UI weiterhin ausweisen,
-dass kein Original-Gage-CT/GLB gerendert wird.
+Vor öffentlicher Auslieferung muss die konkrete Attribution/Lizenz noch in
+`THIRD-PARTY-NOTICES.md` finalisiert werden.
 
 Quellen:
 
@@ -114,17 +115,16 @@ Geprüft am 2026-06-16:
 2. Bigelow 1850 ist als historische Sekundärquelle enger am Objekt: 3 ft 7 in
    Länge, 1,25 in Schaftdurchmesser, 13,25 lb, mit verjüngter Spitze. Umgerechnet
    sind das ca. 109,2 cm, 3,18 cm und 6,0 kg.
-3. Der aktuelle Viewer rendert nicht die volle 1,09-m-Stange. `phineasGage.ts`
-   verwendet `ROD_ENTRY`, `ROD_EXIT`, `ROD_OVERSHOOT = 38`,
-   `ROD_RADIUS_SHAFT = 7` und `ROD_RADIUS_TIP = 2.6`; bei voller Phase ist das
-   ein ca. 234-mm-Trajektorienmarker mit 14 mm Schaftdurchmesser.
+3. Der aktuelle Viewer rendert im Phineas-Modus das importierte
+   `phineas-gage-iron-rod.glb`. Die historischen Konstanten in
+   `phineasGage.ts` bleiben als didaktische Trajektorien-/Quellenreferenz
+   erhalten, ersetzen aber nicht mehr das sichtbare Stangenmodell.
 
-Entscheidung: Die Textmaße bleiben historisch, die 3D-Stange bleibt bewusst
-schematisch gekürzt. Die UI weist das jetzt explizit aus:
+Entscheidung: Die Textmaße bleiben historisch, die 3D-Stange kommt aus dem
+Standalone-GLB. Die UI weist das jetzt explizit aus:
 `Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer
-als gekürzter, schematischer Trajektorienmarker dargestellt.` Eine spätere
-maßstabsgetreue Darstellung müsste die volle Stange als eigenes Modell oder als
-umschaltbaren Maßstabsmodus ergänzen.
+wird das importierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers
+gerendert.`
 
 Quellen:
 
@@ -153,7 +153,7 @@ Quellen:
 | ICA | keine | 3D-Komponententrennung im Raum | später; aktueller Build zeigt eine pausierbare schematische Signal-zu-Komponenten-Animation im Overlay |
 | P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später; aktueller Build zeigt schematische Topografie, Support-Elektroden und Quellenlabels |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
-| Phineas Gage | kein montiertes Original-Gage-CT/GLB im aktuellen Viewer | Standalone-Assets unter `/assets/phineas` plus Quellen unter `raw_protected/phineas-gage`; nächster Schritt wäre Montage nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
+| Phineas Gage | keine für den Vortragspfad | final gepinnte Public-Attribution für die Gage-GLBs | Standalone-Assets unter `/assets/phineas` sind sichtbar montiert; UI dokumentiert weiter den Kandidatenstatus der Lizenz/Attribution |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |
 
 ## Shader- und Texturbewertung
