@@ -1,0 +1,462 @@
+{
+  "schemaVersion": 1,
+  "contractId": "brain-app-runtime-mesh-identity-v1",
+  "runtimeContract": "bodyparts3d-taro + phineas-gage-legacy-figs3d",
+  "checkedAssets": [
+    {
+      "assetId": "bodyparts3d-brain",
+      "contractId": "bodyparts3d-taro",
+      "uri": "/assets/bodyparts3d/brain.glb",
+      "manifest": "/assets/bodyparts3d/structures.json",
+      "byteSize": 6116128,
+      "sha256": "sha256:5a0213c5c871d674e6fc349cf614de2ce84bb67b5d592921cabf88133706cca8",
+      "hashMatchesManifest": null,
+      "nodeCount": 601,
+      "namedNodeCount": 601,
+      "unnamedNodeCount": 0,
+      "meshCount": 600,
+      "namedMeshCount": 600,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 600,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "anterior-commissure",
+        "anterior-communicating-artery",
+        "anterior-communicating-artery-v2",
+        "anterior-intercavernous-sinus",
+        "anterior-part-of-left-superior-temporal-gyrus",
+        "anterior-part-of-right-superior-temporal-gyrus",
+        "anterior-spinal-artery",
+        "anterior-vein-of-left-septum-pellucidum",
+        "anterior-vein-of-right-septum-pellucidum",
+        "anterolateral-central-branch-of-left-middle-cerebral-artery",
+        "anterolateral-central-branch-of-right-middle-cerebral-artery",
+        "anteromedial-frontal-branch-of-left-callosomarginal-artery"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "bodyparts3d-subparcels",
+      "contractId": "bodyparts3d-taro-subparcels",
+      "uri": "/assets/bodyparts3d/k11-subparcels.glb",
+      "manifest": "atlas-config scene_regions",
+      "byteSize": 1943236,
+      "sha256": "sha256:f65dcab707c0b2d7d8bafefe6c3218cd7b0ce8b8b6aec0fde8c6b400a4e1f75b",
+      "hashMatchesManifest": null,
+      "nodeCount": 60,
+      "namedNodeCount": 60,
+      "unnamedNodeCount": 0,
+      "meshCount": 60,
+      "namedMeshCount": 60,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 0,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "left-anterior-cingulate",
+        "left-caudal-anterior-cingulate",
+        "left-frontopolar",
+        "left-gpe",
+        "left-gpi",
+        "left-julich-8d1",
+        "left-julich-8d2",
+        "left-julich-8v1",
+        "left-julich-8v2",
+        "left-julich-fp1",
+        "left-julich-fp2",
+        "left-julich-frontal-i-2-gapmap"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "bodyparts3d-skull-context",
+      "contractId": "bodyparts3d-taro",
+      "uri": "/assets/context/skull.glb",
+      "manifest": "/assets/context/skull.json",
+      "byteSize": 530300,
+      "sha256": "sha256:247c12cbe522f2a1ea05fa56c5125ebbb400d0b58f8d113f90da22260a9b389d",
+      "hashMatchesManifest": null,
+      "nodeCount": 21,
+      "namedNodeCount": 21,
+      "unnamedNodeCount": 0,
+      "meshCount": 20,
+      "namedMeshCount": 20,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 20,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "ethmoid-bone",
+        "frontal-bone",
+        "left-lacrimal-bone",
+        "left-maxilla",
+        "left-nasal-bone",
+        "left-palatine-bone",
+        "left-parietal-bone",
+        "left-temporal-bone",
+        "left-zygomatic-bone",
+        "occipital-bone",
+        "perpendicular-plate-of-ethmoid",
+        "right-lacrimal-bone"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "bodyparts3d-head-context",
+      "contractId": "bodyparts3d-taro",
+      "uri": "/assets/context/head.glb",
+      "manifest": "/assets/context/head.json",
+      "byteSize": 3598436,
+      "sha256": "sha256:b049ca29cb79149ee1cd4a7ec1a479fe3c9dbd65f72c0dad0ce13c8703e55721",
+      "hashMatchesManifest": null,
+      "nodeCount": 314,
+      "namedNodeCount": 314,
+      "unnamedNodeCount": 0,
+      "meshCount": 313,
+      "namedMeshCount": 313,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 313,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "anterior-chamber-of-left-eyeball",
+        "anterior-chamber-of-right-eyeball",
+        "anterior-temporal-branch-of-left-lateral-occipital-artery",
+        "anterior-temporal-branch-of-right-lateral-occipital-artery",
+        "artery-of-right-pterygoid-canal",
+        "atlas",
+        "axis",
+        "buccal-branch-of-left-facial-nerve",
+        "buccal-branch-of-right-facial-nerve",
+        "check-ligament-of-left-lateral-rectus",
+        "check-ligament-of-left-medial-rectus",
+        "check-ligament-of-right-lateral-rectus"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "phineas-gage-skull-lod",
+      "contractId": "phineas-gage-legacy-figs3d",
+      "uri": "/assets/phineas/phineas-gage-skull-lod.glb",
+      "manifest": "/assets/phineas/asset-manifest.json",
+      "byteSize": 615784,
+      "sha256": "sha256:ab804c46c19634f5902108ebda59f9957cb42d0afea8b62ed84b5d55eb10f493",
+      "hashMatchesManifest": true,
+      "nodeCount": 2,
+      "namedNodeCount": 2,
+      "unnamedNodeCount": 0,
+      "meshCount": 1,
+      "namedMeshCount": 1,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 1,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "phineas-gage-skull"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "phineas-gage-skull-calvarium-cut-lod",
+      "contractId": "phineas-gage-legacy-figs3d",
+      "uri": "/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb",
+      "manifest": "/assets/phineas/asset-manifest.json",
+      "byteSize": 555756,
+      "sha256": "sha256:45c3c40c9efa4023bcbc88b53f02902dbed98670e59abaad8809e55dc4892dc8",
+      "hashMatchesManifest": true,
+      "nodeCount": 2,
+      "namedNodeCount": 2,
+      "unnamedNodeCount": 0,
+      "meshCount": 1,
+      "namedMeshCount": 1,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 1,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "phineas-gage-skull-calvarium-cut"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    },
+    {
+      "assetId": "phineas-gage-iron-rod",
+      "contractId": "phineas-gage-legacy-figs3d",
+      "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
+      "manifest": "/assets/phineas/asset-manifest.json",
+      "byteSize": 1344,
+      "sha256": "sha256:b25fe4a0bd8459df9db793876a92f060602b102ce0e3a0ec6e77c8606e46bd5a",
+      "hashMatchesManifest": true,
+      "nodeCount": 2,
+      "namedNodeCount": 2,
+      "unnamedNodeCount": 0,
+      "meshCount": 1,
+      "namedMeshCount": 1,
+      "unnamedMeshCount": 0,
+      "materialCount": 1,
+      "manifestNodeCount": 1,
+      "missingNodeNames": [],
+      "duplicateNodeNames": [],
+      "duplicateMeshNames": [],
+      "sampleMeshNames": [
+        "phineas-gage-iron-rod"
+      ],
+      "sampleMaterialNames": [
+        "(unnamed-material)"
+      ]
+    }
+  ],
+  "staleT6References": [],
+  "archivedT6References": [
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-01-intro.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-02-skull.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-03-trajectory.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-04-lesion-reveal.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-05-regions.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s-gage-06-reconstructions.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s01-gage.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s02-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s03-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s04-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s05-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s06-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s07-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s08-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s09-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s10-dlpfc.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s11-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s12-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s13-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s14-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s15-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s16-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s17-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s18-vmpfc.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s19-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s20-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s21-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s22-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s23-ppc.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s24-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s25-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s26-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s27-acc.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s28-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s29-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s30-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s31-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s32-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s33-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s34-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s35-synthese.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s36-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/s37-highlights.json",
+      "line": 4,
+      "text": "\"extends\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/public/figs3d/v2/figures/t6-master-brain-v2.json",
+      "line": 3,
+      "text": "\"id\": \"t6-master-brain-v2\","
+    },
+    {
+      "file": "archive/2026-06-11-mni-stack/src/routes/companion/companionRoute.tsx",
+      "line": 106,
+      "text": "return 't6-master-brain-v2'"
+    }
+  ],
+  "failures": []
+}

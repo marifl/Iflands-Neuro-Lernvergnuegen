@@ -7,6 +7,7 @@
     "atlas:build-config": "node ../../scripts/atlas/build-config.mjs",
     "dev": "pnpm run atlas:build-config && vite",
     "build": "pnpm run atlas:build-config && tsc -b && vite build",
+    "inventory:mesh-identity": "node scripts/mesh-identity-inventory.mjs --check",
     "perf:budget": "node ../../scripts/perf/check-brain-app-budget.mjs",
     "preview": "vite preview",
     "preview:lan": "vite preview --host 0.0.0.0",
