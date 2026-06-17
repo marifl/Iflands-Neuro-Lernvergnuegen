@@ -591,6 +591,9 @@ Diese Punkte sind bewusst nicht als erledigt dokumentiert:
    hardcodierten Einzelplayers.
 2. Visual-Abnahme braucht Browser-Smokes für Dozenten-, Studenten- und
    Developer-Happy-Path.
+3. Der UV-freie Tissue-Detailpfad ist nur als Entscheidung dokumentiert. Eine
+   Umsetzung braucht eigene Desktop-/Phone-Screenshots und Runtime-Evidenz,
+   bevor sie als realistischer Materialpfad gilt.
 
 ## Verifikation
 
