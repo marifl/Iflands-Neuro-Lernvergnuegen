@@ -20,6 +20,13 @@ import {
   type CutAxis,
   type CutConfig,
 } from './cutCapsMerged'
+import {
+  CUT_FRAME_TAB_HEIGHT_PX,
+  CUT_FRAME_TAB_WIDTH_PX,
+  configureCutPlaneFrameTabButton,
+  updateCutPlaneFrameTabButton,
+  type CutFrameTabDirection,
+} from './cutPlaneFrameTab'
 
 /**
  * Schlanke Schnittstelle, die die Gizmo vom Cut-Zustand braucht — im Original der
@@ -35,13 +42,8 @@ const AXES: CutAxis[] = ['sagittal', 'coronal', 'axial']
 const AXIS_COLORS: Record<CutAxis, number> = CUT_AXIS_COLORS
 
 const FRAME_SIZE = 170
-const FRAME_TAB_WIDTH_PX = 108
-const FRAME_TAB_HEIGHT_PX = 30
 const FRAME_TAB_GAP_PX = 18
-const FRAME_TAB_CHEVRON_NOTCH = 14
 const POINTER_DRAG_THRESHOLD_PX = 4
-
-type TabDirection = 'left' | 'right' | 'up' | 'down'
 
 const SCREEN_A = new Vector2()
 const SCREEN_B = new Vector2()
@@ -177,41 +179,7 @@ export class CutPlaneFrameGizmo {
     const buttons = {} as Record<CutAxis, HTMLButtonElement>
     for (const axis of AXES) {
       const button = document.createElement('button')
-      button.type = 'button'
-      button.dataset.cutAxis = axis
-      button.setAttribute('aria-label', `${axisLabel(axis)} cut plane handle`)
-      button.title = `${axisLabel(axis)} click to toggle, drag to move`
-      button.style.position = 'absolute'
-      button.style.width = `${FRAME_TAB_WIDTH_PX}px`
-      button.style.height = `${FRAME_TAB_HEIGHT_PX}px`
-      button.style.boxSizing = 'border-box'
-      button.style.display = 'flex'
-      button.style.alignItems = 'center'
-      button.style.justifyContent = 'center'
-      button.style.gap = '8px'
-      button.style.font = '700 12px/1 var(--font-sans, system-ui, sans-serif)'
-      button.style.letterSpacing = '0.06em'
-      button.style.pointerEvents = 'auto'
-      button.style.cursor = 'grab'
-      button.style.border = 'none'
-      button.style.transform = 'translate3d(0, 0, 0)'
-      button.style.transition = 'clip-path 140ms ease-out, padding 140ms ease-out, background 140ms ease-out, opacity 140ms ease-out, box-shadow 140ms ease-out'
-      const label = document.createElement('span')
-      label.dataset.cutPlaneFrameTabLabel = 'true'
-      label.textContent = axisLabel(axis)
-      label.style.display = 'inline-block'
-      label.style.flex = '0 0 auto'
-      const pos = document.createElement('span')
-      pos.dataset.cutPlaneFrameTabPos = 'true'
-      pos.textContent = ''
-      pos.style.display = 'inline-block'
-      pos.style.flex = '0 0 auto'
-      pos.style.minWidth = '38px'
-      pos.style.textAlign = 'right'
-      pos.style.font = '500 11px/1 var(--font-mono, ui-monospace, SFMono-Regular, Menlo, monospace)'
-      pos.style.opacity = '0.82'
-      pos.style.letterSpacing = '0'
-      button.append(label, pos)
+      configureCutPlaneFrameTabButton(button, axis)
       button.addEventListener('pointerdown', (event) => this._onTabPointerDown(axis, button, event))
       button.addEventListener('pointermove', (event) => this._onTabPointerMove(event))
       button.addEventListener('pointerup', (event) => this._onTabPointerUp(event))
@@ -249,10 +217,16 @@ export class CutPlaneFrameGizmo {
       // Nur aktive Achsen zeigen ihren Handle — er haengt an der zugehoerigen Schnittebene.
       // Inaktive Achsen werden ueber die FooterBar zugeschaltet, nicht ueber schwebende Tabs.
       if (!active) {
-        button.style.display = 'none'
+        updateCutPlaneFrameTabButton(button, {
+          axis,
+          active: false,
+          highlighted: false,
+          dragging: false,
+          direction: 'right',
+          positionMm: this._state[axis].pos,
+        })
         continue
       }
-      button.style.display = 'block'
       const visual = this._axisVisuals[axis]
       // Ebenen-Zentrum (Schnittebene am Modell) im Overlay-Raum.
       visual.group.getWorldPosition(WORLD_C)
@@ -262,36 +236,19 @@ export class CutPlaneFrameGizmo {
       worldToLocalElement(this._camera, this._renderer.domElement, this._overlay, WORLD_A, SCREEN_A)
       // Tab knapp ueber die Kante hinaus — radial vom Ebenen-Zentrum, NICHT vom Canvas-Rand.
       // Kein Canvas-Clamping: der Handle bleibt an der Ebene statt am Bildschirmrand zu kleben.
-      const center = labelCenterBeyondFrameEdge(SCREEN_C, SCREEN_A, FRAME_TAB_WIDTH_PX, FRAME_TAB_HEIGHT_PX, SCREEN_A)
+      const center = labelCenterBeyondFrameEdge(SCREEN_C, SCREEN_A, CUT_FRAME_TAB_WIDTH_PX, CUT_FRAME_TAB_HEIGHT_PX, SCREEN_A)
       const highlighted = button.matches(':hover') || document.activeElement === button || this._drag?.axis === axis
       const direction = tabDirectionTowardCenter(center, SCREEN_C)
-      const posSpan = button.querySelector<HTMLElement>('[data-cut-plane-frame-tab-pos="true"]')
-      button.style.left = `${Math.round(center.x - FRAME_TAB_WIDTH_PX / 2)}px`
-      button.style.top = `${Math.round(center.y - FRAME_TAB_HEIGHT_PX / 2)}px`
-      button.style.clipPath = chevronClipPath(direction)
-      button.style.padding = chevronPadding(direction)
-      button.style.background = active ? cssColor(AXIS_COLORS[axis], 0.94) : 'rgba(18,18,20,0.94)'
-      button.style.color = active ? 'rgba(10,10,12,0.96)' : cssColor(AXIS_COLORS[axis], 0.94)
-      button.style.boxShadow = highlighted
-        ? `inset 0 1px 0 rgba(255,255,255,0.34), 0 0 0 1px ${cssColor(AXIS_COLORS[axis], 0.65)}, 0 6px 18px rgba(0,0,0,0.55)`
-        : active
-          ? `inset 0 1px 0 rgba(255,255,255,0.26), 0 3px 10px rgba(0,0,0,0.45)`
-          : `inset 0 0 0 1px ${cssColor(AXIS_COLORS[axis], 0.38)}, 0 3px 10px rgba(0,0,0,0.45)`
-      button.style.opacity = active ? '1' : '0.86'
-      button.style.cursor = this._drag?.axis === axis ? 'grabbing' : 'grab'
-      if (posSpan) {
-        if (active) {
-          const pos = Math.round(this._state[axis].pos)
-          const sign = pos > 0 ? '+' : pos < 0 ? '−' : ' '
-          posSpan.textContent = `${sign}${Math.abs(pos)} mm`
-          posSpan.style.opacity = '0.88'
-          posSpan.style.display = 'inline-block'
-        } else {
-          posSpan.textContent = ''
-          posSpan.style.display = 'none'
-        }
-      }
-      button.setAttribute('aria-pressed', active ? 'true' : 'false')
+      button.style.left = `${Math.round(center.x - CUT_FRAME_TAB_WIDTH_PX / 2)}px`
+      button.style.top = `${Math.round(center.y - CUT_FRAME_TAB_HEIGHT_PX / 2)}px`
+      updateCutPlaneFrameTabButton(button, {
+        axis,
+        active,
+        highlighted,
+        dragging: this._drag?.axis === axis,
+        direction,
+        positionMm: this._state[axis].pos,
+      })
     }
   }
 
@@ -529,49 +486,13 @@ function setCutAxisWorldPosition(axis: CutAxis, world: Vector3, positionMm: numb
   else world.y = positionMm
 }
 
-function cssColor(hex: number, alpha: number): string {
-  const r = (hex >> 16) & 255
-  const g = (hex >> 8) & 255
-  const b = hex & 255
-  return `rgba(${r},${g},${b},${alpha})`
-}
-
 function markHelper(object: Object3D): void {
   object.userData[CUT_GIZMO_HELPER_FLAG] = true
 }
 
-function axisLabel(axis: CutAxis): string {
-  if (axis === 'sagittal') return 'Sag'
-  if (axis === 'coronal') return 'Cor'
-  return 'Axi'
-}
-
-function tabDirectionTowardCenter(tab: Vector2, center: Vector2): TabDirection {
+function tabDirectionTowardCenter(tab: Vector2, center: Vector2): CutFrameTabDirection {
   const dx = center.x - tab.x
   const dy = center.y - tab.y
   if (Math.abs(dx) >= Math.abs(dy)) return dx >= 0 ? 'right' : 'left'
   return dy >= 0 ? 'down' : 'up'
-}
-
-function chevronClipPath(direction: TabDirection): string {
-  const notchPct = (FRAME_TAB_CHEVRON_NOTCH / FRAME_TAB_WIDTH_PX) * 100
-  const notchPctV = (FRAME_TAB_CHEVRON_NOTCH / FRAME_TAB_HEIGHT_PX) * 100
-  if (direction === 'right') {
-    return `polygon(0% 0%, ${100 - notchPct}% 0%, 100% 50%, ${100 - notchPct}% 100%, 0% 100%, ${notchPct}% 50%)`
-  }
-  if (direction === 'left') {
-    return `polygon(${notchPct}% 0%, 100% 0%, ${100 - notchPct}% 50%, 100% 100%, ${notchPct}% 100%, 0% 50%)`
-  }
-  if (direction === 'down') {
-    return `polygon(0% 0%, 100% 0%, 100% ${100 - notchPctV}%, 50% 100%, 0% ${100 - notchPctV}%)`
-  }
-  return `polygon(50% 0%, 100% ${notchPctV}%, 100% 100%, 0% 100%, 0% ${notchPctV}%)`
-}
-
-function chevronPadding(direction: TabDirection): string {
-  const lead = FRAME_TAB_CHEVRON_NOTCH + 4
-  const trail = 12
-  if (direction === 'right') return `0 ${lead}px 0 ${trail}px`
-  if (direction === 'left') return `0 ${trail}px 0 ${lead}px`
-  return `4px 12px`
 }
