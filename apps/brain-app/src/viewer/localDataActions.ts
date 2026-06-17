@@ -10,6 +10,7 @@ import {
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
 
 export const THEME_STORAGE_KEY = 'ed-theme'
+const APPEARANCE_DATASET_KEYS = ['theme', 'contrast', 'fontSize', 'readableFont', 'focusRings', 'motion', 'quietMode'] as const
 
 export function readSnapshotFile(file: File): Promise<string> {
   if (typeof file.text === 'function') return file.text()
@@ -60,5 +61,7 @@ export function clearLocalBrainAppData(): void {
   removeLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
   removeLocalStorageItem(SETTINGS_STORAGE_KEY)
   removeLocalStorageItem(THEME_STORAGE_KEY)
-  if (typeof document !== 'undefined') delete document.documentElement.dataset.theme
+  if (typeof document !== 'undefined') {
+    for (const key of APPEARANCE_DATASET_KEYS) delete document.documentElement.dataset[key]
+  }
 }

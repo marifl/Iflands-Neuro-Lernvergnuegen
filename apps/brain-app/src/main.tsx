@@ -4,14 +4,17 @@ import './app.css'
 import AppErrorBoundary from './AppErrorBoundary'
 import { getLocalStorageItem } from './safeLocalStorage'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
-import { loadSettings } from './viewer/settingsStore'
+import { applyAppearanceSettings } from './viewer/appearanceRuntime'
+import { loadSettings, SETTINGS_STORAGE_KEY } from './viewer/settingsStore'
 import { startupAppModeFromSettings } from './viewer/settingsRuntime'
 import { useViewerStore } from './viewer/viewerStore'
 
-// Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
-if (getLocalStorageItem('ed-theme') === 'light') {
-  document.documentElement.dataset.theme = 'light'
+const initialSettings = loadSettings()
+const legacyTheme = getLocalStorageItem('ed-theme')
+if (!getLocalStorageItem(SETTINGS_STORAGE_KEY) && (legacyTheme === 'dark' || legacyTheme === 'light')) {
+  initialSettings.display.theme = legacyTheme
 }
+applyAppearanceSettings(initialSettings)
 
 function isStandaloneDisplayMode() {
   const nav = navigator as Navigator & { standalone?: boolean }
@@ -27,7 +30,7 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', apply
 
 // Deep-Link bleibt vorrangig. Settings greifen nur beim normalen App-Start ohne Inhalts-Route.
 {
-  const mode = startupAppModeFromSettings(window.location.search, loadSettings())
+  const mode = startupAppModeFromSettings(window.location.search, initialSettings)
   if (mode) useViewerStore.getState().setAppMode(mode)
 }
 

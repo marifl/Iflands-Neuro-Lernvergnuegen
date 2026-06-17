@@ -20,9 +20,15 @@ import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex }
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
-import { setLocalStorageItem } from '../safeLocalStorage'
 import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
 import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
+import {
+  PREFERS_LIGHT_QUERY,
+  PREFERS_REDUCED_MOTION_QUERY,
+  applyAppearanceSettings,
+  resolveMotionPreference,
+  resolveThemePreference,
+} from './appearanceRuntime'
 import {
   applyAtlasDefaults,
   applyColoringDefaults,
@@ -46,7 +52,7 @@ import { approachTransitionValue } from './transitions'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
-import { useIsNarrow } from '../useMediaQuery'
+import { useIsNarrow, useMediaQuery } from '../useMediaQuery'
 import {
   ROD_RADIUS_SHAFT,
   ROD_RADIUS_TIP,
@@ -781,6 +787,14 @@ export default function BodyParts3DViewer() {
     () => (visibleCollectionsKey ? visibleCollectionsKey.split('\u0000') : []),
     [visibleCollectionsKey],
   )
+  const themePreference = useSettingsStore((s) => s.display.theme)
+  const contrast = useSettingsStore((s) => s.display.contrast)
+  const fontSize = useSettingsStore((s) => s.display.fontSize)
+  const quietMode = useSettingsStore((s) => s.accessibility.quietMode)
+  const motionPreference = useSettingsStore((s) => s.accessibility.motion)
+  const focusRings = useSettingsStore((s) => s.accessibility.focusRings)
+  const readableFont = useSettingsStore((s) => s.accessibility.readableFont)
+  const updateSettingsCategory = useSettingsStore((s) => s.updateCategory)
   const dimOpacity = dimOpacityFromConfig(effectiveConfig, settingsDimOpacity)
   const renderDpr = dprForRenderQuality(renderQuality)
 
@@ -817,21 +831,22 @@ export default function BodyParts3DViewer() {
 
   // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
+  const prefersLight = useMediaQuery(PREFERS_LIGHT_QUERY)
+  const prefersReducedMotion = useMediaQuery(PREFERS_REDUCED_MOTION_QUERY)
+  const resolvedTheme = resolveThemePreference(themePreference, prefersLight)
+  const reduceMotion = resolveMotionPreference(motionPreference, prefersReducedMotion) === 'reduce'
 
   // Start-Screen (Modus-Wahl) beim ersten Laden — Settings duerfen nur beim normalen App-Start
   // ueberspringen, Deep-Links behalten immer Vorrang.
   const [launched, setLaunched] = useState(() => !shouldShowModeLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
-  // Editorial-Theme (hell/dunkel). Persistiert in localStorage; vor-applied in main.tsx.
-  const [theme, setTheme] = useState<'dark' | 'light'>(() =>
-    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
-  )
   useEffect(() => {
-    if (theme === 'light') document.documentElement.dataset.theme = 'light'
-    else delete document.documentElement.dataset.theme
-    setLocalStorageItem('ed-theme', theme)
-  }, [theme])
+    applyAppearanceSettings({
+      display: { theme: themePreference, contrast, fontSize },
+      accessibility: { quietMode, motion: motionPreference, focusRings, readableFont },
+    }, document.documentElement, { prefersLight, prefersReducedMotion })
+  }, [contrast, focusRings, fontSize, motionPreference, prefersLight, prefersReducedMotion, quietMode, readableFont, themePreference])
 
   useEffect(() => {
     if (!isNarrow || appMode !== 'explore') setMobileTreeOpen(false)
@@ -1020,7 +1035,7 @@ export default function BodyParts3DViewer() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 11, flex: 'none' }}>
             {/* Logo wie im Sample (.fhead .mark): 26px hoch, width auto. Tinte auf Papier, Weiss auf Dunkel. */}
             <img
-              src={theme === 'light' ? '/assets/brand/logo-ink.png' : '/assets/brand/logo-white.png'}
+              src={resolvedTheme === 'light' ? '/assets/brand/logo-ink.png' : '/assets/brand/logo-white.png'}
               alt="Marcus Ifland"
               style={{ height: isNarrow ? 22 : 26, width: 'auto', display: 'block' }}
             />
@@ -1065,17 +1080,17 @@ export default function BodyParts3DViewer() {
                 type="button"
                 className="ed-btn"
                 style={{ padding: '4px 9px', flex: 'none' }}
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                onClick={() => updateSettingsCategory('display', { theme: resolvedTheme === 'dark' ? 'light' : 'dark' })}
                 aria-label="Theme umschalten"
               >
-                {theme === 'dark' ? 'Hell' : 'Dunkel'}
+                {resolvedTheme === 'dark' ? 'Hell' : 'Dunkel'}
               </button>
             ) : (
               <div style={{ display: 'flex', gap: 6 }} role="group" aria-label="Theme umschalten">
-                <button type="button" className={`ed-btn${theme === 'dark' ? ' active' : ''}`} style={{ padding: '4px 9px' }} onClick={() => setTheme('dark')}>
+                <button type="button" className={`ed-btn${resolvedTheme === 'dark' ? ' active' : ''}`} style={{ padding: '4px 9px' }} onClick={() => updateSettingsCategory('display', { theme: 'dark' })}>
                   Dunkel
                 </button>
-                <button type="button" className={`ed-btn${theme === 'light' ? ' active' : ''}`} style={{ padding: '4px 9px' }} onClick={() => setTheme('light')}>
+                <button type="button" className={`ed-btn${resolvedTheme === 'light' ? ' active' : ''}`} style={{ padding: '4px 9px' }} onClick={() => updateSettingsCategory('display', { theme: 'light' })}>
                   Hell
                 </button>
               </div>
@@ -1150,7 +1165,7 @@ export default function BodyParts3DViewer() {
               </Suspense>
               <TampingIron />
               <CutPickBridge />
-              <OrbitControls makeDefault enableDamping autoRotate={autoRotate} autoRotateSpeed={0.35} />
+              <OrbitControls makeDefault enableDamping autoRotate={autoRotate && !reduceMotion} autoRotateSpeed={0.35} />
               <CutPlaneGizmoBridge />
               <CameraRig />
             </Canvas>
