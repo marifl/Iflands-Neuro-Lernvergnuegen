@@ -125,9 +125,9 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
-  assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädel-LOD, Calvarium-Cut und Eisenstange); Lizenz/Attribution bleiben als Kandidat im Manifest markiert.',
+  assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädel-LOD, Calvarium-Cut und generierte Eisenstange); Manifest und Transform-Vertrag pinnen Herkunft, Maße und Lizenzstatus.',
   trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012; die importierten Gage-Assets bleiben im eigenen Rekonstruktionsraum und ersetzen den früheren TARO-Kontextschädel.',
-  rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer wird das importierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers gerendert.',
+  rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer wird das generierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers gerendert.',
   steps: [
     {
       captionDe:
