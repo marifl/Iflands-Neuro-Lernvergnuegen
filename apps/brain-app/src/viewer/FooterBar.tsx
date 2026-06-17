@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
 import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
-import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
@@ -16,6 +15,7 @@ import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
 import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
+import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
 
@@ -30,14 +30,6 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
 const TRANSFORM_MODE_LABEL = { translate: 'Verschieben', rotate: 'Drehen', scale: 'Skalieren' } as const
 const TRANSFORM_SPACE_LABEL = { world: 'Welt', local: 'Lokal' } as const
-const COLOR_LABEL: Record<ColorMode, string> = {
-  anatomical: 'Anatomisch',
-  function: 'Funktionssystem',
-  laterality: 'Lateralität',
-  region: 'Region',
-  preset: 'Figur',
-}
-const BASE_COLOR_MODES: ColorMode[] = ['anatomical', 'function', 'laterality', 'region']
 const CUT_LABEL: Record<CutAxis, string> = {
   sagittal: 'Sagittal',
   coronal: 'Coronal',
@@ -283,13 +275,13 @@ export default function FooterBar() {
     {
       key: 'color',
       eyebrow: 'Färbung',
-      label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_LABEL[colorMode],
+      label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_MODE_LABEL[colorMode],
       icon: <Palette {...FOOTER_ICON_PROPS} />,
       content: (
         <>
-          {BASE_COLOR_MODES.map((c) => (
-            <Item key={c} active={colorMode === c} onClick={() => { setColorMode(c); close() }}>
-              {COLOR_LABEL[c]}
+          {BASE_COLOR_MODE_DEFINITIONS.map((definition) => (
+            <Item key={definition.mode} active={colorMode === definition.mode} onClick={() => { setColorMode(definition.mode); close() }}>
+              {definition.label}
             </Item>
           ))}
           {/* Figur-spezifische Färbungen (Lehrbuch-Abbildungen) — didaktische Gruppen-Farben. */}
