@@ -162,7 +162,7 @@ const DEFAULT_PRESET_VIEW_OPTIONS: PresetViewOptions = {
 
 const DEFAULT_COLOR_LEGEND: ColorLegendState = {
   visible: true,
-  minimized: false,
+  minimized: true,
 }
 
 interface AppliedDefaultVisibility {
