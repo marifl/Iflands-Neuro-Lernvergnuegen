@@ -28,6 +28,7 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { ShellControlButton } from './ShellStatePrimitives'
+import PerformanceGateProbe, { performanceGateEnabled } from './PerformanceGateProbe'
 import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
 import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
 import {
@@ -746,6 +747,7 @@ export default function BodyParts3DViewer() {
   const updateSettingsCategory = useSettingsStore((s) => s.updateCategory)
   const dimOpacity = dimOpacityFromConfig(effectiveConfig, settingsDimOpacity)
   const renderDpr = dprForRenderQuality(renderQuality)
+  const perfGate = useMemo(() => performanceGateEnabled(), [])
 
   if (catalogAliasError) throw catalogAliasError
 
@@ -1091,7 +1093,11 @@ export default function BodyParts3DViewer() {
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
               // Schnittflaechen ueber den Stencil-Buffer. R3F erstellt den Context sonst
               // ohne Stencil (stencilBits=0), wodurch die Caps unmaskiert als volle Plane rendern.
-              gl={{ stencil: true, powerPreference: renderQuality === 'battery' ? 'low-power' : 'high-performance' }}
+              gl={{
+                stencil: true,
+                preserveDrawingBuffer: perfGate,
+                powerPreference: renderQuality === 'battery' ? 'low-power' : 'high-performance',
+              }}
               onCreated={({ gl }) => {
                 gl.localClippingEnabled = true // Schnittebenen (Clipping) aktivieren
                 gl.outputColorSpace = THREE.SRGBColorSpace
@@ -1129,6 +1135,7 @@ export default function BodyParts3DViewer() {
               <OrbitControls makeDefault enableDamping autoRotate={autoRotate && !reduceMotion} autoRotateSpeed={0.35} />
               <CutPlaneGizmoBridge />
               <CameraRig />
+              {perfGate ? <PerformanceGateProbe /> : null}
             </Canvas>
 
             {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). In Lern-/Phineas-Modus
