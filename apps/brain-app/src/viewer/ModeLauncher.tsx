@@ -1,39 +1,9 @@
-import type { AppMode } from './viewerStore'
-
-/** Start-Karte: ein Modus + sein didaktischer Zweck in einem Satz. */
-interface ModeCard {
-  mode: AppMode
-  label: string
-  blurb: string
-  recommended?: boolean
-}
-
-// Reihenfolge bewusst: geführter Einstieg (Lernen) zuerst, freie Werkzeuge danach.
-const CARDS: ModeCard[] = [
-  {
-    mode: 'learn',
-    label: 'Lernen',
-    blurb: 'Geführte Szenen zu Kapitel 11: kognitive Kontrolle, ERP-Komponenten und Basalganglien-Schleifen.',
-    recommended: true,
-  },
-  {
-    mode: 'explore',
-    label: 'Explorer',
-    blurb: 'Das ganze Gehirn frei erkunden — Strukturen anklicken, isolieren, einfärben.',
-  },
-  {
-    mode: 'phineas',
-    label: 'Phineas Gage',
-    blurb: 'Die historische Läsions-Fallstudie als animierte Rekonstruktion.',
-  },
-  // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> bewusst KEINE Launcher-Karte,
-  // nur per Deep-Link ?mode=atlas erreichbar.
-]
+import { REGULAR_APP_MODE_DEFINITIONS, type RegularAppMode } from './appModeDefinitions'
 
 /** Start-Screen: nimmt dem Lernenden die „wo fange ich an?"-Last ab. Eine klare Aktion
  *  (Modus waehlen), alle Optionen sichtbar, keine versteckten Menues. Liegt als Vollflaechen-
  *  Overlay ueber der App und verschwindet, sobald ein Modus gewaehlt wurde. */
-export default function ModeLauncher({ onPick }: { onPick: (mode: AppMode) => void }) {
+export default function ModeLauncher({ onPick }: { onPick: (mode: RegularAppMode) => void }) {
   return (
     <div
       style={{
@@ -68,7 +38,7 @@ export default function ModeLauncher({ onPick }: { onPick: (mode: AppMode) => vo
         </p>
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
-          {CARDS.map((card) => (
+          {REGULAR_APP_MODE_DEFINITIONS.map((card) => (
             <button
               key={card.mode}
               type="button"
@@ -94,7 +64,7 @@ export default function ModeLauncher({ onPick }: { onPick: (mode: AppMode) => vo
                 {card.recommended ? <span className="ed-pill orange">Empfohlen</span> : null}
               </div>
               <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11.5, color: 'var(--g600)', lineHeight: 1.45 }}>
-                {card.blurb}
+                {card.description}
               </span>
             </button>
           ))}

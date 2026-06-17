@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
-import { useViewerStore, type AppMode, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
+import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
@@ -15,6 +15,7 @@ import {
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
+import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
 
@@ -26,7 +27,6 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
   { name: 'medial-midline', label: 'Medial' },
 ]
 
-const MODE_LABEL: Record<AppMode, string> = { learn: 'Lernen', explore: 'Explorer', phineas: 'Phineas Gage', atlas: 'Atlas' }
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
 const TRANSFORM_MODE_LABEL = { translate: 'Verschieben', rotate: 'Drehen', scale: 'Skalieren' } as const
 const TRANSFORM_SPACE_LABEL = { world: 'Welt', local: 'Lokal' } as const
@@ -270,13 +270,13 @@ export default function FooterBar() {
     {
       key: 'mode',
       eyebrow: 'Modus',
-      label: MODE_LABEL[appMode],
+      label: APP_MODE_LABEL[appMode],
       icon: <BookOpen {...FOOTER_ICON_PROPS} />,
       // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> nicht im normalen Modus-Flyout,
       // nur per Deep-Link ?mode=atlas erreichbar. Die regulaeren Modi sind learn/explore/phineas.
-      content: (['learn', 'explore', 'phineas'] as const).map((m) => (
-        <Item key={m} active={appMode === m} onClick={() => { setAppMode(m); close() }}>
-          {MODE_LABEL[m]}
+      content: REGULAR_APP_MODE_DEFINITIONS.map((definition) => (
+        <Item key={definition.mode} active={appMode === definition.mode} onClick={() => { setAppMode(definition.mode); close() }}>
+          {definition.label}
         </Item>
       )),
     },
