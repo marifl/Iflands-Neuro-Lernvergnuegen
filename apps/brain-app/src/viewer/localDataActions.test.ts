@@ -64,6 +64,12 @@ describe('localDataActions', () => {
     localStorage.setItem(THEME_STORAGE_KEY, 'light')
     localStorage.setItem('unrelated-key', 'bleibt')
     document.documentElement.dataset.theme = 'light'
+    document.documentElement.dataset.contrast = 'high'
+    document.documentElement.dataset.fontSize = 'large'
+    document.documentElement.dataset.readableFont = 'true'
+    document.documentElement.dataset.focusRings = 'off'
+    document.documentElement.dataset.motion = 'reduce'
+    document.documentElement.dataset.quietMode = 'true'
 
     clearLocalBrainAppData()
 
@@ -77,5 +83,11 @@ describe('localDataActions', () => {
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem('unrelated-key')).toBe('bleibt')
     expect(document.documentElement.dataset.theme).toBeUndefined()
+    expect(document.documentElement.dataset.contrast).toBeUndefined()
+    expect(document.documentElement.dataset.fontSize).toBeUndefined()
+    expect(document.documentElement.dataset.readableFont).toBeUndefined()
+    expect(document.documentElement.dataset.focusRings).toBeUndefined()
+    expect(document.documentElement.dataset.motion).toBeUndefined()
+    expect(document.documentElement.dataset.quietMode).toBeUndefined()
   })
 })

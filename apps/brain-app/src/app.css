@@ -99,6 +99,78 @@
   --field-bg: #ffffff;
 }
 
+[data-contrast='high'] {
+  --ink: #ffffff;
+  --g800: #f5f5f5;
+  --g700: #dddddd;
+  --g600: #c4c4c4;
+  --line: #ffffff;
+  --line-soft: #737373;
+  --orange: #ff8a2a;
+  --orange-wash: color-mix(in srgb, var(--orange) 22%, transparent);
+  --orange-wash-soft: color-mix(in srgb, var(--orange) 12%, transparent);
+}
+
+[data-theme='light'][data-contrast='high'] {
+  --ink: #000000;
+  --g800: #111111;
+  --g700: #232323;
+  --g600: #373737;
+  --line: #000000;
+  --line-soft: #6f6f6f;
+  --orange: #c84700;
+}
+
+[data-readable-font='true'] {
+  --ed-display: Arial, Helvetica, ui-sans-serif, sans-serif;
+  --ed-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+[data-font-size='large'] { --accessibility-font-scale: 1.08; }
+[data-font-size='extra-large'] { --accessibility-font-scale: 1.16; }
+
+[data-font-size='large'] .ed-btn,
+[data-font-size='extra-large'] .ed-btn {
+  font-size: calc(10px * var(--accessibility-font-scale));
+}
+
+[data-font-size='large'] .ed-foot .col,
+[data-font-size='extra-large'] .ed-foot .col {
+  font-size: calc(8.5px * var(--accessibility-font-scale));
+}
+
+[data-font-size='large'] .eyebrow,
+[data-font-size='extra-large'] .eyebrow {
+  font-size: calc(8.5px * var(--accessibility-font-scale));
+}
+
+[data-quiet-mode='true'] {
+  --orange-wash: color-mix(in srgb, var(--orange) 8%, transparent);
+  --orange-wash-soft: transparent;
+  --surface-interactive-hover: var(--paper-raised);
+}
+
+[data-quiet-mode='true'] .eyebrow {
+  color: var(--g700);
+}
+
+[data-motion='reduce'] *,
+[data-motion='reduce'] *::before,
+[data-motion='reduce'] *::after {
+  animation-duration: 1ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 1ms !important;
+}
+
+[data-focus-rings='off'] .ed-btn:focus-visible,
+[data-focus-rings='off'] .ed-input:focus,
+[data-focus-rings='off'] .ed-panel button:focus-visible,
+[data-focus-rings='off'] .ed-panel input:focus-visible,
+[data-focus-rings='off'] .ed-panel [role='button']:focus-visible {
+  outline: none;
+}
+
 @layer base {
   * {
     border-color: var(--border-strong);
@@ -109,6 +181,7 @@
     background: var(--surface-canvas);
     color: var(--text-primary);
     font-family: var(--ed-display);
+    font-size: calc(16px * var(--accessibility-font-scale, 1));
     -webkit-font-smoothing: antialiased;
   }
 

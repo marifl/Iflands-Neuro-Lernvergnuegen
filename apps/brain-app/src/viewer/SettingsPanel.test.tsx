@@ -57,6 +57,23 @@ beforeEach(() => {
 })
 
 describe('SettingsPanel Daten & Konto', () => {
+  it('zeigt nur Accessibility-Controls mit echtem Runtime-Pfad', () => {
+    render(<SettingsPanel />)
+    fireEvent.click(screen.getByRole('button', { name: 'Barrierefreiheit' }))
+
+    fireEvent.click(screen.getByLabelText('Ruhemodus'))
+    fireEvent.click(screen.getByRole('button', { name: 'Reduziert' }))
+    fireEvent.click(screen.getByLabelText('Fokus-Ringe'))
+    fireEvent.click(screen.getByLabelText('Lesefreundliche Schrift'))
+
+    expect(useSettingsStore.getState().accessibility.quietMode).toBe(true)
+    expect(useSettingsStore.getState().accessibility.motion).toBe('reduce')
+    expect(useSettingsStore.getState().accessibility.focusRings).toBe(false)
+    expect(useSettingsStore.getState().accessibility.readableFont).toBe(true)
+    expect(screen.queryByText('Haptik')).not.toBeInTheDocument()
+    expect(screen.queryByText('Vorlesen')).not.toBeInTheDocument()
+  })
+
   it('pflegt Rollenwert und setzt Lernfortschritt zurueck', () => {
     useStudentProgressStore.getState().setStudentProgress(checkedProgress())
     renderDataAccountPanel()
