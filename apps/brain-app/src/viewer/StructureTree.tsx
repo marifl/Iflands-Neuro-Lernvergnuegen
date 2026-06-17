@@ -10,6 +10,7 @@ import { filterStructureSearch } from './structureSearch'
 import { useIsNarrow, useIsTouchLandscape } from '../useMediaQuery'
 import { buildExplorerTreeRoots, type ExplorerTreeRoot } from './knowledgeRuntimeAdapter'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from './explorerShellLayout'
+import { ExplorerCutControls, ExplorerSelectionActions } from './ExplorerPanelControls'
 
 const ACCENT = 'var(--orange)'
 
@@ -343,6 +344,7 @@ export default function StructureTree() {
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Struktur suchen…"
         />
+        <ExplorerSelectionActions />
         <div style={{ display: 'flex', gap: 6, alignItems: 'center' }} role="group" aria-label="Roh-Atlas-Overlay">
           <span className="eyebrow" style={{ color: 'var(--g500)', marginRight: 2 }}>Atlas roh</span>
           <button
@@ -394,6 +396,7 @@ export default function StructureTree() {
             Brodmann
           </button>
         </div>
+        <ExplorerCutControls />
       </div>
 
       <div className="scrollbar-thin" style={{ flex: 1, overflowY: 'auto', padding: 8, minHeight: 0 }}>
