@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs'
+import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import {
   ASSET_MANIFEST_SCHEMA_VERSION,
@@ -21,6 +23,10 @@ import {
   BRAIN_APP_CONTRACT_SCHEMA_VERSION,
   validateBrainAppContracts,
 } from './contractValidation'
+import {
+  AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+  parseAuthoringSnapshotState,
+} from './authoringSnapshotStore'
 
 const manifest: AssetManifestDocument = {
   schemaVersion: ASSET_MANIFEST_SCHEMA_VERSION,
@@ -95,6 +101,12 @@ const emptyScene: AuthoringScene = {
   schemaVersion: AUTHORING_SCENE_SCHEMA_VERSION,
   sceneId: 'vcpt-device-authoring',
   assetInstances: [],
+}
+
+const appRoot = process.cwd()
+
+function readJsonFile(path: string): unknown {
+  return JSON.parse(readFileSync(path, 'utf8'))
 }
 
 describe('authoring asset loader', () => {
@@ -230,6 +242,114 @@ describe('authoring asset loader', () => {
       bonusContexts: [],
       assetManifest: manifest,
       authoringScenes: [result.scene],
+    })
+
+    expect(report).toEqual({
+      schemaVersion: BRAIN_APP_CONTRACT_SCHEMA_VERSION,
+      ok: true,
+      errors: [],
+    })
+  })
+
+  it('legt die Phineas-GLBs ueber Registry-Slots als AuthoringScene an und laedt sie im Snapshot wieder', () => {
+    const phineasManifest = readJsonFile(resolve(appRoot, 'public/assets/phineas/asset-manifest.json'))
+    const sceneId = 'phineas-gage-authoring'
+    const requests = [
+      {
+        collectionId: 'case-phineas-gage',
+        slotId: 'historical-skull',
+        assetId: 'phineas-gage-skull-lod',
+        optional: true,
+        instanceId: 'phineas-gage-skull-01',
+      },
+      {
+        collectionId: 'case-phineas-gage',
+        slotId: 'calvarium-cut',
+        assetId: 'phineas-gage-skull-calvarium-cut-lod',
+        optional: true,
+        instanceId: 'phineas-gage-calvarium-cut-01',
+      },
+      {
+        collectionId: 'case-phineas-gage',
+        slotId: 'iron-rod',
+        assetId: 'phineas-gage-iron-rod',
+        optional: true,
+        instanceId: 'phineas-gage-iron-rod-01',
+      },
+    ] as const
+
+    let scene: AuthoringScene = {
+      schemaVersion: AUTHORING_SCENE_SCHEMA_VERSION,
+      sceneId,
+      assetInstances: [],
+    }
+    for (const request of requests) {
+      const result = loadAuthoringAssetIntoScene(scene, phineasManifest, request)
+      expect(result.status).toBe('loaded')
+      if (result.status !== 'loaded') throw new Error(result.reason)
+      scene = result.scene
+    }
+
+    expect(scene.assetInstances.map((instance) => instance.assetId)).toEqual([
+      'phineas-gage-skull-lod',
+      'phineas-gage-skull-calvarium-cut-lod',
+      'phineas-gage-iron-rod',
+    ])
+    expect(scene.assetInstances.map((instance) => instance.collectionId)).toEqual([
+      'case-phineas-gage',
+      'case-phineas-gage',
+      'case-phineas-gage',
+    ])
+    expect(scene.assetInstances.map((instance) => instance.transform)).toEqual([
+      { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
+      { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
+      { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
+    ])
+    expect(scene.assetInstances.flatMap((instance) => instance.parts?.map((part) => part.nodeName) ?? [])).toEqual([
+      'phineas-gage-skull',
+      'phineas-gage-skull-calvarium-cut',
+      'phineas-gage-iron-rod',
+    ])
+
+    const authoringState = parseAuthoringSnapshotState({
+      schemaVersion: AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+      registryContext: {
+        collectionIds: ['case-phineas-gage'],
+        bonusContextIds: [],
+      },
+      authoringScenes: [scene],
+      timelines: [],
+      activeSceneId: sceneId,
+      activeTargetRef: {
+        targetKind: 'asset-part',
+        collectionId: 'case-phineas-gage',
+        instanceId: 'phineas-gage-iron-rod-01',
+        partId: 'iron-rod',
+      },
+    })
+
+    expect(authoringState?.authoringScenes[0]).toEqual(scene)
+    expect(authoringState?.activeTargetRef).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'case-phineas-gage',
+      instanceId: 'phineas-gage-iron-rod-01',
+      partId: 'iron-rod',
+    })
+
+    const report = validateBrainAppContracts({
+      schemaVersion: BRAIN_APP_CONTRACT_SCHEMA_VERSION,
+      ontologyNodeIds: [],
+      atlasRoles: [],
+      sceneIds: [],
+      bonusContexts: [],
+      assetManifest: phineasManifest,
+      authoringScenes: [scene],
+      snapshots: [
+        {
+          version: 1,
+          state: { authoring: authoringState },
+        },
+      ],
     })
 
     expect(report).toEqual({

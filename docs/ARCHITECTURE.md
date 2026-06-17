@@ -337,6 +337,15 @@ nutzt deshalb `scale = 1` statt einer pauschalen Meter-Konvertierung. Optionale
 Knowledge-Slots dürfen sichtbar fehlen (`missing-optional`); required Slots
 werden als `missing-required` zurückgegeben und nicht still ersetzt.
 
+Für Phineas ist dieser Pfad mit echten Runtime-Dateien belegt:
+`asset-manifest.json` erfüllt die Slots von `case-phineas-gage`, und
+`authoringAssetLoader.test.ts` legt Vollschädel, Calvarium-Cut und Eisenstange
+aus dem Manifest als `AuthoringScene` an, speichert sie im
+`AuthoringSnapshotState` und validiert den Roundtrip gegen
+`validateBrainAppContracts(...)`. Standalone-Persistenz ist damit die
+versionierte Manifest-/Snapshot-Datei; eine spätere DB-Persistenz muss diesen
+Contract übernehmen.
+
 Damit bleiben Verantwortlichkeiten getrennt:
 
 1. `KnowledgeRegistry` sagt, welche Collection welchen Asset-Slot hat.

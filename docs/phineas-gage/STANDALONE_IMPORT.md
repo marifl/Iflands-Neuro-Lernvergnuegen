@@ -50,12 +50,38 @@ Der Phineas-Viewer rendert die Standalone-GLBs jetzt im Modus `?mode=phineas`:
 3. generiertes 1,1-m-Eisenstangen-GLB statt des früheren Zylinder-Markers.
 
 Der normale TARO-/BodyParts3D-Kontextschädel bleibt für Explorer und
-Strukturbaum erhalten, wird im Phineas-Modus aber ausgeblendet. Offen bleibt:
+Strukturbaum erhalten, wird im Phineas-Modus aber ausgeblendet.
+
+## Registry-/Authoring-Pfad
+
+Phineas nutzt dieselbe Contract-Fläche wie spätere Dozenten-Objekte:
+
+1. `KnowledgeRegistry` deklariert die Collection `case-phineas-gage` und die
+   Slots `historical-skull`, `calvarium-cut` und `iron-rod`.
+2. `asset-manifest.json` erfüllt diese Slots mit GLB-URI, Hash, Quelle,
+   Normalisierung und stabilen Parts.
+3. `loadAuthoringAssetIntoScene(...)` legt daraus `AuthoringScene`-
+   Instanzen mit `collectionId`, `assetId`, `instanceId`, Transform, Origin und
+   Parts an.
+4. `AuthoringSnapshotState` speichert diese Scene zusammen mit
+   `registryContext.collectionIds = ["case-phineas-gage"]` und kann sie über
+   die Snapshot-Datei-UI wieder importieren.
+5. `validateBrainAppContracts(...)` prüft den Roundtrip gegen Registry,
+   Manifest, AuthoringScene und Snapshot-State.
+
+Der Test
+`apps/brain-app/src/viewer/authoringAssetLoader.test.ts` nutzt dafür das echte
+Phineas-Manifest und legt alle drei GLBs als `AuthoringScene` an. Das
+Standalone-Repo hat keine Datenbank-Persistenz; der absicherte Speicherpfad ist
+hier die versionierte Manifest-Datei plus importier-/exportierbarer
+Unterrichts-/Authoring-Snapshot. Eine spätere Multiplayer-/DB-Persistenz muss
+diesen Contract übernehmen, darf aber keinen zweiten Asset-Pfad erfinden.
+
+Offen bleibt:
 
 1. final gepinnte Attribution für Schädel/Calvarium in
    `THIRD-PARTY-NOTICES.md`, falls das Modell öffentlich ausgeliefert wird.
-2. generische AuthoringScene-Persistenz mit Transform-Gizmo für frei
-   importierte GLBs.
+2. eine echte Multiplayer-/DB-Persistenz außerhalb des Standalone-Repo-Scopes.
 
 Die sichtbaren Gage-Teile hängen im Phineas-Modus bereits an stabilen
 `case-phineas-gage`-`asset-part`-Zielen. Picking und Snapshot-State sehen damit
