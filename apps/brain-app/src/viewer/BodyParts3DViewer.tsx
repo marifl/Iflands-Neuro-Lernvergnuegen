@@ -17,7 +17,13 @@ import PresetLegend from './PresetLegend'
 import GlobalColorLegend from './GlobalColorLegend'
 import IsolationBar from './IsolationBar'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
-import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
+import {
+  responsiveShellMode,
+  shellFlexDirection,
+  shouldRenderInlineSidebar,
+  shouldRenderMobileTreeDrawer,
+  viewportFlex,
+} from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
@@ -53,7 +59,7 @@ import { approachTransitionValue } from './transitions'
 import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
-import { useIsNarrow, useMediaQuery } from '../useMediaQuery'
+import { useIsNarrow, useIsTouchLandscape, useMediaQuery } from '../useMediaQuery'
 import {
   ROD_RADIUS_SHAFT,
   ROD_RADIUS_TIP,
@@ -771,8 +777,9 @@ export default function BodyParts3DViewer() {
     } satisfies Record<Atlas3dKey, ReadonlyMap<string, string[]> | undefined>
   }, [effectiveConfig?.catalog, catalogForAliases])
 
-  // Schmale Viewports: vertikaler Stack statt horizontalem Split.
   const isNarrow = useIsNarrow()
+  const isTouchLandscape = useIsTouchLandscape()
+  const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
   const prefersLight = useMediaQuery(PREFERS_LIGHT_QUERY)
   const prefersReducedMotion = useMediaQuery(PREFERS_REDUCED_MOTION_QUERY)
   const resolvedTheme = resolveThemePreference(themePreference, prefersLight)
@@ -791,8 +798,8 @@ export default function BodyParts3DViewer() {
   }, [contrast, focusRings, fontSize, motionPreference, prefersLight, prefersReducedMotion, quietMode, readableFont, themePreference])
 
   useEffect(() => {
-    if (!isNarrow || appMode !== 'explore') setMobileTreeOpen(false)
-  }, [isNarrow, appMode])
+    if (shellMode !== 'portrait-drawer' || appMode !== 'explore') setMobileTreeOpen(false)
+  }, [shellMode, appMode])
 
   useEffect(() => {
     if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
@@ -823,8 +830,8 @@ export default function BodyParts3DViewer() {
   }, [appMode, launched])
 
   useEffect(() => {
-    if (isNarrow && appMode === 'explore' && selected) setMobileTreeOpen(false)
-  }, [isNarrow, appMode, selected])
+    if (shellMode === 'portrait-drawer' && appMode === 'explore' && selected) setMobileTreeOpen(false)
+  }, [shellMode, appMode, selected])
 
   useEffect(() => {
     let active = true
@@ -920,8 +927,8 @@ export default function BodyParts3DViewer() {
   const isAtlas = appMode === 'atlas'
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
-  const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, isNarrow })
-  const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, isNarrow, mobileTreeOpen })
+  const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode })
+  const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, shellMode, mobileTreeOpen })
   const atlasTarget = bridgeFor(selected)
   const selectedSlugList = useMemo(() => [...selectedSlugs], [selectedSlugs])
   const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
@@ -1047,13 +1054,22 @@ export default function BodyParts3DViewer() {
         <IsolationBar />
 
         {/* ── Mitte: 3D-Viewport (dunkle "Cover-Flaeche") + Struktur-/Inhalts-Spalte ──
-            Breit: nebeneinander (Split). Schmal: gestapelt (3D oben, Spalte darunter). */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: isNarrow ? 'column' : 'row', minHeight: 0, position: 'relative' }}>
+            ResponsiveShellMode entscheidet Split, Portrait-Drawer oder Landscape-Rail. */}
+        <div
+          data-responsive-shell={shellMode}
+          style={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: shellFlexDirection(shellMode),
+            minHeight: 0,
+            position: 'relative',
+          }}
+        >
           <div
             style={{
-              // Schmal: feste Hoehen-Zone oben; breit: nimmt den Restraum links.
+              // Portrait: feste Hoehen-Zone oben; Split/Rail: nimmt den Restraum links.
               // Atlas-Modus hat keine Sidebar -> Viewport nimmt die volle Breite/Hoehe.
-              flex: viewportFlex({ appMode, isAtlas, isNarrow }),
+              flex: viewportFlex({ appMode, isAtlas, shellMode }),
               position: 'relative',
               minWidth: 0,
               minHeight: 0,
@@ -1184,7 +1200,7 @@ export default function BodyParts3DViewer() {
                 ) : null}
               </div>
             )}
-            {isNarrow && isExploreMode && !showLearningFlyout ? (
+            {shellMode === 'portrait-drawer' && isExploreMode && !showLearningFlyout ? (
               <button
                 type="button"
                 className="ed-btn"

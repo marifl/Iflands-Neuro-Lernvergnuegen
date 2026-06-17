@@ -5,6 +5,7 @@ import type { Scene } from '../types'
 
 vi.mock('../../useMediaQuery', () => ({
   useIsNarrow: () => false,
+  useIsTouchLandscape: () => false,
 }))
 
 vi.mock('../../viewer/AnimationPlayer', () => ({
