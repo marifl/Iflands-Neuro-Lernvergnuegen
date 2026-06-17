@@ -9,6 +9,7 @@ import { hueToHex, type ColorRole } from './colorPresets'
 import { useViewerStore } from './viewerStore'
 import ColorLegendPanel from './ColorLegendPanel'
 import { useIsNarrow } from '../useMediaQuery'
+import { COLOR_MODE_LABEL } from './colorModeDefinitions'
 
 type GlobalMode = Exclude<ColorMode, 'preset'>
 type CoreColorRole = Extract<ColorRole, 'cognition' | 'emotion' | 'motivation'>
@@ -165,7 +166,10 @@ export default function GlobalColorLegend() {
       >
         <span className="eyebrow">Färbung</span>
         <span style={{ fontFamily: 'var(--ed-display)', fontSize: 14, fontWeight: 700, lineHeight: 1.15 }}>
-          Rollen-Legende
+          {COLOR_MODE_LABEL[colorMode]}
+        </span>
+        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--g600)', lineHeight: 1.25 }}>
+          aktiver Färbungsmodus
         </span>
         <CoreRoleSwatches compact />
       </button>

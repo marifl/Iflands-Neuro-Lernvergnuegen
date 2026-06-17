@@ -140,6 +140,29 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: true })
   })
 
+  it('bietet alle Basis-Färbungsmodi und den Preset-Modus an', async () => {
+    fetchColorPresetsMock.mockResolvedValueOnce([{
+      id: 'test-figure',
+      label: 'Test-Figur',
+      intent: 'Testet die Preset-Auswahl.',
+      coverage: 'full',
+      dimOthers: true,
+      groups: [{ label: 'DLPFC', role: 'cognition', meaning: 'Testgruppe', hue: 210, buckets: ['dlpfc'] }],
+    }])
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Färbung/ }))
+    for (const label of ['Anatomisch', 'Funktionssystem', 'Lateralität', 'Region']) {
+      expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
+    }
+    fireEvent.click(screen.getByRole('button', { name: 'Funktionssystem' }))
+    expect(useViewerStore.getState().colorMode).toBe('function')
+
+    fireEvent.click(screen.getByRole('button', { name: /Funktionssystem/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
+    expect(useViewerStore.getState().colorMode).toBe('preset')
+  })
+
   it('bietet Snapshot-Export und -Import in der Fussleiste an', async () => {
     await renderFooterBar()
     fireEvent.click(screen.getByRole('button', { name: /Zustand/ }))
