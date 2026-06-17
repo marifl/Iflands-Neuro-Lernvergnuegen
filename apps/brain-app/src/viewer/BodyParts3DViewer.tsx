@@ -15,6 +15,7 @@ import FooterBar from './FooterBar'
 import { hasImportedSnapshotRouteForCurrentLocation } from './viewerStateSnapshot'
 import PresetLegend from './PresetLegend'
 import GlobalColorLegend from './GlobalColorLegend'
+import IsolationBar from './IsolationBar'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
 import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
@@ -681,65 +682,6 @@ function TampingIron() {
       <cylinderGeometry args={[ROD_RADIUS_TIP, ROD_RADIUS_SHAFT, 1, 24]} />
       <meshStandardMaterial color={ROD_COLOR} roughness={0.5} metalness={0.6} />
     </mesh>
-  )
-}
-
-/** Breadcrumb des Isolationsmodus: Alle ▸ Ober-Gruppe ▸ … ▸ fokussierter Knoten. */
-function IsolationBar() {
-  const path = useViewerStore((s) => s.isolationPath)
-  const lang = useViewerStore((s) => s.lang)
-  const setIsolated = useViewerStore((s) => s.setIsolated)
-  if (path.length === 0) return null
-  const crumb: React.CSSProperties = {
-    color: 'var(--g600)',
-    cursor: 'pointer',
-    fontFamily: 'var(--ed-mono)',
-    fontSize: 11,
-    letterSpacing: '0.04em',
-  }
-  return (
-    // Eigenes reserviertes Band direkt unter der Kopfleiste (kein schwebendes Overlay mehr -> keine
-    // Ueberlappung mit der Struktur-HUD). Volle Breite, links ausgerichtet, eigene Trennlinie.
-    <div
-      style={{
-        flex: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        gap: 9,
-        flexWrap: 'wrap',
-        padding: '7px 18px',
-        background: 'var(--paper)',
-        borderBottom: '1.5px solid var(--line)',
-      }}
-    >
-      <span className="eyebrow">Isolation</span>
-      <span style={crumb} onClick={() => setIsolated(null)}>
-        Alle
-      </span>
-      {path.map((c, i) => (
-        <span key={c.id} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-          <span style={{ color: 'var(--g500)', fontSize: 10 }}>›</span>
-          <span
-            style={{
-              ...crumb,
-              color: i === path.length - 1 ? 'var(--orange)' : 'var(--g600)',
-              fontWeight: i === path.length - 1 ? 600 : 400,
-            }}
-            onClick={() => setIsolated(c.id)}
-          >
-            {c.labels[lang]}
-          </span>
-        </span>
-      ))}
-      <span
-        role="button"
-        title="Isolation verlassen (Esc)"
-        onClick={() => setIsolated(null)}
-        style={{ marginLeft: 4, cursor: 'pointer', color: 'var(--g500)', fontFamily: 'var(--ed-mono)', fontSize: 12 }}
-      >
-        ✕
-      </span>
-    </div>
   )
 }
 
