@@ -16,6 +16,7 @@ import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
 import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
 import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
+import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExplanation'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
 
@@ -307,14 +308,16 @@ export default function FooterBar() {
               {colorMode === 'preset' && activePreset ? (
                 <>
                   <div style={{ height: 8 }} />
-                  <div className="eyebrow" style={{ margin: '0 0 4px' }}>Figur-Ansicht</div>
+                  <PresetGroupExplanation preset={activePreset} />
+                  <div className="eyebrow" style={{ margin: '0 0 4px' }}>Aktionen</div>
+                  <PresetReadOnlyAction label="Andere dimmen" active={activePreset.dimOthers} />
                   <PresetViewSlider
-                    label="Ungefärbte ausblenden"
+                    label="Andere ausblenden"
                     active={presetViewOptions.hideUncolored}
                     onChange={(hideUncolored) => setPresetViewOptions({ hideUncolored } satisfies Partial<PresetViewOptions>)}
                   />
                   <PresetViewSlider
-                    label="Relevante Areale fokussieren"
+                    label="Eingefärbte fokussieren"
                     active={presetViewOptions.focusColored}
                     onChange={(focusColored) => setPresetViewOptions({ focusColored } satisfies Partial<PresetViewOptions>)}
                   />
