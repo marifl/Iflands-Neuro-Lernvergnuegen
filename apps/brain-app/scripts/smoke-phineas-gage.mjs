@@ -81,7 +81,7 @@ async function validateStepOne(page, errors) {
     )
   }, { timeout: 15000 })
   await page.getByText(/Standalone-Gage-GLBs aus \/assets\/phineas/).waitFor({ timeout: 10000 })
-  await page.getByText(/importierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers/).waitFor({
+  await page.getByText(/generierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers/).waitFor({
     timeout: 10000,
   })
 

@@ -62,7 +62,7 @@ describe('Phineas-Gage-Szene', () => {
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
   })
 
-  it('trennt historische Stangenmaße vom importierten Runtime-Modell', () => {
+  it('trennt didaktische Rod-Phase vom generierten Runtime-Modell', () => {
     const final = rodSegmentForPhase(1)
 
     expect(HISTORICAL_ROD_LENGTH_MM).toBe(1100)
@@ -71,6 +71,7 @@ describe('Phineas-Gage-Szene', () => {
     expect(HISTORICAL_ROD_WEIGHT_KG).toBeCloseTo(5.9)
     expect(final.length).toBeLessThan(HISTORICAL_ROD_LENGTH_MM / 3)
     expect(ROD_RADIUS_SHAFT * 2).toBeLessThan(HISTORICAL_ROD_SHAFT_DIAMETER_MM)
-    expect(PHINEAS_GAGE.rodScaleNoteDe).toContain('importierte Eisenstangen-GLB')
+    expect(PHINEAS_GAGE.assetNoteDe).toContain('Transform-Vertrag')
+    expect(PHINEAS_GAGE.rodScaleNoteDe).toContain('generierte Eisenstangen-GLB')
   })
 })

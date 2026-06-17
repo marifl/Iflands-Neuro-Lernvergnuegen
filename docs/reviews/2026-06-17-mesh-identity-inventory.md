@@ -18,7 +18,7 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 | `bodyparts3d-head-context` | `bodyparts3d-taro` | 314 | 313 | 1 | 313 | 0 | n/a |
 | `phineas-gage-skull-lod` | `phineas-gage-legacy-figs3d` | 2 | 1 | 1 | 1 | 0 | ok |
 | `phineas-gage-skull-calvarium-cut-lod` | `phineas-gage-legacy-figs3d` | 2 | 1 | 1 | 1 | 0 | ok |
-| `phineas-gage-iron-rod` | `phineas-gage-legacy-figs3d` | 2 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-iron-rod` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
 
 ## Details
 
@@ -98,13 +98,13 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 
 - URI: `/assets/phineas/phineas-gage-iron-rod.glb`
 - Manifest: `/assets/phineas/asset-manifest.json`
-- Größe: 0.00 MiB
-- SHA-256: `sha256:b25fe4a0bd8459df9db793876a92f060602b102ce0e3a0ec6e77c8606e46bd5a`
-- Nodes: 2 gesamt, 2 benannt, 0 unbenannt
+- Größe: 0.01 MiB
+- SHA-256: `sha256:5674703efbf611cbffc2acf9a401a3c54c5eab170eade72cea4949e9ac0af751`
+- Nodes: 1 gesamt, 1 benannt, 0 unbenannt
 - Meshes: 1 gesamt, 1 benannt, 0 unbenannt
 - Materials: 1
 - Beispiel-Meshes: `phineas-gage-iron-rod`
-- Beispiel-Materials: `(unnamed-material)`
+- Beispiel-Materials: `phineas-gage-iron`
 
 ## Drift-Gates
 

@@ -21,3 +21,10 @@ verweist.
 Die Dateien sind Quellenmaterial. Sie sind nicht automatisch frei für eine
 öffentliche App-Auslieferung; vor Veröffentlichung bleiben die jeweiligen
 Originalbedingungen maßgeblich.
+
+Der Viewer-Transform-Vertrag liegt in
+`apps/brain-app/public/assets/phineas/transform-contract.json`. Die
+Eisenstangen-Geometrie ist projektgeneriert aus den dort dokumentierten
+historischen Maßen und verweist nur auf diese Quellen. Schädel und
+Calvarium-Cut bleiben lokale Kandidaten mit Manifest-Lizenzwarnung bis zur
+finalen öffentlichen Attribution.

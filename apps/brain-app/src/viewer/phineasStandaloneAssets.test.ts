@@ -3,6 +3,14 @@ import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { parseAssetManifestDocument } from './assetManifest'
+import {
+  HISTORICAL_ROD_LENGTH_MM,
+  HISTORICAL_ROD_SHAFT_DIAMETER_MM,
+  HISTORICAL_ROD_TIP_DIAMETER_MM,
+  HISTORICAL_ROD_WEIGHT_KG,
+  ROD_ENTRY,
+  ROD_EXIT,
+} from './phineasGage'
 
 const appRoot = process.cwd()
 const repoRoot = resolve(appRoot, '../..')
@@ -89,5 +97,50 @@ describe('Phineas-Gage-Standalone-Assets', () => {
       expect(statSync(file).size).toBeGreaterThan(1000)
       expect(sha256(file)).toBe(expectedHash)
     }
+  })
+
+  it('pinnt den Quellen- und Transform-Vertrag fuer die Gage-Geometrie', () => {
+    const contract = readJsonFile(resolve(phineasAssetsRoot, 'transform-contract.json')) as {
+      schemaVersion: unknown
+      contractId: unknown
+      unit: unknown
+      upAxis: unknown
+      sources: Array<{ id: string; localPath: string; role: string }>
+      trajectory: { entry: unknown; exit: unknown; primarySourceId: unknown }
+      ironRod: {
+        assetId: unknown
+        uri: unknown
+        nodeName: unknown
+        generationScript: unknown
+        lengthMm: unknown
+        shaftDiameterMm: unknown
+        tipDiameterMm: unknown
+        weightKg: unknown
+      }
+    }
+
+    expect(contract.schemaVersion).toBe(1)
+    expect(contract.contractId).toBe('phineas-gage-transform-v1')
+    expect(contract.unit).toBe('millimeter')
+    expect(contract.upAxis).toBe('y-up')
+    expect(contract.sources.map((source) => source.id).sort()).toEqual(['harlow1848', 'ratiu2004', 'vanhorn2012'])
+    for (const source of contract.sources) {
+      expect(existsSync(resolve(repoRoot, source.localPath))).toBe(true)
+      expect(source.role.length).toBeGreaterThan(12)
+    }
+
+    expect(contract.trajectory.primarySourceId).toBe('vanhorn2012')
+    expect(contract.trajectory.entry).toEqual(ROD_ENTRY)
+    expect(contract.trajectory.exit).toEqual(ROD_EXIT)
+    expect(contract.ironRod).toMatchObject({
+      assetId: 'phineas-gage-iron-rod',
+      uri: '/assets/phineas/phineas-gage-iron-rod.glb',
+      nodeName: 'phineas-gage-iron-rod',
+      generationScript: 'apps/brain-app/scripts/generate-phineas-iron-rod.mjs',
+      lengthMm: HISTORICAL_ROD_LENGTH_MM,
+      shaftDiameterMm: HISTORICAL_ROD_SHAFT_DIAMETER_MM,
+      tipDiameterMm: HISTORICAL_ROD_TIP_DIAMETER_MM,
+      weightKg: HISTORICAL_ROD_WEIGHT_KG,
+    })
   })
 })

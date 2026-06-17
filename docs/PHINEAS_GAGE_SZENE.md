@@ -25,6 +25,7 @@ Die Gage-Kandidaten liegen jetzt im Standalone-Repo:
 3. `apps/brain-app/public/assets/phineas/phineas-gage-iron-rod.glb`
 4. `apps/brain-app/public/assets/phineas/gage-reconstructions.json`
 5. `apps/brain-app/public/assets/phineas/asset-manifest.json`
+6. `apps/brain-app/public/assets/phineas/transform-contract.json`
 
 Die wissenschaftlichen Unterlagen liegen unter `raw_protected/phineas-gage/`.
 Damit verweist der Standalone-Bestand nicht mehr auf lokale Dateien außerhalb
@@ -32,20 +33,30 @@ dieses Repos.
 
 Der aktuelle Viewer rendert im Phineas-Modus die Standalone-Gage-GLBs:
 Vollschädel im ersten Schritt, Calvarium-Cut in den Durchtritts-/
-Austrittsschritten und das importierte Eisenstangenmodell. Die generischen
+Austrittsschritten und das generierte Eisenstangenmodell. Die generischen
 Kontextmodelle `apps/brain-app/public/assets/context/skull.glb`, `head.glb` und
 `skull.json` bleiben für Explorer und Strukturbaum erhalten, sind aber nicht
 mehr der Phineas-Ersatzpfad.
+
+Der Transform-Vertrag `transform-contract.json` pinnt Einheit, Viewer-Achsen,
+Quellen, Eintritts-/Austrittspunkt und historische Stangenmaße. Die
+Eisenstange wird mit `apps/brain-app/scripts/generate-phineas-iron-rod.mjs`
+aus diesem Vertrag erzeugt und mit `pnpm --dir apps/brain-app run
+verify:phineas-transform` nach GLB-Load gemessen: Länge 1100 mm,
+Schaftdurchmesser 32 mm, Spitzendurchmesser 6,4 mm, ausgerichtet entlang der
+Phineas-Trajektorie.
 
 Die drei sichtbaren Gage-Teile sind als Slots der Collection
 `case-phineas-gage` registriert und tragen stabile `asset-part`-
 `SequenceTargetRef`s. Dadurch verwenden Sequenzlogik, Picking und ObjectGraph
 dieselben IDs für Vollschädel, Calvarium-Cut und Eisenstange.
 
-Die UI benennt weiter die Modellgrenze: Die Gage-GLBs sind lokale
+Die UI benennt weiter die Modellgrenze: Schädel und Calvarium sind lokale
 Standalone-Kandidaten, Attribution/Lizenz sind im Manifest markiert und müssen
-vor öffentlicher Auslieferung final gepinnt werden. Die Läsionsmarkierung bleibt
-eine didaktische TARO-Hervorhebung, keine voxelgenaue Schadenskarte.
+vor öffentlicher Auslieferung final gepinnt werden. Die Eisenstange ist
+projektgenerierte Geometrie aus dokumentierten historischen Maßen. Die
+Läsionsmarkierung bleibt eine didaktische TARO-Hervorhebung, keine voxelgenaue
+Schadenskarte.
 
 ## Implementierungsannahmen
 
@@ -55,6 +66,6 @@ eine didaktische TARO-Hervorhebung, keine voxelgenaue Schadenskarte.
 4. Läsionsmarkierung: linke orbitofrontale und ventromediale präfrontale
    TARO-Strukturen, nicht als voxelgenaue Schadenskarte.
 5. Animation: `rodPhase` trennt Eintritt, Durchtritt und Austritt im
-   Fallstudienablauf. Sichtbar ist im Phineas-Modus das importierte
+   Fallstudienablauf. Sichtbar ist im Phineas-Modus das generierte
    Eisenstangen-GLB; `rodPhase` steuert die didaktische Schrittlogik, keine
    physikalische Ballistik.

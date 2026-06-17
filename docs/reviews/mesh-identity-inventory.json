@@ -208,11 +208,11 @@
       "contractId": "phineas-gage-legacy-figs3d",
       "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
-      "byteSize": 1344,
-      "sha256": "sha256:b25fe4a0bd8459df9db793876a92f060602b102ce0e3a0ec6e77c8606e46bd5a",
+      "byteSize": 12232,
+      "sha256": "sha256:5674703efbf611cbffc2acf9a401a3c54c5eab170eade72cea4949e9ac0af751",
       "hashMatchesManifest": true,
-      "nodeCount": 2,
-      "namedNodeCount": 2,
+      "nodeCount": 1,
+      "namedNodeCount": 1,
       "unnamedNodeCount": 0,
       "meshCount": 1,
       "namedMeshCount": 1,
@@ -226,7 +226,7 @@
         "phineas-gage-iron-rod"
       ],
       "sampleMaterialNames": [
-        "(unnamed-material)"
+        "phineas-gage-iron"
       ]
     }
   ],
