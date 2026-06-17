@@ -1,9 +1,15 @@
-// Smoke FP (P4): frontopolar (BA10) schaltet Badre 11-07 frei. Nach P4 zeigt der Bucket auf das
-// echte Julich-Areal fp1 (statt geometrischer Pol-Carve). Prueft, dass das Preset aktivierbar ist,
-// der fp1-Sub-Patch sichtbar + gefaerbt ist und als anteriore Frontalpol-Kappe sitzt (carve-Sanity).
-import { chromium } from '@playwright/test'
+// Smoke FP (P4): frontopolar (BA10) schaltet Badre 11-07 frei. Der Bucket muss
+// auf die kanonischen frontopolar-Meshes zeigen. Prueft, dass das Preset aktivierbar ist,
+// der Sub-Patch sichtbar + gefaerbt ist und als anteriore Frontalpol-Kappe sitzt.
+import { createRequire } from 'node:module'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const BASE = process.env.SMOKE_URL ?? 'http://localhost:5188'
+const here = dirname(fileURLToPath(import.meta.url))
+const appRoot = resolve(here, '../../apps/brain-app')
+const appRequire = createRequire(resolve(appRoot, 'package.json'))
+const { chromium } = appRequire('@playwright/test')
 const browser = await chromium.launch()
 const page = await browser.newPage()
 page.on('pageerror', (e) => console.log('  [pageerror]', e.message))
@@ -31,7 +37,7 @@ const info = await page.evaluate(() => {
   let root = window.__THREE_SCENE__; while (root.parent) root = root.parent
   let fp = null, sfg = null
   root.traverse((o) => {
-    if (o.isMesh && o.name === 'left-julich-fp1') fp = o
+    if (o.isMesh && o.name === 'left-frontopolar') fp = o
     if (o.isMesh && o.name === 'left-superior-frontal-gyrus') sfg = o
   })
   if (!fp || !sfg) return { error: `fp=${!!fp} sfg=${!!sfg}` }
@@ -59,7 +65,7 @@ if (info.error) { console.log('  FAIL:', info.error); fails++ } else {
   check(info.anterior, `frontopolar sitzt anterior (Pol-Z ${info.fpZ} > SFG-Z ${info.sfgZ})`)
 }
 
-await page.screenshot({ path: 'scripts/atlas/work/smoke-frontopolar.png' })
+await page.screenshot({ path: resolve(here, 'work/smoke-frontopolar.png') })
 await browser.close()
 console.log(fails === 0 ? '\nSMOKE OK' : `\nSMOKE FAIL (${fails})`)
 process.exit(fails === 0 ? 0 : 1)

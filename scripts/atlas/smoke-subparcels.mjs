@@ -26,6 +26,11 @@ const scenes = Object.entries(config.configurations)
   .map(([configName, cfg]) => ({
     configName,
     sceneId: cfg.overlay.scene,
+    skipReason: cfg.colors?.preset
+      ? `Figure-Preset "${cfg.colors.preset}" rendert die sichtbaren Subparcels; smoke-figures prueft diesen Pfad.`
+      : cfg.view?.carve_on_taro && cfg.view.carve_on_taro !== 'off'
+        ? `Atlas-Carve "${cfg.view.carve_on_taro}" rendert den sichtbaren Pfad; smoke-carve/Visual-Specs pruefen diesen Pfad.`
+        : null,
     meshes: expectedMeshes(cfg.regions.scene_regions),
   }))
 
@@ -34,7 +39,11 @@ const page = await browser.newPage()
 page.on('pageerror', (e) => { console.error('[pageerror]', e.message); process.exitCode = 1 })
 
 async function checkScene(scene) {
-  await page.goto(`${BASE}/?scene=${scene.sceneId}`, { waitUntil: 'networkidle', timeout: TIMEOUT })
+  if (scene.skipReason) {
+    console.log(`SKIP ${scene.sceneId}: config=${scene.configName} uebersprungen - ${scene.skipReason}`)
+    return
+  }
+  await page.goto(`${BASE}/?config=${scene.configName}&scene=${scene.sceneId}`, { waitUntil: 'networkidle', timeout: TIMEOUT })
   await page.waitForTimeout(2000)  // R3F-Render abwarten
 
   const result = await page.evaluate(({ expected }) => {
