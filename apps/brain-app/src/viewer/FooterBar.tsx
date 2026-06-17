@@ -18,6 +18,7 @@ import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitio
 import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
 import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExplanation'
 import SettingsPanel from './SettingsPanel'
+import { ShellControlButton } from './ShellStatePrimitives'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | 'settings' | null
 
@@ -42,22 +43,24 @@ const CUT_LABEL: Record<CutAxis, string> = {
 function Item({
   active,
   disabled,
+  disabledReason,
   title,
   onClick,
   children,
 }: {
   active?: boolean
   disabled?: boolean
+  disabledReason?: string
   title?: string
   onClick: () => void
   children: React.ReactNode
 }) {
+  const reason = disabled ? disabledReason ?? title ?? 'Aktion aktuell nicht verfuegbar' : null
   return (
-    <button
-      type="button"
-      className={`ed-btn${active ? ' active' : ''}`}
+    <ShellControlButton
+      active={active}
       onClick={onClick}
-      disabled={disabled}
+      disabledReason={reason}
       title={title}
       style={{
         width: '100%',
@@ -69,7 +72,7 @@ function Item({
       }}
     >
       {children}
-    </button>
+    </ShellControlButton>
   )
 }
 
@@ -411,6 +414,7 @@ export default function FooterBar() {
                     key={mode}
                     active={authoringTransformMode === mode}
                     disabled={!activeTransformTarget}
+                    disabledReason="Erst ein Authoring-Objekt auswählen"
                     onClick={() => setAuthoringTransformMode(mode)}
                   >
                     {TRANSFORM_MODE_LABEL[mode]}
@@ -421,6 +425,7 @@ export default function FooterBar() {
                     key={space}
                     active={authoringTransformSpace === space}
                     disabled={!activeTransformTarget}
+                    disabledReason="Erst ein Authoring-Objekt auswählen"
                     onClick={() => setAuthoringTransformSpace(space)}
                   >
                     {TRANSFORM_SPACE_LABEL[space]}
@@ -429,6 +434,7 @@ export default function FooterBar() {
                 <Item
                   active={authoringTransformSnap}
                   disabled={!activeTransformTarget}
+                  disabledReason="Erst ein Authoring-Objekt auswählen"
                   onClick={() => setAuthoringTransformSnap(!authoringTransformSnap)}
                 >
                   Snap {authoringTransformSnap ? 'an' : 'aus'}
@@ -436,12 +442,14 @@ export default function FooterBar() {
                 <Item
                   active={authoringTransformFrozen}
                   disabled={!activeTransformTarget}
+                  disabledReason="Erst ein Authoring-Objekt auswählen"
                   onClick={() => setAuthoringTransformFrozen(!authoringTransformFrozen)}
                 >
                   {authoringTransformFrozen ? 'Gizmo fixiert' : 'Gizmo frei'}
                 </Item>
                 <Item
                   disabled={!activeTransformTarget || authoringTransformFrozen}
+                  disabledReason={!activeTransformTarget ? 'Erst ein Authoring-Objekt auswählen' : 'Gizmo ist fixiert'}
                   onClick={() => {
                     if (!activeTransformTarget) return
                     applyActiveTransform(
@@ -454,6 +462,7 @@ export default function FooterBar() {
                 </Item>
                 <Item
                   disabled={!activeTransformTarget || authoringTransformFrozen}
+                  disabledReason={!activeTransformTarget ? 'Erst ein Authoring-Objekt auswählen' : 'Gizmo ist fixiert'}
                   onClick={() => applyActiveTransform(IDENTITY_AUTHORING_TRANSFORM, 'Reset Transform')}
                 >
                   Reset Transform
@@ -462,6 +471,7 @@ export default function FooterBar() {
                 <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
                 <Item
                   disabled={!selectedSlugList.length}
+                  disabledReason="Erst eine Struktur auswählen"
                   onClick={() => {
                     if (!selectedSlugList.length) return
                     setHidden(selectedSlugList, selectionHasVisibleSlugs)
@@ -472,6 +482,7 @@ export default function FooterBar() {
                 </Item>
                 <Item
                   disabled={!selected}
+                  disabledReason="Erst eine Struktur auswählen"
                   onClick={() => {
                     if (!selected) return
                     setIsolated(selected)
@@ -482,6 +493,7 @@ export default function FooterBar() {
                 </Item>
                 <Item
                   disabled={!selected}
+                  disabledReason="Erst eine Struktur auswählen"
                   onClick={() => {
                     select(null)
                     close()
@@ -493,6 +505,7 @@ export default function FooterBar() {
                 <div className="eyebrow" style={{ marginBottom: 4 }}>Ansicht zurücksetzen</div>
                 <Item
                   disabled={!hidden.size}
+                  disabledReason="Keine ausgeblendeten Strukturen"
                   onClick={() => {
                     clearHidden()
                     close()
@@ -502,6 +515,7 @@ export default function FooterBar() {
                 </Item>
                 <Item
                   disabled={!isolated}
+                  disabledReason="Keine Isolation aktiv"
                   onClick={() => {
                     isolateUp()
                     close()
@@ -511,6 +525,7 @@ export default function FooterBar() {
                 </Item>
                 <Item
                   disabled={!isolated}
+                  disabledReason="Keine Isolation aktiv"
                   onClick={() => {
                     setIsolated(null)
                     close()

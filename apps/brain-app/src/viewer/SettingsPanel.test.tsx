@@ -85,7 +85,17 @@ describe('SettingsPanel Daten & Konto', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Lernfortschritt zurücksetzen' }))
 
     expect(useStudentProgressStore.getState().progress).toBeNull()
-    expect(screen.getByText('Kein Lernfortschritt gespeichert')).toBeInTheDocument()
+    expect(screen.getAllByText('Kein Lernfortschritt gespeichert').length).toBeGreaterThan(0)
+  })
+
+  it('erklaert den deaktivierten Fortschritts-Reset sichtbar', () => {
+    renderDataAccountPanel()
+
+    const reset = screen.getByRole('button', { name: 'Lernfortschritt zurücksetzen' })
+    expect(reset).toHaveAttribute('aria-disabled', 'true')
+    expect(reset).not.toBeDisabled()
+    expect(reset).toHaveAccessibleDescription('Kein Lernfortschritt gespeichert')
+    expect(screen.getAllByText('Kein Lernfortschritt gespeichert').length).toBeGreaterThan(0)
   })
 
   it('importiert Unterrichts-Snapshots ueber Daten & Konto', async () => {

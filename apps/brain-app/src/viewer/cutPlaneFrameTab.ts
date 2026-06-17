@@ -65,6 +65,9 @@ export function configureCutPlaneFrameTabButton(button: HTMLButtonElement, axis:
   button.style.setProperty('--cut-axis-color', cssColor(CUT_AXIS_COLORS[axis], 0.92))
   button.style.setProperty('--cut-axis-color-soft', cssColor(CUT_AXIS_COLORS[axis], 0.48))
   button.style.setProperty('--cut-axis-color-wash', cssColor(CUT_AXIS_COLORS[axis], 0.18))
+  button.style.setProperty('--shell-cut-axis-color', cssColor(CUT_AXIS_COLORS[axis], 0.92))
+  button.style.setProperty('--shell-cut-axis-color-soft', cssColor(CUT_AXIS_COLORS[axis], 0.48))
+  button.style.setProperty('--shell-cut-axis-color-wash', cssColor(CUT_AXIS_COLORS[axis], 0.18))
 
   const label = document.createElement('span')
   label.dataset.cutPlaneFrameTabLabel = 'true'

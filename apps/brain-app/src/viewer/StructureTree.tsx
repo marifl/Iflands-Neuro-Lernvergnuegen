@@ -11,6 +11,7 @@ import { useIsNarrow, useIsTouchLandscape } from '../useMediaQuery'
 import { buildExplorerTreeRoots, type ExplorerTreeRoot } from './knowledgeRuntimeAdapter'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from './explorerShellLayout'
 import { ExplorerCutControls, ExplorerSelectionActions } from './ExplorerPanelControls'
+import { ShellStateBlock } from './ShellStatePrimitives'
 
 const ACCENT = 'var(--orange)'
 
@@ -404,9 +405,7 @@ export default function StructureTree() {
           searchHits.length ? (
             searchHits.map((node) => <StructureRow key={node.id} node={node} depth={0} />)
           ) : (
-            <div style={{ padding: 12, color: 'var(--g500)', fontFamily: 'var(--ed-mono)', fontSize: 11, letterSpacing: '0.04em' }}>
-              Keine Treffer.
-            </div>
+            <ShellStateBlock state="empty" title="Keine Treffer." />
           )
         ) : (
           <>

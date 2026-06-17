@@ -27,6 +27,7 @@ import {
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
+import { ShellControlButton } from './ShellStatePrimitives'
 import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
 import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
 import {
@@ -968,10 +969,11 @@ export default function BodyParts3DViewer() {
         className="ed-frame app-shell"
         aria-hidden={!launched}
         inert={!launched ? true : undefined}
-        style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--paper)' }}
+        style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--shell-panel-bg)' }}
       >
         {/* ── Kopfleiste (fhead) ── */}
         <div
+          className="ed-head"
           style={{
             position: 'relative',
             flex: 'none',
@@ -980,7 +982,6 @@ export default function BodyParts3DViewer() {
             alignItems: 'center',
             gap: 12,
             padding: isNarrow ? '9px 12px' : '12px 18px',
-            borderBottom: '1.5px solid var(--line)',
           }}
         >
           <div style={{ display: 'flex', alignItems: 'center', gap: 11, flex: 'none' }}>
@@ -1152,15 +1153,13 @@ export default function BodyParts3DViewer() {
                 </div>
                 {isNarrow && selected ? (
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 9, pointerEvents: 'auto' }}>
-                    <button
-                      type="button"
-                      className="ed-btn"
-                      disabled={!selectedSlugList.length}
+                    <ShellControlButton
+                      disabledReason={selectedSlugList.length ? null : 'Erst eine Struktur auswählen'}
                       style={{ padding: '6px 9px' }}
                       onClick={toggleSelectedVisibility}
                     >
                       {selectionHasVisibleSlugs ? 'Ausblenden' : 'Einblenden'}
-                    </button>
+                    </ShellControlButton>
                     <button
                       type="button"
                       className="ed-btn"

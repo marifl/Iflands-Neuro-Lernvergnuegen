@@ -119,6 +119,20 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().hidden.has('area-a')).toBe(false)
   })
 
+  it('erklaert deaktivierte Werkzeug-Aktionen im Footer sichtbar', async () => {
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
+    const isolate = screen.getByRole('button', { name: 'Auswahl isolieren' })
+
+    expect(isolate).toHaveAttribute('aria-disabled', 'true')
+    expect(isolate).not.toBeDisabled()
+    expect(isolate).toHaveAccessibleDescription('Erst eine Struktur auswählen')
+
+    fireEvent.click(isolate)
+    expect(useViewerStore.getState().isolated).toBeNull()
+  })
+
   it('macht Isolation und Reset ohne Tastatur erreichbar', async () => {
     useViewerStore.setState({ selected: 'area-a', selectedSlugs: new Set(['area-a']), hidden: new Set(['area-b']) })
     await renderFooterBar()
