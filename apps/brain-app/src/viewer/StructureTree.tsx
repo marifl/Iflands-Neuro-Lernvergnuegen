@@ -9,6 +9,7 @@ import { useViewerStore } from './viewerStore'
 import { filterStructureSearch } from './structureSearch'
 import { useIsNarrow, useIsTouchLandscape } from '../useMediaQuery'
 import { buildExplorerTreeRoots, type ExplorerTreeRoot } from './knowledgeRuntimeAdapter'
+import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from './explorerShellLayout'
 
 const ACCENT = 'var(--orange)'
 
@@ -278,6 +279,7 @@ export default function StructureTree() {
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const isNarrow = useIsNarrow()
   const isTouchLandscape = useIsTouchLandscape()
+  const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
 
   const visibleTree = useMemo(() => {
     if (!ontology) return null
@@ -306,11 +308,10 @@ export default function StructureTree() {
       className="ed-panel scrollbar-thin"
       data-testid="structure-tree-panel"
       style={{
-        // Breit: feste Spalte rechts. Schmal: volle Breite unter dem 3D.
-        flex: isNarrow ? '1 1 auto' : 'none',
-        width: isNarrow ? '100%' : isTouchLandscape ? 'min(44vw, 520px)' : 340,
-        borderLeft: isNarrow ? undefined : '1.5px solid var(--line)',
-        borderTop: isNarrow ? '1.5px solid var(--line)' : undefined,
+        // Portrait: volle Breite unter dem 3D. Landscape/Desktop: rechte Rail.
+        flex: sidePanelFlex(shellMode),
+        width: sidePanelWidth({ shellMode, desktopWidth: shellMode === 'landscape-rail' ? 520 : 340 }),
+        ...sidePanelBorder({ shellMode }),
         display: 'flex',
         flexDirection: 'column',
         minHeight: 0,

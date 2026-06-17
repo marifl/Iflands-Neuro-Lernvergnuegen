@@ -169,6 +169,32 @@ Sidebar und Viewport-Zuschnitt nach `appMode`.
 Farbe, Schnitt, Ansicht, Kontext und Snapshot. Neue globale Werkzeuge gehören
 hier nur hin, wenn sie den Dozenten- oder Studentenfluss vereinfachen.
 
+### Responsive Shell-Vertrag
+
+`apps/brain-app/src/viewer/explorerShellLayout.ts` benennt den
+Responsive-Vertrag der Shell. Dieser Vertrag ist die Grenze für V2-Shell-
+Arbeit; einzelne Komponenten dürfen `isNarrow` nicht abweichend als eigenen
+Shell-Modus interpretieren.
+
+1. `desktop-split`: breite Maus-/Desktop-Viewports. 3D-Bühne und rechte
+   Sidebar/Rail stehen nebeneinander.
+2. `portrait-drawer`: Phone- und Tablet-Portrait. Der Explorer-Strukturbaum
+   öffnet als Drawer; Lern- und Fallstudieninhalte liegen unter der 3D-Bühne.
+3. `landscape-rail`: grobe Touch-Landscape-Viewports bis 1100 px. Die Shell
+   bleibt im horizontalen Split und nutzt eine rechte Rail statt des
+   Portrait-Drawers.
+
+Lokale Browser-Evidence läuft über:
+
+```bash
+cd apps/brain-app
+pnpm dev -- --host 127.0.0.1 --port 5173
+SMOKE_URL=http://127.0.0.1:5173 pnpm smoke:responsive-layout
+```
+
+Dieser Smoke ist bewusst lokal. GitHub Actions dürfen daraus keinen
+Playwright-/E2E-Schritt ableiten.
+
 ### Studentischer Fortschritt
 
 Studentisches Lernen nutzt denselben `learn`-Modus und denselben

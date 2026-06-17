@@ -4,8 +4,9 @@ import ErpChart from './ErpChart'
 import Flowchart from './Flowchart'
 import AnimationPlayer from '../../viewer/AnimationPlayer'
 import PhineasGageScene from '../../viewer/PhineasGageScene'
-import { useIsNarrow } from '../../useMediaQuery'
+import { useIsNarrow, useIsTouchLandscape } from '../../useMediaQuery'
 import PresenterChrome from '../PresenterChrome'
+import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
 
 /** Waehlt den Overlay-Renderer nach scene.overlay.kind. */
 function renderOverlay(scene: Scene) {
@@ -33,16 +34,17 @@ export function deepeningIdsForScene(scene: Scene): Array<'basalganglia' | 'phin
  *  Kein Overlay ueber dem 3D — der Viewport behaelt seinen vollen Raum daneben. */
 export default function OverlayPanel({ scene }: { scene: Scene }) {
   const isNarrow = useIsNarrow()
+  const isTouchLandscape = useIsTouchLandscape()
+  const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
   const deepenings = deepeningIdsForScene(scene)
   return (
     <aside
       className="ed-panel"
       style={{
-        // Breit: feste Spalte rechts. Schmal: volle Breite unter dem 3D, nimmt den Restraum.
-        flex: isNarrow ? '1 1 auto' : 'none',
-        width: isNarrow ? '100%' : WIDTH_BY_SIZE[scene.overlay.size],
-        borderLeft: isNarrow ? undefined : '1.5px solid var(--line)',
-        borderTop: isNarrow ? '1.5px solid var(--line)' : undefined,
+        // Portrait: volle Breite unter dem 3D; Landscape/Desktop: rechte Rail.
+        flex: sidePanelFlex(shellMode),
+        width: sidePanelWidth({ shellMode, desktopWidth: WIDTH_BY_SIZE[scene.overlay.size] }),
+        ...sidePanelBorder({ shellMode }),
         display: 'flex',
         flexDirection: 'column',
         minHeight: 0,

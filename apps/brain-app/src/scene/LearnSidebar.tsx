@@ -6,7 +6,8 @@ import { regionsToMeshes } from './brainBridge'
 import { ROUTE_CHANGE_EVENT, parseLocation, replaceCanonicalLocation, type CanonicalQueryInput } from './router'
 import { nextIndex, prevIndex } from './nav'
 import OverlayPanel from './overlays/OverlayPanel'
-import { useIsNarrow } from '../useMediaQuery'
+import { useIsNarrow, useIsTouchLandscape } from '../useMediaQuery'
+import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../viewer/explorerShellLayout'
 import { useSettingsStore } from '../viewer/settingsStore'
 import {
   createStudentProgressState,
@@ -20,6 +21,8 @@ import {
 export default function LearnSidebar() {
   const [loadError, setLoadError] = useState<Error | null>(null)
   const isNarrow = useIsNarrow()
+  const isTouchLandscape = useIsTouchLandscape()
+  const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
   const scenes = useSceneStore((s) => s.scenes)
   const index = useSceneStore((s) => s.index)
   const step = useSceneStore((s) => s.step)
@@ -114,9 +117,11 @@ export default function LearnSidebar() {
   return (
     <aside
       style={
-        isNarrow
-          ? { flex: '1 1 auto', width: '100%', borderTop: '1.5px solid var(--line)' }
-          : { flex: 'none', width: 460, borderLeft: '1.5px solid var(--line)' }
+        {
+          flex: sidePanelFlex(shellMode),
+          width: sidePanelWidth({ shellMode, desktopWidth: 460 }),
+          ...sidePanelBorder({ shellMode }),
+        }
       }
     />
   )
