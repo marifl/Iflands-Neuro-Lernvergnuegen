@@ -164,12 +164,20 @@ export default function CutPickBridge() {
       const dy = ev.clientY - down.current.y
       down.current = null
       if (dx * dx + dy * dy > DRAG_PX * DRAG_PX) return // Orbit-Drag (Kamera), kein Pick/Deselect
+      const pickStartedAt = performance.now()
+      const recordPick = (hit: boolean) => {
+        const globals = window as unknown as {
+          __brainPerformanceGateRecordPick?: (latencyMs: number, hit: boolean) => void
+        }
+        globals.__brainPerformanceGateRecordPick?.(performance.now() - pickStartedAt, hit)
+      }
       const { target, area, areaSlug } = hitAt(ev)
       // Liegt ein Atlas-Areal (Carve-Overlay) unter dem Klick -> dessen Name hat Vorrang.
       if (area) {
         setPickedAtlasArea(area, areaSlug)
         setHoveredAtlasArea(area, areaSlug)
         debugPickTarget(null)
+        recordPick(true)
         return
       }
       setPickedAtlasArea(null, null)
@@ -178,9 +186,11 @@ export default function CutPickBridge() {
         pickTarget(target, { additive })
         updateAuthoringTarget(target)
         debugPickTarget(target)
+        recordPick(true)
       } else if (!additive) {
         select(null) // Klick in den leeren Raum hebt die Auswahl auf
         debugPickTarget(null)
+        recordPick(false)
       }
     }
     const onPointerMove = (ev: PointerEvent) => {
