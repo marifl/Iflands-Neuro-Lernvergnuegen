@@ -282,7 +282,7 @@ export default function FooterBar() {
     },
     {
       key: 'color',
-      eyebrow: 'Farbe',
+      eyebrow: 'Färbung',
       label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_LABEL[colorMode],
       icon: <Palette {...FOOTER_ICON_PROPS} />,
       content: (
@@ -292,12 +292,12 @@ export default function FooterBar() {
               {COLOR_LABEL[c]}
             </Item>
           ))}
-          {/* Figur-spezifische Faerbungen (Lehrbuch-Abbildungen) — didaktische Gruppen-Farben. */}
+          {/* Figur-spezifische Färbungen (Lehrbuch-Abbildungen) — didaktische Gruppen-Farben. */}
           {presets.length > 0 ? (
             <>
               <div className="eyebrow" style={{ margin: '8px 0 4px' }}>Figur-Färbungen</div>
               {presets.map((p) => {
-                // Noch nicht baubares Preset (Geometrie-Luecke) deaktivieren + Grund zeigen,
+                // Noch nicht baubares Preset (Geometrie-Lücke) deaktivieren + Grund zeigen,
                 // statt beim Klick den Viewer crashen zu lassen (fail-loud am richtigen Ort).
                 const issue = presetIssue(p)
                 return (

@@ -124,7 +124,7 @@ describe('FooterBar', () => {
     }])
     await renderFooterBar()
 
-    fireEvent.click(screen.getByRole('button', { name: /Farbe/ }))
+    fireEvent.click(screen.getByRole('button', { name: /Färbung/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
     expect(useViewerStore.getState().activePreset?.id).toBe('test-figure')
 
