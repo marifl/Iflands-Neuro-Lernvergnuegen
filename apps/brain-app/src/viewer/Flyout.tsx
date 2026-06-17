@@ -10,13 +10,27 @@ interface FlyoutProps {
   disabled?: boolean
   /** Ankerseite des Popovers. 'right' fuer Boxen am rechten Rand (kein Viewport-Ueberlauf). */
   align?: 'left' | 'right'
+  popoverWidth?: string
+  popoverMaxWidth?: string
   children: React.ReactNode
 }
 
 /** Popover, klappt nach oben aus einer Fussleisten-Box auf. Mindestens box-breit, waechst aber
  *  mit dem Inhalt (kein Abschneiden langer Eintraege wie "Phineas Gage"), gedeckelt gegen
  *  Viewport-Ueberlauf. Schliesst bei Escape und Aussenklick. Der Trigger fuellt die Box. */
-export default function Flyout({ eyebrow, label, icon, open, onToggle, onClose, disabled, align = 'left', children }: FlyoutProps) {
+export default function Flyout({
+  eyebrow,
+  label,
+  icon,
+  open,
+  onToggle,
+  onClose,
+  disabled,
+  align = 'left',
+  popoverWidth = 'max-content',
+  popoverMaxWidth = 'min(280px, 80vw)',
+  children,
+}: FlyoutProps) {
   const ref = useRef<HTMLDivElement>(null)
   const lastTouchToggleAt = useRef(0)
   const activate = () => {
@@ -82,8 +96,8 @@ export default function Flyout({ eyebrow, label, icon, open, onToggle, onClose, 
             // Rechte Boxen verankern rechts, damit sie nicht aus dem Viewport wachsen.
             ...(align === 'right' ? { right: 0 } : { left: 0 }),
             minWidth: '100%',
-            width: 'max-content',
-            maxWidth: 'min(280px, 80vw)',
+            width: popoverWidth,
+            maxWidth: popoverMaxWidth,
             display: 'flex',
             flexDirection: 'column',
             padding: 5,
