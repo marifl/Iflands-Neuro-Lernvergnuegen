@@ -37,6 +37,11 @@ Kontextmodelle `apps/brain-app/public/assets/context/skull.glb`, `head.glb` und
 `skull.json` bleiben für Explorer und Strukturbaum erhalten, sind aber nicht
 mehr der Phineas-Ersatzpfad.
 
+Die drei sichtbaren Gage-Teile sind als Slots der Collection
+`case-phineas-gage` registriert und tragen stabile `asset-part`-
+`SequenceTargetRef`s. Dadurch verwenden Sequenzlogik, Picking und ObjectGraph
+dieselben IDs für Vollschädel, Calvarium-Cut und Eisenstange.
+
 Die UI benennt weiter die Modellgrenze: Die Gage-GLBs sind lokale
 Standalone-Kandidaten, Attribution/Lizenz sind im Manifest markiert und müssen
 vor öffentlicher Auslieferung final gepinnt werden. Die Läsionsmarkierung bleibt

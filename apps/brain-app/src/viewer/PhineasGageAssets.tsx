@@ -2,7 +2,8 @@ import { useGLTF } from '@react-three/drei'
 import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
-import { PHINEAS_GAGE_ASSETS } from './phineasGage'
+import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS } from './phineasGage'
+import { pickTargetFromTargetRef, sequenceTargetUserData, type ViewerPickTarget } from './targetPicking'
 import { useViewerStore } from './viewerStore'
 
 const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
@@ -34,9 +35,19 @@ function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
   return clone
 }
 
+function attachTarget(root: THREE.Object3D, target: ViewerPickTarget): void {
+  root.userData = { ...root.userData, ...sequenceTargetUserData(target, true) }
+  root.traverse((object) => {
+    const mesh = object as THREE.Mesh
+    if (!mesh.isMesh) return
+    mesh.userData = { ...mesh.userData, ...sequenceTargetUserData(target, true) }
+  })
+}
+
 function updateLayer(root: THREE.Object3D, options: {
   visible: boolean
   opacity: number
+  pickable: boolean
   color?: THREE.ColorRepresentation
   metalness?: number
   roughness?: number
@@ -46,7 +57,7 @@ function updateLayer(root: THREE.Object3D, options: {
     const mesh = object as THREE.Mesh
     if (!mesh.isMesh) return
     mesh.visible = options.visible
-    mesh.raycast = NO_RAYCAST
+    mesh.raycast = options.visible && options.pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
     forEachMaterial(mesh.material, (material) => {
       material.transparent = options.opacity < 1
       material.opacity = options.opacity
@@ -76,6 +87,17 @@ function PhineasGageAssetScenes({
   const skull = useMemo(() => cloneSceneWithOwnMaterials(skullScene), [skullScene])
   const calvarium = useMemo(() => cloneSceneWithOwnMaterials(calvariumScene), [calvariumScene])
   const rod = useMemo(() => cloneSceneWithOwnMaterials(rodScene), [rodScene])
+  const targets = useMemo(() => ({
+    skull: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.skull, 'Gage skull'),
+    calvariumCut: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.calvariumCut, 'Gage calvarium cut'),
+    ironRod: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.ironRod, 'Gage iron rod'),
+  }), [])
+
+  useEffect(() => {
+    attachTarget(skull, targets.skull)
+    attachTarget(calvarium, targets.calvariumCut)
+    attachTarget(rod, targets.ironRod)
+  }, [skull, calvarium, rod, targets])
 
   useEffect(() => {
     const showFullSkull = showSkull && !rodVisible
@@ -83,6 +105,7 @@ function PhineasGageAssetScenes({
     updateLayer(skull, {
       visible: showFullSkull,
       opacity: Math.max(0.18, Math.min(1, skullOpacity)),
+      pickable: true,
       color: ATLAS_VIEWER_COLORS.bone,
       roughness: 0.72,
       metalness: 0,
@@ -90,6 +113,7 @@ function PhineasGageAssetScenes({
     updateLayer(calvarium, {
       visible: showCalvariumCut,
       opacity: Math.max(0.24, Math.min(0.82, skullOpacity + 0.18)),
+      pickable: true,
       color: ATLAS_VIEWER_COLORS.bone,
       roughness: 0.72,
       metalness: 0,
@@ -97,6 +121,7 @@ function PhineasGageAssetScenes({
     updateLayer(rod, {
       visible: rodVisible,
       opacity: 1,
+      pickable: true,
       color: ATLAS_VIEWER_COLORS.rod,
       roughness: 0.42,
       metalness: 0.72,

@@ -36,8 +36,10 @@ export default function CutPickBridge() {
   const setPickedAtlasArea = useViewerStore((s) => s.setPickedAtlasArea)
   const setHoveredAtlasArea = useViewerStore((s) => s.setHoveredAtlasArea)
   const hidden = useViewerStore((s) => s.hidden)
+  const appMode = useViewerStore((s) => s.appMode)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const showSkull = useViewerStore((s) => s.showSkull)
+  const rodVisible = useViewerStore((s) => s.rodVisible)
   const showAtlasJulich = useViewerStore((s) => s.showAtlasJulich)
   const showAtlasDkt = useViewerStore((s) => s.showAtlasDkt)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
@@ -60,11 +62,13 @@ export default function CutPickBridge() {
     targetCache.markDirty()
   }, [
     targetCache,
+    appMode,
     hidden,
     isolatedSlugs,
     cuts,
     cutMode,
     showSkull,
+    rodVisible,
     showAtlasJulich,
     showAtlasDkt,
     showCarveJulich,

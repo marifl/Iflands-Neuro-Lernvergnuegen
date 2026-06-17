@@ -1,3 +1,5 @@
+import type { SequenceTargetRef } from './sequenceTargetRef'
+
 /**
  * Phineas-Gage-Szene (Kapitel 11, exekutive Funktionen): historisch-anatomische
  * Rekonstruktion des Stangen-Durchschusses von 1848 als didaktischer 3D-Layer.
@@ -43,6 +45,26 @@ export const PHINEAS_GAGE_ASSETS = {
   calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
   ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
 } as const
+export const PHINEAS_GAGE_TARGETS = {
+  skull: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-skull-01',
+    partId: 'skull',
+  },
+  calvariumCut: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-calvarium-cut-01',
+    partId: 'calvarium-cut',
+  },
+  ironRod: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-iron-rod-01',
+    partId: 'iron-rod',
+  },
+} as const satisfies Record<string, SequenceTargetRef>
 
 const ROD_PHASE_ENTRY = 0.28
 const ROD_PHASE_THROUGH = 0.68

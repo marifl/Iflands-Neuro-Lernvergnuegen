@@ -44,5 +44,10 @@ Strukturbaum erhalten, wird im Phineas-Modus aber ausgeblendet. Offen bleibt:
 
 1. final gepinnte Attribution in `THIRD-PARTY-NOTICES.md`, falls das Modell
    öffentlich ausgeliefert wird.
-2. Pick-/ObjectGraph-Integration für die Gage-Teile; aktuell sind die GLBs
-   bewusst sichtbar, aber nicht anklickbar.
+2. generische AuthoringScene-Persistenz mit Transform-Gizmo für frei
+   importierte GLBs.
+
+Die sichtbaren Gage-Teile hängen im Phineas-Modus bereits an stabilen
+`case-phineas-gage`-`asset-part`-Zielen. Picking und Snapshot-State sehen damit
+dieselben ObjectGraph-IDs wie die Sequenzdaten, auch wenn der generische
+GLB-Loader noch separat bleibt.

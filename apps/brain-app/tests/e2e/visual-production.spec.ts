@@ -294,40 +294,50 @@ test('Phineas-Modus rendert im Phone-Viewport mit Asset-Hinweis', async ({ page 
   await expect.poll(async () => page.evaluate(() => {
     let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
     while (root?.parent) root = root.parent
-    const visible: Record<string, boolean> = {
-      'phineas-gage-skull': false,
-      'phineas-gage-skull-calvarium-cut': false,
-      'phineas-gage-iron-rod': false,
+    const visible: Record<string, { visible: boolean; targetKind: string | null; collectionId: string | null; pickable: boolean }> = {
+      'phineas-gage-skull': { visible: false, targetKind: null, collectionId: null, pickable: false },
+      'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: null, collectionId: null, pickable: false },
+      'phineas-gage-iron-rod': { visible: false, targetKind: null, collectionId: null, pickable: false },
     }
     root?.traverse((obj: any) => {
       if (!obj?.isMesh || !(obj.name in visible)) return
-      visible[obj.name] = obj.visible === true
+      visible[obj.name] = {
+        visible: obj.visible === true,
+        targetKind: obj.userData?.sequenceTargetRef?.targetKind ?? null,
+        collectionId: obj.userData?.sequenceTargetRef?.collectionId ?? null,
+        pickable: obj.userData?.targetPickable === true,
+      }
     })
     return visible
   }), { timeout: 60_000 }).toEqual({
-    'phineas-gage-skull': true,
-    'phineas-gage-skull-calvarium-cut': false,
-    'phineas-gage-iron-rod': false,
+    'phineas-gage-skull': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    'phineas-gage-iron-rod': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
   })
 
   await page.getByRole('button', { name: '▶' }).click()
   await expect.poll(async () => page.evaluate(() => {
     let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
     while (root?.parent) root = root.parent
-    const visible: Record<string, boolean> = {
-      'phineas-gage-skull': false,
-      'phineas-gage-skull-calvarium-cut': false,
-      'phineas-gage-iron-rod': false,
+    const visible: Record<string, { visible: boolean; targetKind: string | null; collectionId: string | null; pickable: boolean }> = {
+      'phineas-gage-skull': { visible: false, targetKind: null, collectionId: null, pickable: false },
+      'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: null, collectionId: null, pickable: false },
+      'phineas-gage-iron-rod': { visible: false, targetKind: null, collectionId: null, pickable: false },
     }
     root?.traverse((obj: any) => {
       if (!obj?.isMesh || !(obj.name in visible)) return
-      visible[obj.name] = obj.visible === true
+      visible[obj.name] = {
+        visible: obj.visible === true,
+        targetKind: obj.userData?.sequenceTargetRef?.targetKind ?? null,
+        collectionId: obj.userData?.sequenceTargetRef?.collectionId ?? null,
+        pickable: obj.userData?.targetPickable === true,
+      }
     })
     return visible
   }), { timeout: 60_000 }).toEqual({
-    'phineas-gage-skull': false,
-    'phineas-gage-skull-calvarium-cut': true,
-    'phineas-gage-iron-rod': true,
+    'phineas-gage-skull': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    'phineas-gage-skull-calvarium-cut': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    'phineas-gage-iron-rod': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
   })
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'phone-phineas')

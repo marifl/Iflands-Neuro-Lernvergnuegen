@@ -7,6 +7,7 @@ import {
   LESION_STRUCTURES,
   PHINEAS_GAGE,
   PHINEAS_GAGE_ASSETS,
+  PHINEAS_GAGE_TARGETS,
   ROD_ENTRY,
   ROD_EXIT,
   ROD_RADIUS_SHAFT,
@@ -51,6 +52,12 @@ describe('Phineas-Gage-Szene', () => {
       skull: '/assets/phineas/phineas-gage-skull-lod.glb',
       calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
       ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
+    })
+    expect(PHINEAS_GAGE_TARGETS.skull).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'case-phineas-gage',
+      instanceId: 'phineas-gage-skull-01',
+      partId: 'skull',
     })
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
   })

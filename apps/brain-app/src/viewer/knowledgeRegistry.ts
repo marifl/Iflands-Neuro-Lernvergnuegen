@@ -101,6 +101,26 @@ export const KNOWLEDGE_COLLECTIONS: KnowledgeCollection[] = [
     label: 'Phineas Gage',
     visibleInExplorerTree: false,
     capabilities: ['load-3d-asset', 'transform-gizmo', 'positionable', 'pickable-parts', 'animatable', 'sequence-state'],
+    assetSlots: [
+      {
+        id: 'historical-skull',
+        label: 'Gage-Schädel',
+        formats: ['glb'],
+        optional: true,
+      },
+      {
+        id: 'calvarium-cut',
+        label: 'Gage-Calvarium-Cut',
+        formats: ['glb'],
+        optional: true,
+      },
+      {
+        id: 'iron-rod',
+        label: 'Gage-Eisenstange',
+        formats: ['glb'],
+        optional: true,
+      },
+    ],
     descriptionDe: 'Fallstudie als erweiterbare Collection statt Pflicht-Vortragsschritt.',
   },
   {
