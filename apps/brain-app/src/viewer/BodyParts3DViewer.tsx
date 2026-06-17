@@ -806,9 +806,10 @@ export default function BodyParts3DViewer() {
 
   useEffect(() => {
     if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
+    if (appMode === 'phineas') return
     if (!canApplyFunctionalDefaults()) return
     applyViewportDefaults({ viewport: { defaultCameraView, skullContext } })
-  }, [defaultCameraView, launched, skullContext])
+  }, [appMode, defaultCameraView, launched, skullContext])
 
   useEffect(() => {
     if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return

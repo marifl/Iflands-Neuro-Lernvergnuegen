@@ -3,11 +3,43 @@ import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS } from './phineasGage'
-import { pickTargetFromTargetRef, sequenceTargetUserData, type ViewerPickTarget } from './targetPicking'
+import {
+  SEQUENCE_TARGET_REF_USER_DATA,
+  TARGET_PICKABLE_USER_DATA,
+  pickTargetFromTargetRef,
+  sequenceTargetUserData,
+  type ViewerPickTarget,
+} from './targetPicking'
 import { useViewerStore } from './viewerStore'
 
 const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
 const NO_RAYCAST = () => {}
+
+type PhineasLayerSnapshot = {
+  asset: string
+  visible: boolean
+  meshCount: number
+  visibleMeshCount: number
+  pickableMeshCount: number
+  meshNames: string[]
+  targetInstanceIds: string[]
+}
+
+type PhineasGageAssetsSnapshot = {
+  groupName: 'phineas-gage-assets'
+  showSkull: boolean
+  skullOpacity: number
+  rodVisible: boolean
+  layers: {
+    skull: PhineasLayerSnapshot
+    calvariumCut: PhineasLayerSnapshot
+    ironRod: PhineasLayerSnapshot
+  }
+}
+
+type PhineasGageAssetsWindow = Window & {
+  __phineasGageAssets?: PhineasGageAssetsSnapshot
+}
 
 useGLTF.setDecoderPath(DRACO_DECODER_PATH)
 useGLTF.preload(PHINEAS_GAGE_ASSETS.skull)
@@ -72,6 +104,39 @@ function updateLayer(root: THREE.Object3D, options: {
   })
 }
 
+function layerSnapshot(root: THREE.Object3D, asset: string): PhineasLayerSnapshot {
+  const meshNames: string[] = []
+  const targetInstanceIds = new Set<string>()
+  let meshCount = 0
+  let visibleMeshCount = 0
+  let pickableMeshCount = 0
+
+  root.traverse((object) => {
+    const targetRef = object.userData[SEQUENCE_TARGET_REF_USER_DATA]
+    const instanceId = typeof targetRef === 'object' && targetRef !== null && 'instanceId' in targetRef
+      ? targetRef.instanceId
+      : undefined
+    if (typeof instanceId === 'string') targetInstanceIds.add(instanceId)
+
+    const mesh = object as THREE.Mesh
+    if (!mesh.isMesh) return
+    meshCount += 1
+    if (mesh.visible) visibleMeshCount += 1
+    if (mesh.userData[TARGET_PICKABLE_USER_DATA] === true && mesh.raycast !== NO_RAYCAST) pickableMeshCount += 1
+    if (mesh.name) meshNames.push(mesh.name)
+  })
+
+  return {
+    asset,
+    visible: root.visible,
+    meshCount,
+    visibleMeshCount,
+    pickableMeshCount,
+    meshNames,
+    targetInstanceIds: [...targetInstanceIds].sort(),
+  }
+}
+
 function PhineasGageAssetScenes({
   showSkull,
   skullOpacity,
@@ -126,7 +191,25 @@ function PhineasGageAssetScenes({
       roughness: 0.42,
       metalness: 0.72,
     })
+
+    if (import.meta.env.DEV) {
+      ;(window as PhineasGageAssetsWindow).__phineasGageAssets = {
+        groupName: 'phineas-gage-assets',
+        showSkull,
+        skullOpacity,
+        rodVisible,
+        layers: {
+          skull: layerSnapshot(skull, PHINEAS_GAGE_ASSETS.skull),
+          calvariumCut: layerSnapshot(calvarium, PHINEAS_GAGE_ASSETS.calvariumCut),
+          ironRod: layerSnapshot(rod, PHINEAS_GAGE_ASSETS.ironRod),
+        },
+      }
+    }
   }, [skull, calvarium, rod, showSkull, skullOpacity, rodVisible])
+
+  useEffect(() => () => {
+    if (import.meta.env.DEV) delete (window as PhineasGageAssetsWindow).__phineasGageAssets
+  }, [])
 
   return (
     <group name="phineas-gage-assets">
