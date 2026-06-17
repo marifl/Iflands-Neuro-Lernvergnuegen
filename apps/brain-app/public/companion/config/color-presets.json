@@ -1,53 +1,338 @@
 {
-  "version": 1,
+  "version": 2,
   "presets": [
     {
       "id": "basalganglienschleifen",
       "label": "Basalganglienschleifen (Abb. 11-04)",
+      "sourceFigure": "11-04",
+      "intent": "Drei fronto-subkortikale Schleifen werden als kognitive, emotionale und motivationale Funktionskreise getrennt.",
+      "coverage": "full",
       "groups": [
-        { "label": "Kognition", "hue": 210, "buckets": ["dlpfc", "ppc", "striatum-dorsal", "globus-pallidus", "thalamus"] },
-        { "label": "Emotion", "hue": 30, "buckets": ["ofc", "vmpfc", "amygdala", "hippocampus"] },
-        { "label": "Motivation", "hue": 150, "buckets": ["dacc", "nucleus-accumbens"] }
+        {
+          "label": "Kognition",
+          "role": "cognition",
+          "meaning": "DLPFC/parietaler Kortex mit dorsalem Striatum, Pallidum und Thalamus.",
+          "hue": 210,
+          "buckets": ["dlpfc", "ppc", "striatum-dorsal", "globus-pallidus", "thalamus"]
+        },
+        {
+          "label": "Emotion",
+          "role": "emotion",
+          "meaning": "OFC/vmPFC mit Amygdala und Hippocampus als affektiver Regelkreis.",
+          "hue": 30,
+          "buckets": ["ofc", "vmpfc", "amygdala", "hippocampus"]
+        },
+        {
+          "label": "Motivation",
+          "role": "motivation",
+          "meaning": "dACC und Nucleus accumbens als motivationaler Handlungsantrieb.",
+          "hue": 150,
+          "buckets": ["dacc", "nucleus-accumbens"]
+        }
       ],
       "dimOthers": true
     },
     {
       "id": "pfc-petrides",
       "label": "PFC Petrides (Abb. 11-05)",
+      "sourceFigure": "11-05",
+      "intent": "Arbeitsgedächtnis-Funktionen werden nach dorsolateralem, ventrolateralem und posteriorem Anteil getrennt.",
+      "coverage": "full",
       "groups": [
-        { "label": "DLPFC (Manipulieren)", "hue": 210, "buckets": ["dlpfc"] },
-        { "label": "VLPFC (Halten/Abrufen)", "hue": 30, "buckets": ["vlpfc"] },
-        { "label": "Posterior (Speicher)", "hue": 270, "buckets": ["ppc", "pcc-praecuneus"] }
+        {
+          "label": "DLPFC (Manipulieren)",
+          "role": "working-memory",
+          "meaning": "Manipulieren und Umordnen mentaler Inhalte.",
+          "hue": 210,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC (Halten/Abrufen)",
+          "role": "selection-control",
+          "meaning": "Halten, Abrufen und kontrollierter Zugriff auf Inhalte.",
+          "hue": 30,
+          "buckets": ["vlpfc"]
+        },
+        {
+          "label": "Posterior (Speicher)",
+          "role": "posterior-storage",
+          "meaning": "Parietale und posterior-mediale Speicher-/Arbeitsflächen.",
+          "hue": 270,
+          "buckets": ["ppc", "pcc-praecuneus"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "fuster-gradient",
+      "label": "Fuster-Gradient (Abb. 11-06)",
+      "sourceFigure": "11-06",
+      "intent": "Posterior-parietale Repräsentation und präfrontale Kontrollanteile werden entlang des Wahrnehmungs-Handlungs-Zyklus getrennt.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "Frontopolar (Kontext)",
+          "role": "abstract-control",
+          "meaning": "Abstrakter Kontext und längerfristige Ziele.",
+          "hue": 200,
+          "buckets": ["frontopolar"]
+        },
+        {
+          "label": "DLPFC (Kontrolle)",
+          "role": "working-memory",
+          "meaning": "Aktive Kontrolle und Manipulation von Handlungsregeln.",
+          "hue": 220,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC (Auswahl)",
+          "role": "selection-control",
+          "meaning": "Abruf, Auswahl und Antwortselektion.",
+          "hue": 180,
+          "buckets": ["vlpfc"]
+        },
+        {
+          "label": "Posterior (Repräsentation)",
+          "role": "posterior-storage",
+          "meaning": "Parietale Repräsentations- und Speicheranteile.",
+          "hue": 270,
+          "buckets": ["ppc"]
+        }
       ],
       "dimOthers": true
     },
     {
       "id": "badre-rostrokaudal",
       "label": "Rostro-kaudaler Gradient (Abb. 11-07)",
+      "sourceFigure": "11-07",
+      "intent": "Kontrollabstraktion wird rostro-kaudal vom frontopolaren PFC bis zu SMA/preSMA gestaffelt.",
+      "coverage": "full",
       "groups": [
-        { "label": "Frontopolar (BA 10)", "hue": 200, "buckets": ["frontopolar"] },
-        { "label": "DLPFC (BA 9/46)", "hue": 220, "buckets": ["dlpfc"] },
-        { "label": "SMA/preSMA (BA 8/6)", "hue": 260, "buckets": ["sma-presma"] },
-        { "label": "VLPFC (BA 47/45/44)", "hue": 180, "buckets": ["vlpfc"] }
+        {
+          "label": "Frontopolar (BA 10)",
+          "role": "abstract-control",
+          "meaning": "Abstrakte, übergeordnete Kontextkontrolle.",
+          "hue": 200,
+          "buckets": ["frontopolar"]
+        },
+        {
+          "label": "DLPFC (BA 9/46)",
+          "role": "context-control",
+          "meaning": "Kontext- und Regelkontrolle.",
+          "hue": 220,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "SMA/preSMA (BA 8/6)",
+          "role": "response-control",
+          "meaning": "Antwortauswahl und motornahe Kontrolle.",
+          "hue": 260,
+          "buckets": ["sma-presma"]
+        },
+        {
+          "label": "VLPFC (BA 47/45/44)",
+          "role": "selection-control",
+          "meaning": "Auswahl und kontrollierter Abruf.",
+          "hue": 180,
+          "buckets": ["vlpfc"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "badre-core-pfc",
+      "label": "Badre PFC-Kern (Abb. 11-08A-C)",
+      "sourceFigure": "11-08A-C",
+      "intent": "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "Frontopolar",
+          "role": "abstract-control",
+          "meaning": "Übergeordnete, abstrakte Kontrollziele.",
+          "hue": 200,
+          "buckets": ["frontopolar"]
+        },
+        {
+          "label": "DLPFC",
+          "role": "context-control",
+          "meaning": "Kontextuelle Regelkontrolle.",
+          "hue": 220,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC",
+          "role": "selection-control",
+          "meaning": "Antwortauswahl und kontrollierter Abruf.",
+          "hue": 180,
+          "buckets": ["vlpfc"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "badre-konflikttypen",
+      "label": "Badre Konflikttypen (Abb. 11-08D)",
+      "sourceFigure": "11-08D",
+      "intent": "Kontroll- und Konflikttypen werden zwischen DLPFC, VLPFC und dACC unterschieden.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "DLPFC (Kontext)",
+          "role": "context-control",
+          "meaning": "Kontextbezogene Kontrollkonflikte.",
+          "hue": 220,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC (Auswahl)",
+          "role": "selection-control",
+          "meaning": "Auswahl- und Abrufkonflikte.",
+          "hue": 180,
+          "buckets": ["vlpfc"]
+        },
+        {
+          "label": "dACC (Konflikt)",
+          "role": "conflict-monitoring",
+          "meaning": "Konfliktmonitoring und Fehler-/Kontrollbedarf.",
+          "hue": 35,
+          "buckets": ["dacc"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "wcst-frontoparietal",
+      "label": "WCST frontoparietal (Abb. 11-09)",
+      "sourceFigure": "11-09",
+      "intent": "Set-Shifting wird als frontoparietales Kontrollnetzwerk dargestellt.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "DLPFC",
+          "role": "working-memory",
+          "meaning": "Regelhalten und Regelwechsel.",
+          "hue": 210,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC",
+          "role": "selection-control",
+          "meaning": "Auswahl und kontrollierter Abruf.",
+          "hue": 30,
+          "buckets": ["vlpfc"]
+        },
+        {
+          "label": "Parietal",
+          "role": "frontoparietal-control",
+          "meaning": "Aufmerksamkeits- und Arbeitsgedächtnisanteil im frontoparietalen Netzwerk.",
+          "hue": 270,
+          "buckets": ["ppc"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "fluency-foci",
+      "label": "Fluency-Foci (Abb. 11-10)",
+      "sourceFigure": "11-10",
+      "intent": "Verbale Flüssigkeit trennt präfrontale Such-/Abrufanteile von motorischer Sequenzplanung.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "DLPFC",
+          "role": "working-memory",
+          "meaning": "Strategische Suche und Arbeitsgedächtnis.",
+          "hue": 210,
+          "buckets": ["dlpfc"]
+        },
+        {
+          "label": "VLPFC",
+          "role": "selection-control",
+          "meaning": "Lexikalischer Abruf und Auswahl.",
+          "hue": 30,
+          "buckets": ["vlpfc"]
+        },
+        {
+          "label": "SMA/preSMA",
+          "role": "motor-planning",
+          "meaning": "Sequenzierung und Antwortinitiierung.",
+          "hue": 260,
+          "buckets": ["sma-presma"]
+        }
+      ],
+      "dimOthers": true
+    },
+    {
+      "id": "tower-dlpfc",
+      "label": "Tower of London DLPFC (Abb. 11-11)",
+      "sourceFigure": "11-11A-C",
+      "intent": "Planungsanforderung wird als fokussierte DLPFC-Aktivierung gezeigt.",
+      "coverage": "full",
+      "groups": [
+        {
+          "label": "DLPFC-Aktivierung",
+          "role": "task-activation",
+          "meaning": "Planung, Zielhierarchie und Manipulation von Zwischenschritten.",
+          "hue": 210,
+          "buckets": ["dlpfc"]
+        }
       ],
       "dimOthers": true
     },
     {
       "id": "acc-bush",
       "label": "ACC Bush (Abb. 11-13)",
+      "sourceFigure": "11-13",
+      "intent": "Dorsale kognitive und ventrale affektive ACC/OFC-Anteile werden getrennt.",
+      "coverage": "full",
       "groups": [
-        { "label": "Dorsales ACC (kognitiv)", "hue": 210, "buckets": ["dacc"] },
-        { "label": "Ventrales ACC/OFC", "hue": 30, "buckets": ["vmpfc", "ofc"] }
+        {
+          "label": "Dorsales ACC (kognitiv)",
+          "role": "conflict-monitoring",
+          "meaning": "Kognitives Konfliktmonitoring und Kontrollbedarf.",
+          "hue": 210,
+          "buckets": ["dacc"]
+        },
+        {
+          "label": "Ventrales ACC/OFC",
+          "role": "affective-control",
+          "meaning": "Affektive Bewertung und orbitofrontale Regulation.",
+          "hue": 30,
+          "buckets": ["vmpfc", "ofc"]
+        }
       ],
       "dimOthers": true
     },
     {
       "id": "phineas-gage",
       "label": "Phineas Gage Läsion",
+      "sourceFigure": "Fallstudie Phineas Gage",
+      "intent": "Läsionsnaher vmPFC/OFC wird von affektiv-motivationalen und kognitiven Vergleichsarealen getrennt.",
+      "coverage": "partial",
+      "coverageNote": "Die Farbsemantik ist fachlich gesetzt; die historische Schädel-/Stangen-Geometrie wird separat im P0-Gage-Block finalisiert.",
       "groups": [
-        { "label": "Läsionsgebiet", "hue": 0, "buckets": ["vmpfc", "ofc", "frontopolar"] },
-        { "label": "Emotion/Motivation", "hue": 30, "buckets": ["amygdala", "hippocampus", "dacc"] },
-        { "label": "Kognition", "hue": 210, "buckets": ["dlpfc", "vlpfc", "ppc"] }
+        {
+          "label": "Läsionsgebiet",
+          "role": "lesion",
+          "meaning": "vmPFC/OFC/frontopolar als Läsionskern der Fallstudie.",
+          "hue": 0,
+          "buckets": ["vmpfc", "ofc", "frontopolar"]
+        },
+        {
+          "label": "Emotion/Motivation",
+          "role": "emotion",
+          "meaning": "Affektiv-motivationale Vergleichsstruktur.",
+          "hue": 30,
+          "buckets": ["amygdala", "hippocampus", "dacc"]
+        },
+        {
+          "label": "Kognition",
+          "role": "cognition",
+          "meaning": "Exekutive Vergleichsareale außerhalb des Läsionskerns.",
+          "hue": 210,
+          "buckets": ["dlpfc", "vlpfc", "ppc"]
+        }
       ],
       "dimOthers": true
     }

@@ -7,8 +7,12 @@
         "shot": "medial-midline"
       },
       "colors": {
+        "coverage": "full",
         "dim_others": true,
-        "preset": "acc-bush"
+        "preset": "acc-bush",
+        "reason": "Preset deckt dACC und ventrale ACC/OFC-Gruppen der Bush-Figur ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -61,7 +65,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "badre-core-pfc",
+        "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -111,7 +120,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "badre-core-pfc",
+        "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -161,7 +175,12 @@
         "shot": "medial-midline"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "badre-konflikttypen",
+        "reason": "Preset deckt DLPFC, VLPFC und dACC fuer die Konflikttypen-Figur ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -211,7 +230,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "badre-core-pfc",
+        "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -261,8 +285,12 @@
         "shot": "lateral-left"
       },
       "colors": {
+        "coverage": "full",
         "dim_others": true,
-        "preset": "badre-rostrokaudal"
+        "preset": "badre-rostrokaudal",
+        "reason": "Preset deckt alle in regions.buckets deklarierten rostro-kaudalen Kontrollbereiche ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -314,8 +342,12 @@
         "target": "dkt:lateralorbitofrontal:l"
       },
       "colors": {
+        "coverage": "full",
         "dim_others": true,
-        "preset": "basalganglienschleifen"
+        "preset": "basalganglienschleifen",
+        "reason": "Preset deckt alle in regions.buckets deklarierten Schleifen-Buckets ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -382,7 +414,11 @@
         "target": "julich:area-44:l"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Areal-Faerbung kommt aus dem Julich-Atlas-Carve, nicht aus einem didaktischen Preset.",
+        "review_status": "final",
+        "scheme": "atlas"
       },
       "cuts": {
         "enabled": false
@@ -432,7 +468,11 @@
         "shot": "medial-midline"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Farbsemantik liegt in der Flowchart-/Aufgaben-Szene, nicht in Atlas-Bucket-Presets.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -481,7 +521,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "fluency-foci",
+        "reason": "Preset deckt DLPFC, VLPFC und SMA/preSMA-Foci ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -531,7 +576,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "fuster-gradient",
+        "reason": "Preset deckt alle in regions.buckets deklarierten Fuster-Bereiche ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -582,7 +632,11 @@
         "shot": "medial-midline"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Go-/No-go-Farben sind Aufgaben-/Overlay-Farben, keine Atlas-Bucket-Presets.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -623,7 +677,11 @@
         "shot": "superior"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "ICA-Komponentenfarben sind scene-spezifische ERP-Kategorien.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -665,8 +723,12 @@
         "target": "dkt:lateralorbitofrontal:l"
       },
       "colors": {
+        "coverage": "partial",
         "dim_others": true,
-        "preset": "phineas-gage"
+        "preset": "phineas-gage",
+        "reason": "Phineas-Farbsemantik ist gesetzt, historische Schaedel-/Stangen-Geometrie wird separat finalisiert.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -721,7 +783,11 @@
         "target": "dkt:rostralanteriorcingulate:l"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Konfliktmonitoring fokussiert ein DKT-Areal plus ERP-Overlay; Atlas-Farbe kommt aus Carve/Scene.",
+        "review_status": "final",
+        "scheme": "atlas"
       },
       "cuts": {
         "enabled": false
@@ -779,7 +845,11 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "P3b nutzt ERP-/Overlay-Farben; keine separate Atlas-Preset-Faerbung.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -821,7 +891,11 @@
         "shot": "medial-midline"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "P3z nutzt ERP-/Overlay-Farben; keine separate Atlas-Preset-Faerbung.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -863,8 +937,12 @@
         "shot": "lateral-left"
       },
       "colors": {
+        "coverage": "full",
         "dim_others": true,
-        "preset": "pfc-petrides"
+        "preset": "pfc-petrides",
+        "reason": "Preset deckt alle in regions.buckets deklarierten Petrides-Gruppen ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -915,7 +993,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "tower-dlpfc",
+        "reason": "Preset deckt die fokussierte DLPFC-Aktivierung ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -963,7 +1046,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "tower-dlpfc",
+        "reason": "Preset deckt die fokussierte DLPFC-Schwierigkeitsmodulation ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -1011,7 +1099,11 @@
         "shot": "medial-midline"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "VCPT nutzt Ablauf-/Overlay-Farben; keine eigenstaendige Atlas-Bucket-Faerbung.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false
@@ -1060,7 +1152,12 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "full",
+        "dim_others": true,
+        "preset": "wcst-frontoparietal",
+        "reason": "Preset deckt die frontoparietalen WCST-Buckets ab.",
+        "review_status": "final",
+        "scheme": "preset"
       },
       "cuts": {
         "enabled": false
@@ -1110,7 +1207,11 @@
         "shot": "lateral-left"
       },
       "colors": {
-        "enabled": false
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Zusammenfassung aggregiert mehrere Szenenregionen und nutzt keine eigene Atlas-Preset-Faerbung.",
+        "review_status": "final",
+        "scheme": "scene"
       },
       "cuts": {
         "enabled": false

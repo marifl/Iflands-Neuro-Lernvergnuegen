@@ -12,11 +12,13 @@ import {
   applyAuthoringTransformCommand,
   type ActiveAuthoringTransformTarget,
 } from './authoringTransformRuntime'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 
 const DEVICE_BASE_COLOR = '#d8ecef'
 const DEVICE_HELPER_COLOR = '#6d7c82'
-const DEVICE_SELECT_COLOR = '#f26b1f'
-const DEVICE_HOVER_COLOR = '#ffd2a8'
+const DEVICE_SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
+const DEVICE_HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
+const EMISSIVE_OFF_COLOR = ATLAS_VIEWER_COLORS.emissiveOff
 const NO_RAYCAST = () => {}
 
 function siteFromPart(part: AuthoringSelectablePart): EegSite | null {
@@ -91,7 +93,7 @@ function AuthoringPartMesh({
   const active = selectedSlugs.has(objectGraphId) || activeTargetId === objectGraphId
   const hover = hovered === objectGraphId
   const color = pickable ? DEVICE_BASE_COLOR : DEVICE_HELPER_COLOR
-  const emissive = active ? DEVICE_SELECT_COLOR : hover ? DEVICE_HOVER_COLOR : '#000000'
+  const emissive = active ? DEVICE_SELECT_COLOR : hover ? DEVICE_HOVER_COLOR : EMISSIVE_OFF_COLOR
   const emissiveIntensity = active ? 0.9 : hover ? 0.35 : 0
   const targetPickable = pickable && visible && !isoDimmed
 

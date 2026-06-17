@@ -1,9 +1,15 @@
+import { readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import {
   resolveScopes, isAreaEnabled, buildAreaLookup, fileScopes, parseUrlScopes, computeEffectiveConfig,
   type AtlasConfigFile, type ScopeMap, type AreaLookup,
 } from './atlasConfig'
 import type { AtlasCatalog } from './atlasCatalog'
+
+const here = dirname(fileURLToPath(import.meta.url))
+const REAL_CONFIG_PATH = resolve(here, '../../../public/assets/atlas-canonical/atlas-config.json')
 
 const FILE: AtlasConfigFile = {
   preset: 'kapitel11',
@@ -182,5 +188,22 @@ describe('computeEffectiveConfig', () => {
     expect(() => computeEffectiveConfig(
       FILE, CATALOG, { preset: null, configuration: null, scopes: {} }, new URLSearchParams('preset=ghost'),
     )).toThrow(/Preset "ghost"/)
+  })
+})
+
+describe('kanonische Farb-Metadaten', () => {
+  it('markiert jede reale Configuration-Faerbung mit Scheme, Coverage, Review-Status und Grund', () => {
+    const file = JSON.parse(readFileSync(REAL_CONFIG_PATH, 'utf8')) as AtlasConfigFile
+    const issues: string[] = []
+    for (const [name, cfg] of Object.entries(file.configurations)) {
+      const colors = cfg.colors
+      if (!colors?.scheme) issues.push(`${name}: scheme fehlt`)
+      if (!colors?.coverage) issues.push(`${name}: coverage fehlt`)
+      if (!colors?.review_status) issues.push(`${name}: review_status fehlt`)
+      if (!colors?.reason) issues.push(`${name}: reason fehlt`)
+      if (colors?.scheme === 'preset' && !colors.preset && !colors.groups) issues.push(`${name}: preset/groups fehlt`)
+      if (colors?.preset && colors.scheme !== 'preset') issues.push(`${name}: preset ohne scheme=preset`)
+    }
+    expect(issues).toEqual([])
   })
 })

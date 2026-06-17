@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { activeCutPlanes } from './cutCapsMerged'
 import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { ATLAS_CAP_SOURCE_FLAG, buildAtlasCapProxyBundle, type AtlasCapProxyBundle } from './atlasCapProxies'
@@ -21,7 +22,7 @@ const PICK_URL = { julich: `/assets/bodyparts3d/atlas-surface-julich-pick.json?v
 const CUT_SOURCES_CHANGED_EVENT = 'brain-app:cut-sources-changed'
 
 // Roh-Debug: eine kuehle Flachfarbe je Quelle (Drift auf einen Blick erkennbar).
-const RAW_COLOR = { julich: '#39d3c4', dkt: '#e879c8' } as const
+const RAW_COLOR = { julich: ATLAS_VIEWER_COLORS.rawJulich, dkt: ATLAS_VIEWER_COLORS.rawDkt } as const
 
 function useClip(mats: THREE.Material[]) {
   const cuts = useViewerStore((s) => s.cuts)

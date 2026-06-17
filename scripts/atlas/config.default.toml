@@ -194,6 +194,10 @@ margin = 1.4
 areas = ["julich:area-44:l", "julich:area-45:l"]
 [configurations.broca-areal.colors]
 enabled = false
+scheme = "atlas"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Areal-Faerbung kommt aus dem Julich-Atlas-Carve, nicht aus einem didaktischen Preset."
 [configurations.broca-areal.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -232,8 +236,12 @@ margin = 1.4
 areas = ["dkt:lateralorbitofrontal:l", "dkt:medialorbitofrontal:l"]
 buckets = ["ofc", "vmpfc"]
 [configurations.ofc-phineas.colors]
+scheme = "preset"
 preset = "phineas-gage"
 dim_others = true
+coverage = "partial"
+review_status = "final"
+reason = "Phineas-Farbsemantik ist gesetzt, historische Schaedel-/Stangen-Geometrie wird separat finalisiert."
 [configurations.ofc-phineas.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -288,8 +296,12 @@ buckets = [
   "nucleus-accumbens",
 ]
 [configurations.basalganglienschleifen.colors]
+scheme = "preset"
 preset = "basalganglienschleifen"
 dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt alle in regions.buckets deklarierten Schleifen-Buckets ab."
 [configurations.basalganglienschleifen.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -328,8 +340,12 @@ margin = 1.4
 [configurations.pfc-petrides.regions]
 buckets = ["dlpfc", "vlpfc", "ppc", "pcc-praecuneus"]
 [configurations.pfc-petrides.colors]
+scheme = "preset"
 preset = "pfc-petrides"
 dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt alle in regions.buckets deklarierten Petrides-Gruppen ab."
 [configurations.pfc-petrides.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -366,7 +382,12 @@ margin = 1.4
 [configurations.fuster-gradient.regions]
 buckets = ["frontopolar", "dlpfc", "vlpfc", "ppc"]
 [configurations.fuster-gradient.colors]
-enabled = false
+scheme = "preset"
+preset = "fuster-gradient"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt alle in regions.buckets deklarierten Fuster-Bereiche ab."
 [configurations.fuster-gradient.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -403,8 +424,12 @@ margin = 1.4
 [configurations.badre-rostrokaudal.regions]
 buckets = ["frontopolar", "dlpfc", "sma-presma", "vlpfc"]
 [configurations.badre-rostrokaudal.colors]
+scheme = "preset"
 preset = "badre-rostrokaudal"
 dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt alle in regions.buckets deklarierten rostro-kaudalen Kontrollbereiche ab."
 [configurations.badre-rostrokaudal.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -441,7 +466,12 @@ margin = 1.4
 [configurations.badre-domainen.regions]
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-domainen.colors]
-enabled = false
+scheme = "preset"
+preset = "badre-core-pfc"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab."
 [configurations.badre-domainen.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -478,7 +508,12 @@ margin = 1.4
 [configurations.badre-relationale-komplexitaet.regions]
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-relationale-komplexitaet.colors]
-enabled = false
+scheme = "preset"
+preset = "badre-core-pfc"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab."
 [configurations.badre-relationale-komplexitaet.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -515,7 +550,12 @@ margin = 1.4
 [configurations.badre-kaskade.regions]
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-kaskade.colors]
-enabled = false
+scheme = "preset"
+preset = "badre-core-pfc"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab."
 [configurations.badre-kaskade.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -552,7 +592,12 @@ margin = 1.4
 [configurations.badre-konflikttypen.regions]
 buckets = ["dlpfc", "vlpfc", "dacc"]
 [configurations.badre-konflikttypen.colors]
-enabled = false
+scheme = "preset"
+preset = "badre-konflikttypen"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt DLPFC, VLPFC und dACC fuer die Konflikttypen-Figur ab."
 [configurations.badre-konflikttypen.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -589,7 +634,12 @@ margin = 1.4
 [configurations.wcst-frontoparietal.regions]
 buckets = ["dlpfc", "vlpfc", "ppc"]
 [configurations.wcst-frontoparietal.colors]
-enabled = false
+scheme = "preset"
+preset = "wcst-frontoparietal"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die frontoparietalen WCST-Buckets ab."
 [configurations.wcst-frontoparietal.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -626,7 +676,12 @@ margin = 1.4
 [configurations.fluency-foci.regions]
 buckets = ["dlpfc", "vlpfc", "sma-presma"]
 [configurations.fluency-foci.colors]
-enabled = false
+scheme = "preset"
+preset = "fluency-foci"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt DLPFC, VLPFC und SMA/preSMA-Foci ab."
 [configurations.fluency-foci.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -663,7 +718,12 @@ margin = 1.4
 [configurations.tower-of-london-dlpfc.regions]
 buckets = ["dlpfc"]
 [configurations.tower-of-london-dlpfc.colors]
-enabled = false
+scheme = "preset"
+preset = "tower-dlpfc"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die fokussierte DLPFC-Aktivierung ab."
 [configurations.tower-of-london-dlpfc.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -700,7 +760,12 @@ margin = 1.4
 [configurations.tower-of-london-schweregrad.regions]
 buckets = ["dlpfc"]
 [configurations.tower-of-london-schweregrad.colors]
-enabled = false
+scheme = "preset"
+preset = "tower-dlpfc"
+dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt die fokussierte DLPFC-Schwierigkeitsmodulation ab."
 [configurations.tower-of-london-schweregrad.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -738,6 +803,10 @@ margin = 1.4
 scene_regions = ["acc-anterior", "inhibition-network"]
 [configurations.flanker-aufgabe.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Farbsemantik liegt in der Flowchart-/Aufgaben-Szene, nicht in Atlas-Bucket-Presets."
 [configurations.flanker-aufgabe.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -775,8 +844,12 @@ margin = 1.4
 buckets = ["dacc", "vmpfc", "ofc"]
 scene_regions = ["acc-anterior"]
 [configurations.acc-bush.colors]
+scheme = "preset"
 preset = "acc-bush"
 dim_others = true
+coverage = "full"
+review_status = "final"
+reason = "Preset deckt dACC und ventrale ACC/OFC-Gruppen der Bush-Figur ab."
 [configurations.acc-bush.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -814,6 +887,10 @@ margin = 1.4
 scene_regions = ["sma-presma"]
 [configurations.vcpt.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "VCPT nutzt Ablauf-/Overlay-Farben; keine eigenstaendige Atlas-Bucket-Faerbung."
 [configurations.vcpt.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -855,6 +932,10 @@ areas = ["dkt:rostralanteriorcingulate:l"]
 scene_regions = ["acc-anterior"]
 [configurations.p3a-konfliktmonitoring.colors]
 enabled = false
+scheme = "atlas"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Konfliktmonitoring fokussiert ein DKT-Areal plus ERP-Overlay; Atlas-Farbe kommt aus Carve/Scene."
 [configurations.p3a-konfliktmonitoring.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -889,6 +970,10 @@ margin = 1.4
 scene_regions = ["inhibition-network"]
 [configurations.go-nogo-intro.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Go-/No-go-Farben sind Aufgaben-/Overlay-Farben, keine Atlas-Bucket-Presets."
 [configurations.go-nogo-intro.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -920,6 +1005,10 @@ margin = 1.4
 scene_regions = ["inhibition-network"]
 [configurations.ica-uebersicht.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "ICA-Komponentenfarben sind scene-spezifische ERP-Kategorien."
 [configurations.ica-uebersicht.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -952,6 +1041,10 @@ margin = 1.4
 scene_regions = ["parietal-frontal"]
 [configurations.p3b-engagement.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "P3b nutzt ERP-/Overlay-Farben; keine separate Atlas-Preset-Faerbung."
 [configurations.p3b-engagement.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -984,6 +1077,10 @@ margin = 1.4
 scene_regions = ["sma-presma"]
 [configurations.p3z-inhibition.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "P3z nutzt ERP-/Overlay-Farben; keine separate Atlas-Preset-Faerbung."
 [configurations.p3z-inhibition.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -1015,6 +1112,10 @@ margin = 1.4
 scene_regions = ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-presma"]
 [configurations.zusammenfassung.colors]
 enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Zusammenfassung aggregiert mehrere Szenenregionen und nutzt keine eigene Atlas-Preset-Faerbung."
 [configurations.zusammenfassung.visibility]
 dim_others = true
 dim_opacity = 0.12

@@ -24,7 +24,8 @@ export default class AppErrorBoundary extends Component<{ children: ReactNode },
 
   private resetLocalState = () => {
     for (const key of LOCAL_STATE_KEYS) removeLocalStorageItem(key)
-    window.location.href = window.location.pathname
+    window.history.replaceState(null, '', window.location.pathname)
+    this.setState({ error: null })
   }
 
   render() {

@@ -11,7 +11,7 @@ export default function PresetLegend() {
   return (
     <div
       className="ed-panel ed-frame"
-      style={{ position: 'absolute', bottom: 16, left: 16, padding: '10px 13px', pointerEvents: 'none', maxWidth: 300 }}
+      style={{ position: 'absolute', bottom: 16, left: 16, padding: '10px 13px', pointerEvents: 'none', maxWidth: 360 }}
     >
       <div className="eyebrow">Färbung</div>
       <div
@@ -27,14 +27,26 @@ export default function PresetLegend() {
       >
         {preset.label}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, lineHeight: 1.45, color: 'var(--g600)', margin: '-2px 0 8px' }}>
+        {preset.intent}
+        {preset.coverage === 'partial' && preset.coverageNote ? (
+          <div style={{ marginTop: 4, color: 'var(--orange)' }}>{preset.coverageNote}</div>
+        ) : null}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {preset.groups.map((g) => (
-          <div key={g.label} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div key={g.label} style={{ display: 'grid', gridTemplateColumns: '11px 1fr', columnGap: 8, alignItems: 'start' }}>
             <span
-              style={{ width: 11, height: 11, flex: '0 0 auto', background: hueToHex(g.hue), border: '1px solid var(--line-soft)' }}
+              data-color-group={g.label}
+              style={{ width: 11, height: 11, marginTop: 2, background: hueToHex(g.hue), border: '1px solid var(--line-soft)' }}
             />
-            <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 10.5, color: 'var(--g800)', letterSpacing: '0.01em' }}>
-              {g.label}
+            <span>
+              <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 10.5, color: 'var(--g800)', letterSpacing: '0.01em' }}>
+                {g.label}
+              </span>
+              <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 9.5, lineHeight: 1.35, color: 'var(--g600)' }}>
+                {g.meaning}
+              </span>
             </span>
           </div>
         ))}

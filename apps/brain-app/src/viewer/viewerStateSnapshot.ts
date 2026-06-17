@@ -1,4 +1,5 @@
 import { CUT_AXES, clampCutPosition, type CutConfig, type CutMode } from './cutCapsMerged'
+import { COLOR_ROLE_VALUES, type ColorRole } from './atlasColorSystem'
 import type { ColorPreset } from './colorPresets'
 import type { ColorMode, Lang } from './ontology'
 import {
@@ -32,6 +33,7 @@ const CUT_MODES = ['slice', 'hide'] as const satisfies readonly CutMode[]
 const LANGS = ['de', 'la', 'en'] as const satisfies readonly Lang[]
 const SELECT_MODES = ['group', 'direct'] as const satisfies readonly SelectMode[]
 const VIEW_MODES = ['full', 'k11'] as const satisfies readonly ViewMode[]
+const COLOR_ROLE_SET = new Set<string>(COLOR_ROLE_VALUES)
 
 export interface ViewerStateSnapshotState {
   activePreset?: ColorPreset | null
@@ -179,14 +181,29 @@ function parseColorPreset(value: unknown): ColorPreset | null {
     if (group.buckets.some((bucket) => typeof bucket !== 'string')) {
       throw new Error(`Viewer-State-Snapshot: activePreset.groups[${i}].buckets muss ein String-Array sein`)
     }
-    return { label: group.label, hue: group.hue, buckets: [...group.buckets] }
+    return {
+      label: group.label,
+      role: parseColorRole(group.role),
+      meaning: typeof group.meaning === 'string' ? group.meaning : group.label,
+      hue: group.hue,
+      buckets: [...group.buckets],
+    }
   })
+  const coverage = value.coverage === 'partial' || value.coverage === 'full' ? value.coverage : 'full'
   return {
     id: value.id,
     label: value.label,
+    sourceFigure: typeof value.sourceFigure === 'string' ? value.sourceFigure : undefined,
+    intent: typeof value.intent === 'string' ? value.intent : value.label,
+    coverage,
+    coverageNote: typeof value.coverageNote === 'string' ? value.coverageNote : undefined,
     groups,
     dimOthers: value.dimOthers === undefined ? true : booleanValue(value.dimOthers, true, 'activePreset.dimOthers'),
   }
+}
+
+function parseColorRole(value: unknown): ColorRole {
+  return typeof value === 'string' && COLOR_ROLE_SET.has(value) ? value as ColorRole : 'task-activation'
 }
 
 function currentRoute(): SceneLocation | null {

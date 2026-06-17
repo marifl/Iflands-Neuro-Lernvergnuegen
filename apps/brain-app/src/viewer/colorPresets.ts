@@ -8,10 +8,19 @@
  * Saettigung/Helligkeit), passend zur editorialen Zurueckhaltung der App.
  */
 import { z } from 'zod'
+import {
+  ATLAS_VIEWER_COLORS,
+  COLOR_ROLE_VALUES,
+  PRESET_HUE_LIGHTNESS,
+  PRESET_HUE_SATURATION,
+  type ColorRole,
+} from './atlasColorSystem'
 import { bucketToMeshes } from './bucketMeshes'
 
 const ColorGroupSchema = z.object({
   label: z.string(),
+  role: z.enum(COLOR_ROLE_VALUES),
+  meaning: z.string().min(1),
   hue: z.number(),
   buckets: z.array(z.string()).min(1),
 })
@@ -19,8 +28,20 @@ const ColorGroupSchema = z.object({
 const ColorPresetSchema = z.object({
   id: z.string(),
   label: z.string(),
+  sourceFigure: z.string().optional(),
+  intent: z.string().min(1),
+  coverage: z.enum(['full', 'partial']).default('full'),
+  coverageNote: z.string().optional(),
   groups: z.array(ColorGroupSchema).min(1),
   dimOthers: z.boolean().default(true),
+}).superRefine((preset, ctx) => {
+  if (preset.coverage === 'partial' && !preset.coverageNote) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'coverageNote ist Pflicht bei coverage="partial"',
+      path: ['coverageNote'],
+    })
+  }
 })
 
 const ColorPresetsFileSchema = z.object({
@@ -30,9 +51,10 @@ const ColorPresetsFileSchema = z.object({
 
 export type ColorGroup = z.infer<typeof ColorGroupSchema>
 export type ColorPreset = z.infer<typeof ColorPresetSchema>
+export type { ColorRole }
 
 /** Gedaempftes Neutral fuer nicht-gruppierte Strukturen, wenn `dimOthers` aktiv ist. */
-export const PRESET_DIM_COLOR = '#3a3631'
+export const PRESET_DIM_COLOR = ATLAS_VIEWER_COLORS.presetDim
 
 const COLOR_PRESETS_URL = '/companion/config/color-presets.json'
 
@@ -49,7 +71,7 @@ export async function fetchColorPresets(): Promise<ColorPreset[]> {
 }
 
 /** Hue (0-360) -> gedaempftes Hex. Saettigung/Helligkeit fix, damit die Palette ruhig bleibt. */
-export function hueToHex(hue: number, sat = 0.46, light = 0.52): string {
+export function hueToHex(hue: number, sat = PRESET_HUE_SATURATION, light = PRESET_HUE_LIGHTNESS): string {
   const c = (1 - Math.abs(2 * light - 1)) * sat
   const hp = (((hue % 360) + 360) % 360) / 60
   const x = c * (1 - Math.abs((hp % 2) - 1))

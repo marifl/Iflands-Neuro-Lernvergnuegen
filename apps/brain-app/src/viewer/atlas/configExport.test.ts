@@ -80,7 +80,15 @@ describe('toTomlConfiguration', () => {
         pose: { position: [1, 2, 3], look_at: [4, 5, 6] },
       },
       regions: { areas: ['dkt:rostralanteriorcingulate:l'], scene_regions: ['acc-anterior'] },
-      colors: { enabled: false, groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }], dim_others: true },
+      colors: {
+        enabled: false,
+        scheme: 'scene',
+        groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }],
+        dim_others: true,
+        coverage: 'not-applicable',
+        review_status: 'final',
+        reason: 'ERP-Overlay nutzt Scene-Farben statt Atlas-Preset.',
+      },
       visibility: { dim_others: true, dim_opacity: 0.18, hidden: ['left-insula'], isolated: ['left-cingulate-gyrus'] },
       cuts: { enabled: true, planes: [{ axis: 'x', position: 12, keep: 'positive' }] },
       overlay: { kind: 'erp', scene: 'p3a-konfliktmonitoring', position: 'right', size: 'md' },
@@ -95,6 +103,10 @@ describe('toTomlConfiguration', () => {
     expect(cfg.camera.pose.position).toEqual([1, 2, 3])
     expect(cfg.regions.scene_regions).toEqual(['acc-anterior'])
     expect(cfg.colors.groups[0]).toEqual({ label: 'ACC', hue: 20, buckets: ['dacc'] })
+    expect(cfg.colors.scheme).toBe('scene')
+    expect(cfg.colors.coverage).toBe('not-applicable')
+    expect(cfg.colors.review_status).toBe('final')
+    expect(cfg.colors.reason).toBe('ERP-Overlay nutzt Scene-Farben statt Atlas-Preset.')
     expect(cfg.visibility.dim_opacity).toBe(0.18)
     expect(cfg.visibility.hidden).toEqual(['left-insula'])
     expect(cfg.cuts.planes[0]).toEqual({ axis: 'x', position: 12, keep: 'positive' })
@@ -110,7 +122,14 @@ describe('toTomlConfiguration', () => {
       view: { surface: 'pial', subcortex: false, carve_on_taro: 'julich' },
       camera: { target: 'julich:area-44:l', shot: 'lateral-left', fit: 'bounds', margin: 1.4, fov: 35 },
       regions: { areas: ['julich:area-44:l'] },
-      colors: { enabled: false, dim_others: true },
+      colors: {
+        enabled: false,
+        dim_others: true,
+        scheme: 'atlas',
+        coverage: 'not-applicable',
+        review_status: 'final',
+        reason: 'Builder-Roundtrip nutzt Atlas-Carve ohne Preset.',
+      },
       visibility: { dim_others: true, dim_opacity: 0.18 },
       cuts: { enabled: false },
       overlay: { kind: 'prose' },

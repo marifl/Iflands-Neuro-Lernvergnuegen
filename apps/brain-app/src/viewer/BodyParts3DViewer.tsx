@@ -3,6 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { APP_MODES, useViewerStore, type AppMode, type CutAxis, type CutConfig } from './viewerStore'
@@ -13,6 +14,7 @@ import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
 import { hasImportedSnapshotRouteForCurrentLocation } from './viewerStateSnapshot'
 import PresetLegend from './PresetLegend'
+import GlobalColorLegend from './GlobalColorLegend'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
 import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
@@ -21,6 +23,7 @@ import { configRegionsToMeshes } from '../scene/brainBridge'
 import { replaceCanonicalLocation } from '../scene/router'
 import { setLocalStorageItem } from '../safeLocalStorage'
 import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocation } from './registryLaunch'
+import { createAnatomicalMaterial, contextAnatomicalMaterialRole, contextColorForMode } from './anatomicalMaterials'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
@@ -60,12 +63,10 @@ useGLTF.preload(BRAIN_GLB)
 useGLTF.preload(SKULL_GLB)
 useGLTF.preload(HEAD_GLB)
 
-const BASE_COLOR = '#cdbfb6'
-const SELECT_COLOR = '#f26b1f'
-const HOVER_COLOR = '#ffd2a8'
-const BONE_COLOR = '#e9e1d2'
-const CONTEXT_COLOR = '#b8a894'
-const ROD_COLOR = '#2f281f'
+const SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
+const HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
+const EMISSIVE_OFF_COLOR = ATLAS_VIEWER_COLORS.emissiveOff
+const ROD_COLOR = ATLAS_VIEWER_COLORS.rod
 const DEFAULT_DIM_OPACITY = 0.12
 const DIM_DEPTH_WRITE_THRESHOLD = 0.6
 const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
@@ -79,6 +80,10 @@ const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
 const NO_RAYCAST = () => {}
 function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
+}
+
+function hasUvAttribute(mesh: THREE.Mesh): boolean {
+  return Boolean(mesh.geometry.getAttribute('uv'))
 }
 
 function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null): number {
@@ -284,12 +289,11 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: BASE_COLOR,
-          roughness: 0.85,
-          metalness: 0,
+        const materialRole = colorIndex.get(mesh.name)?.anatomicalRole ?? 'brain-cortex'
+        mesh.material = createAnatomicalMaterial(materialRole, {
           // Halb-Meshes (L/R-Haelften) sind am Mittelschnitt offen; DoubleSide stellt
           // sicher, dass nichts durch Backface-Culling unsichtbar wird.
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
@@ -297,7 +301,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
       }
     })
     return list
-  }, [scene])
+  }, [scene, colorIndex])
 
   useClipPlanes(meshes)
 
@@ -354,7 +358,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       const dim = visible && ((animating && !isActive) || isoDimmed)
@@ -398,6 +402,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
+  const colorMode = useViewerStore((s) => s.colorMode)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const meshes = useMemo(() => {
@@ -405,10 +410,8 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: BONE_COLOR,
-          roughness: 0.9,
-          metalness: 0,
+        mesh.material = createAnatomicalMaterial('bone', {
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
           transparent: true,
         })
@@ -431,6 +434,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
+      material.color.set(contextColorForMode(mesh.name, colorMode))
       const opacity = isoDimmed ? dimOpacity : showSkull ? skullOpacity : 1
       material.opacity = opacity
       material.depthWrite = opacity > DIM_DEPTH_WRITE_THRESHOLD
@@ -441,12 +445,12 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.3
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       material.needsUpdate = true
     }
-  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
+  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -458,6 +462,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
+  const colorMode = useViewerStore((s) => s.colorMode)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const meshes = useMemo(() => {
@@ -465,10 +470,8 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: CONTEXT_COLOR,
-          roughness: 0.85,
-          metalness: 0,
+        mesh.material = createAnatomicalMaterial(contextAnatomicalMaterialRole(mesh.name), {
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
@@ -488,6 +491,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed) // ausgeblendet/isoliert-aussen -> nicht pickbar
       const material = mesh.material as THREE.MeshStandardMaterial
+      material.color.set(contextColorForMode(mesh.name, colorMode))
       if (selectedSlugs.has(mesh.name)) {
         material.emissive.set(SELECT_COLOR)
         material.emissiveIntensity = 0.7
@@ -495,7 +499,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
@@ -503,7 +507,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
       material.opacity = isoDimmed ? dimOpacity : 1
       material.depthWrite = !isoDimmed
     }
-  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -543,9 +547,9 @@ function AtlasOverObject({
           // Cerebellum/Hirnstamm = Kontext (gedaempft); GapMaps = "nicht-kartierte" Rest-Zonen (neutral,
           // damit sie nicht dominieren); echte zytoarchitektonische Areale = stabile Farbe (L/R teilen sie).
           color: /cerebellum|brainstem/.test(mesh.name)
-            ? '#8d8779'
+            ? ATLAS_VIEWER_COLORS.atlasContext
             : /gapmap/.test(mesh.name)
-              ? '#7c7a73'
+              ? ATLAS_VIEWER_COLORS.atlasGap
               : parcelColor(mesh.name),
           roughness: 0.82,
           metalness: 0,
@@ -584,7 +588,7 @@ function AtlasOverObject({
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
@@ -1046,14 +1050,18 @@ export default function BodyParts3DViewer() {
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
               // Schnittflaechen ueber den Stencil-Buffer. R3F erstellt den Context sonst
               // ohne Stencil (stencilBits=0), wodurch die Caps unmaskiert als volle Plane rendern.
-              gl={{ stencil: true }}
+              gl={{ stencil: true, powerPreference: 'high-performance' }}
               onCreated={({ gl }) => {
                 gl.localClippingEnabled = true // Schnittebenen (Clipping) aktivieren
+                gl.outputColorSpace = THREE.SRGBColorSpace
+                gl.toneMapping = THREE.ACESFilmicToneMapping
+                gl.toneMappingExposure = 1.04
               }}
             >
-              <ambientLight intensity={0.6} />
+              <ambientLight intensity={0.38} />
+              <hemisphereLight args={[0xf8efe5, 0x181818, 0.42]} />
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
-              <directionalLight position={[-160, -80, -200]} intensity={0.4} />
+              <directionalLight position={[-160, -80, -200]} intensity={0.28} />
               <Suspense fallback={null}>
                 <Brain dimOpacity={dimOpacity} />
                 <ContextSkull dimOpacity={dimOpacity} />
@@ -1185,6 +1193,7 @@ export default function BodyParts3DViewer() {
             ) : null}
 
             <PresetLegend />
+            <GlobalColorLegend />
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (

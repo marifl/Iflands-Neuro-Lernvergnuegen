@@ -72,7 +72,14 @@ const VALID_CONFIGURATION = {
   view: { surface: 'pial', subcortex: false, carve_on_taro: 'dkt' },
   camera: { target: 'julich:area-44:l', shot: 'lateral-left', fit: 'target', margin: 1.4 },
   regions: { areas: ['julich:area-44:l'], buckets: ['ok'], meshes: ['mesh-a'], scene_regions: ['sma-presma'] },
-  colors: { enabled: false, dim_others: true },
+  colors: {
+    enabled: false,
+    dim_others: true,
+    scheme: 'atlas',
+    coverage: 'not-applicable',
+    review_status: 'final',
+    reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+  },
   visibility: { dim_others: true, hidden: [], isolated: [] },
   cuts: { enabled: false },
   overlay: { kind: 'prose' },
@@ -370,7 +377,9 @@ test('validateConfig wirft bei unbekanntem replaces_figure', () => {
 test('validateConfig wirft bei unbekanntem colors.preset', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
-    () => validateConfig(configWith({ colors: { preset: 'ghost' } }), idx, VALIDATION_CONTEXT),
+    () => validateConfig(configWith({
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'ghost', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
     /colors\.preset "ghost"/,
   )
 })
@@ -386,8 +395,38 @@ test('validateConfig wirft bei unbekanntem oder leerem Bucket', () => {
     /keine Geometrie/,
   )
   assert.throws(
-    () => validateConfig(configWith({ colors: { preset: 'gap-preset' } }), idx, VALIDATION_CONTEXT),
+    () => validateConfig(configWith({
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'gap-preset', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
     /keine Geometrie/,
+  )
+})
+
+test('validateConfig verlangt Farbmetadaten je Configuration', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        enabled: false,
+        dim_others: true,
+        coverage: 'not-applicable',
+        review_status: 'final',
+        reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.scheme fehlt/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        enabled: false,
+        dim_others: true,
+        scheme: 'atlas',
+        review_status: 'final',
+        reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.coverage fehlt/,
   )
 })
 

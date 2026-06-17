@@ -344,8 +344,10 @@ describe('viewer state snapshots', () => {
       activePreset: {
         id: 'p3a',
         label: 'P3a',
+        intent: 'Test-Preset fuer Snapshot-Export',
+        coverage: 'full',
         dimOthers: false,
-        groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }],
+        groups: [{ label: 'ACC', role: 'conflict-monitoring', meaning: 'ACC-Testgruppe', hue: 20, buckets: ['dacc'] }],
       },
       cameraView: { name: 'lateral-left', nonce: 7 },
       clipAtlasOverlay: false,

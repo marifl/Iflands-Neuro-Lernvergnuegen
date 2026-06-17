@@ -31,6 +31,10 @@ export interface ConfigColors {
   preset?: string
   groups?: { label: string; hue: number; buckets: string[] }[]
   dim_others?: boolean
+  scheme?: 'preset' | 'atlas' | 'scene' | 'none'
+  coverage?: 'full' | 'partial' | 'not-applicable'
+  review_status?: 'final' | 'needs-review' | 'legacy'
+  reason?: string
 }
 export interface ConfigVisibility { dim_others?: boolean; dim_opacity?: number; hidden?: string[]; isolated?: string[] }
 export interface ConfigCuts { enabled?: boolean; planes?: { axis: 'x' | 'y' | 'z'; position: number; keep?: 'positive' | 'negative' }[] }

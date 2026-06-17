@@ -64,8 +64,30 @@ const CAMERA_KEYS = new Set(['target', 'shot', 'fit', 'bounds', 'margin', 'fov',
 const CAMERA_BOUNDS_KEYS = new Set(['center', 'radius'])
 const CAMERA_POSE_KEYS = new Set(['position', 'look_at'])
 const REGION_KEYS = new Set(['areas', 'buckets', 'meshes', 'scene_regions'])
-const COLOR_KEYS = new Set(['enabled', 'preset', 'groups', 'dim_others'])
+const COLOR_KEYS = new Set(['enabled', 'scheme', 'preset', 'groups', 'dim_others', 'coverage', 'review_status', 'reason'])
 const COLOR_GROUP_KEYS = new Set(['label', 'hue', 'buckets'])
+const COLOR_PRESET_KEYS = new Set(['id', 'label', 'sourceFigure', 'intent', 'coverage', 'coverageNote', 'groups', 'dimOthers'])
+const COLOR_PRESET_GROUP_KEYS = new Set(['label', 'role', 'meaning', 'hue', 'buckets'])
+const COLOR_SCHEMES = new Set(['preset', 'atlas', 'scene', 'none'])
+const COLOR_COVERAGE = new Set(['full', 'partial', 'not-applicable'])
+const COLOR_REVIEW_STATUS = new Set(['final', 'needs-review', 'legacy'])
+const COLOR_ROLES = new Set([
+  'cognition',
+  'emotion',
+  'motivation',
+  'lesion',
+  'working-memory',
+  'posterior-storage',
+  'abstract-control',
+  'context-control',
+  'selection-control',
+  'response-control',
+  'conflict-monitoring',
+  'affective-control',
+  'frontoparietal-control',
+  'motor-planning',
+  'task-activation',
+])
 const VISIBILITY_KEYS = new Set(['dim_others', 'dim_opacity', 'hidden', 'isolated'])
 const CUTS_KEYS = new Set(['enabled', 'planes'])
 const CUT_PLANE_KEYS = new Set(['axis', 'position', 'keep'])
@@ -249,7 +271,7 @@ function extractExportedObjectExpression(source, name) {
   throw new Error(`build-config: ${name} Objektliteral nicht geschlossen`)
 }
 
-function loadTsObject(path, name, helpers = {}) {
+export function loadTsObject(path, name, helpers = {}) {
   const expr = extractExportedObjectExpression(readFileSync(path, 'utf8'), name)
   const helperNames = Object.keys(helpers)
   const helperValues = Object.values(helpers)
@@ -349,7 +371,7 @@ export function loadScenesContext(config, scenesRoot = join(APP_PUBLIC, 'scenes'
 
 function loadValidationContext(config) {
   const cameraDirections = loadTsObject(join(APP_SRC, 'scene/cameraPresets.ts'), 'CAMERA_DIRECTIONS')
-  const colorPresets = JSON.parse(readFileSync(COLOR_PRESETS, 'utf8')).presets ?? []
+  const colorPresets = loadColorPresets()
   const meshIds = new Set(Object.keys(JSON.parse(readFileSync(STRUCTURE_COORDS, 'utf8'))))
   return {
     ...loadScenesContext(config),
@@ -360,6 +382,56 @@ function loadValidationContext(config) {
     meshIds,
     sceneRegionMappings: config.mesh_mappings?.scene_regions,
   }
+}
+
+function loadColorPresets(path = COLOR_PRESETS) {
+  let raw
+  try {
+    raw = JSON.parse(readFileSync(path, 'utf8'))
+  } catch {
+    throw new Error(`build-config: ${path} ist kein gueltiges JSON`)
+  }
+  if (raw.version !== 2) throw new Error('build-config: color-presets.json braucht version=2')
+  if (!Array.isArray(raw.presets) || raw.presets.length === 0) {
+    throw new Error('build-config: color-presets.json braucht presets[]')
+  }
+  const seen = new Set()
+  for (const [i, preset] of raw.presets.entries()) {
+    const context = `color-presets[${i}]`
+    assertPlainObject(preset, context)
+    assertKnownKeys(preset, COLOR_PRESET_KEYS, context)
+    assertString(preset.id, `${context}.id`)
+    if (seen.has(preset.id)) throw new Error(`build-config: color-presets id "${preset.id}" doppelt`)
+    seen.add(preset.id)
+    assertString(preset.label, `${context}.label`)
+    assertOptionalString(preset.sourceFigure, `${context}.sourceFigure`)
+    assertString(preset.intent, `${context}.intent`)
+    assertOptionalString(preset.coverage, `${context}.coverage`)
+    const coverage = preset.coverage ?? 'full'
+    if (!COLOR_COVERAGE.has(coverage) || coverage === 'not-applicable') {
+      throw new Error(`build-config: ${context}.coverage "${coverage}" ungueltig`)
+    }
+    assertOptionalString(preset.coverageNote, `${context}.coverageNote`)
+    if (coverage === 'partial' && !preset.coverageNote) {
+      throw new Error(`build-config: ${context}.coverageNote fehlt bei coverage="partial"`)
+    }
+    assertOptionalBoolean(preset.dimOthers, `${context}.dimOthers`)
+    if (!Array.isArray(preset.groups) || preset.groups.length === 0) {
+      throw new Error(`build-config: ${context}.groups braucht mindestens eine Gruppe`)
+    }
+    for (const [j, group] of preset.groups.entries()) {
+      const groupContext = `${context}.groups[${j}]`
+      assertPlainObject(group, groupContext)
+      assertKnownKeys(group, COLOR_PRESET_GROUP_KEYS, groupContext)
+      assertString(group.label, `${groupContext}.label`)
+      assertString(group.role, `${groupContext}.role`)
+      if (!COLOR_ROLES.has(group.role)) throw new Error(`build-config: ${groupContext}.role "${group.role}" ungueltig`)
+      assertString(group.meaning, `${groupContext}.meaning`)
+      assertFiniteNumber(group.hue, `${groupContext}.hue`)
+      assertStringArray(group.buckets, `${groupContext}.buckets`)
+    }
+  }
+  return raw.presets
 }
 
 function validateColorPresetBuckets(preset, ctx, context) {
@@ -416,8 +488,12 @@ function validateConfigurationSchema(name, c, idx) {
 
   assertPlainObject(c.colors, `${context}.colors`)
   assertOptionalBoolean(c.colors.enabled, `${context}.colors.enabled`)
+  assertOptionalString(c.colors.scheme, `${context}.colors.scheme`)
   assertOptionalString(c.colors.preset, `${context}.colors.preset`)
   assertOptionalBoolean(c.colors.dim_others, `${context}.colors.dim_others`)
+  assertOptionalString(c.colors.coverage, `${context}.colors.coverage`)
+  assertOptionalString(c.colors.review_status, `${context}.colors.review_status`)
+  assertOptionalString(c.colors.reason, `${context}.colors.reason`)
   if (c.colors.groups !== undefined) {
     if (!Array.isArray(c.colors.groups)) throw new Error(`build-config: ${context}.colors.groups muss ein Array sein`)
     c.colors.groups.forEach((group, i) => {
@@ -542,6 +618,45 @@ function validateSequencingRefs(name, c, config) {
   }
 }
 
+function validateColorMetadata(name, colors) {
+  if (colors.scheme === undefined) {
+    throw new Error(`build-config: configuration "${name}" colors.scheme fehlt`)
+  }
+  if (colors.coverage === undefined) {
+    throw new Error(`build-config: configuration "${name}" colors.coverage fehlt`)
+  }
+  if (colors.review_status === undefined) {
+    throw new Error(`build-config: configuration "${name}" colors.review_status fehlt`)
+  }
+  if (colors.reason === undefined) {
+    throw new Error(`build-config: configuration "${name}" colors.reason fehlt`)
+  }
+  if (colors.scheme !== undefined && !COLOR_SCHEMES.has(colors.scheme)) {
+    throw new Error(`build-config: configuration "${name}" colors.scheme "${colors.scheme}" ungueltig`)
+  }
+  if (colors.coverage !== undefined && !COLOR_COVERAGE.has(colors.coverage)) {
+    throw new Error(`build-config: configuration "${name}" colors.coverage "${colors.coverage}" ungueltig`)
+  }
+  if (colors.review_status !== undefined && !COLOR_REVIEW_STATUS.has(colors.review_status)) {
+    throw new Error(`build-config: configuration "${name}" colors.review_status "${colors.review_status}" ungueltig`)
+  }
+  if (colors.preset !== undefined && colors.scheme !== undefined && colors.scheme !== 'preset') {
+    throw new Error(`build-config: configuration "${name}" colors.preset braucht scheme="preset"`)
+  }
+  if (colors.scheme === 'preset' && colors.preset === undefined && colors.groups === undefined) {
+    throw new Error(`build-config: configuration "${name}" scheme="preset" braucht colors.preset oder colors.groups`)
+  }
+  if (colors.enabled === false && colors.scheme === 'preset') {
+    throw new Error(`build-config: configuration "${name}" colors.enabled=false widerspricht scheme="preset"`)
+  }
+  if (colors.coverage === 'partial' && !colors.reason) {
+    throw new Error(`build-config: configuration "${name}" colors.reason fehlt bei coverage="partial"`)
+  }
+  if (colors.coverage === 'not-applicable' && colors.scheme === 'preset') {
+    throw new Error(`build-config: configuration "${name}" coverage="not-applicable" widerspricht scheme="preset"`)
+  }
+}
+
 function validateSequence(name, sequence, config) {
   const steps = new Set()
   for (const step of sequence.steps ?? []) {
@@ -597,6 +712,7 @@ export function validateConfig(config, idx, ctx = {}) {
     assertKnownKeys(c.camera, CAMERA_KEYS, `configuration "${name}".camera`)
     assertKnownKeys(c.regions, REGION_KEYS, `configuration "${name}".regions`)
     assertKnownKeys(c.colors, COLOR_KEYS, `configuration "${name}".colors`)
+    validateColorMetadata(name, c.colors)
     assertKnownKeys(c.visibility, VISIBILITY_KEYS, `configuration "${name}".visibility`)
     assertKnownKeys(c.cuts, CUTS_KEYS, `configuration "${name}".cuts`)
     assertKnownKeys(c.overlay, OVERLAY_KEYS, `configuration "${name}".overlay`)
