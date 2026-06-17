@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import { useSceneStore } from './sceneStore'
 import { nextIndex, prevIndex } from './nav'
 import type { LoadedScene } from './scenes'
+import { ShellControlButton } from '../viewer/ShellStatePrimitives'
 
 function stepOptionLabel(scene: LoadedScene) {
   return `${scene.sequence.stepIndex + 1}. ${scene.title}`
@@ -190,29 +191,25 @@ export default function PresenterChrome() {
         {scene.title}
       </div>
       <div style={{ display: 'flex', gap: 6, alignItems: 'center', width: '100%', minWidth: 0 }}>
-        <button
-          type="button"
-          className="ed-btn"
+        <ShellControlButton
           style={nav}
           onClick={() => goto(prevIndex(index))}
-          disabled={index === 0}
+          disabledReason={index === 0 ? 'Erster Schritt' : null}
           aria-label="Vorige Szene"
         >
           ◀
-        </button>
+        </ShellControlButton>
         <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: 'var(--ink)', flex: 'none', whiteSpace: 'nowrap' }}>
           {sequence.stepIndex + 1} / {sequence.stepCount}
         </span>
-        <button
-          type="button"
-          className="ed-btn"
+        <ShellControlButton
           style={nav}
           onClick={() => goto(nextIndex(index, scenes.length))}
-          disabled={index === scenes.length - 1}
+          disabledReason={index === scenes.length - 1 ? 'Letzter Schritt' : null}
           aria-label="Nächste Szene"
         >
           ▶
-        </button>
+        </ShellControlButton>
         <SceneJumpPicker scenes={scenes} index={index} goto={goto} />
       </div>
       {/* Fortschrittsbalken: füllt sich mit jeder Szene; macht „wie weit / wie lang noch" konkret. */}

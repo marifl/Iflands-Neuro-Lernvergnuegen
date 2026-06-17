@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react'
 import { CUT_AXIS_COLORS } from './atlasColorSystem'
 import { CUT_AXES, CUT_POS_MAX, type CutAxis } from './cutCapsMerged'
 import { useViewerStore } from './viewerStore'
+import { ShellControlButton } from './ShellStatePrimitives'
 
 const CUT_LABEL: Record<CutAxis, string> = {
   sagittal: 'Sagittal',
@@ -19,11 +20,13 @@ function cssColor(hex: number, alpha: number) {
 }
 
 function axisButtonStyle(axis: CutAxis, active: boolean): CSSProperties {
+  const color = cssColor(CUT_AXIS_COLORS[axis], 0.92)
   return {
     ...SMALL_BUTTON,
-    '--cut-axis-color': cssColor(CUT_AXIS_COLORS[axis], 0.92),
-    borderColor: active ? 'var(--cut-axis-color)' : 'var(--line-soft)',
-    boxShadow: 'inset 3px 0 0 var(--cut-axis-color)',
+    '--cut-axis-color': color,
+    '--shell-cut-axis-color': color,
+    borderColor: active ? 'var(--shell-cut-axis-color)' : 'var(--shell-panel-border)',
+    boxShadow: 'inset 3px 0 0 var(--shell-cut-axis-color)',
   } as CSSProperties
 }
 
@@ -41,6 +44,9 @@ export function ExplorerSelectionActions() {
   const hasSelection = selectedSlugList.length > 0
   const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
   const selectionLabel = selectedLabels?.[lang] ?? 'Keine Struktur ausgewählt'
+  const selectionActionLabel = !hasSelection ? 'Auswahl ausblenden' : selectionHasVisibleSlugs ? 'Auswahl ausblenden' : 'Auswahl einblenden'
+  const noSelectionReason = hasSelection ? null : 'Erst eine Struktur auswählen'
+  const noIsolationReason = isolated ? null : 'Keine Isolation aktiv'
 
   return (
     <div
@@ -63,36 +69,30 @@ export function ExplorerSelectionActions() {
         {selectionLabel}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-        <button
-          type="button"
-          className="ed-btn"
-          disabled={!hasSelection}
+        <ShellControlButton
+          disabledReason={noSelectionReason}
           style={SMALL_BUTTON}
           onClick={() => setHidden(selectedSlugList, selectionHasVisibleSlugs)}
         >
-          {selectionHasVisibleSlugs ? 'Auswahl ausblenden' : 'Auswahl einblenden'}
-        </button>
-        <button
-          type="button"
-          className="ed-btn"
-          disabled={!hasSelection}
+          {selectionActionLabel}
+        </ShellControlButton>
+        <ShellControlButton
+          disabledReason={noSelectionReason}
           style={SMALL_BUTTON}
           onClick={() => setIsolated(selected)}
         >
           Auswahl isolieren
-        </button>
+        </ShellControlButton>
         <button type="button" className="ed-btn" style={SMALL_BUTTON} onClick={clearHidden}>
           Alles zeigen
         </button>
-        <button
-          type="button"
-          className="ed-btn"
-          disabled={!isolated}
+        <ShellControlButton
+          disabledReason={noIsolationReason}
           style={SMALL_BUTTON}
           onClick={() => setIsolated(null)}
         >
           Isolation aus
-        </button>
+        </ShellControlButton>
       </div>
     </div>
   )

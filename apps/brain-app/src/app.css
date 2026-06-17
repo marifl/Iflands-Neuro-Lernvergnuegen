@@ -70,6 +70,24 @@
   --border-strong: var(--line-soft);
   --border-muted: var(--line-soft);
   --focus-ring: var(--orange);
+
+  /* V2-Shell-Vertrag: semantische Chrome-Tokens statt Panel-Sonderfaelle. */
+  --shell-header-bg: var(--paper);
+  --shell-header-border: var(--line);
+  --shell-dock-bg: var(--paper);
+  --shell-dock-border: var(--line);
+  --shell-drawer-bg: var(--paper);
+  --shell-panel-bg: var(--paper);
+  --shell-panel-border: var(--line-soft);
+  --shell-button-bg: transparent;
+  --shell-button-hover-bg: var(--surface-interactive-hover);
+  --shell-button-active-bg: var(--orange);
+  --shell-button-disabled-bg: var(--fill);
+  --shell-button-disabled-text: var(--g600);
+  --shell-focus-ring: var(--orange);
+  --shell-cut-sagittal: #ff5a4f;
+  --shell-cut-coronal: #77c85b;
+  --shell-cut-axial: #35a6ff;
 }
 
 /* =====================================================================
@@ -198,7 +216,15 @@
 
   /* ── Tinte-Rahmen ("Plate") + Panel-Flaeche ── */
   .ed-frame { border: 1.5px solid var(--line); }
-  .ed-panel { background: var(--paper); }
+  .ed-head {
+    background: var(--shell-header-bg);
+    border-bottom: 1.5px solid var(--shell-header-border);
+  }
+  .ed-panel { background: var(--shell-panel-bg); }
+  .ed-drawer {
+    background: var(--shell-drawer-bg);
+    border-color: var(--shell-panel-border);
+  }
 
   /* ── Eyebrow + technische Tags (Mono, Versalien) ── */
   .eyebrow {
@@ -281,16 +307,63 @@
     letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--g700);
-    background: transparent;
-    border: 1px solid var(--line-soft);
+    background: var(--shell-button-bg);
+    border: 1px solid var(--shell-panel-border);
     padding: 5px 11px;
     cursor: pointer;
     white-space: nowrap;
     transition: background var(--motion-fast, 120ms), color var(--motion-fast, 120ms);
   }
-  .ed-btn:hover { background: var(--surface-interactive-hover); color: var(--ink); }
-  .ed-btn.active { background: var(--orange); color: var(--on-accent); border-color: var(--orange); }
-  .ed-btn:focus-visible { outline: 2px solid var(--orange); outline-offset: 1px; }
+  .ed-btn:hover { background: var(--shell-button-hover-bg); color: var(--ink); }
+  .ed-btn.active { background: var(--shell-button-active-bg); color: var(--on-accent); border-color: var(--orange); }
+  .ed-btn:focus-visible { outline: 2px solid var(--shell-focus-ring); outline-offset: 1px; }
+  .ed-btn[data-shell-disabled='true'] {
+    display: inline-grid;
+    gap: 2px;
+    background: var(--shell-button-disabled-bg);
+    color: var(--shell-button-disabled-text);
+    cursor: not-allowed;
+    opacity: 0.72;
+    white-space: normal;
+  }
+  .ed-btn[data-shell-disabled='true']:hover {
+    background: var(--shell-button-disabled-bg);
+    color: var(--shell-button-disabled-text);
+  }
+  .shell-control-label,
+  .shell-control-reason {
+    min-width: 0;
+  }
+  .shell-control-reason {
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0;
+    line-height: 1.25;
+    text-transform: none;
+    white-space: normal;
+  }
+  .shell-state-block {
+    display: grid;
+    gap: 5px;
+    padding: 10px 12px;
+    border: 1px solid var(--shell-panel-border);
+    background: var(--shell-panel-bg);
+    color: var(--g700);
+    font-family: var(--ed-mono);
+    font-size: 11px;
+    line-height: 1.4;
+  }
+  .shell-state-title {
+    color: var(--ink);
+    font-weight: 700;
+  }
+  .shell-state-detail {
+    color: var(--g600);
+  }
+  .shell-state-loading { box-shadow: inset 3px 0 0 var(--orange); }
+  .shell-state-empty { box-shadow: inset 3px 0 0 var(--g500); }
+  .shell-state-error { box-shadow: inset 3px 0 0 var(--warning-solid, var(--orange)); }
+  .shell-state-disabled { box-shadow: inset 3px 0 0 var(--shell-button-disabled-text); }
 
   .cut-plane-frame-tab {
     font-family: var(--ed-mono);
@@ -298,31 +371,31 @@
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--ink);
-    background: color-mix(in srgb, var(--paper) 82%, var(--cut-axis-color-wash));
-    border: 1px solid var(--line-soft);
+    background: color-mix(in srgb, var(--shell-panel-bg) 82%, var(--shell-cut-axis-color-wash, var(--cut-axis-color-wash)));
+    border: 1px solid var(--shell-panel-border);
     white-space: nowrap;
     touch-action: none;
     box-shadow: inset 0 1px 0 color-mix(in srgb, var(--line) 24%, transparent), 0 3px 12px rgba(0,0,0,0.32);
   }
   .cut-plane-frame-tab[data-cut-active='true'] {
-    border-color: var(--cut-axis-color);
+    border-color: var(--shell-cut-axis-color, var(--cut-axis-color));
   }
   .cut-plane-frame-tab[data-cut-highlighted='true'] {
-    box-shadow: inset 0 0 0 1px var(--line), 0 0 0 2px var(--cut-axis-color-soft), 0 6px 18px rgba(0,0,0,0.38);
+    box-shadow: inset 0 0 0 1px var(--line), 0 0 0 2px var(--shell-cut-axis-color-soft, var(--cut-axis-color-soft)), 0 6px 18px rgba(0,0,0,0.38);
   }
   .cut-plane-frame-tab:focus-visible {
-    outline: 2px solid var(--focus-ring);
+    outline: 2px solid var(--shell-focus-ring);
     outline-offset: 2px;
   }
   [data-theme='light'] .cut-plane-frame-tab {
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.88), 0 4px 14px rgba(0,0,0,0.18);
   }
   [data-contrast='high'] .cut-plane-frame-tab {
-    background: var(--paper);
+    background: var(--shell-panel-bg);
     border-color: var(--line);
   }
   [data-contrast='high'] .cut-plane-frame-tab[data-cut-active='true'] {
-    box-shadow: inset 0 0 0 2px var(--cut-axis-color), 0 0 0 1px var(--line);
+    box-shadow: inset 0 0 0 2px var(--shell-cut-axis-color, var(--cut-axis-color)), 0 0 0 1px var(--line);
   }
   [data-motion='reduce'] .cut-plane-frame-tab {
     transition: none !important;
@@ -382,8 +455,8 @@
     display: grid;
     position: relative;
     z-index: 30;
-    border-top: 1.5px solid var(--line);
-    background: var(--paper);
+    border-top: 1.5px solid var(--shell-dock-border);
+    background: var(--shell-dock-bg);
   }
   .ed-foot .col {
     padding: 9px 14px;
@@ -420,7 +493,7 @@
   .ed-panel button:focus-visible,
   .ed-panel input:focus-visible,
   .ed-panel [role='button']:focus-visible {
-    outline: 2px solid var(--orange);
+    outline: 2px solid var(--shell-focus-ring);
     outline-offset: -2px;
   }
 

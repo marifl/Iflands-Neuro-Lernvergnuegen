@@ -56,6 +56,14 @@ for (const testCase of CASES) {
     await panel.getByRole('group', { name: 'Carve-Atlas-Overlay' }).waitFor({ timeout: 10000 })
     await panel.getByRole('group', { name: 'Schnitte' }).waitFor({ timeout: 10000 })
 
+    const disabledSelection = panel.getByRole('button', { name: 'Auswahl ausblenden' }).first()
+    const ariaDisabled = await disabledSelection.getAttribute('aria-disabled')
+    if (ariaDisabled !== 'true') errors.push(`selection-aria-disabled=${ariaDisabled}`)
+    const nativeDisabled = await disabledSelection.evaluate((button) => button instanceof HTMLButtonElement && button.disabled)
+    if (nativeDisabled) errors.push('selection-native-disabled')
+    const disabledReason = await panel.getByText('Erst eine Struktur auswählen').first().isVisible()
+    if (!disabledReason) errors.push('selection-disabled-reason-fehlt')
+
     const sagittal = panel.getByRole('button', { name: 'Sagittal' })
     const cutAxis = await sagittal.getAttribute('data-cut-axis')
     if (cutAxis !== 'sagittal') errors.push(`cut-axis=${cutAxis}`)

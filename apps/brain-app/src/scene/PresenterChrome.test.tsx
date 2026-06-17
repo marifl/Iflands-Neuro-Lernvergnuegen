@@ -81,6 +81,20 @@ describe('PresenterChrome', () => {
     expect(useSceneStore.getState().index).toBe(2)
   })
 
+  it('erklaert deaktivierte Rand-Navigation sichtbar und bleibt fokussierbar', () => {
+    useSceneStore.setState({ index: 0, step: 0 })
+
+    render(<PresenterChrome />)
+
+    const previous = screen.getByLabelText('Vorige Szene')
+    expect(previous).toHaveAttribute('aria-disabled', 'true')
+    expect(previous).not.toBeDisabled()
+    expect(previous).toHaveAccessibleDescription('Erster Schritt')
+
+    fireEvent.click(previous)
+    expect(useSceneStore.getState().index).toBe(0)
+  })
+
   it('benennt Nicht-Presentation-Sequenzen als Lernpfad', () => {
     useSceneStore.setState({
       scenes: [loadedScene('vcpt', 'VCPT', 0, 1, 'learning')],

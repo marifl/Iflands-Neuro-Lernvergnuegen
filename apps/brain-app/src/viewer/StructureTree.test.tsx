@@ -252,6 +252,21 @@ describe('StructureTree Gruppenknoten', () => {
     expect(useViewerStore.getState().isolated).toBe('area-a')
   })
 
+  it('erklaert deaktivierte Auswahlaktionen sichtbar und bleibt per Tastatur erreichbar', () => {
+    render(<StructureTree />)
+
+    const actionGroup = screen.getByRole('group', { name: 'Auswahlaktionen' })
+    const hideSelection = within(actionGroup).getByRole('button', { name: /Auswahl ausblenden/ })
+
+    expect(hideSelection).toHaveAttribute('aria-disabled', 'true')
+    expect(hideSelection).not.toBeDisabled()
+    expect(hideSelection).toHaveAccessibleDescription('Erst eine Struktur auswählen')
+    expect(within(actionGroup).getAllByText('Erst eine Struktur auswählen').length).toBeGreaterThan(0)
+
+    fireEvent.click(hideSelection)
+    expect(useViewerStore.getState().hidden.size).toBe(0)
+  })
+
   it('stellt die Schnittsteuerung als Abschnitt im Explorer-Panel bereit', () => {
     render(<StructureTree />)
 

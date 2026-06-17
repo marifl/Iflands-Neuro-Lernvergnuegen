@@ -13,6 +13,7 @@ import {
   type SettingsCategory,
 } from './settingsStore'
 import { useStudentProgressStore } from './studentProgress'
+import { ShellControlButton } from './ShellStatePrimitives'
 
 type CategoryData = Omit<BrainAppSettings, 'schemaVersion'>
 type Option<T extends string> = { value: T; label: string }
@@ -209,7 +210,9 @@ function DataAccountPanel({ settings, update }: { settings: BrainAppSettings; up
       </ControlRow>
       <ControlRow label="Lernfortschritt">
         <span style={{ fontSize: 12, color: 'var(--g700)', lineHeight: 1.35 }}>{summarizeStudentProgress(progress)}</span>
-        <button type="button" className="ed-btn" disabled={!progress} onClick={resetStudentProgress}>Lernfortschritt zurücksetzen</button>
+        <ShellControlButton disabledReason={progress ? null : 'Kein Lernfortschritt gespeichert'} onClick={resetStudentProgress}>
+          Lernfortschritt zurücksetzen
+        </ShellControlButton>
       </ControlRow>
       <ControlRow label="Lokale Daten">
         <button type="button" className="ed-btn" onClick={clearLocalBrainAppData}>Lokale Daten leeren</button>
