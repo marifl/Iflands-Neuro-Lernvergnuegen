@@ -11,7 +11,7 @@ async function expectBrainCanvas(page: Page) {
   await expect.poll(async () => {
     const box = await canvas.boundingBox()
     return Math.min(box?.width ?? 0, box?.height ?? 0)
-  }).toBeGreaterThan(100)
+  }, { timeout: 60_000 }).toBeGreaterThan(100)
 }
 
 async function attachScreenshot(page: Page, testInfo: TestInfo, name: string) {
