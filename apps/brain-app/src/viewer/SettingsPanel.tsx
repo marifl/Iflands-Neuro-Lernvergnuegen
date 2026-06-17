@@ -1,14 +1,22 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useIsNarrow } from '../useMediaQuery'
+import {
+  clearLocalBrainAppData,
+  downloadViewerSnapshot,
+  importViewerSnapshotFile,
+  summarizeStudentProgress,
+} from './localDataActions'
 import {
   SETTINGS_CATEGORIES,
   useSettingsStore,
   type BrainAppSettings,
   type SettingsCategory,
 } from './settingsStore'
+import { useStudentProgressStore } from './studentProgress'
 
 type CategoryData = Omit<BrainAppSettings, 'schemaVersion'>
 type Option<T extends string> = { value: T; label: string }
+type UpdateCategory = <T extends SettingsCategory>(category: T, patch: Partial<CategoryData[T]>) => void
 
 const CATEGORY_LABEL: Record<SettingsCategory, string> = {
   display: 'Darstellung',
@@ -162,6 +170,52 @@ function SwatchControl({ label }: { label: string }) {
   )
 }
 
+function DataAccountPanel({ settings, update }: { settings: BrainAppSettings; update: UpdateCategory }) {
+  const importInputRef = useRef<HTMLInputElement>(null)
+  const progress = useStudentProgressStore((state) => state.progress)
+  const resetStudentProgress = useStudentProgressStore((state) => state.resetStudentProgress)
+  const [importError, setImportError] = useState<string | null>(null)
+  const importSnapshot = async (file: File | null | undefined) => {
+    if (!file) return
+    try {
+      await importViewerSnapshotFile(file)
+      setImportError(null)
+    } catch (error) {
+      setImportError(error instanceof Error ? error.message : String(error))
+    } finally {
+      if (importInputRef.current) importInputRef.current.value = ''
+    }
+  }
+
+  return (
+    <>
+      <SegmentedControl label="Rolle" value={settings.dataAccount.role} options={[{ value: 'student', label: 'Student' }, { value: 'dozent', label: 'Dozent' }, { value: 'presenter', label: 'Presenter' }, { value: 'developer', label: 'Dev' }]} onChange={(role) => update('dataAccount', { role })} />
+      <ControlRow label="Unterrichts-Snapshot">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          <button type="button" className="ed-btn" onClick={() => downloadViewerSnapshot()}>Snapshot exportieren</button>
+          <button type="button" className="ed-btn" onClick={() => importInputRef.current?.click()}>Snapshot importieren</button>
+        </div>
+        <input
+          ref={importInputRef}
+          aria-label="Unterrichts-Snapshot importieren"
+          type="file"
+          accept="application/json,.json"
+          style={{ display: 'none' }}
+          onChange={(event) => { void importSnapshot(event.currentTarget.files?.[0]) }}
+        />
+        {importError ? <div role="alert" style={{ color: 'var(--red)', fontSize: 12 }}>{importError}</div> : null}
+      </ControlRow>
+      <ControlRow label="Lernfortschritt">
+        <span style={{ fontSize: 12, color: 'var(--g700)', lineHeight: 1.35 }}>{summarizeStudentProgress(progress)}</span>
+        <button type="button" className="ed-btn" disabled={!progress} onClick={resetStudentProgress}>Lernfortschritt zurücksetzen</button>
+      </ControlRow>
+      <ControlRow label="Lokale Daten">
+        <button type="button" className="ed-btn" onClick={clearLocalBrainAppData}>Lokale Daten leeren</button>
+      </ControlRow>
+    </>
+  )
+}
+
 function categoryPanel<K extends SettingsCategory>({
   category,
   settings,
@@ -169,7 +223,7 @@ function categoryPanel<K extends SettingsCategory>({
 }: {
   category: K
   settings: BrainAppSettings
-  update: <T extends SettingsCategory>(category: T, patch: Partial<CategoryData[T]>) => void
+  update: UpdateCategory
 }) {
   if (category === 'display') return (
     <>
@@ -221,10 +275,7 @@ function categoryPanel<K extends SettingsCategory>({
     )
   }
   if (category === 'dataAccount') return (
-    <>
-      <SegmentedControl label="Rolle" value={settings.dataAccount.role} options={[{ value: 'student', label: 'Student' }, { value: 'dozent', label: 'Dozent' }, { value: 'presenter', label: 'Presenter' }, { value: 'developer', label: 'Dev' }]} onChange={(role) => update('dataAccount', { role })} />
-      <SwitchControl label="Snapshots automatisch exportieren" checked={settings.dataAccount.autoExportSnapshots} onChange={(autoExportSnapshots) => update('dataAccount', { autoExportSnapshots })} />
-    </>
+    <DataAccountPanel settings={settings} update={update} />
   )
   if (category === 'learning') return (
     <>

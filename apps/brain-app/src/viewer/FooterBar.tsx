@@ -3,7 +3,7 @@ import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Sett
 import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
-import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
+import { downloadViewerSnapshot, importViewerSnapshotFile } from './localDataActions'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
 import {
   IDENTITY_AUTHORING_TRANSFORM,
@@ -123,16 +123,6 @@ interface BoxDef {
 const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
 const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot', 'settings']
 
-function readSnapshotFile(file: File): Promise<string> {
-  if (typeof file.text === 'function') return file.text()
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onload = () => resolve(String(reader.result ?? ''))
-    reader.onerror = () => reject(reader.error ?? new Error('Snapshot-Datei konnte nicht gelesen werden'))
-    reader.readAsText(file)
-  })
-}
-
 /** Fussleiste als globales Viewport-Cockpit: App-Ebene (Atlas, Modus) plus modusuebergreifende
  *  Darstellungs-Werkzeuge. Box-breite Flyouts klappen nach oben auf; Boxen gleichmaessig verteilt. */
 export default function FooterBar() {
@@ -196,22 +186,10 @@ export default function FooterBar() {
   const selectedSlugList = [...selectedSlugs]
   const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
   const selectionToggleLabel = selectionHasVisibleSlugs ? 'Auswahl ausblenden' : 'Auswahl einblenden'
-  const exportSnapshot = () => {
-    const blob = new Blob([exportViewerStateSnapshotJson()], { type: 'application/json' })
-    const url = URL.createObjectURL(blob)
-    const link = document.createElement('a')
-    link.href = url
-    link.download = `brain-app-unterricht-${new Date().toISOString().replace(/[:.]/g, '-')}.json`
-    link.style.display = 'none'
-    document.body.appendChild(link)
-    link.click()
-    link.remove()
-    window.setTimeout(() => URL.revokeObjectURL(url), 0)
-  }
   const importSnapshotFile = async (file: File | null | undefined) => {
     if (!file) return
     try {
-      importViewerStateSnapshotJson(await readSnapshotFile(file))
+      await importViewerSnapshotFile(file)
       close()
     } catch (error) {
       setSnapshotError(error instanceof Error ? error : new Error(String(error)))
@@ -401,7 +379,7 @@ export default function FooterBar() {
       icon: <FileJson {...FOOTER_ICON_PROPS} />,
       content: (
         <>
-          <Item onClick={() => { exportSnapshot(); close() }}>Exportieren</Item>
+          <Item onClick={() => { downloadViewerSnapshot(); close() }}>Exportieren</Item>
           <Item onClick={() => snapshotInputRef.current?.click()}>Importieren</Item>
         </>
       ),
