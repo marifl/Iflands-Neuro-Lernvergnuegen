@@ -461,7 +461,7 @@ test('Mobile Footer-Menue reagiert auf echte Touch-Taps', async ({ browser }) =>
   }
 })
 
-test('Mobile Lernbezug dupliziert die Struktur-Beschriftung nicht', async ({ page }) => {
+test('Mobile Explorer-Auswahl zeigt keine generische Lernkarte', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/?mode=explore&preset=explorer')
 
@@ -471,11 +471,11 @@ test('Mobile Lernbezug dupliziert die Struktur-Beschriftung nicht', async ({ pag
   await page.getByPlaceholder('Struktur suchen…').fill('Obere Stirnwindung rechts')
   await page.getByRole('button', { name: /Obere Stirnwindung \(rechts\)/ }).click()
 
-  await expect(page.getByRole('dialog', { name: 'Lernbezug Obere Stirnwindung (rechts)' })).toBeVisible()
+  await expect(page.getByRole('dialog', { name: /Lernbezug|Bonus-Kontext/ })).toHaveCount(0)
   await expect(page.getByText('Obere Stirnwindung (rechts)')).toHaveCount(1)
-  await expect(page.getByText('DLPFC / SMA-Region (medial)')).toHaveCount(1)
-  await expect(page.getByText('P3z - Inhibition')).toBeVisible()
-  await expect(page.getByRole('button', { name: 'Strukturbaum öffnen' })).toBeHidden()
+  await expect(page.getByText('P3z - Inhibition')).toHaveCount(0)
+  await expect(page.getByRole('button', { name: 'Lernen öffnen' })).toHaveCount(0)
+  await expect(page.getByRole('button', { name: /Strukturbaum/ })).toBeVisible()
 })
 
 test('Mobile Rahmen ist nur in installierter PWA unten gerundet', async ({ browser }) => {
