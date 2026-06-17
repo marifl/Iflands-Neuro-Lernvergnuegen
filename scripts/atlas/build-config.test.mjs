@@ -360,6 +360,40 @@ test('validateConfig wirft bei ungueltigen Mesh-Mappings', () => {
   )
 })
 
+test('validateConfig verbietet veraltete Julich-Einzelmeshes in Figure-Buckets', () => {
+  const idx = indexCatalog(CATALOG)
+  const legacyMappings = {
+    buckets: { legacy: { meshes: ['left-julich-mfg1'] } },
+    scene_regions: MESH_MAPPINGS.scene_regions,
+  }
+  const legacyContext = {
+    ...VALIDATION_CONTEXT,
+    bucketMappings: legacyMappings.buckets,
+    colorPresets: new Map([['legacy-preset', { groups: [{ buckets: ['legacy'] }] }]]),
+    meshIds: new Set(['mesh-a', 'left-julich-mfg1']),
+  }
+  assert.throws(
+    () => validateConfig(baseConfig({
+      mesh_mappings: legacyMappings,
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+          regions: { ...VALID_CONFIGURATION.regions, buckets: ['legacy'] },
+          colors: {
+            ...VALID_CONFIGURATION.colors,
+            enabled: true,
+            scheme: 'preset',
+            preset: 'legacy-preset',
+            coverage: 'full',
+          },
+        },
+      },
+    }), idx, legacyContext),
+    /veraltetes Julich-Einzelmesh/,
+  )
+})
+
 test('validateConfig wirft bei totem camera.target', () => {
   const idx = indexCatalog(CATALOG)
   const cfg = configWith({ camera: { ...VALID_CONFIGURATION.camera, target: 'julich:area-99:l' } })

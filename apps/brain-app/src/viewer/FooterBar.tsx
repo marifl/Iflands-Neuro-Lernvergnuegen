@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
-import { useViewerStore, type AppMode, type CutAxis, type SelectMode } from './viewerStore'
+import { useViewerStore, type AppMode, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
@@ -79,6 +79,43 @@ function Item({
   )
 }
 
+function PresetViewSlider({
+  label,
+  active,
+  onChange,
+}: {
+  label: string
+  active: boolean
+  onChange: (active: boolean) => void
+}) {
+  return (
+    <label
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        gap: 8,
+        alignItems: 'center',
+        padding: '4px 8px 6px',
+      }}
+    >
+      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
+      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: active ? 'var(--orange)' : 'var(--g500)' }}>
+        {active ? 'An' : 'Aus'}
+      </span>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        step={1}
+        value={active ? 1 : 0}
+        onChange={(event) => onChange(Number(event.currentTarget.value) === 1)}
+        aria-label={label}
+        style={{ gridColumn: '1 / -1', width: '100%', accentColor: 'var(--orange)', cursor: 'ew-resize' }}
+      />
+    </label>
+  )
+}
+
 interface BoxDef {
   key: Exclude<OpenFlyout, null>
   eyebrow: string
@@ -128,6 +165,8 @@ export default function FooterBar() {
   const setColorMode = useViewerStore((s) => s.setColorMode)
   const activePreset = useViewerStore((s) => s.activePreset)
   const setPreset = useViewerStore((s) => s.setPreset)
+  const presetViewOptions = useViewerStore((s) => s.presetViewOptions)
+  const setPresetViewOptions = useViewerStore((s) => s.setPresetViewOptions)
   const [presets, setPresets] = useState<ColorPreset[]>([])
   const [presetError, setPresetError] = useState<Error | null>(null)
   // Figur-Presets einmal laden; Fehler laut nach oben (kein stiller Fallback).
@@ -270,6 +309,22 @@ export default function FooterBar() {
                   </Item>
                 )
               })}
+              {colorMode === 'preset' && activePreset ? (
+                <>
+                  <div style={{ height: 8 }} />
+                  <div className="eyebrow" style={{ margin: '0 0 4px' }}>Figur-Ansicht</div>
+                  <PresetViewSlider
+                    label="Ungefärbte ausblenden"
+                    active={presetViewOptions.hideUncolored}
+                    onChange={(hideUncolored) => setPresetViewOptions({ hideUncolored } satisfies Partial<PresetViewOptions>)}
+                  />
+                  <PresetViewSlider
+                    label="Relevante Areale fokussieren"
+                    active={presetViewOptions.focusColored}
+                    onChange={(focusColored) => setPresetViewOptions({ focusColored } satisfies Partial<PresetViewOptions>)}
+                  />
+                </>
+              ) : null}
             </>
           ) : null}
         </>

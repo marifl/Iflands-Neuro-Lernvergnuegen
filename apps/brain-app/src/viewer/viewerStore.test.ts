@@ -19,6 +19,8 @@ import {
 import { registryLaunchLocation, resolveRegistryLaunch } from './registryLaunch'
 import type { ColorPreset } from './colorPresets'
 
+const DURA_HEMISPHERE_SEGMENT = 'cerebral-hemisphere-segment-of-dura-mater'
+
 describe('target picking', () => {
   beforeEach(() => {
     useViewerStore.setState({
@@ -225,7 +227,7 @@ describe('carveOverlay', () => {
   beforeEach(() => {
     useViewerStore.setState({
       cortexHideSlugs: ['left-cortex'],
-      hidden: new Set(),
+      hidden: new Set([DURA_HEMISPHERE_SEGMENT]),
       hoveredAtlasArea: 'Hover',
       hoveredAtlasSlug: 'hover-slug',
       pickedAtlasArea: 'Pick',
@@ -274,6 +276,8 @@ describe('carveOverlay', () => {
 
     expect(useViewerStore.getState().showCarveJulich).toBe(false)
     expect(useViewerStore.getState().hidden.has('left-cortex')).toBe(false)
+    expect(useViewerStore.getState().hidden.has(DURA_HEMISPHERE_SEGMENT)).toBe(true)
+    expect(useViewerStore.getState().hidden.has('falx-cerebri')).toBe(false)
   })
 
   it('raeumt aktive Carves beim Aktivieren einer Figur-Faerbung zentral auf', () => {
@@ -298,7 +302,20 @@ describe('carveOverlay', () => {
     expect(state.hoveredAtlasSlug).toBeNull()
     expect(state.hidden.has('left-cortex')).toBe(false)
     expect(state.hidden.has('falx-cerebri')).toBe(false)
+    expect(state.hidden.has(DURA_HEMISPHERE_SEGMENT)).toBe(true)
     expect(state.hidden.has('manual-hidden')).toBe(true)
+  })
+
+  it('raeumt Figur-Ansichtsoptionen beim Verlassen des Preset-Modus auf', () => {
+    useViewerStore.getState().setPreset(figurePreset)
+    useViewerStore.getState().setPresetViewOptions({ hideUncolored: true, focusColored: true })
+
+    useViewerStore.getState().setColorMode('region')
+
+    const state = useViewerStore.getState()
+    expect(state.activePreset).toBeNull()
+    expect(state.colorMode).toBe('region')
+    expect(state.presetViewOptions).toEqual({ hideUncolored: false, focusColored: false })
   })
 })
 
@@ -313,6 +330,10 @@ describe('default visibility', () => {
     })
   })
 
+  it('startet die Dura-Hemisphaerenhuelle als Default-Hidden', () => {
+    expect(useViewerStore.getInitialState().hidden.has(DURA_HEMISPHERE_SEGMENT)).toBe(true)
+  })
+
   it('wendet Preset-Defaults an und raeumt nur alte Default-Hidden-Werte beim Wechsel weg', () => {
     useViewerStore.getState().applyDefaultVisibility('preset:kapitel11', ['left-insula'], 'left-cingulate-gyrus')
 
@@ -323,6 +344,25 @@ describe('default visibility', () => {
 
     expect([...useViewerStore.getState().hidden]).toEqual(['manual-hidden'])
     expect(useViewerStore.getState().isolated).toBeNull()
+  })
+})
+
+describe('color legend view state', () => {
+  beforeEach(() => {
+    useViewerStore.setState({
+      colorLegend: { visible: true, minimized: false },
+    })
+  })
+
+  it('setzt Sichtbarkeit und minimierten Zustand der Faerbungs-Legende gemeinsam', () => {
+    useViewerStore.getState().setColorLegend({ minimized: true })
+    expect(useViewerStore.getState().colorLegend).toEqual({ visible: true, minimized: true })
+
+    useViewerStore.getState().setColorLegend({ visible: false })
+    expect(useViewerStore.getState().colorLegend).toEqual({ visible: false, minimized: true })
+
+    useViewerStore.getState().setColorLegend({ visible: true, minimized: false })
+    expect(useViewerStore.getState().colorLegend).toEqual({ visible: true, minimized: false })
   })
 })
 

@@ -24,8 +24,11 @@ export interface IsolationCrumb {
 
 export type ViewMode = 'full' | 'k11'
 
-// Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die die Kortex verdecken.
-const MENINGES_HIDE = ['cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli']
+// Opake Dura-Hemisphaerenhuelle bleibt im Modell, startet aber ausgeblendet,
+// damit sie Kortex und Atlas-Faerbungen nicht permanent verdeckt.
+const DEFAULT_HIDDEN = ['cerebral-hemisphere-segment-of-dura-mater']
+// Zusaetzlich nur waehrend aktiver Carve-Overlays ausblenden.
+const CARVE_OVERLAY_HIDE = [...DEFAULT_HIDDEN, 'falx-cerebri', 'tentorium-cerebelli']
 
 // Welche TARO-Strukturen sind Kortex-OBERFLAECHE? Die Atlas-Flaeche re-segmentiert die ganze Kortex;
 // jedes sichtbar bleibende Kortex-Mesh konkurriert koplanar mit ihr (Durchscheinen/„Z-Fighting").
@@ -59,6 +62,10 @@ function emptyCuts(): Record<CutAxis, CutConfig> {
     coronal: { on: false, pos: 0 },
     axial: { on: false, pos: 0 },
   }
+}
+
+function defaultHiddenSet(): Set<string> {
+  return new Set(DEFAULT_HIDDEN)
 }
 
 function selectableTrees(state: ViewerState): Array<OntologyNode | null | undefined> {
@@ -138,6 +145,26 @@ export interface CameraPose {
   fov: number
 }
 
+export interface PresetViewOptions {
+  hideUncolored: boolean
+  focusColored: boolean
+}
+
+export interface ColorLegendState {
+  visible: boolean
+  minimized: boolean
+}
+
+const DEFAULT_PRESET_VIEW_OPTIONS: PresetViewOptions = {
+  hideUncolored: false,
+  focusColored: false,
+}
+
+const DEFAULT_COLOR_LEGEND: ColorLegendState = {
+  visible: true,
+  minimized: false,
+}
+
 interface AppliedDefaultVisibility {
   key: string
   hidden: string[]
@@ -154,6 +181,10 @@ interface ViewerState {
   colorMode: ColorMode
   /** Aktives figur-spezifisches Farb-Preset (nur wirksam bei colorMode='preset'). */
   activePreset: ColorPreset | null
+  /** Ansichtsoptionen fuer figur-spezifische Faerbungen; Preset-Buttons bleiben davon getrennt. */
+  presetViewOptions: PresetViewOptions
+  /** Gemeinsamer Viewport-Zustand der grossen Farb-/Figur-Legende. */
+  colorLegend: ColorLegendState
   /** Aktive Schnittebenen (Clipping) je Achse — Multi-Axis. */
   cuts: Record<CutAxis, CutConfig>
   /** Wirkung der Schnittebenen: schneiden+Cap ('slice') oder dahinter ausblenden ('hide'). */
@@ -280,6 +311,10 @@ interface ViewerState {
   setColorMode: (mode: ColorMode) => void
   /** Figur-spezifisches Preset aktivieren (setzt colorMode='preset'); null = aus. */
   setPreset: (preset: ColorPreset | null) => void
+  /** Figur-Faerbungsansicht setzen: Kontext verstecken bzw. relevante Areale fokussieren. */
+  setPresetViewOptions: (options: Partial<PresetViewOptions>) => void
+  /** Farb-/Figur-Legende im Viewport ein-/ausblenden oder minimieren. */
+  setColorLegend: (legend: Partial<ColorLegendState>) => void
   /** Eine Achse setzen (on/off + Position). */
   setCut: (axis: CutAxis, config: CutConfig) => void
   /** Mehrere Achsen auf einmal setzen (Teil-Update). */
@@ -324,8 +359,9 @@ type ClearedCarveOverlayState = Pick<
 
 function clearedCarveOverlayState(state: ViewerState): ClearedCarveOverlayState {
   const hidden = new Set(state.hidden)
-  for (const slug of MENINGES_HIDE) hidden.delete(slug)
+  for (const slug of CARVE_OVERLAY_HIDE) hidden.delete(slug)
   for (const slug of state.cortexHideSlugs) hidden.delete(slug)
+  for (const slug of DEFAULT_HIDDEN) hidden.add(slug)
   return {
     showCarveJulich: false,
     showCarveDkt: false,
@@ -345,6 +381,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   colorIndex: new Map(),
   colorMode: 'region',
   activePreset: null,
+  presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS,
+  colorLegend: DEFAULT_COLOR_LEGEND,
   cuts: emptyCuts(),
   cutMode: 'slice',
   cameraView: null,
@@ -352,7 +390,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   context: null,
   julich: null,
   atlas3d: { dkt: null, brodmann: null, destrieux: null },
-  hidden: new Set(),
+  hidden: defaultHiddenSet(),
   defaultVisibility: null,
   selected: null,
   activeTargetRef: null,
@@ -549,11 +587,23 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set({ appMode, highlight: [], showSkull: false, rodVisible: false, rodPhase: 0 })
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
-  setColorMode: (colorMode) => set((s) => ({ colorMode, activePreset: colorMode === 'preset' ? s.activePreset : null })),
+  setColorMode: (colorMode) => set((s) => ({
+    colorMode,
+    activePreset: colorMode === 'preset' ? s.activePreset : null,
+    presetViewOptions: colorMode === 'preset' ? s.presetViewOptions : DEFAULT_PRESET_VIEW_OPTIONS,
+  })),
   setPreset: (activePreset) =>
     set((s) => activePreset
       ? { ...clearedCarveOverlayState(s), activePreset, colorMode: 'preset' }
-      : { activePreset: null, colorMode: 'region' }),
+      : { activePreset: null, colorMode: 'region', presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS }),
+  setPresetViewOptions: (options) =>
+    set((s) => ({
+      presetViewOptions: { ...s.presetViewOptions, ...options },
+    })),
+  setColorLegend: (legend) =>
+    set((s) => ({
+      colorLegend: { ...s.colorLegend, ...legend },
+    })),
   setCut: (axis, config) =>
     set((s) => ({ cuts: { ...s.cuts, [axis]: { on: config.on, pos: clampCutPosition(config.pos) } } })),
   setCuts: (configs) =>
@@ -600,7 +650,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)
-      for (const slug of MENINGES_HIDE) hidden.add(slug)
+      for (const slug of CARVE_OVERLAY_HIDE) hidden.add(slug)
       for (const slug of s.cortexHideSlugs) hidden.add(slug)
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
       return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null, hoveredAtlasArea: null, hoveredAtlasSlug: null }

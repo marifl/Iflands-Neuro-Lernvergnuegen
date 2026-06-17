@@ -19,6 +19,16 @@ async function attachScreenshot(page: Page, testInfo: TestInfo, name: string) {
   await testInfo.attach(name, { body, contentType: 'image/png' })
 }
 
+async function setRangeValue(page: Page, label: string, value: number) {
+  await page.getByLabel(label).evaluate((node, nextValue) => {
+    const input = node as HTMLInputElement
+    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
+    setter?.call(input, String(nextValue))
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    input.dispatchEvent(new Event('change', { bubbles: true }))
+  }, value)
+}
+
 test('Vortragspfad rendert im Beamer-Viewport mit ERP-Overlay', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.goto('/?config=p3a-konfliktmonitoring')
@@ -37,6 +47,35 @@ test('Explorer rendert im Tablet-Viewport mit Strukturbaum und Canvas', async ({
   await expect(page.getByText('Strukturbaum').first()).toBeVisible()
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'tablet-explorer')
+})
+
+test('Färbungs-Legende lässt sich minimieren, ausblenden und wieder anzeigen', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1180, height: 900 })
+  await page.goto('/?mode=explore')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await page.getByRole('button', { name: /Farbe/ }).click()
+  await page.getByRole('button', { name: 'Lateralität' }).click()
+
+  await expect(page.getByText('Lateralität').first()).toBeVisible()
+  await expect(page.getByText('sinistral')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Legende minimieren' }).click()
+  await expect(page.getByText('Lateralität').first()).toBeVisible()
+  await expect(page.getByText('sinistral')).toBeHidden()
+
+  await page.getByRole('button', { name: 'Legende erweitern' }).click()
+  await expect(page.getByText('sinistral')).toBeVisible()
+
+  await page.getByRole('button', { name: 'Legende verbergen' }).click()
+  await expect(page.getByText('sinistral')).toBeHidden()
+  await expect(page.getByRole('button', { name: 'Legende anzeigen' })).toBeVisible()
+
+  await page.getByRole('button', { name: 'Legende anzeigen' }).click()
+  await expect(page.getByText('sinistral')).toBeVisible()
+
+  await expectBrainCanvas(page)
+  await attachScreenshot(page, testInfo, 'color-legend-minimize-hide')
 })
 
 test('Atlas-Carve erzeugt im Cut-Modus sichtbare Cap-Flächen', async ({ page }, testInfo) => {
@@ -188,13 +227,59 @@ test('Figur-Färbung räumt aktive Atlas-Carves aus dem Viewer-State', async ({ 
     while (root?.parent) root = root.parent
     let atlasSurfaceMeshes = 0
     let atlasCapSources = 0
+    const legacyPresetMeshes: string[] = []
     root?.traverse((obj: any) => {
       if (!obj?.isMesh || !obj.visible) return
       if (obj.userData?.atlasSurface) atlasSurfaceMeshes += 1
       if (obj.userData?.atlasCapSource) atlasCapSources += 1
+      const color = obj.material?.color?.getHexString?.()
+      if (/^(left|right)-julich-/.test(obj.name) && ['4c85bd', 'bd854c', '4cbd85'].includes(color)) {
+        legacyPresetMeshes.push(obj.name)
+      }
     })
-    return { atlasSurfaceMeshes, atlasCapSources }
-  }), { timeout: 30_000 }).toEqual({ atlasSurfaceMeshes: 0, atlasCapSources: 0 })
+    return { atlasSurfaceMeshes, atlasCapSources, legacyPresetMeshes: legacyPresetMeshes.sort() }
+  }), { timeout: 30_000 }).toEqual({ atlasSurfaceMeshes: 0, atlasCapSources: 0, legacyPresetMeshes: [] })
+
+  await page.getByRole('button', { name: /Basalganglienschleifen/ }).click()
+  await setRangeValue(page, 'Relevante Areale fokussieren', 1)
+  await expect.poll(async () => page.evaluate(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    while (root?.parent) root = root.parent
+    const out: Record<string, { visible: boolean; opacity: number; transparent: boolean; color: string | null }> = {}
+    root?.traverse((obj: any) => {
+      if (!obj?.isMesh || !['left-inferior-frontal-gyrus', 'left-caudate-nucleus'].includes(obj.name)) return
+      out[obj.name] = {
+        visible: obj.visible === true,
+        opacity: Number(obj.material?.opacity ?? 1),
+        transparent: obj.material?.transparent === true,
+        color: obj.material?.color?.getHexString?.() ?? null,
+      }
+    })
+    const uncolored = out['left-inferior-frontal-gyrus']
+    const colored = out['left-caudate-nucleus']
+    return {
+      uncoloredDimmed: Boolean(uncolored?.visible && uncolored.transparent && uncolored.opacity < 0.5),
+      coloredSubcortexVisible: Boolean(colored?.visible && !colored.transparent && colored.color === '4c85bd'),
+    }
+  }), { timeout: 30_000 }).toEqual({
+    uncoloredDimmed: true,
+    coloredSubcortexVisible: true,
+  })
+
+  await setRangeValue(page, 'Ungefärbte ausblenden', 1)
+  await expect.poll(async () => page.evaluate(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    while (root?.parent) root = root.parent
+    const out: Record<string, boolean> = {}
+    root?.traverse((obj: any) => {
+      if (!obj?.isMesh || !['left-inferior-frontal-gyrus', 'left-caudate-nucleus'].includes(obj.name)) return
+      out[obj.name] = obj.visible === true
+    })
+    return out
+  }), { timeout: 30_000 }).toEqual({
+    'left-inferior-frontal-gyrus': false,
+    'left-caudate-nucleus': true,
+  })
 
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'figure-color-clears-atlas-carve')

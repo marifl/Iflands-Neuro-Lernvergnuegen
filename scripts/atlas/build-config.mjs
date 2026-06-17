@@ -195,7 +195,15 @@ function assertKnownBucket(bucket, ctx, context) {
     const reason = mapping.gap_reason ? `: ${mapping.gap_reason}` : ''
     throw new Error(`build-config: ${context} "${bucket}" hat keine Geometrie${reason}`)
   }
-  for (const mesh of meshes) assertKnownMesh(mesh, ctx, `${context} "${bucket}" referenziert Mesh`)
+  for (const mesh of meshes) {
+    assertKnownMesh(mesh, ctx, `${context} "${bucket}" referenziert Mesh`)
+    if (/^(left|right)-julich-/.test(mesh)) {
+      throw new Error(
+        `build-config: ${context} "${bucket}" referenziert veraltetes Julich-Einzelmesh "${mesh}" ` +
+          '— Figure-Faerbungen muessen TARO-Host- oder K11-Subparcel-Meshes nutzen',
+      )
+    }
+  }
 }
 
 function assertMeshMappingNode(node, ctx, context) {

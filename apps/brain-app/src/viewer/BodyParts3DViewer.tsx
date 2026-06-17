@@ -275,6 +275,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
   const colorMode = useViewerStore((s) => s.colorMode)
   const colorIndex = useViewerStore((s) => s.colorIndex)
   const activePreset = useViewerStore((s) => s.activePreset)
+  const presetViewOptions = useViewerStore((s) => s.presetViewOptions)
   const erpActive = useViewerStore((s) => s.erpActive)
   const erpPulse = useViewerStore((s) => s.erpPulse)
   const opacityTargets = useRef(new Map<THREE.Mesh, number>())
@@ -333,14 +334,19 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     // transparent, damit die tiefen Strukturen (Striatum, Pallidum, Thalamus) durch
     // den Cortex sichtbar werden.
     const animating = highlightSet.size > 0
+    const presetViewActive = colorMode === 'preset' && Boolean(presetColors && activePreset)
+    const hidePresetUncolored = presetViewActive && presetViewOptions.hideUncolored
+    const focusPresetColored = presetViewActive && presetViewOptions.focusColored
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
+      const isPresetColored = Boolean(presetColors?.has(mesh.name))
       // Hierarchisches Ein-/Ausblenden ueber den Baum: unsichtbar UND nicht pickbar.
-      const visible = !hidden.has(mesh.name) && !cutHidden(mesh)
+      const visible = !hidden.has(mesh.name) && !cutHidden(mesh) && !(hidePresetUncolored && !isPresetColored)
       mesh.visible = visible
-      // Isolationsmodus: alles ausserhalb des aktiven Sets wird transparent + gesperrt.
-      const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
-      setPickable(mesh, visible && !isoDimmed)
+      // Fokusmodus: gleicher Opacity-/Pickability-Pfad wie Isolation. Bei Figur-Faerbung kann
+      // das aktive Preset die Fokusmenge liefern, damit subkortikale Gruppen sichtbar werden.
+      const focusDimmed = focusPresetColored ? !isPresetColored : iso && !isolatedSlugs.has(mesh.name)
+      setPickable(mesh, visible && !focusDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
       // Basisfarbe nach aktivem Farbmodus (Auswahl/Hover ueberlagern als Emissive).
       // Preset-Modus: Gruppen-Farbe je Mesh; nicht-gruppierte Strukturen gedimmt (dimOthers).
@@ -361,10 +367,24 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
-      const dim = visible && ((animating && !isActive) || isoDimmed)
+      const dim = visible && ((animating && !isActive) || focusDimmed)
       setOpacityTarget(mesh, dim ? dimOpacity : 1)
     }
-  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden, dimOpacity])
+  }, [
+    meshes,
+    selectedSlugs,
+    hovered,
+    highlight,
+    hidden,
+    isolatedSlugs,
+    colorMode,
+    colorIndex,
+    presetColors,
+    activePreset,
+    presetViewOptions,
+    cutHidden,
+    dimOpacity,
+  ])
 
   // EEG voll-synchron fuer brain.glb-Quellen (z.B. P3b parietal): pulst NUR die gehighlighteten
   // Meshes mit der ERP-Huellkurve. Bewusst eigener, leichter Effekt (laeuft per Frame ueber

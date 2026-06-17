@@ -6,6 +6,7 @@ import {
   REGION_COLORS,
 } from './atlasColorSystem'
 import { useViewerStore } from './viewerStore'
+import ColorLegendPanel from './ColorLegendPanel'
 
 type GlobalMode = Exclude<ColorMode, 'preset'>
 
@@ -66,24 +67,7 @@ export default function GlobalColorLegend() {
   const legend = LEGENDS[colorMode]
 
   return (
-    <div
-      className="ed-panel ed-frame"
-      style={{
-        position: 'absolute',
-        left: 16,
-        bottom: 28,
-        zIndex: 15,
-        padding: '10px 12px',
-        pointerEvents: 'none',
-        width: 330,
-        maxWidth: 'min(330px, calc(100vw - 32px))',
-      }}
-    >
-      <div className="eyebrow">Färbung</div>
-      <div style={{ fontWeight: 700, fontSize: 14, lineHeight: 1.25, marginTop: 4 }}>{legend.title}</div>
-      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, lineHeight: 1.35, color: 'var(--g600)', marginTop: 6 }}>
-        {legend.subtitle}
-      </div>
+    <ColorLegendPanel title={legend.title} subtitle={legend.subtitle} maxWidth={330}>
       <div style={{ display: 'grid', gap: 5, marginTop: 10 }}>
         {legend.rows.map((row) => (
           <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '10px 1fr', gap: 8, alignItems: 'start' }}>
@@ -106,7 +90,6 @@ export default function GlobalColorLegend() {
           </div>
         ))}
       </div>
-    </div>
+    </ColorLegendPanel>
   )
 }
-

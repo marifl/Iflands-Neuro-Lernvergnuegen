@@ -119,4 +119,16 @@ describe('generierte Bucket-Mappings', () => {
     }
     expect(issues).toEqual([])
   })
+
+  it('verwenden fuer produktive Presets keine veralteten Julich-Einzelmeshes', () => {
+    const presets = real()
+    const used = new Set(presets.flatMap((p) => p.groups.flatMap((g) => g.buckets)))
+    const issues: string[] = []
+    for (const bucket of used) {
+      for (const mesh of BUCKET_MAPPINGS[bucket]?.meshes ?? []) {
+        if (/^(left|right)-julich-/.test(mesh)) issues.push(`${bucket}: ${mesh}`)
+      }
+    }
+    expect(issues).toEqual([])
+  })
 })

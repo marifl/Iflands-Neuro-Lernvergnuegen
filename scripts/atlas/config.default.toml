@@ -51,20 +51,8 @@ hidden = []
 # --- Mesh-Mappings: kanonische Region/Bucket -> Mesh-Aufloesung ------------
 [mesh_mappings.buckets.dlpfc]
 meshes = [
-  "left-julich-mfg1", "right-julich-mfg1",
-  "left-julich-mfg2", "right-julich-mfg2",
-  "left-julich-mfg4", "right-julich-mfg4",
-  "left-julich-8v1", "right-julich-8v1",
-  "left-julich-8v2", "right-julich-8v2",
-  "left-julich-sfs1", "right-julich-sfs1",
-  "left-julich-sfs2", "right-julich-sfs2",
-  "left-julich-frontal-ii-gapmap", "right-julich-frontal-ii-gapmap",
-  "left-julich-sfg2", "right-julich-sfg2",
-  "left-julich-sfg3", "right-julich-sfg3",
-  "left-julich-sfg4", "right-julich-sfg4",
-  "left-julich-8d1", "right-julich-8d1",
-  "left-julich-8d2", "right-julich-8d2",
-  "left-julich-frontal-i-2-gapmap", "right-julich-frontal-i-2-gapmap",
+  "left-middle-frontal-gyrus", "right-middle-frontal-gyrus",
+  "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
 ]
 
 [mesh_mappings.buckets.vlpfc]
@@ -136,7 +124,7 @@ meshes = ["left-sma", "right-sma", "left-pre-sma", "right-pre-sma"]
 meshes = ["left-nucleus-accumbens", "right-nucleus-accumbens"]
 
 [mesh_mappings.buckets.frontopolar]
-meshes = ["left-julich-fp1", "right-julich-fp1", "left-julich-fp2", "right-julich-fp2"]
+meshes = ["left-frontopolar", "right-frontopolar"]
 
 [mesh_mappings.buckets.ifj]
 meshes = []
