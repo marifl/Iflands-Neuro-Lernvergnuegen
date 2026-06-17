@@ -17,12 +17,18 @@ pnpm install --frozen-lockfile
 pnpm typecheck
 pnpm test
 pnpm build
-pnpm test:e2e
+pnpm perf:budget
 ```
 
-Der GitHub-Workflow `.github/workflows/brain-app.yml` führt dieselbe Kette für
-PRs und Pushes auf `main` aus. Playwright-Reports werden als Artifact abgelegt,
-wenn E2E fehlschlägt.
+Der GitHub-Workflow `.github/workflows/brain-app.yml` führt für PRs und Pushes
+auf `main` Install, Typecheck, Unit-Tests, Build und `pnpm perf:budget` aus.
+Playwright-Smokes bleiben lokale/manuelle Verifikation und laufen nicht in
+GitHub Actions.
+
+`pnpm perf:budget` setzt einen statischen Build-Schutz nach `pnpm build`: JS-/
+CSS-Gzip-Budget, größte Runtime-Asset-Datei, Gesamtgröße von `public/assets`
+und die Phineas-Asset-Gruppe. Das ist kein FPS-Test, verhindert aber stille
+Bundle- oder Asset-Ausreißer.
 
 ## Base-Path
 
