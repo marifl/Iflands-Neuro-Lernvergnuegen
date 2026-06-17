@@ -60,12 +60,14 @@ describe('PresenterChrome', () => {
     expect(screen.getByText('Kapitel 11 — Vorlesung')).toBeInTheDocument()
     expect(screen.getByLabelText('Aktueller Vortragsschritt')).toHaveTextContent('Folie 2 / 3 · Step 3')
     expect(screen.getByText('VCPT und Go/No-go')).toBeInTheDocument()
-    expect(screen.getByLabelText('Szene springen')).toHaveDisplayValue('2. VCPT und Go/No-go')
+    const stepPicker = screen.getByLabelText('Szene springen')
+    expect(stepPicker.tagName).toBe('INPUT')
+    expect(stepPicker).toHaveDisplayValue('2. VCPT und Go/No-go')
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '2')
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuemax', '3')
   })
 
-  it('navigiert per Buttons und direktem Sprung ohne Debug-Konsole', () => {
+  it('navigiert per Buttons und suchbarem Sprung ohne Debug-Konsole', () => {
     render(<PresenterChrome />)
 
     fireEvent.click(screen.getByLabelText('Nächste Szene'))
@@ -74,8 +76,9 @@ describe('PresenterChrome', () => {
     fireEvent.click(screen.getByLabelText('Vorige Szene'))
     expect(useSceneStore.getState().index).toBe(1)
 
-    fireEvent.change(screen.getByLabelText('Szene springen'), { target: { value: '0' } })
-    expect(useSceneStore.getState().index).toBe(0)
+    fireEvent.change(screen.getByLabelText('Szene springen'), { target: { value: 'p3a' } })
+    fireEvent.click(screen.getByRole('option', { name: '3. P3a-Konfliktmonitoring' }))
+    expect(useSceneStore.getState().index).toBe(2)
   })
 
   it('benennt Nicht-Presentation-Sequenzen als Lernpfad', () => {

@@ -1233,8 +1233,12 @@ export default function BodyParts3DViewer() {
               />
             ) : null}
 
-            <PresetLegend />
-            <GlobalColorLegend />
+            {isExploreMode ? (
+              <>
+                <PresetLegend />
+                <GlobalColorLegend />
+              </>
+            ) : null}
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (
