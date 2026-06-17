@@ -3,15 +3,18 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
 import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
 import { APP_MODES, useViewerStore, type AppMode, type CutAxis, type CutConfig } from './viewerStore'
-import { useEffectiveConfig, type ConfigCuts, type EffectiveConfig } from './atlas/atlasConfig'
+import { useEffectiveConfig, type ConfigCuts, type ConfigVisibility, type EffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
 import { activeCutPlanes, isHiddenByCutSlab } from './cutCapsMerged'
 import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
+import { hasImportedSnapshotRouteForCurrentLocation } from './viewerStateSnapshot'
 import PresetLegend from './PresetLegend'
+import GlobalColorLegend from './GlobalColorLegend'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
 import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
@@ -19,9 +22,12 @@ import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { replaceCanonicalLocation } from '../scene/router'
 import { setLocalStorageItem } from '../safeLocalStorage'
+import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocation } from './registryLaunch'
+import { createAnatomicalMaterial, contextAnatomicalMaterialRole, contextColorForMode } from './anatomicalMaterials'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
+import AuthoringSceneObjects from './AuthoringSceneObjects'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
@@ -57,12 +63,10 @@ useGLTF.preload(BRAIN_GLB)
 useGLTF.preload(SKULL_GLB)
 useGLTF.preload(HEAD_GLB)
 
-const BASE_COLOR = '#cdbfb6'
-const SELECT_COLOR = '#f26b1f'
-const HOVER_COLOR = '#ffd2a8'
-const BONE_COLOR = '#e9e1d2'
-const CONTEXT_COLOR = '#b8a894'
-const ROD_COLOR = '#2f281f'
+const SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
+const HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
+const EMISSIVE_OFF_COLOR = ATLAS_VIEWER_COLORS.emissiveOff
+const ROD_COLOR = ATLAS_VIEWER_COLORS.rod
 const DEFAULT_DIM_OPACITY = 0.12
 const DIM_DEPTH_WRITE_THRESHOLD = 0.6
 const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
@@ -78,8 +82,12 @@ function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
 }
 
+function hasUvAttribute(mesh: THREE.Mesh): boolean {
+  return Boolean(mesh.geometry.getAttribute('uv'))
+}
+
 function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null): number {
-  const dimOpacity = effectiveConfig?.configuration?.visibility?.dim_opacity
+  const dimOpacity = effectiveConfig?.visibility.dim_opacity
   if (dimOpacity === undefined) return DEFAULT_DIM_OPACITY
   if (!Number.isFinite(dimOpacity) || dimOpacity < 0 || dimOpacity > 1) {
     throw new Error('Config-Link: visibility.dim_opacity muss zwischen 0 und 1 liegen')
@@ -108,6 +116,42 @@ function cutsFromConfig(cuts: ConfigCuts | undefined): Record<CutAxis, CutConfig
   return out
 }
 
+function uniqueConfigStrings(values: string[] | undefined, field: string): string[] {
+  if (!values) return []
+  const out: string[] = []
+  const seen = new Set<string>()
+  values.forEach((value, index) => {
+    if (typeof value !== 'string' || value.trim() === '') {
+      throw new Error(`Config-Link: ${field}[${index}] muss ein nicht-leerer String sein`)
+    }
+    if (seen.has(value)) throw new Error(`Config-Link: ${field} enthaelt "${value}" doppelt`)
+    seen.add(value)
+    out.push(value)
+  })
+  return out
+}
+
+function isolatedFromVisibility(visibility: ConfigVisibility): string | null {
+  const isolated = uniqueConfigStrings(visibility.isolated, 'visibility.isolated')
+  if (isolated.length > 1) {
+    throw new Error('Config-Link: visibility.isolated unterstuetzt aktuell genau ein Isolationsziel')
+  }
+  return isolated[0] ?? null
+}
+
+function defaultVisibilityFromConfig(effectiveConfig: EffectiveConfig): { key: string; hidden: string[]; isolated: string | null } | null {
+  if (!effectiveConfig.hasUrlConfig && !effectiveConfig.hasUrlPreset) return null
+  if (effectiveConfig.hasUrlConfig && !effectiveConfig.activeConfiguration) return null
+  const key = effectiveConfig.hasUrlConfig
+    ? `config:${effectiveConfig.activeConfiguration}`
+    : `preset:${effectiveConfig.preset}`
+  return {
+    key,
+    hidden: uniqueConfigStrings(effectiveConfig.visibility.hidden, 'visibility.hidden'),
+    isolated: isolatedFromVisibility(effectiveConfig.visibility),
+  }
+}
+
 function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: EffectiveConfig | null }) {
   const appMode = useViewerStore((s) => s.appMode)
   const setAppMode = useViewerStore((s) => s.setAppMode)
@@ -116,6 +160,7 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
   const setCuts = useViewerStore((s) => s.setCuts)
   const setCutMode = useViewerStore((s) => s.setCutMode)
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
+  const applyDefaultVisibility = useViewerStore((s) => s.applyDefaultVisibility)
   const [error, setError] = useState<Error | null>(null)
   const routedConfig = useRef<string | null>(null)
   const hasConfigUrl = effectiveConfig?.hasUrlConfig ?? false
@@ -125,9 +170,14 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
   if (error) throw error
 
   useEffect(() => {
-    if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    if (!effectiveConfig || !hasConfigUrl || !activeConfiguration || !configuration) return
+    if (hasImportedSnapshotRouteForCurrentLocation()) return
     setCutMode('slice')
     setCuts(cutsFromConfig(configuration.cuts))
+    const defaultVisibility = defaultVisibilityFromConfig(effectiveConfig)
+    if (defaultVisibility) {
+      applyDefaultVisibility(defaultVisibility.key, defaultVisibility.hidden, defaultVisibility.isolated)
+    }
     const carveLayer = configuration.colors?.preset ? 'off' : configuration.view?.carve_on_taro
     setCarveOverlay('julich', carveLayer === 'julich')
     setCarveOverlay('dkt', carveLayer === 'dkt')
@@ -143,16 +193,28 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
     hasConfigUrl,
     activeConfiguration,
     configuration,
+    effectiveConfig,
     appMode,
     setAppMode,
     setHighlight,
     setCuts,
     setCutMode,
     setCarveOverlay,
+    applyDefaultVisibility,
   ])
 
   useEffect(() => {
+    if (!effectiveConfig?.hasUrlPreset || effectiveConfig.hasUrlConfig) return
+    if (hasImportedSnapshotRouteForCurrentLocation()) return
+    const defaultVisibility = defaultVisibilityFromConfig(effectiveConfig)
+    if (defaultVisibility) {
+      applyDefaultVisibility(defaultVisibility.key, defaultVisibility.hidden, defaultVisibility.isolated)
+    }
+  }, [effectiveConfig, applyDefaultVisibility])
+
+  useEffect(() => {
     if (!hasConfigUrl || !activeConfiguration || !configuration) return
+    if (hasImportedSnapshotRouteForCurrentLocation()) return
     let alive = true
     const presetId = configuration.colors?.preset
     if (!presetId) {
@@ -213,6 +275,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
   const colorMode = useViewerStore((s) => s.colorMode)
   const colorIndex = useViewerStore((s) => s.colorIndex)
   const activePreset = useViewerStore((s) => s.activePreset)
+  const presetViewOptions = useViewerStore((s) => s.presetViewOptions)
   const erpActive = useViewerStore((s) => s.erpActive)
   const erpPulse = useViewerStore((s) => s.erpPulse)
   const opacityTargets = useRef(new Map<THREE.Mesh, number>())
@@ -227,12 +290,11 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: BASE_COLOR,
-          roughness: 0.85,
-          metalness: 0,
+        const materialRole = colorIndex.get(mesh.name)?.anatomicalRole ?? 'brain-cortex'
+        mesh.material = createAnatomicalMaterial(materialRole, {
           // Halb-Meshes (L/R-Haelften) sind am Mittelschnitt offen; DoubleSide stellt
           // sicher, dass nichts durch Backface-Culling unsichtbar wird.
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
@@ -240,7 +302,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
       }
     })
     return list
-  }, [scene])
+  }, [scene, colorIndex])
 
   useClipPlanes(meshes)
 
@@ -272,14 +334,19 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     // transparent, damit die tiefen Strukturen (Striatum, Pallidum, Thalamus) durch
     // den Cortex sichtbar werden.
     const animating = highlightSet.size > 0
+    const presetViewActive = colorMode === 'preset' && Boolean(presetColors && activePreset)
+    const hidePresetUncolored = presetViewActive && presetViewOptions.hideUncolored
+    const focusPresetColored = presetViewActive && presetViewOptions.focusColored
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
+      const isPresetColored = Boolean(presetColors?.has(mesh.name))
       // Hierarchisches Ein-/Ausblenden ueber den Baum: unsichtbar UND nicht pickbar.
-      const visible = !hidden.has(mesh.name) && !cutHidden(mesh)
+      const visible = !hidden.has(mesh.name) && !cutHidden(mesh) && !(hidePresetUncolored && !isPresetColored)
       mesh.visible = visible
-      // Isolationsmodus: alles ausserhalb des aktiven Sets wird transparent + gesperrt.
-      const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
-      setPickable(mesh, visible && !isoDimmed)
+      // Fokusmodus: gleicher Opacity-/Pickability-Pfad wie Isolation. Bei Figur-Faerbung kann
+      // das aktive Preset die Fokusmenge liefern, damit subkortikale Gruppen sichtbar werden.
+      const focusDimmed = focusPresetColored ? !isPresetColored : iso && !isolatedSlugs.has(mesh.name)
+      setPickable(mesh, visible && !focusDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
       // Basisfarbe nach aktivem Farbmodus (Auswahl/Hover ueberlagern als Emissive).
       // Preset-Modus: Gruppen-Farbe je Mesh; nicht-gruppierte Strukturen gedimmt (dimOthers).
@@ -297,13 +364,27 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
-      const dim = visible && ((animating && !isActive) || isoDimmed)
+      const dim = visible && ((animating && !isActive) || focusDimmed)
       setOpacityTarget(mesh, dim ? dimOpacity : 1)
     }
-  }, [meshes, selectedSlugs, hovered, highlight, hidden, isolatedSlugs, colorMode, colorIndex, presetColors, activePreset, cutHidden, dimOpacity])
+  }, [
+    meshes,
+    selectedSlugs,
+    hovered,
+    highlight,
+    hidden,
+    isolatedSlugs,
+    colorMode,
+    colorIndex,
+    presetColors,
+    activePreset,
+    presetViewOptions,
+    cutHidden,
+    dimOpacity,
+  ])
 
   // EEG voll-synchron fuer brain.glb-Quellen (z.B. P3b parietal): pulst NUR die gehighlighteten
   // Meshes mit der ERP-Huellkurve. Bewusst eigener, leichter Effekt (laeuft per Frame ueber
@@ -341,6 +422,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
+  const colorMode = useViewerStore((s) => s.colorMode)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const meshes = useMemo(() => {
@@ -348,10 +430,8 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: BONE_COLOR,
-          roughness: 0.9,
-          metalness: 0,
+        mesh.material = createAnatomicalMaterial('bone', {
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
           transparent: true,
         })
@@ -374,6 +454,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
       const material = mesh.material as THREE.MeshStandardMaterial
+      material.color.set(contextColorForMode(mesh.name, colorMode))
       const opacity = isoDimmed ? dimOpacity : showSkull ? skullOpacity : 1
       material.opacity = opacity
       material.depthWrite = opacity > DIM_DEPTH_WRITE_THRESHOLD
@@ -384,12 +465,12 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.3
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       material.needsUpdate = true
     }
-  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
+  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -401,6 +482,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
+  const colorMode = useViewerStore((s) => s.colorMode)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const meshes = useMemo(() => {
@@ -408,10 +490,8 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
     scene.traverse((obj) => {
       const mesh = obj as THREE.Mesh
       if (mesh.isMesh) {
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: CONTEXT_COLOR,
-          roughness: 0.85,
-          metalness: 0,
+        mesh.material = createAnatomicalMaterial(contextAnatomicalMaterialRole(mesh.name), {
+          enableBumpMap: hasUvAttribute(mesh),
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
@@ -431,6 +511,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed) // ausgeblendet/isoliert-aussen -> nicht pickbar
       const material = mesh.material as THREE.MeshStandardMaterial
+      material.color.set(contextColorForMode(mesh.name, colorMode))
       if (selectedSlugs.has(mesh.name)) {
         material.emissive.set(SELECT_COLOR)
         material.emissiveIntensity = 0.7
@@ -438,7 +519,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
@@ -446,7 +527,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
       material.opacity = isoDimmed ? dimOpacity : 1
       material.depthWrite = !isoDimmed
     }
-  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity])
+  }, [meshes, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -486,9 +567,9 @@ function AtlasOverObject({
           // Cerebellum/Hirnstamm = Kontext (gedaempft); GapMaps = "nicht-kartierte" Rest-Zonen (neutral,
           // damit sie nicht dominieren); echte zytoarchitektonische Areale = stabile Farbe (L/R teilen sie).
           color: /cerebellum|brainstem/.test(mesh.name)
-            ? '#8d8779'
+            ? ATLAS_VIEWER_COLORS.atlasContext
             : /gapmap/.test(mesh.name)
-              ? '#7c7a73'
+              ? ATLAS_VIEWER_COLORS.atlasGap
               : parcelColor(mesh.name),
           roughness: 0.82,
           metalness: 0,
@@ -527,7 +608,7 @@ function AtlasOverObject({
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
-        material.emissive.set('#000000')
+        material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
       if (material.transparent !== isoDimmed) material.needsUpdate = true
@@ -652,7 +733,12 @@ export default function BodyParts3DViewer() {
   const context = useViewerStore((s) => s.context)
   const selected = useViewerStore((s) => s.selected)
   const selectedLabels = useViewerStore((s) => s.selectedLabels)
+  const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
+  const hidden = useViewerStore((s) => s.hidden)
   const selectMode = useViewerStore((s) => s.selectMode)
+  const select = useViewerStore((s) => s.select)
+  const setHidden = useViewerStore((s) => s.setHidden)
+  const setIsolated = useViewerStore((s) => s.setIsolated)
   const lang = useViewerStore((s) => s.lang)
   const appMode = useViewerStore((s) => s.appMode)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
@@ -705,7 +791,13 @@ export default function BodyParts3DViewer() {
   const [launched, setLaunched] = useState(() => {
     const p = new URLSearchParams(window.location.search)
     const mode = p.get('mode')
-    return (mode !== null && APP_MODES.includes(mode as AppMode)) || p.has('scene') || p.has('config') || p.has('spike')
+    return (
+      (mode !== null && APP_MODES.includes(mode as AppMode)) ||
+      p.has('scene') ||
+      p.has('config') ||
+      p.has('spike') ||
+      hasRegistryLaunchSearch(window.location.search)
+    )
   })
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
 
@@ -824,6 +916,15 @@ export default function BodyParts3DViewer() {
   const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, isNarrow })
   const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, isNarrow, mobileTreeOpen })
   const atlasTarget = bridgeFor(selected)
+  const selectedSlugList = useMemo(() => [...selectedSlugs], [selectedSlugs])
+  const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
+  const toggleSelectedVisibility = () => {
+    if (!selectedSlugList.length) return
+    setHidden(selectedSlugList, selectionHasVisibleSlugs)
+  }
+  const isolateSelected = () => {
+    if (selected) setIsolated(selected)
+  }
   const showLearningFlyout = Boolean(
     isExploreMode &&
     selected &&
@@ -832,10 +933,10 @@ export default function BodyParts3DViewer() {
     closedLearningFlyoutFor !== selected,
   )
   const openLearningTarget = (target: ExplorerLearningTarget) => {
-    if (target.mode === 'phineas') {
-      window.history.replaceState(null, '', '?mode=phineas')
+    if (target.launch) {
+      window.history.replaceState(null, '', registryLaunchLocation(target.launch))
       setLaunched(true)
-      setAppMode('phineas')
+      setAppMode(appModeForRegistryLaunch(target.launch))
       return
     }
     if (!target.configName || !target.sceneId) return
@@ -856,7 +957,7 @@ export default function BodyParts3DViewer() {
       )}
       {/* Editorial-"Plate": Tinte-Rahmen um die ganze App (fhead / Mitte / Schriftfeld). */}
       <div
-        className="ed-frame"
+        className="ed-frame app-shell"
         style={{ height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', background: 'var(--paper)' }}
       >
         {/* ── Kopfleiste (fhead) ── */}
@@ -969,14 +1070,18 @@ export default function BodyParts3DViewer() {
               // stencil: true ist Pflicht — die Cap-Pipeline (CutCapsMerged) maskiert die
               // Schnittflaechen ueber den Stencil-Buffer. R3F erstellt den Context sonst
               // ohne Stencil (stencilBits=0), wodurch die Caps unmaskiert als volle Plane rendern.
-              gl={{ stencil: true }}
+              gl={{ stencil: true, powerPreference: 'high-performance' }}
               onCreated={({ gl }) => {
                 gl.localClippingEnabled = true // Schnittebenen (Clipping) aktivieren
+                gl.outputColorSpace = THREE.SRGBColorSpace
+                gl.toneMapping = THREE.ACESFilmicToneMapping
+                gl.toneMappingExposure = 1.04
               }}
             >
-              <ambientLight intensity={0.6} />
+              <ambientLight intensity={0.38} />
+              <hemisphereLight args={[0xf8efe5, 0x181818, 0.42]} />
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
-              <directionalLight position={[-160, -80, -200]} intensity={0.4} />
+              <directionalLight position={[-160, -80, -200]} intensity={0.28} />
               <Suspense fallback={null}>
                 <Brain dimOpacity={dimOpacity} />
                 <ContextSkull dimOpacity={dimOpacity} />
@@ -993,7 +1098,8 @@ export default function BodyParts3DViewer() {
                 ))}
                 <SubParcels />
                 <EegHeadset />
-                <AtlasOverlay />
+                <AuthoringSceneObjects />
+                <AtlasOverlay effectiveConfig={effectiveConfig} />
                 <CutCaps />
               </Suspense>
               <TampingIron />
@@ -1008,12 +1114,50 @@ export default function BodyParts3DViewer() {
             {isExploreMode && (
               <div
                 className="ed-panel ed-frame"
-                style={{ position: 'absolute', top: 16, left: 16, padding: '11px 15px', pointerEvents: 'none', maxWidth: 420 }}
+                style={{
+                  position: 'absolute',
+                  top: isNarrow ? 8 : 16,
+                  left: isNarrow ? 8 : 16,
+                  right: isNarrow ? 8 : undefined,
+                  padding: isNarrow ? '9px 10px' : '11px 15px',
+                  pointerEvents: 'none',
+                  maxWidth: isNarrow ? undefined : 420,
+                  zIndex: 12,
+                }}
               >
                 <div className="eyebrow">Struktur</div>
                 <div style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, color: 'var(--ink)', marginTop: 5, lineHeight: 1.15 }}>
                   {selectedLabels ? selectedLabels[lang] : 'Struktur anklicken'}
                 </div>
+                {isNarrow && selected ? (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 9, pointerEvents: 'auto' }}>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      disabled={!selectedSlugList.length}
+                      style={{ padding: '6px 9px' }}
+                      onClick={toggleSelectedVisibility}
+                    >
+                      {selectionHasVisibleSlugs ? 'Ausblenden' : 'Einblenden'}
+                    </button>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      style={{ padding: '6px 9px' }}
+                      onClick={isolateSelected}
+                    >
+                      Isolieren
+                    </button>
+                    <button
+                      type="button"
+                      className="ed-btn"
+                      style={{ padding: '6px 9px' }}
+                      onClick={() => select(null)}
+                    >
+                      Lösen
+                    </button>
+                  </div>
+                ) : null}
                 {selectedNode?.k11Role ? (
                   <div style={{ marginTop: 8 }}>
                     <span className="ed-pill orange">{selectedNode.k11Role}</span>
@@ -1035,7 +1179,7 @@ export default function BodyParts3DViewer() {
                 ) : null}
               </div>
             )}
-            {isNarrow && isExploreMode ? (
+            {isNarrow && isExploreMode && !showLearningFlyout ? (
               <button
                 type="button"
                 className="ed-btn"
@@ -1057,6 +1201,7 @@ export default function BodyParts3DViewer() {
                 node={selectedNode}
                 target={selectedLearningTarget}
                 atlasAvailable={Boolean(atlasTarget)}
+                compact={isNarrow}
                 onClose={() => setClosedLearningFlyoutFor(selected)}
                 onOpenAtlas={() => {
                   if (!atlasTarget) return
@@ -1068,6 +1213,7 @@ export default function BodyParts3DViewer() {
             ) : null}
 
             <PresetLegend />
+            <GlobalColorLegend />
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (
@@ -1122,13 +1268,14 @@ export default function BodyParts3DViewer() {
           {renderMobileTreeDrawer ? (
             <div
               className="ed-panel ed-frame"
+              data-testid="mobile-structure-drawer"
               style={{
                 position: 'absolute',
                 left: 8,
                 right: 8,
+                top: 8,
                 bottom: 8,
                 zIndex: 25,
-                height: 'min(58%, 520px)',
                 display: 'flex',
                 flexDirection: 'column',
                 overflow: 'hidden',

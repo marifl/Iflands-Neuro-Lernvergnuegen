@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import {
   resolveScopes, isAreaEnabled, buildAreaLookup, fileScopes, parseUrlScopes, computeEffectiveConfig,
@@ -5,11 +8,18 @@ import {
 } from './atlasConfig'
 import type { AtlasCatalog } from './atlasCatalog'
 
+const here = dirname(fileURLToPath(import.meta.url))
+const REAL_CONFIG_PATH = resolve(here, '../../../public/assets/atlas-canonical/atlas-config.json')
+
 const FILE: AtlasConfigFile = {
   preset: 'kapitel11',
   presets: {
-    kapitel11: { label_de: 'K11', scopes: { 'axis:cyto': false, 'area:julich:area-44:l': true } },
-    voll: { label_de: 'Voll', scopes: { 'axis:cyto': true } },
+    kapitel11: {
+      label_de: 'K11',
+      scopes: { 'axis:cyto': false, 'area:julich:area-44:l': true },
+      visibility: { hidden: ['left-insula'] },
+    },
+    voll: { label_de: 'Voll', scopes: { 'axis:cyto': true }, visibility: { hidden: [] } },
   },
   mesh_mappings: { buckets: {}, scene_regions: {} },
   configurations: {
@@ -19,9 +29,9 @@ const FILE: AtlasConfigFile = {
       camera: { shot: 'lateral-left' },
       regions: { areas: ['julich:area-44:l'] },
       colors: { enabled: false },
-      visibility: { dim_others: true },
+      visibility: { dim_others: true, hidden: ['right-insula'] },
       cuts: { enabled: false },
-      overlay: { kind: 'image' },
+      overlay: { kind: 'prose' },
       sequencing: { step: 'area-44-only' },
       scopes: { 'area:julich:area-45:l': false },
     },
@@ -31,9 +41,9 @@ const FILE: AtlasConfigFile = {
       camera: { target: 'julich:area-45:l', shot: 'lateral-left', fit: 'target' },
       regions: { areas: ['julich:area-45:l'] },
       colors: { enabled: false },
-      visibility: { dim_others: true },
+      visibility: { dim_others: true, hidden: ['right-insula'] },
       cuts: { enabled: false },
-      overlay: { kind: 'image' },
+      overlay: { kind: 'prose' },
       sequencing: { step: 'broca-areal' },
       scopes: { 'area:julich:area-45:l': true },
     },
@@ -135,6 +145,7 @@ describe('computeEffectiveConfig', () => {
     expect(eff.activeConfiguration).toBe('broca-areal')
     expect(eff.configuration?.label_de).toBe('Broca')
     expect(eff.cameraTargetMeshes).toEqual(['left-inferior-frontal-gyrus'])
+    expect(eff.visibility.hidden).toEqual(['right-insula'])
     expect(eff.isAreaEnabled('julich:area-44:l')).toBe(true)
   })
   it('URL-config rekonstruiert kanonisch und ignoriert persistierte lokale Overrides', () => {
@@ -150,6 +161,7 @@ describe('computeEffectiveConfig', () => {
     expect(eff.preset).toBe('kapitel11')
     expect(eff.hasUrlConfig).toBe(true)
     expect(eff.activeConfiguration).toBe('broca-areal')
+    expect(eff.visibility.hidden).toEqual(['right-insula'])
     expect(eff.scopes['axis:cyto']).toBe(false)
     expect(eff.scopes['area:julich:area-44:l']).toBe(true)
     expect(eff.scopes['area:julich:area-45:l']).toBe(true)
@@ -169,10 +181,29 @@ describe('computeEffectiveConfig', () => {
       new URLSearchParams('preset=voll'),
     )
     expect(eff.preset).toBe('voll')
+    expect(eff.hasUrlPreset).toBe(true)
+    expect(eff.visibility.hidden).toEqual([])
   })
   it('wirft bei unbekanntem URL-preset', () => {
     expect(() => computeEffectiveConfig(
       FILE, CATALOG, { preset: null, configuration: null, scopes: {} }, new URLSearchParams('preset=ghost'),
     )).toThrow(/Preset "ghost"/)
+  })
+})
+
+describe('kanonische Farb-Metadaten', () => {
+  it('markiert jede reale Configuration-Faerbung mit Scheme, Coverage, Review-Status und Grund', () => {
+    const file = JSON.parse(readFileSync(REAL_CONFIG_PATH, 'utf8')) as AtlasConfigFile
+    const issues: string[] = []
+    for (const [name, cfg] of Object.entries(file.configurations)) {
+      const colors = cfg.colors
+      if (!colors?.scheme) issues.push(`${name}: scheme fehlt`)
+      if (!colors?.coverage) issues.push(`${name}: coverage fehlt`)
+      if (!colors?.review_status) issues.push(`${name}: review_status fehlt`)
+      if (!colors?.reason) issues.push(`${name}: reason fehlt`)
+      if (colors?.scheme === 'preset' && !colors.preset && !colors.groups) issues.push(`${name}: preset/groups fehlt`)
+      if (colors?.preset && colors.scheme !== 'preset') issues.push(`${name}: preset ohne scheme=preset`)
+    }
+    expect(issues).toEqual([])
   })
 })

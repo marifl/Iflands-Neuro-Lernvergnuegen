@@ -1,11 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { BASAL_GANGLIA_LOOP } from './animations'
+import { ontologyNodeTargetsForTimelineStep, timelineDocumentFromAnimation } from './animationSystem'
 import { useViewerStore } from './viewerStore'
 
 const STEP_MS = 3800
 
 export default function AnimationPlayer({ inline = false }: { inline?: boolean } = {}) {
   const animation = BASAL_GANGLIA_LOOP
+  const timeline = useMemo(() => timelineDocumentFromAnimation(animation), [animation])
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const [active, setActive] = useState(false)
   const [step, setStep] = useState(0)
@@ -13,9 +15,10 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
 
   // Aktiven Schritt ins 3D-Highlight spiegeln; beim Schliessen leeren.
   useEffect(() => {
-    if (active) setHighlight(animation.steps[step].structures)
+    const timelineStep = timeline.steps[step]
+    if (active && timelineStep) setHighlight(ontologyNodeTargetsForTimelineStep(timelineStep))
     else setHighlight([])
-  }, [active, step, animation, setHighlight])
+  }, [active, step, setHighlight, timeline])
 
   // Auto-Advance waehrend Play.
   useEffect(() => {
@@ -45,7 +48,8 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
     )
   }
 
-  const current = animation.steps[step]
+  const current = animation.steps[step] ?? animation.steps[0]
+  if (!current) return null
   return (
     <div
       className="ed-panel ed-frame"

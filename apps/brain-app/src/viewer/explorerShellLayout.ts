@@ -1,5 +1,7 @@
 import type { AppMode } from './viewerStore'
 
+export const MOBILE_LEARN_VIEWPORT_FLEX = '0 0 clamp(330px, 56%, 460px)'
+
 export function shouldRenderInlineSidebar(input: {
   appMode: AppMode
   isAtlas: boolean
@@ -24,5 +26,5 @@ export function viewportFlex(input: {
   isNarrow: boolean
 }): number | string {
   if (!input.isNarrow || input.isAtlas) return 1
-  return input.appMode === 'explore' ? 1 : '0 0 42%'
+  return input.appMode === 'explore' ? 1 : MOBILE_LEARN_VIEWPORT_FLEX
 }

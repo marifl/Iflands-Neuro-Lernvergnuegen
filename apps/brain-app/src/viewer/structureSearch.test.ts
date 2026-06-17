@@ -24,6 +24,19 @@ const brocaNode: OntologyNode = {
   searchAliases: ['BA44', 'Broca-Areal', 'inferior frontal gyrus', 'IFG'],
 }
 
+const dlpfcNode: OntologyNode = {
+  id: 'left-middle-frontal-gyrus',
+  slug: 'left-middle-frontal-gyrus',
+  fma: 'FMA:61806',
+  side: 'left',
+  labels: {
+    de: 'Gyrus frontalis medius links',
+    la: 'Gyrus frontalis medius sinister',
+    en: 'Left middle frontal gyrus',
+  },
+  k11Role: 'DLPFC',
+}
+
 describe('structureSearch', () => {
   it('normalisiert Umlaute, Bindestriche und Akzente deterministisch', () => {
     expect(normalizedSearchForms('Broca-Areal')).toEqual(['broca areal'])
@@ -40,6 +53,12 @@ describe('structureSearch', () => {
     expect(matchesStructureSearch(brocaNode, 'Area 44')).toBe(true)
     expect(matchesStructureSearch(brocaNode, 'Broca Areal')).toBe(true)
     expect(matchesStructureSearch(brocaNode, 'hippocampus')).toBe(false)
+  })
+
+  it('findet sichtbare Rollen und stabile Struktur-Identifier', () => {
+    expect(matchesStructureSearch(dlpfcNode, 'DLPFC')).toBe(true)
+    expect(matchesStructureSearch(dlpfcNode, 'left-middle-frontal-gyrus')).toBe(true)
+    expect(matchesStructureSearch(dlpfcNode, 'FMA 61806')).toBe(true)
   })
 
   it('filtert den Trefferpool ohne Umsortierung', () => {

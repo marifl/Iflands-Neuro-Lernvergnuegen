@@ -1,0 +1,79 @@
+import { describe, expect, it } from 'vitest'
+import { AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION, type AuthoringSnapshotState } from './authoringSnapshotStore'
+import { AUTHORING_SCENE_SCHEMA_VERSION } from './authoringScene'
+import {
+  IDENTITY_AUTHORING_TRANSFORM,
+  activeAuthoringTransformTarget,
+  applyAuthoringTransformCommand,
+  nudgeAuthoringTransform,
+} from './authoringTransformRuntime'
+
+const authoring: AuthoringSnapshotState = {
+  schemaVersion: AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+  registryContext: { collectionIds: ['device-eeg-10-20'], bonusContextIds: ['eeg-erp-vcpt'] },
+  authoringScenes: [
+    {
+      schemaVersion: AUTHORING_SCENE_SCHEMA_VERSION,
+      sceneId: 'vcpt-device-authoring',
+      assetInstances: [
+        {
+          instanceId: 'eeg-cap-01',
+          assetId: 'asset:eeg-cap-v1',
+          collectionId: 'device-eeg-10-20',
+          visible: true,
+          transform: { position: [0, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
+          origin: { policy: 'asset-origin' },
+          parts: [{ partId: 'electrode-fz', label: 'Fz electrode', pickable: true, role: 'selectable' }],
+        },
+      ],
+    },
+  ],
+  timelines: [],
+  activeSceneId: 'vcpt-device-authoring',
+  activeTargetRef: {
+    targetKind: 'asset-part',
+    collectionId: 'device-eeg-10-20',
+    instanceId: 'eeg-cap-01',
+    partId: 'electrode-fz',
+  },
+}
+
+describe('authoringTransformRuntime', () => {
+  it('loest aktive Parts auf ihre transformierbare Asset-Instanz auf', () => {
+    expect(activeAuthoringTransformTarget(authoring)).toEqual({
+      sceneId: 'vcpt-device-authoring',
+      instance: authoring.authoringScenes[0].assetInstances[0],
+      targetRef: {
+        targetKind: 'asset-instance',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+      },
+    })
+  })
+
+  it('wendet Transform-Aenderungen ueber einen serialisierten SetTransformCommand an', () => {
+    const target = activeAuthoringTransformTarget(authoring)
+    if (!target) throw new Error('target fehlt')
+    const after = nudgeAuthoringTransform(target.instance.transform, 0, 0.25)
+    const result = applyAuthoringTransformCommand(authoring, target, after, 'cmd:transform:eeg-cap-01:x-plus', 'Move X')
+
+    expect(result.command).toMatchObject({
+      schemaVersion: 1,
+      commandId: 'cmd:transform:eeg-cap-01:x-plus',
+      kind: 'set-transform',
+      targetRef: target.targetRef,
+      before: { position: [0, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
+      after: { position: [0.25, 1.2, 0], rotation: [0, 0.25, 0], scale: [0.8, 0.8, 0.8] },
+    })
+    expect(result.authoring.authoringScenes[0].assetInstances[0].transform.position).toEqual([0.25, 1.2, 0])
+    expect(result.authoring.activeTargetRef).toEqual(authoring.activeTargetRef)
+  })
+
+  it('stellt einen expliziten Reset-Transform bereit', () => {
+    expect(IDENTITY_AUTHORING_TRANSFORM).toEqual({
+      position: [0, 0, 0],
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1],
+    })
+  })
+})

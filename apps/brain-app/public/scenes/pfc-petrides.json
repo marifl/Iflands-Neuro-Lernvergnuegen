@@ -1,0 +1,28 @@
+{
+  "id": "pfc-petrides",
+  "figure": "11-05",
+  "section": "11.3.3 · funktionsspezifischer PFC",
+  "author": "ifland",
+  "order": 6,
+  "title": "PFC-Funktionen nach Petrides",
+  "brain": { "regions": ["parietal-frontal", "inhibition-network"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "dlpfc", "label": "DLPFC", "result": "Manipulieren von Arbeitsgedächtnisinhalten" },
+        { "id": "vlpfc", "label": "VLPFC", "result": "Halten und Abrufen von Information" },
+        { "id": "posterior", "label": "Posterior", "result": "Speicher- und Kontextareale" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-05 ist ein schematisches Petrides-Modell: DLPFC und VLPFC werden nicht als Messdaten, sondern als funktionelle Arbeitsteilung für Manipulieren, Halten und Abrufen gezeigt. Die 3D-Config nutzt lokale Buckets für DLPFC, VLPFC und posterior-parietale Kontextareale; die App ersetzt das Buchbild durch ein eigenes Flowchart plus 3D-Kontext.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-05" },
+      { "key": "petrides_2005", "note": "funktionsspezifisches PFC-Modell" }
+    ]
+  }
+}

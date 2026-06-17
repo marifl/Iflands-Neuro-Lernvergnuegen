@@ -12,11 +12,21 @@ const appRoot = resolve(here, '../../apps/brain-app')
 const appRequire = createRequire(resolve(appRoot, 'package.json'))
 const { chromium } = appRequire('@playwright/test')
 const appPublic = resolve(appRoot, 'public')
+const colorSystemSource = readFileSync(resolve(appRoot, 'src/viewer/atlasColorSystem.ts'), 'utf8')
 const config = JSON.parse(readFileSync(resolve(appPublic, 'assets/atlas-canonical/atlas-config.json'), 'utf8'))
 const colorPresetFile = JSON.parse(readFileSync(resolve(appPublic, 'companion/config/color-presets.json'), 'utf8'))
 const colorPresets = new Map(colorPresetFile.presets.map((preset) => [preset.id, preset]))
 
-function hueToHex(hue, sat = 0.46, light = 0.52) {
+function exportedNumber(name) {
+  const match = colorSystemSource.match(new RegExp(`export const ${name} = ([0-9.]+)`))
+  if (!match) throw new Error(`smoke-figures: ${name} fehlt in atlasColorSystem.ts`)
+  return Number(match[1])
+}
+
+const PRESET_HUE_SATURATION = exportedNumber('PRESET_HUE_SATURATION')
+const PRESET_HUE_LIGHTNESS = exportedNumber('PRESET_HUE_LIGHTNESS')
+
+function hueToHex(hue, sat = PRESET_HUE_SATURATION, light = PRESET_HUE_LIGHTNESS) {
   const c = (1 - Math.abs(2 * light - 1)) * sat
   const hp = (((hue % 360) + 360) % 360) / 60
   const x = c * (1 - Math.abs((hp % 2) - 1))
@@ -92,16 +102,15 @@ const legendColors = (page, groupLabels) => page.evaluate((labels) => {
   const panel = [...document.querySelectorAll('.ed-panel')]
     .find((candidate) => candidate.textContent?.includes('Färbung'))
   if (!panel) return {}
-  const spans = [...panel.querySelectorAll('span')]
   const out = {}
   const toHex = (color) => {
     const match = color.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
     if (!match) return color
     return `#${match.slice(1).map((part) => Number(part).toString(16).padStart(2, '0')).join('')}`
   }
-  for (let i = 1; i < spans.length; i++) {
-    const label = spans[i].textContent?.trim()
-    if (labels.includes(label)) out[label] = toHex(getComputedStyle(spans[i - 1]).backgroundColor)
+  for (const swatch of panel.querySelectorAll('[data-color-group]')) {
+    const label = swatch.getAttribute('data-color-group')?.trim()
+    if (label && labels.includes(label)) out[label] = toHex(getComputedStyle(swatch).backgroundColor)
   }
   return out
 }, groupLabels)

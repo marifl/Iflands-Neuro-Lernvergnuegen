@@ -4,6 +4,7 @@ import './app.css'
 import AppErrorBoundary from './AppErrorBoundary'
 import { getLocalStorageItem } from './safeLocalStorage'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
+import { appModeForRegistryLaunch, parseRegistryLaunchFromSearch } from './viewer/registryLaunch'
 import { APP_MODES, useViewerStore, type AppMode } from './viewer/viewerStore'
 
 // Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
@@ -11,14 +12,29 @@ if (getLocalStorageItem('ed-theme') === 'light') {
   document.documentElement.dataset.theme = 'light'
 }
 
+function isStandaloneDisplayMode() {
+  const nav = navigator as Navigator & { standalone?: boolean }
+  return window.matchMedia('(display-mode: standalone)').matches || nav.standalone === true
+}
+
+function applyDisplayModeDataset() {
+  document.documentElement.dataset.displayMode = isStandaloneDisplayMode() ? 'standalone' : 'browser'
+}
+
+applyDisplayModeDataset()
+window.matchMedia('(display-mode: standalone)').addEventListener('change', applyDisplayModeDataset)
+
 // Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas> setzt den Modus direkt;
 // ?mode=atlas ist DEBUG-ONLY (kanonischer fsaverage-Modus, nicht im Launcher/Modus-Flyout) — nur
 // ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus;
 // ein ?config=<id>-Link oeffnet die Explorer-Shell ohne Launcher. Sonst ModeLauncher.
 {
   const params = new URLSearchParams(window.location.search)
+  const launch = parseRegistryLaunchFromSearch(window.location.search)
   const mode = params.get('mode')
-  if (mode && APP_MODES.includes(mode as AppMode)) {
+  if (launch) {
+    useViewerStore.getState().setAppMode(appModeForRegistryLaunch(launch))
+  } else if (mode && APP_MODES.includes(mode as AppMode)) {
     useViewerStore.getState().setAppMode(mode as AppMode)
   } else if (params.has('scene')) {
     useViewerStore.getState().setAppMode('learn')

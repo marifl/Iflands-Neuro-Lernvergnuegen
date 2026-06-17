@@ -1,8 +1,10 @@
 import { describe, expect, it } from 'vitest'
-import { BufferGeometry, Mesh, MeshBasicMaterial, Plane, Vector3 } from 'three'
+import { BufferGeometry, DoubleSide, Float32BufferAttribute, Mesh, MeshBasicMaterial, Plane, Raycaster, Vector3 } from 'three'
 import type { Intersection } from 'three'
+import { ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
-import { isClippedRaycastHit, pickFirstSurfaceHit } from './cutPick'
+import { isClippedRaycastHit, pickAtActiveCutPlanes, pickFirstSurfaceHit } from './cutPick'
+import { sequenceTargetUserData } from './targetPicking'
 
 const testGeom = new BufferGeometry()
 
@@ -67,5 +69,46 @@ describe('pickFirstSurfaceHit', () => {
     const nonSource = new Mesh(testGeom, new MeshBasicMaterial())
     nonSource.visible = true
     expect(pickFirstSurfaceHit([hit(nonSource, new Vector3(0, 0, 0))])).toBeNull()
+  })
+
+  it('akzeptiert pickbare SequenceTargetRef-Meshes ohne zweiten Pickpfad', () => {
+    const part = new Mesh(testGeom, new MeshBasicMaterial())
+    part.visible = true
+    part.userData = sequenceTargetUserData({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'electrode-fz',
+    })
+
+    expect(pickFirstSurfaceHit([hit(part, new Vector3(0, 0, 0))])?.object).toBe(part)
+  })
+})
+
+describe('pickAtActiveCutPlanes', () => {
+  it('liefert fuer Atlas-Carve-Caps einen Treffer mit Face fuer Vertex-Label-Picking', () => {
+    const geom = new BufferGeometry()
+    geom.setAttribute('position', new Float32BufferAttribute([
+      0, -1, -1,
+      0, 1, -1,
+      0, 0, 1,
+    ], 3))
+    geom.computeBoundingBox()
+    const atlas = new Mesh(geom, new MeshBasicMaterial({
+      side: DoubleSide,
+      clippingPlanes: [new Plane(new Vector3(1, 0, 0), 0)],
+    }))
+    atlas.visible = true
+    atlas.userData[ATLAS_SURFACE_FLAG] = true
+
+    const raycaster = new Raycaster(new Vector3(1, 0, 0), new Vector3(-1, 0, 0))
+    const picked = pickAtActiveCutPlanes(
+      raycaster,
+      [new Plane(new Vector3(1, 0, 0), 0)],
+      [atlas],
+    )
+
+    expect(picked?.object).toBe(atlas)
+    expect(picked?.face).not.toBeNull()
   })
 })

@@ -1,0 +1,18 @@
+{
+  "id": "tower-of-london-schweregrad",
+  "figure": "11-11C",
+  "section": "11.3.3 · Planen",
+  "author": "ifland",
+  "order": 17,
+  "title": "DLPFC-Reaktion nach Aufgaben-Schwierigkeit",
+  "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "prose",
+    "position": "right",
+    "size": "md"
+  },
+  "companion": {
+    "summary": "Abb. 11-11C zeigt die hämodynamische DLPFC-Reaktion in Abhängigkeit von der Schwierigkeit. Bis ein nativer Scatter-Renderer existiert, erklärt die Szene den Befund als Text und fokussiert den DLPFC-Kontext im 3D-Modell.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-11C" }]
+  }
+}

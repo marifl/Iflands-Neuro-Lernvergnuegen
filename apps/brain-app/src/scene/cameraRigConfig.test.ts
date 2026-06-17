@@ -13,6 +13,7 @@ const CATALOG: AtlasCatalog = {
 const effectiveConfig = (hasUrlConfig: boolean): EffectiveConfig => ({
   catalog: CATALOG,
   preset: 'kapitel11',
+  hasUrlPreset: false,
   hasUrlConfig,
   activeConfiguration: 'local-or-url-config',
   configuration: null,
@@ -20,6 +21,7 @@ const effectiveConfig = (hasUrlConfig: boolean): EffectiveConfig => ({
   view: {},
   camera: { target: 'julich:area-44:l', shot: 'lateral-left', fit: 'target' },
   cameraTargetMeshes: ['left-inferior-frontal-gyrus'],
+  visibility: {},
   scopes: {},
   isAreaEnabled: () => false,
 })

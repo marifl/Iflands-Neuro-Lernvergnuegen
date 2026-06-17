@@ -1,0 +1,25 @@
+{
+  "id": "badre-domainen",
+  "figure": "11-08A",
+  "section": "11.3.3 · Badre-Modelle",
+  "author": "ifland",
+  "order": 9,
+  "title": "Domänenspezifisch zu domänenübergreifend",
+  "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "domain", "label": "domänenspezifisch", "result": "konkrete Reiz- oder Aufgabenklasse" },
+        { "id": "bridge", "label": "Integration", "result": "Regeltransfer über Aufgaben" },
+        { "id": "general", "label": "domänenübergreifend", "result": "abstrakte Kontrollanforderung" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-08A ist eine konzeptuelle Karte der rostrokaudalen Organisation: weiter rostrale Bereiche werden als domänenübergreifender beschrieben. Die Szene ersetzt das statische Schema durch ein lokales Flowchart mit Bildfallback.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-08A" }]
+  }
+}

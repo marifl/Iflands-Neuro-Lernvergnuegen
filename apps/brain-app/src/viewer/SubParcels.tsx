@@ -3,11 +3,12 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import { resolvePresetColors } from './colorPresets'
 import { approachTransitionValue } from './transitions'
 
 const SUBPARCELS_GLB = '/assets/bodyparts3d/k11-subparcels.glb'
-const SELECT_COLOR = '#f26b1f'
+const SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
 
 useGLTF.preload(SUBPARCELS_GLB)
 

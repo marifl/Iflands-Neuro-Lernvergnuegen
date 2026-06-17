@@ -89,7 +89,8 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
 
       <div style={{ marginTop: 10, fontFamily: 'var(--ed-mono)', fontSize: 10.5, lineHeight: 1.45, color: 'var(--g600)' }}>
         {scene.trajectoryNoteDe}<br />
-        {scene.assetNoteDe}
+        {scene.assetNoteDe}<br />
+        {scene.rodScaleNoteDe}
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>

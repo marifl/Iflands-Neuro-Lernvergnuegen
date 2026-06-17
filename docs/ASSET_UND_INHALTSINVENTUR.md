@@ -1,17 +1,35 @@
 # Asset- und Inhaltsinventur
 
-Stand: 2026-06-15. Grundlage sind die aktuellen Runtime-Assets,
+Stand: 2026-06-16. Grundlage sind die aktuellen Runtime-Assets,
 Szenen-JSONs, `atlas-config.json`, `atlas-ontology.json`, Vortragstexte und
 Kapitel-11-Abbildungsmappings im Repo.
 
 ## Kurzentscheidung
 
 Die App ist für den Marcus-Teil des Vortrags mit VCPT, P3a/P3b/P3z, Explorer,
-Atlas-Carve, Phineas-Gage-Fallstudie und Zusammenfassung vortragsreif. Es gibt
-keinen aktuellen Pflicht-Assetblocker.
+Atlas-Carve, Phineas-Gage-Fallstudie und Zusammenfassung vortragsreif. Die
+Kapitel-11-Abbildungen 11-04 bis 11-15 sind jetzt als lokale Runtime-
+Figure-Packages abgedeckt. Es gibt keinen aktuellen Pflicht-Assetblocker.
 
-Offene Punkte sind Erweiterungen für eine vollständige Kapitel-11-Abdeckung,
-nicht Blocker für den Produktiveinsatz im aktuellen Vortragspfad.
+## Transparenz für Produktiveinsatz
+
+Die App darf im Vortrag und in der späteren Lernapp keine stärkere fachliche
+Genauigkeit behaupten, als die Assets hergeben.
+
+| Ebene | Bedeutung | Produktregel |
+| --- | --- | --- |
+| Echte Runtime-Assets | BodyParts3D-/TARO-Hirn, Kopf, Schädel, Atlas-GLBs und Pick-JSONs | Herkunft bleibt über `THIRD-PARTY-NOTICES.md`, Asset-Namen und Pipeline-Doku nachvollziehbar |
+| Registrierte Atlas-Carves | Jülich/DKT/Brodmann auf TARO-Oberfläche übertragen | als didaktisch registrierte Atlasdarstellung behandeln, nicht als morphometrisch exakte Einzelperson |
+| Schematische Fallstudie | Phineas-Gage-Modus mit TARO-/Schädelmodell und animierter Stange | UI und Doku müssen klar machen, dass dies noch kein montiertes echtes Gage-CT/GLB ist |
+| Rekonstruktion/Spiegelung | gespiegelte oder rekonstruierte Strukturen aus Asset-Pipeline | im Audit/Inventar sichtbar halten; nicht still als Originaldaten ausgeben |
+
+Release-Regel: Wenn ein Asset schematisch, registriert, gespiegelt oder
+rekonstruiert ist, muss diese Einschränkung entweder im UI-Kontext, in der
+Quellen-/Inventardoku oder im jeweiligen Lerntext sichtbar sein. Für den
+aktuellen Vortragspfad ist diese Transparenz über Phineas-UI, Atlas-/Pipeline-
+Doku und `THIRD-PARTY-NOTICES.md` ausreichend. Die Gage-GLB-Kandidaten sind
+jetzt im Standalone-Repo versioniert; ihre Montage in den aktuellen Viewer
+bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 
 ## Bestand
 
@@ -19,10 +37,10 @@ nicht Blocker für den Produktiveinsatz im aktuellen Vortragspfad.
 
 | Bereich | Bestand | Befund |
 | --- | ---: | --- |
-| Lernszenen | 7 | Go/No-go, VCPT, ICA, P3a, P3b, P3z, Zusammenfassung |
-| Runtime-Konfigurationen | 10 | inklusive `ofc-phineas`, `broca-areal`, `basalganglienschleifen` |
-| Figure-Ersetzungen | 5 | 11-04, 11-14, 11-15(1), 11-15(2), 11-15(3) |
-| Offene Abbildungseinheiten | 13 | 11-05 bis 11-13 laut Masterplan |
+| Lernszenen | 23 | 21-Step-Lernpfad plus Phineas/OFC- und Broca-Kontexte |
+| Runtime-Konfigurationen | 23 | inklusive `ofc-phineas`, `broca-areal` und 18 Figure-Replacements |
+| Figure-Ersetzungen | 18 | 11-04 bis 11-15 inklusive 11-08A-D und 11-11A/B/C |
+| Offene Abbildungseinheiten | 0 | SP5.1-Figure-Matrix ist vollständig geschlossen |
 
 ### 3D-Assets
 
@@ -35,12 +53,87 @@ nicht Blocker für den Produktiveinsatz im aktuellen Vortragspfad.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
+| Kapitel-11-Figure-Fallbacks | 13 lokale JPGs unter `apps/brain-app/public/figures/` | versionierte Runtime-Fallbacks für 11-05 bis 11-11C, 11-13, 11-14; 11-12 ist textuell neu gebaut |
+| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist Standalone-Bestand, aber noch nicht in den aktuellen Viewer montiert; Lizenz und Transform vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
 `atlas-surface-julich.glb` (~9 MB), `atlas-surface-dkt.glb` (~6.4 MB) und
 `brain.glb` (~6 MB). Für den Vortragspfad ist das akzeptabel, aber der Roh-Atlas
 bleibt ein Kandidat für späteres Lazy Loading.
+
+### Phineas-Gage-Schädel: Authentizität und Lizenz
+
+Geprüft am 2026-06-16:
+
+1. Die Countway Library beschreibt den 3D-Druckpfad als Datei von Graham Holt
+   auf Basis der 2004er Dünnschicht-CT-Scans von Ratiu und Talos. Das Original
+   bleibt in der Warren Anatomical Museum Collection; die Datei ist als
+   Lehr-/Druckderivat gedacht.
+2. NIH 3D `3DPX-003118` führt den Schädel als CT-Derivat des historischen
+   Gage-Schädels, erstellt mit 3DSlicer, MeshLab und NetFabb Basic, geteilt mit
+   Zustimmung der Warren Anatomical Museum Collection. Die Entry-Seite zeigt
+   `CC-BY-SA`; die NIH-3D-Nutzungsbedingungen delegieren die konkrete
+   Lizenzprüfung an die jeweilige Entry-Lizenz.
+3. Der Harvard-Library-Sketchfab-Mirror zeigt dasselbe Modell als downloadbares
+   3D-Modell mit `CC Attribution`. Wegen dieses Lizenz-Label-Unterschieds darf
+   die App das Modell nicht still übernehmen. Ein Import muss die konkrete
+   Quelle pinnen, Attribution und eventuell Share-Alike-Pflichten in
+   `THIRD-PARTY-NOTICES.md` nachziehen und das Asset-Manifest ergänzen.
+4. Nach Hinweis von Marcus wurden die belastbaren lokalen Artefakte in dieses
+   Standalone-Repo kopiert:
+   `apps/brain-app/public/assets/phineas/phineas-gage-skull-lod.glb`,
+   `phineas-gage-skull-calvarium-cut-lod.glb`,
+   `phineas-gage-iron-rod.glb`,
+   `gage-reconstructions.json` und `asset-manifest.json`. Die wissenschaftlichen
+   PDFs/OCR-Artefakte liegen unter `raw_protected/phineas-gage/`.
+
+Entscheidung: Im aktuellen Build bleibt der Runtime-Pfad
+`/assets/context/skull.glb` ein BodyParts3D-/TARO-Kontextschädel, kein
+historischer Gage-Schädel. Die historischen Kandidaten liegen jetzt lokal unter
+`/assets/phineas`, sind aber noch nicht in den Viewer montiert. Das Manifest
+pinnt Quelle, Lizenzhinweis, Hash, Transform/Skalierung und Node-Namen; der Test
+`phineasStandaloneAssets.test.ts` prüft die Dateien gegen ihre SHA-256-Hashes.
+Bis die Montage tatsächlich im Viewer hängt, muss die UI weiterhin ausweisen,
+dass kein Original-Gage-CT/GLB gerendert wird.
+
+Quellen:
+
+1. Countway Library: <https://countway.harvard.edu/news/phineas-gage-3d-print>
+2. NIH 3D `3DPX-003118`: <https://3d.nih.gov/entries/3DPX-003118>
+3. NIH 3D Terms: <https://3d.nih.gov/terms>
+4. Harvard Library auf Sketchfab:
+   <https://sketchfab.com/3d-models/skull-of-phineas-gage-4299ef89b78a49b8a9ece34839c94ea3>
+
+### Phineas-Gage-Stange: Maße und Modellgrenze
+
+Geprüft am 2026-06-16:
+
+1. Van Horn et al. 2012 beschreiben die Stange als ca. 110 cm lang, 3,2 cm im
+   Durchmesser und 13 lb schwer. Das deckt die App-Texte `1,1 m` und `~6 kg`.
+2. Bigelow 1850 ist als historische Sekundärquelle enger am Objekt: 3 ft 7 in
+   Länge, 1,25 in Schaftdurchmesser, 13,25 lb, mit verjüngter Spitze. Umgerechnet
+   sind das ca. 109,2 cm, 3,18 cm und 6,0 kg.
+3. Der aktuelle Viewer rendert nicht die volle 1,09-m-Stange. `phineasGage.ts`
+   verwendet `ROD_ENTRY`, `ROD_EXIT`, `ROD_OVERSHOOT = 38`,
+   `ROD_RADIUS_SHAFT = 7` und `ROD_RADIUS_TIP = 2.6`; bei voller Phase ist das
+   ein ca. 234-mm-Trajektorienmarker mit 14 mm Schaftdurchmesser.
+
+Entscheidung: Die Textmaße bleiben historisch, die 3D-Stange bleibt bewusst
+schematisch gekürzt. Die UI weist das jetzt explizit aus:
+`Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer
+als gekürzter, schematischer Trajektorienmarker dargestellt.` Eine spätere
+maßstabsgetreue Darstellung müsste die volle Stange als eigenes Modell oder als
+umschaltbaren Maßstabsmodus ergänzen.
+
+Quellen:
+
+1. Van Horn et al. 2012:
+   <https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0037454>
+2. Harvard Countway / Warren Anatomical Museum:
+   <https://collections.countway.harvard.edu/onview/exhibits/show/beyond-the-bone-box/the-case-of-phineas-gage>
+3. Bigelow 1850, Harvard-Digitalisat:
+   <https://collections.countway.harvard.edu/onview/files/original/fc61f61c95e9f2d82160a86b1f168664.pdf>
 
 ### Atlas-Abdeckung
 
@@ -56,11 +149,11 @@ bleibt ein Kandidat für späteres Lazy Loading.
 | Szene/Modus | Pflichtlücke | Optional | Entscheidung |
 | --- | --- | --- | --- |
 | Go/No-go | keine | reale Stimulus-Karten statt Prose-Intro | später |
-| VCPT | keine | Tier-/Pflanzenstimuli als kleine Texturkarte | später |
-| ICA | keine | animierte Komponententrennung im 3D-Raum | später |
-| P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später |
+| VCPT | keine | echte Stimulus-Bildkarten | später; aktueller Build zeigt eine pausierbare schematische Cue-Probe-Folge mit Go/No-go-Fehlerzuständen |
+| ICA | keine | 3D-Komponententrennung im Raum | später; aktueller Build zeigt eine pausierbare schematische Signal-zu-Komponenten-Animation im Overlay |
+| P3a/P3b/P3z | keine | echte Topografie-Heatmap-Texturen auf Kopfhaut | später; aktueller Build zeigt schematische Topografie, Support-Elektroden und Quellenlabels |
 | Zusammenfassung | keine | Netzwerk-Übersicht als expliziter Graph-Layer | später |
-| Phineas Gage | kein Original-Gage-CT/GLB im Repo | lizenziertes Originalmodell, falls beschaffbar | nicht blockierend, UI dokumentiert schematisches TARO-Modell |
+| Phineas Gage | kein montiertes Original-Gage-CT/GLB im aktuellen Viewer | Standalone-Assets unter `/assets/phineas` plus Quellen unter `raw_protected/phineas-gage`; nächster Schritt wäre Montage nach Lizenz-/Transform-Pinning | nicht blockierend, UI dokumentiert schematisches TARO-Modell und lokale Importkandidaten |
 | Explorer/Atlas | keine | Destrieux-Carve auf TARO | später |
 
 ## Shader- und Texturbewertung
@@ -101,13 +194,12 @@ aber kein vollständiger neuroanatomischer Thesaurus.
 | SMA / pre-SMA | P3z, Inhibition | Explorer-Flyout -> P3z |
 | OFC / VMPFC | Phineas Gage, somatische Marker, Sozialverhalten | Explorer-Flyout -> Phineas-Modus |
 | Basalganglien-Schleifen | DLPFC/VMPFC/ACC-Schleifen | Abb. 11-04-Konfiguration |
-| DLPFC/VLPFC | WCST, Arbeitsgedächtnis, ToL | noch kein eigener Lernpfad |
+| DLPFC/VLPFC | WCST, Arbeitsgedächtnis, ToL | Lernpfad 11-05, 11-09, 11-10, 11-11A/B/C |
 
 ## Folgearbeit nach Vortrag
 
-1. Vollständige Kapitel-11-Abdeckung: 11-05 bis 11-13 als eigene
-   Config-/Scene-Pakete priorisieren.
-2. DLPFC/VLPFC-Lernpfad für WCST, Fluency und Tower of London ausbauen.
-3. Optionales Destrieux-Carve auf TARO prüfen, wenn Sulcus/Gyrus-Präzision im
+1. Studentische Check-UI auf `StudentProgressState` legen:
+   sichtbare Übungsfragen, Progress-Anzeige und Snapshot-Roundtrip-Smoke.
+2. Optionales Destrieux-Carve auf TARO prüfen, wenn Sulcus/Gyrus-Präzision im
    Explorer wirklich gebraucht wird.
-4. Optionaler realistischer Hirnshader erst nach Lesbarkeits- und Mobile-Gate.
+3. Optionaler realistischer Hirnshader erst nach Lesbarkeits- und Mobile-Gate.

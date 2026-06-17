@@ -1,0 +1,27 @@
+{
+  "id": "acc-bush",
+  "figure": "11-13",
+  "section": "11.4 · ACC und Konflikt",
+  "author": "ifland",
+  "order": 19,
+  "title": "ACC nach Bush: kognitiv und emotional",
+  "brain": { "regions": ["acc-anterior", "acc-cingulum"], "camera": "medial-midline" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "dorsal", "label": "dorsales ACC", "result": "kognitive Konflikte, Stroop/Flanker" },
+        { "id": "ventral", "label": "ventrales ACC/OFC", "result": "emotionale Stroop-Konflikte" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-13 unterscheidet dorsale, eher kognitive ACC-Anteile von ventralen, stärker emotionalen Anteilen. Die 3D-Config nutzt das bestehende ACC-Bush-Farbpreset und ersetzt das Lehrbuchbild durch ein eigenes Flowchart.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.4, Abb. 11-13" },
+      { "key": "bush_2000", "note": "dorsal/ventral ACC-Kontrast laut Lehrbuchcaption" }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "badre-relationale-komplexitaet",
+  "figure": "11-08B",
+  "section": "11.3.3 · Badre-Modelle",
+  "author": "ifland",
+  "order": 10,
+  "title": "Relationale Komplexität im PFC",
+  "brain": { "regions": ["parietal-frontal"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "feature", "label": "Merkmal", "result": "ein einzelnes Reizmerkmal" },
+        { "id": "relation-1", "label": "Relation 1. Ordnung", "result": "Beziehung zwischen Merkmalen" },
+        { "id": "relation-2", "label": "Relation 2. Ordnung", "result": "Beziehung zwischen Beziehungen" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-08B beschreibt keine gemessene Aktivierung, sondern Stufen relationaler Komplexität. Die Szene hält diese Stufen als explizite Lernkarte fest und verankert sie im frontoparietalen Kontext.",
+    "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-08B" }]
+  }
+}

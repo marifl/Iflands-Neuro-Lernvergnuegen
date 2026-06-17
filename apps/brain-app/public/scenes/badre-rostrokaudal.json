@@ -1,0 +1,29 @@
+{
+  "id": "badre-rostrokaudal",
+  "figure": "11-07",
+  "section": "11.3.3 · rostrokaudale Organisation",
+  "author": "ifland",
+  "order": 8,
+  "title": "Badre: rostrokaudaler PFC-Gradient",
+  "brain": { "regions": ["parietal-frontal", "sma-presma"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "ba6-8", "label": "BA 6/8", "result": "motorische und prämotorische Kontrolle" },
+        { "id": "ba44-45-47", "label": "BA 44/45/47", "result": "konkretere kontrollierte Sequenzen" },
+        { "id": "ba9-46", "label": "BA 9/46", "result": "abstraktere Regeln und Relationen" },
+        { "id": "ba10", "label": "BA 10", "result": "frontopolarer Integrationspol" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-07 markiert Badres rostrokaudalen Abstraktionsgradienten. Die 3D-Config nutzt vorhandene Frontopolar-, DLPFC-, SMA/preSMA- und VLPFC-Buckets und bleibt als schematisches Modell gekennzeichnet.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-07" },
+      { "key": "badre_2008", "note": "rostrokaudale PFC-Organisation" }
+    ]
+  }
+}

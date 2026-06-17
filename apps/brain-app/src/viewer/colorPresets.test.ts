@@ -3,6 +3,7 @@ import { fileURLToPath } from 'node:url'
 import { dirname, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { bucketToMeshes, BUCKET_MAPPINGS } from './bucketMeshes'
+import { COLOR_ROLE_VALUES } from './atlasColorSystem'
 import { hueToHex, parseColorPresets, resolvePresetColors, type ColorPreset } from './colorPresets'
 
 const here = dirname(fileURLToPath(import.meta.url))
@@ -39,13 +40,29 @@ describe('hueToHex', () => {
 describe('parseColorPresets', () => {
   it('validiert die echte color-presets.json', () => {
     const presets = real()
-    expect(presets.length).toBeGreaterThanOrEqual(5)
+    expect(presets.length).toBeGreaterThanOrEqual(10)
     expect(presets.map((p) => p.id)).toContain('pfc-petrides')
+    expect(presets.map((p) => p.id)).toContain('fuster-gradient')
+    expect(presets.map((p) => p.id)).toContain('wcst-frontoparietal')
   })
 
   it('wirft laut bei Schema-Verstoss', () => {
     expect(() => parseColorPresets({ version: 1, presets: [] })).toThrow()
     expect(() => parseColorPresets({ presets: [{ id: 'x' }] })).toThrow()
+  })
+
+  it('erzwingt Rollen, Bedeutung und Coverage fuer jede produktive Preset-Gruppe', () => {
+    const roles = new Set<string>(COLOR_ROLE_VALUES)
+    const issues: string[] = []
+    for (const preset of real()) {
+      if (!preset.intent.trim()) issues.push(`${preset.id}: intent fehlt`)
+      if (preset.coverage === 'partial' && !preset.coverageNote?.trim()) issues.push(`${preset.id}: coverageNote fehlt`)
+      for (const group of preset.groups) {
+        if (!roles.has(group.role)) issues.push(`${preset.id}/${group.label}: Rolle ungueltig`)
+        if (!group.meaning.trim()) issues.push(`${preset.id}/${group.label}: Bedeutung fehlt`)
+      }
+    }
+    expect(issues).toEqual([])
   })
 })
 
@@ -74,8 +91,10 @@ describe('resolvePresetColors', () => {
     const gap: ColorPreset = {
       id: 'synthetic-gap',
       label: 'Synthetisch (Mapping-Luecke)',
+      intent: 'Testet Luecken-Bucket',
+      coverage: 'full',
       dimOthers: true,
-      groups: [{ label: 'Gap', hue: 0, buckets: [gapBucket!] }],
+      groups: [{ label: 'Gap', role: 'task-activation', meaning: 'Testgruppe', hue: 0, buckets: [gapBucket!] }],
     }
     expect(() => resolvePresetColors(gap)).toThrow(/keine Geometrie/)
   })
@@ -96,6 +115,18 @@ describe('generierte Bucket-Mappings', () => {
       if (mapping.meshes.length === 0) issues.push(`${bucket}: keine Geometrie`)
       for (const mesh of mapping.meshes) {
         if (!structureIds.has(mesh)) issues.push(`${bucket}: Mesh ${mesh} unbekannt`)
+      }
+    }
+    expect(issues).toEqual([])
+  })
+
+  it('verwenden fuer produktive Presets keine veralteten Julich-Einzelmeshes', () => {
+    const presets = real()
+    const used = new Set(presets.flatMap((p) => p.groups.flatMap((g) => g.buckets)))
+    const issues: string[] = []
+    for (const bucket of used) {
+      for (const mesh of BUCKET_MAPPINGS[bucket]?.meshes ?? []) {
+        if (/^(left|right)-julich-/.test(mesh)) issues.push(`${bucket}: ${mesh}`)
       }
     }
     expect(issues).toEqual([])

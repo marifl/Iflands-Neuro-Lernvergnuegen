@@ -1,0 +1,30 @@
+{
+  "id": "fluency-foci",
+  "figure": "11-10",
+  "section": "11.3.3 · Fluency-Aufgaben",
+  "author": "ifland",
+  "order": 14,
+  "title": "Flüssigkeitsaufgaben: fünf Aktivierungsfoki",
+  "brain": { "regions": ["parietal-frontal", "sma-presma"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "phonologisch", "label": "phonologisch", "result": "dorsaler IFG/PFC" },
+        { "id": "semantisch", "label": "semantisch", "result": "ventraler verschoben" },
+        { "id": "wechsel", "label": "Wechseln", "result": "Aufgabenwechsel" },
+        { "id": "initiieren", "label": "Initiieren", "result": "Auswahl starten" },
+        { "id": "ausfuehren", "label": "Ausführen", "result": "motorische Umsetzung" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Abb. 11-10 fasst Aktivierungsfoki für unterschiedliche Flüssigkeitsaufgaben zusammen. Die Szene zeigt die fünf Bedingungen als didaktische Ordnung und hält die 3D-Hervorhebung bewusst schematisch.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-10" },
+      { "key": "costafreda_2006", "note": "Fluency-Aktivierungen laut Lehrbuchtext" }
+    ]
+  }
+}

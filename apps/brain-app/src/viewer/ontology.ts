@@ -1,3 +1,14 @@
+import {
+  ANATOMICAL_MATERIAL_COLORS,
+  ATLAS_VIEWER_COLORS,
+  FUNCTION_COLORS,
+  REGION_COLORS,
+  REGION_FALLBACK_PALETTE,
+  LATERALITY_COLORS,
+  type AnatomicalMaterialRole,
+  type FunctionalSystem,
+} from './atlasColorSystem'
+
 export type Lang = 'de' | 'la' | 'en'
 export type Side = 'left' | 'right' | 'midline'
 
@@ -227,9 +238,12 @@ export type ColorMode = 'anatomical' | 'function' | 'laterality' | 'region' | 'p
 
 /** Pro Struktur-Blatt die Merkmale fuer die Einfaerbung. */
 export interface ColorEntry {
+  id: string
   role?: string
   side?: Side
   group: string
+  anatomicalRole: AnatomicalMaterialRole
+  functionSystem: FunctionalSystem
 }
 
 /** slug -> {role, side, Top-Gruppe} fuer alle Hirn-Struktur-Blaetter. */
@@ -237,48 +251,86 @@ export function buildColorIndex(tree: OntologyNode): Map<string, ColorEntry> {
   const map = new Map<string, ColorEntry>()
   for (const group of tree.children ?? []) {
     for (const leaf of flattenStructures(group)) {
-      map.set(leaf.id, { role: leaf.k11Role, side: leaf.side, group: group.id })
+      map.set(leaf.id, {
+        id: leaf.id,
+        role: leaf.k11Role,
+        side: leaf.side,
+        group: group.id,
+        anatomicalRole: anatomicalMaterialRole(leaf.id, group.id),
+        functionSystem: functionSystem(leaf.k11Role, leaf.id, group.id),
+      })
     }
   }
   return map
 }
 
 /** Default-Anatomie-Beige (auch Fallback fuer nicht klassifizierbare Strukturen). */
-export const ANATOMICAL_COLOR = '#cdbfb6'
+export const ANATOMICAL_COLOR = ATLAS_VIEWER_COLORS.anatomical
+
+export function anatomicalMaterialRole(id: string, group: string): AnatomicalMaterialRole {
+  if (group === 'vasculature') return /vein|sinus|venous/i.test(id) ? 'vein' : 'artery'
+  if (group === 'cranial-nerves' || /nerve|ganglion/i.test(id)) return 'nerve'
+  if (group === 'visual-pathway') return /retina/i.test(id) ? 'eye' : 'nerve'
+  if (group === 'ventricles' || /ventricle|ventricular|aqueduct|choroid|csf/i.test(id)) return 'csf'
+  if (group === 'meninges-grp' || /dura|falx|tentorium|mening/i.test(id)) return 'meninges'
+  if (group === 'cerebellum-grp' || /cerebell/i.test(id)) return 'cerebellum'
+  if (group === 'brainstem' || /brainstem|midbrain|pons|medulla|colliculus|substantia-nigra|red-nucleus/i.test(id)) {
+    return 'brainstem'
+  }
+  if (
+    group === 'commissures' ||
+    /white-matter|commissure|corpus-callosum|fornix|capsule|tract|fasciculus|radiation|stria|lemniscus|peduncle/i.test(id)
+  ) {
+    return 'white-matter'
+  }
+  if (
+    group === 'diencephalon' ||
+    /thalamus|hypothalamus|subthalamic|pallid|putamen|caudate|accumbens|amygdala|hippocampus|striatum|globus/i.test(id)
+  ) {
+    return 'subcortical-gray'
+  }
+  return 'brain-cortex'
+}
 
 /** k11Role-String -> grobes Funktionssystem (fuer Legende + Farbe). */
-export function functionSystem(role: string | undefined): string {
-  if (!role) return 'other'
-  if (role.startsWith('Basalganglien')) return 'bg'
-  if (role.includes('ACC')) return 'cingulum'
-  if (role.includes('Parietal')) return 'parietal'
-  if (role.includes('M1') || role.includes('S1') || role.includes('SMA')) return 'sensorimotor'
-  // VLPFC / DLPFC / OFC / VMPFC und Mischformen
-  if (/PFC|OFC/.test(role)) return 'pfc'
+export function functionSystem(role: string | undefined, id = '', group = ''): FunctionalSystem {
+  if (role?.startsWith('Basalganglien')) return 'basal-ganglia-loop'
+  if (role && /DLPFC|VLPFC|VMPFC|OFC|PFC|Frontopolar/i.test(role)) return 'executive-control'
+  if (role && /ACC|Konflikt/i.test(role)) return 'salience-cingulo-opercular'
+  if (role && /Parietal|WCST|ToL/i.test(role)) return 'frontoparietal-attention'
+  if (role && /M1|S1|SMA|motorisch|somatosensorisch/i.test(role)) return 'sensorimotor'
+  if (group === 'vasculature') return 'vascular'
+  if (group === 'cranial-nerves') return 'cranial-nerve'
+  if (group === 'ventricles') return 'csf-ventricular'
+  if (group === 'meninges-grp') return 'meningeal-protection'
+  if (group === 'visual-pathway' || /optic|retina|lateral-geniculate|calcarine|occipital|cuneus|lingual|fusiform/i.test(id)) return 'visual'
+  if (/medial-geniculate|heschl|auditory|transverse-temporal/i.test(id)) return 'auditory'
+  if (/nerve|ganglion/i.test(id)) return 'cranial-nerve'
+  if (group === 'cerebellum-grp' || /cerebell/i.test(id)) return 'cerebellar-coordination'
+  if (group === 'brainstem' || /brainstem|midbrain|pons|medulla|colliculus|substantia-nigra|red-nucleus/i.test(id)) {
+    return 'brainstem-autonomic'
+  }
+  if (
+    /hippocampus|parahippocampal|entorhinal|amygdala|uncus|mammillary|fornix|fasciolar|paraterminal|induseum|subiculum|periamygdaloid|subcallosal|lamina-terminalis|septum|diagonal-band/i.test(id)
+  ) {
+    return 'limbic-memory'
+  }
+  if (/putamen|caudate|pallid|accumbens|striatum|globus/i.test(id)) return 'basal-ganglia-loop'
+  if (group === 'diencephalon' || /thalamus|hypothalamus|nucleus|pulvinar|pituitary|pineal|habenula|tuber-cinereum/i.test(id)) {
+    return 'thalamic-relay'
+  }
+  if (group === 'commissures' || /white-matter|commissure|corpus-callosum|capsule|tract|fasciculus|radiation|stria/i.test(id)) {
+    return 'white-matter-communication'
+  }
+  if (/inferior-frontal|broca|opercular|triangular|orbital-part/i.test(id)) return 'language-control'
+  if (/precentral|postcentral|paracentral|central-lobule|sma|motor|somatosensory/i.test(id)) return 'sensorimotor'
+  if (/temporal/i.test(id)) return 'auditory'
+  if (/cingulate|insula|operculum/i.test(id)) return 'salience-cingulo-opercular'
+  if (/parietal|precuneus|angular|supramarginal|lobule|posterior-central-gyrus/i.test(id)) return 'frontoparietal-attention'
+  if (/frontal|orbital|prefrontal|straight-gyrus|accessory-gyrus/i.test(id)) return 'executive-control'
   return 'other'
 }
 
-/** Gedaempfte Editorial-Paletten je Modus (slug-/merkmals-bezogen). */
-const FUNCTION_COLORS: Record<string, string> = {
-  pfc: '#c2724a', // Praefrontal (exekutive Kontrolle)
-  bg: '#5f8a86', // Basalganglien-Schleife
-  sensorimotor: '#8a7196', // Sensomotorik (M1/S1/SMA)
-  cingulum: '#9a9255', // ACC / Cingulum
-  parietal: '#6f86a6', // Parietaler Kortex
-  other: '#7d756c', // sonstige (gedaempftes Grau-Braun)
-}
-
-const LATERALITY_COLORS: Record<Side, string> = {
-  left: '#6f86a6', // links: blau-grau
-  right: '#c2724a', // rechts: terracotta
-  midline: '#9a9a92', // Mittellinie: neutral
-}
-
-/** Region-Palette je Top-Gruppen-Index (durchrotierend, gedaempft). */
-const REGION_PALETTE = [
-  '#c2724a', '#5f8a86', '#6f86a6', '#9a9255', '#8a7196',
-  '#a8895f', '#6f9a7a', '#9a6f86', '#7d8a5f', '#8a6f6f',
-]
 const regionColorCache = new Map<string, string>()
 function regionColor(group: string): string {
   const cached = regionColorCache.get(group)
@@ -286,15 +338,16 @@ function regionColor(group: string): string {
   // Stabiler Index aus dem Gruppen-Slug (deterministisch, ohne globalen Zaehler).
   let hash = 0
   for (let i = 0; i < group.length; i++) hash = (hash * 31 + group.charCodeAt(i)) >>> 0
-  const color = REGION_PALETTE[hash % REGION_PALETTE.length]
+  const color = REGION_COLORS[group] ?? REGION_FALLBACK_PALETTE[hash % REGION_FALLBACK_PALETTE.length]
   regionColorCache.set(group, color)
   return color
 }
 
 /** Basisfarbe eines Hirn-Mesh fuer den aktiven Farbmodus. */
 export function meshColor(entry: ColorEntry | undefined, mode: ColorMode): string {
-  if (mode === 'anatomical' || !entry) return ANATOMICAL_COLOR
-  if (mode === 'function') return FUNCTION_COLORS[functionSystem(entry.role)]
+  if (!entry) return ANATOMICAL_COLOR
+  if (mode === 'anatomical') return ANATOMICAL_MATERIAL_COLORS[entry.anatomicalRole]
+  if (mode === 'function') return FUNCTION_COLORS[entry.functionSystem]
   if (mode === 'laterality') return entry.side ? LATERALITY_COLORS[entry.side] : ANATOMICAL_COLOR
   return regionColor(entry.group)
 }

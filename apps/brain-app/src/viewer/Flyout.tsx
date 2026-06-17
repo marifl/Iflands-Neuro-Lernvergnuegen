@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react'
 interface FlyoutProps {
   eyebrow: string
   label: string
+  icon?: React.ReactNode
   open: boolean
   onToggle: () => void
   onClose: () => void
@@ -15,8 +16,12 @@ interface FlyoutProps {
 /** Popover, klappt nach oben aus einer Fussleisten-Box auf. Mindestens box-breit, waechst aber
  *  mit dem Inhalt (kein Abschneiden langer Eintraege wie "Phineas Gage"), gedeckelt gegen
  *  Viewport-Ueberlauf. Schliesst bei Escape und Aussenklick. Der Trigger fuellt die Box. */
-export default function Flyout({ eyebrow, label, open, onToggle, onClose, disabled, align = 'left', children }: FlyoutProps) {
+export default function Flyout({ eyebrow, label, icon, open, onToggle, onClose, disabled, align = 'left', children }: FlyoutProps) {
   const ref = useRef<HTMLDivElement>(null)
+  const lastTouchToggleAt = useRef(0)
+  const activate = () => {
+    if (!disabled) onToggle()
+  }
 
   useEffect(() => {
     if (!open) return
@@ -38,7 +43,17 @@ export default function Flyout({ eyebrow, label, open, onToggle, onClose, disabl
     <div ref={ref} className="col" style={{ position: 'relative', cursor: disabled ? 'default' : 'pointer' }}>
       <button
         type="button"
-        onClick={() => !disabled && onToggle()}
+        className="flyout-trigger"
+        onPointerUp={(event) => {
+          if (event.pointerType !== 'touch') return
+          event.preventDefault()
+          lastTouchToggleAt.current = Date.now()
+          activate()
+        }}
+        onClick={() => {
+          if (Date.now() - lastTouchToggleAt.current < 500) return
+          activate()
+        }}
         disabled={disabled}
         style={{
           display: 'block',
@@ -51,14 +66,15 @@ export default function Flyout({ eyebrow, label, open, onToggle, onClose, disabl
           opacity: disabled ? 0.4 : 1,
         }}
       >
+        {icon ? <span className="flyout-icon">{icon}</span> : null}
         <div className="h">{eyebrow}</div>
         <span className="v ellip">
-          {label} <span style={{ color: 'var(--g500)', fontSize: 9 }}>{open ? '▾' : '▴'}</span>
+          {label} <span className="flyout-caret" style={{ color: 'var(--g500)', fontSize: 9 }}>{open ? '▾' : '▴'}</span>
         </span>
       </button>
       {open ? (
         <div
-          className="ed-panel ed-frame"
+          className="ed-panel ed-frame flyout-popover"
           style={{
             position: 'absolute',
             bottom: 'calc(100% + 6px)',

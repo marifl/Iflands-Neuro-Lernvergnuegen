@@ -13,6 +13,7 @@ import {
   type WebGLRenderer,
 } from 'three'
 import type { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+import { CUT_AXIS_COLORS } from './atlasColorSystem'
 import {
   CUT_GIZMO_HELPER_FLAG,
   clampCutPosition,
@@ -31,11 +32,7 @@ export interface CutController {
 }
 
 const AXES: CutAxis[] = ['sagittal', 'coronal', 'axial']
-const AXIS_COLORS: Record<CutAxis, number> = {
-  sagittal: 0xff5a4f,
-  coronal: 0x77c85b,
-  axial: 0x35a6ff,
-}
+const AXIS_COLORS: Record<CutAxis, number> = CUT_AXIS_COLORS
 
 const FRAME_SIZE = 170
 const FRAME_TAB_WIDTH_PX = 108

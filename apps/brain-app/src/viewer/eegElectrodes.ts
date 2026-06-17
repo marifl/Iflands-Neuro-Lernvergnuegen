@@ -9,6 +9,11 @@ export interface EegElectrode {
   role: string
 }
 
+export interface ErpSceneSites {
+  primary: EegSite
+  support: EegSite[]
+}
+
 export const EEG_ELECTRODES: Record<EegSite, EegElectrode> = {
   Fpz: { site: 'Fpz', position: [0, 70, 70], role: 'frontopolarer Mittellinienanker' },
   Fz: { site: 'Fz', position: [0, 82, 48], role: 'frontale Mittellinie' },
@@ -45,7 +50,19 @@ export function isEegSite(value: string | undefined): value is EegSite {
 }
 
 export function erpSiteForScene(scene: Scene | null | undefined): EegSite | null {
+  return erpSitesForScene(scene)?.primary ?? null
+}
+
+export function erpSitesForScene(scene: Scene | null | undefined): ErpSceneSites | null {
   if (!scene || scene.overlay.kind !== 'erp') return null
-  const data = scene.overlay.data as { site?: string } | undefined
-  return isEegSite(data?.site) ? data.site : null
+  const data = scene.overlay.data as { site?: string; topography?: { supportSites?: string[] } } | undefined
+  if (!isEegSite(data?.site)) return null
+  const seen = new Set<EegSite>([data.site])
+  const support: EegSite[] = []
+  for (const candidate of data.topography?.supportSites ?? []) {
+    if (!isEegSite(candidate) || seen.has(candidate)) continue
+    seen.add(candidate)
+    support.push(candidate)
+  }
+  return { primary: data.site, support }
 }

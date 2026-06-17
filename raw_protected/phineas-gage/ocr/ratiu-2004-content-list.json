@@ -1,0 +1,807 @@
+[
+    {
+        "type": "text",
+        "text": "Case Report ",
+        "text_level": 1,
+        "bbox": [
+            408,
+            147,
+            595,
+            173
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The Tale of Phineas Gage, Digitally Remastered ",
+        "bbox": [
+            154,
+            203,
+            845,
+            231
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "PETER RATIU,1,\\* ION-FLORIN TALOS,1,\\* STEVEN HAKER,1 DANIEL LIEBERMAN,2 and PETER EVERETT1 ",
+        "bbox": [
+            74,
+            266,
+            923,
+            302
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "ABSTRACT ",
+        "text_level": 1,
+        "bbox": [
+            444,
+            360,
+            557,
+            376
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "The injury of Phineas Gage has fueled research on and fascination with the localization of cerebral functions in the past century and a half. Most physicians and anatomists believed that Gage sustained a largely bilateral injury to the frontal lobes. However, previous studies seem to have overlooked a few less obvious, but essential details. This has led us to reanalyze the injury using threedimensional reconstruction and quantitative computer-aided techniques and to propose a new biomechanical model, in order to determine the location and extent of the injury and explain Gage’s improbable survival. Unlike previous studies on this subject, our findings are based on computergenerated three-dimensional reconstructions of a thin-slice computed tomography scan (CAT) of Phineas Gage’s skull. The results of our image analysis were corroborated with the clinical findings, thoroughly recorded by Dr. Harlow in 1848, as well as with a systematic examination of the original skull specimen. Our results show that the cerebral injury was limited to the left frontal lobe, did not extend to the contralateral side, did not affect the ventricular system, and did not involve vital intracranial vascular structures. Although modern neuroscience has perhaps outgrown the speculations prompted by this famous case, it is still a living part of the medical folklore and education. Setting the record straight based on clinical reasoning, observation of the physical evidence, and sound quantitative computational methods is more than mere minutia and of interest for the broad medical community. ",
+        "bbox": [
+            51,
+            394,
+            948,
+            695
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "Key words: lesion location; mechanism of injury; Phineas Gage ",
+        "bbox": [
+            55,
+            714,
+            606,
+            731
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "INTRODUCTION ",
+        "text_level": 1,
+        "bbox": [
+            188,
+            776,
+            356,
+            792
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "N 1848, Phineas Gage, a healthy, 25-year-old construction foreman in Vermont, survived injury from a massive iron bar that was propelled through his left cheek and skull by an accidental explosion (Harlow, 1848; Macmillan, 2000). Only a few minutes after the blast, Gage regained consciousness and, aided by two co-workers, walked to a cart where he was seated in and sent back to his boarding house, a $^ 3 / _ { 4 }$ of a mile ride. Gage’s unlikely survival (he died in 1860) has fueled research on the localization of brain functions for the ensuing 150 years. Most physicians and anatomists believed that Gage sustained a largely bilateral injury to the frontal lobes, causing him to become an irritable, unreliable drifter (Harlow, 1848). However, accounts of Gage’s behavior and psychic functions following his trauma are few and sketchy, and appear inconsistent with his subsequent employment as a coach driver in Chile (Macmillan, 2000). Since Gage’s accident, there have been a dozen attempts to estimate the trajectory of the $6 { \\cdot } \\mathrm { k g }$ iron bar (Macmillan, 2000) (length, $1 . 0 9 \\mathrm { ~ m ~ }$ ; maximum diameter, 31.75 mm, tapering to $6 \\ \\mathrm { m m }$ at the tip) and two detailed attempts to reconstruct the trauma. First, in 1850, Bigelow drilled a hole through a “common skull,” which was then “enlarged until it allowed the passage of the bar in question” so that the damage corresponded to Gage’s supposed lesion (Bigelow, 1850). However, since Gage’s skull wasn’t exhumed until 1868 (Macmillan, 2000), Bigelow did not observe the lesion of the skull, whose diameter is actually smaller than that of the iron (see Fig. 2 below). ",
+        "bbox": [
+            53,
+            807,
+            488,
+            856
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            511,
+            776,
+            948,
+            856
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "1Department of Radiology, Brigham and Women’s Hospital and Harvard Medical School, Boston, Massachusetts. 2Peabody Museum, Harvard University, Cambridge, Massachusetts. \\*These authors contributed equally to this study and to the preparation of this manuscript. ",
+        "bbox": [
+            68,
+            890,
+            874,
+            935
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "JOURNAL OF NEUROTRAUMA Volume 21, Number 5, 2004 $^ ©$ Mary Ann Liebert, Inc. Pp. 637–643 ",
+        "bbox": [
+            51,
+            30,
+            299,
+            85
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "discarded",
+        "text": "637 ",
+        "bbox": [
+            486,
+            956,
+            517,
+            968
+        ],
+        "page_idx": 0
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            55,
+            66,
+            490,
+            425
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "A full 144 years later, Damasio et al. (1994) reconstructed the iron’s trajectory using photographs and $\\mathbf { X }$ -rays of the skull, and a three-dimensional (3-D) computer-generated model of a “standard” human skull whose overall dimensions matched those of Gage. They concluded that the iron exited Gage’s skull toward the right side of the calvarium, implying that it passed through the superior sagittal sinus (SSS), along with the prefrontal area, the orbital frontal cortex, and the anterior portion of the cyngulate gyrus, bilaterally. ",
+        "bbox": [
+            55,
+            427,
+            490,
+            589
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "By re-examining of the exhumed skull, the tamping iron, and clinical notes recorded by Dr. Harlow, we found inconsistencies that awakened some degree of skepticism as to the validity of these conclusions. ",
+        "bbox": [
+            53,
+            590,
+            490,
+            654
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Given inconsistencies between Gage’s clinical record and the above cited studies, we re-examined the case by integrating forensic analysis of the skull with techniques of 3-D computer-aided reconstruction and image analysis originally developed for and used in image-guided neurosurgery (Grimson, 1999; Everett, 2000; Gering, 2001; Nabavi et al., 2003), computer-aided surgical planning (Everett, 2000), and computational anatomy research (Ratiu, 2000; Rodt, 2002). ",
+        "bbox": [
+            53,
+            656,
+            490,
+            802
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "MATERIALS AND METHODS ",
+        "text_level": 1,
+        "bbox": [
+            124,
+            832,
+            419,
+            849
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "First, we obtained a thin-slice $\\mathrm { ( ) . 5 \\ m m } ,$ ) axial computed tomography scan (CAT) of the exhumed skull of Phineas Gage, in the custody of the Warren Museum of Anatomy, Harvard Medical School. The scan was obtained with the superior, cut portion of the calvarium and the mandible in the correct anatomical position on a Siemens Somatom CAT scanner (Siemens AG, Erlangen, Germany), in the Department of Radiology, Brigham and Women’s Hospital (Boston, MA). ",
+        "bbox": [
+            53,
+            866,
+            490,
+            930
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            511,
+            66,
+            948,
+            147
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The CAT images were segmented, and separate 3-D models of the three parts (cut calvarium, skull, and mandible) were generated, using our in-house developed image analysis software (Gering, 2001). ",
+        "bbox": [
+            511,
+            148,
+            948,
+            212
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "A 3-D model of a normal brain, obtained from a volumetric 3D-SPGR MRI scan (spoiled gradient echo recall, TE/TR $= 6 / 3 5$ msec, $\\mathrm { F A } = 7 5 ^ { \\circ }$ , $\\mathrm { F O V } = 2 4 \\mathrm { c m }$ , ma$\\mathrm { t r i x } = 2 5 6 \\times 2 5 6$ , slice thickness $1 . 5 \\ \\mathrm { m m }$ , no spacing) that was painstakingly labeled in previous research, as well as a 3-D model of the cerebral vasculature, obtained from MR angiography $( 1 . 5 ~ \\mathrm { m m }$ sagittal slices, $\\mathrm { T R } = 3 2$ msec, $\\mathrm { F A } = 2 0 ^ { \\circ }$ , $\\mathrm { F O V } = 2 4 \\ \\mathrm { c m }$ , matrix $= 2 5 6 \\times 1 2 8$ Venc $= 6 0$ ) of another healthy volunteer were registered to the 3-D model of Gage’s skull. ",
+        "bbox": [
+            511,
+            214,
+            948,
+            376
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "We used piece-wise affine transforms to register the models, based on major anatomical landmarks. Copies of the skull model and its components were sectioned into fragments that allowed us to better visualize the skull base and the hypotheticaltrajectories of the tamping iron. We used a model of the skull sectioned in the mid-sagittal plane to visualize the sella turcica. We then applied the appropriate affine transforms to this data, placing the pituitary gland into the sella, and then applied the same transform to each component of the brain and vascular models. Further, we registered the optic nerves, first relative to the optic chiasm, whose position varies little relative to the pituitary gland. Next, by treating both optic nerves as a rigid body, we placed the right optic nerve into the right optic canal, assuming that the relative position of the left optic nerve is symmetrical. We then verified the affine transforms that were generated relative to other components of the brain model and adjusted them individually. ",
+        "bbox": [
+            511,
+            377,
+            948,
+            687
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "Second, we performed measurements of the original tamping iron, obtained from the Warren Museum. Based on these measurements, a 3-D model to scale of the tamping iron was built with Matlab (The Mathworks Inc., Natick, MA). For reference, high-quality photographic images of the skull specimen were obtained. Finally, the image analysis findings were correlated with Dr. Harlow’s clinical records (Harlow, 1848, 1868). ",
+        "bbox": [
+            511,
+            688,
+            948,
+            818
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "RESULTS ",
+        "text_level": 1,
+        "bbox": [
+            683,
+            849,
+            778,
+            866
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "text",
+        "text": "The first challenge of our research was to reconstruct the points of entry and exit of the iron. Inspection of the damage to the original skull (Fig. 1a) corroborates previous diagnoses (Harlow, 1848, 1868; Bigelow, 1850; Damasio, 1994; Macmillan, 2000) that the bar entered through Gage’s left cheek under the zygomatic and through the greater and lesser wings of the sphenoid, sparing the coronoid process of the mandible (also confirming Bigelow’s inference that Gage must have had his mouth open at the time of the impact) (Bigelow, 1850). Interpreting the exit site is more complex and differs from that estimated by previous reconstructions. Although previous studies, such as Damasio (1994), have focused on the main flap of bone that crosses the midline of the skull (ant in Fig. 1a,b), there is also a second, previously undocumented bone flap (lt in Fig. 1a,b) that lies completely on the left side of the skull and posterior to the first flap. Midway between the two flaps is a hole, where presumably the frontal bone suffered a comminutive fracture, at the point of exit of the bar’s tip. Healing around both flaps suggests that, as the bar exited, the flaps hinged outward and then were drawn back into place. The left flap was still attached to the dura, and healed normally, but the more central, anterior flap appears to have been separated from the dura, as shown by its extremely rough endocranial surface, and the presence of osteophytes along the flap’s margin (Fig. 1b). This detachment of the dura from the endocranial surface is accountable for preserving the superior sagittal sinus (SSS). ",
+        "bbox": [
+            511,
+            884,
+            948,
+            930
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "638 ",
+        "bbox": [
+            484,
+            956,
+            515,
+            968
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "discarded",
+        "text": "RATIU ET AL. ",
+        "bbox": [
+            437,
+            31,
+            561,
+            45
+        ],
+        "page_idx": 1
+    },
+    {
+        "type": "image",
+        "img_path": "images/0468b343a3ee349bf0b5cdd20aaa40d899e539867aef2eebc63d4040f73191f5.jpg",
+        "image_caption": [
+            "FIG. 1. Photographs of Phineas Gage’s skull. cr—crack through the frontal bone; $f r$ —partially consolidatedfracture line through the maxilla; ant—anterior bone flap at the exit site; lt—left (posterior) bone flap at the exit site; $f i .$ —fissure through the squama temporalis; s-t—spheno-temporal suture; oc—optic canal (a) Overview of the skull. $\\mathbf { ( b ) }$ Closeup of the calvarium viewed from the inside. (c) Closeup of the maxilla. (d) Lateral view of the squama temporalis. (e) Infero-lateral view. (f) Superior view of the entry site with the calvarium removed. The circled areas in d, e, and f indicate the entry site of the iron. (Reprinted with permission from the Warren Anatomical Museum, Francis A. Countway Library of Medicine.) "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            61,
+            68,
+            942,
+            346
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            53,
+            469,
+            490,
+            631
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            513,
+            469,
+            950,
+            630
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "image",
+        "img_path": "images/25709b4463b24897c41a4ab22d9a197d88ee9e5ac50fe9392451845990f69fd1.jpg",
+        "image_caption": [
+            "FIG. 2. The computer-generated model of the skull, based on CT scans and the computer-generated model of the tamping iron, built to scale. A stump of the tamping iron is shown, and the zygomatic bone is not shown. Violet, right side; pink, left side. (Reprinted with permission from the Warren Anatomical Museum, Francis A. Countway Library of Medicine.) "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            114,
+            654,
+            887,
+            870
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "THE TALE OF PHINEAS GAGE, DIGITALLY REMASTERED ",
+        "bbox": [
+            238,
+            31,
+            761,
+            45
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "discarded",
+        "text": "639 ",
+        "bbox": [
+            484,
+            956,
+            517,
+            968
+        ],
+        "page_idx": 2
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            53,
+            66,
+            488,
+            163
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Placing a model of the iron into the computer-generated reconstruction of Gage’s skull (Fig. 2) indicates that the actual bone loss at the iron’s point of entry into the skull as well as in the iron’s path through the orbit and the sphenoid is approximately $50 \\%$ smaller than the maximum diameter of the iron. Since the edges of the region of bone loss show little evidence of healing—mostly a few small osteophytes with no considerable callus formation, it follows that portions of the skull lateral to the iron must have fractured an hinged open as the iron passed through, and were then drawn back into place elastically and spontaneously realigned by the soft tissue. We document here several traces of this fracture. Most obviously, there is a large healed crack extending inferiorly from the anterior margin of the iron’s exit site in the frontal bone to the supraorbital notch ( $. c r$ in Fig. 1a). This crack, moreover, is congruent with the bone loss in the orbital walls and with another healed fracture line that runs downward from the inferior orbital rim through the inferior orbital foramen, to the alveolar crest above the second molar $f r$ in Fig. 1a,c). In addition, there is an almost straight fissure from the iron’s entry hole in the greater wing of the sphenoid through the squama of the temporal bone $\\mathscr { f }$ in Fig. 1d,f), and the spheno-temporal suture on the left side appears patent, presumably from having been loosened $_ { s - t }$ in Figure 1e). ",
+        "bbox": [
+            53,
+            166,
+            488,
+            589
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Based on the above observations, we propose the following scenario: as the iron’s tapered end penetrated the left cheek, it fractured the maxilla and the sphenoid wings. As it passed through the orbit, the left half of the bony face swung laterally, causing the above described damage to the temporal bone. However, the optic canal was spared and the eyeball and the left optic nerve stayed medially (oc in Fig. 1f), which explains why Gage lost his vision only several days later, as carefully recorded by Dr. Harlow (Harlow, 1848; Macmillan, 2000), most likely secondary to acute glaucoma or swelling of the optic nerve and compression against the rigid walls of the optic canal. Finally, the iron shattered a hole near the midline of the skull, causing the two flaps of the frontal to hinge up like a trap door, one to the left and the other anterior to the hole’s center. ",
+        "bbox": [
+            53,
+            590,
+            490,
+            785
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            511,
+            66,
+            948,
+            130
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Reconstruction of the iron’s trajectory, in combination with a computer-generated model of the brain and blood vessels, allows the re-evaluation of the initial damage to Gage’s brain (Fig. 3). First, because the trajectory of the iron went from the left cheek to the midline of the frontal bone above the orbit, the iron must have passed solely through the fronto-orbital and prefrontal cortex in the left hemisphere. This assumption is supported by clinical data. Our reconstruction shows that the iron must have passed left of the SSS (Fig. 4b,d). This is corroborated by the fact that damage to the SSS would have almost certainly caused air embolism and/or fatal blood loss, especially since Gage traveled upright following the accident. In addition, the reconstruction shows that the iron’s trajectory is also anterior to the cingulate gyrus and to the left lateral ventricle (Fig. 4 e,f). No rhinoliquorhea or other indication for post-traumatic CSF fistula was reported. Also, there is no evidence that Gage developed ventriculitis, a condition very likely lethal, especially in the pre-antibiotics era. ",
+        "bbox": [
+            513,
+            132,
+            948,
+            457
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Having conjectured the rod trajectory from the clues offered by the bony injuries, we proceeded to determine the extent and location of brain parenchyma and vascular injuries. In our reconstruction, the rod only intersects the medial and lateral orbito-frontal, as well as the dorsolateral prefrontal regions. Its trajectory lies in front of the supplementary motor area and of the frontal operculum, where Broca’s area is located. Again, these facts are supported by the clinical record (injury to the supplementary motor area results in contralateral hemiplegia and dysphasia; injury to Broca’s area results in motor aphasia; there is no mention of such focal neurological deficits in Dr. Harlow’s thorough and detailed record). There is also no evidence of injury of the arcuate fasciculus, which connects Broca’s speech area in the frontal operculum with Wernicke’s area in the posterior temporal lobe. ",
+        "bbox": [
+            513,
+            459,
+            948,
+            736
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "text",
+        "text": "Also, in our reconstruction, the rod closely misses the internal carotid, as well as the middle and anterior cerebral arteries. This fact is also congruent with the clinical data, since injury to these structures would have been associated with massive bleeding, buildup of intracranial hematomas, increased intracranial pressure and most likely would have had fatal consequences. ",
+        "bbox": [
+            511,
+            738,
+            948,
+            785
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "640 ",
+        "bbox": [
+            484,
+            956,
+            517,
+            967
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "RATIU ET AL. ",
+        "bbox": [
+            437,
+            31,
+            561,
+            45
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "FIG. 4. Computer-generated models of the lesions. (a) The tamping iron in situ. (b) The volume of the tamping iron subtracted from the model of the brain. SSS, superior sagittal sinus. (c) The model of the gray matter removed, for visualization of the white matter. (d) Relation of the tamping iron with the SSS and other blood vessels. (e) Relation of the tamping iron with the cingulate girus $\\bf ( C g )$ . (f) Relation of the tamping iron with the left lateral ventricle (Lv). (Reprinted with permission from the Warren Anatomical Museum, Francis A. Countway Library of Medicine.) ",
+        "bbox": [
+            51,
+            860,
+            948,
+            935
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "discarded",
+        "text": "FIG. 3. Dynamic model of the injury. The bone flaps displaced, the skeleton of the face hinged open. (Reprinted with permission from the Warren Anatomical Museum, Francis A. Countway Library of Medicine.) ",
+        "bbox": [
+            51,
+            819,
+            940,
+            851
+        ],
+        "page_idx": 3
+    },
+    {
+        "type": "image",
+        "img_path": "images/043dc6b7300bf4feb1936e9967a8f3b64b2afd785027ef1badc1b5cc32e81f72.jpg",
+        "image_caption": [
+            "FIG. 3. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            227,
+            34,
+            778,
+            439
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "image",
+        "img_path": "images/cf001e1fd1bf9c5cf1811dfbf1f3ae1dc4876a1115e1b7aa7f8335739749d4d9.jpg",
+        "image_caption": [
+            "FIG. 4. "
+        ],
+        "image_footnote": [],
+        "bbox": [
+            143,
+            476,
+            858,
+            908
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            484,
+            956,
+            515,
+            968
+        ],
+        "page_idx": 4
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            53,
+            66,
+            488,
+            130
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "DISCUSSION ",
+        "text_level": 1,
+        "bbox": [
+            206,
+            162,
+            335,
+            178
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Our reconstruction of Gage’s injury confirms once again Bigelow’s assessment that the “the leading feature of this case is its improbability” (Bigelow, 1850). The combined deployment of multiple modalities of morphological analysis both quantitative and visual, allowed us to create a dynamic model of the sequence of events that occurred during the injury, which also takes into account hitherto ignored forensic and clinical evidence. These techniques of computational anatomy are being used in bio-medical research and surgical planning (Grimson, 1999; Everett, 2000; Gering, 2001; Rodt, 2002; Nabavi et al., 2003), but they also have other potential applications, such as testing hypotheses about the biomechanics of cranial function, and reconstructing neural and vascular structures in fossil humans and other taxa. ",
+        "bbox": [
+            53,
+            193,
+            490,
+            454
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We have shown that an exit point of the rod to the right of the midline, as assumed by previous authors, would imply an extended bilateral lesion to the frontal lobes and also a tear of the SSS, highly unlikely injuries in light of the clinical outcome. It is a well-known fact that the opening of the SSS or of any other major intracranial venous sinus is a life threatening condition, due to the resulting massive hemorrhage and also to the high risk of massive air embolism. Especially when the head is elevated above the heart level, the negative pressure in the rigid venous sinuses is extremely likely to result in air aspiration. Air embolism is a high surgical risk associated with the opening of the SSS or any other intracranial venous sinus. Current research has shown an incidence as high as $45 \\%$ (Mammoto, 1998) during procedures performed in the sitting position and a recent study using intra-operative trans-esophageal eco-cardiography demonstrated the presence of air emboli in the right atrium in $100 \\%$ (Mammoto, 1998) of the studied patients. These surgical conditions are much less demanding than a horse-cart ride and a walk up the stairs. Although Harlow described Gage’s blood loss as “gory,” he also recorded his pulse at 60 beats/min and regular 90 minutes after the accident. Thereafter, his pulse continued to be inconsistent with massive blood loss: 70 beats/min the next morning, 75 beats/min on the third morning, and 85 beats/min on the evening of the third day, when he became delirious, presumably due to secondary infection (Harlow, 1848). The intact left coronoid process of the mandible and the delayed onset of blindness on the left eye offered important clues for determining the rod trajectory. The comminutive fracture between the anterior and posterior bone flaps clearly indicated the point of impact of the rod tip and was another helpful feature in determining the trajectory of the missile. ",
+        "bbox": [
+            53,
+            455,
+            488,
+            930
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "",
+        "bbox": [
+            511,
+            66,
+            948,
+            163
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Macmillan (2000) has shown that the record of how Phineas Gage’s character changed after the accident must be considered with caution; this circumstance, in the light of our still vague understanding of neuropsychology neither requires nor can rule out such a hypothesis. According to our results, the brain parenchyma injury appears to be much less extended than previously thought. Only the medial and lateral orbito-frontal as well as the dorsolateral prefrontal regions of the left frontal lobe were injured as a consequence of direct missile impact. Although modern neuroscience could perhaps dispense with the speculations prompted by this famous case, it is still a living part of the medical folklore and education. Setting the record straight based on clinical reasoning, observation of the physical evidence, and sound quantitative computational methods is more than mere minutia. ",
+        "bbox": [
+            511,
+            163,
+            948,
+            425
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "ACKNOWLEDGMENTS ",
+        "text_level": 1,
+        "bbox": [
+            614,
+            455,
+            847,
+            473
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "We thank to the following persons: V. Hunt and S. Fitz from the Warren Museum of Anatomy for making available the skull of Phineas Gage; Karl Krinopol and Robert Berger from Brigham Radiology for scanning the skull; Mark Anderson from the Surgiacal Planning Laboratory (SPL) for his help with data manipulation; Carl-Fredrik Westin from SPL for providing the post-processed MRA data; Parker Workman from HSDM for segmenting the vessels; last, but not least to Ron Kikinis for the use of the facilities and infrastructure of the the SPL. This work has been made possible through financial support by Brigham Radiology Research and Education Foundation, the Neuroimaging Analysis Center program project (NIH grant P41RR13218) and the Visible Human ITK project. ",
+        "bbox": [
+            511,
+            489,
+            948,
+            717
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "REFERENCES ",
+        "text_level": 1,
+        "bbox": [
+            658,
+            751,
+            801,
+            768
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "BIGELOW, H.J. (1850). Dr. Harlow’s case of recovery from the passage of an iron bar through the head. Am. J. Med. Sci. 20, 13–22. DAMASIO, H., GRABOWSKI, T., FRANK, R., et al. (1994). The return of Phineas Gage: clues about the brain from the skull of a famous patient. Science 264, 1102–1105. EVERETT, P., SELDIN E.B., TROULIS M., et al. (2000). A 3-D System for Planning and Simulating Minimally-Invasive Distraction Osteogenesis of the Facial Skeleton. Delp, S.L., ",
+        "bbox": [
+            511,
+            783,
+            950,
+            931
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "",
+        "bbox": [
+            484,
+            956,
+            517,
+            967
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "discarded",
+        "text": "RATIU ET AL. ",
+        "bbox": [
+            437,
+            31,
+            561,
+            45
+        ],
+        "page_idx": 5
+    },
+    {
+        "type": "text",
+        "text": "Digioia, A.M., Jaramaz, B. (Eds.), Medical Image Computing and Computer-Assisted Intervention—MICCAI 2000, Third International Conference, Pittsburgh, PA, October 11–14, 2000, Proceedings. Lecture Notes in Computer Science. Springer, pps. 1029–1039. ",
+        "bbox": [
+            68,
+            66,
+            490,
+            140
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "GERING, D.T., KIKINIS, R., HATA, N., et al. (2001). An integrated visualization system for surgical planning and guidance using image fusion and an open MR. JMRI 13, 967–975. ",
+        "bbox": [
+            51,
+            148,
+            490,
+            206
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "GRIMSON, W.E.L., KIKINIS, R., JOLESZ, F.A. (1999). Image-guided surgery. Sci. Am. 280, 62–69. ",
+        "bbox": [
+            53,
+            214,
+            490,
+            244
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "HARLOW, J.M. (1848). Passage of an iron bar through the head. Boston Med. Surg. J. 39, 389–393. ",
+        "bbox": [
+            53,
+            252,
+            490,
+            281
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "HARLOW, J.M. (1868). Recovery from the passage of an iron bar through the head. Publ. Mass. Med. Soc. 2, 327–347. ",
+        "bbox": [
+            53,
+            289,
+            490,
+            317
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "MACMILLAN, M. (2000). An odd kind of fame. Stories of Phineas Gage. MIT Press: Boston. ",
+        "bbox": [
+            53,
+            324,
+            492,
+            354
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "MAMMOTO, T., HAYASHI, Y., OHNISHI, Y., et al. (1998). Incidence of venous and paradoxical air embolism in neurosurgical patients in the sitting position: detection by transesophageal echocardiography. Acta Anaesthesiol. Scand. 42, 643–647. ",
+        "bbox": [
+            53,
+            361,
+            492,
+            435
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "NABAVI, A., GERING, D.T., KACHER, D.F., et al. (2003). Surgical navigation in the open MRI. Acta Neurochir. Suppl. 85, 121–125.   \nRATIU, P., KIKINIS, R. (2000). Squaring the circle: validation without ground truth. Presented at the Third Visible Human Conference, Bethesda, MD.   \nRODT, T., RATIU, P., BECKER, H., et al. (2002). 3D visualisation of the middle ear and adjacent structures using reconstructed multi-slice CT datasets, correlating 3D images and virtual endoscopy to the 2D cross-sectionalimages. Neuroradiology 44, 783–790. ",
+        "bbox": [
+            509,
+            65,
+            950,
+            244
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "Address reprint requests to: Peter Ratiu, M.D. Department of Radiology Brigham and Women’s Hospital 75 Francis St. Boston, MA 02115 ",
+        "bbox": [
+            696,
+            306,
+            952,
+            403
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "text",
+        "text": "E-mail: ratiu@bwh.harvard.edu ",
+        "bbox": [
+            702,
+            421,
+            950,
+            436
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "643 ",
+        "bbox": [
+            484,
+            956,
+            517,
+            968
+        ],
+        "page_idx": 6
+    },
+    {
+        "type": "discarded",
+        "text": "THE TALE OF PHINEAS GAGE, DIGITALLY REMASTERED ",
+        "bbox": [
+            240,
+            30,
+            761,
+            45
+        ],
+        "page_idx": 6
+    }
+]

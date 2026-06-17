@@ -22,6 +22,23 @@ describe('router', () => {
     expect(query).toBe('?config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring&step=1')
     expect(parseLocation(query)).toEqual({ configName: 'p3a-konfliktmonitoring', sceneId: 'p3a-konfliktmonitoring', step: 1 })
   })
+  it('roundtript Presentation-Sequenzlinks', () => {
+    const query = toCanonicalQuery({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: 'vcpt',
+      sceneId: 'vcpt',
+      step: 2,
+    })
+    expect(query).toBe('?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=2')
+    expect(parseLocation(query)).toEqual({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: 'vcpt',
+      sceneId: 'vcpt',
+      step: 2,
+    })
+  })
   it('serialisiert reine Figure-Config-Links', () => {
     expect(toConfigQuery('basalganglienschleifen')).toBe('?config=basalganglienschleifen')
   })
@@ -39,5 +56,17 @@ describe('router', () => {
     } finally {
       window.removeEventListener('brain-app:urlchange', onChange)
     }
+  })
+
+  it('replaceCanonicalLocation erhaelt Area-Scope-Overrides fuer dieselbe Config', () => {
+    window.history.replaceState(null, '', '/?config=broca-areal&scene=broca-areal&off=julich%3Aarea-44%3Al')
+    expect(replaceCanonicalLocation({ configName: 'broca-areal', sceneId: 'broca-areal', step: 0 })).toBe(
+      '?config=broca-areal&scene=broca-areal&step=0&off=julich%3Aarea-44%3Al',
+    )
+  })
+
+  it('replaceCanonicalLocation verwirft alte Area-Scope-Overrides beim Config-Wechsel', () => {
+    window.history.replaceState(null, '', '/?config=broca-areal&scene=broca-areal&off=julich%3Aarea-44%3Al')
+    expect(replaceCanonicalLocation({ configName: 'vcpt', sceneId: 'vcpt', step: 0 })).toBe('?config=vcpt&scene=vcpt&step=0')
   })
 })

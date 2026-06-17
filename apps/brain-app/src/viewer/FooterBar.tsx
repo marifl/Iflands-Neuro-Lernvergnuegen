@@ -1,9 +1,17 @@
 import { useEffect, useRef, useState } from 'react'
-import { useViewerStore, type AppMode, type CutAxis, type SelectMode } from './viewerStore'
+import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
+import { useViewerStore, type AppMode, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import type { ColorMode } from './ontology'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
+import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
+import {
+  IDENTITY_AUTHORING_TRANSFORM,
+  activeAuthoringTransformTarget,
+  applyAuthoringTransformCommand,
+  nudgeAuthoringTransform,
+} from './authoringTransformRuntime'
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
@@ -20,6 +28,8 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
 
 const MODE_LABEL: Record<AppMode, string> = { learn: 'Lernen', explore: 'Explorer', phineas: 'Phineas Gage', atlas: 'Atlas' }
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
+const TRANSFORM_MODE_LABEL = { translate: 'Verschieben', rotate: 'Drehen', scale: 'Skalieren' } as const
+const TRANSFORM_SPACE_LABEL = { world: 'Welt', local: 'Lokal' } as const
 const COLOR_LABEL: Record<ColorMode, string> = {
   anatomical: 'Anatomisch',
   function: 'Funktionssystem',
@@ -69,12 +79,53 @@ function Item({
   )
 }
 
+function PresetViewSlider({
+  label,
+  active,
+  onChange,
+}: {
+  label: string
+  active: boolean
+  onChange: (active: boolean) => void
+}) {
+  return (
+    <label
+      style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr auto',
+        gap: 8,
+        alignItems: 'center',
+        padding: '4px 8px 6px',
+      }}
+    >
+      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
+      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: active ? 'var(--orange)' : 'var(--g500)' }}>
+        {active ? 'An' : 'Aus'}
+      </span>
+      <input
+        type="range"
+        min={0}
+        max={1}
+        step={1}
+        value={active ? 1 : 0}
+        onChange={(event) => onChange(Number(event.currentTarget.value) === 1)}
+        aria-label={label}
+        style={{ gridColumn: '1 / -1', width: '100%', accentColor: 'var(--orange)', cursor: 'ew-resize' }}
+      />
+    </label>
+  )
+}
+
 interface BoxDef {
   key: Exclude<OpenFlyout, null>
   eyebrow: string
   label: string
+  icon: React.ReactNode
   content: React.ReactNode
 }
+
+const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
+const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot']
 
 function readSnapshotFile(file: File): Promise<string> {
   if (typeof file.text === 'function') return file.text()
@@ -93,6 +144,14 @@ export default function FooterBar() {
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const selectMode = useViewerStore((s) => s.selectMode)
   const setSelectMode = useViewerStore((s) => s.setSelectMode)
+  const authoringTransformMode = useViewerStore((s) => s.authoringTransformMode)
+  const setAuthoringTransformMode = useViewerStore((s) => s.setAuthoringTransformMode)
+  const authoringTransformSpace = useViewerStore((s) => s.authoringTransformSpace)
+  const setAuthoringTransformSpace = useViewerStore((s) => s.setAuthoringTransformSpace)
+  const authoringTransformSnap = useViewerStore((s) => s.authoringTransformSnap)
+  const setAuthoringTransformSnap = useViewerStore((s) => s.setAuthoringTransformSnap)
+  const authoringTransformFrozen = useViewerStore((s) => s.authoringTransformFrozen)
+  const setAuthoringTransformFrozen = useViewerStore((s) => s.setAuthoringTransformFrozen)
   const selected = useViewerStore((s) => s.selected)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hidden = useViewerStore((s) => s.hidden)
@@ -106,6 +165,8 @@ export default function FooterBar() {
   const setColorMode = useViewerStore((s) => s.setColorMode)
   const activePreset = useViewerStore((s) => s.activePreset)
   const setPreset = useViewerStore((s) => s.setPreset)
+  const presetViewOptions = useViewerStore((s) => s.presetViewOptions)
+  const setPresetViewOptions = useViewerStore((s) => s.setPresetViewOptions)
   const [presets, setPresets] = useState<ColorPreset[]>([])
   const [presetError, setPresetError] = useState<Error | null>(null)
   // Figur-Presets einmal laden; Fehler laut nach oben (kein stiller Fallback).
@@ -131,6 +192,8 @@ export default function FooterBar() {
   const [showSources, setShowSources] = useState(false)
   const [snapshotError, setSnapshotError] = useState<Error | null>(null)
   const snapshotInputRef = useRef<HTMLInputElement>(null)
+  const authoring = useAuthoringSnapshotStore((s) => s.authoring)
+  const activeTransformTarget = activeAuthoringTransformTarget(authoring)
   const toggle = (which: OpenFlyout) => setOpen((cur) => (cur === which ? null : which))
   const close = () => setOpen(null)
   const isPhone = useIsPhone()
@@ -157,6 +220,25 @@ export default function FooterBar() {
       if (snapshotInputRef.current) snapshotInputRef.current.value = ''
     }
   }
+  const applyActiveTransform = (
+    transform: typeof IDENTITY_AUTHORING_TRANSFORM,
+    label: string,
+  ) => {
+    const current = useAuthoringSnapshotStore.getState().authoring
+    const target = activeAuthoringTransformTarget(current)
+    if (!current || !target) return
+    const result = applyAuthoringTransformCommand(
+      current,
+      target,
+      transform,
+      `cmd:transform:${target.instance.instanceId}:${Date.now()}`,
+      label,
+    )
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(result.authoring)
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
+    }
+  }
 
   if (snapshotError) throw snapshotError
 
@@ -167,6 +249,7 @@ export default function FooterBar() {
       eyebrow: 'Atlas',
       // Label zeigt das aktive Atlas-auf-Hirn-Overlay (Carve, 0 mm auf TARO) oder „Menü".
       label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : showCarveBrodmann ? 'Brodmann' : 'Menü',
+      icon: <Map {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {/* Atlas-Areale direkt auf dem TARO-Hirn (Carve = 0 mm, anklickbar zeigt Namen).
@@ -185,6 +268,7 @@ export default function FooterBar() {
       key: 'mode',
       eyebrow: 'Modus',
       label: MODE_LABEL[appMode],
+      icon: <BookOpen {...FOOTER_ICON_PROPS} />,
       // 'atlas' (kanonischer fsaverage-Modus) ist DEBUG-ONLY -> nicht im normalen Modus-Flyout,
       // nur per Deep-Link ?mode=atlas erreichbar. Die regulaeren Modi sind learn/explore/phineas.
       content: (['learn', 'explore', 'phineas'] as const).map((m) => (
@@ -197,6 +281,7 @@ export default function FooterBar() {
       key: 'color',
       eyebrow: 'Farbe',
       label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_LABEL[colorMode],
+      icon: <Palette {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {BASE_COLOR_MODES.map((c) => (
@@ -224,6 +309,22 @@ export default function FooterBar() {
                   </Item>
                 )
               })}
+              {colorMode === 'preset' && activePreset ? (
+                <>
+                  <div style={{ height: 8 }} />
+                  <div className="eyebrow" style={{ margin: '0 0 4px' }}>Figur-Ansicht</div>
+                  <PresetViewSlider
+                    label="Ungefärbte ausblenden"
+                    active={presetViewOptions.hideUncolored}
+                    onChange={(hideUncolored) => setPresetViewOptions({ hideUncolored } satisfies Partial<PresetViewOptions>)}
+                  />
+                  <PresetViewSlider
+                    label="Relevante Areale fokussieren"
+                    active={presetViewOptions.focusColored}
+                    onChange={(focusColored) => setPresetViewOptions({ focusColored } satisfies Partial<PresetViewOptions>)}
+                  />
+                </>
+              ) : null}
             </>
           ) : null}
         </>
@@ -233,6 +334,7 @@ export default function FooterBar() {
       key: 'cut',
       eyebrow: 'Schnitte',
       label: CUT_AXES.filter((a) => cuts[a].on).map((a) => CUT_LABEL[a]).join(' · ') || 'Aus',
+      icon: <Scissors {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {/* Wirkung der Ebenen: schneiden (mit Cap) ODER dahinterliegende Strukturen ausblenden. */}
@@ -271,6 +373,7 @@ export default function FooterBar() {
       key: 'view',
       eyebrow: 'Ansicht',
       label: 'Ausrichten',
+      icon: <Camera {...FOOTER_ICON_PROPS} />,
       content: VIEW_PRESETS.map((v) => (
         <Item key={v.name} onClick={() => { setCameraView(v.name); close() }}>
           {v.label}
@@ -281,6 +384,7 @@ export default function FooterBar() {
       key: 'context',
       eyebrow: 'Kontext',
       label: showSkull ? 'Schädel' : 'Aus',
+      icon: <Skull {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           <Item active={!showSkull} onClick={() => { setSkull(false); close() }}>Aus</Item>
@@ -293,6 +397,7 @@ export default function FooterBar() {
       key: 'snapshot',
       eyebrow: 'Zustand',
       label: 'Datei',
+      icon: <FileJson {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           <Item onClick={() => { exportSnapshot(); close() }}>Exportieren</Item>
@@ -306,10 +411,65 @@ export default function FooterBar() {
             key: 'tool' as const,
             eyebrow: 'Werkzeug',
             label: TOOL_LABEL[selectMode],
+            icon: <MousePointer2 {...FOOTER_ICON_PROPS} />,
             content: (
               <>
                 <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
                 <Item active={selectMode === 'direct'} onClick={() => { setSelectMode('direct'); close() }}>▹ Direkt</Item>
+                <div style={{ height: 10 }} />
+                <div className="eyebrow" style={{ marginBottom: 4 }}>Transform</div>
+                {(['translate', 'rotate', 'scale'] as const).map((mode) => (
+                  <Item
+                    key={mode}
+                    active={authoringTransformMode === mode}
+                    disabled={!activeTransformTarget}
+                    onClick={() => setAuthoringTransformMode(mode)}
+                  >
+                    {TRANSFORM_MODE_LABEL[mode]}
+                  </Item>
+                ))}
+                {(['world', 'local'] as const).map((space) => (
+                  <Item
+                    key={space}
+                    active={authoringTransformSpace === space}
+                    disabled={!activeTransformTarget}
+                    onClick={() => setAuthoringTransformSpace(space)}
+                  >
+                    {TRANSFORM_SPACE_LABEL[space]}
+                  </Item>
+                ))}
+                <Item
+                  active={authoringTransformSnap}
+                  disabled={!activeTransformTarget}
+                  onClick={() => setAuthoringTransformSnap(!authoringTransformSnap)}
+                >
+                  Snap {authoringTransformSnap ? 'an' : 'aus'}
+                </Item>
+                <Item
+                  active={authoringTransformFrozen}
+                  disabled={!activeTransformTarget}
+                  onClick={() => setAuthoringTransformFrozen(!authoringTransformFrozen)}
+                >
+                  {authoringTransformFrozen ? 'Gizmo fixiert' : 'Gizmo frei'}
+                </Item>
+                <Item
+                  disabled={!activeTransformTarget || authoringTransformFrozen}
+                  onClick={() => {
+                    if (!activeTransformTarget) return
+                    applyActiveTransform(
+                      nudgeAuthoringTransform(activeTransformTarget.instance.transform, 0, 5),
+                      'Nudge X',
+                    )
+                  }}
+                >
+                  X +5
+                </Item>
+                <Item
+                  disabled={!activeTransformTarget || authoringTransformFrozen}
+                  onClick={() => applyActiveTransform(IDENTITY_AUTHORING_TRANSFORM, 'Reset Transform')}
+                >
+                  Reset Transform
+                </Item>
                 <div style={{ height: 10 }} />
                 <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
                 <Item
@@ -376,6 +536,12 @@ export default function FooterBar() {
         ]
       : []),
   ]
+  const visibleBoxes = isPhone
+    ? MOBILE_BOX_ORDER.flatMap((key) => {
+        const box = boxes.find((candidate) => candidate.key === key)
+        return box ? [box] : []
+      })
+    : boxes
 
   return (
     <>
@@ -387,15 +553,16 @@ export default function FooterBar() {
         style={{ display: 'none' }}
         onChange={(event) => { void importSnapshotFile(event.currentTarget.files?.[0]) }}
       />
-      <div className="ed-foot" style={{ gridTemplateColumns: `repeat(${boxes.length}, 1fr)` }}>
-        {boxes.map((box, i) => (
+      <div className="ed-foot" style={{ gridTemplateColumns: `repeat(${visibleBoxes.length}, 1fr)` }}>
+        {visibleBoxes.map((box, i) => (
           <Flyout
             key={box.key}
             eyebrow={box.eyebrow}
             label={box.label}
+            icon={box.icon}
             // Popover rechts verankern, wenn die Box am rechten Rand sitzt (kein Viewport-Ueberlauf).
-            // Phone: 3 Boxen pro Reihe (flex-wrap) -> jede 3. Spalte rechts. Sonst: rechte Haelfte.
-            align={(isPhone ? i % 3 === 2 : i >= boxes.length / 2) ? 'right' : 'left'}
+            // Phone: horizontaler Icon-Dock -> rechte Hälfte rechts ankern. Sonst: rechte Hälfte.
+            align={i >= visibleBoxes.length / 2 ? 'right' : 'left'}
             open={open === box.key}
             onToggle={() => toggle(box.key)}
             onClose={close}

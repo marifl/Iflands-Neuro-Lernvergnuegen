@@ -1,0 +1,150 @@
+{
+  "schemaVersion": 1,
+  "manifestId": "phineas-gage-standalone-assets-v1",
+  "assets": [
+    {
+      "assetId": "phineas-gage-skull-lod",
+      "collectionId": "case-phineas-gage",
+      "slotId": "historical-skull",
+      "label": "Phineas Gage skull LOD",
+      "uri": "/assets/phineas/phineas-gage-skull-lod.glb",
+      "format": "glb",
+      "optional": true,
+      "version": "1.0.0",
+      "source": {
+        "kind": "curated",
+        "provenance": "Ratiu et al. 2004 CT-derived Gage skull candidate copied into the standalone runtime asset set.",
+        "license": "CC-BY-SA-4.0 candidate from legacy figure manifests; verify the pinned upstream entry before public redistribution.",
+        "hash": "sha256:ab804c46c19634f5902108ebda59f9957cb42d0afea8b62ed84b5d55eb10f493",
+        "attribution": "Ratiu et al. 2004; Warren Anatomical Museum / Countway Library lineage"
+      },
+      "normalization": {
+        "unit": "millimeter",
+        "upAxis": "y-up",
+        "scale": 1,
+        "spaceId": "phineas-gage-legacy-figs3d",
+        "defaultPivot": { "policy": "bounds-center" },
+        "rootTransform": {
+          "position": [0, 0, 0],
+          "rotation": [0, 0, 0],
+          "scale": [1, 1, 1]
+        }
+      },
+      "materialPolicy": {
+        "materials": "source-materials",
+        "transparency": "alpha-blend",
+        "shareMaterials": true
+      },
+      "nodeNaming": {
+        "requireStableNodeNames": true,
+        "nodeNamePattern": "^[A-Za-z0-9_.:-]+$",
+        "partIdPattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "parts": [
+        {
+          "partId": "skull",
+          "label": "Gage skull",
+          "nodeName": "phineas-gage-skull",
+          "pickable": true,
+          "role": "selectable"
+        }
+      ]
+    },
+    {
+      "assetId": "phineas-gage-skull-calvarium-cut-lod",
+      "collectionId": "case-phineas-gage",
+      "slotId": "calvarium-cut",
+      "label": "Phineas Gage calvarium cut LOD",
+      "uri": "/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb",
+      "format": "glb",
+      "optional": true,
+      "version": "1.0.0",
+      "source": {
+        "kind": "curated",
+        "provenance": "Ratiu et al. 2004 CT-derived calvarium-cut candidate copied into the standalone runtime asset set.",
+        "license": "CC-BY-SA-4.0 candidate from legacy figure manifests; verify the pinned upstream entry before public redistribution.",
+        "hash": "sha256:45c3c40c9efa4023bcbc88b53f02902dbed98670e59abaad8809e55dc4892dc8",
+        "attribution": "Ratiu et al. 2004; Warren Anatomical Museum / Countway Library lineage"
+      },
+      "normalization": {
+        "unit": "millimeter",
+        "upAxis": "y-up",
+        "scale": 1,
+        "spaceId": "phineas-gage-legacy-figs3d",
+        "defaultPivot": { "policy": "bounds-center" },
+        "rootTransform": {
+          "position": [0, 0, 0],
+          "rotation": [0, 0, 0],
+          "scale": [1, 1, 1]
+        }
+      },
+      "materialPolicy": {
+        "materials": "source-materials",
+        "transparency": "alpha-blend",
+        "shareMaterials": true
+      },
+      "nodeNaming": {
+        "requireStableNodeNames": true,
+        "nodeNamePattern": "^[A-Za-z0-9_.:-]+$",
+        "partIdPattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "parts": [
+        {
+          "partId": "calvarium-cut",
+          "label": "Gage calvarium cut",
+          "nodeName": "phineas-gage-skull-calvarium-cut",
+          "pickable": true,
+          "role": "selectable"
+        }
+      ]
+    },
+    {
+      "assetId": "phineas-gage-iron-rod",
+      "collectionId": "case-phineas-gage",
+      "slotId": "iron-rod",
+      "label": "Phineas Gage iron rod",
+      "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
+      "format": "glb",
+      "optional": true,
+      "version": "1.0.0",
+      "source": {
+        "kind": "curated",
+        "provenance": "Legacy tamping-iron GLB candidate copied into the standalone runtime asset set for scale comparison.",
+        "license": "CC-BY-SA-4.0 candidate from legacy figure manifests; verify the pinned upstream entry before public redistribution.",
+        "hash": "sha256:b25fe4a0bd8459df9db793876a92f060602b102ce0e3a0ec6e77c8606e46bd5a",
+        "attribution": "Ratiu et al. 2004 reconstruction context; historical dimensions cross-checked against Van Horn et al. 2012 and Bigelow 1850"
+      },
+      "normalization": {
+        "unit": "millimeter",
+        "upAxis": "y-up",
+        "scale": 1,
+        "spaceId": "phineas-gage-legacy-figs3d",
+        "defaultPivot": { "policy": "bounds-center" },
+        "rootTransform": {
+          "position": [0, 0, 0],
+          "rotation": [0, 0, 0],
+          "scale": [1, 1, 1]
+        }
+      },
+      "materialPolicy": {
+        "materials": "source-materials",
+        "transparency": "opaque",
+        "shareMaterials": true
+      },
+      "nodeNaming": {
+        "requireStableNodeNames": true,
+        "nodeNamePattern": "^[A-Za-z0-9_.:-]+$",
+        "partIdPattern": "^[a-z0-9][a-z0-9-]*$"
+      },
+      "parts": [
+        {
+          "partId": "iron-rod",
+          "label": "Gage iron rod",
+          "nodeName": "phineas-gage-iron-rod",
+          "pickable": true,
+          "role": "selectable"
+        }
+      ]
+    }
+  ]
+}

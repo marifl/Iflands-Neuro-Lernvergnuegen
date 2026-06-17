@@ -72,7 +72,14 @@ const VALID_CONFIGURATION = {
   view: { surface: 'pial', subcortex: false, carve_on_taro: 'dkt' },
   camera: { target: 'julich:area-44:l', shot: 'lateral-left', fit: 'target', margin: 1.4 },
   regions: { areas: ['julich:area-44:l'], buckets: ['ok'], meshes: ['mesh-a'], scene_regions: ['sma-presma'] },
-  colors: { enabled: false, dim_others: true },
+  colors: {
+    enabled: false,
+    dim_others: true,
+    scheme: 'atlas',
+    coverage: 'not-applicable',
+    review_status: 'final',
+    reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+  },
   visibility: { dim_others: true, hidden: [], isolated: [] },
   cuts: { enabled: false },
   overlay: { kind: 'prose' },
@@ -144,7 +151,7 @@ test('validateConfig wirft bei totem Preset', () => {
 test('validateConfig wirft bei totem Step-Verweis', () => {
   const idx = indexCatalog(CATALOG)
   const cfg = baseConfig({
-    configurations: { a: VALID_CONFIGURATION },
+    configurations: { a: { ...VALID_CONFIGURATION, overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' } } },
     presentation: { seq: { label_de: 'Sequenz', steps: ['a', 'missing'] } },
   })
   assert.throws(() => validateConfig(cfg, idx), /Step "missing"/)
@@ -166,7 +173,7 @@ test('validateConfig prueft sequencing-Referenzen', () => {
   )
 })
 
-test('validateConfig verlangt overlay.scene fuer learning-Sequenzsteps', () => {
+test('validateConfig verlangt overlay.scene fuer first-class Sequenzsteps', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
     () => validateConfig(baseConfig({
@@ -175,10 +182,17 @@ test('validateConfig verlangt overlay.scene fuer learning-Sequenzsteps', () => {
     }), idx, VALIDATION_CONTEXT),
     /learning "learn" Step "a" hat kein overlay\.scene/,
   )
-  assert.doesNotThrow(() => validateConfig(baseConfig({
-    configurations: { a: VALID_CONFIGURATION },
+  assert.throws(
+    () => validateConfig(baseConfig({
+      configurations: { a: VALID_CONFIGURATION },
       presentation: { seq: { label_de: 'Vorlesung', steps: ['a'] } },
-    }), idx, VALIDATION_CONTEXT))
+    }), idx, VALIDATION_CONTEXT),
+    /presentation "seq" Step "a" hat kein overlay\.scene/,
+  )
+  assert.doesNotThrow(() => validateConfig(baseConfig({
+    configurations: { a: { ...VALID_CONFIGURATION, overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' } } },
+    presentation: { seq: { label_de: 'Vorlesung', steps: ['a'] } },
+  }), idx, VALIDATION_CONTEXT))
 })
 
 test('validateConfig erlaubt wiederverwendete overlay.scene fuer eindeutige Learning-Steps', () => {
@@ -239,6 +253,18 @@ test('validateConfig wirft bei unbekanntem Figure-Atom-Subkey', () => {
     configurations: { 'a': { ...VALID_CONFIGURATION, overlay: { kind: 'erp', surprise: true } } },
   })
   assert.throws(() => validateConfig(cfg, idx), /configuration "a"\.overlay hat unbekannten Key "surprise"/)
+})
+
+test('validateConfig verbietet Buchbild-Fallbacks im Overlay', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({ overlay: { kind: 'image' } }), idx, VALIDATION_CONTEXT),
+    /overlay\.kind "image" ungueltig/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({ overlay: { kind: 'prose', fallback_image: '/figures/book.jpg' } }), idx, VALIDATION_CONTEXT),
+    /overlay hat unbekannten Key "fallback_image"/,
+  )
 })
 
 test('validateConfig wirft bei unbekanntem nested Config-Key', () => {
@@ -334,6 +360,40 @@ test('validateConfig wirft bei ungueltigen Mesh-Mappings', () => {
   )
 })
 
+test('validateConfig verbietet veraltete Julich-Einzelmeshes in Figure-Buckets', () => {
+  const idx = indexCatalog(CATALOG)
+  const legacyMappings = {
+    buckets: { legacy: { meshes: ['left-julich-mfg1'] } },
+    scene_regions: MESH_MAPPINGS.scene_regions,
+  }
+  const legacyContext = {
+    ...VALIDATION_CONTEXT,
+    bucketMappings: legacyMappings.buckets,
+    colorPresets: new Map([['legacy-preset', { groups: [{ buckets: ['legacy'] }] }]]),
+    meshIds: new Set(['mesh-a', 'left-julich-mfg1']),
+  }
+  assert.throws(
+    () => validateConfig(baseConfig({
+      mesh_mappings: legacyMappings,
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+          regions: { ...VALID_CONFIGURATION.regions, buckets: ['legacy'] },
+          colors: {
+            ...VALID_CONFIGURATION.colors,
+            enabled: true,
+            scheme: 'preset',
+            preset: 'legacy-preset',
+            coverage: 'full',
+          },
+        },
+      },
+    }), idx, legacyContext),
+    /veraltetes Julich-Einzelmesh/,
+  )
+})
+
 test('validateConfig wirft bei totem camera.target', () => {
   const idx = indexCatalog(CATALOG)
   const cfg = configWith({ camera: { ...VALID_CONFIGURATION.camera, target: 'julich:area-99:l' } })
@@ -351,8 +411,22 @@ test('validateConfig wirft bei unbekanntem replaces_figure', () => {
 test('validateConfig wirft bei unbekanntem colors.preset', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
-    () => validateConfig(configWith({ colors: { preset: 'ghost' } }), idx, VALIDATION_CONTEXT),
+    () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'ghost', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
     /colors\.preset "ghost"/,
+  )
+})
+
+test('validateConfig verbietet Atlas-Carves fuer Color-Preset-Configurations', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'dkt' },
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'ok-preset', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.preset.*view\.carve_on_taro/,
   )
 })
 
@@ -367,8 +441,39 @@ test('validateConfig wirft bei unbekanntem oder leerem Bucket', () => {
     /keine Geometrie/,
   )
   assert.throws(
-    () => validateConfig(configWith({ colors: { preset: 'gap-preset' } }), idx, VALIDATION_CONTEXT),
+    () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'gap-preset', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
     /keine Geometrie/,
+  )
+})
+
+test('validateConfig verlangt Farbmetadaten je Configuration', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        enabled: false,
+        dim_others: true,
+        coverage: 'not-applicable',
+        review_status: 'final',
+        reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.scheme fehlt/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        enabled: false,
+        dim_others: true,
+        scheme: 'atlas',
+        review_status: 'final',
+        reason: 'Testfixture nutzt keine produktive Preset-Faerbung.',
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.coverage fehlt/,
   )
 })
 

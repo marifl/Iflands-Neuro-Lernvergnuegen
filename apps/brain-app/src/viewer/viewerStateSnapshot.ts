@@ -1,21 +1,45 @@
 import { CUT_AXES, clampCutPosition, type CutConfig, type CutMode } from './cutCapsMerged'
+import { COLOR_ROLE_VALUES, type ColorRole } from './atlasColorSystem'
 import type { ColorPreset } from './colorPresets'
 import type { ColorMode, Lang } from './ontology'
+import {
+  parseAuthoringSnapshotState,
+  useAuthoringSnapshotStore,
+  type AuthoringSnapshotState,
+} from './authoringSnapshotStore'
+import {
+  parseStudentProgressState,
+  useStudentProgressStore,
+  type StudentProgressState,
+} from './studentProgress'
 import { APP_MODES, useViewerStore, type AppMode, type CameraPose, type SelectMode, type ViewMode } from './viewerStore'
+import { sceneIndexForLocation } from '../scene/scenes'
+import { useSceneStore } from '../scene/sceneStore'
+import { parseLocation, replaceCanonicalLocation, SCENE_SEQUENCE_KINDS, type SceneLocation } from '../scene/router'
+import {
+  appModeForRegistryLaunch,
+  parseOptionalRegistryLaunch,
+  parseRegistryLaunchFromSearch,
+  registryLaunchLocation,
+  type RegistryLaunch,
+} from './registryLaunch'
 
 export const VIEWER_STATE_SNAPSHOT_VERSION = 1
+
+let importedSnapshotRouteSearch: string | null = null
 
 const COLOR_MODES = ['anatomical', 'function', 'laterality', 'region', 'preset'] as const satisfies readonly ColorMode[]
 const CUT_MODES = ['slice', 'hide'] as const satisfies readonly CutMode[]
 const LANGS = ['de', 'la', 'en'] as const satisfies readonly Lang[]
 const SELECT_MODES = ['group', 'direct'] as const satisfies readonly SelectMode[]
 const VIEW_MODES = ['full', 'k11'] as const satisfies readonly ViewMode[]
+const COLOR_ROLE_SET = new Set<string>(COLOR_ROLE_VALUES)
 
-interface ViewerStateSnapshotState {
+export interface ViewerStateSnapshotState {
   activePreset?: ColorPreset | null
+  authoring: AuthoringSnapshotState | null
   appMode: AppMode
-  cameraPose: CameraPose | null
-  cameraView: string | null
+  cameraPose: CameraPose | null; cameraView: string | null
   clipAtlasOverlay: boolean
   colorMode: ColorMode
   cutMode: CutMode
@@ -24,26 +48,20 @@ interface ViewerStateSnapshotState {
   highlight: string[]
   isolated: string | null
   lang: Lang
+  launch: RegistryLaunch | null
   mode: ViewMode
-  pickedAtlasArea: string | null
-  pickedAtlasSlug: string | null
-  rodPhase: number
-  rodVisible: boolean
+  pickedAtlasArea: string | null; pickedAtlasSlug: string | null
+  rodPhase: number; rodVisible: boolean
+  route: SceneLocation | null
   selectMode: SelectMode
   selected: string | null
-  showAtlasDkt: boolean
-  showAtlasJulich: boolean
-  showCarveBrodmann: boolean
-  showCarveDkt: boolean
-  showCarveJulich: boolean
-  showSkull: boolean
-  skullOpacity: number
+  showAtlasDkt: boolean; showAtlasJulich: boolean
+  showCarveBrodmann: boolean; showCarveDkt: boolean; showCarveJulich: boolean
+  showSkull: boolean; skullOpacity: number
+  studentProgress: StudentProgressState | null
 }
 
-export interface ViewerStateSnapshot {
-  version: typeof VIEWER_STATE_SNAPSHOT_VERSION
-  state: ViewerStateSnapshotState
-}
+export interface ViewerStateSnapshot { version: typeof VIEWER_STATE_SNAPSHOT_VERSION; state: ViewerStateSnapshotState }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return value !== null && typeof value === 'object' && !Array.isArray(value)
@@ -85,6 +103,22 @@ function enumValue<T extends string>(value: unknown, allowed: readonly T[], fall
 
 function unitValue(value: unknown, fallback: number, field: string): number {
   return Math.min(1, Math.max(0, numberValue(value, fallback, field)))
+}
+
+function routeStepValue(value: unknown, field: string): number {
+  const step = numberValue(value, 0, field)
+  if (!Number.isSafeInteger(step) || step < 0) {
+    throw new Error(`Viewer-State-Snapshot: ${field} muss ein nicht-negativer Integer sein`)
+  }
+  return step
+}
+
+function optionalSequenceKind(value: unknown): SceneLocation['sequenceKind'] {
+  if (value === undefined || value === null) return undefined
+  if (typeof value === 'string' && (SCENE_SEQUENCE_KINDS as readonly string[]).includes(value)) {
+    return value as SceneLocation['sequenceKind']
+  }
+  throw new Error('Viewer-State-Snapshot: route.sequenceKind hat einen ungueltigen Wert')
 }
 
 function vec3Value(value: unknown, field: string): [number, number, number] {
@@ -147,20 +181,92 @@ function parseColorPreset(value: unknown): ColorPreset | null {
     if (group.buckets.some((bucket) => typeof bucket !== 'string')) {
       throw new Error(`Viewer-State-Snapshot: activePreset.groups[${i}].buckets muss ein String-Array sein`)
     }
-    return { label: group.label, hue: group.hue, buckets: [...group.buckets] }
+    return {
+      label: group.label,
+      role: parseColorRole(group.role),
+      meaning: typeof group.meaning === 'string' ? group.meaning : group.label,
+      hue: group.hue,
+      buckets: [...group.buckets],
+    }
   })
+  const coverage = value.coverage === 'partial' || value.coverage === 'full' ? value.coverage : 'full'
   return {
     id: value.id,
     label: value.label,
+    sourceFigure: typeof value.sourceFigure === 'string' ? value.sourceFigure : undefined,
+    intent: typeof value.intent === 'string' ? value.intent : value.label,
+    coverage,
+    coverageNote: typeof value.coverageNote === 'string' ? value.coverageNote : undefined,
     groups,
     dimOthers: value.dimOthers === undefined ? true : booleanValue(value.dimOthers, true, 'activePreset.dimOthers'),
   }
+}
+
+function parseColorRole(value: unknown): ColorRole {
+  return typeof value === 'string' && COLOR_ROLE_SET.has(value) ? value as ColorRole : 'task-activation'
+}
+
+function currentRoute(): SceneLocation | null {
+  const route = parseLocation(window.location.search)
+  if (!route.configName && !route.sceneId) return null
+  return route
+}
+
+function currentLaunch(): RegistryLaunch | null {
+  return parseRegistryLaunchFromSearch(window.location.search)
+}
+
+function parseRoute(value: unknown): SceneLocation | null {
+  if (value === undefined || value === null) return null
+  if (!isRecord(value)) throw new Error('Viewer-State-Snapshot: route muss ein Objekt sein')
+  const configName = optionalString(value.configName, 'route.configName')
+  const sceneId = optionalString(value.sceneId, 'route.sceneId')
+  const sequenceKind = optionalSequenceKind(value.sequenceKind)
+  const sequenceName = optionalString(value.sequenceName, 'route.sequenceName') ?? undefined
+  if ((sequenceKind === undefined) !== (sequenceName === undefined)) {
+    throw new Error('Viewer-State-Snapshot: route.sequenceKind und route.sequenceName muessen gemeinsam gesetzt sein')
+  }
+  if (!configName && !sceneId) {
+    throw new Error('Viewer-State-Snapshot: route braucht configName oder sceneId')
+  }
+  return {
+    ...(sequenceKind && sequenceName ? { sequenceKind, sequenceName } : {}),
+    configName,
+    sceneId,
+    step: routeStepValue(value.step, 'route.step'),
+  }
+}
+
+function applyRoute(route: SceneLocation | null): void {
+  if (!route) return
+  replaceCanonicalLocation(route)
+  importedSnapshotRouteSearch = window.location.search
+  const sceneStore = useSceneStore.getState()
+  if (!sceneStore.scenes.length) return
+  const index = sceneIndexForLocation(sceneStore.scenes, route)
+  sceneStore.goto(index >= 0 ? index : 0, route.step)
+}
+
+function applyLaunch(launch: RegistryLaunch | null): void {
+  if (!launch) return
+  window.history.replaceState(null, '', registryLaunchLocation(launch))
+  importedSnapshotRouteSearch = window.location.search
+}
+
+export function hasImportedSnapshotRouteForCurrentLocation(): boolean {
+  if (importedSnapshotRouteSearch === null) return false
+  if (importedSnapshotRouteSearch !== window.location.search) {
+    importedSnapshotRouteSearch = null
+    return false
+  }
+  return true
 }
 
 function currentSnapshotState(): ViewerStateSnapshotState {
   const state = useViewerStore.getState()
   return {
     activePreset: state.activePreset,
+    authoring: useAuthoringSnapshotStore.getState().authoring,
     appMode: state.appMode,
     cameraPose: state.cameraPose,
     cameraView: state.cameraView?.name ?? null,
@@ -176,11 +282,13 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     highlight: [...state.highlight],
     isolated: state.isolated,
     lang: state.lang,
+    launch: currentLaunch(),
     mode: state.mode,
     pickedAtlasArea: state.pickedAtlasArea,
     pickedAtlasSlug: state.pickedAtlasSlug,
     rodPhase: state.rodPhase,
     rodVisible: state.rodVisible,
+    route: currentRoute(),
     selectMode: state.selectMode,
     selected: state.selected,
     showAtlasDkt: state.showAtlasDkt,
@@ -190,17 +298,19 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     showCarveJulich: state.showCarveJulich,
     showSkull: state.showSkull,
     skullOpacity: state.skullOpacity,
+    studentProgress: useStudentProgressStore.getState().progress,
   }
 }
 
-function parseSnapshotState(raw: unknown): ViewerStateSnapshotState {
-  const fallback = currentSnapshotState()
+function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): ViewerStateSnapshotState {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: state muss ein Objekt sein')
   const activePreset = parseColorPreset(raw.activePreset)
   const colorMode = enumValue(raw.colorMode, COLOR_MODES, fallback.colorMode, 'colorMode')
+  const launch = parseOptionalRegistryLaunch(raw.launch)
   return {
     activePreset,
-    appMode: enumValue(raw.appMode, APP_MODES, fallback.appMode, 'appMode'),
+    authoring: parseAuthoringSnapshotState(raw.authoring),
+    appMode: enumValue(raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : fallback.appMode, 'appMode'),
     cameraPose: parseCameraPose(raw.cameraPose),
     cameraView: optionalString(raw.cameraView, 'cameraView'),
     clipAtlasOverlay: booleanValue(raw.clipAtlasOverlay, fallback.clipAtlasOverlay, 'clipAtlasOverlay'),
@@ -211,11 +321,13 @@ function parseSnapshotState(raw: unknown): ViewerStateSnapshotState {
     highlight: stringArray(raw.highlight, 'highlight'),
     isolated: optionalString(raw.isolated, 'isolated'),
     lang: enumValue(raw.lang, LANGS, fallback.lang, 'lang'),
+    launch,
     mode: enumValue(raw.mode, VIEW_MODES, fallback.mode, 'mode'),
     pickedAtlasArea: optionalString(raw.pickedAtlasArea, 'pickedAtlasArea'),
     pickedAtlasSlug: optionalString(raw.pickedAtlasSlug, 'pickedAtlasSlug'),
     rodPhase: unitValue(raw.rodPhase, fallback.rodPhase, 'rodPhase'),
     rodVisible: booleanValue(raw.rodVisible, fallback.rodVisible, 'rodVisible'),
+    route: parseRoute(raw.route),
     selectMode: enumValue(raw.selectMode, SELECT_MODES, fallback.selectMode, 'selectMode'),
     selected: optionalString(raw.selected, 'selected'),
     showAtlasDkt: booleanValue(raw.showAtlasDkt, fallback.showAtlasDkt, 'showAtlasDkt'),
@@ -225,6 +337,7 @@ function parseSnapshotState(raw: unknown): ViewerStateSnapshotState {
     showCarveJulich: booleanValue(raw.showCarveJulich, fallback.showCarveJulich, 'showCarveJulich'),
     showSkull: booleanValue(raw.showSkull, fallback.showSkull, 'showSkull'),
     skullOpacity: unitValue(raw.skullOpacity, fallback.skullOpacity, 'skullOpacity'),
+    studentProgress: parseStudentProgressState(raw.studentProgress),
   }
 }
 
@@ -239,12 +352,24 @@ export function exportViewerStateSnapshotJson(): string {
   return JSON.stringify(exportViewerStateSnapshot(), null, 2)
 }
 
-export function importViewerStateSnapshot(raw: unknown): void {
+export function parseViewerStateSnapshot(raw: unknown, fallback?: ViewerStateSnapshotState): ViewerStateSnapshot {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: Root muss ein Objekt sein')
   if (raw.version !== VIEWER_STATE_SNAPSHOT_VERSION) {
     throw new Error(`Viewer-State-Snapshot: Snapshot-Version "${String(raw.version)}" wird nicht unterstuetzt`)
   }
-  const snapshotState = parseSnapshotState(raw.state)
+  return {
+    version: VIEWER_STATE_SNAPSHOT_VERSION,
+    state: parseSnapshotState(raw.state, fallback),
+  }
+}
+
+export function importViewerStateSnapshot(raw: unknown): void {
+  const snapshot = parseViewerStateSnapshot(raw)
+  const snapshotState = snapshot.state
+  applyRoute(snapshotState.route)
+  applyLaunch(snapshotState.launch)
+  useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(snapshotState.authoring)
+  useStudentProgressStore.getState().setStudentProgress(snapshotState.studentProgress)
   useViewerStore.setState({
     activePreset: snapshotState.activePreset,
     appMode: snapshotState.appMode,
@@ -254,6 +379,7 @@ export function importViewerStateSnapshot(raw: unknown): void {
     colorMode: snapshotState.colorMode,
     cutMode: snapshotState.cutMode,
     cuts: snapshotState.cuts,
+    defaultVisibility: null,
     hidden: new Set(snapshotState.hidden),
     highlight: snapshotState.highlight,
     isolated: null,
@@ -267,8 +393,11 @@ export function importViewerStateSnapshot(raw: unknown): void {
     rodVisible: snapshotState.rodVisible,
     selectMode: snapshotState.selectMode,
     selected: null,
+    activeTargetRef: null,
+    activeObjectGraphId: null,
     selectedLabels: null,
     selectedSlugs: new Set(),
+    selectedTargetRefs: [],
     showAtlasDkt: snapshotState.showAtlasDkt,
     showAtlasJulich: snapshotState.showAtlasJulich,
     showCarveBrodmann: snapshotState.showCarveBrodmann,

@@ -107,8 +107,18 @@ describe('loadScenes', () => {
     })
 
     await expect(loadScenes()).resolves.toMatchObject([
-      { id: 'vcpt', configName: 'vcpt', configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 } },
-      { id: 'p3a-konfliktmonitoring', configName: 'p3a-konfliktmonitoring', configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 } },
+      {
+        id: 'vcpt',
+        configName: 'vcpt',
+        configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 },
+        sequence: { kind: 'learning', name: 'kapitel11-pfad', label: 'Lernpfad Kapitel 11', stepIndex: 0, stepCount: 2 },
+      },
+      {
+        id: 'p3a-konfliktmonitoring',
+        configName: 'p3a-konfliktmonitoring',
+        configCamera: { shot: 'lateral-left', fit: 'bounds', margin: 2, fov: 35 },
+        sequence: { kind: 'learning', name: 'kapitel11-pfad', label: 'Lernpfad Kapitel 11', stepIndex: 1, stepCount: 2 },
+      },
     ])
   })
 
@@ -158,18 +168,27 @@ describe('loadScenes', () => {
     await expect(loadScenes()).rejects.toThrow('Sequenz-Step "vcpt" hat kein overlay.scene')
   })
 
-  it('lehnt presentation-Sequenzen als Scene-Quelle laut ab', async () => {
+  it('laedt Presentation-Sequenzen als first-class Scene-Quelle', async () => {
     mockFetch({
       '/assets/atlas-canonical/atlas-config.json': {
-        ...configWith([], {}),
-        presentation: { 'kapitel11-vorlesung': { label_de: 'Vorlesung', steps: ['broca-areal'] } },
+        ...configWith([], {
+          vcpt: configNode('vcpt'),
+        }),
+        presentation: { 'kapitel11-vorlesung': { label_de: 'Vorlesung', steps: ['vcpt'] } },
       },
+      '/scenes/vcpt.json': scene('vcpt', 10),
     })
 
     await expect(loadScenes({
-      sequenceKind: 'presentation' as never,
+      sequenceKind: 'presentation',
       sequenceName: 'kapitel11-vorlesung',
-    })).rejects.toThrow('Sequenz-Art "presentation" ist nicht scene-ladbar')
+    })).resolves.toMatchObject([
+      {
+        id: 'vcpt',
+        configName: 'vcpt',
+        sequence: { kind: 'presentation', name: 'kapitel11-vorlesung', label: 'Vorlesung', stepIndex: 0, stepCount: 1 },
+      },
+    ])
   })
 
   it('wirft laut bei doppelten Sequenz-Steps', async () => {
@@ -219,6 +238,13 @@ describe('sceneIndexForLocation', () => {
     ...SceneSchema.parse(scene(id, order)),
     configName,
     configCameraTargetMeshes: [],
+    sequence: {
+      kind: 'learning',
+      name: 'kapitel11-pfad',
+      label: 'Lernpfad Kapitel 11',
+      stepIndex: order,
+      stepCount: 3,
+    },
   })
   const scenes = [
     loaded('vcpt', 50),

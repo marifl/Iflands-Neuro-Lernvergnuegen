@@ -68,6 +68,26 @@ export function buildAliasMapByCarveSlug(catalog: AtlasCatalog, atlasId: string)
   return map
 }
 
+export function buildAreaIdMapByCarveSlug(catalog: AtlasCatalog, atlasId: string): Map<string, string> {
+  const map = new Map<string, string>()
+  const atlas = catalog.atlases.find((entry) => entry.id === atlasId)
+  if (!atlas) return map
+  for (const group of atlas.groups) {
+    for (const area of group.areas) {
+      for (const slug of area.refs.carve) {
+        for (const runtimeSlug of runtimeCarveSlugs(atlasId, slug)) {
+          const existing = map.get(runtimeSlug)
+          if (existing && existing !== area.id) {
+            throw new Error(`buildAreaIdMapByCarveSlug: "${runtimeSlug}" mappt auf ${existing} und ${area.id}`)
+          }
+          map.set(runtimeSlug, area.id)
+        }
+      }
+    }
+  }
+  return map
+}
+
 const URL = '/assets/atlas-canonical/atlas-ontology.json'
 
 /** Laedt + validiert den Katalog. Wirft laut bei fehlenden Pflichtfeldern (kein stiller Default). */

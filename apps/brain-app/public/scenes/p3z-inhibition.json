@@ -6,6 +6,7 @@
     "kind": "erp", "position": "right", "size": "md",
     "data": {
       "x": "ms",
+      "component": "P3z",
       "series": [
         { "label": "No-go (rot)", "color": "#c0392b",
           "points": [[1,0],[2,0.5],[3,1.5],[4,3],[5,4.2],[6,3.5],[7,2],[8,0.8],[9,0]] },
@@ -14,7 +15,16 @@
       ],
       "markers": ["P3z 300–400 ms", "Maximum über Cz", "Peak ~4.2 µV (schematisch)"],
       "source": "SMA / pre-SMA (medialer BA6)",
-      "site": "Cz"
+      "site": "Cz",
+      "topography": {
+        "region": "zentral-motorisch",
+        "supportSites": ["Fz", "C3", "Cz", "C4"],
+        "evidence": "Schematisch/didaktisch nach Müller et al. 2011; keine Rohmesswerte"
+      },
+      "sourceTargets": [
+        { "role": "Inhibition", "label": "SMA / pre-SMA, medialer BA6" },
+        { "role": "Ableitort", "label": "Cz mit zentralen C3/C4-Referenzen" }
+      ]
     }
   },
   "companion": {

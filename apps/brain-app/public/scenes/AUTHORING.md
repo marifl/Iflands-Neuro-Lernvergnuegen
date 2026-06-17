@@ -6,17 +6,17 @@ Eine Szene = eine Datei `public/scenes/<id>.json`. Kein React nötig.
 - `id`, `section`, `author`, `order` (Sortierung im Vortrag), `title`
 - `brain.regions`: Liste semantischer Region-Slugs (verfügbare siehe `src/scene/regions.ts`)
 - `brain.camera`: einer von `lateral-left | lateral-right | anterior | medial-midline | superior`
-- `overlay.kind`: `prose | erp | flowchart | table | image | topography`
+- `overlay.kind`: `prose | erp | flowchart | table | topography`
 - `companion.summary` + `companion.sources`
 
 ## Overlay-Daten
 - `prose`: nur `companion.summary`.
 - `erp`: `overlay.data.series = [{ label, color?, points: [[x,wert], …] }]`, optional `markers`.
 - `flowchart`: `overlay.data.nodes = [{ id, label, result }]`.
-- `image`: `overlay.fallbackImage = "/figures/<datei>.jpg"` (Bild nach `public/figures/` legen).
+- Buch-/Kapitelbilder dürfen nicht in `public/` liegen und nicht als Overlay gerendert werden.
 
 > Hinweis: `table` und `topography` haben noch keinen nativen Renderer — sie fallen auf
-> `fallbackImage` (wenn gesetzt) bzw. `companion.summary` zurück. Native Renderer folgen.
+> `companion.summary` zurück. Native Renderer folgen.
 
 ## Neue Region gebraucht?
 Slug + Mesh-Namen in `src/scene/regions.ts` ergänzen. Mesh-Namen aus

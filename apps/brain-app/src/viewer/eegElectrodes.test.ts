@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import type { Scene } from '../scene/types'
-import { EEG_ELECTRODES, EEG_HEADSET_CONNECTIONS, EEG_SITES, erpSiteForScene } from './eegElectrodes'
+import { EEG_ELECTRODES, EEG_HEADSET_CONNECTIONS, EEG_SITES, erpSiteForScene, erpSitesForScene } from './eegElectrodes'
 
-function erpScene(site: string): Scene {
+function erpScene(site: string, supportSites: string[] = []): Scene {
   return {
     id: `erp-${site}`,
     section: '11.4',
@@ -10,7 +10,7 @@ function erpScene(site: string): Scene {
     order: 1,
     title: `ERP ${site}`,
     brain: { regions: [], camera: 'medial-midline' },
-    overlay: { kind: 'erp', position: 'right', size: 'md', data: { site, series: [{ label: 'No-go', points: [[0, 0]] }] } },
+    overlay: { kind: 'erp', position: 'right', size: 'md', data: { site, topography: { supportSites }, series: [{ label: 'No-go', points: [[0, 0]] }] } },
     companion: { summary: 'x', sources: [] },
   }
 }
@@ -26,6 +26,17 @@ describe('EEG electrodes', () => {
     expect(EEG_ELECTRODES.Cz.position[0]).toBe(0)
     expect(EEG_ELECTRODES.Pz.position[0]).toBe(0)
     expect(EEG_ELECTRODES.Cz.position[2]).toBeGreaterThan(EEG_ELECTRODES.Pz.position[2])
+  })
+
+  it('liefert primaere und unterstuetzende ERP-Elektroden fuer das Headset', () => {
+    expect(erpSitesForScene(erpScene('Cz', ['Fz', 'Cz', 'C3']))).toEqual({
+      primary: 'Cz',
+      support: ['Fz', 'C3'],
+    })
+    expect(erpSitesForScene(erpScene('Pz', ['P3', 'P4']))).toEqual({
+      primary: 'Pz',
+      support: ['P3', 'P4'],
+    })
   })
 
   it('verbindet nur definierte Elektroden', () => {

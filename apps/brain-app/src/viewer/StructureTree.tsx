@@ -7,7 +7,8 @@ import {
 } from './ontology'
 import { useViewerStore } from './viewerStore'
 import { filterStructureSearch } from './structureSearch'
-import { useIsNarrow } from '../useMediaQuery'
+import { useIsNarrow, useIsTouchLandscape } from '../useMediaQuery'
+import { buildExplorerTreeRoots, type ExplorerTreeRoot } from './knowledgeRuntimeAdapter'
 
 const ACCENT = 'var(--orange)'
 
@@ -97,7 +98,7 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
     >
       <button
         type="button"
-        onClick={() => select(node.id)}
+        onClick={(event) => select(node.id, { additive: event.shiftKey || event.metaKey || event.ctrlKey })}
         onMouseEnter={() => setHovered(node.id)}
         onMouseLeave={() => setHovered(null)}
         title={node.lateralityNote ?? undefined}
@@ -138,6 +139,7 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
 
 function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
   const lang = useViewerStore((s) => s.lang)
+  const isNarrow = useIsNarrow()
   const expanded = useViewerStore((s) => s.expanded[node.id] ?? false)
   const toggle = useViewerStore((s) => s.toggleExpanded)
   const selected = useViewerStore((s) => s.selected)
@@ -148,6 +150,7 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
   const selectedLeafCount = leaves.reduce((count, id) => count + (selectedSlugs.has(id) ? 1 : 0), 0)
   const isMember = !isSelected && selectedLeafCount > 0
   const selectionState = selectedLeafCount === 0 ? 'none' : selectedLeafCount === leaves.length ? 'all' : 'partial'
+  const expandHitSize = isNarrow ? 44 : 24
 
   const headRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -162,22 +165,26 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
         style={{
           display: 'flex',
           alignItems: 'center',
+          minHeight: isNarrow ? 44 : undefined,
           paddingRight: 8,
         }}
       >
         <button
           type="button"
+          className="structure-expand-hit"
           aria-label={`${expanded ? 'Einklappen' : 'Aufklappen'} ${node.labels[lang]}`}
           onClick={() => toggle(node.id)}
           style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            width: 24,
+            width: expandHitSize,
+            minHeight: isNarrow ? 44 : undefined,
             flex: 'none',
-            padding: '6px 0',
+            padding: isNarrow ? 0 : '6px 0',
             marginLeft: 8 + depth * 14,
             border: 'none',
+            borderRight: isNarrow ? '1px solid var(--line-soft)' : 'none',
             background: 'transparent',
             color: 'var(--g500)',
             fontFamily: 'var(--ed-display)',
@@ -191,16 +198,18 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
         </button>
         <button
           type="button"
+          className="structure-label-hit"
           aria-pressed={selectionState === 'partial' ? 'mixed' : selectionState === 'all'}
-          onClick={() => select(node.id)}
+          onClick={(event) => select(node.id, { additive: event.shiftKey || event.metaKey || event.ctrlKey })}
           style={{
             display: 'flex',
             alignItems: 'center',
             gap: 6,
             flex: 1,
             minWidth: 0,
+            minHeight: isNarrow ? 44 : undefined,
             textAlign: 'left',
-            padding: '6px 8px',
+            padding: isNarrow ? '8px 8px 8px 10px' : '6px 8px',
             border: 'none',
             background: 'transparent',
             color: isSelected ? 'var(--orange)' : 'var(--g700)',
@@ -245,6 +254,10 @@ function PlaceholderObject({ label }: { label: string }) {
   )
 }
 
+function ExplorerTreeRootRow({ root }: { root: ExplorerTreeRoot }) {
+  return root.kind === 'tree' ? <GroupRow node={root.node} depth={0} /> : <PlaceholderObject label={root.label} />
+}
+
 export default function StructureTree() {
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
@@ -264,6 +277,7 @@ export default function StructureTree() {
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const isNarrow = useIsNarrow()
+  const isTouchLandscape = useIsTouchLandscape()
 
   const visibleTree = useMemo(() => {
     if (!ontology) return null
@@ -278,6 +292,11 @@ export default function StructureTree() {
     return filterStructureSearch([...brainPool, ...ctxPool, ...atlasPools], search)
   }, [ontology, context, julich, atlas3d, search, mode, visibleTree])
 
+  const explorerRoots = useMemo(() => {
+    if (!visibleTree) return []
+    return buildExplorerTreeRoots({ visibleTree, mode, julich, atlas3d, context })
+  }, [visibleTree, mode, julich, atlas3d, context])
+
   if (!ontology || !visibleTree) return null
 
   const sm: React.CSSProperties = { padding: '4px 9px' }
@@ -285,10 +304,11 @@ export default function StructureTree() {
   return (
     <div
       className="ed-panel scrollbar-thin"
+      data-testid="structure-tree-panel"
       style={{
         // Breit: feste Spalte rechts. Schmal: volle Breite unter dem 3D.
         flex: isNarrow ? '1 1 auto' : 'none',
-        width: isNarrow ? '100%' : 340,
+        width: isNarrow ? '100%' : isTouchLandscape ? 'min(44vw, 520px)' : 340,
         borderLeft: isNarrow ? undefined : '1.5px solid var(--line)',
         borderTop: isNarrow ? '1.5px solid var(--line)' : undefined,
         display: 'flex',
@@ -386,18 +406,12 @@ export default function StructureTree() {
           )
         ) : (
           <>
-            {/* Fuenf klare Ueber-Objekte: TARO · Jülich · DKT · Brodmann · Kontext (Vollausbau). */}
-            <GroupRow
-              node={{ id: 'taro', labels: { de: 'TARO', la: 'TARO', en: 'TARO' }, children: visibleTree.children ?? [] }}
-              depth={0}
-            />
-            {mode === 'full' ? (
+            {explorerRoots[0] ? <ExplorerTreeRootRow root={explorerRoots[0]} /> : null}
+            {explorerRoots.length > 1 ? (
               <div style={{ marginTop: 10, borderTop: '1px solid var(--line-soft)', paddingTop: 6, display: 'flex', flexDirection: 'column', gap: 4 }}>
-                {julich ? <GroupRow node={julich} depth={0} /> : <PlaceholderObject label="Jülich" />}
-                {atlas3d.dkt ? <GroupRow node={atlas3d.dkt} depth={0} /> : <PlaceholderObject label="DKT" />}
-                {atlas3d.brodmann ? <GroupRow node={atlas3d.brodmann} depth={0} /> : <PlaceholderObject label="Brodmann" />}
-                {atlas3d.destrieux ? <GroupRow node={atlas3d.destrieux} depth={0} /> : <PlaceholderObject label="Destrieux" />}
-                {context ? <GroupRow node={context} depth={0} /> : null}
+                {explorerRoots.slice(1).map((root) => (
+                  <ExplorerTreeRootRow key={root.collectionId} root={root} />
+                ))}
               </div>
             ) : null}
           </>

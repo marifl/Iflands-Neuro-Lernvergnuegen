@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 import type { AtlasCatalog } from './atlasCatalog'
-import { buildAliasMapByCarveSlug } from './atlasCatalog'
+import { buildAliasMapByCarveSlug, buildAreaIdMapByCarveSlug } from './atlasCatalog'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const catalog = JSON.parse(
@@ -81,5 +81,14 @@ describe('atlas-ontology.json Invarianten', () => {
     expect(julichAliases.get('julich-area-44-ifg-l')).toContain('Broca-Areal')
     expect(dktAliases.get('rostralanteriorcingulate-l')).toContain('anterior cingulate cortex')
     expect(dktAliases.get('dkt-rostralanteriorcingulate-l')).toContain('anterior cingulate cortex')
+  })
+
+  it('mappt Runtime-Carve-Slugs auf kanonische Areal-IDs fuer Config-Scopes', () => {
+    const julichAreas = buildAreaIdMapByCarveSlug(catalog, 'julich')
+    const dktAreas = buildAreaIdMapByCarveSlug(catalog, 'dkt')
+    expect(julichAreas.get('julich3-area-44-ifg-l')).toBe('julich:area-44:l')
+    expect(julichAreas.get('julich-area-44-ifg-l')).toBe('julich:area-44:l')
+    expect(dktAreas.get('rostralanteriorcingulate-l')).toBe('dkt:rostralanteriorcingulate:l')
+    expect(dktAreas.get('dkt-rostralanteriorcingulate-l')).toBe('dkt:rostralanteriorcingulate:l')
   })
 })

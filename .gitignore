@@ -50,8 +50,9 @@ docs/superpowers
 docs/END_SESSION_2026-06-12_Kapitel11-3D-Lern-Experience-Planung.md
 docs/fma-discrepancy-report.md
 docs/laterality-volume-audit.md
-# Buch-Abbildungen (Copyright) — nicht ins Repo
-apps/brain-app/public/figures/
+# Buch-Abbildungen und extrahierte Rohgrafiken bleiben verboten im Repo.
+# Eigene Rekonstruktionen muessen als Code/SVG/3D-Daten modelliert werden.
+apps/brain-app/public/figures/*
 
 # Smoke-/Debug-Output unter apps (Artefakte)
 apps/brain-app/scripts/atlas/work/

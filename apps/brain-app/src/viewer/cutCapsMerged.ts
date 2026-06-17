@@ -36,6 +36,7 @@ import {
   Vector3,
   type WebGLRenderer,
 } from 'three'
+import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 
 // Cap-/Stencil-Helfer muessen VOR den Source-Meshes fertig sein:
 // max(cap.renderOrder) ~= STENCIL_RENDER_ORDER_BASE + 2 * (aktive Units) - 1.
@@ -45,8 +46,8 @@ const CAP_PLANE_SIZE = 400
 const PLANE_TOLERANCE_MM = 2
 const MAX_POOL = 1200
 /** Hover-/Selektions-Farben der Cap (entsprechen den Hover-/Select-Toenen der Source-Meshes). */
-const CAP_HOVER_COLOR = 0xffd2a8
-const CAP_SELECT_COLOR = 0xf26b1f
+const CAP_HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
+const CAP_SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
 
 /** Markiert die Stencil-/Cap-Hilfsmeshes (vom Picking + von getSourceMeshes auszufiltern). */
 export const CUT_CAP_HELPER_FLAG = 'cutCapHelper'
@@ -232,9 +233,9 @@ export class CutCapsMerged {
       if (!src) continue
       const name = src.name
       if (selectedSlugs.has(name) || highlightSet?.has(name)) {
-        unit.capMat.color.setHex(CAP_SELECT_COLOR)
+        unit.capMat.color.set(CAP_SELECT_COLOR)
       } else if (name === hoveredName) {
-        unit.capMat.color.setHex(CAP_HOVER_COLOR)
+        unit.capMat.color.set(CAP_HOVER_COLOR)
       } else {
         const c = readMeshColor(src)
         if (c) unit.capMat.color.copy(c)
@@ -292,6 +293,8 @@ export class CutCapsMerged {
     unit.stencilBack.renderOrder = ro
     unit.stencilFront.renderOrder = ro
     unit.cap.renderOrder = ro + 1
+    unit.cap.userData.cutCapSourceName = mesh.name
+    unit.cap.userData.atlasCapSource = mesh.userData.atlasCapSource === true
 
     unit.stencilBack.visible = true
     unit.stencilFront.visible = true
@@ -361,6 +364,8 @@ export class CutCapsMerged {
       u.stencilBack.visible = false
       u.stencilFront.visible = false
       u.cap.visible = false
+      delete u.cap.userData.cutCapSourceName
+      delete u.cap.userData.atlasCapSource
       u.srcMesh = null
       if (this._pool.length < MAX_POOL) this._pool.push(u)
       else this._disposeUnit(u)

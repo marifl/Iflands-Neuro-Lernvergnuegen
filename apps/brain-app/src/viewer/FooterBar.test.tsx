@@ -44,10 +44,13 @@ describe('FooterBar', () => {
     fetchColorPresetsMock.mockResolvedValue([])
     useViewerStore.setState({
       appMode: 'explore',
+      activePreset: null,
+      colorMode: 'region',
       hidden: new Set(),
       isolated: null,
       isolationPath: [],
       isolatedSlugs: new Set(),
+      presetViewOptions: { hideUncolored: false, focusColored: false },
       selected: null,
       selectedSlugs: new Set(),
       selectedLabels: null,
@@ -108,6 +111,33 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Isolation aus' }))
     expect(useViewerStore.getState().isolated).toBeNull()
+  })
+
+  it('steuert die Figur-Ansicht ueber Slider statt Zusatz-Buttons', async () => {
+    fetchColorPresetsMock.mockResolvedValueOnce([{
+      id: 'test-figure',
+      label: 'Test-Figur',
+      intent: 'Testet die Preset-Ansichtsoptionen.',
+      coverage: 'full',
+      dimOthers: true,
+      groups: [{ label: 'DLPFC', role: 'cognition', meaning: 'Testgruppe', hue: 210, buckets: ['dlpfc'] }],
+    }])
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Farbe/ }))
+    fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
+    expect(useViewerStore.getState().activePreset?.id).toBe('test-figure')
+
+    fireEvent.click(screen.getByRole('button', { name: /Test-Figur/ }))
+    const hideSlider = screen.getByLabelText('Ungefärbte ausblenden')
+    const focusSlider = screen.getByLabelText('Relevante Areale fokussieren')
+    expect(screen.queryByRole('button', { name: 'Ungefärbte ausblenden' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Relevante Areale fokussieren' })).not.toBeInTheDocument()
+
+    fireEvent.change(hideSlider, { target: { value: '1' } })
+    fireEvent.change(focusSlider, { target: { value: '1' } })
+
+    expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: true })
   })
 
   it('bietet Snapshot-Export und -Import in der Fussleiste an', async () => {

@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const ciChromiumArgs = process.env.CI
+  ? ['--disable-dev-shm-usage', '--enable-webgl', '--ignore-gpu-blocklist', '--use-angle=swiftshader']
+  : []
+
 export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60_000,
@@ -17,7 +21,13 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
   },
-  projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
+  projects: [{
+    name: 'chromium',
+    use: {
+      ...devices['Desktop Chrome'],
+      launchOptions: { args: ciChromiumArgs },
+    },
+  }],
   webServer: {
     command: 'pnpm dev --port 5174 --host 127.0.0.1',
     url: 'http://127.0.0.1:5174',

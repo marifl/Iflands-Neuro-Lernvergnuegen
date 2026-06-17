@@ -4,7 +4,9 @@
 // ueberspringen solche Meshes automatisch. Pickbare Strukturen tragen das CUT_SOURCE_FLAG.
 import { Box3, Raycaster, Vector3 } from 'three'
 import type { Intersection, Mesh, Plane, Ray } from 'three'
+import { ATLAS_PARCEL_FLAG, ATLAS_SURFACE_FLAG } from './atlasParcels'
 import { CUT_CAP_HELPER_FLAG, CUT_SOURCE_FLAG } from './cutCapsMerged'
+import { isSequenceTargetPickableMesh } from './targetPicking'
 
 const PLANE_TOL_MM = 2
 const PROBE_MM = 0.4
@@ -33,7 +35,15 @@ export function isClippedRaycastHit(hit: Intersection): boolean {
 
 /** Nur benannte Cut-Source-Strukturen sind pickbar (wie das bisherige onClick auf Brain/Skull/Head). */
 function isPickableSource(obj: Mesh): boolean {
-  return obj.userData[CUT_SOURCE_FLAG] === true
+  return obj.userData[CUT_SOURCE_FLAG] === true || isSequenceTargetPickableMesh(obj)
+}
+
+function isPickableCutCapSource(obj: Mesh): boolean {
+  return (
+    isPickableSource(obj) ||
+    obj.userData[ATLAS_SURFACE_FLAG] === true ||
+    obj.userData[ATLAS_PARCEL_FLAG] === true
+  )
 }
 
 /** Erster gueltiger Oberflaechen-Treffer (geclippte Seite + nicht-pickbare uebersprungen). */
@@ -75,7 +85,11 @@ function meshBoundsCrossPlane(mesh: Mesh, plane: Plane): boolean {
  * Mesh-Geometrie (null = kein Treffer). Nutzt mesh.raycast → nicht-pickbare (noop) Meshes
  * geben keine Treffer. So wird nur das Mesh getroffen, das die Cap an P tatsaechlich fuellt.
  */
-export function meshCutProbeScore(mesh: Mesh, cutPlane: Plane, pointOnPlane: Vector3): number | null {
+function meshCutProbeHit(
+  mesh: Mesh,
+  cutPlane: Plane,
+  pointOnPlane: Vector3,
+): { score: number; hit: Intersection } | null {
   if (!meshBoundsCrossPlane(mesh, cutPlane)) return null
   if (mesh.matrixWorldNeedsUpdate) mesh.updateMatrixWorld(true)
   if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox()
@@ -91,19 +105,26 @@ export function meshCutProbeScore(mesh: Mesh, cutPlane: Plane, pointOnPlane: Vec
   _probe.far = PROBE_MM * 4
   const hits: Intersection[] = []
   mesh.raycast(_probe, hits)
-  let best = Infinity
+  let best: { score: number; hit: Intersection } | null = null
   for (const hit of hits) {
     if (!isClippedRaycastHit({ ...hit, object: mesh } as Intersection)) continue
     if (Math.abs(cutPlane.distanceToPoint(hit.point)) > PLANE_TOL_MM) continue
-    best = Math.min(best, hit.point.distanceTo(pointOnPlane))
+    const score = hit.point.distanceTo(pointOnPlane)
+    if (!best || score < best.score) best = { score, hit: { ...hit, object: mesh } as Intersection }
   }
-  return best === Infinity ? null : best
+  return best
 }
 
-function tieBreakCutCandidates(candidates: Array<{ mesh: Mesh; score: number }>): Mesh {
+export function meshCutProbeScore(mesh: Mesh, cutPlane: Plane, pointOnPlane: Vector3): number | null {
+  return meshCutProbeHit(mesh, cutPlane, pointOnPlane)?.score ?? null
+}
+
+function tieBreakCutCandidates(
+  candidates: Array<{ mesh: Mesh; score: number; probeHit: Intersection }>,
+): { mesh: Mesh; probeHit: Intersection } {
   let best = candidates[0]
   for (const c of candidates) if (c.score < best.score) best = c
-  return best.mesh
+  return { mesh: best.mesh, probeHit: best.probeHit }
 }
 
 /** Klick auf die sichtbare Schnittflaeche → Struktur, die die Cap an diesem Punkt fuellt. */
@@ -116,16 +137,16 @@ export function pickAtActiveCutPlanes(
   if (!hit) return null
 
   const primary = cutPlanes[0]
-  const candidates: Array<{ mesh: Mesh; score: number }> = []
+  const candidates: Array<{ mesh: Mesh; score: number; probeHit: Intersection }> = []
   for (const mesh of sourceMeshes) {
-    if (!isPickableSource(mesh)) continue
-    const score = meshCutProbeScore(mesh, primary, hit.point)
-    if (score !== null) candidates.push({ mesh, score })
+    if (!isPickableCutCapSource(mesh)) continue
+    const probe = meshCutProbeHit(mesh, primary, hit.point)
+    if (probe) candidates.push({ mesh, score: probe.score, probeHit: probe.hit })
   }
   if (candidates.length === 0) return null
 
   const chosen = tieBreakCutCandidates(candidates)
-  return { object: chosen, point: hit.point, distance: hit.distance, face: null, faceIndex: 0 } as Intersection
+  return { ...chosen.probeHit, object: chosen.mesh, distance: hit.distance } as Intersection
 }
 
 /**

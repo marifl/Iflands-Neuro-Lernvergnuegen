@@ -4,11 +4,15 @@
   "brain": { "regions": ["inhibition-network"], "camera": "superior" },
   "overlay": {
     "kind": "flowchart", "position": "right", "size": "md",
-    "data": { "nodes": [
-      { "id": "p3a", "label": "P3a (fronto-zentral, No-go)", "result": "Konfliktmonitoring" },
-      { "id": "p3b", "label": "P3b (parietal, Go)",          "result": "Engagement" },
-      { "id": "p3z", "label": "P3z (zentro-frontal, No-go)", "result": "Inhibition" }
-    ] }
+    "data": {
+      "mode": "ica-separation",
+      "evidence": "Schematisch/didaktisch nach Müller et al. 2011; keine Rohmesswerte",
+      "nodes": [
+        { "id": "p3a", "label": "P3a", "result": "Konfliktmonitoring", "color": "#c0392b", "site": "Cz", "source": "ACC / anteriores Cingulum" },
+        { "id": "p3b", "label": "P3b", "result": "Engagement", "color": "#2f80ed", "site": "Pz", "source": "Parietal- und Frontallappen" },
+        { "id": "p3z", "label": "P3z", "result": "Inhibition", "color": "#9b59b6", "site": "Cz", "source": "SMA / pre-SMA" }
+      ]
+    }
   },
   "companion": {
     "summary": "Die ERPs aus dem VCPT werden mit Independent Component Analysis (ICA) in unabhängige Teilkomponenten zerlegt — jede mit eigener Topografie und intrakortikaler Quelle. Drei für exekutive Funktionen zentrale Komponenten: die fronto-zentrale P3a-No-go (Konfliktmonitoring), die parietale P3b-Go (Engagement) und die zentro-frontale P3z-No-go (Inhibition).",

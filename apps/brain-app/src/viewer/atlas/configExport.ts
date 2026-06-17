@@ -83,6 +83,7 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
 
   pushTable(lines, name, 'colors', [
     ['enabled', input.colors?.enabled?.toString()],
+    ['scheme', input.colors?.scheme !== undefined ? tomlStr(input.colors.scheme) : undefined],
     ['preset', input.colors?.preset !== undefined ? tomlStr(input.colors.preset) : undefined],
     ['groups', input.colors?.groups !== undefined
       ? `[${input.colors.groups.map((group) => inlineTable([
@@ -92,6 +93,9 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
       ])).join(', ')}]`
       : undefined],
     ['dim_others', input.colors?.dim_others?.toString()],
+    ['coverage', input.colors?.coverage !== undefined ? tomlStr(input.colors.coverage) : undefined],
+    ['review_status', input.colors?.review_status !== undefined ? tomlStr(input.colors.review_status) : undefined],
+    ['reason', input.colors?.reason !== undefined ? tomlStr(input.colors.reason) : undefined],
   ])
 
   pushTable(lines, name, 'visibility', [
@@ -117,7 +121,6 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
     ['scene', input.overlay?.scene !== undefined ? tomlStr(input.overlay.scene) : undefined],
     ['position', input.overlay?.position !== undefined ? tomlStr(input.overlay.position) : undefined],
     ['size', input.overlay?.size !== undefined ? tomlStr(input.overlay.size) : undefined],
-    ['fallback_image', input.overlay?.fallback_image !== undefined ? tomlStr(input.overlay.fallback_image) : undefined],
   ])
 
   pushTable(lines, name, 'sequencing', [

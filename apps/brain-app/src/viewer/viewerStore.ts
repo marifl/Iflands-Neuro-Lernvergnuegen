@@ -12,6 +12,8 @@ import {
 } from './ontology'
 import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
+import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
+import { pickTargetFromLegacyMeshName, type ViewerPickTarget } from './targetPicking'
 
 export type { CutAxis, CutConfig, CutMode }
 
@@ -22,8 +24,11 @@ export interface IsolationCrumb {
 
 export type ViewMode = 'full' | 'k11'
 
-// Hirnhaeute (Dura/Falx/Tentorium): opake Aussenhuellen, die die Kortex verdecken.
-const MENINGES_HIDE = ['cerebral-hemisphere-segment-of-dura-mater', 'falx-cerebri', 'tentorium-cerebelli']
+// Opake Dura-Hemisphaerenhuelle bleibt im Modell, startet aber ausgeblendet,
+// damit sie Kortex und Atlas-Faerbungen nicht permanent verdeckt.
+const DEFAULT_HIDDEN = ['cerebral-hemisphere-segment-of-dura-mater']
+// Zusaetzlich nur waehrend aktiver Carve-Overlays ausblenden.
+const CARVE_OVERLAY_HIDE = [...DEFAULT_HIDDEN, 'falx-cerebri', 'tentorium-cerebelli']
 
 // Welche TARO-Strukturen sind Kortex-OBERFLAECHE? Die Atlas-Flaeche re-segmentiert die ganze Kortex;
 // jedes sichtbar bleibende Kortex-Mesh konkurriert koplanar mit ihr (Durchscheinen/„Z-Fighting").
@@ -41,7 +46,14 @@ function cortexSurfaceSlugs(tree: OntologyNode): string[] {
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
 export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
+export type AuthoringTransformMode = 'translate' | 'rotate' | 'scale'
+export type AuthoringTransformSpace = 'world' | 'local'
+export interface SelectionOptions {
+  additive?: boolean
+}
 export const APP_MODES = ['learn', 'explore', 'phineas', 'atlas'] as const satisfies readonly AppMode[]
+export const AUTHORING_TRANSFORM_MODES = ['translate', 'rotate', 'scale'] as const satisfies readonly AuthoringTransformMode[]
+export const AUTHORING_TRANSFORM_SPACES = ['world', 'local'] as const satisfies readonly AuthoringTransformSpace[]
 // Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
 // Multi-Axis: jede Achse ist unabhaengig an/aus mit eigener Position (siehe CutAxis/CutConfig).
 function emptyCuts(): Record<CutAxis, CutConfig> {
@@ -49,6 +61,76 @@ function emptyCuts(): Record<CutAxis, CutConfig> {
     sagittal: { on: false, pos: 0 },
     coronal: { on: false, pos: 0 },
     axial: { on: false, pos: 0 },
+  }
+}
+
+function defaultHiddenSet(): Set<string> {
+  return new Set(DEFAULT_HIDDEN)
+}
+
+function selectableTrees(state: ViewerState): Array<OntologyNode | null | undefined> {
+  return [state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux]
+}
+
+function sameTargetRef(a: SequenceTargetRef, b: SequenceTargetRef): boolean {
+  return objectGraphIdForTarget(a) === objectGraphIdForTarget(b)
+}
+
+function targetSelectionId(targetRef: SequenceTargetRef): string {
+  return targetRef.targetKind === 'ontology-node' ? targetRef.ontologyNodeId : objectGraphIdForTarget(targetRef)
+}
+
+function targetSlugs(state: ViewerState, targetRef: SequenceTargetRef): string[] {
+  const selectionId = targetSelectionId(targetRef)
+  if (targetRef.targetKind !== 'ontology-node') return [selectionId]
+  const chain = nodeChain(selectableTrees(state), selectionId)
+  const node = chain ? chain[chain.length - 1] : null
+  return node ? flattenStructures(node).map((n) => n.id) : [selectionId]
+}
+
+function targetLabels(state: ViewerState, targetRef: SequenceTargetRef, fallbackLabel?: string): Record<Lang, string> | null {
+  if (targetRef.targetKind === 'ontology-node') {
+    const chain = nodeChain(selectableTrees(state), targetRef.ontologyNodeId)
+    return chain ? chain[chain.length - 1].labels : null
+  }
+  const label = fallbackLabel ?? targetSelectionId(targetRef)
+  return { de: label, la: label, en: label }
+}
+
+function toggleTargetRef(selection: readonly SequenceTargetRef[], targetRef: SequenceTargetRef): SequenceTargetRef[] {
+  if (selection.some((ref) => sameTargetRef(ref, targetRef))) {
+    return selection.filter((ref) => !sameTargetRef(ref, targetRef))
+  }
+  return [...selection, targetRef]
+}
+
+function selectionStateForTargets(
+  state: ViewerState,
+  selectedTargetRefs: readonly SequenceTargetRef[],
+  fallbackLabel?: string,
+): Pick<ViewerState, 'selected' | 'activeTargetRef' | 'activeObjectGraphId' | 'selectedTargetRefs' | 'selectedSlugs' | 'selectedLabels'> {
+  if (selectedTargetRefs.length === 0) {
+    return {
+      selected: null,
+      activeTargetRef: null,
+      activeObjectGraphId: null,
+      selectedTargetRefs: [],
+      selectedSlugs: new Set(),
+      selectedLabels: null,
+    }
+  }
+  const activeTargetRef = selectedTargetRefs[selectedTargetRefs.length - 1]
+  const selectedSlugs = new Set<string>()
+  for (const ref of selectedTargetRefs) for (const slug of targetSlugs(state, ref)) selectedSlugs.add(slug)
+  return {
+    selected: targetSelectionId(activeTargetRef),
+    activeTargetRef,
+    activeObjectGraphId: objectGraphIdForTarget(activeTargetRef),
+    selectedTargetRefs: [...selectedTargetRefs],
+    selectedSlugs,
+    selectedLabels: selectedTargetRefs.length > 1
+      ? { de: `${selectedTargetRefs.length} Ziele`, la: `${selectedTargetRefs.length} Ziele`, en: `${selectedTargetRefs.length} targets` }
+      : targetLabels(state, activeTargetRef, fallbackLabel),
   }
 }
 /** Einmaliger Kamera-Ausricht-Befehl. nonce erlaubt erneutes Ausloesen desselben Shots. */
@@ -63,6 +145,31 @@ export interface CameraPose {
   fov: number
 }
 
+export interface PresetViewOptions {
+  hideUncolored: boolean
+  focusColored: boolean
+}
+
+export interface ColorLegendState {
+  visible: boolean
+  minimized: boolean
+}
+
+const DEFAULT_PRESET_VIEW_OPTIONS: PresetViewOptions = {
+  hideUncolored: false,
+  focusColored: false,
+}
+
+const DEFAULT_COLOR_LEGEND: ColorLegendState = {
+  visible: true,
+  minimized: false,
+}
+
+interface AppliedDefaultVisibility {
+  key: string
+  hidden: string[]
+}
+
 interface ViewerState {
   ontology: Ontology | null
   ancestors: Map<string, string[]>
@@ -74,6 +181,10 @@ interface ViewerState {
   colorMode: ColorMode
   /** Aktives figur-spezifisches Farb-Preset (nur wirksam bei colorMode='preset'). */
   activePreset: ColorPreset | null
+  /** Ansichtsoptionen fuer figur-spezifische Faerbungen; Preset-Buttons bleiben davon getrennt. */
+  presetViewOptions: PresetViewOptions
+  /** Gemeinsamer Viewport-Zustand der grossen Farb-/Figur-Legende. */
+  colorLegend: ColorLegendState
   /** Aktive Schnittebenen (Clipping) je Achse — Multi-Axis. */
   cuts: Record<CutAxis, CutConfig>
   /** Wirkung der Schnittebenen: schneiden+Cap ('slice') oder dahinter ausblenden ('hide'). */
@@ -91,9 +202,21 @@ interface ViewerState {
   atlas3d: { dkt: OntologyNode | null; brodmann: OntologyNode | null; destrieux: OntologyNode | null }
   /** Slugs, die im 3D-View ausgeblendet sind (hierarchisches Ein-/Ausblenden). */
   hidden: Set<string>
+  /** Zuletzt durch Preset/Config gesetzte Start-Sichtbarkeit; nicht Teil von Snapshots. */
+  defaultVisibility: AppliedDefaultVisibility | null
   selected: string | null
+  /** Stabiler Target-Vertrag zur aktuellen Auswahl; legacy Mesh-Namen werden auf Ontologie-Refs gemappt. */
+  activeTargetRef: SequenceTargetRef | null
+  activeObjectGraphId: string | null
+  /** Minimaler Authoring-Transform-Modus fuer TransformControls. */
+  authoringTransformMode: AuthoringTransformMode
+  authoringTransformSpace: AuthoringTransformSpace
+  authoringTransformSnap: boolean
+  authoringTransformFrozen: boolean
   /** Slugs der aktuellen Auswahl (bei Gruppen-Auswahl alle Blaetter; sonst genau eines). */
   selectedSlugs: Set<string>
+  /** Alle aktuell gewaehlten Targets; activeTargetRef bleibt das Primaerziel. */
+  selectedTargetRefs: SequenceTargetRef[]
   /** Label der Auswahl (auch fuer Gruppen, die nicht im slug->node-Index stehen). */
   selectedLabels: Record<Lang, string> | null
   selectMode: SelectMode
@@ -132,6 +255,8 @@ interface ViewerState {
   showCarveBrodmann: boolean
   /** Atlas-Overlays von der Schnittebene mitschneiden (true) oder explizit ausnehmen (false). */
   clipAtlasOverlay: boolean
+  /** Revision fuer Scene-Graph-Aenderungen an Cut-Quellen (z.B. Atlas-Cap-Proxies nach Pick-JSON). */
+  cutSourceRevision: number
   /** Name des zuletzt angeklickten Atlas-Areals auf TARO (Carve-Overlay); null = keins. */
   pickedAtlasArea: string | null
   /** Slug des zuletzt angeklickten Atlas-Areals (z.B. `julich3-area-44-ifg-l`) — fuer die
@@ -155,13 +280,21 @@ interface ViewerState {
   setHidden: (slugs: string[], hide: boolean) => void
   /** Alles wieder sichtbar machen (Shift+H). */
   clearHidden: () => void
+  /** Start-Sichtbarkeit aus Preset/Config anwenden, ohne Snapshot-State zu erfinden. */
+  applyDefaultVisibility: (key: string, hidden: string[], isolated: string | null) => void
   /** Eine Isolations-Ebene hoch (Esc); auf oberster Ebene Isolation verlassen. */
   isolateUp: () => void
   /** Auswahl setzen und die Eltern-Gruppen aufklappen (fuer Tree-Sync nach 3D-Klick). */
-  select: (id: string | null) => void
+  select: (id: string | null, options?: SelectionOptions) => void
   setSelectMode: (mode: SelectMode) => void
   /** 3D-Klick: respektiert selectMode (group = Gruppe der aktuellen Ebene, direct = Blatt). */
-  pick: (meshName: string) => void
+  pick: (meshName: string, options?: SelectionOptions) => void
+  /** 3D-Klick mit bereits aufgeloestem SequenceTargetRef. */
+  pickTarget: (target: ViewerPickTarget, options?: SelectionOptions) => void
+  setAuthoringTransformMode: (mode: AuthoringTransformMode) => void
+  setAuthoringTransformSpace: (space: AuthoringTransformSpace) => void
+  setAuthoringTransformSnap: (snap: boolean) => void
+  setAuthoringTransformFrozen: (frozen: boolean) => void
   /** 3D-Doppelklick: group = eine Ebene tiefer betreten (isolieren), direct = Blatt isolieren. */
   drill: (meshName: string) => void
   setHovered: (id: string | null) => void
@@ -178,6 +311,10 @@ interface ViewerState {
   setColorMode: (mode: ColorMode) => void
   /** Figur-spezifisches Preset aktivieren (setzt colorMode='preset'); null = aus. */
   setPreset: (preset: ColorPreset | null) => void
+  /** Figur-Faerbungsansicht setzen: Kontext verstecken bzw. relevante Areale fokussieren. */
+  setPresetViewOptions: (options: Partial<PresetViewOptions>) => void
+  /** Farb-/Figur-Legende im Viewport ein-/ausblenden oder minimieren. */
+  setColorLegend: (legend: Partial<ColorLegendState>) => void
   /** Eine Achse setzen (on/off + Position). */
   setCut: (axis: CutAxis, config: CutConfig) => void
   /** Mehrere Achsen auf einmal setzen (Teil-Update). */
@@ -200,10 +337,41 @@ interface ViewerState {
   /** Nicht-persistentes Hover-Areal auf TARO setzen/loeschen. */
   setHoveredAtlasArea: (name: string | null, slug: string | null) => void
   setClipAtlasOverlay: (clip: boolean) => void
+  /** CutCaps/CutPickBridge neu synchronisieren, wenn Runtime-Cut-Quellen nachgeladen wurden. */
+  bumpCutSourceRevision: () => void
   /** Atlas-Fokus setzen (Bruecke TARO->Atlas) bzw. nach Konsum loeschen (null). */
   setAtlasFocus: (focus: { layer: string; name: string } | null) => void
   /** Auf einen Knoten isolieren (er + seine Kinder bleiben aktiv, Rest transparent). null = aus. */
   setIsolated: (id: string | null) => void
+}
+
+type ClearedCarveOverlayState = Pick<
+  ViewerState,
+  | 'showCarveJulich'
+  | 'showCarveDkt'
+  | 'showCarveBrodmann'
+  | 'hidden'
+  | 'pickedAtlasArea'
+  | 'pickedAtlasSlug'
+  | 'hoveredAtlasArea'
+  | 'hoveredAtlasSlug'
+>
+
+function clearedCarveOverlayState(state: ViewerState): ClearedCarveOverlayState {
+  const hidden = new Set(state.hidden)
+  for (const slug of CARVE_OVERLAY_HIDE) hidden.delete(slug)
+  for (const slug of state.cortexHideSlugs) hidden.delete(slug)
+  for (const slug of DEFAULT_HIDDEN) hidden.add(slug)
+  return {
+    showCarveJulich: false,
+    showCarveDkt: false,
+    showCarveBrodmann: false,
+    hidden,
+    pickedAtlasArea: null,
+    pickedAtlasSlug: null,
+    hoveredAtlasArea: null,
+    hoveredAtlasSlug: null,
+  }
 }
 
 export const useViewerStore = create<ViewerState>((set, get) => ({
@@ -213,6 +381,8 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   colorIndex: new Map(),
   colorMode: 'region',
   activePreset: null,
+  presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS,
+  colorLegend: DEFAULT_COLOR_LEGEND,
   cuts: emptyCuts(),
   cutMode: 'slice',
   cameraView: null,
@@ -220,9 +390,17 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   context: null,
   julich: null,
   atlas3d: { dkt: null, brodmann: null, destrieux: null },
-  hidden: new Set(),
+  hidden: defaultHiddenSet(),
+  defaultVisibility: null,
   selected: null,
+  activeTargetRef: null,
+  activeObjectGraphId: null,
+  authoringTransformMode: 'translate',
+  authoringTransformSpace: 'world',
+  authoringTransformSnap: false,
+  authoringTransformFrozen: false,
   selectedSlugs: new Set(),
+  selectedTargetRefs: [],
   selectedLabels: null,
   selectMode: 'group',
   hovered: null,
@@ -248,6 +426,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   showCarveDkt: false,
   showCarveBrodmann: false,
   clipAtlasOverlay: true,
+  cutSourceRevision: 0,
   pickedAtlasArea: null,
   pickedAtlasSlug: null,
   hoveredAtlasArea: null,
@@ -286,35 +465,104 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       return { hidden: next }
     }),
   clearHidden: () => set({ hidden: new Set() }),
+  applyDefaultVisibility: (key, hidden, isolated) => {
+    const uniqueHidden = [...new Set(hidden)]
+    set((state) => {
+      const nextHidden = new Set(state.hidden)
+      for (const slug of state.defaultVisibility?.hidden ?? []) {
+        if (!uniqueHidden.includes(slug)) nextHidden.delete(slug)
+      }
+      for (const slug of uniqueHidden) nextHidden.add(slug)
+      return {
+        hidden: nextHidden,
+        defaultVisibility: { key, hidden: uniqueHidden },
+        ...(isolated
+          ? {}
+          : { isolated: null, isolatedSlugs: new Set(), isolationPath: [] }),
+      }
+    })
+    if (isolated) get().setIsolated(isolated)
+  },
   isolateUp: () => {
     const st = get()
     const path = st.isolationPath
     // path[0] ist die Baum-Wurzel (kein Isolations-Ziel) -> ab Laenge>2 eine Ebene hoch, sonst aus.
     st.setIsolated(path.length > 2 ? path[path.length - 2].id : null)
   },
-  select: (id) =>
+  select: (id, options) =>
     set((state) => {
-      if (!id) return { selected: null, selectedSlugs: new Set(), selectedLabels: null }
+      if (!id) {
+        return {
+          selected: null,
+          activeTargetRef: null,
+          activeObjectGraphId: null,
+          selectedTargetRefs: [],
+          selectedSlugs: new Set(),
+          selectedLabels: null,
+        }
+      }
       // Knoten in Hirn- ODER Kontext-Baum aufloesen: Gruppen-Auswahl markiert alle Blaetter.
-      const chain = nodeChain([state.ontology?.tree, state.context, state.julich, state.atlas3d.dkt, state.atlas3d.brodmann, state.atlas3d.destrieux], id)
+      const chain = nodeChain(selectableTrees(state), id)
       const node = chain ? chain[chain.length - 1] : null
       const slugs = node ? flattenStructures(node).map((n) => n.id) : [id]
       const expanded = { ...state.expanded }
       const path = chain ? chain.slice(0, -1).map((n) => n.id) : state.ancestors.get(id) ?? []
       for (const groupId of path) expanded[groupId] = true
-      return { selected: id, selectedSlugs: new Set(slugs), selectedLabels: node?.labels ?? null, expanded }
+      const target = pickTargetFromLegacyMeshName(id)
+      if (options?.additive && target) {
+        return {
+          ...selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), target.label),
+          expanded,
+        }
+      }
+      return {
+        selected: id,
+        activeTargetRef: target?.targetRef ?? null,
+        activeObjectGraphId: target?.objectGraphId ?? null,
+        selectedTargetRefs: target ? [target.targetRef] : [],
+        selectedSlugs: new Set(slugs),
+        selectedLabels: node?.labels ?? null,
+        expanded,
+      }
     }),
   setSelectMode: (selectMode) => set({ selectMode }),
-  pick: (meshName) => {
-    const st = get()
-    if (st.selectMode === 'direct') return st.select(meshName)
-    // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
-    const chain = nodeChain([st.ontology?.tree, st.context, st.julich, st.atlas3d.dkt, st.atlas3d.brodmann, st.atlas3d.destrieux], meshName)
-    if (!chain) return st.select(meshName)
-    const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
-    const target = chain[ctxIdx + 1] ?? chain[chain.length - 1]
-    st.select(target.id)
+  pick: (meshName, options) => {
+    const target = pickTargetFromLegacyMeshName(meshName)
+    if (!target) return
+    get().pickTarget(target, options)
   },
+  pickTarget: (target, options) => {
+    const st = get()
+    if (target.targetRef.targetKind !== 'ontology-node') {
+      const label = target.label ?? target.objectGraphId
+      if (options?.additive) {
+        set((state) => selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), label))
+        return
+      }
+      set({
+        selected: target.selectionId,
+        activeTargetRef: target.targetRef,
+        activeObjectGraphId: target.objectGraphId,
+        selectedTargetRefs: [target.targetRef],
+        selectedSlugs: new Set([target.selectionId]),
+        selectedLabels: { de: label, la: label, en: label },
+      })
+      return
+    }
+
+    const meshName = target.selectionId
+    if (st.selectMode === 'direct') return st.select(meshName, options)
+    // Gruppen-Modus: Gruppe der aktuellen Ebene (Kind des aktuell betretenen Kontexts) waehlen.
+    const chain = nodeChain(selectableTrees(st), meshName)
+    if (!chain) return st.select(meshName, options)
+    const ctxIdx = st.isolated ? Math.max(0, chain.findIndex((n) => n.id === st.isolated)) : 0
+    const selectionNode = chain[ctxIdx + 1] ?? chain[chain.length - 1]
+    st.select(selectionNode.id, options)
+  },
+  setAuthoringTransformMode: (authoringTransformMode) => set({ authoringTransformMode }),
+  setAuthoringTransformSpace: (authoringTransformSpace) => set({ authoringTransformSpace }),
+  setAuthoringTransformSnap: (authoringTransformSnap) => set({ authoringTransformSnap }),
+  setAuthoringTransformFrozen: (authoringTransformFrozen) => set({ authoringTransformFrozen }),
   drill: (meshName) => {
     const st = get()
     if (st.selectMode === 'direct') return st.setIsolated(meshName)
@@ -339,8 +587,23 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set({ appMode, highlight: [], showSkull: false, rodVisible: false, rodPhase: 0 })
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
-  setColorMode: (colorMode) => set((s) => ({ colorMode, activePreset: colorMode === 'preset' ? s.activePreset : null })),
-  setPreset: (activePreset) => set({ activePreset, colorMode: activePreset ? 'preset' : 'region' }),
+  setColorMode: (colorMode) => set((s) => ({
+    colorMode,
+    activePreset: colorMode === 'preset' ? s.activePreset : null,
+    presetViewOptions: colorMode === 'preset' ? s.presetViewOptions : DEFAULT_PRESET_VIEW_OPTIONS,
+  })),
+  setPreset: (activePreset) =>
+    set((s) => activePreset
+      ? { ...clearedCarveOverlayState(s), activePreset, colorMode: 'preset' }
+      : { activePreset: null, colorMode: 'region', presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS }),
+  setPresetViewOptions: (options) =>
+    set((s) => ({
+      presetViewOptions: { ...s.presetViewOptions, ...options },
+    })),
+  setColorLegend: (legend) =>
+    set((s) => ({
+      colorLegend: { ...s.colorLegend, ...legend },
+    })),
   setCut: (axis, config) =>
     set((s) => ({ cuts: { ...s.cuts, [axis]: { on: config.on, pos: clampCutPosition(config.pos) } } })),
   setCuts: (configs) =>
@@ -383,17 +646,19 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const dktOn = next.showCarveDkt
       const brodmannOn = next.showCarveBrodmann
       const anyOn = julichOn || dktOn || brodmannOn
+      if (!anyOn) return clearedCarveOverlayState(s)
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)
-      for (const slug of MENINGES_HIDE) (anyOn ? hidden.add(slug) : hidden.delete(slug))
-      for (const slug of s.cortexHideSlugs) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      for (const slug of CARVE_OVERLAY_HIDE) hidden.add(slug)
+      for (const slug of s.cortexHideSlugs) hidden.add(slug)
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
       return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null, hoveredAtlasArea: null, hoveredAtlasSlug: null }
     }),
   setPickedAtlasArea: (pickedAtlasArea, pickedAtlasSlug) => set({ pickedAtlasArea, pickedAtlasSlug }),
   setHoveredAtlasArea: (hoveredAtlasArea, hoveredAtlasSlug) => set({ hoveredAtlasArea, hoveredAtlasSlug }),
   setClipAtlasOverlay: (clipAtlasOverlay) => set({ clipAtlasOverlay }),
+  bumpCutSourceRevision: () => set((s) => ({ cutSourceRevision: s.cutSourceRevision + 1 })),
   setAtlasFocus: (atlasFocus) => set({ atlasFocus }),
   setIsolated: (id) =>
     set((state) => {

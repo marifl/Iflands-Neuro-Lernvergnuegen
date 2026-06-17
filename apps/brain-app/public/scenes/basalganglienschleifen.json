@@ -1,0 +1,28 @@
+{
+  "id": "basalganglienschleifen",
+  "figure": "11-04",
+  "section": "11.3.3 · Basalganglienschleifen",
+  "author": "ifland",
+  "order": 5,
+  "title": "Drei Basalganglien-Schleifen",
+  "brain": { "regions": ["inhibition-network", "acc-cingulum"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "dlpfc-loop", "label": "DLPFC-Schleife", "result": "Planung, Arbeitsgedächtnis, kognitive Kontrolle" },
+        { "id": "vmpfc-loop", "label": "VMPFC/OFC-Schleife", "result": "Bewertung, Motivation, emotionale Regulation" },
+        { "id": "acc-loop", "label": "ACC-Schleife", "result": "Konfliktmonitoring und Handlungsanpassung" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Die Vortragssequenz startet mit den drei fronto-striatalen Schleifen als Ordnungsmodell für exekutive Funktionen. DLPFC, VMPFC/OFC und ACC projizieren über Striatum, Globus pallidus und Thalamus zurück in frontale Kontrollnetzwerke; die App zeigt diese Route als fokussierbaren Scene-Step statt nur als authored Config-Eintrag.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-04" },
+      { "key": "config.default.toml", "note": "configuration basalganglienschleifen" }
+    ]
+  }
+}

@@ -1,0 +1,67 @@
+name: brain-app
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/brain-app.yml'
+      - 'apps/brain-app/**'
+      - 'packages/brain-runtime/**'
+      - 'packages/theme-tokens/**'
+      - 'scripts/atlas/**'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/brain-app.yml'
+      - 'apps/brain-app/**'
+      - 'packages/brain-runtime/**'
+      - 'packages/theme-tokens/**'
+      - 'scripts/atlas/**'
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/brain-app
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          cache-dependency-path: apps/brain-app/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Unit tests
+        run: pnpm test
+
+      - name: Production build
+        run: pnpm build
+
+      - name: E2E smoke
+        run: pnpm test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: brain-app-playwright-report
+          path: apps/brain-app/playwright-report
+          if-no-files-found: ignore
