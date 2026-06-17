@@ -1,9 +1,17 @@
 import { REGULAR_APP_MODE_DEFINITIONS, type RegularAppMode } from './appModeDefinitions'
+import { loadRememberedAppMode } from './settingsRuntime'
 
 /** Start-Screen: nimmt dem Lernenden die „wo fange ich an?"-Last ab. Eine klare Aktion
  *  (Modus waehlen), alle Optionen sichtbar, keine versteckten Menues. Liegt als Vollflaechen-
  *  Overlay ueber der App und verschwindet, sobald ein Modus gewaehlt wurde. */
-export default function ModeLauncher({ onPick }: { onPick: (mode: RegularAppMode) => void }) {
+export default function ModeLauncher({
+  onPick,
+  continueMode = loadRememberedAppMode(),
+}: {
+  onPick: (mode: RegularAppMode) => void
+  continueMode?: RegularAppMode | null
+}) {
+  const continueDefinition = REGULAR_APP_MODE_DEFINITIONS.find((definition) => definition.mode === continueMode) ?? null
   return (
     <div
       style={{
@@ -37,7 +45,36 @@ export default function ModeLauncher({ onPick }: { onPick: (mode: RegularAppMode
           Wähle einen Modus. Du kannst jederzeit unten in der Fussleiste unter „Modus" wechseln.
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 12 }}>
+        {continueDefinition ? (
+          <button
+            type="button"
+            className="ed-btn ed-frame active"
+            onClick={() => onPick(continueDefinition.mode)}
+            style={{
+              width: '100%',
+              textAlign: 'left',
+              padding: '15px 16px',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 6,
+              alignItems: 'flex-start',
+              marginBottom: 12,
+              whiteSpace: 'normal',
+            }}
+          >
+            <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+              Fortsetzen
+            </span>
+            <span style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.01em' }}>
+              Weiter mit {continueDefinition.label}
+            </span>
+            <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11.5, lineHeight: 1.45 }}>
+              Zuletzt genutzten Modus öffnen. Deep-Links und explizite Start-Defaults bleiben vorrangig.
+            </span>
+          </button>
+        ) : null}
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 12 }}>
           {REGULAR_APP_MODE_DEFINITIONS.map((card) => (
             <button
               key={card.mode}

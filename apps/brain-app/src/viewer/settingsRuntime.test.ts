@@ -4,6 +4,7 @@ import {
   LAST_APP_MODE_STORAGE_KEY,
   applySupportedViewerDefaults,
   explicitAppModeFromSearch,
+  loadRememberedAppMode,
   rememberAppMode,
   shouldShowModeLauncher,
   startupAppModeFromSettings,
@@ -62,8 +63,10 @@ describe('settingsRuntime', () => {
   it('merkt den letzten regulaeren Modus fuer den naechsten Start', () => {
     rememberAppMode('atlas')
     expect(localStorage.getItem(LAST_APP_MODE_STORAGE_KEY)).toBeNull()
+    expect(loadRememberedAppMode()).toBeNull()
 
     rememberAppMode('phineas')
+    expect(loadRememberedAppMode()).toBe('phineas')
     expect(startupAppModeFromSettings('', settingsWith({ start: { defaultMode: 'last', showOnboarding: false } }))).toBe('phineas')
   })
 
