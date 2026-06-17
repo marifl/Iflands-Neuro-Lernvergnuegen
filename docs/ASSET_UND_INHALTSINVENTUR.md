@@ -169,6 +169,38 @@ Realistische Hirnshader werden geparkt. Bedingungen für eine spätere Umsetzung
 3. Mobil ohne merklichen GPU-Knick.
 4. Kein neues Stock-/Fake-Brain-Material ohne klare Herkunft.
 
+Entscheidung vom 17. Juni 2026: Der nächste Realismus-Pfad ist **UV-frei**,
+nicht ein Asset-UV-Bake. `brain.glb` bleibt unverändert, und die
+Atlas-/Carve-Dokumentation hält bereits fest, dass gefalteter Kortex keine
+belastbare UV-Basis für robuste Label- oder Detailtexturen liefert. Ein
+Asset-Bake wäre deshalb ein separates Asset-Projekt mit Provenienz-, Lizenz-
+und Bake-Gates; er ist nicht der erste Umsetzungsschnitt für die App.
+
+Der erste zulässige Umsetzungsschnitt für Materialwirkung ist ein
+rollenbasierter, UV-freier Detailpfad:
+
+1. Kortex zuerst, weil dort die lehrmodellhafte Oberfläche am sichtbarsten ist.
+2. Knochen danach, weil Schädel/Phineas-Ansicht vom Materialkontrast lebt.
+3. Gefäße danach, aber nur als sehr ruhige Oberflächenvariation.
+4. Nerven zuletzt, weil Lesbarkeit und dünne Geometrie wichtiger sind als
+   Texturwirkung.
+
+Mobile-Grenze für diesen Pfad:
+
+1. Der Modus bleibt optional und darf nicht Default werden.
+2. Keine zusätzlichen Draw Calls, kein Postprocessing und keine neuen großen
+   Texturassets im ersten Slice.
+3. Pro Rolle höchstens ein geteilter Detail-Parameter- oder Mini-Texturpfad;
+   keine pro-Mesh-Canvas-Erzeugung und keine per-frame Material-Allokationen.
+4. `pnpm build`, `pnpm perf:budget` und ein lokaler Phone-Browser-Smoke müssen
+   vor einer Umsetzung grün sein.
+
+Dieser Entscheidungsabschnitt erledigt nur die Pfadwahl. Der Realismus-Pfad
+selbst gilt erst als umgesetzt, wenn Desktop- und Phone-Screenshots sowie eine
+Runtime-Prüfung zeigen, dass Highlights, Carve-Areale, Labels und Orbit-
+Interaktion lesbar bleiben. Phineas-Gage-Geometrie und GLB/GLTF-Persistenz
+bleiben separate Aufgaben.
+
 ## Arealnamen DE/EN/Lat
 
 Konvention:
