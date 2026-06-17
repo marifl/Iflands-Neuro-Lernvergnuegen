@@ -54,7 +54,7 @@ test('Färbungs-Legende lässt sich minimieren, ausblenden und wieder anzeigen',
   await page.goto('/?mode=explore')
 
   await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
-  await page.getByRole('button', { name: /Farbe/ }).click()
+  await page.getByRole('button', { name: /Färbung/ }).click()
   await page.getByRole('button', { name: 'Lateralität' }).click()
 
   await expect(page.getByText('Lateralität').first()).toBeVisible()
@@ -218,7 +218,7 @@ test('Figur-Färbung räumt aktive Atlas-Carves aus dem Viewer-State', async ({ 
     return atlasSurfaceMeshes > 0
   }, { timeout: 60_000 })
 
-  await page.getByRole('button', { name: /Farbe/ }).click()
+  await page.getByRole('button', { name: /Färbung/ }).click()
   await page.getByRole('button', { name: 'Basalganglienschleifen (Abb. 11-04)' }).click()
   await expect(page.getByRole('button', { name: /Basalganglienschleifen/ })).toBeVisible()
 
