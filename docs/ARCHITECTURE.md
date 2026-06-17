@@ -298,16 +298,18 @@ Loader. Das Manifest besitzt die Asset-Ebene: `assetId`, `collectionId`,
 SemVer-Version, SHA-256-Hash, Provenienz, Lizenz, Vorschau, Normalisierung,
 Materialpolitik, Node-Naming-Regeln und stabile Parts.
 
-Die Runtime lädt daraus noch keine Modelle. Der Parser validiert nur den
-lieferbaren Pipeline-Stand laut: URI muss unter `/assets/` liegen und zur
-Format-Endung passen, Hashes sind `sha256:<64 hex>`, Scale und
-`rootTransform` sind finite TRS-Werte, Parts sind kebab-case IDs mit stabilen
-GLB-Node-Namen, und Helper-Parts bleiben `pickable = false`. Bestehende
-BodyParts3D-/Context-GLBs sind bereits für die Runtime rezentriert und nach
-Y-up gedreht; ihr Manifest nutzt deshalb `scale = 1` statt einer pauschalen
-Meter-Konvertierung. Optionale Knowledge-Slots dürfen sichtbar fehlen
-(`missing-optional`); required Slots werden als `missing-required`
-zurückgegeben und nicht still ersetzt.
+Die generische Runtime lädt daraus noch keine beliebigen Modelle. Der
+Phineas-Modus nutzt seine manifestierten Slots bereits spezifisch für
+Vollschädel, Calvarium-Cut und Eisenstange und koppelt die sichtbaren GLB-Meshes
+an `SequenceTargetRef`-/ObjectGraph-IDs. Der Parser validiert den lieferbaren
+Pipeline-Stand laut: URI muss unter `/assets/` liegen und zur Format-Endung
+passen, Hashes sind `sha256:<64 hex>`, Scale und `rootTransform` sind finite
+TRS-Werte, Parts sind kebab-case IDs mit stabilen GLB-Node-Namen, und
+Helper-Parts bleiben `pickable = false`. Bestehende BodyParts3D-/Context-GLBs
+sind bereits für die Runtime rezentriert und nach Y-up gedreht; ihr Manifest
+nutzt deshalb `scale = 1` statt einer pauschalen Meter-Konvertierung. Optionale
+Knowledge-Slots dürfen sichtbar fehlen (`missing-optional`); required Slots
+werden als `missing-required` zurückgegeben und nicht still ersetzt.
 
 Damit bleiben Verantwortlichkeiten getrennt:
 
@@ -315,8 +317,8 @@ Damit bleiben Verantwortlichkeiten getrennt:
 2. `AssetManifest` sagt, welches GLB/GLTF diesen Slot aktuell erfüllt.
 3. `AuthoringScene` instanziiert Assets mit TRS, Parent-Bezug und Parts.
 4. `SequenceTargetRef` adressiert Instanzen und Parts unabhängig vom Loader.
-5. Ein späterer Loader darf fehlende required Assets laut abbrechen, aber keine
-   Fallback-Geometrie erfinden.
+5. Ein späterer generischer Loader darf fehlende required Assets laut
+   abbrechen, aber keine Fallback-Geometrie erfinden.
 
 ## Registry-Launch-Vertrag
 

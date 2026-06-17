@@ -19,9 +19,8 @@ describe('PhineasGageScene', () => {
 
     render(<PhineasGageScene asMode />)
 
-    expect(screen.getByText(/kein montiertes Original-Gage-CT\/GLB/)).toBeInTheDocument()
-    expect(screen.getByText(/Standalone unter \/assets\/phineas/)).toBeInTheDocument()
-    expect(screen.getByText(/gekürzter, schematischer Trajektorienmarker/)).toBeInTheDocument()
+    expect(screen.getByText(/Standalone-Gage-GLBs aus \/assets\/phineas/)).toBeInTheDocument()
+    expect(screen.getByText(/importierte Eisenstangen-GLB/)).toBeInTheDocument()
     expect(useViewerStore.getState().showSkull).toBe(true)
     expect(useViewerStore.getState().rodVisible).toBe(false)
 

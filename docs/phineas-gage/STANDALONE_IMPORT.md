@@ -1,6 +1,6 @@
 # Phineas-Gage-Standalone-Import
 
-Stand: 2026-06-16.
+Stand: 2026-06-17.
 
 ## Runtime-Assets
 
@@ -31,14 +31,23 @@ Damit ist der Standalone-Bestand lokal nachvollziehbar. Die Dateien sind
 Quellenmaterial und ersetzen keine Lizenzfreigabe für öffentliche
 Weiterverbreitung.
 
-## Bewusste Grenze
+## Runtime-Mount
 
-Der aktuelle Phineas-Viewer rendert weiterhin den TARO-/BodyParts3D-Kontext.
-Die echten Gage-GLBs sind jetzt im Standalone-Repo vorhanden, aber noch nicht in
-den Viewer montiert. Der nächste Montageslice braucht:
+Der Phineas-Viewer rendert die Standalone-GLBs jetzt im Modus `?mode=phineas`:
 
-1. Transform- und Skalierungsprüfung gegen den aktuellen Viewer-Raum.
-2. Loader-/Layer-Vertrag für Schädel, Calvarium-Cut und Rod.
-3. Browser-Smoke mit sichtbarem Gage-Schädel statt nur TARO-Kontext.
-4. final gepinnte Attribution in `THIRD-PARTY-NOTICES.md`, falls das Modell
+1. Vollschädel im ersten Schritt.
+2. Calvarium-Cut in den Durchtritts-/Austrittsschritten.
+3. Eisenstangen-GLB statt des früheren Zylinder-Markers.
+
+Der normale TARO-/BodyParts3D-Kontextschädel bleibt für Explorer und
+Strukturbaum erhalten, wird im Phineas-Modus aber ausgeblendet. Offen bleibt:
+
+1. final gepinnte Attribution in `THIRD-PARTY-NOTICES.md`, falls das Modell
    öffentlich ausgeliefert wird.
+2. generische AuthoringScene-Persistenz mit Transform-Gizmo für frei
+   importierte GLBs.
+
+Die sichtbaren Gage-Teile hängen im Phineas-Modus bereits an stabilen
+`case-phineas-gage`-`asset-part`-Zielen. Picking und Snapshot-State sehen damit
+dieselben ObjectGraph-IDs wie die Sequenzdaten, auch wenn der generische
+GLB-Loader noch separat bleibt.

@@ -4,6 +4,11 @@ import { OrbitControls } from '@react-three/drei'
 import { CanonicalSurface } from './CanonicalSurface'
 import { SubcorticalMeshes } from './SubcorticalMeshes'
 import { AtlasLayerPanel } from './AtlasLayerPanel'
+import { AtlasTreeBrowser } from './AtlasTreeBrowser'
+import { AtlasFacetPanel } from './AtlasFacetPanel'
+import { useEffectiveConfig } from './atlasConfig'
+import { useAtlasConfigStore } from './atlasConfigStore'
+import type { AreaNode, AtlasCatalog } from './atlasCatalog'
 import { loadManifest, loadHemi, loadSubcortical, type AtlasManifest, type HemiData, type SubcorticalMesh } from './atlasAssets'
 import { labelName } from './atlasLut'
 import { useViewerStore } from '../viewerStore'
@@ -14,7 +19,32 @@ function labelIdByName(lut: Record<number, { name: string }>, name: string): num
   return -1
 }
 
+function areaById(catalog: AtlasCatalog, areaId: string): AreaNode | null {
+  for (const atlas of catalog.atlases) {
+    for (const group of atlas.groups) {
+      const area = group.areas.find((candidate) => candidate.id === areaId)
+      if (area) return area
+    }
+  }
+  return null
+}
+
+function areaByCanonicalLabel(catalog: AtlasCatalog, layer: string, labelId: number): AreaNode | null {
+  for (const atlas of catalog.atlases) {
+    for (const group of atlas.groups) {
+      const area = group.areas.find((candidate) =>
+        candidate.refs.canonical_lut.layer === layer
+        && candidate.refs.canonical_lut.label_id === labelId,
+      )
+      if (area) return area
+    }
+  }
+  return null
+}
+
 export default function CanonicalAtlasMode() {
+  const effectiveConfig = useEffectiveConfig()
+  const toggleScope = useAtlasConfigStore((s) => s.toggleScope)
   const [m, setM] = useState<AtlasManifest | null>(null)
   const [hemis, setHemis] = useState<{ L: HemiData; R: HemiData } | null>(null)
   const [subMeshes, setSubMeshes] = useState<SubcorticalMesh[]>([])
@@ -26,6 +56,7 @@ export default function CanonicalAtlasMode() {
   const [showSub, setShowSub] = useState<boolean>(false)
   const [picked, setPicked] = useState<string>('—')
   const [hovered, setHovered] = useState<string>('—')
+  const [pickedAreaId, setPickedAreaId] = useState<string | null>(null)
   // Fokussiertes Areal (Bruecke TARO->Atlas): Label-Id, das hervorgehoben wird; -1 = kein Fokus.
   const [highlight, setHighlight] = useState<number>(-1)
   const [hoverLabel, setHoverLabel] = useState<number>(-1)
@@ -75,9 +106,10 @@ export default function CanonicalAtlasMode() {
   }, [m])
 
   if (err) throw err
-  if (!m || !hemis || active === '')
+  if (!m || !hemis || !effectiveConfig || active === '')
     return <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e', color: '#ccc', padding: 20 }}>Lade fsaverage…</div>
 
+  const selectedArea = pickedAreaId ? areaById(effectiveConfig.catalog, pickedAreaId) : null
   const lut = m.lut[active]
   // Subkortex-Kerne liegen in MNI (= pial-Raum) -> bei aktivem Subkortex Pial erzwingen + Kortex ausgeistern.
   const surf = showSub ? 'pial' : surface
@@ -88,12 +120,18 @@ export default function CanonicalAtlasMode() {
   // Manueller Pick hebt den Bruecken-Fokus auf (freie Exploration -> kein Dimmen mehr).
   function handlePickL(vertex: number) {
     setHighlight(-1)
-    setPicked(labelName(lut, hemis!.L.labels[active][vertex]) || '—')
+    const labelId = hemis!.L.labels[active][vertex]
+    const area = areaByCanonicalLabel(effectiveConfig!.catalog, active, labelId)
+    setPickedAreaId(area?.id ?? null)
+    setPicked(area?.label_de ?? labelName(lut, labelId) ?? '—')
   }
 
   function handlePickR(vertex: number) {
     setHighlight(-1)
-    setPicked(labelName(lut, hemis!.R.labels[active][vertex]) || '—')
+    const labelId = hemis!.R.labels[active][vertex]
+    const area = areaByCanonicalLabel(effectiveConfig!.catalog, active, labelId)
+    setPickedAreaId(area?.id ?? null)
+    setPicked(area?.label_de ?? labelName(lut, labelId) ?? '—')
   }
 
   function handleHoverL(vertex: number | null) {
@@ -120,20 +158,54 @@ export default function CanonicalAtlasMode() {
 
   const activeHighlight = hoverLabel >= 0 ? hoverLabel : highlight
 
+  function selectLayer(id: string) {
+    setActive(id)
+    setPicked('—')
+    setPickedAreaId(null)
+    setHighlight(-1)
+    clearHover()
+  }
+
+  function selectCatalogArea(areaId: string) {
+    const area = areaById(effectiveConfig!.catalog, areaId)
+    if (!area) return
+    setActive(area.refs.canonical_lut.layer)
+    setHighlight(area.refs.canonical_lut.label_id)
+    setPicked(area.label_de)
+    setPickedAreaId(area.id)
+    clearHover()
+  }
+
   return (
     // Fuellt die Viewport-Spalte des BodyParts3DViewer-Layouts (absolute, nicht fixed -> Footer/Kopfleiste bleiben frei).
     <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e' }}>
       <AtlasLayerPanel
         layers={m.layers}
         active={active}
-        onSelect={(id) => { setActive(id); setPicked('—'); setHighlight(-1); clearHover() }}
+        onSelect={selectLayer}
         surface={surf}
         onSurface={(nextSurface) => { setSurface(nextSurface); clearHover() }}
         showSub={m.subcortical ? showSub : undefined}
-        onToggleSub={() => { setShowSub((v) => !v); setPicked('—'); clearHover() }}
+        onToggleSub={() => { setShowSub((v) => !v); setPicked('—'); setPickedAreaId(null); clearHover() }}
         picked={picked}
         hovered={hovered}
+        browser={(
+          <AtlasTreeBrowser
+            catalog={effectiveConfig.catalog}
+            isAreaEnabled={effectiveConfig.isAreaEnabled}
+            onToggleScope={toggleScope}
+            onPickArea={selectCatalogArea}
+            activeAtlas={active}
+            onSelectAtlas={selectLayer}
+            pickedAreaId={pickedAreaId}
+          />
+        )}
       />
+      {selectedArea ? (
+        <div style={{ position: 'absolute', top: 12, right: 12, zIndex: 11, width: 'min(340px, calc(100vw - 24px))' }}>
+          <AtlasFacetPanel area={selectedArea} />
+        </div>
+      ) : null}
       <Canvas camera={{ position: [0, 0, 310], fov: 45 }}>
         <ambientLight intensity={0.6} />
         {/* Gerichtetes Licht modelliert die Subkortex-Kerne (MeshStandardMaterial); Kortex-Shader bleibt unbeeinflusst. */}
@@ -147,7 +219,7 @@ export default function CanonicalAtlasMode() {
           <group rotation={[-Math.PI / 2, 0, 0]}>
             <CanonicalSurface hemi={hemis.L} layer={active} surface={surf} lut={lut} offsetX={-dx} opacity={cortexOpacity} highlightLabel={activeHighlight} onPick={handlePickL} onHover={handleHoverL} />
             <CanonicalSurface hemi={hemis.R} layer={active} surface={surf} lut={lut} offsetX={+dx} opacity={cortexOpacity} highlightLabel={activeHighlight} onPick={handlePickR} onHover={handleHoverR} />
-            {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => setPicked(n)} /> : null}
+            {showSub ? <SubcorticalMeshes meshes={subMeshes} onPick={(n) => { setPicked(n); setPickedAreaId(null) }} /> : null}
           </group>
         </group>
         <OrbitControls />

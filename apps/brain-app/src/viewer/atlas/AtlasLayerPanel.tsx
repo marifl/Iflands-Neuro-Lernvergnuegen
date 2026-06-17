@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import type { AtlasLayer } from './atlasAssets'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
   onToggleSub: () => void
   picked: string
   hovered?: string
+  browser?: ReactNode
 }
 
 const AXIS_LABEL: Record<'macro' | 'cyto', string> = {
@@ -24,7 +26,7 @@ const AXIS_SUB: Record<'macro' | 'cyto', string> = {
 }
 
 /** Layer-Umschalt-Panel (oben links, ueber dem 3D-Canvas). Gruppiert nach Achse. */
-export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, showSub, onToggleSub, picked, hovered = '—' }: Props) {
+export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, showSub, onToggleSub, picked, hovered = '—', browser }: Props) {
   const macroLayers = layers.filter((l) => l.axis === 'macro')
   const cytoLayers = layers.filter((l) => l.axis === 'cyto')
   const hasHover = hovered !== '—'
@@ -60,7 +62,7 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
           Standardhirn — Regionen präzise.<br />Nicht das TARO-Lern-Hirn.
         </div>
       </div>
-      {groups.map((group) => (
+      {browser ?? groups.map((group) => (
         <div key={group.axis} style={{ marginBottom: group.axis === 'macro' ? 10 : 0 }}>
           <div className="eyebrow" style={{ marginBottom: 2 }}>
             {AXIS_LABEL[group.axis]}

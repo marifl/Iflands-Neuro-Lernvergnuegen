@@ -30,17 +30,22 @@ Die wissenschaftlichen Unterlagen liegen unter `raw_protected/phineas-gage/`.
 Damit verweist der Standalone-Bestand nicht mehr auf lokale Dateien außerhalb
 dieses Repos.
 
-Der aktuelle Viewer rendert trotzdem noch die generischen Kontextmodelle
-`apps/brain-app/public/assets/context/skull.glb`, `head.glb` und die
-Knochen-Metadaten `skull.json`. Die Gage-GLBs sind noch nicht in den
-TARO-/BodyParts3D-Raum montiert. Dafür müssen Koordinatenraum, Skalierung,
-Layer-Vertrag, Attribution und Browser-Smoke separat geprüft werden.
+Der aktuelle Viewer rendert im Phineas-Modus die Standalone-Gage-GLBs:
+Vollschädel im ersten Schritt, Calvarium-Cut in den Durchtritts-/
+Austrittsschritten und das importierte Eisenstangenmodell. Die generischen
+Kontextmodelle `apps/brain-app/public/assets/context/skull.glb`, `head.glb` und
+`skull.json` bleiben für Explorer und Strukturbaum erhalten, sind aber nicht
+mehr der Phineas-Ersatzpfad.
 
-Deshalb bleibt die Szene bewusst eine schematische TARO-Viewer-Rekonstruktion.
-Die UI benennt das explizit: Das gerenderte Schädelmodell ist nicht der
-historische Originalschädel, die Trajektorie ist eine didaktische Übertragung in
-den Viewer-Raum, und die echten Gage-Kandidaten liegen erst als Standalone-
-Assets unter `/assets/phineas`.
+Die drei sichtbaren Gage-Teile sind als Slots der Collection
+`case-phineas-gage` registriert und tragen stabile `asset-part`-
+`SequenceTargetRef`s. Dadurch verwenden Sequenzlogik, Picking und ObjectGraph
+dieselben IDs für Vollschädel, Calvarium-Cut und Eisenstange.
+
+Die UI benennt weiter die Modellgrenze: Die Gage-GLBs sind lokale
+Standalone-Kandidaten, Attribution/Lizenz sind im Manifest markiert und müssen
+vor öffentlicher Auslieferung final gepinnt werden. Die Läsionsmarkierung bleibt
+eine didaktische TARO-Hervorhebung, keine voxelgenaue Schadenskarte.
 
 ## Implementierungsannahmen
 
@@ -49,6 +54,7 @@ Assets unter `/assets/phineas`.
 3. Austritt: superior/frontal nahe der Mittellinie.
 4. Läsionsmarkierung: linke orbitofrontale und ventromediale präfrontale
    TARO-Strukturen, nicht als voxelgenaue Schadenskarte.
-5. Animation: `rodPhase` trennt Eintritt, Durchtritt und Austritt. Die Stange
-   wird als wachsender sichtbarer Abschnitt gerendert; das ist didaktisch, keine
+5. Animation: `rodPhase` trennt Eintritt, Durchtritt und Austritt im
+   Fallstudienablauf. Sichtbar ist im Phineas-Modus das importierte
+   Eisenstangen-GLB; `rodPhase` steuert die didaktische Schrittlogik, keine
    physikalische Ballistik.

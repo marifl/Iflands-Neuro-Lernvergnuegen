@@ -647,6 +647,21 @@ test('Explorer-Deep-Link zeigt freie Strukturansicht ohne Presenter-Chrome', asy
   await expectBrainCanvas(page)
 })
 
+test('Atlas-Deep-Link verdrahtet Tree-Browser und Facettenpanel', async ({ page }) => {
+  await page.goto('/?mode=atlas')
+
+  await expect(page.getByText('Atlas · fsaverage')).toBeVisible({ timeout: 60_000 })
+  await page.getByText(/Makroanatomie/).click()
+  await page.getByText(/DKT \(Gyri\)/).click()
+  await page.getByText('Frontallappen').click()
+  await page.getByText('caudalmiddlefrontal · L').click()
+
+  await expect(page.getByText('caudalmiddlefrontal · L').last()).toBeVisible()
+  await expect(page.getByText('Provenienz')).toBeVisible()
+  await expect(page.getByText(/Quelle:/)).toBeVisible()
+  await expect(page.getByText('ausgewählt')).toBeVisible()
+})
+
 test('ungueltiger Mode-Deep-Link faellt auf den Startscreen zurueck', async ({ page }) => {
   await page.goto('/?mode=bogus')
 

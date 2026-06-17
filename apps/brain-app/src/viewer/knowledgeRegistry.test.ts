@@ -24,6 +24,11 @@ describe('knowledgeRegistry', () => {
     expect(knowledgeCollectionById('case-phineas-gage')).toMatchObject({
       kind: 'case-study',
       label: 'Phineas Gage',
+      assetSlots: [
+        { id: 'historical-skull', label: 'Gage-Schädel', formats: ['glb'], optional: true },
+        { id: 'calvarium-cut', label: 'Gage-Calvarium-Cut', formats: ['glb'], optional: true },
+        { id: 'iron-rod', label: 'Gage-Eisenstange', formats: ['glb'], optional: true },
+      ],
     })
     expect(knowledgeCollectionById('device-eeg-10-20')).toMatchObject({
       kind: 'device',
@@ -59,7 +64,10 @@ describe('knowledgeRegistry', () => {
       'animatable',
       'sequence-state',
     ]))
-    expect(collectionsWithCapability('load-3d-asset').map((collection) => collection.id)).toContain('device-eeg-10-20')
+    expect(collectionsWithCapability('load-3d-asset').map((collection) => collection.id)).toEqual(expect.arrayContaining([
+      'case-phineas-gage',
+      'device-eeg-10-20',
+    ]))
   })
 
   it('validiert zentrale IDs ohne versteckte Verdrahtung', () => {

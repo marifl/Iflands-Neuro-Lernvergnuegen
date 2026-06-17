@@ -28,6 +28,7 @@ import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
 import AuthoringSceneObjects from './AuthoringSceneObjects'
+import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ModeLauncher from './ModeLauncher'
@@ -417,6 +418,7 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
  * Hirn-Auswahl frei bleibt. Deckkraft von der Szene gesteuert (transparent = Hirn sichtbar). */
 function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   const { scene } = useGLTF(SKULL_GLB)
+  const appMode = useViewerStore((s) => s.appMode)
   const showSkull = useViewerStore((s) => s.showSkull)
   const skullOpacity = useViewerStore((s) => s.skullOpacity)
   const hidden = useViewerStore((s) => s.hidden)
@@ -449,7 +451,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const visible = (showSkull || !hidden.has(mesh.name)) && !cutHidden(mesh)
+      const visible = appMode !== 'phineas' && (showSkull || !hidden.has(mesh.name)) && !cutHidden(mesh)
       mesh.visible = visible
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
@@ -470,7 +472,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
       }
       material.needsUpdate = true
     }
-  }, [meshes, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
+  }, [meshes, appMode, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -624,6 +626,7 @@ function AtlasOverObject({
 /** Tampiereisen entlang der rekonstruierten Trajektorie (Eintritt Wange -> Austritt Scheitel),
  * spitz zulaufend, ueber den Schaedel hinaus verlaengert. */
 function TampingIron() {
+  const appMode = useViewerStore((s) => s.appMode)
   const rodVisible = useViewerStore((s) => s.rodVisible)
   const rodPhase = useViewerStore((s) => s.rodPhase)
   const meshRef = useRef<THREE.Mesh>(null)
@@ -651,7 +654,7 @@ function TampingIron() {
     applySegment(renderedPhase.current)
   })
 
-  if (!rodVisible) return null
+  if (!rodVisible || appMode === 'phineas') return null
   // +Y-Ende liegt an der vorlaufenden Spitze, -Y-Ende am dickeren Schaft.
   return (
     <mesh ref={meshRef}>
@@ -1099,6 +1102,7 @@ export default function BodyParts3DViewer() {
                 <SubParcels />
                 <EegHeadset />
                 <AuthoringSceneObjects />
+                <PhineasGageAssets />
                 <AtlasOverlay effectiveConfig={effectiveConfig} />
                 <CutCaps />
               </Suspense>

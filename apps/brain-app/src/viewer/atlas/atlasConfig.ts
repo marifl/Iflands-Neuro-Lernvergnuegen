@@ -8,6 +8,8 @@ import { getLocalStorageItem } from '../../safeLocalStorage'
 
 export type ScopeMap = Record<string, boolean>
 
+export const ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT = 'brain-app:atlas-config-overrides-changed'
+
 export interface PresetNode { label_de: string; scopes: ScopeMap; visibility?: ConfigVisibility }
 export interface ConfigFacets { clinic?: boolean; function?: boolean; chapter?: boolean; provenance?: boolean }
 export interface ConfigView { surface?: 'pial' | 'inflated'; subcortex?: boolean; carve_on_taro?: 'off' | 'dkt' | 'julich' }
@@ -261,9 +263,11 @@ export function useEffectiveConfig(): EffectiveConfig | null {
       refresh()
       window.addEventListener('popstate', refresh)
       window.addEventListener(ROUTE_CHANGE_EVENT, refresh)
+      window.addEventListener(ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT, refresh)
       cleanup = () => {
         window.removeEventListener('popstate', refresh)
         window.removeEventListener(ROUTE_CHANGE_EVENT, refresh)
+        window.removeEventListener(ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT, refresh)
       }
     }).catch(fail)
     return () => { alive = false; cleanup() }

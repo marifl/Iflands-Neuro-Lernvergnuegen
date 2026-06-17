@@ -13,7 +13,7 @@
 ## Arbeitsweise / Status / Fortschritt
 
 - Branch: `feature/atlas-config-ontologie` · Backup-Tag: `backup/pre-sp4-drilldown`
-- Aktive Wave: SP4 — IN PROGRESS · Letzte Update: 2026-06-15
+- Aktive Wave: SP4 — IN PROGRESS · Letzte Update: 2026-06-17
 - Reihenfolge nach Wert/Risiko: rein-logische Module (testbar) → Komponenten → Verdrahtung → Carve-Sync.
 
 ## Fortschritt
@@ -21,11 +21,17 @@
 - [x] Task 2: `treeState.ts` — Aggregat all/some/none + scopeKey-Bau + Tests (5/5)
 - [x] Task 3: `configExport.ts` — effective→TOML-Snippet + Roundtrip-Test (2/2)
 - [x] Task 4: `AtlasTreeBrowser.tsx` + `AtlasFacetPanel.tsx` (Render-Komponenten, typecheck 0)
-- [ ] Task 5: Verdrahtung `CanonicalAtlasMode.tsx` (Tree/Facet/Highlight/Kamera + Store) — **BROWSER-SMOKE noetig**
-- [ ] Task 6: Carve-Sync `AtlasOverlay.tsx` (LUT-Alpha per `isAreaEnabled`) — abtrennbar, **BROWSER-SMOKE noetig**
-- [ ] Task 7: Verifikation + Plan/Dart-Update
+- [x] Task 5: Verdrahtung `CanonicalAtlasMode.tsx` (Tree/Facet/Highlight + Store) — `75239ee`, lokaler Browser-Smoke gruen
+- [x] Task 6: Carve-Sync `AtlasOverlay.tsx` (LUT-Alpha per `isAreaEnabled`) — lokaler Browser-Smoke gruen
+- [ ] Task 7: Verifikation + Plan/Dart-Update — Code-Verifikation erledigt, Dart-Update durch OAuth blockiert
 
-> **STOPP-PUNKT (2026-06-15):** Tasks 1-4 fertig + committed (Logik unit-getestet, Komponenten typecheck-verifiziert, 46 Atlas-Tests gruen). Tasks 5-6 aendern den laufenden R3F-Render-Pfad → Evidence-First verlangt `pnpm dev`-Browser-Smoke (Tree rendert, Toggle persistiert, Carve folgt). Naechste Session mit offenem Browser fortsetzen.
+> **STOPP-PUNKT (2026-06-17):** Task 5 ist im Debug-Atlas verdrahtet:
+> Tree-Browser ersetzt die Layerliste, Scope-Overrides triggern den bestehenden
+> `useEffectiveConfig`-Resolver, Areal-Klick setzt Highlight und Facettenpanel.
+> Verifiziert mit fokussierten Atlas-Tests, `tsc -b --noEmit`, lokalem
+> `app-query`-Browser-Smoke, lokalem `Config-Atlas-Carve`-Smoke und vollem
+> `pnpm test`. Dart-Status kann erst nach erneuter OAuth-Freigabe aktualisiert
+> werden.
 
 ## Daten-Grundlage (verifiziert)
 - SP3-API in `apps/brain-app/src/viewer/atlas/atlasConfig.ts`: `ScopeMap`, `isAreaEnabled(areaId, scopes, lookup)`, `buildAreaLookup(catalog)`, `LocalOverrides`, `loadLocalOverrides()`, `computeEffectiveConfig`, `useEffectiveConfig`.
@@ -77,17 +83,17 @@ Tree rekursiv über `AtlasCatalog`; pro Areal Checkbox (`isAreaEnabled`), pro Gr
 
 `useEffectiveConfig` + `atlasConfigStore` einhängen; `AtlasLayerPanel`-Layerliste durch `AtlasTreeBrowser` ersetzen (Atlas-Knoten = aktiver Layer); `AtlasFacetPanel` für gepicktes Areal; Klick setzt Highlight (refs.canonical_lut.label_id) + Kamera-Ziel.
 
-- [ ] Step 1: Verdrahten. Step 2: typecheck + bestehende atlas-Tests grün. Step 3: Browser-Smoke. Step 4: Commit.
+- [x] Step 1: Verdrahten. Step 2: typecheck + bestehende atlas-Tests grün. Step 3: Browser-Smoke. Step 4: Commit `75239ee`.
 
 ## Task 6: Carve-Sync `AtlasOverlay.tsx` (abtrennbar)
 
 `CarveSurface`-LUT um Alpha/Desaturierung pro slug erweitern: slug→areaId (reverse aus `refs.carve`), `isAreaEnabled` → deaktivierte Parzellen grau/transparent. Effective config via `useEffectiveConfig` in den TARO-Modus reichen.
 
-- [ ] Step 1: slug→areaId-Map + LUT-Alpha. Step 2: typecheck. Step 3: Browser-Smoke (Carve folgt Toggle). Step 4: Commit. (Falls Risiko zu hoch → dokumentiert auf Folge-Schritt verschieben.)
+- [x] Step 1: slug→areaId-Map + LUT-Alpha. Step 2: typecheck. Step 3: Browser-Smoke (Carve folgt Toggle). Step 4: Commit.
 
 ## Task 7: Verifikation + Update
-- [ ] `pnpm typecheck` exit 0; `pnpm test atlas` grün; SP3-Regression grün.
-- [ ] Plan→DONE, Dart `XdDuz0JzLZxt`→Done (+Subtasks), Doc nachziehen.
+- [x] Code-Verifikation: fokussierte Atlas-Tests grün, `tsc -b --noEmit` grün, lokaler `app-query`-Browser-Smoke grün, lokaler `Config-Atlas-Carve`-Smoke grün, volles `pnpm test` grün.
+- [ ] Dart `XdDuz0JzLZxt`→Done (+Subtasks). Dart ist aktuell durch OAuth blockiert.
 
 ## Scope-Grenzen (explizit)
 - Watertight-3D draussen (Refs fehlen, SP1-Nachzug). Split-View draussen. Transitions=SP5. Context-Kuration=SP2.

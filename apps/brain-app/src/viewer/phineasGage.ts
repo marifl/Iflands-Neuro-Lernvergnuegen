@@ -1,3 +1,5 @@
+import type { SequenceTargetRef } from './sequenceTargetRef'
+
 /**
  * Phineas-Gage-Szene (Kapitel 11, exekutive Funktionen): historisch-anatomische
  * Rekonstruktion des Stangen-Durchschusses von 1848 als didaktischer 3D-Layer.
@@ -38,6 +40,31 @@ export const HISTORICAL_ROD_LENGTH_MM = 1100
 export const HISTORICAL_ROD_SHAFT_DIAMETER_MM = 32
 export const HISTORICAL_ROD_TIP_DIAMETER_MM = 6.4
 export const HISTORICAL_ROD_WEIGHT_KG = 5.9
+export const PHINEAS_GAGE_ASSETS = {
+  skull: '/assets/phineas/phineas-gage-skull-lod.glb',
+  calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
+  ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
+} as const
+export const PHINEAS_GAGE_TARGETS = {
+  skull: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-skull-01',
+    partId: 'skull',
+  },
+  calvariumCut: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-calvarium-cut-01',
+    partId: 'calvarium-cut',
+  },
+  ironRod: {
+    targetKind: 'asset-part',
+    collectionId: 'case-phineas-gage',
+    instanceId: 'phineas-gage-iron-rod-01',
+    partId: 'iron-rod',
+  },
+} as const satisfies Record<string, SequenceTargetRef>
 
 const ROD_PHASE_ENTRY = 0.28
 const ROD_PHASE_THROUGH = 0.68
@@ -98,9 +125,9 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
-  assetNoteDe: 'Aktueller Viewer: das gerenderte Schädelmodell bleibt TARO-/BodyParts3D-Kontext, kein montiertes Original-Gage-CT/GLB; Gage-Schädel, Calvarium-Cut und Eisenstange liegen im Standalone unter /assets/phineas.',
-  trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 schematisch in den Viewer-Raum übertragen.',
-  rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer als gekürzter, schematischer Trajektorienmarker dargestellt.',
+  assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädel-LOD, Calvarium-Cut und Eisenstange); Lizenz/Attribution bleiben als Kandidat im Manifest markiert.',
+  trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012; die importierten Gage-Assets bleiben im eigenen Rekonstruktionsraum und ersetzen den früheren TARO-Kontextschädel.',
+  rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer wird das importierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers gerendert.',
   steps: [
     {
       captionDe:
