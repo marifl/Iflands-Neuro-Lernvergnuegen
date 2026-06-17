@@ -206,8 +206,11 @@ export default function FooterBar() {
     const link = document.createElement('a')
     link.href = url
     link.download = `brain-app-unterricht-${new Date().toISOString().replace(/[:.]/g, '-')}.json`
+    link.style.display = 'none'
+    document.body.appendChild(link)
     link.click()
-    URL.revokeObjectURL(url)
+    link.remove()
+    window.setTimeout(() => URL.revokeObjectURL(url), 0)
   }
   const importSnapshotFile = async (file: File | null | undefined) => {
     if (!file) return
