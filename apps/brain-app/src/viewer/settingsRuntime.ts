@@ -34,8 +34,7 @@ export function explicitAppModeFromSearch(search: string): AppMode | null {
 
 export function defaultAppModeFromSettings(settings: BrainAppSettings): RegularAppMode | null {
   if (settings.start.defaultMode === 'last') {
-    const remembered = getLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
-    return isRegularAppMode(remembered) ? remembered : null
+    return loadRememberedAppMode()
   }
   return settings.start.defaultMode
 }
@@ -53,6 +52,11 @@ export function shouldShowModeLauncher(search: string, settings: BrainAppSetting
 
 export function rememberAppMode(mode: AppMode): void {
   if (isRegularAppMode(mode)) setLocalStorageItem(LAST_APP_MODE_STORAGE_KEY, mode)
+}
+
+export function loadRememberedAppMode(): RegularAppMode | null {
+  const remembered = getLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
+  return isRegularAppMode(remembered) ? remembered : null
 }
 
 function shouldApplyFunctionalDefaults(search: string): boolean {

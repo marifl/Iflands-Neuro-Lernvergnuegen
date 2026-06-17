@@ -21,4 +21,19 @@ describe('ModeLauncher', () => {
     fireEvent.click(screen.getByRole('button', { name: /Explorer/ }))
     expect(onPick).toHaveBeenCalledWith('explore')
   })
+
+  it('bietet Fortsetzen fuer den gemerkten regulaeren Modus an', () => {
+    const onPick = vi.fn()
+    render(<ModeLauncher onPick={onPick} continueMode="phineas" />)
+
+    fireEvent.click(screen.getByRole('button', { name: /Fortsetzen.*Weiter mit Phineas Gage/s }))
+
+    expect(onPick).toHaveBeenCalledWith('phineas')
+  })
+
+  it('blendet Fortsetzen ohne gemerkten Modus aus', () => {
+    render(<ModeLauncher onPick={() => {}} continueMode={null} />)
+
+    expect(screen.queryByRole('button', { name: /Fortsetzen/ })).not.toBeInTheDocument()
+  })
 })
