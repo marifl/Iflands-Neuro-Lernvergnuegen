@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
+import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Settings2, Skull } from 'lucide-react'
 import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
@@ -17,8 +17,9 @@ import SourcesPage from './SourcesPage'
 import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
 import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
 import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExplanation'
+import SettingsPanel from './SettingsPanel'
 
-type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
+type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | 'settings' | null
 
 /** Kamera-Schnellwinkel (Shot-Name aus cameraPresets -> Label). */
 const VIEW_PRESETS: { name: string; label: string }[] = [
@@ -115,10 +116,12 @@ interface BoxDef {
   label: string
   icon: React.ReactNode
   content: React.ReactNode
+  popoverWidth?: string
+  popoverMaxWidth?: string
 }
 
 const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
-const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot']
+const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot', 'settings']
 
 function readSnapshotFile(file: File): Promise<string> {
   if (typeof file.text === 'function') return file.text()
@@ -403,6 +406,15 @@ export default function FooterBar() {
         </>
       ),
     },
+    {
+      key: 'settings',
+      eyebrow: 'Mehr',
+      label: 'Einstellungen',
+      icon: <Settings2 {...FOOTER_ICON_PROPS} />,
+      popoverWidth: 'min(720px, calc(100vw - 24px))',
+      popoverMaxWidth: 'calc(100vw - 24px)',
+      content: <SettingsPanel />,
+    },
     ...(appMode === 'explore'
       ? [
           {
@@ -564,6 +576,8 @@ export default function FooterBar() {
             open={open === box.key}
             onToggle={() => toggle(box.key)}
             onClose={close}
+            popoverWidth={box.popoverWidth}
+            popoverMaxWidth={box.popoverMaxWidth}
           >
             {box.content}
           </Flyout>

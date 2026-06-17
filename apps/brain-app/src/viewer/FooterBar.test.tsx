@@ -3,6 +3,7 @@ import { Component, act, type ReactNode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import FooterBar from './FooterBar'
 import { fetchColorPresets } from './colorPresets'
+import { useSettingsStore } from './settingsStore'
 import { useViewerStore } from './viewerStore'
 import { VIEWER_STATE_SNAPSHOT_VERSION } from './viewerStateSnapshot'
 
@@ -15,6 +16,25 @@ vi.mock('./colorPresets', async (importOriginal) => {
 })
 
 const fetchColorPresetsMock = vi.mocked(fetchColorPresets)
+
+function mockViewportWidth(width: number) {
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: vi.fn((query: string) => {
+      const maxWidth = /max-width:\s*(\d+)px/.exec(query)?.[1]
+      return {
+        matches: maxWidth ? width <= Number(maxWidth) : false,
+        media: query,
+        onchange: null,
+        addEventListener: vi.fn(),
+        removeEventListener: vi.fn(),
+        addListener: vi.fn(),
+        removeListener: vi.fn(),
+        dispatchEvent: vi.fn(() => false),
+      } as unknown as MediaQueryList
+    }),
+  })
+}
 
 class TestErrorBoundary extends Component<{ children: ReactNode }, { message: string | null }> {
   state = { message: null }
@@ -40,8 +60,11 @@ async function renderFooterBar() {
 
 describe('FooterBar', () => {
   beforeEach(() => {
+    mockViewportWidth(1200)
+    localStorage.clear()
     fetchColorPresetsMock.mockReset()
     fetchColorPresetsMock.mockResolvedValue([])
+    useSettingsStore.getState().resetSettings()
     useViewerStore.setState({
       appMode: 'explore',
       activePreset: null,
@@ -180,6 +203,44 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Zustand/ }))
     expect(screen.getByRole('button', { name: 'Exportieren' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Importieren' })).toBeInTheDocument()
+  })
+
+  it('oeffnet die zentrale Settings-UI ueber Mehr und schreibt in den Settings-Store', async () => {
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
+    expect(screen.getByRole('navigation', { name: 'Einstellungskategorien' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Einstellungen')).toHaveAttribute('data-layout', 'split')
+
+    fireEvent.click(screen.getByRole('button', { name: 'Barrierefreiheit' }))
+    fireEvent.click(screen.getByLabelText('Ruhemodus'))
+
+    expect(useSettingsStore.getState().accessibility.quietMode).toBe(true)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Zurücksetzen' }))
+    expect(useSettingsStore.getState().accessibility.quietMode).toBe(false)
+  })
+
+  it('stellt Settings-Controls fuer Select, Slider und Swatches bereit', async () => {
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
+    expect(screen.getByRole('button', { name: 'Orange' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Färbung' }))
+    fireEvent.change(screen.getByLabelText('Standard-Färbung'), { target: { value: 'preset' } })
+    fireEvent.change(screen.getByLabelText('Dim-Stärke'), { target: { value: '0.5' } })
+
+    expect(useSettingsStore.getState().coloring.defaultColorMode).toBe('preset')
+    expect(useSettingsStore.getState().coloring.dimOpacity).toBe(0.5)
+  })
+
+  it('stackt die Settings-UI auf Phone-Breite', async () => {
+    mockViewportWidth(500)
+
+    await renderFooterBar()
+    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
+
+    expect(screen.getByLabelText('Einstellungen')).toHaveAttribute('data-layout', 'stack')
   })
 
   it('importiert eine Unterrichts-Snapshot-Datei', async () => {
