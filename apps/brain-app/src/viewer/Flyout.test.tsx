@@ -10,6 +10,8 @@ describe('Flyout', () => {
       </Flyout>,
     )
     expect(screen.getByText('Lernen')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /Lernen/ })).toHaveAttribute('aria-expanded', 'false')
+    expect(screen.getByRole('button', { name: /Lernen/ })).not.toHaveAttribute('aria-controls')
     expect(screen.queryByText('Panel-Inhalt')).not.toBeInTheDocument()
   })
 
@@ -20,6 +22,10 @@ describe('Flyout', () => {
       </Flyout>,
     )
     expect(screen.getByText('Panel-Inhalt')).toBeInTheDocument()
+    const trigger = screen.getByRole('button', { name: /Lernen/ })
+    const region = screen.getByRole('region', { name: 'Modus: Lernen' })
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    expect(trigger).toHaveAttribute('aria-controls', region.id)
   })
 
   it('ruft onToggle beim Klick auf den Trigger', () => {

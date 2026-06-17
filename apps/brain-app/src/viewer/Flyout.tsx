@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useId, useRef } from 'react'
 
 interface FlyoutProps {
   eyebrow: string
@@ -31,6 +31,7 @@ export default function Flyout({
   popoverMaxWidth = 'min(280px, 80vw)',
   children,
 }: FlyoutProps) {
+  const popoverId = useId()
   const ref = useRef<HTMLDivElement>(null)
   const lastTouchToggleAt = useRef(0)
   const activate = () => {
@@ -69,6 +70,8 @@ export default function Flyout({
           activate()
         }}
         disabled={disabled}
+        aria-expanded={open}
+        aria-controls={open ? popoverId : undefined}
         style={{
           display: 'block',
           width: '100%',
@@ -88,6 +91,9 @@ export default function Flyout({
       </button>
       {open ? (
         <div
+          id={popoverId}
+          role="region"
+          aria-label={`${eyebrow}: ${label}`}
           className="ed-panel ed-frame flyout-popover"
           style={{
             position: 'absolute',
