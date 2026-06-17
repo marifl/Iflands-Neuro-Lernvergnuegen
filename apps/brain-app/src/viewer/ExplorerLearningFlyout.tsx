@@ -2,27 +2,13 @@ import { useEffect } from 'react'
 import { bonusContextIdsForNode, resolveBonusContextIds, type BonusContext } from './bonusContexts'
 import type { OntologyNode } from './ontology'
 import { resolveRegistryLaunch, type RegistryLaunch } from './registryLaunch'
-import type { AppMode } from './viewerStore'
 
 export interface ExplorerLearningTarget {
-  sceneId?: string
-  configName?: string
-  mode: Extract<AppMode, 'learn' | 'phineas'>
+  mode: 'phineas'
   label: string
-  actionLabel?: string
+  actionLabel: string
   bonusContextId?: string
   launch?: RegistryLaunch
-}
-
-const LEARNING_TARGETS = {
-  p3a: { sceneId: 'p3a-konfliktmonitoring', configName: 'p3a-konfliktmonitoring', mode: 'learn', label: 'P3a - Konfliktmonitoring' },
-  p3b: { sceneId: 'p3b-engagement', configName: 'p3b-engagement', mode: 'learn', label: 'P3b - Engagement' },
-  p3z: { sceneId: 'p3z-inhibition', configName: 'p3z-inhibition', mode: 'learn', label: 'P3z - Inhibition' },
-  summary: { sceneId: 'zusammenfassung', configName: 'zusammenfassung', mode: 'learn', label: 'Zusammenfassung - exekutive Funktionen' },
-} satisfies Record<string, ExplorerLearningTarget>
-
-function withBonusContext(target: ExplorerLearningTarget, bonusContextId: string | undefined): ExplorerLearningTarget {
-  return bonusContextId ? { ...target, bonusContextId } : target
 }
 
 function launchForContext(context: BonusContext): RegistryLaunch | undefined {
@@ -43,18 +29,7 @@ export function learningTargetForNode(node: OntologyNode | null): ExplorerLearni
       launch: launchForContext(phineasContext),
     }
   }
-  const p3aContext = bonusContexts.find((context) => context.id === 'eeg-erp-p3a-konfliktmonitoring')
-  const text = [
-    node.id,
-    node.k11Role,
-    node.labels.de,
-    node.labels.en,
-    node.labels.la,
-  ].join(' ').toLowerCase()
-  if (/acc|cingul|konflikt/.test(text)) return withBonusContext(LEARNING_TARGETS.p3a, p3aContext?.id)
-  if (/sma|pre-sma|inhibition/.test(text)) return LEARNING_TARGETS.p3z
-  if (/parietal|engagement|aufmerksamkeit/.test(text)) return LEARNING_TARGETS.p3b
-  return LEARNING_TARGETS.summary
+  return null
 }
 
 interface ExplorerLearningFlyoutProps {
@@ -64,7 +39,7 @@ interface ExplorerLearningFlyoutProps {
   compact?: boolean
   onClose: () => void
   onOpenAtlas: () => void
-  onOpenLearn: (target: ExplorerLearningTarget) => void
+  onOpenTarget: (target: ExplorerLearningTarget) => void
 }
 
 export default function ExplorerLearningFlyout({
@@ -74,7 +49,7 @@ export default function ExplorerLearningFlyout({
   compact = false,
   onClose,
   onOpenAtlas,
-  onOpenLearn,
+  onOpenTarget,
 }: ExplorerLearningFlyoutProps) {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -88,7 +63,7 @@ export default function ExplorerLearningFlyout({
     <div
       className="ed-panel ed-frame"
       role="dialog"
-      aria-label={`Lernbezug ${node.labels.de}`}
+      aria-label={`Bonus-Kontext ${node.labels.de}`}
       style={{
         position: 'absolute',
         right: 16,
@@ -104,7 +79,7 @@ export default function ExplorerLearningFlyout({
     >
       <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
         <div style={{ flex: 1, minWidth: 0 }}>
-          <div className="eyebrow">Lernbezug</div>
+          <div className="eyebrow">Bonus-Kontext</div>
           {!compact ? (
             <div style={{ marginTop: 5, fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 16, lineHeight: 1.2, color: 'var(--ink)' }}>
               {node.labels.de}
@@ -114,7 +89,7 @@ export default function ExplorerLearningFlyout({
         <button
           type="button"
           className="ed-btn"
-          aria-label="Lern-Flyout schließen"
+          aria-label="Bonus-Kontext schließen"
           onClick={onClose}
           style={{ flex: 'none', padding: '3px 8px' }}
         >
@@ -130,8 +105,8 @@ export default function ExplorerLearningFlyout({
         {target.label}
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-        <button type="button" className="ed-btn" style={{ padding: '5px 10px' }} onClick={() => onOpenLearn(target)}>
-          {target.actionLabel ?? 'Lernen öffnen'}
+        <button type="button" className="ed-btn" style={{ padding: '5px 10px' }} onClick={() => onOpenTarget(target)}>
+          {target.actionLabel}
         </button>
         {atlasAvailable ? (
           <button type="button" className="ed-btn" style={{ padding: '5px 10px' }} onClick={onOpenAtlas}>

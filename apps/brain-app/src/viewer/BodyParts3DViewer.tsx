@@ -20,7 +20,6 @@ import { shouldRenderInlineSidebar, shouldRenderMobileTreeDrawer, viewportFlex }
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
-import { replaceCanonicalLocation } from '../scene/router'
 import { setLocalStorageItem } from '../safeLocalStorage'
 import { appModeForRegistryLaunch, hasRegistryLaunchSearch, registryLaunchLocation } from './registryLaunch'
 import { createAnatomicalMaterial, contextAnatomicalMaterialRole, contextColorForMode } from './anatomicalMaterials'
@@ -935,17 +934,11 @@ export default function BodyParts3DViewer() {
     selectedLearningTarget &&
     closedLearningFlyoutFor !== selected,
   )
-  const openLearningTarget = (target: ExplorerLearningTarget) => {
-    if (target.launch) {
-      window.history.replaceState(null, '', registryLaunchLocation(target.launch))
-      setLaunched(true)
-      setAppMode(appModeForRegistryLaunch(target.launch))
-      return
-    }
-    if (!target.configName || !target.sceneId) return
-    replaceCanonicalLocation({ configName: target.configName, sceneId: target.sceneId, step: 0 })
+  const openExplorerTarget = (target: ExplorerLearningTarget) => {
+    if (!target.launch) return
+    window.history.replaceState(null, '', registryLaunchLocation(target.launch))
     setLaunched(true)
-    setAppMode('learn')
+    setAppMode(appModeForRegistryLaunch(target.launch))
   }
 
   return (
@@ -1212,7 +1205,7 @@ export default function BodyParts3DViewer() {
                   setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
                   setAppMode('atlas')
                 }}
-                onOpenLearn={openLearningTarget}
+                onOpenTarget={openExplorerTarget}
               />
             ) : null}
 

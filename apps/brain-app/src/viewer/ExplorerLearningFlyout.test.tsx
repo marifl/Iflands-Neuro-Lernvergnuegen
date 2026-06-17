@@ -24,14 +24,8 @@ const ofcNode: OntologyNode = {
 }
 
 describe('ExplorerLearningFlyout', () => {
-  it('ordnet ACC-nahe Knoten der P3a-Lernszene zu', () => {
-    expect(learningTargetForNode(accNode)).toMatchObject({
-      sceneId: 'p3a-konfliktmonitoring',
-      configName: 'p3a-konfliktmonitoring',
-      mode: 'learn',
-      label: 'P3a - Konfliktmonitoring',
-      bonusContextId: 'eeg-erp-p3a-konfliktmonitoring',
-    })
+  it('ordnet ACC-nahe Knoten keiner Explorer-Lernszene mehr zu', () => {
+    expect(learningTargetForNode(accNode)).toBeNull()
   })
 
   it('ordnet OFC/vmPFC-Knoten dem Phineas-Bonuskontext zu', () => {
@@ -49,55 +43,57 @@ describe('ExplorerLearningFlyout', () => {
     })
   })
 
-  it('rendert Lernbezug und ruft Lernnavigation auf', () => {
+  it('rendert Bonus-Kontext und ruft Zielnavigation auf', () => {
     const onClose = vi.fn()
     const onOpenAtlas = vi.fn()
-    const onOpenLearn = vi.fn()
-    const target = learningTargetForNode(accNode)!
+    const onOpenTarget = vi.fn()
+    const target = learningTargetForNode(ofcNode)!
 
     render(
       <ExplorerLearningFlyout
-        node={accNode}
+        node={ofcNode}
         target={target}
         atlasAvailable
         onClose={onClose}
         onOpenAtlas={onOpenAtlas}
-        onOpenLearn={onOpenLearn}
+        onOpenTarget={onOpenTarget}
       />,
     )
 
-    expect(screen.getByRole('dialog', { name: 'Lernbezug Anteriores Cingulum' })).toBeInTheDocument()
-    expect(screen.getByText('ACC · Konfliktmonitoring')).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Lernen öffnen' }))
-    expect(onOpenLearn).toHaveBeenCalledWith(target)
+    expect(screen.getByRole('dialog', { name: 'Bonus-Kontext Medialer orbitofrontaler Cortex' })).toBeInTheDocument()
+    expect(screen.getByText('VMPFC / OFC')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Lernen öffnen' })).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Bonus-Kontext öffnen' }))
+    expect(onOpenTarget).toHaveBeenCalledWith(target)
     fireEvent.click(screen.getByRole('button', { name: 'Atlas öffnen' }))
     expect(onOpenAtlas).toHaveBeenCalledTimes(1)
   })
 
-  it('rendert kompakt ohne doppelte Struktur-Beschriftung', () => {
-    const target = learningTargetForNode(accNode)!
+  it('rendert kompakt ohne doppelte Struktur-Beschriftung und ohne Lernaktion', () => {
+    const target = learningTargetForNode(ofcNode)!
 
     render(
       <ExplorerLearningFlyout
-        node={accNode}
+        node={ofcNode}
         target={target}
         atlasAvailable
         compact
         onClose={() => {}}
         onOpenAtlas={() => {}}
-        onOpenLearn={() => {}}
+        onOpenTarget={() => {}}
       />,
     )
 
-    expect(screen.queryByText('Anteriores Cingulum')).not.toBeInTheDocument()
-    expect(screen.queryByText('ACC · Konfliktmonitoring')).not.toBeInTheDocument()
-    expect(screen.getByText('P3a - Konfliktmonitoring')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Lernen öffnen' })).toBeInTheDocument()
+    expect(screen.queryByText('Medialer orbitofrontaler Cortex')).not.toBeInTheDocument()
+    expect(screen.queryByText('VMPFC / OFC')).not.toBeInTheDocument()
+    expect(screen.getByText('Bonus-Kontext: Phineas Gage (OFC/vmPFC)')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Lernen öffnen' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Bonus-Kontext öffnen' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Atlas öffnen' })).toBeInTheDocument()
   })
 
   it('benennt Phineas als Bonus-Kontext-Aktion', () => {
-    const onOpenLearn = vi.fn()
+    const onOpenTarget = vi.fn()
     const target = learningTargetForNode(ofcNode)!
     render(
       <ExplorerLearningFlyout
@@ -106,24 +102,24 @@ describe('ExplorerLearningFlyout', () => {
         atlasAvailable={false}
         onClose={() => {}}
         onOpenAtlas={() => {}}
-        onOpenLearn={onOpenLearn}
+        onOpenTarget={onOpenTarget}
       />,
     )
 
     fireEvent.click(screen.getByRole('button', { name: 'Bonus-Kontext öffnen' }))
-    expect(onOpenLearn).toHaveBeenCalledWith(target)
+    expect(onOpenTarget).toHaveBeenCalledWith(target)
   })
 
   it('schließt per Escape', () => {
     const onClose = vi.fn()
     render(
       <ExplorerLearningFlyout
-        node={accNode}
-        target={learningTargetForNode(accNode)!}
+        node={ofcNode}
+        target={learningTargetForNode(ofcNode)!}
         atlasAvailable={false}
         onClose={onClose}
         onOpenAtlas={() => {}}
-        onOpenLearn={() => {}}
+        onOpenTarget={() => {}}
       />,
     )
 
