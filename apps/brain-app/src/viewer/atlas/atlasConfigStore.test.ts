@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest'
+import { ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT } from './atlasConfig'
 import { useAtlasConfigStore, LS_KEY } from './atlasConfigStore'
 
 beforeEach(() => {
@@ -34,11 +35,16 @@ describe('atlasConfigStore', () => {
   })
 
   it('persistiert nach localStorage (Roundtrip)', () => {
+    let events = 0
+    window.addEventListener(ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT, () => { events += 1 }, { once: true })
+
     useAtlasConfigStore.getState().setScope('area:dkt:parstriangularis:l', true)
+
     const raw = localStorage.getItem(LS_KEY)
     expect(raw).toBeTruthy()
     const parsed = JSON.parse(raw!)
     expect(parsed.scopes['area:dkt:parstriangularis:l']).toBe(true)
+    expect(events).toBe(1)
   })
 
   it('reset leert scopes/preset/configuration', () => {

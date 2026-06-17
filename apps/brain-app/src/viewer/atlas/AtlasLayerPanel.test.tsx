@@ -31,4 +31,11 @@ describe('AtlasLayerPanel', () => {
     expect(screen.getByText('Gyrus frontalis')).toBeInTheDocument()
     expect(screen.getByText('ausgewählt')).toBeInTheDocument()
   })
+
+  it('renders the atlas browser in place of the layer buttons', () => {
+    render(<AtlasLayerPanel {...baseProps} picked="—" hovered="—" browser={<div>Atlas-Browser</div>} />)
+
+    expect(screen.getByText('Atlas-Browser')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'DKT' })).not.toBeInTheDocument()
+  })
 })
