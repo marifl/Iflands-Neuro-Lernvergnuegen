@@ -31,6 +31,8 @@ const CATEGORY_LABEL: Record<SettingsCategory, string> = {
   dataAccount: 'Daten & Konto',
 }
 
+const VISIBLE_SETTINGS_CATEGORIES: SettingsCategory[] = SETTINGS_CATEGORIES.filter((category) => category !== 'presenter')
+
 const PANEL_STYLE = {
   display: 'grid',
   gap: 10,
@@ -257,7 +259,7 @@ function categoryPanel<K extends SettingsCategory>({
   )
   if (category === 'coloring') return (
     <>
-      <SelectControl label="Standard-Färbung" value={settings.coloring.defaultColorMode} options={[{ value: 'anatomical', label: 'Anatomisch' }, { value: 'function', label: 'Funktion' }, { value: 'laterality', label: 'Lateralität' }, { value: 'region', label: 'Region' }, { value: 'preset', label: 'Figur' }]} onChange={(defaultColorMode) => update('coloring', { defaultColorMode })} />
+      <SelectControl label="Standard-Färbung" value={settings.coloring.defaultColorMode === 'preset' ? 'region' : settings.coloring.defaultColorMode} options={[{ value: 'anatomical', label: 'Anatomisch' }, { value: 'function', label: 'Funktion' }, { value: 'laterality', label: 'Lateralität' }, { value: 'region', label: 'Region' }]} onChange={(defaultColorMode) => update('coloring', { defaultColorMode })} />
       <SwitchControl label="Andere dimmen" checked={settings.coloring.dimOthers} onChange={(dimOthers) => update('coloring', { dimOthers })} />
       <SliderControl label="Dim-Stärke" value={settings.coloring.dimOpacity} min={0} max={1} step={0.01} onChange={(dimOpacity) => update('coloring', { dimOpacity })} />
     </>
@@ -269,8 +271,8 @@ function categoryPanel<K extends SettingsCategory>({
     }
     return (
       <>
-        <SelectControl label="Standard-Atlas" value={settings.atlas.defaultLayer} options={[{ value: 'off', label: 'Aus' }, { value: 'dkt', label: 'DKT' }, { value: 'julich', label: 'Jülich' }, { value: 'brodmann', label: 'Brodmann' }, { value: 'destrieux', label: 'Destrieux' }]} onChange={(defaultLayer) => update('atlas', { defaultLayer })} />
-        {['dkt', 'julich', 'brodmann', 'destrieux'].map((id) => <SwitchControl key={id} label={`Collection ${id}`} checked={settings.atlas.visibleCollections.includes(id)} onChange={(checked) => toggleCollection(id, checked)} />)}
+        <SelectControl label="Standard-Atlas" value={settings.atlas.defaultLayer === 'destrieux' ? 'off' : settings.atlas.defaultLayer} options={[{ value: 'off', label: 'Aus' }, { value: 'dkt', label: 'DKT' }, { value: 'julich', label: 'Jülich' }, { value: 'brodmann', label: 'Brodmann' }]} onChange={(defaultLayer) => update('atlas', { defaultLayer })} />
+        {['dkt', 'julich'].map((id) => <SwitchControl key={id} label={`Collection ${id}`} checked={settings.atlas.visibleCollections.includes(id)} onChange={(checked) => toggleCollection(id, checked)} />)}
       </>
     )
   }
@@ -279,16 +281,12 @@ function categoryPanel<K extends SettingsCategory>({
   )
   if (category === 'learning') return (
     <>
-      <SwitchControl label="Auto-Advance" checked={settings.learning.autoAdvance} onChange={(autoAdvance) => update('learning', { autoAdvance })} />
       <SwitchControl label="Fortschritt speichern" checked={settings.learning.saveProgress} onChange={(saveProgress) => update('learning', { saveProgress })} />
-      <SwitchControl label="Speaker-Notes anzeigen" checked={settings.learning.showSpeakerNotes} onChange={(showSpeakerNotes) => update('learning', { showSpeakerNotes })} />
     </>
   )
   if (category === 'language') return (
     <>
       <SegmentedControl label="Sprache" value={settings.language.primary} options={[{ value: 'de', label: 'DE' }, { value: 'la', label: 'LA' }, { value: 'en', label: 'EN' }]} onChange={(primary) => update('language', { primary })} />
-      <SegmentedControl label="Begriffe" value={settings.language.termStyle} options={[{ value: 'german', label: 'Deutsch' }, { value: 'latin', label: 'Latein' }, { value: 'both', label: 'Beide' }]} onChange={(termStyle) => update('language', { termStyle })} />
-      <SwitchControl label="Abkürzungen" checked={settings.language.abbreviations} onChange={(abbreviations) => update('language', { abbreviations })} />
     </>
   )
   return (
@@ -316,7 +314,7 @@ export default function SettingsPanel() {
       style={{ ...PANEL_STYLE, gridTemplateColumns: isNarrow ? '1fr' : '190px minmax(0, 1fr)' }}
     >
       <nav aria-label="Einstellungskategorien" style={{ display: 'grid', gap: 4, alignContent: 'start' }}>
-        {SETTINGS_CATEGORIES.map((category) => (
+        {VISIBLE_SETTINGS_CATEGORIES.map((category) => (
           <button
             key={category}
             type="button"

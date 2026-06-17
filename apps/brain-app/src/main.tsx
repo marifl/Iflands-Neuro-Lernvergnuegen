@@ -4,8 +4,9 @@ import './app.css'
 import AppErrorBoundary from './AppErrorBoundary'
 import { getLocalStorageItem } from './safeLocalStorage'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
-import { appModeForRegistryLaunch, parseRegistryLaunchFromSearch } from './viewer/registryLaunch'
-import { APP_MODES, useViewerStore, type AppMode } from './viewer/viewerStore'
+import { loadSettings } from './viewer/settingsStore'
+import { startupAppModeFromSettings } from './viewer/settingsRuntime'
+import { useViewerStore } from './viewer/viewerStore'
 
 // Theme vor dem ersten Paint anwenden (kein Flash). Default: dunkel (kein Attribut).
 if (getLocalStorageItem('ed-theme') === 'light') {
@@ -24,23 +25,10 @@ function applyDisplayModeDataset() {
 applyDisplayModeDataset()
 window.matchMedia('(display-mode: standalone)').addEventListener('change', applyDisplayModeDataset)
 
-// Start-Grundmodus aus Deep-Link: ?mode=<learn|explore|phineas> setzt den Modus direkt;
-// ?mode=atlas ist DEBUG-ONLY (kanonischer fsaverage-Modus, nicht im Launcher/Modus-Flyout) — nur
-// ueber diesen Deep-Link erreichbar. Ein ?scene=<id>-Link impliziert den Lern-Modus;
-// ein ?config=<id>-Link oeffnet die Explorer-Shell ohne Launcher. Sonst ModeLauncher.
+// Deep-Link bleibt vorrangig. Settings greifen nur beim normalen App-Start ohne Inhalts-Route.
 {
-  const params = new URLSearchParams(window.location.search)
-  const launch = parseRegistryLaunchFromSearch(window.location.search)
-  const mode = params.get('mode')
-  if (launch) {
-    useViewerStore.getState().setAppMode(appModeForRegistryLaunch(launch))
-  } else if (mode && APP_MODES.includes(mode as AppMode)) {
-    useViewerStore.getState().setAppMode(mode as AppMode)
-  } else if (params.has('scene')) {
-    useViewerStore.getState().setAppMode('learn')
-  } else if (params.has('config')) {
-    useViewerStore.getState().setAppMode('explore')
-  }
+  const mode = startupAppModeFromSettings(window.location.search, loadSettings())
+  if (mode) useViewerStore.getState().setAppMode(mode)
 }
 
 const root = document.getElementById('root')!

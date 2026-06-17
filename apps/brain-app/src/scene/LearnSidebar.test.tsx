@@ -3,6 +3,8 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import LearnSidebar from './LearnSidebar'
 import { useSceneStore } from './sceneStore'
 import { ROUTE_CHANGE_EVENT } from './router'
+import { useSettingsStore } from '../viewer/settingsStore'
+import { useStudentProgressStore } from '../viewer/studentProgress'
 import { useViewerStore } from '../viewer/viewerStore'
 
 vi.mock('./brainBridge', () => ({
@@ -44,6 +46,8 @@ function mockFetch(routes: Record<string, unknown>) {
 
 beforeEach(() => {
   useSceneStore.setState({ scenes: [], index: 0, step: 0, cameraShot: null, cameraConfig: null })
+  useSettingsStore.getState().resetSettings()
+  useStudentProgressStore.getState().resetStudentProgress()
   useViewerStore.setState({ highlight: [], mode: 'full', appMode: 'explore' })
   window.history.replaceState(null, '', '/')
 })
@@ -168,5 +172,67 @@ describe('LearnSidebar', () => {
         '?sequence=presentation.kapitel11-vorlesung&config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring&step=2',
       ),
     )
+  })
+
+  it('markiert Lernpfad-Schritte als gesehen wenn Fortschrittsspeicherung aktiv ist', async () => {
+    mockFetch({
+      '/assets/atlas-canonical/atlas-config.json': {
+        preset: 'kapitel11',
+        presets: { kapitel11: { label_de: 'Kapitel 11', scopes: {} } },
+        configurations: {
+          vcpt: configNode('vcpt'),
+          'p3a-konfliktmonitoring': configNode('p3a-konfliktmonitoring'),
+        },
+        presentation: {},
+        learning: {
+          'kapitel11-pfad': {
+            label_de: 'Lernpfad Kapitel 11',
+            steps: ['vcpt', 'p3a-konfliktmonitoring'],
+          },
+        },
+      },
+      '/scenes/vcpt.json': scene('vcpt', 10),
+      '/scenes/p3a-konfliktmonitoring.json': scene('p3a-konfliktmonitoring', 20),
+    })
+    window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=0')
+
+    render(<LearnSidebar />)
+
+    await screen.findByTestId('overlay-panel')
+    await waitFor(() => expect(useStudentProgressStore.getState().progress?.currentConfigName).toBe('vcpt'))
+    expect(useStudentProgressStore.getState().progress?.steps.map((step) => step.status)).toEqual(['seen', 'not-started'])
+
+    act(() => {
+      window.history.replaceState(null, '', '/?config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring&step=0')
+      window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+    })
+
+    await waitFor(() => expect(useStudentProgressStore.getState().progress?.currentConfigName).toBe('p3a-konfliktmonitoring'))
+    expect(useStudentProgressStore.getState().progress?.steps.map((step) => step.status)).toEqual(['seen', 'seen'])
+  })
+
+  it('laesst Lernpfad-Fortschritt unangetastet wenn Speicherung deaktiviert ist', async () => {
+    useSettingsStore.getState().updateCategory('learning', { saveProgress: false })
+    mockFetch({
+      '/assets/atlas-canonical/atlas-config.json': {
+        preset: 'kapitel11',
+        presets: { kapitel11: { label_de: 'Kapitel 11', scopes: {} } },
+        configurations: { vcpt: configNode('vcpt') },
+        presentation: {},
+        learning: {
+          'kapitel11-pfad': {
+            label_de: 'Lernpfad Kapitel 11',
+            steps: ['vcpt'],
+          },
+        },
+      },
+      '/scenes/vcpt.json': scene('vcpt', 10),
+    })
+    window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=0')
+
+    render(<LearnSidebar />)
+
+    await screen.findByTestId('overlay-panel')
+    expect(useStudentProgressStore.getState().progress).toBeNull()
   })
 })

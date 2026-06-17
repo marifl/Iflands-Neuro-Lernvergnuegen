@@ -227,10 +227,10 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
     expect(screen.getByRole('button', { name: 'Orange' })).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Färbung' }))
-    fireEvent.change(screen.getByLabelText('Standard-Färbung'), { target: { value: 'preset' } })
+    fireEvent.change(screen.getByLabelText('Standard-Färbung'), { target: { value: 'function' } })
     fireEvent.change(screen.getByLabelText('Dim-Stärke'), { target: { value: '0.5' } })
 
-    expect(useSettingsStore.getState().coloring.defaultColorMode).toBe('preset')
+    expect(useSettingsStore.getState().coloring.defaultColorMode).toBe('function')
     expect(useSettingsStore.getState().coloring.dimOpacity).toBe(0.5)
   })
 
