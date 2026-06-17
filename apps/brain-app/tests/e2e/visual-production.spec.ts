@@ -107,6 +107,99 @@ test('Atlas-Carve erzeugt im Cut-Modus sichtbare Cap-Flächen', async ({ page },
   await attachScreenshot(page, testInfo, 'atlas-carve-cut-caps')
 })
 
+test('Config-Atlas-Carve respektiert Area-Scopes mit LUT-Alpha und Cap-Proxies', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=broca-areal&scene=broca-areal&step=0&off=julich%3Aarea-44%3Al')
+
+  await expect(page.getByRole('heading', { name: /Broca-Areal/ })).toBeVisible({ timeout: 60_000 })
+  const handle = await page.waitForFunction(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    if (!root) return null
+    while (root.parent) root = root.parent
+    const capNames: string[] = []
+    let surface: {
+      enabledAreaIds: string[]
+      disabledAreaIds: string[]
+      enabledSlugs: string[]
+      disabledSlugs: string[]
+      colorItemSize: number | null
+      materialTransparent: boolean
+      materialDepthWrite: boolean
+    } | null = null
+    root.traverse((obj: any) => {
+      if (!obj?.isMesh || !obj.visible) return
+      if (obj.userData?.atlasCapSource) capNames.push(obj.name)
+      if (obj.userData?.atlasSurface && obj.userData?.atlasScopeFiltered) {
+        const color = obj.geometry?.getAttribute?.('color')
+        surface = {
+          enabledAreaIds: obj.userData.atlasEnabledAreaIds ?? [],
+          disabledAreaIds: obj.userData.atlasDisabledAreaIds ?? [],
+          enabledSlugs: obj.userData.atlasEnabledSlugs ?? [],
+          disabledSlugs: obj.userData.atlasDisabledSlugs ?? [],
+          colorItemSize: color?.itemSize ?? null,
+          materialTransparent: obj.material?.transparent === true,
+          materialDepthWrite: obj.material?.depthWrite === true,
+        }
+      }
+    })
+    if (!surface || capNames.length === 0) return null
+    return { surface, capNames }
+  }, { timeout: 60_000 })
+
+  const state = await handle.jsonValue()
+  expect(state.surface.enabledAreaIds).toContain('julich:area-45:l')
+  expect(state.surface.disabledAreaIds).toContain('julich:area-44:l')
+  expect(state.surface.enabledSlugs).toContain('julich3-area-45-ifg-l')
+  expect(state.surface.disabledSlugs).toContain('julich3-area-44-ifg-l')
+  expect(state.surface.colorItemSize).toBe(4)
+  expect(state.surface.materialTransparent).toBe(true)
+  expect(state.surface.materialDepthWrite).toBe(false)
+  expect(state.capNames).toContain('julich3-area-45-ifg-l')
+  expect(state.capNames).not.toContain('julich3-area-44-ifg-l')
+
+  await expectBrainCanvas(page)
+  await attachScreenshot(page, testInfo, 'atlas-carve-area-scope-alpha')
+})
+
+test('Figur-Färbung räumt aktive Atlas-Carves aus dem Viewer-State', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.goto('/?mode=explore')
+
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
+  await page.getByRole('group', { name: 'Carve-Atlas-Overlay' }).getByRole('button', { name: 'DKT' }).click()
+
+  await page.waitForFunction(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    if (!root) return false
+    while (root.parent) root = root.parent
+    let atlasSurfaceMeshes = 0
+    root.traverse((obj: any) => {
+      if (obj?.isMesh && obj.visible && obj.userData?.atlasSurface) atlasSurfaceMeshes += 1
+    })
+    return atlasSurfaceMeshes > 0
+  }, { timeout: 60_000 })
+
+  await page.getByRole('button', { name: /Farbe/ }).click()
+  await page.getByRole('button', { name: 'Basalganglienschleifen (Abb. 11-04)' }).click()
+  await expect(page.getByRole('button', { name: /Basalganglienschleifen/ })).toBeVisible()
+
+  await expect.poll(async () => page.evaluate(() => {
+    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
+    while (root?.parent) root = root.parent
+    let atlasSurfaceMeshes = 0
+    let atlasCapSources = 0
+    root?.traverse((obj: any) => {
+      if (!obj?.isMesh || !obj.visible) return
+      if (obj.userData?.atlasSurface) atlasSurfaceMeshes += 1
+      if (obj.userData?.atlasCapSource) atlasCapSources += 1
+    })
+    return { atlasSurfaceMeshes, atlasCapSources }
+  }), { timeout: 30_000 }).toEqual({ atlasSurfaceMeshes: 0, atlasCapSources: 0 })
+
+  await expectBrainCanvas(page)
+  await attachScreenshot(page, testInfo, 'figure-color-clears-atlas-carve')
+})
+
 test('Phineas-Modus rendert im Phone-Viewport mit Asset-Hinweis', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 })
   await page.goto('/?mode=phineas')

@@ -17,6 +17,7 @@ import {
   importViewerStateSnapshot,
 } from './viewerStateSnapshot'
 import { registryLaunchLocation, resolveRegistryLaunch } from './registryLaunch'
+import type { ColorPreset } from './colorPresets'
 
 describe('target picking', () => {
   beforeEach(() => {
@@ -212,6 +213,15 @@ describe('cameraView', () => {
 })
 
 describe('carveOverlay', () => {
+  const figurePreset: ColorPreset = {
+    id: 'basalganglienschleifen',
+    label: 'Basalganglienschleifen',
+    intent: 'Regressionstest fuer Figur-Faerbung nach aktivem Atlas-Carve',
+    coverage: 'full',
+    dimOthers: true,
+    groups: [{ label: 'Loop', role: 'cognition', meaning: 'Testgruppe', hue: 30, buckets: ['dlpfc'] }],
+  }
+
   beforeEach(() => {
     useViewerStore.setState({
       cortexHideSlugs: ['left-cortex'],
@@ -264,6 +274,31 @@ describe('carveOverlay', () => {
 
     expect(useViewerStore.getState().showCarveJulich).toBe(false)
     expect(useViewerStore.getState().hidden.has('left-cortex')).toBe(false)
+  })
+
+  it('raeumt aktive Carves beim Aktivieren einer Figur-Faerbung zentral auf', () => {
+    useViewerStore.setState({
+      hidden: new Set(['left-cortex', 'falx-cerebri', 'manual-hidden']),
+      showCarveJulich: false,
+      showCarveDkt: true,
+      showCarveBrodmann: false,
+    })
+
+    useViewerStore.getState().setPreset(figurePreset)
+
+    const state = useViewerStore.getState()
+    expect(state.colorMode).toBe('preset')
+    expect(state.activePreset?.id).toBe('basalganglienschleifen')
+    expect(state.showCarveJulich).toBe(false)
+    expect(state.showCarveDkt).toBe(false)
+    expect(state.showCarveBrodmann).toBe(false)
+    expect(state.pickedAtlasArea).toBeNull()
+    expect(state.pickedAtlasSlug).toBeNull()
+    expect(state.hoveredAtlasArea).toBeNull()
+    expect(state.hoveredAtlasSlug).toBeNull()
+    expect(state.hidden.has('left-cortex')).toBe(false)
+    expect(state.hidden.has('falx-cerebri')).toBe(false)
+    expect(state.hidden.has('manual-hidden')).toBe(true)
   })
 })
 

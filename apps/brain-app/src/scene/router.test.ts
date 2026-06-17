@@ -57,4 +57,16 @@ describe('router', () => {
       window.removeEventListener('brain-app:urlchange', onChange)
     }
   })
+
+  it('replaceCanonicalLocation erhaelt Area-Scope-Overrides fuer dieselbe Config', () => {
+    window.history.replaceState(null, '', '/?config=broca-areal&scene=broca-areal&off=julich%3Aarea-44%3Al')
+    expect(replaceCanonicalLocation({ configName: 'broca-areal', sceneId: 'broca-areal', step: 0 })).toBe(
+      '?config=broca-areal&scene=broca-areal&step=0&off=julich%3Aarea-44%3Al',
+    )
+  })
+
+  it('replaceCanonicalLocation verwirft alte Area-Scope-Overrides beim Config-Wechsel', () => {
+    window.history.replaceState(null, '', '/?config=broca-areal&scene=broca-areal&off=julich%3Aarea-44%3Al')
+    expect(replaceCanonicalLocation({ configName: 'vcpt', sceneId: 'vcpt', step: 0 })).toBe('?config=vcpt&scene=vcpt&step=0')
+  })
 })

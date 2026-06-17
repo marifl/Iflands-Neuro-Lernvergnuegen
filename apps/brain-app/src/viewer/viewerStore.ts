@@ -310,6 +310,34 @@ interface ViewerState {
   setIsolated: (id: string | null) => void
 }
 
+type ClearedCarveOverlayState = Pick<
+  ViewerState,
+  | 'showCarveJulich'
+  | 'showCarveDkt'
+  | 'showCarveBrodmann'
+  | 'hidden'
+  | 'pickedAtlasArea'
+  | 'pickedAtlasSlug'
+  | 'hoveredAtlasArea'
+  | 'hoveredAtlasSlug'
+>
+
+function clearedCarveOverlayState(state: ViewerState): ClearedCarveOverlayState {
+  const hidden = new Set(state.hidden)
+  for (const slug of MENINGES_HIDE) hidden.delete(slug)
+  for (const slug of state.cortexHideSlugs) hidden.delete(slug)
+  return {
+    showCarveJulich: false,
+    showCarveDkt: false,
+    showCarveBrodmann: false,
+    hidden,
+    pickedAtlasArea: null,
+    pickedAtlasSlug: null,
+    hoveredAtlasArea: null,
+    hoveredAtlasSlug: null,
+  }
+}
+
 export const useViewerStore = create<ViewerState>((set, get) => ({
   ontology: null,
   ancestors: new Map(),
@@ -522,7 +550,10 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
   setColorMode: (colorMode) => set((s) => ({ colorMode, activePreset: colorMode === 'preset' ? s.activePreset : null })),
-  setPreset: (activePreset) => set({ activePreset, colorMode: activePreset ? 'preset' : 'region' }),
+  setPreset: (activePreset) =>
+    set((s) => activePreset
+      ? { ...clearedCarveOverlayState(s), activePreset, colorMode: 'preset' }
+      : { activePreset: null, colorMode: 'region' }),
   setCut: (axis, config) =>
     set((s) => ({ cuts: { ...s.cuts, [axis]: { on: config.on, pos: clampCutPosition(config.pos) } } })),
   setCuts: (configs) =>
@@ -565,11 +596,12 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const dktOn = next.showCarveDkt
       const brodmannOn = next.showCarveBrodmann
       const anyOn = julichOn || dktOn || brodmannOn
+      if (!anyOn) return clearedCarveOverlayState(s)
       // Hirnhaeute + Host-Gyri ausblenden, solange ein Overlay an ist (Parzellen ersetzen die Kortex,
       // kein Konflikt); beim letzten Ausschalten wieder einblenden + Areal-Auswahl aufraeumen.
       const hidden = new Set(s.hidden)
-      for (const slug of MENINGES_HIDE) (anyOn ? hidden.add(slug) : hidden.delete(slug))
-      for (const slug of s.cortexHideSlugs) (anyOn ? hidden.add(slug) : hidden.delete(slug))
+      for (const slug of MENINGES_HIDE) hidden.add(slug)
+      for (const slug of s.cortexHideSlugs) hidden.add(slug)
       // Areal-Auswahl beim Umschalten/Ausschalten immer zuruecksetzen (kein Rest aus dem alten Atlas).
       return { ...next, hidden, pickedAtlasArea: null, pickedAtlasSlug: null, hoveredAtlasArea: null, hoveredAtlasSlug: null }
     }),

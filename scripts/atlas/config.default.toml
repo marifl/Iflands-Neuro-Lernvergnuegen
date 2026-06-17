@@ -226,7 +226,7 @@ provenance = false
 [configurations.ofc-phineas.view]
 surface = "pial"
 subcortex = false
-carve_on_taro = "dkt"
+carve_on_taro = "off"
 [configurations.ofc-phineas.camera]
 target = "dkt:lateralorbitofrontal:l"
 shot = "lateral-left"
@@ -270,7 +270,7 @@ provenance = false
 [configurations.basalganglienschleifen.view]
 surface = "pial"
 subcortex = true
-carve_on_taro = "dkt"
+carve_on_taro = "off"
 [configurations.basalganglienschleifen.camera]
 target = "dkt:lateralorbitofrontal:l"
 shot = "lateral-left"

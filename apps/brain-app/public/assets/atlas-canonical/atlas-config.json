@@ -397,7 +397,7 @@
       },
       "title": "Drei Basalganglien-Schleifen",
       "view": {
-        "carve_on_taro": "dkt",
+        "carve_on_taro": "off",
         "subcortex": true,
         "surface": "pial"
       },
@@ -765,7 +765,7 @@
       },
       "title": "Orbitofrontaler Cortex und Phineas Gage",
       "view": {
-        "carve_on_taro": "dkt",
+        "carve_on_taro": "off",
         "subcortex": false,
         "surface": "pial"
       },

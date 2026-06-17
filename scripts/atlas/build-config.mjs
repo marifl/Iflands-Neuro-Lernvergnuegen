@@ -709,6 +709,9 @@ export function validateConfig(config, idx, ctx = {}) {
     if (c.view?.carve_on_taro && !CARVE.has(c.view.carve_on_taro)) {
       throw new Error(`build-config: configuration "${name}" view.carve_on_taro "${c.view.carve_on_taro}" ungueltig`)
     }
+    if (c.colors?.preset !== undefined && c.view?.carve_on_taro && c.view.carve_on_taro !== 'off') {
+      throw new Error(`build-config: configuration "${name}" colors.preset darf kein view.carve_on_taro="${c.view.carve_on_taro}" aktivieren`)
+    }
     assertKnownKeys(c.camera, CAMERA_KEYS, `configuration "${name}".camera`)
     assertKnownKeys(c.regions, REGION_KEYS, `configuration "${name}".regions`)
     assertKnownKeys(c.colors, COLOR_KEYS, `configuration "${name}".colors`)

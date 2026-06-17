@@ -378,9 +378,21 @@ test('validateConfig wirft bei unbekanntem colors.preset', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
     () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
       colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'ghost', coverage: 'full' },
     }), idx, VALIDATION_CONTEXT),
     /colors\.preset "ghost"/,
+  )
+})
+
+test('validateConfig verbietet Atlas-Carves fuer Color-Preset-Configurations', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'dkt' },
+      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'ok-preset', coverage: 'full' },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.preset.*view\.carve_on_taro/,
   )
 })
 
@@ -396,6 +408,7 @@ test('validateConfig wirft bei unbekanntem oder leerem Bucket', () => {
   )
   assert.throws(
     () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
       colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'gap-preset', coverage: 'full' },
     }), idx, VALIDATION_CONTEXT),
     /keine Geometrie/,

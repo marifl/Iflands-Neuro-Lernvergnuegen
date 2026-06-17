@@ -76,8 +76,19 @@ export function toConfigQuery(configName: string): string {
   return toCanonicalQuery({ configName })
 }
 
+function preserveScopeOverrides(query: string, input: CanonicalQueryInput): string {
+  const current = new URLSearchParams(window.location.search)
+  if (!input.configName || current.get('config') !== input.configName) return query
+  const scoped = new URLSearchParams(query)
+  for (const key of ['on', 'off']) {
+    const value = current.get(key)
+    if (value) scoped.set(key, value)
+  }
+  return `?${scoped.toString()}`
+}
+
 export function replaceCanonicalLocation(input: CanonicalQueryInput): string {
-  const query = toCanonicalQuery(input)
+  const query = preserveScopeOverrides(toCanonicalQuery(input), input)
   window.history.replaceState(null, '', query)
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
   return query

@@ -23,6 +23,10 @@ export interface AtlasCapProxyBundle {
   dispose: () => void
 }
 
+export interface AtlasCapProxyOptions {
+  isLabelEnabled?: (label: number, slug: string) => boolean
+}
+
 const noopRaycast = () => {}
 
 function emptyBundle(source: Mesh): AtlasCapProxyBundle {
@@ -44,7 +48,11 @@ function pushVertex(out: number[], position: BufferAttribute, index: number): vo
   out.push(position.getX(index), position.getY(index), position.getZ(index))
 }
 
-export function buildAtlasCapProxyBundle(source: Mesh, pick: AtlasPickData): AtlasCapProxyBundle {
+export function buildAtlasCapProxyBundle(
+  source: Mesh,
+  pick: AtlasPickData,
+  options: AtlasCapProxyOptions = {},
+): AtlasCapProxyBundle {
   const position = source.geometry.getAttribute('position') as BufferAttribute | undefined
   if (!position) return emptyBundle(source)
   if (pick.vlabels.length !== position.count) {
@@ -79,6 +87,7 @@ export function buildAtlasCapProxyBundle(source: Mesh, pick: AtlasPickData): Atl
     const slug = pick.slugs[label]
     const vertices = verticesByLabel.get(label)
     if (!slug || !vertices?.length) continue
+    if (options.isLabelEnabled && !options.isLabelEnabled(label, slug)) continue
 
     const geometry = new BufferGeometry()
     geometry.setAttribute('position', new Float32BufferAttribute(vertices, 3))

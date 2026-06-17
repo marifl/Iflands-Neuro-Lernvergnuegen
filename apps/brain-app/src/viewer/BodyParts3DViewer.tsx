@@ -1079,7 +1079,7 @@ export default function BodyParts3DViewer() {
                 <SubParcels />
                 <EegHeadset />
                 <AuthoringSceneObjects />
-                <AtlasOverlay />
+                <AtlasOverlay effectiveConfig={effectiveConfig} />
                 <CutCaps />
               </Suspense>
               <TampingIron />

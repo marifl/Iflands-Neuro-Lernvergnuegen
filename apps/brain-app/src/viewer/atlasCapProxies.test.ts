@@ -34,4 +34,31 @@ describe('buildAtlasCapProxyBundle', () => {
     bundle.dispose()
     expect(source.userData.atlasCapProxyOwner).toBeUndefined()
   })
+
+  it('erzeugt Cap-Proxies nur fuer aktivierte Labels', () => {
+    const geometry = new BufferGeometry()
+    geometry.setAttribute('position', new Float32BufferAttribute([
+      0, 0, 0,
+      1, 0, 0,
+      0, 1, 0,
+      2, 0, 0,
+      3, 0, 0,
+      2, 1, 0,
+    ], 3))
+    geometry.setIndex([0, 1, 2, 3, 4, 5])
+    const source = new Mesh(geometry, new MeshBasicMaterial())
+
+    const bundle = buildAtlasCapProxyBundle(source, {
+      slugs: ['area-44-l', 'area-45-l'],
+      vlabels: Int16Array.from([0, 0, 0, 1, 1, 1]),
+    }, {
+      isLabelEnabled: (_label, slug) => slug === 'area-45-l',
+    })
+
+    expect(bundle.meshes.map((m) => m.name)).toEqual(['area-45-l'])
+    expect(source.children.map((m) => m.name)).toEqual(['area-45-l'])
+
+    bundle.dispose()
+    expect(source.children).toHaveLength(0)
+  })
 })
