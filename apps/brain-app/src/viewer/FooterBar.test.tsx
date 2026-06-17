@@ -120,7 +120,11 @@ describe('FooterBar', () => {
       intent: 'Testet die Preset-Ansichtsoptionen.',
       coverage: 'full',
       dimOthers: true,
-      groups: [{ label: 'DLPFC', role: 'cognition', meaning: 'Testgruppe', hue: 210, buckets: ['dlpfc'] }],
+      groups: [
+        { label: 'Kognition', role: 'cognition', meaning: 'DLPFC/dorsales Striatum', hue: 210, buckets: ['dlpfc'] },
+        { label: 'Emotion', role: 'emotion', meaning: 'OFC/vmPFC/Amygdala', hue: 30, buckets: ['ofc'] },
+        { label: 'Motivation', role: 'motivation', meaning: 'dACC/Nc. accumbens', hue: 150, buckets: ['dacc'] },
+      ],
     }])
     await renderFooterBar()
 
@@ -129,10 +133,18 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().activePreset?.id).toBe('test-figure')
 
     fireEvent.click(screen.getByRole('button', { name: /Test-Figur/ }))
-    const hideSlider = screen.getByLabelText('Ungefärbte ausblenden')
-    const focusSlider = screen.getByLabelText('Relevante Areale fokussieren')
-    expect(screen.queryByRole('button', { name: 'Ungefärbte ausblenden' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Relevante Areale fokussieren' })).not.toBeInTheDocument()
+    expect(screen.getByText('Bedeutungen')).toBeInTheDocument()
+    expect(screen.getByText('Kognition')).toBeInTheDocument()
+    expect(screen.getByText('DLPFC/dorsales Striatum')).toBeInTheDocument()
+    expect(screen.getByText('Emotion')).toBeInTheDocument()
+    expect(screen.getByText('OFC/vmPFC/Amygdala')).toBeInTheDocument()
+    expect(screen.getByText('Motivation')).toBeInTheDocument()
+    expect(screen.getByText('dACC/Nc. accumbens')).toBeInTheDocument()
+    expect(screen.getByText('Andere dimmen')).toBeInTheDocument()
+    const hideSlider = screen.getByLabelText('Andere ausblenden')
+    const focusSlider = screen.getByLabelText('Eingefärbte fokussieren')
+    expect(screen.queryByRole('button', { name: 'Andere ausblenden' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Eingefärbte fokussieren' })).not.toBeInTheDocument()
 
     fireEvent.change(hideSlider, { target: { value: '1' } })
     fireEvent.change(focusSlider, { target: { value: '1' } })
