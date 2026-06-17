@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import StructureTree from './StructureTree'
 import { useViewerStore } from './viewerStore'
@@ -224,6 +224,51 @@ describe('StructureTree Gruppenknoten', () => {
 
     fireEvent.change(searchInput, { target: { value: 'kein-treffer' } })
     expect(screen.getByText('Keine Treffer.')).toBeInTheDocument()
+  })
+
+  it('bietet Auswahlaktionen mit Isolation und Reset direkt im Explorer-Panel an', () => {
+    useViewerStore.setState({
+      selected: 'area-a',
+      selectedSlugs: new Set(['area-a']),
+      selectedLabels: labels('Area A'),
+      hidden: new Set(['area-b']),
+      isolated: 'area-a',
+    })
+
+    render(<StructureTree />)
+
+    expect(screen.getByRole('group', { name: 'Auswahlaktionen' })).toBeInTheDocument()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Auswahl ausblenden' }))
+    expect(useViewerStore.getState().hidden.has('area-a')).toBe(true)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Alles zeigen' }))
+    expect(useViewerStore.getState().hidden.size).toBe(0)
+
+    fireEvent.click(screen.getByRole('button', { name: 'Isolation aus' }))
+    expect(useViewerStore.getState().isolated).toBeNull()
+
+    fireEvent.click(screen.getByRole('button', { name: 'Auswahl isolieren' }))
+    expect(useViewerStore.getState().isolated).toBe('area-a')
+  })
+
+  it('stellt die Schnittsteuerung als Abschnitt im Explorer-Panel bereit', () => {
+    render(<StructureTree />)
+
+    const cutGroup = screen.getByRole('group', { name: 'Schnitte' })
+    expect(cutGroup).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Schneiden' })).toHaveClass('active')
+
+    const sagittal = screen.getByRole('button', { name: 'Sagittal' })
+    expect(sagittal).toHaveAttribute('data-cut-axis', 'sagittal')
+    expect(sagittal.style.getPropertyValue('--cut-axis-color')).toMatch(/^rgba\(/)
+
+    fireEvent.click(sagittal)
+    expect(useViewerStore.getState().cuts.sagittal.on).toBe(true)
+    expect(screen.getByLabelText('Schnittposition Sagittal')).toBeInTheDocument()
+
+    fireEvent.click(within(cutGroup).getByRole('button', { name: 'Ausblenden' }))
+    expect(useViewerStore.getState().cutMode).toBe('hide')
   })
 
   it('rendert keine kapitelweite Vertiefung im Explorer-Baum', () => {
