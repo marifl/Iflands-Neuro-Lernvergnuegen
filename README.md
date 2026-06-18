@@ -161,6 +161,7 @@ Tablet und Phone, WCAG-AA-Kontraste.
 | …die Quellen / Zitate (APA7) | je Region im Abschnitt „## Quellen"; Atlas-/Daten-Lizenzen in [`THIRD-PARTY-NOTICES.md`](THIRD-PARTY-NOTICES.md) |
 | …den App-Code lesen | `apps/brain-app/src/` (`main.tsx` → `scene/` + `viewer/`) |
 | …Architektur, State, Config, Snapshots und Visual-Authoring verstehen | [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) |
+| …Einfärbungen korrekt authoren | Kurzfassung unten unter [Einfärbungen authoren](#einfärbungen-authoren), Details in [`docs/FAERBUNGEN_GUIDE.md`](docs/FAERBUNGEN_GUIDE.md) |
 | …die 3D-Daten selbst erzeugen | `scripts/` ([Daten & Asset-Pipelines](#daten--asset-pipelines)) |
 | …Deployment, Base-Path und Cache-Regeln prüfen | [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) |
 | …Produkt / Design verstehen | [`PRODUCT.md`](PRODUCT.md), [`DESIGN.md`](DESIGN.md) |
@@ -267,6 +268,30 @@ und `apps/brain-app/src/viewer/meshMappings.generated.json`. Beide sind abgeleit
 Artefakte; sie werden nicht von Hand als zweite Wahrheit gepflegt. Die
 App-Scripts `dev`, `build`, `typecheck` und `test` führen den Builder vorab aus,
 damit ein frischer Checkout kein lokales Mapping-Artefakt voraussetzt.
+
+### Einfärbungen authoren
+
+Der aktuelle produktive Pfad für didaktische Figure-Färbungen läuft über
+`colors.preset`, nicht über handgesetzte Mesh-Farben:
+
+1. Buckets werden in `scripts/atlas/config.default.toml` unter
+   `[mesh_mappings.buckets.<slug>]` gepflegt.
+2. Didaktische Presets werden in
+   `apps/brain-app/public/companion/config/color-presets.json` definiert:
+   `label`, `role`, `meaning`, `hue`, `buckets`.
+3. Figure-Configurations referenzieren das Preset in der TOML:
+   `colors.scheme = "preset"` und `colors.preset = "<preset-id>"`.
+4. Die Runtime löst Buckets über `meshMappings.generated.json` auf konkrete
+   Meshes auf und berechnet die echte Renderfarbe über `hueToHex(...)`.
+5. `scripts/atlas/smoke-figures.mjs` prüft pro `?config=...`, dass Legende und
+   alle erwarteten Bucket-Meshes exakt diese Preset-Farbe verwenden.
+
+`colors.groups` ist aktuell validierte Config-/Export-Metadaten, aber nicht der
+aktive Figure-Renderpfad. Für echte Abbildungsfärbungen deshalb `colors.preset`
+verwenden.
+
+Ausführliche, human- und AI-freundliche Anleitung:
+[`docs/FAERBUNGEN_GUIDE.md`](docs/FAERBUNGEN_GUIDE.md).
 
 > [!NOTE]
 > **Quelldaten** (selbst beziehen, unter deren Lizenzen): BodyParts3D
