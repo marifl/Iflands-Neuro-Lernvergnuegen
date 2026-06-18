@@ -1,0 +1,173 @@
+{
+  "input": "archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-allen-fullbrain-gage-context.glb",
+  "objects": {
+    "archive-tamping-iron": {
+      "bounds": {
+        "center": [
+          -15.989517211914062,
+          31.49404525756836,
+          34.0
+        ],
+        "max": [
+          150.5240936279297,
+          92.09998321533203,
+          560.7411499023438
+        ],
+        "min": [
+          -182.5031280517578,
+          -29.111892700195312,
+          -492.74114990234375
+        ],
+        "size": [
+          333.0272216796875,
+          121.21187591552734,
+          1053.4822998046875
+        ]
+      },
+      "exportName": "archive-tamping-iron",
+      "matrixWorld": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "meshName": "Tamping iron (1090mm)",
+      "objectName": "Tamping Iron (1090mm)",
+      "polygonCount": 256,
+      "sourceName": "Tamping Iron (1090mm)",
+      "vertexCount": 130
+    },
+    "phineas-gage-skull-base": {
+      "bounds": {
+        "center": [
+          -4.597328186035156,
+          -16.040611267089844,
+          -76.59666442871094
+        ],
+        "max": [
+          63.083900451660156,
+          77.7286605834961,
+          -10.002914428710938
+        ],
+        "min": [
+          -72.27855682373047,
+          -109.80988311767578,
+          -143.19041442871094
+        ],
+        "size": [
+          135.36245727539062,
+          187.53854370117188,
+          133.1875
+        ]
+      },
+      "exportName": "phineas-gage-skull-base",
+      "matrixWorld": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "meshName": "Phineas gage skull (intact, base)",
+      "objectName": "Phineas Gage Skull (intact, base)",
+      "polygonCount": 90450,
+      "sourceName": "Phineas Gage Skull (intact, base)",
+      "vertexCount": 45240
+    },
+    "phineas-gage-skull-calvaria": {
+      "bounds": {
+        "center": [
+          -5.823020935058594,
+          -17.542694091796875,
+          32.35386276245117
+        ],
+        "max": [
+          62.50389862060547,
+          76.39033508300781,
+          74.70772552490234
+        ],
+        "min": [
+          -74.14994049072266,
+          -111.47572326660156,
+          -10.0
+        ],
+        "size": [
+          136.65383911132812,
+          187.86605834960938,
+          84.70772552490234
+        ]
+      },
+      "exportName": "phineas-gage-skull-calvaria",
+      "matrixWorld": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "meshName": "Phineas gage skull (intact, calvaria)",
+      "objectName": "Phineas Gage Skull (intact, calvaria)",
+      "polygonCount": 33718,
+      "sourceName": "Phineas Gage Skull (intact, calvaria)",
+      "vertexCount": 17135
+    }
+  }
+}

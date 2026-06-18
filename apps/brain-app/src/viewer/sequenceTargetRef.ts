@@ -90,6 +90,29 @@ export function objectGraphIdForTarget(ref: SequenceTargetRef): string {
   }
 }
 
+export function sequenceTargetRefFromObjectGraphId(objectGraphId: string): SequenceTargetRef | null {
+  const [prefix, targetKind, ...segments] = objectGraphId.split(':')
+  if (prefix !== 'target' || !TARGET_KINDS.includes(targetKind as SequenceTargetKind)) return null
+  const parsedKind = targetKind as SequenceTargetKind
+  switch (parsedKind) {
+    case 'ontology-node':
+      if (segments.length !== 2) return null
+      return { targetKind: parsedKind, collectionId: segments[0], ontologyNodeId: segments[1] }
+    case 'atlas-role':
+      if (segments.length !== 2) return null
+      return { targetKind: parsedKind, collectionId: segments[0], atlasRole: segments[1] }
+    case 'eeg-site':
+      if (segments.length !== 2 || !isEegSite(segments[1])) return null
+      return { targetKind: parsedKind, collectionId: segments[0], eegSite: segments[1] }
+    case 'asset-instance':
+      if (segments.length !== 2) return null
+      return { targetKind: parsedKind, collectionId: segments[0], instanceId: segments[1] }
+    case 'asset-part':
+      if (segments.length !== 3) return null
+      return { targetKind: parsedKind, collectionId: segments[0], instanceId: segments[1], partId: segments[2] }
+  }
+}
+
 export function sequenceTargetRefFromOntologyNode(node: OntologyNode, collectionId = 'taro'): SequenceTargetRef {
   return { targetKind: 'ontology-node', collectionId, ontologyNodeId: node.id }
 }

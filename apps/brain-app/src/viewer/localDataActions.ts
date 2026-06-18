@@ -3,6 +3,11 @@ import { useAtlasConfigStore, LS_KEY as ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } fro
 import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
 import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
 import {
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STORAGE_KEY,
+  useAuthoringSnapshotStore,
+} from './authoringSnapshotStore'
+import {
   studentCompletionRatio,
   useStudentProgressStore,
   type StudentProgressState,
@@ -57,7 +62,10 @@ export function clearLocalBrainAppData(): void {
   useSettingsStore.getState().resetSettings()
   useStudentProgressStore.getState().resetStudentProgress()
   useAtlasConfigStore.getState().reset()
+  useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
   removeLocalStorageItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)
+  removeLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
+  removeLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
   removeLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
   removeLocalStorageItem(SETTINGS_STORAGE_KEY)
   removeLocalStorageItem(THEME_STORAGE_KEY)

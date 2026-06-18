@@ -9,6 +9,7 @@ import { nearestCornerVertex } from './atlas/atlasPick'
 import { isAtlasHit, pickFirstAtlasHit } from './atlasInteraction'
 import { createCutPickTargetCache } from './cutPickTargets'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
+import { flushAuthoringTransformDrafts } from './authoringTransformDraftRegistry'
 import {
   isAuthoringTargetRef,
   pickTargetFromLegacyMeshName,
@@ -111,8 +112,14 @@ export default function CutPickBridge() {
       const snapshotStore = useAuthoringSnapshotStore.getState()
       const current = snapshotStore.authoring
       if (!current) return
+      const activeScene = current.authoringScenes.find((scene) => scene.assetInstances.some((instance) =>
+        (target.targetRef.targetKind === 'asset-instance' || target.targetRef.targetKind === 'asset-part') &&
+        instance.collectionId === target.targetRef.collectionId &&
+        instance.instanceId === target.targetRef.instanceId
+      ))
       snapshotStore.setAuthoringSnapshotState({
         ...current,
+        ...(activeScene === undefined ? {} : { activeSceneId: activeScene.sceneId }),
         activeTargetRef: target.targetRef,
       })
     }
@@ -172,6 +179,7 @@ export default function CutPickBridge() {
         globals.__brainPerformanceGateRecordPick?.(performance.now() - pickStartedAt, hit)
       }
       const { target, area, areaSlug } = hitAt(ev)
+      flushAuthoringTransformDrafts()
       // Liegt ein Atlas-Areal (Carve-Overlay) unter dem Klick -> dessen Name hat Vorrang.
       if (area) {
         setPickedAtlasArea(area, areaSlug)

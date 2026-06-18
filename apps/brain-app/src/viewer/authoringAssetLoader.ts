@@ -1,5 +1,7 @@
 import {
+  parseAssetManifestDocument,
   resolveAssetManifestSlot,
+  type AssetManifestDocument,
   type AssetManifestEntry,
   type AssetManifestSlotRequest,
 } from './assetManifest'
@@ -121,4 +123,24 @@ export function createAuthoringSceneFromManifestSlot(
     assetInstances: [],
   }
   return loadAuthoringAssetIntoScene(emptyScene, rawManifest, request)
+}
+
+export function createAuthoringSceneFromManifestAssets(
+  rawManifest: unknown,
+  sceneId: string,
+): AuthoringScene {
+  const manifest: AssetManifestDocument = parseAssetManifestDocument(rawManifest)
+  return parseAuthoringScene({
+    schemaVersion: AUTHORING_SCENE_SCHEMA_VERSION,
+    sceneId,
+    assetInstances: manifest.assets
+      .filter((asset) => asset.runtimeInstanceId)
+      .map((asset) => createInstance(asset, {
+        collectionId: asset.collectionId,
+        slotId: asset.slotId,
+        assetId: asset.assetId,
+        instanceId: asset.runtimeInstanceId ?? asset.assetId,
+        optional: asset.optional,
+      })),
+  })
 }

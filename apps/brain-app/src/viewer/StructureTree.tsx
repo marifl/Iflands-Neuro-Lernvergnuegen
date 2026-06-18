@@ -288,18 +288,23 @@ export default function StructureTree() {
     return mode === 'k11' ? filterK11(ontology.tree) : ontology.tree
   }, [ontology, mode])
 
+  const explorerRoots = useMemo(() => {
+    if (!visibleTree) return []
+    return buildExplorerTreeRoots({ visibleTree, mode, julich, atlas3d, context })
+  }, [visibleTree, mode, julich, atlas3d, context])
+
   const searchHits = useMemo(() => {
     if (!ontology || !search.trim()) return null
     const brainPool = mode === 'k11' ? (visibleTree ? flattenStructures(visibleTree) : []) : flattenStructures(ontology.tree)
     const ctxPool = context ? flattenStructures(context) : []
     const atlasPools = [julich, atlas3d.dkt, atlas3d.brodmann, atlas3d.destrieux].flatMap((t) => (t ? flattenStructures(t) : []))
-    return filterStructureSearch([...brainPool, ...ctxPool, ...atlasPools], search)
-  }, [ontology, context, julich, atlas3d, search, mode, visibleTree])
-
-  const explorerRoots = useMemo(() => {
-    if (!visibleTree) return []
-    return buildExplorerTreeRoots({ visibleTree, mode, julich, atlas3d, context })
-  }, [visibleTree, mode, julich, atlas3d, context])
+    const explorerPools = explorerRoots.flatMap((root) => (root.kind === 'tree' ? flattenStructures(root.node) : []))
+    const unique = new Map<string, OntologyNode>()
+    for (const node of [...brainPool, ...ctxPool, ...atlasPools, ...explorerPools]) {
+      if (!unique.has(node.id)) unique.set(node.id, node)
+    }
+    return filterStructureSearch([...unique.values()], search)
+  }, [ontology, context, julich, atlas3d, explorerRoots, search, mode, visibleTree])
 
   if (!ontology || !visibleTree) return null
 
