@@ -54,7 +54,7 @@ bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
 | Kapitel-11-Figure-Fallbacks | 13 lokale JPGs unter `apps/brain-app/public/figures/` | versionierte Runtime-Fallbacks für 11-05 bis 11-11C, 11-13, 11-14; 11-12 ist textuell neu gebaut |
-| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit Schädel-LOD, Calvarium-Cut, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist im Phineas-Modus montiert; Lizenz/Attribution vor Public-Claim final pinnen |
+| Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit extrahierter Schädelbasis, Calvaria, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist in Phineas- und Explore-Modus montiert; Lizenz/Attribution vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
 `atlas-raw-julich.glb` (~14 MB), `atlas-surface-brodmann.glb` (~9.6 MB),
@@ -81,20 +81,26 @@ Geprüft am 2026-06-16:
    Quelle pinnen, Attribution und eventuell Share-Alike-Pflichten in
    `THIRD-PARTY-NOTICES.md` nachziehen und das Asset-Manifest ergänzen.
 4. Nach Hinweis von Marcus wurden die belastbaren lokalen Artefakte in dieses
-   Standalone-Repo kopiert:
-   `apps/brain-app/public/assets/phineas/phineas-gage-skull-lod.glb`,
-   `phineas-gage-skull-calvarium-cut-lod.glb`,
+   Standalone-Repo überführt. Der aktuelle Runtime-Pfad nutzt aus dem
+   archivierten `mni152-allen-fullbrain-gage-context.glb` extrahierte
+   Einzelteile:
+   `apps/brain-app/public/assets/phineas/phineas-gage-skull-base.glb`,
+   `phineas-gage-skull-calvaria.glb`,
    `phineas-gage-iron-rod.glb`,
-   `gage-reconstructions.json` und `asset-manifest.json`. Die wissenschaftlichen
-   PDFs/OCR-Artefakte liegen unter `raw_protected/phineas-gage/`.
+   `archive-extract-report.json`, `gage-reconstructions.json` und
+   `asset-manifest.json`. Die wissenschaftlichen PDFs/OCR-Artefakte liegen unter
+   `raw_protected/phineas-gage/`.
 
 Entscheidung: Im aktuellen Build rendert der Phineas-Modus die Standalone-GLBs
-unter `/assets/phineas`: Vollschädel im ersten Schritt, Calvarium-Cut plus
-Eisenstange in den Trajektorien-Schritten. Der normale Kontextpfad
-`/assets/context/skull.glb` bleibt für Explorer/Strukturbaum erhalten, wird im
-Phineas-Modus aber nicht mehr als Gage-Ersatz gezeigt. Das Manifest pinnt
-Quelle, Lizenzhinweis, Hash, Transform/Skalierung und Node-Namen; der Test
-`phineasStandaloneAssets.test.ts` prüft die Dateien gegen ihre SHA-256-Hashes.
+unter `/assets/phineas`: Schädelbasis und Calvaria im ersten Schritt, dieselben
+Teile transparent in den Trajektorien-Schritten plus Eisenstange. Im
+Explore-Modus hängen dieselben drei Assets am Manifest-Objektgraphen, damit der
+Strukturbaum und der Viewport synchron sind und die Teile einzeln ausgeblendet
+werden können. Der normale Kontextpfad `/assets/context/skull.glb` bleibt für
+Explorer/Strukturbaum erhalten, wird im Phineas-Modus aber nicht mehr als
+Gage-Ersatz gezeigt. Das Manifest pinnt Quelle, Lizenzhinweis, Hash,
+Transform/Skalierung und Node-Namen; der Test `phineasStandaloneAssets.test.ts`
+prüft die Dateien gegen ihre SHA-256-Hashes.
 Vor öffentlicher Auslieferung muss die konkrete Attribution/Lizenz noch in
 `THIRD-PARTY-NOTICES.md` finalisiert werden.
 

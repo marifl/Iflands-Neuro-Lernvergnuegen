@@ -20,23 +20,32 @@ Referenzen:
 
 Die Gage-Kandidaten liegen jetzt im Standalone-Repo:
 
-1. `apps/brain-app/public/assets/phineas/phineas-gage-skull-lod.glb`
-2. `apps/brain-app/public/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb`
+1. `apps/brain-app/public/assets/phineas/phineas-gage-skull-base.glb`
+2. `apps/brain-app/public/assets/phineas/phineas-gage-skull-calvaria.glb`
 3. `apps/brain-app/public/assets/phineas/phineas-gage-iron-rod.glb`
-4. `apps/brain-app/public/assets/phineas/gage-reconstructions.json`
-5. `apps/brain-app/public/assets/phineas/asset-manifest.json`
-6. `apps/brain-app/public/assets/phineas/transform-contract.json`
+4. `apps/brain-app/public/assets/phineas/archive-extract-report.json`
+5. `apps/brain-app/public/assets/phineas/gage-reconstructions.json`
+6. `apps/brain-app/public/assets/phineas/asset-manifest.json`
+7. `apps/brain-app/public/assets/phineas/transform-contract.json`
 
 Die wissenschaftlichen Unterlagen liegen unter `raw_protected/phineas-gage/`.
 Damit verweist der Standalone-Bestand nicht mehr auf lokale Dateien außerhalb
 dieses Repos.
 
 Der aktuelle Viewer rendert im Phineas-Modus die Standalone-Gage-GLBs:
-Vollschädel im ersten Schritt, Calvarium-Cut in den Durchtritts-/
-Austrittsschritten und das generierte Eisenstangenmodell. Die generischen
+Schädelbasis und Calvaria im ersten Schritt, dieselben Teile transparent in den
+Durchtritts-/Austrittsschritten und das generierte Eisenstangenmodell. Die
+generischen
 Kontextmodelle `apps/brain-app/public/assets/context/skull.glb`, `head.glb` und
 `skull.json` bleiben für Explorer und Strukturbaum erhalten, sind aber nicht
 mehr der Phineas-Ersatzpfad.
+
+Schädelbasis und Calvaria stammen aus dem archivierten
+`mni152-allen-fullbrain-gage-context.glb` und werden mit
+`apps/brain-app/scripts/extract-phineas-archive-assets.py` als stabile Einzel-
+GLBs exportiert. Der Transform-Vertrag wendet keine Spiegelung mehr an; Base,
+Calvaria und generierte Eisenstange teilen eine TARO-Fit-Matrix bzw. die daraus
+abgeleitete Trajektorie.
 
 Der Transform-Vertrag `transform-contract.json` pinnt Einheit, Viewer-Achsen,
 Quellen, Eintritts-/Austrittspunkt und historische Stangenmaße. Die
@@ -48,10 +57,11 @@ Phineas-Trajektorie.
 
 Die drei sichtbaren Gage-Teile sind als Slots der Collection
 `case-phineas-gage` registriert und tragen stabile `asset-part`-
-`SequenceTargetRef`s. Dadurch verwenden Sequenzlogik, Picking und ObjectGraph
-dieselben IDs für Vollschädel, Calvarium-Cut und Eisenstange.
+`SequenceTargetRef`s. Dadurch verwenden Sequenzlogik, Picking, Explorer-
+Strukturbaum und ObjectGraph dieselben IDs für Schädelbasis, Calvaria und
+Eisenstange.
 
-Die UI benennt weiter die Modellgrenze: Schädel und Calvarium sind lokale
+Die UI benennt weiter die Modellgrenze: Schädelbasis und Calvaria sind lokale
 Standalone-Kandidaten, Attribution/Lizenz sind im Manifest markiert und müssen
 vor öffentlicher Auslieferung final gepinnt werden. Die Eisenstange ist
 projektgenerierte Geometrie aus dokumentierten historischen Maßen. Die

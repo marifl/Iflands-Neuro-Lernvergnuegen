@@ -16,8 +16,8 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 | `bodyparts3d-subparcels` | `bodyparts3d-taro-subparcels` | 60 | 60 | 1 | 0 | 0 | n/a |
 | `bodyparts3d-skull-context` | `bodyparts3d-taro` | 21 | 20 | 1 | 20 | 0 | n/a |
 | `bodyparts3d-head-context` | `bodyparts3d-taro` | 314 | 313 | 1 | 313 | 0 | n/a |
-| `phineas-gage-skull-lod` | `phineas-gage-legacy-figs3d` | 2 | 1 | 1 | 1 | 0 | ok |
-| `phineas-gage-skull-calvarium-cut-lod` | `phineas-gage-legacy-figs3d` | 2 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-skull-base` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-skull-calvaria` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
 | `phineas-gage-iron-rod` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
 
 ## Details
@@ -70,36 +70,36 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 - Beispiel-Meshes: `anterior-chamber-of-left-eyeball`, `anterior-chamber-of-right-eyeball`, `anterior-temporal-branch-of-left-lateral-occipital-artery`, `anterior-temporal-branch-of-right-lateral-occipital-artery`, `artery-of-right-pterygoid-canal`, `atlas`, `axis`, `buccal-branch-of-left-facial-nerve`, `buccal-branch-of-right-facial-nerve`, `check-ligament-of-left-lateral-rectus`, `check-ligament-of-left-medial-rectus`, `check-ligament-of-right-lateral-rectus`
 - Beispiel-Materials: `(unnamed-material)`
 
-### phineas-gage-skull-lod
+### phineas-gage-skull-base
 
-- URI: `/assets/phineas/phineas-gage-skull-lod.glb`
+- URI: `/assets/phineas/phineas-gage-skull-base.glb`
+- Manifest: `/assets/phineas/asset-manifest.json`
+- Größe: 1.55 MiB
+- SHA-256: `sha256:70ad306f070c0a2a97de84d906df8917cc924142132d7640f8e9756c126d2358`
+- Nodes: 1 gesamt, 1 benannt, 0 unbenannt
+- Meshes: 1 gesamt, 1 benannt, 0 unbenannt
+- Materials: 1
+- Beispiel-Meshes: `phineas-gage-skull-base`
+- Beispiel-Materials: `gage_skull_intact_base`
+
+### phineas-gage-skull-calvaria
+
+- URI: `/assets/phineas/phineas-gage-skull-calvaria.glb`
 - Manifest: `/assets/phineas/asset-manifest.json`
 - Größe: 0.59 MiB
-- SHA-256: `sha256:ab804c46c19634f5902108ebda59f9957cb42d0afea8b62ed84b5d55eb10f493`
-- Nodes: 2 gesamt, 2 benannt, 0 unbenannt
+- SHA-256: `sha256:7d1ded2f87de911841f366a7bb8d3f826db60472baa67ef59c63556a8e074e1e`
+- Nodes: 1 gesamt, 1 benannt, 0 unbenannt
 - Meshes: 1 gesamt, 1 benannt, 0 unbenannt
 - Materials: 1
-- Beispiel-Meshes: `phineas-gage-skull`
-- Beispiel-Materials: `(unnamed-material)`
-
-### phineas-gage-skull-calvarium-cut-lod
-
-- URI: `/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb`
-- Manifest: `/assets/phineas/asset-manifest.json`
-- Größe: 0.53 MiB
-- SHA-256: `sha256:45c3c40c9efa4023bcbc88b53f02902dbed98670e59abaad8809e55dc4892dc8`
-- Nodes: 2 gesamt, 2 benannt, 0 unbenannt
-- Meshes: 1 gesamt, 1 benannt, 0 unbenannt
-- Materials: 1
-- Beispiel-Meshes: `phineas-gage-skull-calvarium-cut`
-- Beispiel-Materials: `(unnamed-material)`
+- Beispiel-Meshes: `phineas-gage-skull-calvaria`
+- Beispiel-Materials: `gage_skull_intact_calvaria`
 
 ### phineas-gage-iron-rod
 
 - URI: `/assets/phineas/phineas-gage-iron-rod.glb`
 - Manifest: `/assets/phineas/asset-manifest.json`
 - Größe: 0.01 MiB
-- SHA-256: `sha256:5674703efbf611cbffc2acf9a401a3c54c5eab170eade72cea4949e9ac0af751`
+- SHA-256: `sha256:de50b94c56cdbb6aa22c906f681c704d24097547c9878dcc44585a9e5d7ea440`
 - Nodes: 1 gesamt, 1 benannt, 0 unbenannt
 - Meshes: 1 gesamt, 1 benannt, 0 unbenannt
 - Materials: 1

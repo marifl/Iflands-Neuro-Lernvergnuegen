@@ -152,15 +152,15 @@
       ]
     },
     {
-      "assetId": "phineas-gage-skull-lod",
+      "assetId": "phineas-gage-skull-base",
       "contractId": "phineas-gage-legacy-figs3d",
-      "uri": "/assets/phineas/phineas-gage-skull-lod.glb",
+      "uri": "/assets/phineas/phineas-gage-skull-base.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
-      "byteSize": 615784,
-      "sha256": "sha256:ab804c46c19634f5902108ebda59f9957cb42d0afea8b62ed84b5d55eb10f493",
+      "byteSize": 1629616,
+      "sha256": "sha256:70ad306f070c0a2a97de84d906df8917cc924142132d7640f8e9756c126d2358",
       "hashMatchesManifest": true,
-      "nodeCount": 2,
-      "namedNodeCount": 2,
+      "nodeCount": 1,
+      "namedNodeCount": 1,
       "unnamedNodeCount": 0,
       "meshCount": 1,
       "namedMeshCount": 1,
@@ -171,22 +171,22 @@
       "duplicateNodeNames": [],
       "duplicateMeshNames": [],
       "sampleMeshNames": [
-        "phineas-gage-skull"
+        "phineas-gage-skull-base"
       ],
       "sampleMaterialNames": [
-        "(unnamed-material)"
+        "gage_skull_intact_base"
       ]
     },
     {
-      "assetId": "phineas-gage-skull-calvarium-cut-lod",
+      "assetId": "phineas-gage-skull-calvaria",
       "contractId": "phineas-gage-legacy-figs3d",
-      "uri": "/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb",
+      "uri": "/assets/phineas/phineas-gage-skull-calvaria.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
-      "byteSize": 555756,
-      "sha256": "sha256:45c3c40c9efa4023bcbc88b53f02902dbed98670e59abaad8809e55dc4892dc8",
+      "byteSize": 614696,
+      "sha256": "sha256:7d1ded2f87de911841f366a7bb8d3f826db60472baa67ef59c63556a8e074e1e",
       "hashMatchesManifest": true,
-      "nodeCount": 2,
-      "namedNodeCount": 2,
+      "nodeCount": 1,
+      "namedNodeCount": 1,
       "unnamedNodeCount": 0,
       "meshCount": 1,
       "namedMeshCount": 1,
@@ -197,10 +197,10 @@
       "duplicateNodeNames": [],
       "duplicateMeshNames": [],
       "sampleMeshNames": [
-        "phineas-gage-skull-calvarium-cut"
+        "phineas-gage-skull-calvaria"
       ],
       "sampleMaterialNames": [
-        "(unnamed-material)"
+        "gage_skull_intact_calvaria"
       ]
     },
     {
@@ -208,8 +208,8 @@
       "contractId": "phineas-gage-legacy-figs3d",
       "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
-      "byteSize": 12232,
-      "sha256": "sha256:5674703efbf611cbffc2acf9a401a3c54c5eab170eade72cea4949e9ac0af751",
+      "byteSize": 12276,
+      "sha256": "sha256:de50b94c56cdbb6aa22c906f681c704d24097547c9878dcc44585a9e5d7ea440",
       "hashMatchesManifest": true,
       "nodeCount": 1,
       "namedNodeCount": 1,
