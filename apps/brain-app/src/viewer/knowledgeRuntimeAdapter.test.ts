@@ -33,6 +33,7 @@ describe('knowledgeRuntimeAdapter', () => {
       'brodmann',
       'destrieux',
       'context-full',
+      'case-phineas-gage',
     ])
     expect(roots.map((root) => root.label)).toEqual([
       'TARO',
@@ -41,12 +42,14 @@ describe('knowledgeRuntimeAdapter', () => {
       'Brodmann',
       'Destrieux',
       'Kontext (Vollausbau)',
+      'Phineas Gage',
     ])
     expect(roots.map((root) => root.kind)).toEqual([
       'tree',
       'placeholder',
       'tree',
       'placeholder',
+      'tree',
       'tree',
       'tree',
     ])
@@ -57,6 +60,27 @@ describe('knowledgeRuntimeAdapter', () => {
     })
     expect(roots[2]).toMatchObject({ kind: 'tree', treeId: 'dkt', node: { id: 'dkt' } })
     expect(roots[5]).toMatchObject({ kind: 'tree', treeId: 'context', node: { id: 'context' } })
+    expect(roots[6]).toMatchObject({
+      kind: 'tree',
+      treeId: 'case-phineas-gage',
+      node: {
+        id: 'case-phineas-gage',
+        children: [
+          {
+            id: 'target:asset-part:case-phineas-gage:phineas-gage-skull-base-01:skull-base',
+            labels: labels('Gage-Schädelbasis'),
+          },
+          {
+            id: 'target:asset-part:case-phineas-gage:phineas-gage-skull-calvaria-01:skull-calvaria',
+            labels: labels('Gage-Calvaria'),
+          },
+          {
+            id: 'target:asset-part:case-phineas-gage:phineas-gage-iron-rod-01:iron-rod',
+            labels: labels('Gage-Eisenstange'),
+          },
+        ],
+      },
+    })
   })
 
   it('laesst Kapitel-11-Ansicht beim TARO-Baum und erzeugt keinen Kontext-Platzhalter', () => {

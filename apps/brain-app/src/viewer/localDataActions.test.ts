@@ -9,6 +9,12 @@ import {
 import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
 import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
 import {
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+  useAuthoringSnapshotStore,
+} from './authoringSnapshotStore'
+import {
   createStudentProgressState,
   recordStudentCheck,
   useStudentProgressStore,
@@ -37,6 +43,7 @@ beforeEach(() => {
   useSettingsStore.getState().resetSettings()
   useStudentProgressStore.getState().resetStudentProgress()
   useAtlasConfigStore.getState().reset()
+  useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
 })
 
 describe('localDataActions', () => {
@@ -60,6 +67,12 @@ describe('localDataActions', () => {
     useSettingsStore.getState().updateCategory('dataAccount', { role: 'dozent' })
     useStudentProgressStore.getState().setStudentProgress(checkedProgress())
     useAtlasConfigStore.getState().setPreset('voll')
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState({
+      schemaVersion: AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+      registryContext: { collectionIds: ['device-eeg-10-20'], bonusContextIds: [] },
+      authoringScenes: [],
+      timelines: [],
+    })
     localStorage.setItem(LAST_APP_MODE_STORAGE_KEY, 'phineas')
     localStorage.setItem(THEME_STORAGE_KEY, 'light')
     localStorage.setItem('unrelated-key', 'bleibt')
@@ -77,8 +90,11 @@ describe('localDataActions', () => {
     expect(useStudentProgressStore.getState().progress).toBeNull()
     expect(useAtlasConfigStore.getState().preset).toBeNull()
     expect(useAtlasConfigStore.getState().scopes).toEqual({})
+    expect(useAuthoringSnapshotStore.getState().authoring).toBeNull()
     expect(localStorage.getItem(SETTINGS_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)).toBeNull()
+    expect(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)).toBeNull()
+    expect(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem(LAST_APP_MODE_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull()
     expect(localStorage.getItem('unrelated-key')).toBe('bleibt')

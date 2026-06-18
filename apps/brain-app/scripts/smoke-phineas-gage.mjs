@@ -3,15 +3,21 @@ import { chromium } from '@playwright/test'
 const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
 
 const ASSETS = {
-  skull: '/assets/phineas/phineas-gage-skull-lod.glb',
-  calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
+  skullBase: '/assets/phineas/phineas-gage-skull-base.glb',
+  skullCalvaria: '/assets/phineas/phineas-gage-skull-calvaria.glb',
   ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
 }
 
 const TARGETS = {
-  skull: 'phineas-gage-skull-01',
-  calvariumCut: 'phineas-gage-calvarium-cut-01',
+  skullBase: 'phineas-gage-skull-base-01',
+  skullCalvaria: 'phineas-gage-skull-calvaria-01',
   ironRod: 'phineas-gage-iron-rod-01',
+}
+
+const SKULL_TRANSFORM = {
+  position: [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+  rotation: [0, Math.PI, 0],
+  scale: [1.100639643699513, 1, 1.1039332125696444],
 }
 
 const CASES = [
@@ -32,6 +38,22 @@ const CASES = [
 const browser = await chromium.launch()
 let failures = 0
 
+function pushClose(errors, label, actual, expected, tolerance = 0.75) {
+  if (typeof actual !== 'number' || Math.abs(actual - expected) > tolerance) {
+    errors.push(`${label}=${actual} expected=${expected}`)
+  }
+}
+
+function pushVecClose(errors, label, actual, expected, tolerance = 0.75) {
+  if (!Array.isArray(actual) || actual.length !== 3) {
+    errors.push(`${label}=fehlt`)
+    return
+  }
+  for (let index = 0; index < 3; index += 1) {
+    pushClose(errors, `${label}[${index}]`, actual[index], expected[index], tolerance)
+  }
+}
+
 function pushLayerErrors(errors, layerId, layer, expected) {
   if (!layer) {
     errors.push(`${layerId}=fehlt`)
@@ -41,6 +63,15 @@ function pushLayerErrors(errors, layerId, layer, expected) {
   if (layer.meshCount < 1) errors.push(`${layerId}.meshCount=${layer.meshCount}`)
   if (!layer.targetInstanceIds?.includes(expected.target)) {
     errors.push(`${layerId}.target=${layer.targetInstanceIds?.join(',') ?? 'n/a'}`)
+  }
+  if (expected.transform) {
+    pushVecClose(errors, `${layerId}.transform.position`, layer.transform?.position, expected.transform.position, 0.001)
+    pushVecClose(errors, `${layerId}.transform.rotation`, layer.transform?.rotation, expected.transform.rotation, 0.001)
+    pushVecClose(errors, `${layerId}.transform.scale`, layer.transform?.scale, expected.transform.scale, 0.001)
+  }
+  if (expected.bounds) {
+    pushVecClose(errors, `${layerId}.bounds.center`, layer.bounds?.center, expected.bounds.center, 0.75)
+    pushVecClose(errors, `${layerId}.bounds.size`, layer.bounds?.size, expected.bounds.size, 0.75)
   }
   if (expected.visible) {
     if (!layer.visible) errors.push(`${layerId}.visible=false`)
@@ -62,8 +93,8 @@ async function waitForSnapshot(page) {
     return Boolean(
       snapshot &&
       snapshot.groupName === 'phineas-gage-assets' &&
-      snapshot.layers?.skull?.meshCount >= 1 &&
-      snapshot.layers?.calvariumCut?.meshCount >= 1 &&
+      snapshot.layers?.skullBase?.meshCount >= 1 &&
+      snapshot.layers?.skullCalvaria?.meshCount >= 1 &&
       snapshot.layers?.ironRod?.meshCount >= 1,
     )
   }, { timeout: 60000 })
@@ -77,7 +108,8 @@ async function validateStepOne(page, errors) {
       snapshot &&
       snapshot.showSkull === true &&
       snapshot.rodVisible === false &&
-      snapshot.layers?.skull?.visible === true,
+      snapshot.layers?.skullBase?.visible === true &&
+      snapshot.layers?.skullCalvaria?.visible === true,
     )
   }, { timeout: 15000 })
   await page.getByText(/Standalone-Gage-GLBs aus \/assets\/phineas/).waitFor({ timeout: 10000 })
@@ -90,15 +122,17 @@ async function validateStepOne(page, errors) {
   if (snapshot.showSkull !== true) errors.push(`step1.showSkull=${snapshot.showSkull}`)
   if (snapshot.rodVisible !== false) errors.push(`step1.rodVisible=${snapshot.rodVisible}`)
 
-  pushLayerErrors(errors, 'step1.skull', snapshot.layers.skull, {
-    asset: ASSETS.skull,
-    target: TARGETS.skull,
+  pushLayerErrors(errors, 'step1.skullBase', snapshot.layers.skullBase, {
+    asset: ASSETS.skullBase,
+    target: TARGETS.skullBase,
+    transform: SKULL_TRANSFORM,
     visible: true,
   })
-  pushLayerErrors(errors, 'step1.calvariumCut', snapshot.layers.calvariumCut, {
-    asset: ASSETS.calvariumCut,
-    target: TARGETS.calvariumCut,
-    visible: false,
+  pushLayerErrors(errors, 'step1.skullCalvaria', snapshot.layers.skullCalvaria, {
+    asset: ASSETS.skullCalvaria,
+    target: TARGETS.skullCalvaria,
+    transform: SKULL_TRANSFORM,
+    visible: true,
   })
   pushLayerErrors(errors, 'step1.ironRod', snapshot.layers.ironRod, {
     asset: ASSETS.ironRod,
@@ -116,7 +150,8 @@ async function validateStepTwo(page, errors) {
     return Boolean(
       snapshot &&
       snapshot.rodVisible === true &&
-      snapshot.layers?.calvariumCut?.visible === true &&
+      snapshot.layers?.skullBase?.visible === true &&
+      snapshot.layers?.skullCalvaria?.visible === true &&
       snapshot.layers?.ironRod?.visible === true,
     )
   }, { timeout: 15000 })
@@ -125,14 +160,16 @@ async function validateStepTwo(page, errors) {
   if (snapshot.showSkull !== true) errors.push(`step2.showSkull=${snapshot.showSkull}`)
   if (snapshot.rodVisible !== true) errors.push(`step2.rodVisible=${snapshot.rodVisible}`)
 
-  pushLayerErrors(errors, 'step2.skull', snapshot.layers.skull, {
-    asset: ASSETS.skull,
-    target: TARGETS.skull,
-    visible: false,
+  pushLayerErrors(errors, 'step2.skullBase', snapshot.layers.skullBase, {
+    asset: ASSETS.skullBase,
+    target: TARGETS.skullBase,
+    transform: SKULL_TRANSFORM,
+    visible: true,
   })
-  pushLayerErrors(errors, 'step2.calvariumCut', snapshot.layers.calvariumCut, {
-    asset: ASSETS.calvariumCut,
-    target: TARGETS.calvariumCut,
+  pushLayerErrors(errors, 'step2.skullCalvaria', snapshot.layers.skullCalvaria, {
+    asset: ASSETS.skullCalvaria,
+    target: TARGETS.skullCalvaria,
+    transform: SKULL_TRANSFORM,
     visible: true,
   })
   pushLayerErrors(errors, 'step2.ironRod', snapshot.layers.ironRod, {
@@ -166,9 +203,11 @@ for (const testCase of CASES) {
 
     console.log(
       `${errors.length ? 'FAIL' : 'PASS'} ${testCase.id} ` +
-      `step1=skull:${stepOne.layers.skull.visibleMeshCount}/${stepOne.layers.skull.meshCount},` +
+      `step1=base:${stepOne.layers.skullBase.visibleMeshCount}/${stepOne.layers.skullBase.meshCount},` +
+      `calvaria:${stepOne.layers.skullCalvaria.visibleMeshCount}/${stepOne.layers.skullCalvaria.meshCount},` +
       `rod:${stepOne.layers.ironRod.visibleMeshCount}/${stepOne.layers.ironRod.meshCount} ` +
-      `step2=calvarium:${stepTwo.layers.calvariumCut.visibleMeshCount}/${stepTwo.layers.calvariumCut.meshCount},` +
+      `step2=base:${stepTwo.layers.skullBase.visibleMeshCount}/${stepTwo.layers.skullBase.meshCount},` +
+      `calvaria:${stepTwo.layers.skullCalvaria.visibleMeshCount}/${stepTwo.layers.skullCalvaria.meshCount},` +
       `rod:${stepTwo.layers.ironRod.visibleMeshCount}/${stepTwo.layers.ironRod.meshCount}` +
       `${errors.length ? ` | ${errors.join(' | ')}` : ''}`,
     )

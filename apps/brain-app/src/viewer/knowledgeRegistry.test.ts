@@ -17,6 +17,7 @@ describe('knowledgeRegistry', () => {
       ['brodmann', 'Brodmann', 80],
       ['destrieux', 'Destrieux', 148],
       ['context-full', 'Kontext (Vollausbau)', 333],
+      ['case-phineas-gage', 'Phineas Gage', 3],
     ])
   })
 
@@ -25,9 +26,33 @@ describe('knowledgeRegistry', () => {
       kind: 'case-study',
       label: 'Phineas Gage',
       assetSlots: [
-        { id: 'historical-skull', label: 'Gage-Schädel', formats: ['glb'], optional: true },
-        { id: 'calvarium-cut', label: 'Gage-Calvarium-Cut', formats: ['glb'], optional: true },
-        { id: 'iron-rod', label: 'Gage-Eisenstange', formats: ['glb'], optional: true },
+        {
+          id: 'skull-base',
+          label: 'Gage-Schädelbasis',
+          formats: ['glb'],
+          optional: true,
+          assetId: 'phineas-gage-skull-base',
+          runtimeInstanceId: 'phineas-gage-skull-base-01',
+          partId: 'skull-base',
+        },
+        {
+          id: 'skull-calvaria',
+          label: 'Gage-Calvaria',
+          formats: ['glb'],
+          optional: true,
+          assetId: 'phineas-gage-skull-calvaria',
+          runtimeInstanceId: 'phineas-gage-skull-calvaria-01',
+          partId: 'skull-calvaria',
+        },
+        {
+          id: 'iron-rod',
+          label: 'Gage-Eisenstange',
+          formats: ['glb'],
+          optional: true,
+          assetId: 'phineas-gage-iron-rod',
+          runtimeInstanceId: 'phineas-gage-iron-rod-01',
+          partId: 'iron-rod',
+        },
       ],
     })
     expect(knowledgeCollectionById('device-eeg-10-20')).toMatchObject({

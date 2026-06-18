@@ -1,11 +1,15 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import {
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STORAGE_KEY,
   AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
   parseAuthoringSnapshotState,
   toAuthoringSnapshotStateJson,
   useAuthoringSnapshotStore,
   type AuthoringSnapshotState,
 } from './authoringSnapshotStore'
+import { createSetTransformCommand, executeAuthoringCommand } from './authoringCommands'
+import type { AuthoringTransform } from './authoringScene'
 
 const authoringState: AuthoringSnapshotState = {
   schemaVersion: AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
@@ -174,9 +178,137 @@ describe('authoring snapshot store', () => {
     useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(authoringState)
 
     expect(useAuthoringSnapshotStore.getState().authoring).toEqual(authoringState)
+    expect(JSON.parse(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)!)).toEqual(authoringState)
 
     useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
 
     expect(useAuthoringSnapshotStore.getState().authoring).toBeNull()
+    expect(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)).toBeNull()
+  })
+
+  it('fuehrt Authoring-Commands ueber Store-History rueckwaerts und vorwaerts aus', () => {
+    const store = useAuthoringSnapshotStore.getState()
+    store.setAuthoringSnapshotState(authoringState)
+    const scene = authoringState.authoringScenes[0]
+    const after: AuthoringTransform = {
+      position: [2, 3, 4],
+      rotation: [0.1, 0.2, 0.3],
+      scale: [1.1, 1.2, 1.3],
+    }
+    const command = createSetTransformCommand(scene, {
+      commandId: 'cmd:transform:eeg-cap-01:test',
+      targetRef: {
+        targetKind: 'asset-instance',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+      },
+      after,
+    })
+
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState({
+      ...authoringState,
+      authoringScenes: [executeAuthoringCommand(scene, command)],
+    })
+    useAuthoringSnapshotStore.getState().recordAuthoringCommand(command)
+
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory.cursor).toBe(1)
+    expect(JSON.parse(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)!).cursor).toBe(1)
+    expect(useAuthoringSnapshotStore.getState().authoring?.authoringScenes[0].assetInstances[0].transform).toEqual(after)
+
+    expect(useAuthoringSnapshotStore.getState().undoAuthoringCommand()).toBe(true)
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory.cursor).toBe(0)
+    expect(JSON.parse(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)!).cursor).toBe(0)
+    expect(useAuthoringSnapshotStore.getState().authoring?.authoringScenes[0].assetInstances[0].transform).toEqual({
+      position: [0, 1.2, 0],
+      rotation: [0, 0.25, 0],
+      scale: [0.8, 0.8, 0.8],
+    })
+    expect(JSON.parse(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)!).authoringScenes[0].assetInstances[0].transform).toEqual({
+      position: [0, 1.2, 0],
+      rotation: [0, 0.25, 0],
+      scale: [0.8, 0.8, 0.8],
+    })
+
+    expect(useAuthoringSnapshotStore.getState().redoAuthoringCommand()).toBe(true)
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory.cursor).toBe(1)
+    expect(JSON.parse(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)!).cursor).toBe(1)
+    expect(useAuthoringSnapshotStore.getState().authoring?.authoringScenes[0].assetInstances[0].transform).toEqual(after)
+  })
+
+  it('ignoriert Undo/Redo an den History-Grenzen und leert History beim Reset', () => {
+    expect(useAuthoringSnapshotStore.getState().undoAuthoringCommand()).toBe(false)
+    expect(useAuthoringSnapshotStore.getState().redoAuthoringCommand()).toBe(false)
+
+    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(authoringState)
+    const command = createSetTransformCommand(authoringState.authoringScenes[0], {
+      commandId: 'cmd:transform:eeg-cap-01:test',
+      targetRef: {
+        targetKind: 'asset-instance',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+      },
+      after: {
+        position: [2, 3, 4],
+        rotation: [0.1, 0.2, 0.3],
+        scale: [1.1, 1.2, 1.3],
+      },
+    })
+    useAuthoringSnapshotStore.getState().recordAuthoringCommand(command)
+
+    useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
+
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory).toMatchObject({ commands: [], cursor: 0 })
+    expect(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)).toBeNull()
+  })
+
+  it('springt ueber den sichtbaren History-Cursor zu aelteren Transform-Staenden', () => {
+    const store = useAuthoringSnapshotStore.getState()
+    store.setAuthoringSnapshotState(authoringState)
+    const first = createSetTransformCommand(authoringState.authoringScenes[0], {
+      commandId: 'cmd:transform:eeg-cap-01:first',
+      targetRef: {
+        targetKind: 'asset-instance',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+      },
+      after: {
+        position: [2, 3, 4],
+        rotation: [0.1, 0.2, 0.3],
+        scale: [1.1, 1.2, 1.3],
+      },
+    })
+    const afterFirstScene = executeAuthoringCommand(authoringState.authoringScenes[0], first)
+    store.setAuthoringSnapshotState({
+      ...authoringState,
+      authoringScenes: [afterFirstScene],
+    })
+    store.recordAuthoringCommand(first)
+
+    const second = createSetTransformCommand(afterFirstScene, {
+      commandId: 'cmd:transform:eeg-cap-01:second',
+      targetRef: {
+        targetKind: 'asset-instance',
+        collectionId: 'device-eeg-10-20',
+        instanceId: 'eeg-cap-01',
+      },
+      after: {
+        position: [8, 9, 10],
+        rotation: [0.4, 0.5, 0.6],
+        scale: [1.4, 1.5, 1.6],
+      },
+    })
+    store.setAuthoringSnapshotState({
+      ...authoringState,
+      authoringScenes: [executeAuthoringCommand(afterFirstScene, second)],
+    })
+    store.recordAuthoringCommand(second)
+
+    expect(useAuthoringSnapshotStore.getState().jumpAuthoringCommandHistory(1)).toBe(true)
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory.cursor).toBe(1)
+    expect(useAuthoringSnapshotStore.getState().authoring?.authoringScenes[0].assetInstances[0].transform.position).toEqual([2, 3, 4])
+
+    expect(useAuthoringSnapshotStore.getState().jumpAuthoringCommandHistory(2)).toBe(true)
+    expect(useAuthoringSnapshotStore.getState().authoringCommandHistory.cursor).toBe(2)
+    expect(useAuthoringSnapshotStore.getState().authoring?.authoringScenes[0].assetInstances[0].transform.position).toEqual([8, 9, 10])
   })
 })

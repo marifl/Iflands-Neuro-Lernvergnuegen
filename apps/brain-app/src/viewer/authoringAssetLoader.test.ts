@@ -11,6 +11,7 @@ import {
 } from './authoringScene'
 import {
   appendAuthoringAssetInstanceToScene,
+  createAuthoringSceneFromManifestAssets,
   createAuthoringSceneFromManifestSlot,
   loadAuthoringAssetInstanceFromManifestSlot,
   loadAuthoringAssetIntoScene,
@@ -131,6 +132,32 @@ describe('authoring asset loader', () => {
         { partId: 'electrode-fz', nodeName: 'EEG_Fz', pickable: true, role: 'selectable' },
         { partId: 'cap-helper-ring', nodeName: 'EEG_Helper_Ring', pickable: false, role: 'helper' },
       ],
+    })
+  })
+
+  it('legt alle runtime-Instanzen aus dem Manifest als allgemeine AuthoringScene an', () => {
+    const scene = createAuthoringSceneFromManifestAssets({
+      ...manifest,
+      assets: [
+        { ...manifest.assets[0], runtimeInstanceId: 'eeg-cap-01' },
+        { ...manifest.assets[0], assetId: 'asset:eeg-helper', slotId: 'helper-model' },
+      ],
+    }, 'manifest-assets-authoring')
+
+    expect(scene).toMatchObject({
+      schemaVersion: AUTHORING_SCENE_SCHEMA_VERSION,
+      sceneId: 'manifest-assets-authoring',
+    })
+    expect(scene.assetInstances).toHaveLength(1)
+    expect(scene.assetInstances[0]).toMatchObject({
+      instanceId: 'eeg-cap-01',
+      assetId: 'asset:eeg-cap-v1',
+      collectionId: 'device-eeg-10-20',
+      transform: {
+        position: [0, 1.2, 0],
+        rotation: [0, 0.25, 0],
+        scale: [0.002, 0.002, 0.002],
+      },
     })
   })
 
@@ -257,17 +284,17 @@ describe('authoring asset loader', () => {
     const requests = [
       {
         collectionId: 'case-phineas-gage',
-        slotId: 'historical-skull',
-        assetId: 'phineas-gage-skull-lod',
+        slotId: 'skull-base',
+        assetId: 'phineas-gage-skull-base',
         optional: true,
-        instanceId: 'phineas-gage-skull-01',
+        instanceId: 'phineas-gage-skull-base-01',
       },
       {
         collectionId: 'case-phineas-gage',
-        slotId: 'calvarium-cut',
-        assetId: 'phineas-gage-skull-calvarium-cut-lod',
+        slotId: 'skull-calvaria',
+        assetId: 'phineas-gage-skull-calvaria',
         optional: true,
-        instanceId: 'phineas-gage-calvarium-cut-01',
+        instanceId: 'phineas-gage-skull-calvaria-01',
       },
       {
         collectionId: 'case-phineas-gage',
@@ -291,8 +318,8 @@ describe('authoring asset loader', () => {
     }
 
     expect(scene.assetInstances.map((instance) => instance.assetId)).toEqual([
-      'phineas-gage-skull-lod',
-      'phineas-gage-skull-calvarium-cut-lod',
+      'phineas-gage-skull-base',
+      'phineas-gage-skull-calvaria',
       'phineas-gage-iron-rod',
     ])
     expect(scene.assetInstances.map((instance) => instance.collectionId)).toEqual([
@@ -300,14 +327,19 @@ describe('authoring asset loader', () => {
       'case-phineas-gage',
       'case-phineas-gage',
     ])
+    const skullTransform = {
+      position: [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+      rotation: [0, Math.PI, 0],
+      scale: [1.100639643699513, 1, 1.1039332125696444],
+    }
     expect(scene.assetInstances.map((instance) => instance.transform)).toEqual([
-      { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
-      { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
+      skullTransform,
+      skullTransform,
       { position: [0, 0, 0], rotation: [0, 0, 0], scale: [1, 1, 1] },
     ])
     expect(scene.assetInstances.flatMap((instance) => instance.parts?.map((part) => part.nodeName) ?? [])).toEqual([
-      'phineas-gage-skull',
-      'phineas-gage-skull-calvarium-cut',
+      'phineas-gage-skull-base',
+      'phineas-gage-skull-calvaria',
       'phineas-gage-iron-rod',
     ])
 
