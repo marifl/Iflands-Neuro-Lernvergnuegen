@@ -4,7 +4,7 @@
   "spaceId": "phineas-gage-legacy-figs3d",
   "unit": "millimeter",
   "upAxis": "y-up",
-  "coordinateNote": "Viewer space: +X left, +Y superior, +Z anterior. The rod axis is the documented entry-to-exit trajectory used by the Phineas scene.",
+  "coordinateNote": "Viewer space: +X left, +Y superior, +Z anterior. The rod axis is the archived Van Horn/Ratiu Gage trajectory after the same Y-rotated TARO-fit matrix used for the extracted skull parts.",
   "sources": [
     {
       "id": "harlow1848",
@@ -30,11 +30,50 @@
   ],
   "trajectory": {
     "primarySourceId": "vanhorn2012",
-    "entry": [40, -55, 75],
-    "exit": [5, 95, 40],
+    "entry": [35.719045344841014, -19.013652801513672, 57.98141497183153],
+    "exit": [-19.312936840134633, 132.98634719848633, 43.63028320842616],
+    "rawEntry": [-38, -42, -38],
+    "archiveRawExit": [6, 110, -25],
+    "rawExit": [12, 110, -25],
     "centerPolicy": "midpoint-between-entry-and-exit",
     "axisPolicy": "entry-to-exit",
-    "assumption": "Entry and exit are the scene-space control points from the Phineas narrative; the full rod is centered on their midpoint so both points lie on the generated rod axis."
+    "assumption": "Raw entry comes from the archived MNI152 Allen/Gage context GLB trajectory. rawExit is minimally rotated from archiveRawExit before transform to match the visible skull opening and avoid the previous wrong rod lean while remaining synchronized with the extracted Gage skull base and calvaria in TARO viewer space."
+  },
+  "skullAlignment": {
+    "assetIds": ["phineas-gage-skull-base", "phineas-gage-skull-calvaria"],
+    "archiveSource": {
+      "localPath": "archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-allen-fullbrain-gage-context.glb",
+      "objectNames": ["Phineas Gage Skull (intact, base)", "Phineas Gage Skull (intact, calvaria)"],
+      "extractScript": "apps/brain-app/scripts/extract-phineas-archive-assets.py"
+    },
+    "referenceAssets": {
+      "skullXZ": "/assets/context/skull.glb",
+      "headY": "/assets/context/head.glb",
+      "brainFit": "/assets/bodyparts3d/brain.glb"
+    },
+    "fitPolicy": "Fit extracted Gage skull base + calvaria into TARO space: X/Z are matched to the BodyParts3D context skull, Y keeps the extracted skull's native height around the BodyParts3D head center, then visualOffset nudges the case posterior/inferior so eyes and brain clear the Gage skull volume.",
+    "yFitPolicy": "native-skull-height",
+    "orientationPolicy": "Apply a 180 degree Y-axis rotation in the Three.js root transform while fitting the extracted archive parts into viewer space. If this asset is rebaked from the archive source instead, use the equivalent Z-axis bake in the source asset pipeline.",
+    "visualOffset": [0, -5, -5],
+    "rootTransform": {
+      "position": [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+      "rotation": [0, 3.141592653589793, 0],
+      "scale": [1.100639643699513, 1, 1.1039332125696444]
+    },
+    "rawBounds": {
+      "min": [-74.14994049072266, -143.19041442871094, -77.7286605834961],
+      "max": [63.083900451660156, 74.70772552490234, 111.47572326660156],
+      "center": [-5.53302001953125, -34.2413444519043, 16.873531341552734],
+      "size": [137.2338409423828, 217.89813995361328, 189.20438385009766]
+    },
+    "targetBounds": {
+      "min": [-75.53790283203125, -120.20406723022461, -107.02980041503906],
+      "max": [75.5071029663086, 97.69407272338867, 101.83920288085938],
+      "center": [-0.015399932861328125, -11.254997253417969, -2.5952987670898438],
+      "size": [151.04500579833984, 217.89813995361328, 208.86900329589844]
+    },
+    "boundsToleranceMm": 0.75,
+    "brainFitToleranceMm": 1
   },
   "ironRod": {
     "assetId": "phineas-gage-iron-rod",
@@ -53,17 +92,19 @@
   },
   "skullAssets": [
     {
-      "assetId": "phineas-gage-skull-lod",
-      "uri": "/assets/phineas/phineas-gage-skull-lod.glb",
+      "assetId": "phineas-gage-skull-base",
+      "uri": "/assets/phineas/phineas-gage-skull-base.glb",
       "sourceId": "ratiu2004",
+      "archiveObjectName": "Phineas Gage Skull (intact, base)",
       "licenseStatus": "candidate-pinned-in-asset-manifest"
     },
     {
-      "assetId": "phineas-gage-skull-calvarium-cut-lod",
-      "uri": "/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb",
+      "assetId": "phineas-gage-skull-calvaria",
+      "uri": "/assets/phineas/phineas-gage-skull-calvaria.glb",
       "sourceId": "ratiu2004",
+      "archiveObjectName": "Phineas Gage Skull (intact, calvaria)",
       "licenseStatus": "candidate-pinned-in-asset-manifest"
     }
   ],
-  "redistributionNote": "The generated iron-rod mesh is project-created from documented historical dimensions. Skull and calvarium candidates keep their manifest license-status warning and require final attribution review before public redistribution."
+  "redistributionNote": "The generated iron-rod mesh is project-created from documented historical dimensions. Extracted skull base and calvaria candidates keep their manifest license-status warning and require final attribution review before public redistribution."
 }

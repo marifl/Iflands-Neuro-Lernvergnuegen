@@ -19,7 +19,9 @@ const BUDGETS = {
   cssGzipTotal: 80 * KiB,
   publicAssetsTotal: 120 * MiB,
   publicAssetLargest: 24 * MiB,
-  phineasAssetsTotal: 2 * MiB,
+  // Skull base, calvaria and rod are separate runtime assets so they can be
+  // toggled and transformed independently in the authoring path.
+  phineasAssetsTotal: 2.25 * MiB,
 }
 
 function assertDir(path) {

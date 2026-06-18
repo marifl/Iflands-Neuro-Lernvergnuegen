@@ -3,6 +3,8 @@
 Die versionierte Autorenquelle bleibt `scripts/atlas/config.default.toml`.
 Runtime-Links referenzieren diese Config explizit; `localStorage` ist nur eine
 temporäre Override-Schicht der UI und wird nicht als kanonischer Export gelesen.
+Die konkrete Anleitung für menschliches und agentisches Authoring von
+Einfärbungen liegt in [`FAERBUNGEN_GUIDE.md`](FAERBUNGEN_GUIDE.md).
 
 ## SP3 zu SP5.1: `mesh_mappings`
 

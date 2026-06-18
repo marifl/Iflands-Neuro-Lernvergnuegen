@@ -31,6 +31,7 @@ describe('Phineas-Gage-Szene', () => {
     const final = rodSegmentForPhase(1)
 
     expect(entry.tip).toEqual(ROD_ENTRY)
+    expect(ROD_ENTRY[0]).toBeGreaterThan(ROD_EXIT[0])
     expect(final.tip[1]).toBeGreaterThan(ROD_EXIT[1])
     expect(final.tip[2]).toBeLessThan(ROD_ENTRY[2])
     expect(final.length).toBeGreaterThan(entry.length)
@@ -49,15 +50,15 @@ describe('Phineas-Gage-Szene', () => {
     expect(PHINEAS_GAGE.assetNoteDe).toContain('Standalone-Gage-GLBs')
     expect(PHINEAS_GAGE.assetNoteDe).toContain('/assets/phineas')
     expect(PHINEAS_GAGE_ASSETS).toEqual({
-      skull: '/assets/phineas/phineas-gage-skull-lod.glb',
-      calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
+      skullBase: '/assets/phineas/phineas-gage-skull-base.glb',
+      skullCalvaria: '/assets/phineas/phineas-gage-skull-calvaria.glb',
       ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
     })
-    expect(PHINEAS_GAGE_TARGETS.skull).toEqual({
+    expect(PHINEAS_GAGE_TARGETS.skullBase).toEqual({
       targetKind: 'asset-part',
       collectionId: 'case-phineas-gage',
-      instanceId: 'phineas-gage-skull-01',
-      partId: 'skull',
+      instanceId: 'phineas-gage-skull-base-01',
+      partId: 'skull-base',
     })
     expect(PHINEAS_GAGE.trajectoryNoteDe).toContain('Van Horn')
   })

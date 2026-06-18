@@ -52,6 +52,10 @@ import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
 import AuthoringSceneObjects from './AuthoringSceneObjects'
+import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
+import { AuthoringTransformControls } from './AuthoringTransformControls'
+import ManifestAssetObjects from './ManifestAssetObjects'
+import ManifestAuthoringBridge from './ManifestAuthoringBridge'
 import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
@@ -67,6 +71,10 @@ import {
   ROD_RADIUS_TIP,
   rodSegmentForPhase,
 } from './phineasGage'
+import {
+  authoringHistoryActionForKeyboardEvent,
+  isEditableKeyboardTarget,
+} from './authoringKeyboardShortcuts'
 
 const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
@@ -878,8 +886,15 @@ export default function BodyParts3DViewer() {
   // i=isolieren, Shift+I=Isolation aus, Esc=eine Ebene hoch.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement | null)?.tagName
-      if (tag === 'INPUT' || tag === 'TEXTAREA') return // Suchfeld nicht stoeren
+      if (isEditableKeyboardTarget(e.target)) return // Suchfeld/Textbearbeitung nicht stoeren
+      const historyAction = authoringHistoryActionForKeyboardEvent(e)
+      if (historyAction) {
+        e.preventDefault()
+        const store = useAuthoringSnapshotStore.getState()
+        if (historyAction === 'undo') store.undoAuthoringCommand()
+        else store.redoAuthoringCommand()
+        return
+      }
       const s = useViewerStore.getState()
       const k = e.key.toLowerCase()
       if (k === 'f') {
@@ -1088,6 +1103,7 @@ export default function BodyParts3DViewer() {
             ) : (
             <>
             <ConfigLinkStateApplier effectiveConfig={effectiveConfig} />
+            <ManifestAuthoringBridge />
             <Canvas
               camera={{ position: [0, 30, 320], fov: 40, near: 1, far: 4000 }}
               dpr={renderDpr}
@@ -1127,6 +1143,7 @@ export default function BodyParts3DViewer() {
                 <SubParcels />
                 <EegHeadset />
                 <AuthoringSceneObjects />
+                <ManifestAssetObjects dimOpacity={dimOpacity} />
                 <PhineasGageAssets />
                 <AtlasOverlay effectiveConfig={effectiveConfig} />
                 <CutCaps />
@@ -1138,9 +1155,10 @@ export default function BodyParts3DViewer() {
               <CameraRig />
               {perfGate ? <PerformanceGateProbe /> : null}
             </Canvas>
+            <AuthoringTransformControls layout="toolbar" includeEditToggle includeResetAction />
 
-            {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). In Lern-/Phineas-Modus
-                liegt die Steuerung in der Sidebar/FooterBar — nichts ueberlagert den 3D-Viewport. */}
+            {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). Authoring-Werkzeuge
+                liegen nur im aktiven Asset-Edit als Viewport-Toolbar darueber. */}
             {isExploreMode && (
               <div
                 className="ed-panel ed-frame"

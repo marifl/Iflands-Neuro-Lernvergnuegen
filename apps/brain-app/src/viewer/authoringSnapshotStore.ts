@@ -1,4 +1,15 @@
 import { create } from 'zustand'
+import { getLocalStorageItem, removeLocalStorageItem, setLocalStorageItem } from '../safeLocalStorage'
+import {
+  emptyAuthoringCommandHistory,
+  parseAuthoringCommandHistory,
+  pushAuthoringCommand,
+  redoAuthoringCommandHistory,
+  toAuthoringCommandHistoryJson,
+  undoAuthoringCommandHistory,
+  type AuthoringCommandHistory,
+} from './authoringCommandHistory'
+import type { AuthoringCommand } from './authoringCommands'
 import { parseAuthoringScene, type AuthoringScene } from './authoringScene'
 import { BONUS_CONTEXTS } from './bonusContexts'
 import { KNOWLEDGE_COLLECTIONS } from './knowledgeRegistry'
@@ -14,6 +25,8 @@ import {
 } from './timelineDocument'
 
 export const AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION = 1
+export const AUTHORING_SNAPSHOT_STORAGE_KEY = 'brain-app-authoring-snapshot'
+export const AUTHORING_COMMAND_HISTORY_STORAGE_KEY = 'brain-app-authoring-command-history'
 
 export interface AuthoringRegistryContextState {
   collectionIds: string[]
@@ -47,7 +60,12 @@ export interface AuthoringSnapshotState {
 
 interface AuthoringSnapshotStoreState {
   authoring: AuthoringSnapshotState | null
+  authoringCommandHistory: AuthoringCommandHistory
   setAuthoringSnapshotState: (authoring: AuthoringSnapshotState | null) => void
+  recordAuthoringCommand: (command: AuthoringCommand) => void
+  undoAuthoringCommand: () => boolean
+  redoAuthoringCommand: () => boolean
+  jumpAuthoringCommandHistory: (cursor: number) => boolean
   resetAuthoringSnapshotState: () => void
 }
 
@@ -272,8 +290,123 @@ export function toAuthoringSnapshotStateJson(state: AuthoringSnapshotState): str
   return JSON.stringify(parseAuthoringSnapshotState(state), null, 2)
 }
 
-export const useAuthoringSnapshotStore = create<AuthoringSnapshotStoreState>((set) => ({
-  authoring: null,
-  setAuthoringSnapshotState: (authoring) => set({ authoring: parseAuthoringSnapshotState(authoring) }),
-  resetAuthoringSnapshotState: () => set({ authoring: null }),
+function loadStoredAuthoringSnapshotState(): AuthoringSnapshotState | null {
+  const raw = getLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
+  if (!raw) return null
+  try {
+    return parseAuthoringSnapshotState(JSON.parse(raw))
+  } catch {
+    removeLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
+    return null
+  }
+}
+
+function loadStoredAuthoringCommandHistory(): AuthoringCommandHistory {
+  const raw = getLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
+  if (!raw) return emptyAuthoringCommandHistory()
+  try {
+    return parseAuthoringCommandHistory(JSON.parse(raw))
+  } catch {
+    removeLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
+    return emptyAuthoringCommandHistory()
+  }
+}
+
+function persistAuthoringSnapshotState(authoring: AuthoringSnapshotState | null): void {
+  if (!authoring) {
+    removeLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
+    return
+  }
+  setLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY, toAuthoringSnapshotStateJson(authoring))
+}
+
+function persistAuthoringCommandHistory(history: AuthoringCommandHistory): void {
+  setLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY, toAuthoringCommandHistoryJson(history))
+}
+
+function commandTarget(command: AuthoringCommand): Extract<SequenceTargetRef, { targetKind: 'asset-instance' }> | null {
+  if (command.kind === 'set-transform') return command.targetRef
+  return command.commands[0]?.targetRef ?? null
+}
+
+function sceneForCommand(authoring: AuthoringSnapshotState, command: AuthoringCommand): AuthoringScene | null {
+  const target = commandTarget(command)
+  if (!target) return null
+  return authoring.authoringScenes.find((scene) => scene.assetInstances.some((instance) =>
+    instance.collectionId === target.collectionId && instance.instanceId === target.instanceId
+  )) ?? null
+}
+
+function replaceAuthoringScene(authoring: AuthoringSnapshotState, scene: AuthoringScene): AuthoringSnapshotState {
+  return parseAuthoringSnapshotState({
+    ...authoring,
+    activeSceneId: scene.sceneId,
+    authoringScenes: authoring.authoringScenes.map((candidate) => (
+      candidate.sceneId === scene.sceneId ? scene : candidate
+    )),
+  })!
+}
+
+export const useAuthoringSnapshotStore = create<AuthoringSnapshotStoreState>((set, get) => ({
+  authoring: loadStoredAuthoringSnapshotState(),
+  authoringCommandHistory: loadStoredAuthoringCommandHistory(),
+  setAuthoringSnapshotState: (authoring) => {
+    const parsed = parseAuthoringSnapshotState(authoring)
+    persistAuthoringSnapshotState(parsed)
+    set({ authoring: parsed })
+  },
+  recordAuthoringCommand: (command) => {
+    set((state) => {
+      const history = pushAuthoringCommand(state.authoringCommandHistory, command)
+      persistAuthoringCommandHistory(history)
+      return { authoringCommandHistory: history }
+    })
+  },
+  undoAuthoringCommand: () => {
+    const { authoring, authoringCommandHistory } = get()
+    if (!authoring || authoringCommandHistory.cursor === 0) return false
+    const command = authoringCommandHistory.commands[authoringCommandHistory.cursor - 1]
+    const scene = command ? sceneForCommand(authoring, command) : null
+    if (!scene) return false
+    const transition = undoAuthoringCommandHistory(scene, authoringCommandHistory)
+    const nextAuthoring = replaceAuthoringScene(authoring, transition.scene)
+    persistAuthoringSnapshotState(nextAuthoring)
+    persistAuthoringCommandHistory(transition.history)
+    set({ authoring: nextAuthoring, authoringCommandHistory: transition.history })
+    return true
+  },
+  redoAuthoringCommand: () => {
+    const { authoring, authoringCommandHistory } = get()
+    if (!authoring || authoringCommandHistory.cursor === authoringCommandHistory.commands.length) return false
+    const command = authoringCommandHistory.commands[authoringCommandHistory.cursor]
+    const scene = command ? sceneForCommand(authoring, command) : null
+    if (!scene) return false
+    const transition = redoAuthoringCommandHistory(scene, authoringCommandHistory)
+    const nextAuthoring = replaceAuthoringScene(authoring, transition.scene)
+    persistAuthoringSnapshotState(nextAuthoring)
+    persistAuthoringCommandHistory(transition.history)
+    set({ authoring: nextAuthoring, authoringCommandHistory: transition.history })
+    return true
+  },
+  jumpAuthoringCommandHistory: (cursor) => {
+    const boundedCursor = Math.max(
+      0,
+      Math.min(Math.trunc(cursor), get().authoringCommandHistory.commands.length),
+    )
+    let moved = false
+    while (get().authoringCommandHistory.cursor > boundedCursor) {
+      if (!get().undoAuthoringCommand()) return moved
+      moved = true
+    }
+    while (get().authoringCommandHistory.cursor < boundedCursor) {
+      if (!get().redoAuthoringCommand()) return moved
+      moved = true
+    }
+    return moved
+  },
+  resetAuthoringSnapshotState: () => {
+    persistAuthoringSnapshotState(null)
+    removeLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
+    set({ authoring: null, authoringCommandHistory: emptyAuthoringCommandHistory() })
+  },
 }))

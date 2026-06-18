@@ -78,6 +78,11 @@ describe('FooterBar', () => {
       selectedSlugs: new Set(),
       selectedLabels: null,
       selectMode: 'group',
+      authoringEditMode: false,
+      authoringTransformMode: 'translate',
+      authoringTransformSpace: 'world',
+      authoringTransformSnap: false,
+      authoringTransformFrozen: false,
     })
   })
 
@@ -86,10 +91,24 @@ describe('FooterBar', () => {
     expect(screen.getByText('Werkzeug')).toBeInTheDocument()
   })
 
-  it('blendet die Werkzeug-Box ausserhalb des Explorers aus', async () => {
+  it('zeigt die Werkzeug-Box auch ausserhalb des Explorers fuer Asset-Edit', async () => {
     useViewerStore.setState({ appMode: 'learn' })
     await renderFooterBar()
-    expect(screen.queryByText('Werkzeug')).not.toBeInTheDocument()
+    expect(screen.getByText('Werkzeug')).toBeInTheDocument()
+  })
+
+  it('schaltet Asset-Edit und Welt-/Objekt-Koordinaten im Werkzeug-Flyout', async () => {
+    await renderFooterBar()
+
+    fireEvent.click(screen.getByRole('button', { name: /Werkzeug/ }))
+    expect(screen.getByRole('button', { name: 'Lokal' })).toHaveAccessibleDescription('Asset-Edit einschalten')
+    fireEvent.click(screen.getByRole('button', { name: 'Asset-Edit aus' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Lokal' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Drehen' }))
+
+    expect(useViewerStore.getState().authoringEditMode).toBe(true)
+    expect(useViewerStore.getState().authoringTransformSpace).toBe('local')
+    expect(useViewerStore.getState().authoringTransformMode).toBe('rotate')
   })
 
   it('wechselt den appMode ueber das Modus-Flyout', async () => {

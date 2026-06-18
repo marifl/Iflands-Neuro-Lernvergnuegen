@@ -34,6 +34,7 @@ export interface AssetManifestEntry {
   assetId: string
   collectionId: string
   slotId: string
+  runtimeInstanceId?: string
   label: string
   uri: string
   previewUri?: string
@@ -275,6 +276,7 @@ function parseAsset(raw: unknown, field: string): AssetManifestEntry {
     'assetId',
     'collectionId',
     'slotId',
+    'runtimeInstanceId',
     'label',
     'uri',
     'previewUri',
@@ -289,6 +291,7 @@ function parseAsset(raw: unknown, field: string): AssetManifestEntry {
   ], field)
   const format = enumValue(value.format, FORMATS, `${field}.format`)
   const previewUri = optionalString(value.previewUri, `${field}.previewUri`)
+  const runtimeInstanceId = optionalString(value.runtimeInstanceId, `${field}.runtimeInstanceId`)
   const nodeNaming = parseNodeNaming(value.nodeNaming, `${field}.nodeNaming`)
   const parts = parseArray(value.parts, `${field}.parts`, (item, itemField) => parsePart(item, itemField, nodeNaming))
   assertUnique(parts.map((part) => part.partId), `${field}.parts`)
@@ -297,6 +300,7 @@ function parseAsset(raw: unknown, field: string): AssetManifestEntry {
     assetId: requiredString(value.assetId, `${field}.assetId`),
     collectionId: requiredString(value.collectionId, `${field}.collectionId`),
     slotId: requiredString(value.slotId, `${field}.slotId`),
+    ...(runtimeInstanceId === undefined ? {} : { runtimeInstanceId }),
     label: requiredString(value.label, `${field}.label`),
     uri: parseUri(value.uri, format, `${field}.uri`),
     ...(previewUri === undefined ? {} : { previewUri }),

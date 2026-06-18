@@ -112,6 +112,23 @@ describe('target picking', () => {
     expect(useViewerStore.getState().activeTargetRef).toBeNull()
   })
 
+  it('selektiert Explorer-Asset-Leaves ueber ihre Object-Graph-ID statt ueber TARO-Fallback', () => {
+    const gageIronRodId = 'target:asset-part:case-phineas-gage:phineas-gage-iron-rod-01:iron-rod'
+
+    useViewerStore.getState().select(gageIronRodId)
+
+    const state = useViewerStore.getState()
+    expect(state.selected).toBe(gageIronRodId)
+    expect(state.activeObjectGraphId).toBe(gageIronRodId)
+    expect(state.activeTargetRef).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'case-phineas-gage',
+      instanceId: 'phineas-gage-iron-rod-01',
+      partId: 'iron-rod',
+    })
+    expect([...state.selectedSlugs]).toEqual([gageIronRodId])
+  })
+
   it('mischt Ontologie-Targets und Asset-Parts in einer Mehrfachauswahl', () => {
     const assetTarget = {
       targetRef: {

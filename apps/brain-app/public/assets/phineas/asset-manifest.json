@@ -3,20 +3,21 @@
   "manifestId": "phineas-gage-standalone-assets-v1",
   "assets": [
     {
-      "assetId": "phineas-gage-skull-lod",
+      "assetId": "phineas-gage-skull-base",
       "collectionId": "case-phineas-gage",
-      "slotId": "historical-skull",
-      "label": "Phineas Gage skull LOD",
-      "uri": "/assets/phineas/phineas-gage-skull-lod.glb",
+      "slotId": "skull-base",
+      "runtimeInstanceId": "phineas-gage-skull-base-01",
+      "label": "Phineas Gage skull base",
+      "uri": "/assets/phineas/phineas-gage-skull-base.glb",
       "format": "glb",
       "optional": true,
       "version": "1.0.0",
       "source": {
         "kind": "curated",
-        "provenance": "Ratiu et al. 2004 CT-derived Gage skull candidate copied into the standalone runtime asset set.",
-        "license": "CC-BY-SA-4.0 candidate from legacy figure manifests; verify the pinned upstream entry before public redistribution.",
-        "hash": "sha256:ab804c46c19634f5902108ebda59f9957cb42d0afea8b62ed84b5d55eb10f493",
-        "attribution": "Ratiu et al. 2004; Warren Anatomical Museum / Countway Library lineage"
+        "provenance": "Extracted from archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-allen-fullbrain-gage-context.glb object Phineas Gage Skull (intact, base) using apps/brain-app/scripts/extract-phineas-archive-assets.py.",
+        "license": "CC-BY-SA-4.0 candidate from archived Gage context manifest; verify the pinned upstream entry before public redistribution.",
+        "hash": "sha256:70ad306f070c0a2a97de84d906df8917cc924142132d7640f8e9756c126d2358",
+        "attribution": "Ratiu et al. 2004; archived MNI152 Allen/Gage context lineage"
       },
       "normalization": {
         "unit": "millimeter",
@@ -25,9 +26,9 @@
         "spaceId": "phineas-gage-legacy-figs3d",
         "defaultPivot": { "policy": "bounds-center" },
         "rootTransform": {
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
-          "scale": [1, 1, 1]
+          "position": [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+          "rotation": [0, 3.141592653589793, 0],
+          "scale": [1.100639643699513, 1, 1.1039332125696444]
         }
       },
       "materialPolicy": {
@@ -42,29 +43,30 @@
       },
       "parts": [
         {
-          "partId": "skull",
-          "label": "Gage skull",
-          "nodeName": "phineas-gage-skull",
+          "partId": "skull-base",
+          "label": "Gage skull base",
+          "nodeName": "phineas-gage-skull-base",
           "pickable": true,
           "role": "selectable"
         }
       ]
     },
     {
-      "assetId": "phineas-gage-skull-calvarium-cut-lod",
+      "assetId": "phineas-gage-skull-calvaria",
       "collectionId": "case-phineas-gage",
-      "slotId": "calvarium-cut",
-      "label": "Phineas Gage calvarium cut LOD",
-      "uri": "/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb",
+      "slotId": "skull-calvaria",
+      "runtimeInstanceId": "phineas-gage-skull-calvaria-01",
+      "label": "Phineas Gage skull calvaria",
+      "uri": "/assets/phineas/phineas-gage-skull-calvaria.glb",
       "format": "glb",
       "optional": true,
       "version": "1.0.0",
       "source": {
         "kind": "curated",
-        "provenance": "Ratiu et al. 2004 CT-derived calvarium-cut candidate copied into the standalone runtime asset set.",
-        "license": "CC-BY-SA-4.0 candidate from legacy figure manifests; verify the pinned upstream entry before public redistribution.",
-        "hash": "sha256:45c3c40c9efa4023bcbc88b53f02902dbed98670e59abaad8809e55dc4892dc8",
-        "attribution": "Ratiu et al. 2004; Warren Anatomical Museum / Countway Library lineage"
+        "provenance": "Extracted from archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-allen-fullbrain-gage-context.glb object Phineas Gage Skull (intact, calvaria) using apps/brain-app/scripts/extract-phineas-archive-assets.py.",
+        "license": "CC-BY-SA-4.0 candidate from archived Gage context manifest; verify the pinned upstream entry before public redistribution.",
+        "hash": "sha256:7d1ded2f87de911841f366a7bb8d3f826db60472baa67ef59c63556a8e074e1e",
+        "attribution": "Ratiu et al. 2004; archived MNI152 Allen/Gage context lineage"
       },
       "normalization": {
         "unit": "millimeter",
@@ -73,9 +75,9 @@
         "spaceId": "phineas-gage-legacy-figs3d",
         "defaultPivot": { "policy": "bounds-center" },
         "rootTransform": {
-          "position": [0, 0, 0],
-          "rotation": [0, 0, 0],
-          "scale": [1, 1, 1]
+          "position": [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+          "rotation": [0, 3.141592653589793, 0],
+          "scale": [1.100639643699513, 1, 1.1039332125696444]
         }
       },
       "materialPolicy": {
@@ -90,9 +92,9 @@
       },
       "parts": [
         {
-          "partId": "calvarium-cut",
-          "label": "Gage calvarium cut",
-          "nodeName": "phineas-gage-skull-calvarium-cut",
+          "partId": "skull-calvaria",
+          "label": "Gage skull calvaria",
+          "nodeName": "phineas-gage-skull-calvaria",
           "pickable": true,
           "role": "selectable"
         }
@@ -102,6 +104,7 @@
       "assetId": "phineas-gage-iron-rod",
       "collectionId": "case-phineas-gage",
       "slotId": "iron-rod",
+      "runtimeInstanceId": "phineas-gage-iron-rod-01",
       "label": "Phineas Gage iron rod",
       "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
       "format": "glb",
@@ -109,9 +112,9 @@
       "version": "1.0.0",
       "source": {
         "kind": "synthetic",
-        "provenance": "Generated by apps/brain-app/scripts/generate-phineas-iron-rod.mjs from transform-contract.json using historical tamping-iron dimensions and the Phineas scene trajectory.",
+        "provenance": "Generated by apps/brain-app/scripts/generate-phineas-iron-rod.mjs from transform-contract.json using historical tamping-iron dimensions and the archive-synchronized Phineas trajectory.",
         "license": "project-generated geometry from documented historical measurements; no third-party rod mesh redistribution.",
-        "hash": "sha256:5674703efbf611cbffc2acf9a401a3c54c5eab170eade72cea4949e9ac0af751",
+        "hash": "sha256:ec7a2d8878a8e6d5812c79b139435122338603b0cfae05f7ccf4344e8bf9686a",
         "attribution": "Historical dimensions: Harlow 1848 / Bigelow 1850 lineage; trajectory context: Van Horn et al. 2012"
       },
       "normalization": {

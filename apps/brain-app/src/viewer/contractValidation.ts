@@ -119,6 +119,15 @@ function assetMatchesSlot(asset: AssetManifestEntry, slot: KnowledgeAssetSlot, p
   if (asset.optional !== slot.optional) {
     add(ctx.errors, path, `optional ${asset.optional} passt nicht zu Slot ${slotId} optional ${slot.optional}`)
   }
+  if (slot.assetId && asset.assetId !== slot.assetId) {
+    add(ctx.errors, path, `assetId "${asset.assetId}" passt nicht zu Slot ${slotId} assetId "${slot.assetId}"`)
+  }
+  if (slot.runtimeInstanceId && asset.runtimeInstanceId !== slot.runtimeInstanceId) {
+    add(ctx.errors, path, `runtimeInstanceId "${asset.runtimeInstanceId ?? 'n/a'}" passt nicht zu Slot ${slotId}`)
+  }
+  if (slot.partId && !asset.parts.some((part) => part.partId === slot.partId)) {
+    add(ctx.errors, path, `partId "${slot.partId}" fehlt im Asset ${asset.assetId}`)
+  }
 }
 
 function vec3Equals(a: Vec3 | undefined, b: Vec3 | undefined): boolean {

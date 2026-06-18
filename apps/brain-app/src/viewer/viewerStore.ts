@@ -12,8 +12,8 @@ import {
 } from './ontology'
 import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
-import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
-import { pickTargetFromLegacyMeshName, type ViewerPickTarget } from './targetPicking'
+import { objectGraphIdForTarget, sequenceTargetRefFromObjectGraphId, type SequenceTargetRef } from './sequenceTargetRef'
+import { pickTargetFromLegacyMeshName, pickTargetFromTargetRef, type ViewerPickTarget } from './targetPicking'
 
 export type { CutAxis, CutConfig, CutMode }
 
@@ -208,6 +208,8 @@ interface ViewerState {
   /** Stabiler Target-Vertrag zur aktuellen Auswahl; legacy Mesh-Namen werden auf Ontologie-Refs gemappt. */
   activeTargetRef: SequenceTargetRef | null
   activeObjectGraphId: string | null
+  /** Expliziter Edit-Modus fuer persistente Asset-Transforms. */
+  authoringEditMode: boolean
   /** Minimaler Authoring-Transform-Modus fuer TransformControls. */
   authoringTransformMode: AuthoringTransformMode
   authoringTransformSpace: AuthoringTransformSpace
@@ -291,6 +293,7 @@ interface ViewerState {
   pick: (meshName: string, options?: SelectionOptions) => void
   /** 3D-Klick mit bereits aufgeloestem SequenceTargetRef. */
   pickTarget: (target: ViewerPickTarget, options?: SelectionOptions) => void
+  setAuthoringEditMode: (enabled: boolean) => void
   setAuthoringTransformMode: (mode: AuthoringTransformMode) => void
   setAuthoringTransformSpace: (space: AuthoringTransformSpace) => void
   setAuthoringTransformSnap: (snap: boolean) => void
@@ -395,6 +398,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   selected: null,
   activeTargetRef: null,
   activeObjectGraphId: null,
+  authoringEditMode: false,
   authoringTransformMode: 'translate',
   authoringTransformSpace: 'world',
   authoringTransformSnap: false,
@@ -508,7 +512,10 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const expanded = { ...state.expanded }
       const path = chain ? chain.slice(0, -1).map((n) => n.id) : state.ancestors.get(id) ?? []
       for (const groupId of path) expanded[groupId] = true
-      const target = pickTargetFromLegacyMeshName(id)
+      const explicitTargetRef = sequenceTargetRefFromObjectGraphId(id)
+      const target = explicitTargetRef
+        ? pickTargetFromTargetRef(explicitTargetRef, node?.labels?.de)
+        : pickTargetFromLegacyMeshName(id)
       if (options?.additive && target) {
         return {
           ...selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), target.label),
@@ -559,6 +566,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     const selectionNode = chain[ctxIdx + 1] ?? chain[chain.length - 1]
     st.select(selectionNode.id, options)
   },
+  setAuthoringEditMode: (authoringEditMode) => set({ authoringEditMode }),
   setAuthoringTransformMode: (authoringTransformMode) => set({ authoringTransformMode }),
   setAuthoringTransformSpace: (authoringTransformSpace) => set({ authoringTransformSpace }),
   setAuthoringTransformSnap: (authoringTransformSnap) => set({ authoringTransformSnap }),

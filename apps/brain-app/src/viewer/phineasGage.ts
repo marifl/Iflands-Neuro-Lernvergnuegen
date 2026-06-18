@@ -28,8 +28,8 @@ export interface PhineasStep {
 }
 
 /** Stangen-Trajektorie (mm, finaler Viewer-Raum): Eintritt linke Wange -> Austritt Scheitel. */
-export const ROD_ENTRY: [number, number, number] = [40, -55, 75]
-export const ROD_EXIT: [number, number, number] = [5, 95, 40]
+export const ROD_ENTRY: [number, number, number] = [35.719045344841014, -19.013652801513672, 57.98141497183153]
+export const ROD_EXIT: [number, number, number] = [-19.312936840134633, 132.98634719848633, 43.63028320842616]
 /** Die reale Stange war länger als der Kopf -> über Eintritt/Austritt hinaus verlängern (mm). */
 export const ROD_OVERSHOOT = 38
 /** Tampiereisen lief spitz zu: Spitze vorn, Schaft hinten. Radien in mm. */
@@ -41,22 +41,22 @@ export const HISTORICAL_ROD_SHAFT_DIAMETER_MM = 32
 export const HISTORICAL_ROD_TIP_DIAMETER_MM = 6.4
 export const HISTORICAL_ROD_WEIGHT_KG = 5.9
 export const PHINEAS_GAGE_ASSETS = {
-  skull: '/assets/phineas/phineas-gage-skull-lod.glb',
-  calvariumCut: '/assets/phineas/phineas-gage-skull-calvarium-cut-lod.glb',
+  skullBase: '/assets/phineas/phineas-gage-skull-base.glb',
+  skullCalvaria: '/assets/phineas/phineas-gage-skull-calvaria.glb',
   ironRod: '/assets/phineas/phineas-gage-iron-rod.glb',
 } as const
 export const PHINEAS_GAGE_TARGETS = {
-  skull: {
+  skullBase: {
     targetKind: 'asset-part',
     collectionId: 'case-phineas-gage',
-    instanceId: 'phineas-gage-skull-01',
-    partId: 'skull',
+    instanceId: 'phineas-gage-skull-base-01',
+    partId: 'skull-base',
   },
-  calvariumCut: {
+  skullCalvaria: {
     targetKind: 'asset-part',
     collectionId: 'case-phineas-gage',
-    instanceId: 'phineas-gage-calvarium-cut-01',
-    partId: 'calvarium-cut',
+    instanceId: 'phineas-gage-skull-calvaria-01',
+    partId: 'skull-calvaria',
   },
   ironRod: {
     targetKind: 'asset-part',
@@ -125,8 +125,8 @@ export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
   source: 'Kap. 11 · Van Horn et al. 2012',
-  assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädel-LOD, Calvarium-Cut und generierte Eisenstange); Manifest und Transform-Vertrag pinnen Herkunft, Maße und Lizenzstatus.',
-  trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012; die importierten Gage-Assets bleiben im eigenen Rekonstruktionsraum und ersetzen den früheren TARO-Kontextschädel.',
+  assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädelbasis, Calvaria und generierte Eisenstange); Manifest und Transform-Vertrag pinnen Herkunft, Maße und Lizenzstatus.',
+  trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 und Ratiu et al. 2004; die extrahierten Gage-Schädelteile sind per TARO-Fit-Matrix mit der generierten Eisenstange synchronisiert.',
   rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer wird das generierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers gerendert.',
   steps: [
     {

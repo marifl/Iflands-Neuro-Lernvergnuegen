@@ -10,6 +10,7 @@ import {
   sequenceTargetRefFromAssetPart,
   sequenceTargetRefFromAtlasRole,
   sequenceTargetRefFromEegSite,
+  sequenceTargetRefFromObjectGraphId,
   sequenceTargetRefFromOntologyNode,
   toSequenceTargetRefJson,
 } from './sequenceTargetRef'
@@ -162,6 +163,18 @@ describe('SequenceTargetRef contract', () => {
     expect(objectGraphIdForTarget(sequenceTargetRefFromAssetPart(instance, helper))).toBe(
       'target:asset-part:device-eeg-10-20:eeg-cap-01:alignment-helper-ring',
     )
+  })
+
+  it('rekonstruiert TargetRefs aus Object-Graph-IDs fuer Explorer-Asset-Leaves', () => {
+    expect(sequenceTargetRefFromObjectGraphId(
+      'target:asset-part:case-phineas-gage:phineas-gage-iron-rod-01:iron-rod',
+    )).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'case-phineas-gage',
+      instanceId: 'phineas-gage-iron-rod-01',
+      partId: 'iron-rod',
+    })
+    expect(sequenceTargetRefFromObjectGraphId('case-phineas-gage:iron-rod')).toBeNull()
   })
 
   it('macht unbekannte Targets sichtbar, ohne den Resolver werfen zu lassen', () => {

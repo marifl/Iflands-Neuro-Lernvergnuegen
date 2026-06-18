@@ -1,5 +1,5 @@
 import { TransformControls } from '@react-three/drei'
-import { useEffect, useMemo, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef, type RefObject } from 'react'
 import * as THREE from 'three'
 import { EEG_ELECTRODES, isEegSite, type EegSite } from './eegElectrodes'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
@@ -9,10 +9,13 @@ import { useViewerStore } from './viewerStore'
 import { pickTargetFromTargetRef, sequenceTargetUserData } from './targetPicking'
 import {
   activeAuthoringTransformTarget,
-  applyAuthoringTransformCommand,
+  applyAuthoringTransformDraft,
+  applyAuthoringTransformTransaction,
   type ActiveAuthoringTransformTarget,
 } from './authoringTransformRuntime'
+import { registerAuthoringTransformDraft } from './authoringTransformDraftRegistry'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
+import { MANIFEST_AUTHORING_SCENE_ID } from './manifestAuthoringRuntime'
 
 const DEVICE_BASE_COLOR = '#d8ecef'
 const DEVICE_HELPER_COLOR = '#6d7c82'
@@ -57,14 +60,6 @@ function transformFromGroup(group: THREE.Group): AuthoringTransform {
     rotation: [group.rotation.x, group.rotation.y, group.rotation.z],
     scale: [group.scale.x, group.scale.y, group.scale.z],
   }
-}
-
-function sameTransform(a: AuthoringTransform, b: AuthoringTransform): boolean {
-  return (
-    a.position.every((value, index) => value === b.position[index]) &&
-    a.rotation.every((value, index) => value === b.rotation[index]) &&
-    a.scale.every((value, index) => value === b.scale[index])
-  )
 }
 
 function AuthoringPartMesh({
@@ -133,14 +128,16 @@ function AuthoringInstance({
 }) {
   const parts = instance.parts ?? []
   const groupRef = useRef<THREE.Group>(null)
-  const controlsRef = useRef<any>(null)
   const beforeRef = useRef<AuthoringTransform | null>(null)
+  const draggingRef = useRef(false)
   const mode = useViewerStore((s) => s.authoringTransformMode)
   const space = useViewerStore((s) => s.authoringTransformSpace)
   const snap = useViewerStore((s) => s.authoringTransformSnap)
   const frozen = useViewerStore((s) => s.authoringTransformFrozen)
+  const editMode = useViewerStore((s) => s.authoringEditMode)
   const transformActive = Boolean(
-    activeTransformTarget
+    editMode
+      && activeTransformTarget
       && activeTransformTarget.instance.collectionId === instance.collectionId
       && activeTransformTarget.instance.instanceId === instance.instanceId
       && !frozen,
@@ -148,8 +145,9 @@ function AuthoringInstance({
 
   if (!instance.visible || parts.length === 0) return null
 
+  const groupTransformProps = draggingRef.current ? {} : transformProps(instance.transform)
   const group = (
-    <group ref={groupRef} name={`authoring-instance:${instance.collectionId}:${instance.instanceId}`} {...transformProps(instance.transform)}>
+    <group ref={groupRef} name={`authoring-instance:${instance.collectionId}:${instance.instanceId}`} {...groupTransformProps}>
       {parts.map((part, index) => (
         <AuthoringPartMesh
           key={part.partId}
@@ -163,53 +161,75 @@ function AuthoringInstance({
     </group>
   )
 
+  const captureBefore = useCallback(() => {
+    const groupObject = groupRef.current
+    beforeRef.current = groupObject ? transformFromGroup(groupObject) : instance.transform
+    draggingRef.current = true
+  }, [instance.transform])
+
+  const commitAfter = useCallback((): boolean => {
+    const groupObject = groupRef.current
+    if (!groupObject) return false
+    const after = transformFromGroup(groupObject)
+    const current = useAuthoringSnapshotStore.getState().authoring
+    const before = beforeRef.current
+    const result = before
+      ? applyAuthoringTransformTransaction(current, {
+          collectionId: instance.collectionId,
+          instanceId: instance.instanceId,
+          before,
+          after,
+          commandId: `cmd:transform:${instance.instanceId}:${Date.now()}`,
+          label: `Transform ${instance.instanceId}`,
+        })
+      : applyAuthoringTransformDraft(current, {
+          collectionId: instance.collectionId,
+          instanceId: instance.instanceId,
+          transform: after,
+          commandId: `cmd:transform:${instance.instanceId}:${Date.now()}`,
+          label: `Transform ${instance.instanceId}`,
+        })
+    beforeRef.current = null
+    draggingRef.current = false
+    if (!result) return false
+    const store = useAuthoringSnapshotStore.getState()
+    store.setAuthoringSnapshotState(result.authoring)
+    store.recordAuthoringCommand(result.command)
+    if (import.meta.env.DEV) {
+      ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
+    }
+    return true
+  }, [instance.collectionId, instance.instanceId])
+
+  const noteLiveChange = useCallback(() => {
+    groupRef.current?.updateMatrixWorld(true)
+  }, [])
+
   useEffect(() => {
     if (!transformActive) return
-    const controls = controlsRef.current
-    if (!controls) return
-    const onMouseDown = () => {
-      beforeRef.current = groupRef.current ? transformFromGroup(groupRef.current) : instance.transform
-    }
-    const onMouseUp = () => {
-      const groupObject = groupRef.current
-      if (!groupObject || !beforeRef.current) return
-      const after = transformFromGroup(groupObject)
-      if (sameTransform(beforeRef.current, after)) return
-      const current = useAuthoringSnapshotStore.getState().authoring
-      const target = activeAuthoringTransformTarget(current)
-      if (!current || !target) return
-      const result = applyAuthoringTransformCommand(
-        current,
-        target,
-        after,
-        `cmd:transform:${target.instance.instanceId}:${Date.now()}`,
-        `Transform ${target.instance.instanceId}`,
-      )
-      useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(result.authoring)
-      if (import.meta.env.DEV) {
-        ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
-      }
-    }
-    controls.addEventListener('mouseDown', onMouseDown)
-    controls.addEventListener('mouseUp', onMouseUp)
+    const unregisterDraft = registerAuthoringTransformDraft(commitAfter)
     return () => {
-      controls.removeEventListener('mouseDown', onMouseDown)
-      controls.removeEventListener('mouseUp', onMouseUp)
+      commitAfter()
+      unregisterDraft()
     }
-  }, [instance.transform, transformActive])
+  }, [commitAfter, transformActive])
 
   if (!transformActive) return group
   return (
-    <TransformControls
-      ref={controlsRef}
-      mode={mode}
-      space={space}
-      translationSnap={snap ? 5 : undefined}
-      rotationSnap={snap ? Math.PI / 12 : undefined}
-      scaleSnap={snap ? 0.05 : undefined}
-    >
+    <>
       {group}
-    </TransformControls>
+      <TransformControls
+        object={groupRef as RefObject<THREE.Object3D>}
+        mode={mode}
+        space={space}
+        translationSnap={snap ? 5 : undefined}
+        rotationSnap={snap ? Math.PI / 12 : undefined}
+        scaleSnap={snap ? 0.05 : undefined}
+        onMouseDown={captureBefore}
+        onMouseUp={commitAfter}
+        onObjectChange={noteLiveChange}
+      />
+    </>
   )
 }
 
@@ -224,7 +244,7 @@ export default function AuthoringSceneObjects() {
   const activeTargetId = authoring?.activeTargetRef ? objectGraphIdForTarget(authoring.activeTargetRef) : null
   const activeTransformTarget = useMemo(() => activeAuthoringTransformTarget(authoring), [authoring])
 
-  if (!activeScene) return null
+  if (!activeScene || activeScene.sceneId === MANIFEST_AUTHORING_SCENE_ID) return null
   return (
     <group name={`authoring-scene:${activeScene.sceneId}`}>
       {activeScene.assetInstances.map((instance) => (

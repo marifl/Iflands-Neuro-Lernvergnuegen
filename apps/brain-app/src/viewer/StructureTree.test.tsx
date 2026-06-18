@@ -172,7 +172,7 @@ describe('StructureTree Gruppenknoten', () => {
 
     const text = container.textContent ?? ''
     let cursor = 0
-    for (const label of ['TARO', 'Jülich', 'DKT', 'Brodmann', 'Destrieux', 'Kontext (Vollausbau)']) {
+    for (const label of ['TARO', 'Jülich', 'DKT', 'Brodmann', 'Destrieux', 'Kontext (Vollausbau)', 'Phineas Gage']) {
       const position = text.indexOf(label, cursor)
       expect(position).toBeGreaterThanOrEqual(cursor)
       cursor = position + label.length
@@ -220,6 +220,10 @@ describe('StructureTree Gruppenknoten', () => {
 
     fireEvent.change(searchInput, { target: { value: 'cingullum' } })
     expect(screen.getByRole('button', { name: 'Area B' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Area A' })).not.toBeInTheDocument()
+
+    fireEvent.change(searchInput, { target: { value: 'Eisenstange' } })
+    expect(screen.getByRole('button', { name: 'Gage-Eisenstange' })).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Area A' })).not.toBeInTheDocument()
 
     fireEvent.change(searchInput, { target: { value: 'kein-treffer' } })

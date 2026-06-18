@@ -1,8 +1,10 @@
 import {
   topLevelKnowledgeCollections,
   type KnowledgeCollection,
+  type KnowledgeAssetSlot,
 } from './knowledgeRegistry'
 import type { Lang, OntologyNode } from './ontology'
+import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
 import type { ViewMode } from './viewerStore'
 
 export interface ExplorerTreeRootSource {
@@ -53,6 +55,43 @@ function normalizedRootNode(collection: KnowledgeCollection, node: OntologyNode)
   }
 }
 
+function assetSlotLeaf(collection: KnowledgeCollection, slot: KnowledgeAssetSlot): OntologyNode {
+  const label = slot.label
+  const targetRef: SequenceTargetRef | null = slot.runtimeInstanceId && slot.partId
+    ? {
+      targetKind: 'asset-part',
+      collectionId: collection.id,
+      instanceId: slot.runtimeInstanceId,
+      partId: slot.partId,
+    }
+    : null
+  const id = targetRef ? objectGraphIdForTarget(targetRef) : `${collection.id}:${slot.id}`
+  return {
+    id,
+    slug: id,
+    fma: id,
+    side: 'midline',
+    labels: labelsForRoot(label),
+    searchAliases: [
+      collection.label,
+      collection.id,
+      slot.id,
+      ...(slot.assetId ? [slot.assetId] : []),
+      ...(slot.runtimeInstanceId ? [slot.runtimeInstanceId] : []),
+      ...(slot.partId ? [slot.partId] : []),
+    ],
+  }
+}
+
+function assetSlotTree(collection: KnowledgeCollection): OntologyNode | null {
+  if (!collection.treeId || !collection.assetSlots?.length) return null
+  return {
+    id: collection.treeId,
+    labels: labelsForRoot(collection.label),
+    children: collection.assetSlots.map((slot) => assetSlotLeaf(collection, slot)),
+  }
+}
+
 function runtimeNodeForCollection(collection: KnowledgeCollection, source: ExplorerTreeRootSource): OntologyNode | null {
   switch (collection.treeId) {
     case 'taro':
@@ -72,7 +111,7 @@ function runtimeNodeForCollection(collection: KnowledgeCollection, source: Explo
     case 'context':
       return source.context
     default:
-      return null
+      return assetSlotTree(collection)
   }
 }
 

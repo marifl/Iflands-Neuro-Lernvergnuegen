@@ -1,7 +1,13 @@
 import { useGLTF } from '@react-three/drei'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
+import type { AssetManifestDocument, AssetManifestEntry } from './assetManifest'
+import {
+  applyManifestRootTransform,
+  assetManifestEntryByUri,
+  loadPhineasAssetManifest,
+} from './phineasAssetManifest'
 import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS } from './phineasGage'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
@@ -11,6 +17,7 @@ import {
   type ViewerPickTarget,
 } from './targetPicking'
 import { useViewerStore } from './viewerStore'
+import ManifestEditableObject from './ManifestEditableObject'
 
 const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
 const NO_RAYCAST = () => {}
@@ -23,6 +30,17 @@ type PhineasLayerSnapshot = {
   pickableMeshCount: number
   meshNames: string[]
   targetInstanceIds: string[]
+  transform: {
+    position: [number, number, number]
+    rotation: [number, number, number]
+    scale: [number, number, number]
+  }
+  bounds: {
+    min: [number, number, number]
+    max: [number, number, number]
+    size: [number, number, number]
+    center: [number, number, number]
+  }
 }
 
 type PhineasGageAssetsSnapshot = {
@@ -31,8 +49,8 @@ type PhineasGageAssetsSnapshot = {
   skullOpacity: number
   rodVisible: boolean
   layers: {
-    skull: PhineasLayerSnapshot
-    calvariumCut: PhineasLayerSnapshot
+    skullBase: PhineasLayerSnapshot
+    skullCalvaria: PhineasLayerSnapshot
     ironRod: PhineasLayerSnapshot
   }
 }
@@ -42,8 +60,8 @@ type PhineasGageAssetsWindow = Window & {
 }
 
 useGLTF.setDecoderPath(DRACO_DECODER_PATH)
-useGLTF.preload(PHINEAS_GAGE_ASSETS.skull)
-useGLTF.preload(PHINEAS_GAGE_ASSETS.calvariumCut)
+useGLTF.preload(PHINEAS_GAGE_ASSETS.skullBase)
+useGLTF.preload(PHINEAS_GAGE_ASSETS.skullCalvaria)
 useGLTF.preload(PHINEAS_GAGE_ASSETS.ironRod)
 
 function cloneMaterial(material: THREE.Material | THREE.Material[]): THREE.Material | THREE.Material[] {
@@ -64,6 +82,12 @@ function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
     mesh.raycast = NO_RAYCAST
     mesh.renderOrder = 7
   })
+  return clone
+}
+
+function cloneSceneForAsset(scene: THREE.Group, asset: AssetManifestEntry): THREE.Group {
+  const clone = cloneSceneWithOwnMaterials(scene)
+  applyManifestRootTransform(clone, asset)
   return clone
 }
 
@@ -104,12 +128,21 @@ function updateLayer(root: THREE.Object3D, options: {
   })
 }
 
+function vec3Tuple(vector: THREE.Vector3): [number, number, number] {
+  return [vector.x, vector.y, vector.z]
+}
+
 function layerSnapshot(root: THREE.Object3D, asset: string): PhineasLayerSnapshot {
   const meshNames: string[] = []
   const targetInstanceIds = new Set<string>()
   let meshCount = 0
   let visibleMeshCount = 0
   let pickableMeshCount = 0
+
+  root.updateMatrixWorld(true)
+  const bounds = new THREE.Box3().setFromObject(root)
+  const size = bounds.getSize(new THREE.Vector3())
+  const center = bounds.getCenter(new THREE.Vector3())
 
   root.traverse((object) => {
     const targetRef = object.userData[SEQUENCE_TARGET_REF_USER_DATA]
@@ -134,7 +167,43 @@ function layerSnapshot(root: THREE.Object3D, asset: string): PhineasLayerSnapsho
     pickableMeshCount,
     meshNames,
     targetInstanceIds: [...targetInstanceIds].sort(),
+    transform: {
+      position: vec3Tuple(root.position),
+      rotation: [root.rotation.x, root.rotation.y, root.rotation.z],
+      scale: vec3Tuple(root.scale),
+    },
+    bounds: {
+      min: vec3Tuple(bounds.min),
+      max: vec3Tuple(bounds.max),
+      size: vec3Tuple(size),
+      center: vec3Tuple(center),
+    },
   }
+}
+
+function usePhineasAssetManifest(): AssetManifestDocument | null {
+  const [state, setState] = useState<{ manifest: AssetManifestDocument | null; error: Error | null }>({
+    manifest: null,
+    error: null,
+  })
+
+  useEffect(() => {
+    let active = true
+    loadPhineasAssetManifest()
+      .then((manifest) => {
+        if (active) setState({ manifest, error: null })
+      })
+      .catch((error: unknown) => {
+        const err = error instanceof Error ? error : new Error(String(error))
+        if (active) setState({ manifest: null, error: err })
+      })
+    return () => {
+      active = false
+    }
+  }, [])
+
+  if (state.error) throw state.error
+  return state.manifest
 }
 
 function PhineasGageAssetScenes({
@@ -146,38 +215,53 @@ function PhineasGageAssetScenes({
   skullOpacity: number
   rodVisible: boolean
 }) {
-  const { scene: skullScene } = useGLTF(PHINEAS_GAGE_ASSETS.skull)
-  const { scene: calvariumScene } = useGLTF(PHINEAS_GAGE_ASSETS.calvariumCut)
+  const manifest = usePhineasAssetManifest()
+  const { scene: skullBaseScene } = useGLTF(PHINEAS_GAGE_ASSETS.skullBase)
+  const { scene: skullCalvariaScene } = useGLTF(PHINEAS_GAGE_ASSETS.skullCalvaria)
   const { scene: rodScene } = useGLTF(PHINEAS_GAGE_ASSETS.ironRod)
-  const skull = useMemo(() => cloneSceneWithOwnMaterials(skullScene), [skullScene])
-  const calvarium = useMemo(() => cloneSceneWithOwnMaterials(calvariumScene), [calvariumScene])
-  const rod = useMemo(() => cloneSceneWithOwnMaterials(rodScene), [rodScene])
+  const assets = useMemo(() => {
+    if (!manifest) return null
+    return {
+      skullBase: assetManifestEntryByUri(manifest, PHINEAS_GAGE_ASSETS.skullBase),
+      skullCalvaria: assetManifestEntryByUri(manifest, PHINEAS_GAGE_ASSETS.skullCalvaria),
+      ironRod: assetManifestEntryByUri(manifest, PHINEAS_GAGE_ASSETS.ironRod),
+    }
+  }, [manifest])
+  const skullBase = useMemo(
+    () => (assets ? cloneSceneForAsset(skullBaseScene, assets.skullBase) : null),
+    [skullBaseScene, assets],
+  )
+  const skullCalvaria = useMemo(
+    () => (assets ? cloneSceneForAsset(skullCalvariaScene, assets.skullCalvaria) : null),
+    [skullCalvariaScene, assets],
+  )
+  const rod = useMemo(() => (assets ? cloneSceneForAsset(rodScene, assets.ironRod) : null), [rodScene, assets])
   const targets = useMemo(() => ({
-    skull: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.skull, 'Gage skull'),
-    calvariumCut: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.calvariumCut, 'Gage calvarium cut'),
+    skullBase: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.skullBase, 'Gage skull base'),
+    skullCalvaria: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.skullCalvaria, 'Gage skull calvaria'),
     ironRod: pickTargetFromTargetRef(PHINEAS_GAGE_TARGETS.ironRod, 'Gage iron rod'),
   }), [])
 
   useEffect(() => {
-    attachTarget(skull, targets.skull)
-    attachTarget(calvarium, targets.calvariumCut)
+    if (!skullBase || !skullCalvaria || !rod) return
+    attachTarget(skullBase, targets.skullBase)
+    attachTarget(skullCalvaria, targets.skullCalvaria)
     attachTarget(rod, targets.ironRod)
-  }, [skull, calvarium, rod, targets])
+  }, [skullBase, skullCalvaria, rod, targets])
 
   useEffect(() => {
-    const showFullSkull = showSkull && !rodVisible
-    const showCalvariumCut = showSkull && rodVisible
-    updateLayer(skull, {
-      visible: showFullSkull,
-      opacity: Math.max(0.18, Math.min(1, skullOpacity)),
+    if (!skullBase || !skullCalvaria || !rod) return
+    updateLayer(skullBase, {
+      visible: showSkull,
+      opacity: Math.max(0.28, Math.min(1, skullOpacity)),
       pickable: true,
       color: ATLAS_VIEWER_COLORS.bone,
       roughness: 0.72,
       metalness: 0,
     })
-    updateLayer(calvarium, {
-      visible: showCalvariumCut,
-      opacity: Math.max(0.24, Math.min(0.82, skullOpacity + 0.18)),
+    updateLayer(skullCalvaria, {
+      visible: showSkull,
+      opacity: rodVisible ? 0.34 : Math.max(0.18, Math.min(0.92, skullOpacity)),
       pickable: true,
       color: ATLAS_VIEWER_COLORS.bone,
       roughness: 0.72,
@@ -199,23 +283,25 @@ function PhineasGageAssetScenes({
         skullOpacity,
         rodVisible,
         layers: {
-          skull: layerSnapshot(skull, PHINEAS_GAGE_ASSETS.skull),
-          calvariumCut: layerSnapshot(calvarium, PHINEAS_GAGE_ASSETS.calvariumCut),
+          skullBase: layerSnapshot(skullBase, PHINEAS_GAGE_ASSETS.skullBase),
+          skullCalvaria: layerSnapshot(skullCalvaria, PHINEAS_GAGE_ASSETS.skullCalvaria),
           ironRod: layerSnapshot(rod, PHINEAS_GAGE_ASSETS.ironRod),
         },
       }
     }
-  }, [skull, calvarium, rod, showSkull, skullOpacity, rodVisible])
+  }, [skullBase, skullCalvaria, rod, showSkull, skullOpacity, rodVisible])
 
   useEffect(() => () => {
     if (import.meta.env.DEV) delete (window as PhineasGageAssetsWindow).__phineasGageAssets
   }, [])
 
+  if (!assets || !skullBase || !skullCalvaria || !rod) return null
+
   return (
     <group name="phineas-gage-assets">
-      <primitive object={skull} />
-      <primitive object={calvarium} />
-      <primitive object={rod} />
+      <ManifestEditableObject object={skullBase} asset={assets.skullBase} />
+      <ManifestEditableObject object={skullCalvaria} asset={assets.skullCalvaria} />
+      <ManifestEditableObject object={rod} asset={assets.ironRod} />
     </group>
   )
 }

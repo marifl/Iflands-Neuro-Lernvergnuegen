@@ -3,6 +3,7 @@ import { existsSync, readFileSync, statSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { parseAssetManifestDocument } from './assetManifest'
+import type { AuthoringTransform } from './authoringScene'
 import {
   HISTORICAL_ROD_LENGTH_MM,
   HISTORICAL_ROD_SHAFT_DIAMETER_MM,
@@ -39,14 +40,21 @@ function expectVec3(value: unknown): asserts value is [number, number, number] {
   }
 }
 
+function expectTransform(value: unknown): asserts value is AuthoringTransform {
+  const transform = value as Partial<AuthoringTransform>
+  expectVec3(transform.position)
+  expectVec3(transform.rotation)
+  expectVec3(transform.scale)
+}
+
 describe('Phineas-Gage-Standalone-Assets', () => {
   it('liefert ein valides Runtime-Manifest mit echten GLB-Dateien und Hashes', () => {
     const manifest = parseAssetManifestDocument(readJsonFile(resolve(phineasAssetsRoot, 'asset-manifest.json')))
 
     expect(manifest.manifestId).toBe('phineas-gage-standalone-assets-v1')
     expect(manifest.assets.map((asset) => asset.assetId)).toEqual([
-      'phineas-gage-skull-lod',
-      'phineas-gage-skull-calvarium-cut-lod',
+      'phineas-gage-skull-base',
+      'phineas-gage-skull-calvaria',
       'phineas-gage-iron-rod',
     ])
 
@@ -106,7 +114,22 @@ describe('Phineas-Gage-Standalone-Assets', () => {
       unit: unknown
       upAxis: unknown
       sources: Array<{ id: string; localPath: string; role: string }>
-      trajectory: { entry: unknown; exit: unknown; primarySourceId: unknown }
+      trajectory: {
+        entry: unknown
+        exit: unknown
+        primarySourceId: unknown
+      }
+      skullAlignment: {
+        assetIds: unknown
+        referenceAssets: Record<string, unknown>
+        yFitPolicy: unknown
+        orientationPolicy: unknown
+        visualOffset: unknown
+        rootTransform: unknown
+        targetBounds: { min: unknown; max: unknown; center: unknown; size: unknown }
+        boundsToleranceMm: unknown
+        brainFitToleranceMm: unknown
+      }
       ironRod: {
         assetId: unknown
         uri: unknown
@@ -132,6 +155,30 @@ describe('Phineas-Gage-Standalone-Assets', () => {
     expect(contract.trajectory.primarySourceId).toBe('vanhorn2012')
     expect(contract.trajectory.entry).toEqual(ROD_ENTRY)
     expect(contract.trajectory.exit).toEqual(ROD_EXIT)
+    expect(contract.skullAlignment.assetIds).toEqual([
+      'phineas-gage-skull-base',
+      'phineas-gage-skull-calvaria',
+    ])
+    expect(contract.skullAlignment.referenceAssets).toMatchObject({
+      skullXZ: '/assets/context/skull.glb',
+      headY: '/assets/context/head.glb',
+      brainFit: '/assets/bodyparts3d/brain.glb',
+    })
+    expect(contract.skullAlignment.yFitPolicy).toBe('native-skull-height')
+    expect(contract.skullAlignment.orientationPolicy).toContain('Y-axis rotation')
+    expect(contract.skullAlignment.visualOffset).toEqual([0, -5, -5])
+    expectTransform(contract.skullAlignment.rootTransform)
+    expect(contract.skullAlignment.rootTransform).toMatchObject({
+      position: [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
+      rotation: [0, Math.PI, 0],
+      scale: [1.100639643699513, 1, 1.1039332125696444],
+    })
+    expectVec3(contract.skullAlignment.targetBounds.min)
+    expectVec3(contract.skullAlignment.targetBounds.max)
+    expectVec3(contract.skullAlignment.targetBounds.center)
+    expectVec3(contract.skullAlignment.targetBounds.size)
+    expect(contract.skullAlignment.boundsToleranceMm).toBeGreaterThan(0)
+    expect(contract.skullAlignment.brainFitToleranceMm).toBeGreaterThan(0)
     expect(contract.ironRod).toMatchObject({
       assetId: 'phineas-gage-iron-rod',
       uri: '/assets/phineas/phineas-gage-iron-rod.glb',
@@ -141,6 +188,24 @@ describe('Phineas-Gage-Standalone-Assets', () => {
       shaftDiameterMm: HISTORICAL_ROD_SHAFT_DIAMETER_MM,
       tipDiameterMm: HISTORICAL_ROD_TIP_DIAMETER_MM,
       weightKg: HISTORICAL_ROD_WEIGHT_KG,
+    })
+  })
+
+  it('haelt Runtime-Manifest und Skull-Alignment-Contract synchron', () => {
+    const manifest = parseAssetManifestDocument(readJsonFile(resolve(phineasAssetsRoot, 'asset-manifest.json')))
+    const contract = readJsonFile(resolve(phineasAssetsRoot, 'transform-contract.json')) as {
+      skullAlignment: { rootTransform: AuthoringTransform }
+    }
+    const skullBase = manifest.assets.find((asset) => asset.assetId === 'phineas-gage-skull-base')
+    const skullCalvaria = manifest.assets.find((asset) => asset.assetId === 'phineas-gage-skull-calvaria')
+    const rod = manifest.assets.find((asset) => asset.assetId === 'phineas-gage-iron-rod')
+
+    expect(skullBase?.normalization.rootTransform).toEqual(contract.skullAlignment.rootTransform)
+    expect(skullCalvaria?.normalization.rootTransform).toEqual(contract.skullAlignment.rootTransform)
+    expect(rod?.normalization.rootTransform).toEqual({
+      position: [0, 0, 0],
+      rotation: [0, 0, 0],
+      scale: [1, 1, 1],
     })
   })
 })

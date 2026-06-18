@@ -18,6 +18,9 @@ export interface KnowledgeAssetSlot {
   label: string
   formats: KnowledgeAssetFormat[]
   optional: boolean
+  assetId?: string
+  runtimeInstanceId?: string
+  partId?: string
 }
 
 export interface KnowledgeCollection {
@@ -99,26 +102,37 @@ export const KNOWLEDGE_COLLECTIONS: KnowledgeCollection[] = [
     id: 'case-phineas-gage',
     kind: 'case-study',
     label: 'Phineas Gage',
-    visibleInExplorerTree: false,
+    treeId: 'case-phineas-gage',
+    count: 3,
+    visibleInExplorerTree: true,
     capabilities: ['load-3d-asset', 'transform-gizmo', 'positionable', 'pickable-parts', 'animatable', 'sequence-state'],
     assetSlots: [
       {
-        id: 'historical-skull',
-        label: 'Gage-Schädel',
+        id: 'skull-base',
+        label: 'Gage-Schädelbasis',
         formats: ['glb'],
         optional: true,
+        assetId: 'phineas-gage-skull-base',
+        runtimeInstanceId: 'phineas-gage-skull-base-01',
+        partId: 'skull-base',
       },
       {
-        id: 'calvarium-cut',
-        label: 'Gage-Calvarium-Cut',
+        id: 'skull-calvaria',
+        label: 'Gage-Calvaria',
         formats: ['glb'],
         optional: true,
+        assetId: 'phineas-gage-skull-calvaria',
+        runtimeInstanceId: 'phineas-gage-skull-calvaria-01',
+        partId: 'skull-calvaria',
       },
       {
         id: 'iron-rod',
         label: 'Gage-Eisenstange',
         formats: ['glb'],
         optional: true,
+        assetId: 'phineas-gage-iron-rod',
+        runtimeInstanceId: 'phineas-gage-iron-rod-01',
+        partId: 'iron-rod',
       },
     ],
     descriptionDe: 'Fallstudie als erweiterbare Collection statt Pflicht-Vortragsschritt.',

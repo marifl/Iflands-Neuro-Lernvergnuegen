@@ -4,13 +4,6 @@ import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode }
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
 import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
 import { downloadViewerSnapshot, importViewerSnapshotFile } from './localDataActions'
-import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
-import {
-  IDENTITY_AUTHORING_TRANSFORM,
-  activeAuthoringTransformTarget,
-  applyAuthoringTransformCommand,
-  nudgeAuthoringTransform,
-} from './authoringTransformRuntime'
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
@@ -19,6 +12,7 @@ import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefini
 import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExplanation'
 import SettingsPanel from './SettingsPanel'
 import { ShellControlButton } from './ShellStatePrimitives'
+import { AuthoringTransformControls } from './AuthoringTransformControls'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | 'settings' | null
 
@@ -31,8 +25,6 @@ const VIEW_PRESETS: { name: string; label: string }[] = [
 ]
 
 const TOOL_LABEL: Record<SelectMode, string> = { group: 'Gruppe', direct: 'Direkt' }
-const TRANSFORM_MODE_LABEL = { translate: 'Verschieben', rotate: 'Drehen', scale: 'Skalieren' } as const
-const TRANSFORM_SPACE_LABEL = { world: 'Welt', local: 'Lokal' } as const
 const CUT_LABEL: Record<CutAxis, string> = {
   sagittal: 'Sagittal',
   coronal: 'Coronal',
@@ -133,14 +125,7 @@ export default function FooterBar() {
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const selectMode = useViewerStore((s) => s.selectMode)
   const setSelectMode = useViewerStore((s) => s.setSelectMode)
-  const authoringTransformMode = useViewerStore((s) => s.authoringTransformMode)
-  const setAuthoringTransformMode = useViewerStore((s) => s.setAuthoringTransformMode)
-  const authoringTransformSpace = useViewerStore((s) => s.authoringTransformSpace)
-  const setAuthoringTransformSpace = useViewerStore((s) => s.setAuthoringTransformSpace)
-  const authoringTransformSnap = useViewerStore((s) => s.authoringTransformSnap)
-  const setAuthoringTransformSnap = useViewerStore((s) => s.setAuthoringTransformSnap)
-  const authoringTransformFrozen = useViewerStore((s) => s.authoringTransformFrozen)
-  const setAuthoringTransformFrozen = useViewerStore((s) => s.setAuthoringTransformFrozen)
+  const authoringEditMode = useViewerStore((s) => s.authoringEditMode)
   const selected = useViewerStore((s) => s.selected)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hidden = useViewerStore((s) => s.hidden)
@@ -181,8 +166,6 @@ export default function FooterBar() {
   const [showSources, setShowSources] = useState(false)
   const [snapshotError, setSnapshotError] = useState<Error | null>(null)
   const snapshotInputRef = useRef<HTMLInputElement>(null)
-  const authoring = useAuthoringSnapshotStore((s) => s.authoring)
-  const activeTransformTarget = activeAuthoringTransformTarget(authoring)
   const toggle = (which: OpenFlyout) => setOpen((cur) => (cur === which ? null : which))
   const close = () => setOpen(null)
   const isPhone = useIsPhone()
@@ -200,29 +183,9 @@ export default function FooterBar() {
       if (snapshotInputRef.current) snapshotInputRef.current.value = ''
     }
   }
-  const applyActiveTransform = (
-    transform: typeof IDENTITY_AUTHORING_TRANSFORM,
-    label: string,
-  ) => {
-    const current = useAuthoringSnapshotStore.getState().authoring
-    const target = activeAuthoringTransformTarget(current)
-    if (!current || !target) return
-    const result = applyAuthoringTransformCommand(
-      current,
-      target,
-      transform,
-      `cmd:transform:${target.instance.instanceId}:${Date.now()}`,
-      label,
-    )
-    useAuthoringSnapshotStore.getState().setAuthoringSnapshotState(result.authoring)
-    if (import.meta.env.DEV) {
-      ;(window as unknown as { __BRAIN_LAST_AUTHORING_COMMAND__?: unknown }).__BRAIN_LAST_AUTHORING_COMMAND__ = result.command
-    }
-  }
-
   if (snapshotError) throw snapshotError
 
-  // Box-Liste in Anzeige-Reihenfolge. Werkzeug (Klickmodus) nur im Explorer sinnvoll.
+  // Box-Liste in Anzeige-Reihenfolge. Werkzeug kombiniert Auswahlmodus und expliziten Asset-Edit.
   const boxes: BoxDef[] = [
     {
       key: 'atlas',
@@ -396,148 +359,85 @@ export default function FooterBar() {
       popoverMaxWidth: 'calc(100vw - 24px)',
       content: <SettingsPanel />,
     },
-    ...(appMode === 'explore'
-      ? [
-          {
-            key: 'tool' as const,
-            eyebrow: 'Werkzeug',
-            label: TOOL_LABEL[selectMode],
-            icon: <MousePointer2 {...FOOTER_ICON_PROPS} />,
-            content: (
-              <>
-                <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
-                <Item active={selectMode === 'direct'} onClick={() => { setSelectMode('direct'); close() }}>▹ Direkt</Item>
-                <div style={{ height: 10 }} />
-                <div className="eyebrow" style={{ marginBottom: 4 }}>Transform</div>
-                {(['translate', 'rotate', 'scale'] as const).map((mode) => (
-                  <Item
-                    key={mode}
-                    active={authoringTransformMode === mode}
-                    disabled={!activeTransformTarget}
-                    disabledReason="Erst ein Authoring-Objekt auswählen"
-                    onClick={() => setAuthoringTransformMode(mode)}
-                  >
-                    {TRANSFORM_MODE_LABEL[mode]}
-                  </Item>
-                ))}
-                {(['world', 'local'] as const).map((space) => (
-                  <Item
-                    key={space}
-                    active={authoringTransformSpace === space}
-                    disabled={!activeTransformTarget}
-                    disabledReason="Erst ein Authoring-Objekt auswählen"
-                    onClick={() => setAuthoringTransformSpace(space)}
-                  >
-                    {TRANSFORM_SPACE_LABEL[space]}
-                  </Item>
-                ))}
-                <Item
-                  active={authoringTransformSnap}
-                  disabled={!activeTransformTarget}
-                  disabledReason="Erst ein Authoring-Objekt auswählen"
-                  onClick={() => setAuthoringTransformSnap(!authoringTransformSnap)}
-                >
-                  Snap {authoringTransformSnap ? 'an' : 'aus'}
-                </Item>
-                <Item
-                  active={authoringTransformFrozen}
-                  disabled={!activeTransformTarget}
-                  disabledReason="Erst ein Authoring-Objekt auswählen"
-                  onClick={() => setAuthoringTransformFrozen(!authoringTransformFrozen)}
-                >
-                  {authoringTransformFrozen ? 'Gizmo fixiert' : 'Gizmo frei'}
-                </Item>
-                <Item
-                  disabled={!activeTransformTarget || authoringTransformFrozen}
-                  disabledReason={!activeTransformTarget ? 'Erst ein Authoring-Objekt auswählen' : 'Gizmo ist fixiert'}
-                  onClick={() => {
-                    if (!activeTransformTarget) return
-                    applyActiveTransform(
-                      nudgeAuthoringTransform(activeTransformTarget.instance.transform, 0, 5),
-                      'Nudge X',
-                    )
-                  }}
-                >
-                  X +5
-                </Item>
-                <Item
-                  disabled={!activeTransformTarget || authoringTransformFrozen}
-                  disabledReason={!activeTransformTarget ? 'Erst ein Authoring-Objekt auswählen' : 'Gizmo ist fixiert'}
-                  onClick={() => applyActiveTransform(IDENTITY_AUTHORING_TRANSFORM, 'Reset Transform')}
-                >
-                  Reset Transform
-                </Item>
-                <div style={{ height: 10 }} />
-                <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
-                <Item
-                  disabled={!selectedSlugList.length}
-                  disabledReason="Erst eine Struktur auswählen"
-                  onClick={() => {
-                    if (!selectedSlugList.length) return
-                    setHidden(selectedSlugList, selectionHasVisibleSlugs)
-                    close()
-                  }}
-                >
-                  {selectionToggleLabel}
-                </Item>
-                <Item
-                  disabled={!selected}
-                  disabledReason="Erst eine Struktur auswählen"
-                  onClick={() => {
-                    if (!selected) return
-                    setIsolated(selected)
-                    close()
-                  }}
-                >
-                  Auswahl isolieren
-                </Item>
-                <Item
-                  disabled={!selected}
-                  disabledReason="Erst eine Struktur auswählen"
-                  onClick={() => {
-                    select(null)
-                    close()
-                  }}
-                >
-                  Auswahl lösen
-                </Item>
-                <div style={{ height: 10 }} />
-                <div className="eyebrow" style={{ marginBottom: 4 }}>Ansicht zurücksetzen</div>
-                <Item
-                  disabled={!hidden.size}
-                  disabledReason="Keine ausgeblendeten Strukturen"
-                  onClick={() => {
-                    clearHidden()
-                    close()
-                  }}
-                >
-                  Alles zeigen
-                </Item>
-                <Item
-                  disabled={!isolated}
-                  disabledReason="Keine Isolation aktiv"
-                  onClick={() => {
-                    isolateUp()
-                    close()
-                  }}
-                >
-                  Isolationsebene zurück
-                </Item>
-                <Item
-                  disabled={!isolated}
-                  disabledReason="Keine Isolation aktiv"
-                  onClick={() => {
-                    setIsolated(null)
-                    close()
-                  }}
-                >
-                  Isolation aus
-                </Item>
-              </>
-            ),
-          },
-        ]
-      : []),
+    {
+      key: 'tool',
+      eyebrow: 'Werkzeug',
+      label: authoringEditMode ? 'Asset-Edit' : TOOL_LABEL[selectMode],
+      icon: <MousePointer2 {...FOOTER_ICON_PROPS} />,
+      content: (
+        <>
+          <AuthoringTransformControls includeEditToggle includeNudgeAction includeResetAction />
+          <div style={{ height: 10 }} />
+          <div className="eyebrow" style={{ marginBottom: 4 }}>Auswahl</div>
+          <Item active={selectMode === 'group'} onClick={() => { setSelectMode('group'); close() }}>▸ Gruppe</Item>
+          <Item active={selectMode === 'direct'} onClick={() => { setSelectMode('direct'); close() }}>▹ Direkt</Item>
+          <Item
+            disabled={!selectedSlugList.length}
+            disabledReason="Erst eine Struktur auswählen"
+            onClick={() => {
+              if (!selectedSlugList.length) return
+              setHidden(selectedSlugList, selectionHasVisibleSlugs)
+              close()
+            }}
+          >
+            {selectionToggleLabel}
+          </Item>
+          <Item
+            disabled={!selected}
+            disabledReason="Erst eine Struktur auswählen"
+            onClick={() => {
+              if (!selected) return
+              setIsolated(selected)
+              close()
+            }}
+          >
+            Auswahl isolieren
+          </Item>
+          <Item
+            disabled={!selected}
+            disabledReason="Erst eine Struktur auswählen"
+            onClick={() => {
+              select(null)
+              close()
+            }}
+          >
+            Auswahl lösen
+          </Item>
+          <div style={{ height: 10 }} />
+          <div className="eyebrow" style={{ marginBottom: 4 }}>Ansicht zurücksetzen</div>
+          <Item
+            disabled={!hidden.size}
+            disabledReason="Keine ausgeblendeten Strukturen"
+            onClick={() => {
+              clearHidden()
+              close()
+            }}
+          >
+            Alles zeigen
+          </Item>
+          <Item
+            disabled={!isolated}
+            disabledReason="Keine Isolation aktiv"
+            onClick={() => {
+              isolateUp()
+              close()
+            }}
+          >
+            Isolationsebene zurück
+          </Item>
+          <Item
+            disabled={!isolated}
+            disabledReason="Keine Isolation aktiv"
+            onClick={() => {
+              setIsolated(null)
+              close()
+            }}
+          >
+            Isolation aus
+          </Item>
+        </>
+      ),
+    },
   ]
   const visibleBoxes = isPhone
     ? MOBILE_BOX_ORDER.flatMap((key) => {
