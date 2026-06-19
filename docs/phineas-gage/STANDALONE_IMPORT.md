@@ -21,6 +21,10 @@ SHA-256 für die drei GLBs. Der Test
 Form, die GLB-Hashes, die Rekonstruktionsdaten, den Transform-Vertrag und die
 lokalen Quellen.
 
+Der aktuelle App-Space für diese GLBs heißt `phineas-gage-taro-fit-v1`. Die
+Archiv-Herkunft bleibt in den Provenienzfeldern sichtbar, läuft aber nicht als
+`legacy`-Space durch den Runtime-Vertrag.
+
 Schädelbasis und Calvaria werden mit
 `apps/brain-app/scripts/extract-phineas-archive-assets.py` aus
 `archive/2026-06-11-mni-stack/public/figs3d/v2/glb/mni152-allen-fullbrain-gage-context.glb`

@@ -1,6 +1,6 @@
 # Mesh-Identity-Inventory
 
-Aktueller Runtime-Vertrag: `bodyparts3d-taro` für BodyParts3D-/Context-Assets und `phineas-gage-legacy-figs3d` für die importierten Phineas-GLBs. Die alte `t6-master-brain`-Bezeichnung kommt im Repo-Scope nicht mehr vor; der Check bleibt trotzdem als Drift-Gate aktiv.
+Aktueller Runtime-Vertrag: `bodyparts3d-taro` für BodyParts3D-/Context-Assets und `phineas-gage-taro-fit-v1` für die in TARO-Viewer-Space eingepassten Phineas-GLBs. Die alte `t6-master-brain`-Bezeichnung kommt im Repo-Scope nicht mehr vor; der Check bleibt trotzdem als Drift-Gate aktiv.
 
 Reproduzierbar mit:
 
@@ -16,9 +16,9 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 | `bodyparts3d-subparcels` | `bodyparts3d-taro-subparcels` | 60 | 60 | 1 | 0 | 0 | n/a |
 | `bodyparts3d-skull-context` | `bodyparts3d-taro` | 21 | 20 | 1 | 20 | 0 | n/a |
 | `bodyparts3d-head-context` | `bodyparts3d-taro` | 314 | 313 | 1 | 313 | 0 | n/a |
-| `phineas-gage-skull-base` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
-| `phineas-gage-skull-calvaria` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
-| `phineas-gage-iron-rod` | `phineas-gage-legacy-figs3d` | 1 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-skull-base` | `phineas-gage-taro-fit-v1` | 1 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-skull-calvaria` | `phineas-gage-taro-fit-v1` | 1 | 1 | 1 | 1 | 0 | ok |
+| `phineas-gage-iron-rod` | `phineas-gage-taro-fit-v1` | 1 | 1 | 1 | 1 | 0 | ok |
 
 ## Details
 
@@ -99,7 +99,7 @@ pnpm --dir apps/brain-app run inventory:mesh-identity
 - URI: `/assets/phineas/phineas-gage-iron-rod.glb`
 - Manifest: `/assets/phineas/asset-manifest.json`
 - Größe: 0.01 MiB
-- SHA-256: `sha256:de50b94c56cdbb6aa22c906f681c704d24097547c9878dcc44585a9e5d7ea440`
+- SHA-256: `sha256:ec7a2d8878a8e6d5812c79b139435122338603b0cfae05f7ccf4344e8bf9686a`
 - Nodes: 1 gesamt, 1 benannt, 0 unbenannt
 - Meshes: 1 gesamt, 1 benannt, 0 unbenannt
 - Materials: 1

@@ -23,7 +23,7 @@
         "unit": "millimeter",
         "upAxis": "y-up",
         "scale": 1,
-        "spaceId": "phineas-gage-legacy-figs3d",
+        "spaceId": "phineas-gage-taro-fit-v1",
         "defaultPivot": { "policy": "bounds-center" },
         "rootTransform": {
           "position": [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
@@ -72,7 +72,7 @@
         "unit": "millimeter",
         "upAxis": "y-up",
         "scale": 1,
-        "spaceId": "phineas-gage-legacy-figs3d",
+        "spaceId": "phineas-gage-taro-fit-v1",
         "defaultPivot": { "policy": "bounds-center" },
         "rootTransform": {
           "position": [-6.1052611157404755, 22.986347198486328, 16.031952894185046],
@@ -121,7 +121,7 @@
         "unit": "millimeter",
         "upAxis": "y-up",
         "scale": 1,
-        "spaceId": "phineas-gage-legacy-figs3d",
+        "spaceId": "phineas-gage-taro-fit-v1",
         "defaultPivot": { "policy": "bounds-center" },
         "rootTransform": {
           "position": [0, 0, 0],

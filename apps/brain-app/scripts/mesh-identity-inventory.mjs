@@ -212,7 +212,7 @@ async function buildReport() {
     return {
       schemaVersion: 1,
       contractId: 'brain-app-runtime-mesh-identity-v1',
-      runtimeContract: 'bodyparts3d-taro + phineas-gage-legacy-figs3d',
+      runtimeContract: 'bodyparts3d-taro + phineas-gage-taro-fit-v1',
       checkedAssets: assets,
       staleT6References,
       archivedT6References,
@@ -231,7 +231,7 @@ function renderMarkdown(report) {
   const lines = [
     '# Mesh-Identity-Inventory',
     '',
-    'Aktueller Runtime-Vertrag: `bodyparts3d-taro` für BodyParts3D-/Context-Assets und `phineas-gage-legacy-figs3d` für die importierten Phineas-GLBs. Die alte `t6-master-brain`-Bezeichnung kommt im Repo-Scope nicht mehr vor; der Check bleibt trotzdem als Drift-Gate aktiv.',
+    'Aktueller Runtime-Vertrag: `bodyparts3d-taro` für BodyParts3D-/Context-Assets und `phineas-gage-taro-fit-v1` für die in TARO-Viewer-Space eingepassten Phineas-GLBs. Die alte `t6-master-brain`-Bezeichnung kommt im Repo-Scope nicht mehr vor; der Check bleibt trotzdem als Drift-Gate aktiv.',
     '',
     'Reproduzierbar mit:',
     '',

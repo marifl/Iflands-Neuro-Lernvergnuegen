@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "contractId": "brain-app-runtime-mesh-identity-v1",
-  "runtimeContract": "bodyparts3d-taro + phineas-gage-legacy-figs3d",
+  "runtimeContract": "bodyparts3d-taro + phineas-gage-taro-fit-v1",
   "checkedAssets": [
     {
       "assetId": "bodyparts3d-brain",
@@ -153,7 +153,7 @@
     },
     {
       "assetId": "phineas-gage-skull-base",
-      "contractId": "phineas-gage-legacy-figs3d",
+      "contractId": "phineas-gage-taro-fit-v1",
       "uri": "/assets/phineas/phineas-gage-skull-base.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
       "byteSize": 1629616,
@@ -179,7 +179,7 @@
     },
     {
       "assetId": "phineas-gage-skull-calvaria",
-      "contractId": "phineas-gage-legacy-figs3d",
+      "contractId": "phineas-gage-taro-fit-v1",
       "uri": "/assets/phineas/phineas-gage-skull-calvaria.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
       "byteSize": 614696,
@@ -205,11 +205,11 @@
     },
     {
       "assetId": "phineas-gage-iron-rod",
-      "contractId": "phineas-gage-legacy-figs3d",
+      "contractId": "phineas-gage-taro-fit-v1",
       "uri": "/assets/phineas/phineas-gage-iron-rod.glb",
       "manifest": "/assets/phineas/asset-manifest.json",
-      "byteSize": 12276,
-      "sha256": "sha256:de50b94c56cdbb6aa22c906f681c704d24097547c9878dcc44585a9e5d7ea440",
+      "byteSize": 12272,
+      "sha256": "sha256:ec7a2d8878a8e6d5812c79b139435122338603b0cfae05f7ccf4344e8bf9686a",
       "hashMatchesManifest": true,
       "nodeCount": 1,
       "namedNodeCount": 1,

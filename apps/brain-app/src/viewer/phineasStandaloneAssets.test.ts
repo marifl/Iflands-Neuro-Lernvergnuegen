@@ -18,6 +18,7 @@ const repoRoot = resolve(appRoot, '../..')
 const publicRoot = resolve(appRoot, 'public')
 const phineasAssetsRoot = resolve(publicRoot, 'assets/phineas')
 const phineasSourcesRoot = resolve(repoRoot, 'raw_protected/phineas-gage')
+const PHINEAS_SPACE_ID = 'phineas-gage-taro-fit-v1'
 
 function readJsonFile(path: string): unknown {
   return JSON.parse(readFileSync(path, 'utf8'))
@@ -62,6 +63,8 @@ describe('Phineas-Gage-Standalone-Assets', () => {
       const assetFile = publicFileForUri(asset.uri)
       expect(existsSync(assetFile)).toBe(true)
       expect(asset.collectionId).toBe('case-phineas-gage')
+      expect(asset.normalization.spaceId).toBe(PHINEAS_SPACE_ID)
+      expect(asset.normalization.spaceId).not.toContain('legacy')
       expect(asset.source.hash).toBe(`sha256:${sha256(assetFile)}`)
       expect(asset.source.provenance).not.toContain('/Users/')
       expect(asset.parts).toHaveLength(1)
@@ -111,6 +114,7 @@ describe('Phineas-Gage-Standalone-Assets', () => {
     const contract = readJsonFile(resolve(phineasAssetsRoot, 'transform-contract.json')) as {
       schemaVersion: unknown
       contractId: unknown
+      spaceId: unknown
       unit: unknown
       upAxis: unknown
       sources: Array<{ id: string; localPath: string; role: string }>
@@ -144,6 +148,7 @@ describe('Phineas-Gage-Standalone-Assets', () => {
 
     expect(contract.schemaVersion).toBe(1)
     expect(contract.contractId).toBe('phineas-gage-transform-v1')
+    expect(contract.spaceId).toBe(PHINEAS_SPACE_ID)
     expect(contract.unit).toBe('millimeter')
     expect(contract.upAxis).toBe('y-up')
     expect(contract.sources.map((source) => source.id).sort()).toEqual(['harlow1848', 'ratiu2004', 'vanhorn2012'])

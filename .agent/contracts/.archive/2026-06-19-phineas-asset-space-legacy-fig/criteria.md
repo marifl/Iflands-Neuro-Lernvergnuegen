@@ -1,0 +1,56 @@
+---
+outcome:
+  user_signal: |
+    Phineas-Gage-Assets laufen nicht mehr unter einem `legacy`-Space als
+    aktuellem App-Vertrag, bleiben aber in Phineas- und Authoring-Runtime
+    unverändert ladbar.
+  observable_in: |
+    Phineas-Manifest, Transform-Contract, Mesh-Identity-Inventar, Tests und
+    Phineas-Browser-Smoke.
+  guardrail: |
+    Keine Geometrie-, Transform- oder Hash-Änderung an den GLBs.
+  read_horizon: |
+    Sofort im Contract-Run und danach bei jedem Phineas-Asset-/Release-Check.
+---
+
+# Akzeptanzkriterien — Phineas-Asset-Space `legacy-figs3d` kapseln
+
+> Contract-ID: `2026-06-19-phineas-asset-space-legacy-fig`
+> Revision: v1 (2026-06-19)
+
+Jedes Kriterium ist als Pass/Fail formuliert.
+
+## C1 — Aktueller Space-Vertrag ohne Legacy-Namen
+
+- Input: `apps/brain-app/public/assets/phineas/asset-manifest.json` und
+  `apps/brain-app/public/assets/phineas/transform-contract.json`.
+- Erwartet: alle Phineas-Assets und der Transform-Contract nutzen
+  `spaceId: "phineas-gage-taro-fit-v1"`; kein aktueller Phineas-Runtime-Vertrag
+  nutzt `phineas-gage-legacy-figs3d`.
+
+## C2 — Phineas Asset-Tests sichern den neuen Vertrag
+
+- Input: `pnpm --dir apps/brain-app exec vitest run src/viewer/phineasStandaloneAssets.test.ts src/viewer/authoringAssetLoader.test.ts`
+- Erwartet: Tests grün und mindestens ein Test prüft, dass der Manifest- und
+  Transform-Space `phineas-gage-taro-fit-v1` ist.
+
+## C3 — Mesh-Identity-Inventar ist regeneriert
+
+- Input: `pnpm --dir apps/brain-app run inventory:mesh-identity`.
+- Erwartet: Exit 0; `docs/reviews/mesh-identity-inventory.json` und
+  `docs/reviews/2026-06-17-mesh-identity-inventory.md` nennen
+  `phineas-gage-taro-fit-v1` statt `phineas-gage-legacy-figs3d`.
+
+## C4 — Transform- und Runtime-Smoke bleiben grün
+
+- Input:
+  1. `pnpm --dir apps/brain-app run verify:phineas-transform`
+  2. `SMOKE_URL=http://localhost:<port> pnpm --dir apps/brain-app run smoke:phineas-gage`
+- Erwartet: beide Checks Exit 0.
+
+## C5 — Legacy-Begriff bleibt nur historische Quelle
+
+- Input: `rg -n "phineas-gage-legacy-figs3d|legacy-figs3d" apps docs scripts --glob '!docs/reviews/**' --glob '!docs/END_SESSION_*'`.
+- Erwartet: keine Treffer in aktuellen Runtime-/Arbeitsdoku-/Script-Dateien.
+  Historische ALRAH-Archive oder ausgeschlossene Review-Artefakte zählen nicht
+  als aktueller App-Vertrag.

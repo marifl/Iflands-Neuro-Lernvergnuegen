@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-phineas-asset-space-legacy-fig",
+  "title": "Phineas Asset-Space legacy-figs3d kapseln",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T20:56:02.536Z",
+  "updated": "2026-06-19T21:03:04.559Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T20:58:16.940Z"
+      }
+    ]
+  }
+}

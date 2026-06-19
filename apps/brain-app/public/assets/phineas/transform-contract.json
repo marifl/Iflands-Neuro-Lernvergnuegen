@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "contractId": "phineas-gage-transform-v1",
-  "spaceId": "phineas-gage-legacy-figs3d",
+  "spaceId": "phineas-gage-taro-fit-v1",
   "unit": "millimeter",
   "upAxis": "y-up",
   "coordinateNote": "Viewer space: +X left, +Y superior, +Z anterior. The rod axis is the archived Van Horn/Ratiu Gage trajectory after the same Y-rotated TARO-fit matrix used for the extracted skull parts.",
