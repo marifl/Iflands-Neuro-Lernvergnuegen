@@ -1,0 +1,12 @@
+{
+  "skill": "evaluator",
+  "scope": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-canvas-loading-error-empty-sta/criteria.md",
+  "backend": "claude",
+  "mode": "manual",
+  "status": "waiting-for-review",
+  "startedAt": "2026-06-19T18:34:16.471Z",
+  "updatedAt": "2026-06-19T18:34:16.471Z",
+  "promptPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-canvas-loading-error-empty-sta/.criteria-review-prompt.md",
+  "streamPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-canvas-loading-error-empty-sta/criteria-review.log",
+  "outputPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-canvas-loading-error-empty-sta/criteria-review.md"
+}

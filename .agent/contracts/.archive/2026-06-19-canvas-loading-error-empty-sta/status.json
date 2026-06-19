@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-canvas-loading-error-empty-sta",
+  "title": "Canvas Loading Error Empty State releasefaehig machen",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T18:32:53.359Z",
+  "updated": "2026-06-19T18:41:41.083Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T18:34:46.682Z"
+      }
+    ]
+  }
+}
