@@ -1,6 +1,10 @@
 import { create } from 'zustand'
 import { getLocalStorageItem, removeLocalStorageItem, setLocalStorageItem } from '../safeLocalStorage'
 import {
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY as LOCAL_AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STORAGE_KEY as LOCAL_AUTHORING_SNAPSHOT_STORAGE_KEY,
+} from '../localAppStorageKeys'
+import {
   emptyAuthoringCommandHistory,
   parseAuthoringCommandHistory,
   pushAuthoringCommand,
@@ -25,8 +29,8 @@ import {
 } from './timelineDocument'
 
 export const AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION = 1
-export const AUTHORING_SNAPSHOT_STORAGE_KEY = 'brain-app-authoring-snapshot'
-export const AUTHORING_COMMAND_HISTORY_STORAGE_KEY = 'brain-app-authoring-command-history'
+export const AUTHORING_SNAPSHOT_STORAGE_KEY = LOCAL_AUTHORING_SNAPSHOT_STORAGE_KEY
+export const AUTHORING_COMMAND_HISTORY_STORAGE_KEY = LOCAL_AUTHORING_COMMAND_HISTORY_STORAGE_KEY
 
 export interface AuthoringRegistryContextState {
   collectionIds: string[]

@@ -1,9 +1,10 @@
 import { create } from 'zustand'
 import type { ColorMode, Lang } from './ontology'
 import { getLocalStorageItem, removeLocalStorageItem, setLocalStorageItem } from '../safeLocalStorage'
+import { SETTINGS_STORAGE_KEY as LOCAL_SETTINGS_STORAGE_KEY } from '../localAppStorageKeys'
 
 export const SETTINGS_SCHEMA_VERSION = 1
-export const SETTINGS_STORAGE_KEY = 'brain-app-settings'
+export const SETTINGS_STORAGE_KEY = LOCAL_SETTINGS_STORAGE_KEY
 export const SETTINGS_CHANGE_EVENT = 'brain-app:settings-changed'
 
 export const SETTINGS_CATEGORIES = [
@@ -266,8 +267,9 @@ export function loadSettings(): BrainAppSettings {
   if (!raw) return defaultSettings()
   try {
     return parseSettingsState(JSON.parse(raw))
-  } catch {
-    return defaultSettings()
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error)
+    throw new Error(`${SETTINGS_STORAGE_KEY}: lokale Settings konnten nicht geladen werden (${detail})`)
   }
 }
 

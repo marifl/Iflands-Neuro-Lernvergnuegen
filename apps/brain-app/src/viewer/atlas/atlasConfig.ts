@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { loadCatalog, type AtlasCatalog } from './atlasCatalog'
 import { ROUTE_CHANGE_EVENT } from '../../scene/router'
 import { getLocalStorageItem } from '../../safeLocalStorage'
+import { ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from '../../localAppStorageKeys'
 
 export type ScopeMap = Record<string, boolean>
 
@@ -152,11 +153,48 @@ export function parseUrlScopes(params: URLSearchParams): ScopeMap {
 
 /** localStorage-Schicht (Schicht 2): persistierte User-Overrides. */
 export interface LocalOverrides { preset: string | null; configuration: string | null; scopes: ScopeMap }
-const LS_KEY = 'atlas-config-overrides'
+export const LOCAL_OVERRIDES_STORAGE_KEY = ATLAS_CONFIG_OVERRIDES_STORAGE_KEY
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value)
+}
+
+function optionalString(value: unknown, field: string): string | null {
+  if (value === null || value === undefined) return null
+  if (typeof value === 'string' && value.trim()) return value
+  throw new Error(`${field} muss null oder ein nicht-leerer String sein`)
+}
+
+function parseStoredScopeMap(value: unknown): ScopeMap {
+  if (value === undefined) return {}
+  if (!isRecord(value)) throw new Error('scopes muss ein Objekt sein')
+  const scopes: ScopeMap = {}
+  for (const [key, enabled] of Object.entries(value)) {
+    if (!key.trim()) throw new Error('scopes enthaelt einen leeren Key')
+    if (typeof enabled !== 'boolean') throw new Error(`scopes.${key} muss boolean sein`)
+    scopes[key] = enabled
+  }
+  return scopes
+}
+
+export function parseLocalOverridesState(raw: unknown): LocalOverrides {
+  if (!isRecord(raw)) throw new Error('Root muss ein Objekt sein')
+  return {
+    preset: optionalString(raw.preset, 'preset'),
+    configuration: optionalString(raw.configuration, 'configuration'),
+    scopes: parseStoredScopeMap(raw.scopes),
+  }
+}
+
 export function loadLocalOverrides(): LocalOverrides {
-  const raw = getLocalStorageItem(LS_KEY)
+  const raw = getLocalStorageItem(LOCAL_OVERRIDES_STORAGE_KEY)
   if (!raw) return { preset: null, configuration: null, scopes: {} }
-  return JSON.parse(raw) as LocalOverrides
+  try {
+    return parseLocalOverridesState(JSON.parse(raw))
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error)
+    throw new Error(`${LOCAL_OVERRIDES_STORAGE_KEY}: lokale Atlas-Overrides konnten nicht geladen werden (${detail})`)
+  }
 }
 
 export interface EffectiveConfig {

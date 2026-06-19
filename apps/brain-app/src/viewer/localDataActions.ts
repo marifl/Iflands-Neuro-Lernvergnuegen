@@ -1,10 +1,11 @@
 import { removeLocalStorageItem } from '../safeLocalStorage'
-import { useAtlasConfigStore, LS_KEY as ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from './atlas/atlasConfigStore'
-import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
-import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
 import {
-  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
-  AUTHORING_SNAPSHOT_STORAGE_KEY,
+  LOCAL_BRAIN_APP_STORAGE_KEYS,
+  THEME_STORAGE_KEY as LOCAL_THEME_STORAGE_KEY,
+} from '../localAppStorageKeys'
+import { useAtlasConfigStore } from './atlas/atlasConfigStore'
+import { useSettingsStore } from './settingsStore'
+import {
   useAuthoringSnapshotStore,
 } from './authoringSnapshotStore'
 import {
@@ -14,7 +15,7 @@ import {
 } from './studentProgress'
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
 
-export const THEME_STORAGE_KEY = 'ed-theme'
+export const THEME_STORAGE_KEY = LOCAL_THEME_STORAGE_KEY
 const APPEARANCE_DATASET_KEYS = ['theme', 'contrast', 'fontSize', 'readableFont', 'focusRings', 'motion', 'quietMode'] as const
 
 export function readSnapshotFile(file: File): Promise<string> {
@@ -63,12 +64,7 @@ export function clearLocalBrainAppData(): void {
   useStudentProgressStore.getState().resetStudentProgress()
   useAtlasConfigStore.getState().reset()
   useAuthoringSnapshotStore.getState().resetAuthoringSnapshotState()
-  removeLocalStorageItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)
-  removeLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
-  removeLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
-  removeLocalStorageItem(LAST_APP_MODE_STORAGE_KEY)
-  removeLocalStorageItem(SETTINGS_STORAGE_KEY)
-  removeLocalStorageItem(THEME_STORAGE_KEY)
+  for (const key of LOCAL_BRAIN_APP_STORAGE_KEYS) removeLocalStorageItem(key)
   if (typeof document !== 'undefined') {
     for (const key of APPEARANCE_DATASET_KEYS) delete document.documentElement.dataset[key]
   }

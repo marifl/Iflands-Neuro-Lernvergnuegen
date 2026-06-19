@@ -1,7 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { removeLocalStorageItem } from './safeLocalStorage'
-
-const LOCAL_STATE_KEYS = ['atlas-config-overrides', 'ed-theme']
+import { LOCAL_BRAIN_APP_STORAGE_KEYS } from './localAppStorageKeys'
 
 interface AppErrorBoundaryState {
   error: Error | null
@@ -23,7 +22,7 @@ export default class AppErrorBoundary extends Component<{ children: ReactNode },
   }
 
   private resetLocalState = () => {
-    for (const key of LOCAL_STATE_KEYS) removeLocalStorageItem(key)
+    for (const key of LOCAL_BRAIN_APP_STORAGE_KEYS) removeLocalStorageItem(key)
     window.history.replaceState(null, '', window.location.pathname)
     this.setState({ error: null })
   }

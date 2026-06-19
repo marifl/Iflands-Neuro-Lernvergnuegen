@@ -82,17 +82,17 @@ describe('settingsStore', () => {
     })).toThrow(/visibleCollections/)
   })
 
-  it('faellt beim Laden korrupter localStorage-Daten auf Defaults zurueck', () => {
+  it('wirft beim Laden korrupter localStorage-Daten laut statt Defaults zu maskieren', () => {
     localStorage.setItem(SETTINGS_STORAGE_KEY, '{kaputt')
 
-    expect(loadSettings()).toEqual(defaultSettings())
+    expect(() => loadSettings()).toThrow(/brain-app-settings/)
 
     localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify({
       ...defaultSettings(),
       display: { theme: 'neon' },
     }))
 
-    expect(loadSettings()).toEqual(defaultSettings())
+    expect(() => loadSettings()).toThrow(/brain-app-settings/)
   })
 
   it('persistiert Kategorie-Updates und meldet Settings-Aenderungen', () => {

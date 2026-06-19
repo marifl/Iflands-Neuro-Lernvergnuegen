@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-localstorage-persistenzgrenzen",
+  "title": "localStorage-Persistenzgrenzen klaeren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T19:09:53.375Z",
+  "updated": "2026-06-19T19:19:38.273Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T19:12:54.635Z"
+      }
+    ]
+  }
+}

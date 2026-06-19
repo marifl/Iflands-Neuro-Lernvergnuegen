@@ -134,6 +134,29 @@ State-Priorität über Resolver-Grenzen hinweg:
 5. Explizite User-Interaktion nach Import gewinnt ab diesem Moment wieder als
    neuer lokaler Sitzungszustand.
 
+## Lokale Persistenzgrenzen
+
+`localStorage` ist nur für benannte UI-/Session-Zustände erlaubt. Es ist keine
+kanonische Autorenquelle, kein versteckter Lernfortschritt und keine
+Migrationsbrücke. Korrupte App-eigene Persistenz wirft laut mit Storage-Key im
+Fehlertext; sie wird nicht still auf Defaults repariert.
+
+Aktuelle App-eigene Keys:
+
+| Key | Owner | Zweck | Löschpfad |
+| --- | --- | --- | --- |
+| `atlas-config-overrides` | `atlasConfigStore` | lokale Atlas-/Preset-/Scope-Overrides für UI und Entwicklung; verliert gegen kanonische `?config=`-Links | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+| `brain-app-settings` | `settingsStore` | Anzeige-, Start-, Viewport-, Farb-, Lern-, Sprach-, Atlas-, Presenter- und Rollen-Settings | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+| `brain-app-last-app-mode` | `settingsRuntime` | letzter regulärer Startmodus, nur wenn Settings `start.defaultMode = "last"` erlauben | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+| `brain-app-authoring-snapshot` | `authoringSnapshotStore` | lokaler Authoring-/Timeline-Arbeitsstand für exportierbare Unterrichts-Snapshots | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+| `brain-app-authoring-command-history` | `authoringSnapshotStore` | Undo-/Redo-Verlauf für lokale Authoring-Edits | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+| `ed-theme` | Appearance/Settings UI | DOM-nahe Theme-Auswahl für sofortige Darstellung | `clearLocalBrainAppData()` und Root-ErrorBoundary-Reset |
+
+Die zentrale Runtime-Liste steht in
+`apps/brain-app/src/localAppStorageKeys.ts`. Neue App-eigene lokale Keys müssen
+dort, im Clear-Flow und in dieser Architekturkarte ergänzt werden. Fremde Keys
+werden nicht gelöscht.
+
 Config-Bausteine:
 
 1. `presets.*`: Default-Scope- und Start-Sichtbarkeits-Sets wie `kapitel11`,

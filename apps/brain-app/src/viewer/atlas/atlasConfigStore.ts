@@ -2,9 +2,15 @@
 // die useEffectiveConfig() laut validiert; der Store-Import selbst bleibt render-sicher.
 import { create } from 'zustand'
 import { setLocalStorageItem } from '../../safeLocalStorage'
-import { ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT, loadLocalOverrides, type LocalOverrides, type ScopeMap } from './atlasConfig'
+import {
+  ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT,
+  LOCAL_OVERRIDES_STORAGE_KEY,
+  loadLocalOverrides,
+  type LocalOverrides,
+  type ScopeMap,
+} from './atlasConfig'
 
-export const LS_KEY = 'atlas-config-overrides'
+export const LS_KEY = LOCAL_OVERRIDES_STORAGE_KEY
 
 function persist(o: LocalOverrides): void {
   setLocalStorageItem(LS_KEY, JSON.stringify(o))
@@ -13,12 +19,8 @@ function persist(o: LocalOverrides): void {
   }
 }
 
-function initialOverrides(): LocalOverrides {
-  try {
-    return loadLocalOverrides()
-  } catch {
-    return { preset: null, configuration: null, scopes: {} }
-  }
+export function loadStoredAtlasConfigOverrides(): LocalOverrides {
+  return loadLocalOverrides()
 }
 
 interface AtlasConfigStore extends LocalOverrides {
@@ -39,7 +41,7 @@ function snapshot(s: LocalOverrides): LocalOverrides {
 }
 
 export const useAtlasConfigStore = create<AtlasConfigStore>((set) => ({
-  ...initialOverrides(),
+  ...loadStoredAtlasConfigOverrides(),
 
   toggleScope: (key) => set((s) => {
     const scopes: ScopeMap = { ...s.scopes }

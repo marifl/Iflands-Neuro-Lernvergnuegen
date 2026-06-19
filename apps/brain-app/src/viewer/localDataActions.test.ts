@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it } from 'vitest'
+import { LOCAL_BRAIN_APP_STORAGE_KEYS } from '../localAppStorageKeys'
 import { useAtlasConfigStore, LS_KEY as ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from './atlas/atlasConfigStore'
 import {
   clearLocalBrainAppData,
@@ -75,6 +76,9 @@ describe('localDataActions', () => {
     })
     localStorage.setItem(LAST_APP_MODE_STORAGE_KEY, 'phineas')
     localStorage.setItem(THEME_STORAGE_KEY, 'light')
+    for (const key of LOCAL_BRAIN_APP_STORAGE_KEYS) {
+      if (!localStorage.getItem(key)) localStorage.setItem(key, 'stale')
+    }
     localStorage.setItem('unrelated-key', 'bleibt')
     document.documentElement.dataset.theme = 'light'
     document.documentElement.dataset.contrast = 'high'
@@ -91,12 +95,15 @@ describe('localDataActions', () => {
     expect(useAtlasConfigStore.getState().preset).toBeNull()
     expect(useAtlasConfigStore.getState().scopes).toEqual({})
     expect(useAuthoringSnapshotStore.getState().authoring).toBeNull()
-    expect(localStorage.getItem(SETTINGS_STORAGE_KEY)).toBeNull()
-    expect(localStorage.getItem(ATLAS_CONFIG_OVERRIDES_STORAGE_KEY)).toBeNull()
-    expect(localStorage.getItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)).toBeNull()
-    expect(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)).toBeNull()
-    expect(localStorage.getItem(LAST_APP_MODE_STORAGE_KEY)).toBeNull()
-    expect(localStorage.getItem(THEME_STORAGE_KEY)).toBeNull()
+    expect(LOCAL_BRAIN_APP_STORAGE_KEYS).toEqual([
+      ATLAS_CONFIG_OVERRIDES_STORAGE_KEY,
+      AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+      AUTHORING_SNAPSHOT_STORAGE_KEY,
+      LAST_APP_MODE_STORAGE_KEY,
+      SETTINGS_STORAGE_KEY,
+      THEME_STORAGE_KEY,
+    ])
+    for (const key of LOCAL_BRAIN_APP_STORAGE_KEYS) expect(localStorage.getItem(key)).toBeNull()
     expect(localStorage.getItem('unrelated-key')).toBe('bleibt')
     expect(document.documentElement.dataset.theme).toBeUndefined()
     expect(document.documentElement.dataset.contrast).toBeUndefined()

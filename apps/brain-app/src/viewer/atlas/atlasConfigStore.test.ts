@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { ATLAS_CONFIG_OVERRIDES_CHANGE_EVENT } from './atlasConfig'
-import { useAtlasConfigStore, LS_KEY } from './atlasConfigStore'
+import { loadStoredAtlasConfigOverrides, useAtlasConfigStore, LS_KEY } from './atlasConfigStore'
 
 beforeEach(() => {
   localStorage.clear()
@@ -45,6 +45,14 @@ describe('atlasConfigStore', () => {
     const parsed = JSON.parse(raw!)
     expect(parsed.scopes['area:dkt:parstriangularis:l']).toBe(true)
     expect(events).toBe(1)
+  })
+
+  it('wirft bei korrupten lokalen Overrides laut statt Defaults zu maskieren', () => {
+    localStorage.setItem(LS_KEY, '{kaputt')
+    expect(() => loadStoredAtlasConfigOverrides()).toThrow(/atlas-config-overrides/)
+
+    localStorage.setItem(LS_KEY, JSON.stringify({ preset: 42, configuration: null, scopes: {} }))
+    expect(() => loadStoredAtlasConfigOverrides()).toThrow(/atlas-config-overrides/)
   })
 
   it('reset leert scopes/preset/configuration', () => {
