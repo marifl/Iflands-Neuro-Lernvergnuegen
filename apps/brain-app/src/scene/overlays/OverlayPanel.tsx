@@ -17,7 +17,7 @@ function renderOverlay(scene: Scene) {
       return <ErpChart scene={scene} />
     case 'flowchart':
       return <Flowchart scene={scene} />
-    // table/topography: spaeter; bis dahin kompakte Textfassung statt Buchbild-Fallback.
+    // table/topography: spaeter; bis dahin kompakte Textfassung.
     default:
       return <Prose scene={scene} />
   }

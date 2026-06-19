@@ -178,9 +178,9 @@ morphometrisch exakt — nein; `backfill:true` = überlappende Näherung.
 - [x] A1 · `scene/regions.ts` mit verifizierten Slugs (Befund: kein ACC/SMA-Mesh in TARO → ganzer Gyrus)
 - [x] B1/C1/C2/D3/D5 · TDD-Logik (brainBridge, scenes/types, router/sceneStore, erpGeometry, nav)
 - [x] B2 · `CameraRig` (Fit-to-Highlight aus `structure-coords.json`, `unionBounds`)
-- [x] D1/D2/D4 · SceneStage + Overlays (ErpChart, Flowchart, Prose, ImageFallback)
+- [x] D1/D2/D4 · SceneStage + Overlays (ErpChart, Flowchart, Prose; keine Buchbild-Runtime)
 - [x] E1–E3 · 7 Szenen-JSONs (VCPT, P3a/P3b/P3z, Zusammenfassung)
-- [x] F1 · `main.tsx` (SceneStage default, `?mode=explore`), Bilder → `public/figures/`, alte slides → archive
+- [x] F1 · `main.tsx` (SceneStage default, `?mode=explore`), frühere Bildspiegelung entfernt, alte slides → archive
 - [x] Verifiziert: typecheck 0, vitest 11/11, Playwright-Smoke alle 7 Szenen grün
 
 ### Phase 2 — MNI-Subparzellierung 6 Patches (G–K) ✅

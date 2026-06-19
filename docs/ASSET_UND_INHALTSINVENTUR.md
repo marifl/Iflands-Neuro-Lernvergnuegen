@@ -53,7 +53,7 @@ bleibt ein separater Transform-/Lizenz-Slice, nicht Release-Blocker.
 | Carve-Flächen | `atlas-surface-{julich,dkt,brodmann}.glb` + Pick-JSON | vorhanden |
 | Roh-Atlas | `atlas-raw-{julich,dkt}.glb` | vorhanden, nicht Primärpfad |
 | Bild-/Brandingassets | Logo-PNGs | vorhanden |
-| Kapitel-11-Figure-Fallbacks | 13 lokale JPGs unter `apps/brain-app/public/figures/` | versionierte Runtime-Fallbacks für 11-05 bis 11-11C, 11-13, 11-14; 11-12 ist textuell neu gebaut |
+| Kapitel-11-Figure-Ersetzungen | keine Runtime-Buchbilder | 11-04 bis 11-15 laufen über eigene Szene-/Overlay-/3D-Inhalte; Rohbilder bleiben ausschließlich Quellenmaterial unter `raw/chapter/images/` |
 | Gage-Schädel-Kandidat | `apps/brain-app/public/assets/phineas/` mit extrahierter Schädelbasis, Calvaria, Eisenstange, Manifest und Rekonstruktionsdaten | CT-abgeleiteter Kandidat ist in Phineas- und Explore-Modus montiert; Lizenz/Attribution vor Public-Claim final pinnen |
 
 Größte Assets im Runtime-Pfad sind aktuell `atlas-raw-dkt.glb` (~22 MB),
