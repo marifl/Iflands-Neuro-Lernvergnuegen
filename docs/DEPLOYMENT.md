@@ -26,9 +26,10 @@ Playwright-Smokes bleiben lokale/manuelle Verifikation und laufen nicht in
 GitHub Actions.
 
 `pnpm perf:budget` setzt einen statischen Build-Schutz nach `pnpm build`: JS-/
-CSS-Gzip-Budget, größte Runtime-Asset-Datei, Gesamtgröße von `public/assets`
-und die Phineas-Asset-Gruppe. Das ist kein FPS-Test, verhindert aber stille
-Bundle- oder Asset-Ausreißer.
+CSS-Gzip-Budget, größte Runtime-Asset-Datei, Gesamtgröße der Runtime-Assets
+unter `public/assets` ohne BrainModel-Reviewmodelle, separates Budget für
+`public/assets/brain-models/` und die Phineas-Asset-Gruppe. Das ist kein
+FPS-Test, verhindert aber stille Bundle- oder Asset-Ausreißer.
 
 ## Base-Path
 
