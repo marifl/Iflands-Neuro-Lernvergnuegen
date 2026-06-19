@@ -52,5 +52,8 @@ jobs:
       - name: Production build
         run: pnpm build
 
+      - name: Brain model asset gate
+        run: pnpm verify:brain-models
+
       - name: Performance budget
         run: pnpm perf:budget
