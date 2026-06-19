@@ -1,0 +1,77 @@
+---
+outcome:
+  user_signal: |
+    Release-Readiness rückt voran, weil korrupte Authoring- und Snapshot-Daten
+    nicht mehr still zu aktuellen Defaults oder leerem Zustand degradiert
+    werden.
+  observable_in: |
+    apps/brain-app/src/viewer/authoringSnapshotStore.ts,
+    apps/brain-app/src/viewer/viewerStateSnapshot.ts und die zugehörigen
+    Vitest-Dateien.
+  guardrail: |
+    Keine neuen Parser-Fallbacks, keine leeren catch-Blöcke, keine aktuelle
+    Live-State-Reparatur für importierte Snapshots und keine Änderungen an
+    anderen No-Fallback-Klassen.
+  read_horizon: |
+    Vor Schließen von Dart-Task 67dIBiXChW0p und vor erneutem Bewerten des
+    V2-Readiness-Gates.
+---
+
+# Kriterien
+
+## C1 Authoring-Snapshot-Storage ist fail-loud
+
+Korrupte oder schema-ungültige Daten unter
+`brain-app-authoring-snapshot` werden beim Store-Load nicht still gelöscht und
+nicht als `null` maskiert. Der Fehlertext nennt den Storage-Key.
+
+Bewertung:
+
+1. `authoringSnapshotStore.test.ts` deckt korruptes JSON und ungültige
+   Snapshot-Form ab.
+2. `authoringSnapshotStore.ts` enthält keinen stillen Catch-to-null-Pfad für
+   `AUTHORING_SNAPSHOT_STORAGE_KEY`.
+
+## C2 Authoring-Command-History ist fail-loud
+
+Korrupte oder schema-ungültige Daten unter
+`brain-app-authoring-command-history` werden nicht still gelöscht und nicht als
+leere History maskiert. Der Fehlertext nennt den Storage-Key.
+
+Bewertung:
+
+1. `authoringSnapshotStore.test.ts` deckt korruptes JSON und ungültige
+   History-Form ab.
+2. `authoringSnapshotStore.ts` enthält keinen stillen Catch-to-empty-Pfad für
+   `AUTHORING_COMMAND_HISTORY_STORAGE_KEY`.
+
+## C3 Viewer-State-Snapshot-Import ist deterministisch
+
+Fehlende optionale Viewer-Snapshot-Felder fallen auf stabile Schema-Defaults,
+nicht auf den aktuellen Live-Store. Ungültige Typen werfen weiter.
+
+Bewertung:
+
+1. `viewerStateSnapshot.test.ts` beweist, dass ein Minimal-Snapshot unabhängig
+   von vorher gesetztem Live-State dieselben Default-Werte erhält.
+2. Ein ungültiger Snapshot-Wert wirft mit Feldkontext.
+
+## C4 Manifest-Refresh ist nicht als Fallback benannt
+
+Der legitime Manifest-Refresh in `manifestAuthoringRuntime.ts` nutzt keinen
+`fallback`-Begriff für den aktuellen Primärvertrag.
+
+Bewertung:
+
+1. Die Runtime-Funktion ist sprechend auf Manifest-Baseline/Refresh benannt.
+2. Bestehende Manifest-Authoring-Tests bleiben grün.
+
+## C5 No-Fallback-Inventur ist synchron
+
+`docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md` nennt den Parser-Default-Slice als
+migriert und führt Codepfade sowie Verifikation.
+
+Bewertung:
+
+1. Inventur-Zeile zu `NF-006` oder der passenden Parser-Klasse ist aktualisiert.
+2. `pnpm --dir apps/brain-app docs:drift` bleibt grün.

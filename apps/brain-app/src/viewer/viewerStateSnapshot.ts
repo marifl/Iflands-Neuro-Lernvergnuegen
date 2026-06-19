@@ -81,28 +81,28 @@ function stringArray(value: unknown, field: string): string[] {
   return [...value]
 }
 
-function booleanValue(value: unknown, fallback: boolean, field: string): boolean {
-  if (value === undefined) return fallback
+function booleanValue(value: unknown, defaultValue: boolean, field: string): boolean {
+  if (value === undefined) return defaultValue
   if (typeof value !== 'boolean') throw new Error(`Viewer-State-Snapshot: ${field} muss boolean sein`)
   return value
 }
 
-function numberValue(value: unknown, fallback: number, field: string): number {
-  if (value === undefined) return fallback
+function numberValue(value: unknown, defaultValue: number, field: string): number {
+  if (value === undefined) return defaultValue
   if (typeof value !== 'number' || !Number.isFinite(value)) {
     throw new Error(`Viewer-State-Snapshot: ${field} muss eine finite Zahl sein`)
   }
   return value
 }
 
-function enumValue<T extends string>(value: unknown, allowed: readonly T[], fallback: T, field: string): T {
-  if (value === undefined) return fallback
+function enumValue<T extends string>(value: unknown, allowed: readonly T[], defaultValue: T, field: string): T {
+  if (value === undefined) return defaultValue
   if (typeof value === 'string' && allowed.includes(value as T)) return value as T
   throw new Error(`Viewer-State-Snapshot: ${field} hat einen ungueltigen Wert`)
 }
 
-function unitValue(value: unknown, fallback: number, field: string): number {
-  return Math.min(1, Math.max(0, numberValue(value, fallback, field)))
+function unitValue(value: unknown, defaultValue: number, field: string): number {
+  return Math.min(1, Math.max(0, numberValue(value, defaultValue, field)))
 }
 
 function routeStepValue(value: unknown, field: string): number {
@@ -150,22 +150,22 @@ function parseCameraPose(value: unknown): CameraPose | null {
   }
 }
 
-function parseCutConfig(value: unknown, fallback: CutConfig, field: string): CutConfig {
-  if (value === undefined) return fallback
+function parseCutConfig(value: unknown, defaults: CutConfig, field: string): CutConfig {
+  if (value === undefined) return defaults
   if (!isRecord(value)) throw new Error(`Viewer-State-Snapshot: ${field} muss ein Objekt sein`)
   return {
-    on: booleanValue(value.on, fallback.on, `${field}.on`),
-    pos: clampCutPosition(numberValue(value.pos, fallback.pos, `${field}.pos`)),
+    on: booleanValue(value.on, defaults.on, `${field}.on`),
+    pos: clampCutPosition(numberValue(value.pos, defaults.pos, `${field}.pos`)),
   }
 }
 
-function parseCuts(value: unknown, fallback: ViewerStateSnapshotState['cuts']): ViewerStateSnapshotState['cuts'] {
-  if (value === undefined) return fallback
+function parseCuts(value: unknown, defaults: ViewerStateSnapshotState['cuts']): ViewerStateSnapshotState['cuts'] {
+  if (value === undefined) return defaults
   if (!isRecord(value)) throw new Error('Viewer-State-Snapshot: cuts muss ein Objekt sein')
   return {
-    sagittal: parseCutConfig(value.sagittal, fallback.sagittal, 'cuts.sagittal'),
-    coronal: parseCutConfig(value.coronal, fallback.coronal, 'cuts.coronal'),
-    axial: parseCutConfig(value.axial, fallback.axial, 'cuts.axial'),
+    sagittal: parseCutConfig(value.sagittal, defaults.sagittal, 'cuts.sagittal'),
+    coronal: parseCutConfig(value.coronal, defaults.coronal, 'cuts.coronal'),
+    axial: parseCutConfig(value.axial, defaults.axial, 'cuts.axial'),
   }
 }
 
@@ -302,41 +302,80 @@ function currentSnapshotState(): ViewerStateSnapshotState {
   }
 }
 
-function parseSnapshotState(raw: unknown, fallback = currentSnapshotState()): ViewerStateSnapshotState {
+function defaultSnapshotState(): ViewerStateSnapshotState {
+  return {
+    activePreset: null,
+    authoring: null,
+    appMode: 'explore',
+    cameraPose: null,
+    cameraView: null,
+    clipAtlasOverlay: true,
+    colorMode: 'region',
+    cutMode: 'slice',
+    cuts: {
+      sagittal: { on: false, pos: 0 },
+      coronal: { on: false, pos: 0 },
+      axial: { on: false, pos: 0 },
+    },
+    hidden: ['cerebral-hemisphere-segment-of-dura-mater'],
+    highlight: [],
+    isolated: null,
+    lang: 'de',
+    launch: null,
+    mode: 'full',
+    pickedAtlasArea: null,
+    pickedAtlasSlug: null,
+    rodPhase: 0,
+    rodVisible: false,
+    route: null,
+    selectMode: 'group',
+    selected: null,
+    showAtlasDkt: false,
+    showAtlasJulich: false,
+    showCarveBrodmann: false,
+    showCarveDkt: false,
+    showCarveJulich: false,
+    showSkull: false,
+    skullOpacity: 0.25,
+    studentProgress: null,
+  }
+}
+
+function parseSnapshotState(raw: unknown, defaults = defaultSnapshotState()): ViewerStateSnapshotState {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: state muss ein Objekt sein')
   const activePreset = parseColorPreset(raw.activePreset)
-  const colorMode = enumValue(raw.colorMode, COLOR_MODES, fallback.colorMode, 'colorMode')
+  const colorMode = enumValue(raw.colorMode, COLOR_MODES, defaults.colorMode, 'colorMode')
   const launch = parseOptionalRegistryLaunch(raw.launch)
   return {
     activePreset,
     authoring: parseAuthoringSnapshotState(raw.authoring),
-    appMode: enumValue(raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : fallback.appMode, 'appMode'),
+    appMode: enumValue(raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : defaults.appMode, 'appMode'),
     cameraPose: parseCameraPose(raw.cameraPose),
     cameraView: optionalString(raw.cameraView, 'cameraView'),
-    clipAtlasOverlay: booleanValue(raw.clipAtlasOverlay, fallback.clipAtlasOverlay, 'clipAtlasOverlay'),
+    clipAtlasOverlay: booleanValue(raw.clipAtlasOverlay, defaults.clipAtlasOverlay, 'clipAtlasOverlay'),
     colorMode: colorMode === 'preset' && !activePreset ? 'region' : colorMode,
-    cutMode: enumValue(raw.cutMode, CUT_MODES, fallback.cutMode, 'cutMode'),
-    cuts: parseCuts(raw.cuts, fallback.cuts),
+    cutMode: enumValue(raw.cutMode, CUT_MODES, defaults.cutMode, 'cutMode'),
+    cuts: parseCuts(raw.cuts, defaults.cuts),
     hidden: stringArray(raw.hidden, 'hidden').sort(),
     highlight: stringArray(raw.highlight, 'highlight'),
     isolated: optionalString(raw.isolated, 'isolated'),
-    lang: enumValue(raw.lang, LANGS, fallback.lang, 'lang'),
+    lang: enumValue(raw.lang, LANGS, defaults.lang, 'lang'),
     launch,
-    mode: enumValue(raw.mode, VIEW_MODES, fallback.mode, 'mode'),
+    mode: enumValue(raw.mode, VIEW_MODES, defaults.mode, 'mode'),
     pickedAtlasArea: optionalString(raw.pickedAtlasArea, 'pickedAtlasArea'),
     pickedAtlasSlug: optionalString(raw.pickedAtlasSlug, 'pickedAtlasSlug'),
-    rodPhase: unitValue(raw.rodPhase, fallback.rodPhase, 'rodPhase'),
-    rodVisible: booleanValue(raw.rodVisible, fallback.rodVisible, 'rodVisible'),
+    rodPhase: unitValue(raw.rodPhase, defaults.rodPhase, 'rodPhase'),
+    rodVisible: booleanValue(raw.rodVisible, defaults.rodVisible, 'rodVisible'),
     route: parseRoute(raw.route),
-    selectMode: enumValue(raw.selectMode, SELECT_MODES, fallback.selectMode, 'selectMode'),
+    selectMode: enumValue(raw.selectMode, SELECT_MODES, defaults.selectMode, 'selectMode'),
     selected: optionalString(raw.selected, 'selected'),
-    showAtlasDkt: booleanValue(raw.showAtlasDkt, fallback.showAtlasDkt, 'showAtlasDkt'),
-    showAtlasJulich: booleanValue(raw.showAtlasJulich, fallback.showAtlasJulich, 'showAtlasJulich'),
-    showCarveBrodmann: booleanValue(raw.showCarveBrodmann, fallback.showCarveBrodmann, 'showCarveBrodmann'),
-    showCarveDkt: booleanValue(raw.showCarveDkt, fallback.showCarveDkt, 'showCarveDkt'),
-    showCarveJulich: booleanValue(raw.showCarveJulich, fallback.showCarveJulich, 'showCarveJulich'),
-    showSkull: booleanValue(raw.showSkull, fallback.showSkull, 'showSkull'),
-    skullOpacity: unitValue(raw.skullOpacity, fallback.skullOpacity, 'skullOpacity'),
+    showAtlasDkt: booleanValue(raw.showAtlasDkt, defaults.showAtlasDkt, 'showAtlasDkt'),
+    showAtlasJulich: booleanValue(raw.showAtlasJulich, defaults.showAtlasJulich, 'showAtlasJulich'),
+    showCarveBrodmann: booleanValue(raw.showCarveBrodmann, defaults.showCarveBrodmann, 'showCarveBrodmann'),
+    showCarveDkt: booleanValue(raw.showCarveDkt, defaults.showCarveDkt, 'showCarveDkt'),
+    showCarveJulich: booleanValue(raw.showCarveJulich, defaults.showCarveJulich, 'showCarveJulich'),
+    showSkull: booleanValue(raw.showSkull, defaults.showSkull, 'showSkull'),
+    skullOpacity: unitValue(raw.skullOpacity, defaults.skullOpacity, 'skullOpacity'),
     studentProgress: parseStudentProgressState(raw.studentProgress),
   }
 }
@@ -352,14 +391,14 @@ export function exportViewerStateSnapshotJson(): string {
   return JSON.stringify(exportViewerStateSnapshot(), null, 2)
 }
 
-export function parseViewerStateSnapshot(raw: unknown, fallback?: ViewerStateSnapshotState): ViewerStateSnapshot {
+export function parseViewerStateSnapshot(raw: unknown, defaults?: ViewerStateSnapshotState): ViewerStateSnapshot {
   if (!isRecord(raw)) throw new Error('Viewer-State-Snapshot: Root muss ein Objekt sein')
   if (raw.version !== VIEWER_STATE_SNAPSHOT_VERSION) {
     throw new Error(`Viewer-State-Snapshot: Snapshot-Version "${String(raw.version)}" wird nicht unterstuetzt`)
   }
   return {
     version: VIEWER_STATE_SNAPSHOT_VERSION,
-    state: parseSnapshotState(raw.state, fallback),
+    state: parseSnapshotState(raw.state, defaults),
   }
 }
 

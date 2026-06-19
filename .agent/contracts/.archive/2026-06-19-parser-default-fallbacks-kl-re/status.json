@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-parser-default-fallbacks-kl-re",
+  "title": "Parser-Default-Fallbacks klären",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T19:31:03.901Z",
+  "updated": "2026-06-19T19:39:56.670Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T19:34:28.614Z"
+      }
+    ]
+  }
+}

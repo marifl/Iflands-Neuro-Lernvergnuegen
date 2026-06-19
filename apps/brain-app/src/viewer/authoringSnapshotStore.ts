@@ -294,25 +294,25 @@ export function toAuthoringSnapshotStateJson(state: AuthoringSnapshotState): str
   return JSON.stringify(parseAuthoringSnapshotState(state), null, 2)
 }
 
-function loadStoredAuthoringSnapshotState(): AuthoringSnapshotState | null {
+export function loadStoredAuthoringSnapshotState(): AuthoringSnapshotState | null {
   const raw = getLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
   if (!raw) return null
   try {
     return parseAuthoringSnapshotState(JSON.parse(raw))
-  } catch {
-    removeLocalStorageItem(AUTHORING_SNAPSHOT_STORAGE_KEY)
-    return null
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error)
+    throw new Error(`${AUTHORING_SNAPSHOT_STORAGE_KEY}: lokaler Authoring-Snapshot konnte nicht geladen werden (${detail})`)
   }
 }
 
-function loadStoredAuthoringCommandHistory(): AuthoringCommandHistory {
+export function loadStoredAuthoringCommandHistory(): AuthoringCommandHistory {
   const raw = getLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
   if (!raw) return emptyAuthoringCommandHistory()
   try {
     return parseAuthoringCommandHistory(JSON.parse(raw))
-  } catch {
-    removeLocalStorageItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY)
-    return emptyAuthoringCommandHistory()
+  } catch (error) {
+    const detail = error instanceof Error ? error.message : String(error)
+    throw new Error(`${AUTHORING_COMMAND_HISTORY_STORAGE_KEY}: lokale Authoring-Command-History konnte nicht geladen werden (${detail})`)
   }
 }
 

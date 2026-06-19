@@ -57,7 +57,7 @@ interface ContractContext {
   errors: string[]
 }
 
-const SNAPSHOT_VALIDATION_FALLBACK: ViewerStateSnapshotState = {
+const SNAPSHOT_VALIDATION_DEFAULTS: ViewerStateSnapshotState = {
   activePreset: null,
   authoring: null,
   appMode: 'explore',
@@ -377,7 +377,7 @@ export function validateBrainAppContracts(input: BrainAppContractFixture): Brain
     const snapshot = parseOrReport(
       `snapshots[${index}]`,
       raw,
-      (value) => parseViewerStateSnapshot(value, SNAPSHOT_VALIDATION_FALLBACK),
+      (value) => parseViewerStateSnapshot(value, SNAPSHOT_VALIDATION_DEFAULTS),
       errors,
     )
     if (snapshot) validateSnapshot(snapshot, `snapshots[${index}]`, ctx)

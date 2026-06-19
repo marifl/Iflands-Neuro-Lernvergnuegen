@@ -18,10 +18,10 @@ function sceneContainsTarget(scene: AuthoringScene, targetRef: SequenceTargetRef
   )
 }
 
-function mergeSceneInstances(current: AuthoringScene | undefined, fallback: AuthoringScene): AuthoringScene {
-  if (!current) return fallback
+function mergeSceneInstances(current: AuthoringScene | undefined, manifestBaseline: AuthoringScene): AuthoringScene {
+  if (!current) return manifestBaseline
   const existing = new Set(current.assetInstances.map((instance) => `${instance.collectionId}:${instance.instanceId}`))
-  const missing = fallback.assetInstances.filter((instance) => !existing.has(`${instance.collectionId}:${instance.instanceId}`))
+  const missing = manifestBaseline.assetInstances.filter((instance) => !existing.has(`${instance.collectionId}:${instance.instanceId}`))
   if (missing.length === 0) return current
   return {
     ...current,

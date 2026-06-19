@@ -3,6 +3,8 @@ import {
   AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
   AUTHORING_SNAPSHOT_STORAGE_KEY,
   AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
+  loadStoredAuthoringCommandHistory,
+  loadStoredAuthoringSnapshotState,
   parseAuthoringSnapshotState,
   toAuthoringSnapshotStateJson,
   useAuthoringSnapshotStore,
@@ -184,6 +186,33 @@ describe('authoring snapshot store', () => {
 
     expect(useAuthoringSnapshotStore.getState().authoring).toBeNull()
     expect(localStorage.getItem(AUTHORING_SNAPSHOT_STORAGE_KEY)).toBeNull()
+  })
+
+  it('wirft bei korruptem lokalem AuthoringSnapshot laut statt null zu maskieren', () => {
+    localStorage.setItem(AUTHORING_SNAPSHOT_STORAGE_KEY, '{kaputt')
+
+    expect(() => loadStoredAuthoringSnapshotState()).toThrow(/brain-app-authoring-snapshot/)
+
+    localStorage.setItem(AUTHORING_SNAPSHOT_STORAGE_KEY, JSON.stringify({
+      ...authoringState,
+      activeSceneId: 'scene-missing',
+    }))
+
+    expect(() => loadStoredAuthoringSnapshotState()).toThrow(/brain-app-authoring-snapshot/)
+  })
+
+  it('wirft bei korrupter lokaler AuthoringCommandHistory laut statt leere History zu maskieren', () => {
+    localStorage.setItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY, '{kaputt')
+
+    expect(() => loadStoredAuthoringCommandHistory()).toThrow(/brain-app-authoring-command-history/)
+
+    localStorage.setItem(AUTHORING_COMMAND_HISTORY_STORAGE_KEY, JSON.stringify({
+      schemaVersion: 1,
+      commands: [],
+      cursor: 1,
+    }))
+
+    expect(() => loadStoredAuthoringCommandHistory()).toThrow(/brain-app-authoring-command-history/)
   })
 
   it('fuehrt Authoring-Commands ueber Store-History rueckwaerts und vorwaerts aus', () => {
