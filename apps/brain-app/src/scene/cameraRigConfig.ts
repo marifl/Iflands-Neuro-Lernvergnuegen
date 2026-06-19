@@ -1,6 +1,6 @@
 import type { ConfigCamera, EffectiveConfig } from '../viewer/atlas/atlasConfig'
 
-export type CameraConfigSource = 'figure' | 'scene' | 'legacy'
+export type CameraConfigSource = 'figure' | 'scene'
 export const EMPTY_TARGET_MESHES: string[] = []
 
 export interface CameraRigConfigSelection {
@@ -8,7 +8,7 @@ export interface CameraRigConfigSelection {
   figureCameraConfig: ConfigCamera | null
   figureTargetMeshes: string[]
   cameraConfig: ConfigCamera | null
-  cameraConfigSource: CameraConfigSource
+  cameraConfigSource: CameraConfigSource | null
   targetMeshes: string[]
 }
 
@@ -16,15 +16,14 @@ export function selectCameraRigConfig(input: {
   effectiveConfig: EffectiveConfig | null
   sceneCameraConfig: ConfigCamera | null
   sceneTargetMeshes: string[]
-  legacyCameraConfig: ConfigCamera | null
 }): CameraRigConfigSelection {
   const activeConfiguration = input.effectiveConfig?.hasUrlConfig ? input.effectiveConfig.activeConfiguration : null
   const figureCameraConfig = input.effectiveConfig && activeConfiguration ? input.effectiveConfig.camera : null
   const figureTargetMeshes = input.effectiveConfig && activeConfiguration
     ? input.effectiveConfig.cameraTargetMeshes
     : EMPTY_TARGET_MESHES
-  const cameraConfig = figureCameraConfig ?? input.sceneCameraConfig ?? input.legacyCameraConfig
-  const cameraConfigSource: CameraConfigSource = figureCameraConfig ? 'figure' : input.sceneCameraConfig ? 'scene' : 'legacy'
+  const cameraConfig = figureCameraConfig ?? input.sceneCameraConfig
+  const cameraConfigSource: CameraConfigSource | null = figureCameraConfig ? 'figure' : input.sceneCameraConfig ? 'scene' : null
   const targetMeshes = figureCameraConfig
     ? figureTargetMeshes
     : input.sceneCameraConfig

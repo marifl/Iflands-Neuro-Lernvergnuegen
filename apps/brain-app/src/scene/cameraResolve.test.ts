@@ -110,15 +110,12 @@ describe('resolveCameraTarget', () => {
     })
   })
 
-  it('erhaelt den Legacy-Shot als Fallback', () => {
-    const target = resolveCameraTarget({
+  it('wirft laut statt einen Legacy-Shot als Fallback zu nutzen', () => {
+    expect(() => resolveCameraTarget({
       config: {},
       bounds,
-      fallbackShot: 'lateral-right',
       fallbackFov: 40,
-    })
-    expect(target.position[0]).toBeLessThan(bounds.center[0])
-    expect(target.fov).toBe(40)
+    })).toThrow(/camera\.shot fehlt/)
   })
 
   it('wirft laut bei fehlendem Shot oder ungueltiger Kamera-Geometrie', () => {

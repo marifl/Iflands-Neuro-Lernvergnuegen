@@ -12,7 +12,6 @@ export interface CameraResolveInput {
   config: ConfigCamera | null
   bounds: CameraBounds
   targetBounds?: CameraBounds | null
-  fallbackShot?: string | null
   fallbackFov: number
 }
 
@@ -82,8 +81,8 @@ export function resolveCameraTarget(input: CameraResolveInput): ResolvedCameraTa
   }
 
   assertFit(config.fit)
-  const shot = config.shot ?? input.fallbackShot
-  if (!shot) throw new Error('resolveCameraTarget: camera.shot fehlt und kein fallbackShot gesetzt')
+  const shot = config.shot
+  if (!shot) throw new Error('resolveCameraTarget: camera.shot fehlt')
 
   const fit = config.fit ?? 'bounds'
   const bounds = fit === 'target' ? input.targetBounds : input.bounds

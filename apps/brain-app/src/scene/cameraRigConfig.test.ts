@@ -32,7 +32,6 @@ describe('selectCameraRigConfig', () => {
       effectiveConfig: effectiveConfig(true),
       sceneCameraConfig: { shot: 'superior', fit: 'bounds' },
       sceneTargetMeshes: ['scene-mesh'],
-      legacyCameraConfig: { shot: 'inferior' },
     })
 
     expect(selected.cameraConfigSource).toBe('figure')
@@ -46,7 +45,6 @@ describe('selectCameraRigConfig', () => {
       effectiveConfig: effectiveConfig(false),
       sceneCameraConfig: { target: 'dkt:rostralanteriorcingulate:l', shot: 'medial-midline', fit: 'target' },
       sceneTargetMeshes: ['left-anterior-cingulate'],
-      legacyCameraConfig: { shot: 'inferior' },
     })
 
     expect(selected.cameraConfigSource).toBe('scene')
@@ -57,5 +55,17 @@ describe('selectCameraRigConfig', () => {
       fit: 'target',
     })
     expect(selected.targetMeshes).toEqual(['left-anterior-cingulate'])
+  })
+
+  it('nutzt keine Legacy-Quelle wenn keine aktuelle Kamera definiert ist', () => {
+    const selected = selectCameraRigConfig({
+      effectiveConfig: null,
+      sceneCameraConfig: null,
+      sceneTargetMeshes: [],
+    })
+
+    expect(selected.cameraConfigSource).toBeNull()
+    expect(selected.cameraConfig).toBeNull()
+    expect(selected.targetMeshes).toEqual([])
   })
 })

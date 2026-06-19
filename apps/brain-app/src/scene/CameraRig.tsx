@@ -25,7 +25,6 @@ function exposeCameraRigDebug(debug: {
   source: CameraConfigSource
   activeConfiguration: string | null
   config: ConfigCamera
-  fallbackShot: string | null
   highlight: string[]
   targetMeshes: string[]
   figureTargetMeshes: string[]
@@ -54,7 +53,7 @@ export default function CameraRig() {
   const camGoal = useRef(new THREE.Vector3())
   const want = useRef(false)
   const cameraConfigRef = useRef<ConfigCamera | null>(null)
-  const legacyCameraConfig = useMemo<ConfigCamera | null>(() => (shot ? { shot } : null), [shot])
+  const currentSceneCameraConfig = useMemo<ConfigCamera | null>(() => sceneCameraConfig ?? (shot ? { shot } : null), [sceneCameraConfig, shot])
   const {
     activeConfiguration,
     figureTargetMeshes,
@@ -63,9 +62,8 @@ export default function CameraRig() {
     targetMeshes,
   } = selectCameraRigConfig({
     effectiveConfig,
-    sceneCameraConfig,
+    sceneCameraConfig: currentSceneCameraConfig,
     sceneTargetMeshes,
-    legacyCameraConfig,
   })
 
   useEffect(() => {
@@ -108,7 +106,7 @@ export default function CameraRig() {
 
   // Bei Highlight-/Shot-Wechsel Ziel deterministisch aus der Tabelle berechnen.
   useEffect(() => {
-    if (!cameraConfig) return
+    if (!cameraConfig || !cameraConfigSource) return
     const hasPose = cameraConfig.pose !== undefined
     let bounds = globalCameraBoundsForConfig(cameraConfig)
     let targetBounds = null
@@ -122,14 +120,12 @@ export default function CameraRig() {
       config: cameraConfig,
       bounds,
       targetBounds,
-      fallbackShot: shot,
       fallbackFov: perspectiveCamera(camera).fov,
     })
     exposeCameraRigDebug({
       source: cameraConfigSource,
       activeConfiguration,
       config: cameraConfig,
-      fallbackShot: shot,
       highlight,
       targetMeshes,
       figureTargetMeshes,
@@ -138,7 +134,7 @@ export default function CameraRig() {
       resolved,
     })
     setGoal(resolved)
-  }, [coords, cameraConfig, cameraConfigSource, activeConfiguration, shot, highlight, targetMeshes, camera])
+  }, [coords, cameraConfig, cameraConfigSource, activeConfiguration, highlight, targetMeshes, camera])
 
   // Globale Ansicht-Box: das Gesamt-Hirn aus einer benannten Richtung framen (one-shot, nonce-getriggert).
   useEffect(() => {
