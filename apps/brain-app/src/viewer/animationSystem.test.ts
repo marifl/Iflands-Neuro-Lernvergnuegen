@@ -4,14 +4,15 @@ import {
   type AuthoringScene,
 } from './authoringScene'
 import {
-  BASAL_GANGLIA_LOOP,
-  type Animation,
+  BASAL_GANGLIA_CLIP_ID,
+  BASAL_GANGLIA_TIMELINE,
+  BASAL_GANGLIA_TIMELINE_ID,
+  timelineHighlightBindingId,
 } from './animations'
 import {
   assertTimelineAnimationBindings,
   ontologyNodeTargetsForTimelineStep,
   resolveTimelineAnimationBindings,
-  timelineDocumentFromAnimation,
 } from './animationSystem'
 import {
   TIMELINE_DOCUMENT_SCHEMA_VERSION,
@@ -100,14 +101,14 @@ const deviceTimeline: TimelineDocument = {
 }
 
 describe('timeline animation system', () => {
-  it('adaptiert legacy highlight steps in Timeline-Keyframes mit TargetRefs', () => {
-    const timeline = timelineDocumentFromAnimation(BASAL_GANGLIA_LOOP)
+  it('liest registrierte Highlight-Steps als Timeline-Keyframes mit TargetRefs', () => {
+    const timeline = BASAL_GANGLIA_TIMELINE
 
-    expect(timeline.timelineId).toBe('legacy-basal-ganglia-loop')
-    expect(timeline.steps).toHaveLength(BASAL_GANGLIA_LOOP.steps.length)
+    expect(timeline.timelineId).toBe(BASAL_GANGLIA_TIMELINE_ID)
+    expect(timeline.steps).toHaveLength(6)
     expect(timeline.steps[0].keyframes[0].channels.overlay).toMatchObject({
-      title: BASAL_GANGLIA_LOOP.title,
-      body: BASAL_GANGLIA_LOOP.steps[0].captionDe,
+      title: 'Basalganglien-Schleife (DLPFC)',
+      body: '1 — Praefrontaler Cortex (DLPFC): Der dorsolaterale Praefrontalcortex startet die Schleife und projiziert exzitatorisch (glutamaterg) ins Striatum.',
     })
     expect(ontologyNodeTargetsForTimelineStep(timeline.steps[0])).toEqual([
       'left-middle-frontal-gyrus',
@@ -117,10 +118,9 @@ describe('timeline animation system', () => {
     ])
   })
 
-  it('resolvt legacy animation bindings gegen stabile Ontologie-TargetRefs', () => {
-    const timeline = timelineDocumentFromAnimation(BASAL_GANGLIA_LOOP)
+  it('resolvt registrierte Timeline-Bindings gegen stabile Ontologie-TargetRefs', () => {
+    const timeline = BASAL_GANGLIA_TIMELINE
     const resolutions = resolveTimelineAnimationBindings(timeline, {
-      legacyAnimations: [BASAL_GANGLIA_LOOP],
       collections: ['taro'],
       ontologyNodeIds: ontologyIds,
     })
@@ -128,15 +128,14 @@ describe('timeline animation system', () => {
     expect(resolutions.every((entry) => entry.status === 'resolved')).toBe(true)
     expect(resolutions[0]).toMatchObject({
       status: 'resolved',
-      bindingKind: 'legacy-highlight',
-      sourceId: BASAL_GANGLIA_LOOP.id,
-      bindingId: 'basal-ganglia-loop:highlight:1:left-middle-frontal-gyrus',
-      clipId: 'legacy:basal-ganglia-loop',
+      bindingKind: 'timeline-highlight',
+      sourceId: BASAL_GANGLIA_TIMELINE_ID,
+      bindingId: timelineHighlightBindingId(BASAL_GANGLIA_TIMELINE_ID, 0, 'left-middle-frontal-gyrus'),
+      clipId: BASAL_GANGLIA_CLIP_ID,
       objectGraphId: 'target:ontology-node:taro:left-middle-frontal-gyrus',
       action: 'scrub',
     })
     expect(() => assertTimelineAnimationBindings(timeline, {
-      legacyAnimations: [BASAL_GANGLIA_LOOP],
       collections: ['taro'],
       ontologyNodeIds: ontologyIds,
     })).not.toThrow()
@@ -196,19 +195,10 @@ describe('timeline animation system', () => {
       reason: 'bindingId "missing-pulse" mit clipId "clip:missing-pulse" ist nicht definiert',
     })
 
-    const missingTarget: Animation = {
-      id: 'missing-node-demo',
-      title: 'Missing node demo',
-      source: 'test',
-      steps: [{ structures: ['left-ghost-node'], captionDe: 'Missing target.' }],
-    }
-    const missingTargetTimeline = timelineDocumentFromAnimation(missingTarget)
-
-    expect(() => assertTimelineAnimationBindings(missingTargetTimeline, {
-      legacyAnimations: [missingTarget],
+    expect(() => assertTimelineAnimationBindings(BASAL_GANGLIA_TIMELINE, {
       collections: ['taro'],
-      ontologyNodeIds: ontologyIds,
-    })).toThrow(/left-ghost-node/)
+      ontologyNodeIds: [],
+    })).toThrow(/left-middle-frontal-gyrus/)
   })
 
   it('weist Timeline-targetRef-Konflikte gegen registrierte ClipBindings zurueck', () => {

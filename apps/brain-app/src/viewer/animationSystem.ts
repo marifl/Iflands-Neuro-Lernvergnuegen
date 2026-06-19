@@ -2,9 +2,8 @@ import {
   parseAuthoringScene,
   type AuthoringScene,
 } from './authoringScene'
-import type { Animation } from './animations'
+import { ANIMATION_TIMELINES } from './animations'
 import {
-  TIMELINE_DOCUMENT_SCHEMA_VERSION,
   parseTimelineDocument,
   type TimelineAnimationAction,
   type TimelineAnimationChannel,
@@ -18,10 +17,7 @@ import {
   type SequenceTargetResolveContext,
 } from './sequenceTargetRef'
 
-const DEFAULT_LEGACY_COLLECTION_ID = 'taro'
-const DEFAULT_LEGACY_STEP_MS = 3800
-
-type AnimationBindingKind = 'legacy-highlight' | 'authoring-clip'
+type AnimationBindingKind = 'timeline-highlight' | 'authoring-clip'
 
 interface KnownAnimationBinding {
   kind: AnimationBindingKind
@@ -60,99 +56,8 @@ export type TimelineAnimationBindingResolution =
     timeMs?: number
   })
 
-export interface LegacyAnimationTimelineOptions {
-  collectionId?: string
-  stepDurationMs?: number
-}
-
 export interface TimelineAnimationResolveContext extends SequenceTargetResolveContext {
   authoringScenes?: readonly AuthoringScene[]
-  legacyAnimations?: readonly Animation[]
-}
-
-function legacyClipId(animationId: string): string {
-  return `legacy:${animationId}`
-}
-
-function legacyBindingId(animationId: string, stepIndex: number, ontologyNodeId: string): string {
-  return `${animationId}:highlight:${stepIndex + 1}:${ontologyNodeId}`
-}
-
-function legacyTarget(collectionId: string, ontologyNodeId: string): SequenceTargetRef {
-  return { targetKind: 'ontology-node', collectionId, ontologyNodeId }
-}
-
-function legacyAnimationBindings(
-  animation: Animation,
-  collectionId = DEFAULT_LEGACY_COLLECTION_ID,
-): KnownAnimationBinding[] {
-  return animation.steps.flatMap((step, stepIndex) =>
-    step.structures.map((ontologyNodeId) => ({
-      kind: 'legacy-highlight',
-      bindingId: legacyBindingId(animation.id, stepIndex, ontologyNodeId),
-      clipId: legacyClipId(animation.id),
-      sourceId: animation.id,
-      targetRef: legacyTarget(collectionId, ontologyNodeId),
-    })),
-  )
-}
-
-export function timelineDocumentFromAnimation(
-  animation: Animation,
-  options: LegacyAnimationTimelineOptions = {},
-): TimelineDocument {
-  if (animation.steps.length === 0) {
-    throw new Error(`TimelineAnimationSystem: animation "${animation.id}" braucht mindestens einen Step`)
-  }
-  const collectionId = options.collectionId ?? DEFAULT_LEGACY_COLLECTION_ID
-  const durationMs = options.stepDurationMs ?? DEFAULT_LEGACY_STEP_MS
-  const steps = animation.steps.map((step, stepIndex) => {
-    const stepNumber = stepIndex + 1
-    const stepId = `${animation.id}-step-${stepNumber}`
-    return {
-      stepId,
-      order: stepIndex,
-      durationMs,
-      keyframes: [
-        {
-          keyframeId: `${stepId}-highlight`,
-          atMs: 0,
-          holdMs: durationMs,
-          channels: {
-            overlay: {
-              title: animation.title,
-              body: step.captionDe,
-            },
-            animation: step.structures.map((ontologyNodeId): TimelineAnimationChannel => ({
-              bindingId: legacyBindingId(animation.id, stepIndex, ontologyNodeId),
-              clipId: legacyClipId(animation.id),
-              targetRef: legacyTarget(collectionId, ontologyNodeId),
-              action: 'scrub',
-              timeMs: 0,
-              loop: false,
-            })),
-          },
-        },
-      ],
-    }
-  })
-  const firstStep = steps[0]
-  const firstKeyframe = firstStep?.keyframes[0]
-  if (!firstStep || !firstKeyframe) {
-    throw new Error(`TimelineAnimationSystem: animation "${animation.id}" braucht mindestens einen Timeline-Keyframe`)
-  }
-
-  return parseTimelineDocument({
-    schemaVersion: TIMELINE_DOCUMENT_SCHEMA_VERSION,
-    timelineId: `legacy-${animation.id}`,
-    title: animation.title,
-    source: animation.source,
-    restore: {
-      stepId: firstStep.stepId,
-      keyframeId: firstKeyframe.keyframeId,
-    },
-    steps,
-  })
 }
 
 export function ontologyNodeTargetsForTimelineStep(step: TimelineStep): string[] {
@@ -196,6 +101,26 @@ function authoringSceneBindings(rawScenes: readonly AuthoringScene[] = []): Know
   })
 }
 
+function timelineDocumentBindings(rawDocuments: readonly TimelineDocument[] = ANIMATION_TIMELINES): KnownAnimationBinding[] {
+  return rawDocuments.flatMap((rawDocument) => {
+    const document = parseTimelineDocument(rawDocument)
+    return document.steps.flatMap((step) =>
+      step.keyframes.flatMap((keyframe) =>
+        (keyframe.channels.animation ?? []).flatMap((channel) => {
+          if (!channel.targetRef) return []
+          return [{
+            kind: 'timeline-highlight' as const,
+            bindingId: channel.bindingId,
+            clipId: channel.clipId,
+            sourceId: document.timelineId,
+            targetRef: channel.targetRef,
+          }]
+        }),
+      ),
+    )
+  })
+}
+
 function assetInstanceIds(scenes: readonly AuthoringScene[]): string[] {
   return scenes.flatMap((scene) =>
     scene.assetInstances.map((instance) => `${instance.collectionId}/${instance.instanceId}`),
@@ -216,8 +141,8 @@ function bindingMatches(channel: TimelineAnimationChannel, binding: KnownAnimati
 
 function knownBindings(context: TimelineAnimationResolveContext): KnownAnimationBinding[] {
   return [
+    ...timelineDocumentBindings(),
     ...authoringSceneBindings(context.authoringScenes),
-    ...(context.legacyAnimations ?? []).flatMap((animation) => legacyAnimationBindings(animation)),
   ]
 }
 

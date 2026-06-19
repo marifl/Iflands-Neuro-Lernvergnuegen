@@ -3,7 +3,6 @@ import {
   type AssetManifestDocument,
   type AssetManifestEntry,
 } from './assetManifest'
-import { ANIMATIONS } from './animations'
 import { resolveTimelineAnimationBindings } from './animationSystem'
 import {
   parseAuthoringScene,
@@ -308,7 +307,6 @@ function validateTimeline(timeline: TimelineDocument, path: string, ctx: Contrac
     })
   }))
   resolveTimelineAnimationBindings(timeline, {
-    legacyAnimations: ANIMATIONS,
     authoringScenes: ctx.authoringScenes,
     collections: [...ctx.collectionIds],
     ontologyNodeIds: [...ctx.ontologyNodeIds],

@@ -589,28 +589,27 @@ Adapterplan:
 3. Phineas: der Fallstudienmodus bleibt eigener Consumer. Timeline-Events
    dürfen Phineas nicht implizit aus `learning` oder `presentation`
    mutieren.
-4. `AnimationPlayer.tsx`: bleibt Legacy-Pfad. Seine Steps können später über
-   einen Adapter in Timeline-Keyframes überführt werden; neue
-   Produktivanimationen sollen keinen weiteren Hardcode neben diesem Vertrag
-   erzeugen.
+4. `AnimationPlayer.tsx`: konsumiert registrierte Timeline-Dokumente. Neue
+   Produktivanimationen werden als Timeline-Vertrag registriert, nicht als
+   zusätzlicher Viewer-Hardcode.
 5. Snapshot/Route-Restore: Snapshot-Import gewinnt gegen Config-Defaults und
    muss `restore.stepId`/`restore.keyframeId` plus Route anwenden, bevor neue
    User-Interaktion wieder lokalen Zustand schreibt. Fehlende Steps oder
    Targets werden sichtbar behandelt oder laut abgelehnt, nicht still
    verworfen.
 
-Nicht Teil dieses Slices: Timeline-UI, Player-Migration, Loader, Picking,
+Nicht Teil dieses Vertrags: Timeline-Editor-UI, Loader, Picking,
 TransformControls und Browser-Editor-Smoke. Diese Arbeiten bleiben Folge-
-Slices auf Basis dieses Vertrags.
+Slices auf Basis des bestehenden Timeline-Datenvertrags.
 
 ## Animation-Authoring
 
 Aktueller Stand:
 
-1. `apps/brain-app/src/viewer/animations.ts` enthält die
-   `BASAL_GANGLIA_LOOP`-Animation.
-2. `apps/brain-app/src/viewer/AnimationPlayer.tsx` ist aktuell noch direkt auf
-   diese Animation verdrahtet.
+1. `apps/brain-app/src/viewer/animations.ts` enthält die registrierte
+   `BASAL_GANGLIA_TIMELINE` als aktuelles `TimelineDocument`.
+2. `apps/brain-app/src/viewer/AnimationPlayer.tsx` liest diese Timeline direkt
+   und spiegelt den aktiven Step über `setHighlight(...)` in den Viewer-Store.
 3. ERP-nahe Animationen laufen separat über `erpAnimation.ts` und den
    Store-Zustand `erpActive`, `erpPhase`, `erpPulse`.
 
@@ -626,22 +625,23 @@ Zielvertrag für neue Presentation-Animationen:
 5. Sichtbarkeit wird bevorzugt über `visible`/Materialzustand gesteuert, nicht
    durch permanentes Remounting großer GLB-Teilbäume.
 
-Bis die Animation-Registry existiert, ist `AnimationPlayer.tsx` als Legacy-Pfad
-zu behandeln. Für mehrere produktive Vortraganimationen zuerst die Registry
-generalisieren, dann einzelne Animationen anschließen.
+Die bestehende Timeline-Registry ist bewusst klein: Sie führt aktuell die
+Basalganglien-Schleife und liefert die registrierten Highlight-Bindings für die
+Contract-Validierung. Für mehrere produktive Vortraganimationen wird diese
+Registry erweitert, bevor neue Player-Spezialfälle entstehen.
 
 Konkretes aktuelles Beispiel Basalganglien-Schleife:
 
 1. Daten:
    `apps/brain-app/src/viewer/animations.ts` definiert
-   `BASAL_GANGLIA_LOOP` mit stabiler `id`, Quelle und geordneten Steps.
+   `BASAL_GANGLIA_TIMELINE` mit stabiler `timelineId`, Quelle, geordneten
+   Steps und expliziten `SequenceTargetRef`-Targets.
 2. Player:
-   `apps/brain-app/src/viewer/AnimationPlayer.tsx` liest diese Animation noch
-   direkt und spiegelt den aktiven Step über `setHighlight(...)` in den
-   Viewer-Store.
+   `apps/brain-app/src/viewer/AnimationPlayer.tsx` liest diese Timeline und
+   spiegelt den aktiven Step über `setHighlight(...)` in den Viewer-Store.
 3. Grenze:
-   Neue produktive Animationen sollen diesen Hardcode nicht kopieren, sondern
-   nach dem Registry-Slice über Config/Scene-ID auswählbar werden.
+   Neue produktive Animationen sollen die Timeline-Registry erweitern und
+   später über Config/Scene-ID auswählbar werden.
 4. Prüfung:
    Player-Interaktionen müssen mindestens Play, Pause, vorheriger/nächster Step
    und Highlight-Rücksetzung beim Schließen abdecken.

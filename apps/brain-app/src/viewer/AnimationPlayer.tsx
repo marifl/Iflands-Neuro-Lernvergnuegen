@@ -1,13 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
-import { BASAL_GANGLIA_LOOP } from './animations'
-import { ontologyNodeTargetsForTimelineStep, timelineDocumentFromAnimation } from './animationSystem'
+import { useEffect, useState } from 'react'
+import { BASAL_GANGLIA_TIMELINE } from './animations'
+import { ontologyNodeTargetsForTimelineStep } from './animationSystem'
 import { useViewerStore } from './viewerStore'
 
-const STEP_MS = 3800
-
 export default function AnimationPlayer({ inline = false }: { inline?: boolean } = {}) {
-  const animation = BASAL_GANGLIA_LOOP
-  const timeline = useMemo(() => timelineDocumentFromAnimation(animation), [animation])
+  const timeline = BASAL_GANGLIA_TIMELINE
   const setHighlight = useViewerStore((s) => s.setHighlight)
   const [active, setActive] = useState(false)
   const [step, setStep] = useState(0)
@@ -23,9 +20,10 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
   // Auto-Advance waehrend Play.
   useEffect(() => {
     if (!active || !playing) return
-    const timer = setInterval(() => setStep((s) => (s + 1) % animation.steps.length), STEP_MS)
+    const durationMs = timeline.steps[step]?.durationMs ?? timeline.steps[0]?.durationMs ?? 3800
+    const timer = setInterval(() => setStep((s) => (s + 1) % timeline.steps.length), durationMs)
     return () => clearInterval(timer)
-  }, [active, playing, animation.steps.length])
+  }, [active, playing, step, timeline])
 
   if (!active) {
     return (
@@ -43,12 +41,14 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
             : { position: 'absolute', bottom: 54, left: 16, maxWidth: 'calc(100% - 32px)', whiteSpace: 'normal', lineHeight: 1.4, padding: '8px 14px', background: 'var(--paper)', border: '1px solid var(--line)' }
         }
       >
-        <span style={{ color: 'var(--orange)' }}>▶</span> Animation · {animation.title} · {animation.source}
+        <span style={{ color: 'var(--orange)' }}>▶</span> Animation · {timeline.title} · {timeline.source}
       </button>
     )
   }
 
-  const current = animation.steps[step] ?? animation.steps[0]
+  const current = timeline.steps[step] ?? timeline.steps[0]
+  const currentKeyframe = current?.keyframes[0]
+  const currentBody = currentKeyframe?.channels.overlay?.body
   if (!current) return null
   return (
     <div
@@ -62,10 +62,10 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
         <span className="eyebrow">Animation</span>
         <span style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 14, color: 'var(--ink)' }}>
-          {animation.title}
+          {timeline.title}
         </span>
         <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--g500)' }}>
-          {animation.source} · Schritt {step + 1}/{animation.steps.length}
+          {timeline.source} · Schritt {step + 1}/{timeline.steps.length}
         </span>
         <span style={{ flex: 1 }} />
         <button type="button" className="ed-btn" onClick={() => { setActive(false); setPlaying(false) }}>
@@ -74,7 +74,7 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
       </div>
 
       <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13.5, lineHeight: 1.55, color: 'var(--g800)', minHeight: 64 }}>
-        {current.captionDe}
+        {currentBody}
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
@@ -84,7 +84,7 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
         <button
           type="button"
           className="ed-btn"
-          onClick={() => setStep((s) => (s - 1 + animation.steps.length) % animation.steps.length)}
+          onClick={() => setStep((s) => (s - 1 + timeline.steps.length) % timeline.steps.length)}
         >
           ◀
         </button>
@@ -98,7 +98,7 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
         <button
           type="button"
           className="ed-btn"
-          onClick={() => setStep((s) => (s + 1) % animation.steps.length)}
+          onClick={() => setStep((s) => (s + 1) % timeline.steps.length)}
         >
           ▶
         </button>

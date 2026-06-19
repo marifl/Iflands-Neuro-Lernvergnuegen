@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-animation-legacy-auf-timeline-",
+  "title": "Animation-Legacy auf Timeline-Registry migrieren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T20:34:34.689Z",
+  "updated": "2026-06-19T20:51:23.996Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T20:35:39.909Z"
+      }
+    ]
+  }
+}
