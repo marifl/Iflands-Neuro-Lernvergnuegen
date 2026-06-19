@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:16px;padding:9px;box-shadow:0 20px 48px rgba(0,0,0,.3);flex:none;}
+  .scr > div{border-radius:9px;overflow:hidden;}
+  .dvlabel{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;color:#1c1a18;font-weight:600;}
+  .dvsub{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.04em;color:#7a756e;margin-top:2px;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .clshead{display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid #a8a49d;padding-bottom:11px;margin-bottom:26px;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+</style>
+</helmet>
+
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1100px;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Geräte-Matrix · v2</div>
+    <h1 style="font-size:38px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Kern-Shell auf allen Geräten</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:740px;margin:0;text-wrap:pretty;">Ein einziges responsives Shell-Component (<span class="mono" style="font-size:12px;">AppFrame</span>), gerendert über alle Geräteklassen und beide Orientierungen. Regel: <b>Portrait → Bottom-Drawer + Dock</b>, <b>Landscape → Rail + Seiten-Panel</b>. Lernen und Explorer im selben System.</p>
+  </div>
+
+  <!-- PHONE -->
+  <div style="margin-top:52px;">
+    <div class="clshead"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">iPhone</span><span class="mono" style="font-size:10px;color:#7a756e;">390 × 844 · &lt; 744</span></div>
+    <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+      <div><div class="dvlabel">Portrait · Lernen</div><div class="dvsub">390 × 844</div><div class="scr" style="margin-top:12px;"><div style="width:390px;height:844px;"><dc-import name="AppFrame" mode="lernen" orientation="portrait" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+      <div><div class="dvlabel">Landscape · Explorer</div><div class="dvsub">844 × 390</div><div class="scr" style="margin-top:12px;"><div style="width:844px;height:390px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" hint-size="844px,390px" style="width:844px;height:390px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- iPad Mini -->
+  <div style="margin-top:60px;">
+    <div class="clshead"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">iPad Mini</span><span class="mono" style="font-size:10px;color:#7a756e;">768 × 1024 · ≥ 744</span></div>
+    <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+      <div><div class="dvlabel">Portrait · Lernen</div><div class="dvsub">768 × 1024</div><div class="scr" style="margin-top:12px;"><div style="width:768px;height:1024px;"><dc-import name="AppFrame" mode="lernen" orientation="portrait" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div></div>
+      <div><div class="dvlabel">Landscape · Explorer</div><div class="dvsub">1024 × 768</div><div class="scr" style="margin-top:12px;"><div style="width:1024px;height:768px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" hint-size="1024px,768px" style="width:1024px;height:768px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- iPad Pro 11 -->
+  <div style="margin-top:60px;">
+    <div class="clshead"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">iPad Pro 11"</span><span class="mono" style="font-size:10px;color:#7a756e;">834 × 1194</span></div>
+    <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+      <div><div class="dvlabel">Portrait · Explorer</div><div class="dvsub">834 × 1194</div><div class="scr" style="margin-top:12px;"><div style="width:834px;height:1194px;"><dc-import name="AppFrame" mode="explorer" orientation="portrait" hint-size="834px,1194px" style="width:834px;height:1194px;"></dc-import></div></div></div>
+      <div><div class="dvlabel">Landscape · Lernen</div><div class="dvsub">1194 × 834</div><div class="scr" style="margin-top:12px;"><div style="width:1194px;height:834px;"><dc-import name="AppFrame" mode="lernen" orientation="landscape" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- iPad Pro 13 -->
+  <div style="margin-top:60px;">
+    <div class="clshead"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">iPad Pro 13"</span><span class="mono" style="font-size:10px;color:#7a756e;">1024 × 1366</span></div>
+    <div style="display:flex;gap:40px;align-items:flex-start;flex-wrap:wrap;">
+      <div><div class="dvlabel">Portrait · Lernen</div><div class="dvsub">1024 × 1366</div><div class="scr" style="margin-top:12px;"><div style="width:1024px;height:1366px;"><dc-import name="AppFrame" mode="lernen" orientation="portrait" hint-size="1024px,1366px" style="width:1024px;height:1366px;"></dc-import></div></div></div>
+      <div><div class="dvlabel">Landscape · Explorer</div><div class="dvsub">1366 × 1024</div><div class="scr" style="margin-top:12px;"><div style="width:1366px;height:1024px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" hint-size="1366px,1024px" style="width:1366px;height:1024px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- Desktop -->
+  <div style="margin-top:60px;">
+    <div class="clshead"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">Desktop</span><span class="mono" style="font-size:10px;color:#7a756e;">1440 × 900 · ≥ 1280</span></div>
+    <div style="display:flex;flex-direction:column;gap:34px;">
+      <div><div class="dvlabel">Lernen · Panel offen</div><div class="dvsub">1440 × 900</div><div class="scr" style="margin-top:12px;"><div style="width:1440px;height:900px;"><dc-import name="AppFrame" mode="lernen" orientation="landscape" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+      <div><div class="dvlabel">Explorer · Panel eingeklappt</div><div class="dvsub">1440 × 900</div><div class="scr" style="margin-top:12px;"><div style="width:1440px;height:900px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" collapsed="{{ true }}" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

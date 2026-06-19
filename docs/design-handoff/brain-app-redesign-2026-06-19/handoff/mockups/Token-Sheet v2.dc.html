@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .th *{box-sizing:border-box;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .sec{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;border-top:1.5px solid #a8a49d;padding-top:14px;margin-top:50px;margin-bottom:20px;}
+  .tok{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #bdb9b2;}
+  .sw{width:46px;height:30px;flex:none;border:1px solid rgba(0,0,0,.18);}
+  .tn{font-family:'IBM Plex Mono',monospace;font-size:11px;color:#1a1a1a;flex:1;min-width:0;}
+  .tv{font-family:'IBM Plex Mono',monospace;font-size:10px;color:#7a756e;}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;}
+  .colh{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6f6a63;padding-bottom:8px;border-bottom:1.5px solid #a8a49d;}
+  .chip{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid #b7b3ac;background:#fbfaf8;}
+  .cbox{width:34px;height:34px;flex:none;border:1px solid rgba(0,0,0,.15);}
+  .cmeta{min-width:0;}
+  .cname{font-size:12.5px;font-weight:600;color:#1a1a1a;}
+  .chex{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:#7a756e;margin-top:2px;}
+  .card{border:1px solid #b7b3ac;background:#fbfaf8;padding:16px 18px;}
+  a.lnk{color:#b4490f;text-decoration:none;border-bottom:1px solid rgba(180,73,15,.4);}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+</style>
+</helmet>
+
+<div class="th" style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;color:#1a1a1a;">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Handoff · v2</div>
+    <h1 style="font-size:40px;font-weight:700;letter-spacing:-.035em;margin:10px 0 10px;line-height:1;">Token- &amp; Komponenten-Sheet</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:840px;margin:0;text-wrap:pretty;">Single source of truth für das v2-System. Theme-Schalter setzt <span class="mono" style="font-size:12.5px;">data-theme="dark|hell"</span> am Root; der Wert wird in <span class="mono" style="font-size:12.5px;">localStorage["ifn-theme"]</span> gehalten und bleibt über Navigation erhalten. Regel: <strong>nur Neutrale sind getokenisiert</strong> — alle Bedeutungsfarben sind in beiden Themes literal und identisch.</p>
+
+    <div class="sec">Neutrale Tokens · CSS-Variablen</div>
+    <div class="grid2">
+      <div><div class="colh">data-theme="dark"</div><div id="neutral-dark"><div class="tok"><span class="sw" style="background:#0e0e0e;"></span><span class="tn">--bg</span><span class="tv">#0e0e0e</span></div><div class="tok"><span class="sw" style="background:#0c0c0c;"></span><span class="tn">--vp</span><span class="tv">#0c0c0c</span></div><div class="tok"><span class="sw" style="background:#131313;"></span><span class="tn">--rail</span><span class="tv">#131313</span></div><div class="tok"><span class="sw" style="background:#161616;"></span><span class="tn">--panel</span><span class="tv">#161616</span></div><div class="tok"><span class="sw" style="background:#1c1c1c;"></span><span class="tn">--sel</span><span class="tv">#1c1c1c</span></div><div class="tok"><span class="sw" style="background:#1f1f1f;"></span><span class="tn">--cell</span><span class="tv">#1f1f1f</span></div><div class="tok"><span class="sw" style="background:#2a2a2a;"></span><span class="tn">--line</span><span class="tv">#2a2a2a</span></div><div class="tok"><span class="sw" style="background:#3a3a3a;"></span><span class="tn">--line5</span><span class="tv">#3a3a3a</span></div><div class="tok"><span class="sw" style="background:#333333;"></span><span class="tn">--ctrl</span><span class="tv">#333333</span></div><div class="tok"><span class="sw" style="background:#ededed;"></span><span class="tn">--t1</span><span class="tv">#ededed</span></div><div class="tok"><span class="sw" style="background:#d2d2d2;"></span><span class="tn">--t2</span><span class="tv">#d2d2d2</span></div><div class="tok"><span class="sw" style="background:#b2b2b2;"></span><span class="tn">--t2b</span><span class="tv">#b2b2b2</span></div><div class="tok"><span class="sw" style="background:#8c8c8c;"></span><span class="tn">--t3</span><span class="tv">#8c8c8c</span></div><div class="tok"><span class="sw" style="background:#6f6f6f;"></span><span class="tn">--t4</span><span class="tv">#6f6f6f</span></div><div class="tok"><span class="sw" style="background:#160b04;"></span><span class="tn">--onacc</span><span class="tv">#160b04</span></div></div></div>
+      <div><div class="colh">data-theme="hell"</div><div id="neutral-hell"><div class="tok"><span class="sw" style="background:#e9e6e1;"></span><span class="tn">--bg</span><span class="tv">#e9e6e1</span></div><div class="tok"><span class="sw" style="background:#c7c4bf;"></span><span class="tn">--vp</span><span class="tv">#c7c4bf</span></div><div class="tok"><span class="sw" style="background:#f0eee9;"></span><span class="tn">--rail</span><span class="tv">#f0eee9</span></div><div class="tok"><span class="sw" style="background:#ffffff;"></span><span class="tn">--panel</span><span class="tv">#ffffff</span></div><div class="tok"><span class="sw" style="background:#fdf1e9;"></span><span class="tn">--sel</span><span class="tv">#fdf1e9</span></div><div class="tok"><span class="sw" style="background:#efece6;"></span><span class="tn">--cell</span><span class="tv">#efece6</span></div><div class="tok"><span class="sw" style="background:#e2e2e2;"></span><span class="tn">--line</span><span class="tv">#e2e2e2</span></div><div class="tok"><span class="sw" style="background:#cfccc6;"></span><span class="tn">--line5</span><span class="tv">#cfccc6</span></div><div class="tok"><span class="sw" style="background:#d8d5cf;"></span><span class="tn">--ctrl</span><span class="tv">#d8d5cf</span></div><div class="tok"><span class="sw" style="background:#111111;"></span><span class="tn">--t1</span><span class="tv">#111111</span></div><div class="tok"><span class="sw" style="background:#333333;"></span><span class="tn">--t2</span><span class="tv">#333333</span></div><div class="tok"><span class="sw" style="background:#4a4a4a;"></span><span class="tn">--t2b</span><span class="tv">#4a4a4a</span></div><div class="tok"><span class="sw" style="background:#6b6b6b;"></span><span class="tn">--t3</span><span class="tv">#6b6b6b</span></div><div class="tok"><span class="sw" style="background:#9a9a9a;"></span><span class="tn">--t4</span><span class="tv">#9a9a9a</span></div><div class="tok"><span class="sw" style="background:#ffffff;"></span><span class="tn">--onacc</span><span class="tv">#ffffff</span></div></div></div>
+    </div>
+
+    <div class="sec">Bedeutungsfarben · in beiden Themes identisch</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;"><div class="chip"><span class="cbox" style="background:#f26b1f;"></span><div class="cmeta"><div class="cname">Akzent</div><div class="chex">#f26b1f · Auswahl/Aktiv</div></div></div><div class="chip"><span class="cbox" style="background:#e06a4a;"></span><div class="cmeta"><div class="cname">Fehler</div><div class="chex">#e06a4a · Stroke</div></div></div><div class="chip"><span class="cbox" style="background:#c0494a;"></span><div class="cmeta"><div class="cname">Fehler-Fill</div><div class="chex">#c0494a · destruktiv</div></div></div><div class="chip"><span class="cbox" style="background:#3fae6a;"></span><div class="cmeta"><div class="cname">Erfolg</div><div class="chex">#3fae6a</div></div></div><div class="chip"><span class="cbox" style="background:#bd6f45;"></span><div class="cmeta"><div class="cname">Warnung</div><div class="chex">#bd6f45 · offline</div></div></div><div class="chip"><span class="cbox" style="background:#3268a8;"></span><div class="cmeta"><div class="cname">Info</div><div class="chex">#3268a8</div></div></div></div>
+
+    <div class="sec">Funktions-, Achsen- &amp; Atlas-Farben</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;"><div class="chip"><span class="cbox" style="background:#bd6f45;"></span><div class="cmeta"><div class="cname">Exekutiv</div><div class="chex">#bd6f45</div></div></div><div class="chip"><span class="cbox" style="background:#5f86b2;"></span><div class="cmeta"><div class="cname">Aufmerksamkeit</div><div class="chex">#5f86b2</div></div></div><div class="chip"><span class="cbox" style="background:#5f8f84;"></span><div class="cmeta"><div class="cname">Basalganglien</div><div class="chex">#5f8f84</div></div></div><div class="chip"><span class="cbox" style="background:#b45d70;"></span><div class="cmeta"><div class="cname">Limbisch</div><div class="chex">#b45d70</div></div></div><div class="chip"><span class="cbox" style="background:#c0494a;"></span><div class="cmeta"><div class="cname">Achse X</div><div class="chex">#c0494a</div></div></div><div class="chip"><span class="cbox" style="background:#77c85b;"></span><div class="cmeta"><div class="cname">Achse Y</div><div class="chex">#77c85b</div></div></div><div class="chip"><span class="cbox" style="background:#35a6ff;"></span><div class="cmeta"><div class="cname">Achse Z</div><div class="chex">#35a6ff</div></div></div><div class="chip"><span class="cbox" style="background:#7e57c2;"></span><div class="cmeta"><div class="cname">Jülich</div><div class="chex">#7e57c2 · Atlas</div></div></div><div class="chip"><span class="cbox" style="background:#26a69a;"></span><div class="cmeta"><div class="cname">DKT</div><div class="chex">#26a69a · Atlas</div></div></div><div class="chip"><span class="cbox" style="background:#ef6c4d;"></span><div class="cmeta"><div class="cname">Brodmann</div><div class="chex">#ef6c4d · Atlas</div></div></div><div class="chip"><span class="cbox" style="background:#42a5f5;"></span><div class="cmeta"><div class="cname">Destrieux</div><div class="chex">#42a5f5 · Atlas</div></div></div><div class="chip"><span class="cbox" style="background:#c0494a;"></span><div class="cmeta"><div class="cname">Accumbens</div><div class="chex">#c0494a</div></div></div></div>
+
+    <div class="sec">Typografie</div>
+    <div class="grid2" style="gap:0 40px;">
+      <div class="card">
+        <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6f6a63;margin-bottom:14px;">Helvetica Neue — Inhalt</div>
+        <div style="font-size:38px;font-weight:700;letter-spacing:-.035em;line-height:1;">Überschrift 38/700</div>
+        <div style="font-size:21px;font-weight:700;letter-spacing:-.02em;margin-top:14px;">Titel 21/700</div>
+        <div style="font-size:14px;line-height:1.6;color:#48443f;margin-top:12px;">Fließtext 14/1.6 — ein Gedanke pro Zeile, ruhig, text-wrap:pretty. ADHS-/Autismus-freundlich.</div>
+      </div>
+      <div class="card">
+        <div class="mono" style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#6f6a63;margin-bottom:14px;">IBM Plex Mono — Labels &amp; Daten</div>
+        <div class="mono" style="font-size:13px;letter-spacing:.06em;">FOLIE 04 / 21 · 11.3.3</div>
+        <div class="mono" style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;margin-top:14px;color:#b4490f;">Sektion · Label .2em</div>
+        <div class="mono" style="font-size:8.5px;letter-spacing:.06em;color:#7a756e;margin-top:12px;">Meta 8.5 · Quelle · Abb. 11-04</div>
+      </div>
+    </div>
+
+    <div class="sec">Maße &amp; Regeln</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div class="card"><div style="font-size:15px;font-weight:700;">Hit-Targets ≥ 44 px</div><div style="font-size:12.5px;line-height:1.5;color:#48443f;margin-top:6px;">Alle interaktiven Ziele min. 44 px Höhe/Breite.</div></div>
+      <div class="card"><div style="font-size:15px;font-weight:700;">Tiers</div><div class="mono" style="font-size:10.5px;line-height:1.7;color:#48443f;margin-top:6px;">w&lt;820 STACK · w≥820 COLUMNS<br>h&lt;480 kompakt · w≥1366 wide</div></div>
+      <div class="card"><div style="font-size:15px;font-weight:700;">Flach &amp; ruhig</div><div style="font-size:12.5px;line-height:1.5;color:#48443f;margin-top:6px;">Keine Verläufe. Brain-Icon stets beide Hemisphären. Rail 64 px.</div></div>
+    </div>
+
+    <div class="sec">Zustands-Muster · laut statt still</div>
+    <div class="card">
+      <div style="font-size:13px;line-height:1.6;color:#48443f;">Prop <span class="mono" style="font-size:12px;color:#b4490f;">state: idle | loading | empty | error</span> rendert ein Overlay (<span class="mono" style="font-size:12px;">z-index:90</span>) über jeder Surface. Auf allen 18 Frames vorhanden. Fehler sind nie still — sie benennen Ursache und bieten „Erneut versuchen". Spinner-Keyframe <span class="mono" style="font-size:12px;">scSpin</span>.</div>
+    </div>
+
+    <div class="sec">Komponenten-Inventar</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">Einstieg &amp; Hub</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Onboarding · Auth · Launcher · AppFrame (Lernen/Explorer)</div></div>
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">Surfaces</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Färbung · ExplorerTools · Atlas/ERP · Timeline · Collection · Wiki · Chat · Fälle · Fälle-Browser</div></div>
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">Vortrag &amp; Verwaltung</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Presenter · Deck-Import · Participant (neu) · Authoring · Admin · Settings</div></div>
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">System-Komponenten</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Modal · Toast · Such-Leer · Permission-Denied · Offline-Banner — <a class="lnk" href="System-Komponenten v2.dc.html">öffnen</a></div></div>
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">Flow / IA</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Verbundener Klick-Prototyp + IA-Karte — <a class="lnk" href="Iflands Neuro – Prototyp.dc.html">öffnen</a></div></div>
+      <div class="card"><div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;">Matrizen</div><div style="font-size:12.5px;line-height:1.7;margin-top:8px;">Theme-Matrix · Device-Matrix · Zustände</div></div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

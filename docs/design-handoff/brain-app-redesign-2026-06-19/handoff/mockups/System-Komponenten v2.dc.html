@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  [data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);}
+  [data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);}
+  @keyframes scSpin{to{transform:rotate(360deg)}}
+  @keyframes scPulse{0%,100%{opacity:1}50%{opacity:.4}}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .sec{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;border-top:1.5px solid #a8a49d;padding-top:14px;margin-top:48px;}
+  .rowhead{display:flex;align-items:baseline;gap:13px;border-bottom:1px solid #b4b0a9;padding-bottom:9px;margin-top:30px;}
+  .rk{font-size:18px;font-weight:700;letter-spacing:-.02em;color:#1a1a1a;}
+  .rl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.04em;color:#7a756e;}
+  .specs{display:flex;gap:26px;align-items:flex-start;flex-wrap:wrap;margin-top:16px;}
+  .cap{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:#6f6a63;margin-bottom:8px;}
+  .spec{width:404px;height:268px;border-radius:10px;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,.2);position:relative;background:var(--bg);}
+  .stage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);}
+  .ib{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;cursor:pointer;border:none;min-height:44px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center;gap:7px;outline:none;}
+  .ib:focus-visible{box-shadow:0 0 0 3px rgba(242,107,31,.5);}
+</style>
+</helmet>
+
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1180px;margin:0 auto;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · System-Komponenten · v2</div>
+    <h1 style="font-size:38px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Fehlende System-Komponenten</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:840px;margin:0;text-wrap:pretty;">Wiederverwendbare Muster, je links Dunkel- und rechts Hell-Theme. Flach, tokenisiert; Bedeutungsfarben (Akzent #f26b1f, Fehler #e06a4a, Erfolg #3fae6a, Warnung #bd6f45) sind in beiden Themes identisch, nur Neutrale folgen dem Token-System. Hit-Targets ≥ 44 px, Fokus-Ringe vorhanden.</p>
+
+    <!-- MODAL -->
+    <div class="sec">Modal · Bestätigungsdialog</div>
+    <div class="rowhead"><span class="rk">Bestätigung</span><span class="rl">destruktive Aktion · Fokus gefangen</span></div>
+    <div class="specs">
+      <div><div class="cap">Dunkel</div><div class="spec" data-theme="dark"><div class="stage" style="background:rgba(0,0,0,.5);"><div style="width:300px;background:var(--panel);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.4);">
+  <div style="padding:18px 18px 0;">
+    <div style="display:flex;align-items:center;gap:10px;"><span style="width:30px;height:30px;flex:none;border:1px solid #c0494a;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></span><div style="font-size:15px;font-weight:700;letter-spacing:-.01em;">Schnitte zur&uuml;cksetzen?</div></div>
+    <p style="font-size:12.5px;line-height:1.5;color:var(--t2b);margin:12px 0 16px;text-wrap:pretty;">Alle aktiven Schnittebenen und Isolationen werden verworfen. Nicht umkehrbar.</p>
+  </div>
+  <div style="display:flex;gap:9px;padding:0 18px 18px;">
+    <button class="ib" style="flex:1;background:transparent;border:1px solid var(--line3);color:var(--t1);">Abbrechen</button>
+    <button class="ib" style="flex:1;background:#c0494a;color:#fff;">Zur&uuml;cksetzen</button>
+  </div>
+</div></div></div></div>
+      <div><div class="cap">Hell</div><div class="spec" data-theme="hell"><div class="stage" style="background:rgba(0,0,0,.32);"><div style="width:300px;background:var(--panel);border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.4);">
+  <div style="padding:18px 18px 0;">
+    <div style="display:flex;align-items:center;gap:10px;"><span style="width:30px;height:30px;flex:none;border:1px solid #c0494a;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></span><div style="font-size:15px;font-weight:700;letter-spacing:-.01em;">Schnitte zur&uuml;cksetzen?</div></div>
+    <p style="font-size:12.5px;line-height:1.5;color:var(--t2b);margin:12px 0 16px;text-wrap:pretty;">Alle aktiven Schnittebenen und Isolationen werden verworfen. Nicht umkehrbar.</p>
+  </div>
+  <div style="display:flex;gap:9px;padding:0 18px 18px;">
+    <button class="ib" style="flex:1;background:transparent;border:1px solid var(--line3);color:var(--t1);">Abbrechen</button>
+    <button class="ib" style="flex:1;background:#c0494a;color:#fff;">Zur&uuml;cksetzen</button>
+  </div>
+</div></div></div></div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="sec">Toast · Benachrichtigung</div>
+    <div class="rowhead"><span class="rk">Toasts</span><span class="rl">Erfolg · Fehler · auto-dismiss</span></div>
+    <div class="specs">
+      <div><div class="cap">Dunkel</div><div class="spec" data-theme="dark"><div class="stage" style="flex-direction:column;justify-content:flex-start;gap:11px;align-items:stretch;"><div style="display:flex;align-items:flex-start;gap:11px;background:var(--panel);border:1px solid var(--line);border-left:3px solid #3fae6a;padding:12px 13px;box-shadow:0 8px 22px rgba(0,0,0,.3);">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3fae6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>
+  <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Snapshot gespeichert</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">Basalganglien &middot; P3a &middot; Slot 3</div></div>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="2" stroke-linecap="round" style="flex:none;cursor:pointer;"><path d="M18 6 6 18M6 6l12 12"/></svg>
+</div>
+<div style="display:flex;align-items:flex-start;gap:11px;background:var(--panel);border:1px solid #7a3326;border-left:3px solid #e06a4a;padding:12px 13px;box-shadow:0 8px 22px rgba(0,0,0,.3);">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Sync zum Presenter verloren</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">Erneut verbinden &hellip;</div></div>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="2" stroke-linecap="round" style="flex:none;cursor:pointer;"><path d="M18 6 6 18M6 6l12 12"/></svg>
+</div></div></div></div>
+      <div><div class="cap">Hell</div><div class="spec" data-theme="hell"><div class="stage" style="flex-direction:column;justify-content:flex-start;gap:11px;align-items:stretch;"><div style="display:flex;align-items:flex-start;gap:11px;background:var(--panel);border:1px solid var(--line);border-left:3px solid #3fae6a;padding:12px 13px;box-shadow:0 8px 22px rgba(0,0,0,.3);">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#3fae6a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M20 6 9 17l-5-5"/></svg>
+  <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Snapshot gespeichert</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">Basalganglien &middot; P3a &middot; Slot 3</div></div>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="2" stroke-linecap="round" style="flex:none;cursor:pointer;"><path d="M18 6 6 18M6 6l12 12"/></svg>
+</div>
+<div style="display:flex;align-items:flex-start;gap:11px;background:var(--panel);border:1px solid #7a3326;border-left:3px solid #e06a4a;padding:12px 13px;box-shadow:0 8px 22px rgba(0,0,0,.3);">
+  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+  <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Sync zum Presenter verloren</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">Erneut verbinden &hellip;</div></div>
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="2" stroke-linecap="round" style="flex:none;cursor:pointer;"><path d="M18 6 6 18M6 6l12 12"/></svg>
+</div></div></div></div>
+    </div>
+
+    <!-- SUCH-LEER -->
+    <div class="sec">Such-Leer-Ergebnis</div>
+    <div class="rowhead"><span class="rk">Keine Treffer</span><span class="rl">laut statt still · Korrektur anbieten</span></div>
+    <div class="specs">
+      <div><div class="cap">Dunkel</div><div class="spec" data-theme="dark"><div class="stage"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:300px;">
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--t4);">Keine Treffer</div>
+  <div style="font-size:16px;font-weight:700;letter-spacing:-.015em;">amygdala nicht gefunden</div>
+  <div style="font-size:12px;line-height:1.5;color:var(--t2b);">Andere Schreibweise oder TARO-Synonym versuchen &mdash; z.&nbsp;B. Mandelkern.</div>
+  <button class="ib" style="background:transparent;border:1px solid var(--line3);color:var(--t1);padding:0 16px;">Suche leeren</button>
+</div></div></div></div>
+      <div><div class="cap">Hell</div><div class="spec" data-theme="hell"><div class="stage"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:300px;">
+  <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--t4);">Keine Treffer</div>
+  <div style="font-size:16px;font-weight:700;letter-spacing:-.015em;">amygdala nicht gefunden</div>
+  <div style="font-size:12px;line-height:1.5;color:var(--t2b);">Andere Schreibweise oder TARO-Synonym versuchen &mdash; z.&nbsp;B. Mandelkern.</div>
+  <button class="ib" style="background:transparent;border:1px solid var(--line3);color:var(--t1);padding:0 16px;">Suche leeren</button>
+</div></div></div></div>
+    </div>
+
+    <!-- PERMISSION DENIED -->
+    <div class="sec">Permission-Denied · je Rolle</div>
+    <div class="rowhead"><span class="rk">Kein Zugriff</span><span class="rl">Rolle benennen · Ausweg anbieten</span></div>
+    <div class="specs">
+      <div><div class="cap">Participant → Authoring · Dunkel</div><div class="spec" data-theme="dark"><div class="stage"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:300px;">
+  <span style="width:40px;height:40px;border:1px solid var(--line3);display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#bd6f45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#bd6f45;">Kein Zugriff</div>
+  <div style="font-size:16px;font-weight:700;letter-spacing:-.015em;">Authoring gesperrt</div>
+  <div style="font-size:12px;line-height:1.5;color:var(--t2b);">Als <span style="color:var(--t1);font-weight:600;">Participant</span> kannst du Szenen nicht bearbeiten.</div>
+  <div style="display:flex;gap:8px;align-items:center;"><span class="mono" style="font-size:8.5px;letter-spacing:.06em;border:1px solid var(--line5);color:var(--t3);padding:9px 10px;">Rolle &middot; Participant</span><button class="ib" style="background:#f26b1f;color:var(--onacc);padding:0 14px;">Zugriff anfragen</button></div>
+</div></div></div></div>
+      <div><div class="cap">Selflearner → Admin · Hell</div><div class="spec" data-theme="hell"><div class="stage"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;max-width:300px;">
+  <span style="width:40px;height:40px;border:1px solid var(--line3);display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#bd6f45" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="1"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+  <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#bd6f45;">Kein Zugriff</div>
+  <div style="font-size:16px;font-weight:700;letter-spacing:-.015em;">Admin gesperrt</div>
+  <div style="font-size:12px;line-height:1.5;color:var(--t2b);">Als <span style="color:var(--t1);font-weight:600;">Selflearner</span> hast du keine Verwaltungsrechte.</div>
+  <div style="display:flex;gap:8px;align-items:center;"><span class="mono" style="font-size:8.5px;letter-spacing:.06em;border:1px solid var(--line5);color:var(--t3);padding:9px 10px;">Rolle &middot; Selflearner</span><button class="ib" style="background:#f26b1f;color:var(--onacc);padding:0 14px;">Zugriff anfragen</button></div>
+</div></div></div></div>
+    </div>
+
+    <!-- OFFLINE BANNER -->
+    <div class="sec">Offline-Banner</div>
+    <div class="rowhead"><span class="rk">Offline</span><span class="rl">persistent · oben angedockt · erneut verbinden</span></div>
+    <div class="specs">
+      <div><div class="cap">Dunkel</div><div class="spec" data-theme="dark"><div class="stage" style="align-items:flex-start;padding:0;"><div style="width:100%;">
+  <div style="display:flex;align-items:center;gap:12px;background:var(--panel);border-bottom:1px solid #bd6f45;padding:13px 16px;">
+    <span style="width:8px;height:8px;border-radius:50%;background:#bd6f45;flex:none;animation:scPulse 1.6s ease-in-out infinite;"></span>
+    <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Offline &mdash; zwischengespeicherte Inhalte</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">&Auml;nderungen bleiben lokal und werden sp&auml;ter synchronisiert.</div></div>
+    <button class="ib" style="background:transparent;border:1px solid #bd6f45;color:#bd6f45;padding:0 14px;">Erneut verbinden</button>
+  </div>
+  <div style="padding:18px 16px;display:flex;flex-direction:column;gap:9px;opacity:.5;">
+    <div style="height:10px;width:60%;background:var(--cell);"></div>
+    <div style="height:10px;width:85%;background:var(--cell);"></div>
+    <div style="height:10px;width:45%;background:var(--cell);"></div>
+  </div>
+</div></div></div></div>
+      <div><div class="cap">Hell</div><div class="spec" data-theme="hell"><div class="stage" style="align-items:flex-start;padding:0;"><div style="width:100%;">
+  <div style="display:flex;align-items:center;gap:12px;background:var(--panel);border-bottom:1px solid #bd6f45;padding:13px 16px;">
+    <span style="width:8px;height:8px;border-radius:50%;background:#bd6f45;flex:none;animation:scPulse 1.6s ease-in-out infinite;"></span>
+    <div style="flex:1;min-width:0;"><div style="font-size:12.5px;font-weight:600;">Offline &mdash; zwischengespeicherte Inhalte</div><div class="mono" style="font-size:8.5px;color:var(--t3);margin-top:2px;">&Auml;nderungen bleiben lokal und werden sp&auml;ter synchronisiert.</div></div>
+    <button class="ib" style="background:transparent;border:1px solid #bd6f45;color:#bd6f45;padding:0 14px;">Erneut verbinden</button>
+  </div>
+  <div style="padding:18px 16px;display:flex;flex-direction:column;gap:9px;opacity:.5;">
+    <div style="height:10px;width:60%;background:var(--cell);"></div>
+    <div style="height:10px;width:85%;background:var(--cell);"></div>
+    <div style="height:10px;width:45%;background:var(--cell);"></div>
+  </div>
+</div></div></div></div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

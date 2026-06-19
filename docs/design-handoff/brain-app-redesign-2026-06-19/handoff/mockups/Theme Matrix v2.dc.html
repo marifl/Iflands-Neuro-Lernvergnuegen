@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:14px;padding:8px;box-shadow:0 18px 44px rgba(0,0,0,.28);flex:none;display:inline-block;}
+  .scr > div{border-radius:8px;overflow:hidden;}
+  .mono,.cap,.rk,.rl,.secbar{font-family:'IBM Plex Mono',monospace;}
+  .cap{font-size:9.5px;letter-spacing:.05em;color:#6f6a63;margin-bottom:9px;}
+  .rowhead{display:flex;align-items:baseline;gap:13px;border-bottom:1px solid #b4b0a9;padding-bottom:9px;}
+  .rk{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em;color:#1a1a1a;}
+  .rl{font-size:10px;letter-spacing:.04em;color:#7a756e;}
+  .secbar{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;border-top:1.5px solid #a8a49d;padding-top:14px;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+</style>
+</helmet>
+
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 120px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1100px;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Theme-Matrix · v2</div>
+    <h1 style="font-size:38px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Alle 18 Frames · Dunkel und Hell</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:820px;margin:0;text-wrap:pretty;">Jeder Frame im selben Geräteausschnitt (Landscape · COLUMNS), links Dunkel-, rechts Hell-Theme. Bedeutungsfarben (Akzent #f26b1f, Funktions-/Regionen-/Rollenfarben) bleiben in beiden identisch — nur Neutrale folgen dem Token-System. Das „Hell/Dunkel"-Label in Rails/Headern ist klickbar. Unten: Zustände (Laden / Leer / Fehler — laut statt still) der sechs neuen Surfaces.</p>
+  </div>
+
+  <div style="margin-top:56px;"><div class="secbar">Kern-Shell & Detail-Surfaces</div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AppFrame</span><span class="rl">App-Shell · Lernen/Explorer</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AppFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AppFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">FaerbungFrame</span><span class="rl">Färbung · 5-Modi</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaerbungFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaerbungFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">CollectionFrame</span><span class="rl">Collection-Manager</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="CollectionFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="CollectionFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AtlasErpFrame</span><span class="rl">Atlas-Layer & ERP</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AtlasErpFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AtlasErpFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">TimelineSnapshotFrame</span><span class="rl">Timeline & Snapshots</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="TimelineSnapshotFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="TimelineSnapshotFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">FaelleBrowserFrame</span><span class="rl">Fälle-Browser</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaelleBrowserFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaelleBrowserFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AdminFrame</span><span class="rl">Rollen & Auth · Admin</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AdminFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AdminFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+  </div>
+  <div style="margin-top:56px;"><div class="secbar">Modus- & Werkzeug-Surfaces</div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">ExplorerToolsFrame</span><span class="rl">Explorer · Werkzeuge</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="ExplorerToolsFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="ExplorerToolsFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">FaelleFrame</span><span class="rl">Fall · Phineas Gage</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaelleFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="FaelleFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AuthoringFrame</span><span class="rl">Authoring · Gizmo</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AuthoringFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AuthoringFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">WikiFrame</span><span class="rl">Wiki · Struktur</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="WikiFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="WikiFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">ChatFrame</span><span class="rl">Companion-Chat</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="ChatFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="ChatFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">SettingsFrame</span><span class="rl">Einstellungen</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="SettingsFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="SettingsFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+  </div>
+  <div style="margin-top:56px;"><div class="secbar">Vortrag, Auth & Onboarding</div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">PresenterFrame</span><span class="rl">Presenter · Live</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="PresenterFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="PresenterFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">PresenterDeckFrame</span><span class="rl">Presenter · Deck-Import</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="PresenterDeckFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="PresenterDeckFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">LauncherFrame</span><span class="rl">Launcher · Moduswahl</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="LauncherFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="LauncherFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">OnboardingFrame</span><span class="rl">Onboarding</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="OnboardingFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="OnboardingFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AuthFrame</span><span class="rl">Auth · Login</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Dunkel · dark</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AuthFrame" orientation="landscape" theme="dark"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+          <div><div class="cap">Hell · hell</div><div class="scr"><div style="width:860px;height:560px;"><dc-import name="AuthFrame" orientation="landscape" theme="hell"  hint-size="860px,560px" style="width:860px;height:560px;"></dc-import></div></div></div>
+        </div>
+      </div>
+  </div>
+
+  <div style="margin-top:64px;"><div class="secbar">Zustände pro Surface · laut statt still</div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">FaerbungFrame</span><span class="rl">Färbung</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaerbungFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaerbungFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaerbungFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">CollectionFrame</span><span class="rl">Collection</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="CollectionFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="CollectionFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="CollectionFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AtlasErpFrame</span><span class="rl">Atlas/ERP</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AtlasErpFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AtlasErpFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AtlasErpFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">TimelineSnapshotFrame</span><span class="rl">Timeline</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="TimelineSnapshotFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="TimelineSnapshotFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="TimelineSnapshotFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">FaelleBrowserFrame</span><span class="rl">Fälle-Browser</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaelleBrowserFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaelleBrowserFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="FaelleBrowserFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+      <div style="margin-top:34px;">
+        <div class="rowhead"><span class="rk">AdminFrame</span><span class="rl">Admin</span></div>
+        <div style="display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;margin-top:14px;">
+          <div><div class="cap">Laden</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AdminFrame" orientation="portrait" theme="dark" state="loading" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Leer</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AdminFrame" orientation="portrait" theme="dark" state="empty" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+          <div><div class="cap">Fehler</div><div class="scr"><div style="width:372px;height:600px;"><dc-import name="AdminFrame" orientation="portrait" theme="dark" state="error" hint-size="372px,600px" style="width:372px;height:600px;"></dc-import></div></div></div>
+        </div>
+      </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

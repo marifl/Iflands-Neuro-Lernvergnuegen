@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  .phone{
+    --ed-canvas:#0e0e0e; --paper:#161616; --paper-raised:#1c1c1c; --fill:#1f1f1f;
+    --ink:#ededed; --g800:#d2d2d2; --g700:#b2b2b2; --g600:#8c8c8c; --g500:#6f6f6f; --g400:#555;
+    --line:#c8c8c8; --line-soft:#2c2c2c; --orange:#f26b1f; --on-accent:#160b04;
+    --app-bg:#0e0e0e; --field-bg:#0e0e0e;
+    --viewport-bg:#0e0e0e;
+    --hud-bg:rgba(16,16,16,.66); --hud-border:rgba(255,255,255,.2); --hud-fg:#fff;
+    --ed-display:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --ed-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  .phone[data-theme="light"]{
+    --paper:#fff; --paper-raised:#fff; --fill:#f4f4f4;
+    --ink:#111; --g800:#2a2a2a; --g700:#4f4f4f; --g600:#6b6b6b; --g500:#8c8c8c; --g400:#aeaeae;
+    --line:#111; --line-soft:#e2e2e2; --app-bg:#e7e7e7; --field-bg:#fff;
+    --viewport-bg:#c7c4bf;
+    --hud-bg:rgba(255,255,255,.72); --hud-border:rgba(0,0,0,.2); --hud-fg:#111;
+  }
+  .drw{transition:height .3s cubic-bezier(.2,.9,.25,1)}
+  .drw[data-drag="true"]{transition:none}
+  image-slot{display:block;--is-bg:var(--viewport-bg)}
+  body{margin:0}
+  .eyb{font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange)}
+  .peekRow{cursor:pointer}
+  .peekRow .peekActions{position:absolute;left:0;right:0;top:0;opacity:0;pointer-events:none;transition:opacity .22s ease}
+  .peekRow .peekTeaser{position:absolute;left:0;right:0;top:0;opacity:1;transition:opacity .22s ease;-webkit-mask-image:linear-gradient(#000,#000 55%,transparent);mask-image:linear-gradient(#000,#000 55%,transparent)}
+  .peekRow:hover .peekActions,.peekRow.show .peekActions{opacity:1;pointer-events:auto}
+  .peekRow:hover .peekTeaser,.peekRow.show .peekTeaser{opacity:0;pointer-events:none}
+  .peekRow .peekChev{opacity:.45;transition:opacity .2s}
+  .peekRow:hover .peekChev,.peekRow.show .peekChev{opacity:1}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#c7c4bf;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:44px 40px 72px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:880px;margin:0 auto;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;">Mobile · Companion · v2</div>
+    <h1 style="font-size:32px;font-weight:700;letter-spacing:-.03em;margin:8px 0 6px;line-height:1;">Klassische Struktur + Zieh-Drawer</h1>
+    <p style="font-size:14px;line-height:1.5;color:#4a4744;max-width:600px;margin:0;text-wrap:pretty;">Header und Dock bleiben wie in A. Statt fester Sheets sitzt ein persistenter Drawer über dem Dock: Peek zeigt die aktive Struktur, Ziehen bringt Werkzeuge und Baum. Das Dock wählt die Kategorie.</p>
+
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:52px;margin-top:40px;align-items:start;">
+
+      <!-- PHONE -->
+      <div style="background:#0a0a0a;padding:11px;border-radius:46px;box-shadow:0 26px 60px rgba(0,0,0,.32);width:412px;flex:none;">
+        <div class="phone" data-theme="{{ theme }}" style="position:relative;width:390px;height:784px;border-radius:36px;overflow:hidden;background:var(--app-bg);display:flex;flex-direction:column;font-family:var(--ed-display);">
+
+          <!-- status -->
+          <div style="height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:var(--ed-mono);font-size:12px;font-weight:600;color:var(--ink);">
+            <span>9:41</span>
+            <span style="display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.06em;"><span>5G</span><span style="display:inline-block;width:20px;height:10px;border:1.4px solid var(--ink);border-radius:2px;position:relative;"><span style="position:absolute;inset:1.6px;right:5px;background:var(--ink);"></span></span></span>
+          </div>
+
+          <!-- app header -->
+          <div style="height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--paper);border-bottom:1.5px solid var(--line);z-index:30;">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:27px;height:27px;background:var(--orange);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+              <div style="line-height:1;">
+                <div style="font-weight:700;font-size:12px;letter-spacing:-.01em;color:var(--ink);">Iflands Neuro</div>
+                <div class="eyb" style="font-size:7px;margin-top:2px;">Lernvergnügen</div>
+              </div>
+            </div>
+            <button onClick="{{ themeToggle }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--line);padding:6px 11px;cursor:pointer;">{{ themeLabel }}</button>
+          </div>
+
+          <!-- viewport -->
+          <div style="position:relative;flex:1;min-height:0;background:var(--viewport-bg);">
+            <image-slot id="vp-v2" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="3D-RENDER ABLEGEN"></image-slot>
+            <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 36%, rgba(86,108,140,.16), transparent 60%);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:12px;left:14px;font-family:var(--ed-mono);font-size:8px;letter-spacing:.1em;color:var(--g600);display:flex;align-items:center;gap:6px;z-index:2;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg>ANTERIOR</div>
+
+            <!-- floating structure actions: icon-only, hovering over the viewport -->
+            <sc-if value="{{ floatActions }}" hint-placeholder-val="{{ true }}">
+              <div style="position:absolute;top:12px;right:12px;z-index:6;display:flex;flex-direction:column;gap:7px;">
+                <button title="Einblenden" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:var(--hud-bg);border:1.5px solid var(--hud-border);backdrop-filter:blur(10px);color:var(--hud-fg);cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                <button title="Isolieren" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:var(--hud-bg);border:1.5px solid var(--hud-border);backdrop-filter:blur(10px);color:var(--hud-fg);cursor:pointer;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg></button>
+                <button title="Lösen" style="width:43px;height:43px;display:flex;align-items:center;justify-content:center;background:var(--hud-bg);border:1.5px solid var(--hud-border);backdrop-filter:blur(10px);color:var(--hud-fg);opacity:.62;cursor:pointer;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+              </div>
+            </sc-if>
+
+            <!-- collapse catcher -->
+            <sc-if value="{{ expanded }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ collapse }}" style="position:absolute;inset:0;background:rgba(4,4,4,.42);z-index:5;"></div>
+            </sc-if>
+          </div>
+
+          <!-- DRAWER (over dock) -->
+          <div class="drw" data-drag="{{ dragging }}" style="position:absolute;left:0;right:0;bottom:66px;z-index:20;height:{{ sheetH }}px;min-height:108px;background:var(--paper);border-top:1.5px solid var(--line);display:flex;flex-direction:column;">
+            <!-- grabber -->
+            <div onPointerDown="{{ onDown }}" onPointerMove="{{ onMove }}" onPointerUp="{{ onUp }}" onClick="{{ onCycle }}" style="flex:none;padding:11px 0 8px;display:flex;justify-content:center;cursor:grab;touch-action:none;">
+              <span style="width:42px;height:5px;border-radius:3px;background:var(--g500);"></span>
+            </div>
+
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:0 16px 18px;">
+
+              <!-- ===== PEEK : STRUKTUR (explore) ===== -->
+              <sc-if value="{{ peekStruktur }}" hint-placeholder-val="{{ true }}">
+                <div onClick="{{ toHalf }}" style="cursor:pointer;">
+                  <div class="eyb" style="padding-left:25px;">Struktur</div>
+                  <div style="display:flex;align-items:center;gap:11px;margin-top:5px;">
+                    <span style="width:14px;height:14px;background:var(--orange);flex:none;"></span>
+                    <div style="font-weight:700;font-size:21px;letter-spacing:-.015em;color:var(--ink);flex:1;min-width:0;">Insel — ganz · links</div>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--g500)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none;opacity:.5;"><circle cx="12" cy="12" r="9"/><path d="M8.5 11l3.5 3.5L15.5 11"/></svg>
+                  </div>
+                  <div style="margin-top:13px;-webkit-mask-image:linear-gradient(#000,#000 55%,transparent);mask-image:linear-gradient(#000,#000 55%,transparent);">
+                    <div style="height:1px;background:var(--line-soft);margin-bottom:10px;"></div>
+                    <div style="display:flex;align-items:center;gap:8px;font-family:var(--ed-mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--g600);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"/></svg>Baum · Werkzeuge · Schnitt</div>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ===== PEEK : LERNPFAD (learn) ===== -->
+              <sc-if value="{{ peekLesson }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                    <div class="eyb">Lernpfad · Kapitel 11</div>
+                    <div style="font-family:var(--ed-mono);font-size:9px;letter-spacing:.1em;color:var(--g600);">Folie 16 / 21</div>
+                  </div>
+                  <div style="font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);line-height:1.15;margin-top:5px;">Visueller Konzentrationsverlaufstest</div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-top:13px;">
+                    <button style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <div style="flex:1;height:4px;background:var(--line-soft);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:76%;background:var(--orange);"></span></div>
+                    <button style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                    <button onClick="{{ toHalf }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--on-accent);background:var(--orange);border:1px solid var(--orange);padding:9px 11px;cursor:pointer;">Aufgabe</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- ===== EXPANDED HEADER ===== -->
+              <sc-if value="{{ expanded }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding-bottom:12px;border-bottom:1px solid var(--line-soft);margin-bottom:14px;">
+                  <div><div class="eyb">{{ secEyebrow }}</div><div style="font-weight:700;font-size:17px;letter-spacing:-.01em;color:var(--ink);margin-top:3px;">{{ secTitle }}</div></div>
+                  <button onClick="{{ collapse }}" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button>
+                </div>
+              </sc-if>
+
+              <!-- expanded: STRUKTUR (explore) = details + baum -->
+              <sc-if value="{{ eStrukturExplore }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;gap:7px;margin-bottom:16px;">
+                    <button style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--ed-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1.4px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Einblenden</button>
+                    <button style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--ed-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1.4px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Isolieren</button>
+                  </div>
+                  <div class="eyb" style="margin-bottom:8px;">Strukturbaum</div>
+                  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line-soft);padding:10px 11px;margin-bottom:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);">Struktur suchen</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 4px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);flex:none;"></span><span style="font-size:13px;color:var(--ink);">Großhirn</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 4px 11px 22px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);flex:none;"></span><span style="font-size:13px;color:var(--ink);">Temporallappen</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 4px 11px 40px;border-bottom:1px solid var(--line-soft);background:color-mix(in srgb,var(--orange) 14%,transparent);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);flex:none;"></span><span style="font-size:13px;color:var(--ink);font-weight:600;">Insel</span></div>
+                  <div style="display:flex;align-items:center;gap:9px;padding:11px 4px 11px 22px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);flex:none;"></span><span style="font-size:13px;color:var(--g700);">Frontallappen</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: STRUKTUR (learn) = aufgabe -->
+              <sc-if value="{{ eStrukturLearn }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:11px;">
+                    <span style="font-family:var(--ed-mono);font-size:14px;font-weight:600;letter-spacing:.1em;color:#3fae6a;">GO</span>
+                    <span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;color:var(--g600);">Reiz 1 / 6</span>
+                  </div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                    <div style="aspect-ratio:1.5;border:1.5px solid var(--line);background:var(--field-bg);display:flex;align-items:flex-end;padding:10px;"><span class="eyb" style="color:var(--g500);">Cue</span></div>
+                    <div style="aspect-ratio:1.5;border:1.5px solid var(--orange);background:color-mix(in srgb,var(--orange) 12%,transparent);display:flex;align-items:flex-end;padding:10px;"><span class="eyb">Probe</span></div>
+                  </div>
+                  <button style="width:100%;margin-top:13px;font-family:var(--ed-mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Antwort prüfen</button>
+                </div>
+              </sc-if>
+
+              <!-- expanded: MODUS -->
+              <sc-if value="{{ eModus }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <button onClick="{{ modeLearn }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid {{ modeLearnBorder }};background:{{ modeLearnBg }};color:{{ modeLearnFg }};cursor:pointer;">Lernen<span class="eyb" style="color:inherit;opacity:.6;">Lernpfad</span></button>
+                  <button onClick="{{ modeExplore }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid {{ modeExploreBorder }};background:{{ modeExploreBg }};color:{{ modeExploreFg }};cursor:pointer;">Explorer<span class="eyb" style="color:inherit;opacity:.6;">3D</span></button>
+                  <button onClick="{{ modePhineas }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Phineas Gage<span class="eyb" style="color:var(--g500);">Fall</span></button>
+                </div>
+              </sc-if>
+
+              <!-- expanded: WERKZEUG -->
+              <sc-if value="{{ eWerkzeug }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div class="eyb" style="margin-bottom:7px;">Klickmodus</div>
+                  <div style="display:flex;gap:7px;margin-bottom:14px;">
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">▸ Gruppe</button>
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">▹ Direkt</button>
+                  </div>
+                  <div class="eyb" style="margin-bottom:7px;">Auswahl</div>
+                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                    <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Ausblenden</button>
+                    <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Isolieren</button>
+                    <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Alles zeigen</button>
+                    <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--g600);cursor:pointer;">Lösen</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: SCHNITT -->
+              <sc-if value="{{ eSchnitt }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div class="eyb" style="margin-bottom:7px;">Wirkung</div>
+                  <div style="display:flex;gap:7px;margin-bottom:16px;">
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Schneiden</button>
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Ausblenden</button>
+                  </div>
+                  <div class="eyb" style="margin-bottom:7px;">Ebenen</div>
+                  <button style="width:100%;display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Sagittal<span style="font-size:9px;opacity:.7;">+12 mm</span></button>
+                  <input type="range" min="-50" max="50" value="12" aria-label="Schnittposition Sagittal" style="width:100%;accent-color:var(--orange);margin:9px 0 13px;cursor:ew-resize;">
+                  <div style="display:flex;flex-direction:column;gap:7px;">
+                    <button style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Coronal<span style="font-size:9px;color:var(--g600);">Aus</span></button>
+                    <button style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Axial<span style="font-size:9px;color:var(--g600);">Aus</span></button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: FARBE -->
+              <sc-if value="{{ eFarbe }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Anatomisch</button>
+                  <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Funktionssystem</button>
+                  <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Lateralität</button>
+                  <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Region</button>
+                </div>
+              </sc-if>
+
+              <!-- expanded: MEHR -->
+              <sc-if value="{{ eMehr }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Ansicht</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Kamera</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Anterior · Lateral · Superior</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Kontext</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Schädel</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Transparent · Solide</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Atlas</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Menü</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">DKT · Julich · Brodmann</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Zustand</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Datei</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Export · Import</div></div>
+                </div>
+              </sc-if>
+
+            </div>
+          </div>
+
+          <!-- DOCK -->
+          <div style="height:66px;flex:none;display:flex;background:var(--paper);border-top:1.5px solid var(--line);position:relative;z-index:25;">
+            <button onClick="{{ tapModus }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actModus }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Modus</span>
+            </button>
+            <sc-if value="{{ isExplore }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ tapWerkzeug }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ actWerkzeug }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 16 2-6.5L19.5 11 4 4Z"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Werkzeug</span>
+              </button>
+            </sc-if>
+            <sc-if value="{{ isLearn }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ tapWerkzeug }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ actWerkzeug }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 0-2 2Z"/><path d="M8 7h6M8 11h6"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Aufgabe</span>
+              </button>
+            </sc-if>
+            <button onClick="{{ tapSchnitt }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actSchnitt }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M14.5 14.5 20 20M8.2 8.2 12 12"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Schnitt</span>
+            </button>
+            <button onClick="{{ tapFarbe }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actFarbe }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="15.5" cy="9" r="1"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Färbung</span>
+            </button>
+            <button onClick="{{ tapMehr }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actMehr }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Mehr</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div style="padding-top:6px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;margin-bottom:12px;">So funktioniert es</div>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;">
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">01</span><span><b>Peek bleibt minimal.</b> Nur die aktive Struktur, darunter peekt der tiefere Inhalt durch. Einblenden / Isolieren / Lösen schweben als Symbole über dem Modell.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">02</span><span><b>Ziehen oder Griff tippen</b> öffnet drei Rasten: Peek → Halb (Baum &amp; Werkzeuge) → Voll.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">03</span><span><b>Dock wählt die Kategorie.</b> Modus, Werkzeug, Schnitt, Farbe, Mehr füllen denselben Drawer — kein Vollbild-Flyout mehr.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">04</span><span><b>Lernpfad inklusive.</b> Wechsle über Modus → Lernen: Peek zeigt die Folie, die Aufgabe öffnet im Drawer.</span></li>
+        </ul>
+        <div style="margin-top:24px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.7;color:#6b6b6b;border-top:1px solid #a8a5a0;padding-top:14px;">Tippe das Dock · zieh den Griff · lege einen Render ab</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { mode: 'explore', section: 'struktur', detent: 'peek', dragH: null, theme: 'dark', revealActions: false, hovering: false }
+
+  set(patch) { this.setState((s) => ({ ...s, ...patch })) }
+  detentH(d) { return d === 'full' ? 620 : d === 'half' ? 372 : 112 }
+
+  renderVals() {
+    const s = this.state
+    const expanded = s.detent !== 'peek'
+    const isExplore = s.mode === 'explore'
+    const isLearn = s.mode === 'learn'
+    const revealed = s.revealActions || s.hovering
+
+    const titles = {
+      struktur: ['Struktur', isLearn ? 'Aufgabe 16' : 'Insel — ganz · links'],
+      modus: ['Modus', 'Ansicht wählen'],
+      werkzeug: ['Werkzeug', 'Auswahl & Transform'],
+      schnitt: ['Schnitt', 'Schnittebenen'],
+      farbe: ['Färbung', 'Färbung wählen'],
+      mehr: ['Mehr', 'Weitere Werkzeuge'],
+    }
+    const t = titles[s.section] || ['', '']
+
+    // collapse resets section to struktur so peek always shows the structure/lesson
+    const collapse = () => this.set({ detent: 'peek', section: 'struktur', dragH: null, revealActions: false, hovering: false })
+    const toHalf = () => this.set({ detent: 'half', dragH: null, revealActions: false, hovering: false })
+
+    const tap = (sec) => {
+      if (s.section === sec && expanded) { collapse(); return }
+      this.set({ section: sec, detent: expanded ? s.detent : 'half', dragH: null, revealActions: false, hovering: false })
+    }
+
+    // drag
+    const onDown = (e) => {
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
+      this._start = { y: e.clientY, base: this.detentH(this.state.detent) }
+      this._h = this.detentH(this.state.detent)
+      this._moved = false
+    }
+    const onMove = (e) => {
+      if (!this._start) return
+      const dy = e.clientY - this._start.y
+      if (Math.abs(dy) > 4) this._moved = true
+      const h = Math.max(120, Math.min(640, this._start.base - dy))
+      this._h = h
+      this.set({ dragH: h })
+    }
+    const onUp = () => {
+      if (!this._start) return
+      this._start = null
+      if (!this._moved) { this.set({ dragH: null }); return }
+      const h = this._h
+      const tg = [['peek', 112], ['half', 372], ['full', 620]]
+      let best = tg[0]
+      for (const x of tg) { if (Math.abs(x[1] - h) < Math.abs(best[1] - h)) best = x }
+      const next = { detent: best[0], dragH: null }
+      if (best[0] === 'peek') { next.section = 'struktur'; next.revealActions = false }
+      this.set(next)
+    }
+    const onCycle = () => {
+      if (this._moved) { this._moved = false; return }
+      const order = { peek: 'half', half: 'full', full: 'peek' }
+      const nd = order[this.state.detent]
+      const next = { detent: nd, dragH: null }
+      if (nd === 'peek') { next.section = 'struktur'; next.revealActions = false }
+      this.set(next)
+    }
+
+    const sheetH = s.dragH != null ? Math.round(s.dragH) : this.detentH(s.detent)
+    const onColor = (active) => active ? 'var(--orange)' : 'transparent'
+
+    return {
+      theme: s.theme,
+      themeLabel: s.theme === 'dark' ? 'Hell' : 'Dunkel',
+      themeToggle: () => this.set({ theme: s.theme === 'dark' ? 'light' : 'dark' }),
+      revealCls: revealed ? 'show' : '',
+      showTeaser: !revealed,
+      showActions: revealed,
+      toggleReveal: () => this.set({ revealActions: !s.revealActions }),
+      onEnter: () => this.set({ hovering: true }),
+      onLeave: () => this.set({ hovering: false }),
+      teaserOpacity: revealed ? '0' : '1',
+      teaserPE: revealed ? 'none' : 'auto',
+      actionsOpacity: revealed ? '1' : '0',
+      actionsPE: revealed ? 'auto' : 'none',
+      chevOpacity: revealed ? '1' : '0.45',
+      stop: (e) => { try { e.stopPropagation() } catch (_) {} },
+      isExplore, isLearn,
+      expanded,
+      peekStruktur: !expanded && isExplore,
+      peekLesson: !expanded && isLearn,
+      floatActions: isExplore && !expanded,
+      eStrukturExplore: expanded && s.section === 'struktur' && isExplore,
+      eStrukturLearn: expanded && s.section === 'struktur' && isLearn,
+      eModus: expanded && s.section === 'modus',
+      eWerkzeug: expanded && s.section === 'werkzeug',
+      eSchnitt: expanded && s.section === 'schnitt',
+      eFarbe: expanded && s.section === 'farbe',
+      eMehr: expanded && s.section === 'mehr',
+      secEyebrow: t[0],
+      secTitle: t[1],
+      sheetH,
+      dragging: s.dragH != null ? 'true' : 'false',
+      onDown, onMove, onUp, onCycle, collapse, toHalf,
+      // dock
+      actModus: expanded && s.section === 'modus',
+      // In learn mode the 2nd dock slot is "Aufgabe" → opens the struktur-learn (Cue/Probe) block.
+      actWerkzeug: expanded && (isLearn ? s.section === 'struktur' : s.section === 'werkzeug'),
+      actSchnitt: expanded && s.section === 'schnitt',
+      actFarbe: expanded && s.section === 'farbe',
+      actMehr: expanded && s.section === 'mehr',
+      tapModus: () => tap('modus'),
+      tapWerkzeug: () => tap(isLearn ? 'struktur' : 'werkzeug'),
+      tapSchnitt: () => tap('schnitt'),
+      tapFarbe: () => tap('farbe'),
+      tapMehr: () => tap('mehr'),
+      // mode buttons in modus sheet
+      modeLearn: () => this.set({ mode: 'learn' }),
+      modeExplore: () => this.set({ mode: 'explore' }),
+      modePhineas: () => this.set({ mode: 'explore' }),
+      modeLearnBg: onColor(isLearn), modeLearnFg: isLearn ? 'var(--on-accent)' : 'var(--ink)', modeLearnBorder: isLearn ? 'var(--orange)' : 'var(--line-soft)',
+      modeExploreBg: onColor(isExplore), modeExploreFg: isExplore ? 'var(--on-accent)' : 'var(--ink)', modeExploreBorder: isExplore ? 'var(--orange)' : 'var(--line-soft)',
+    }
+  }
+}
+</script>
+</body>
+</html>

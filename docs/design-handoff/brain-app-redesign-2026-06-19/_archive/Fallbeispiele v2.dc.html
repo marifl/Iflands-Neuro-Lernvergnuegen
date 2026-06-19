@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:18px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.34);flex:none;}
+  .scr > div{border-radius:11px;overflow:hidden;}
+  .dvlabel{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:#1c1a18;font-weight:600;}
+  .dvsub{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.04em;color:#7a756e;margin-top:3px;max-width:540px;line-height:1.5;}
+  .rail{width:74px;flex:none;display:flex;flex-direction:column;align-items:center;background:#131313;border-right:1px solid #2a2a2a;padding:14px 0;}
+  .ricon{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:11px 0;width:100%;color:#6f6f6f;}
+  .ricon.on{color:#ededed;}
+  .ricon.on:before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:3px;background:#f26b1f;}
+  .rlbl{font-family:'IBM Plex Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase;}
+  .vp{flex:1;min-width:0;position:relative;background:#0c0c0c;background-image:none;}
+  .chip{position:absolute;top:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#160b04;background:#f26b1f;padding:5px 10px;white-space:nowrap;}
+  .eyb{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .brainbg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 96px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1200px;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Fallbeispiele · v2</div>
+    <h1 style="font-size:38px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Fälle als offenes System</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:700px;margin:0;text-wrap:pretty;">Phineas Gage ist nur der erste von vielen Fällen. Jeder Fall ist eine <b>case-study-Collection</b> (3D-Modell + Läsionsstrukturen + schrittweiser Text) — gleiche Ansicht für alle, beliebig erweiterbar. Ein <b>Fälle-Browser</b> listet sie, die <b>Fall-Ansicht</b> spielt sie ab.</p>
+  </div>
+
+  <!-- ============ 1 · FÄLLE-BROWSER ============ -->
+  <div style="margin-top:56px;">
+    <div class="dvlabel">1 · Fälle-Browser — alle Fallbeispiele</div>
+    <div class="dvsub">Galerie aller case-study-Collections. Gage als erster echter Fall; neue Fälle per Import (GLB/GLTF + Schritt-Text) ergänzbar. Querverweis aus dem Vortrag (Block 3 · Bilan).</div>
+    <div class="scr" style="margin-top:14px;"><div style="width:1440px;height:900px;display:flex;background:#0e0e0e;color:#ededed;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+      <!-- rail -->
+      <div class="rail">
+        <div style="width:34px;height:34px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#160b04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+        <div class="mono" style="font-size:7px;letter-spacing:.14em;color:#f26b1f;margin-top:9px;text-transform:uppercase;">Fälle</div>
+        <div style="display:flex;flex-direction:column;gap:3px;margin-top:22px;width:100%;">
+          <div class="ricon on"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg><span class="rlbl">Modus</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg><span class="rlbl">Inhalt</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="15.5" cy="9" r="1"/></svg><span class="rlbl">Färbung</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span class="rlbl">Kapitel</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg><span class="rlbl">Mehr</span></div>
+        </div>
+        <div class="ricon" style="margin-top:auto;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span class="rlbl">Hell</span></div>
+      </div>
+      <!-- main -->
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+        <div style="flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:26px 32px 20px;border-bottom:1px solid #242424;">
+          <div><div class="eyb">Modus · Fälle</div><div style="font-size:26px;font-weight:700;letter-spacing:-.025em;margin-top:6px;">Fallbeispiele</div></div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <div style="display:flex;align-items:center;gap:9px;border:1px solid #2c2c2c;padding:10px 13px;width:220px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6f6f6f" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span class="mono" style="font-size:10.5px;color:#6f6f6f;">Fall suchen</span></div>
+            <button style="display:flex;align-items:center;gap:7px;background:#f26b1f;border:none;color:#160b04;padding:11px 15px;cursor:pointer;" class="mono"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>FALL HINZUFÜGEN</button>
+          </div>
+        </div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:28px 32px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-content:start;">
+          <!-- Gage card -->
+          <div style="border:1.5px solid #f26b1f;background:#161616;display:flex;flex-direction:column;cursor:pointer;">
+            <div style="height:168px;position:relative;background:#0c0c0c;background-image:none;display:flex;align-items:center;justify-content:center;">
+              <svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#4a3a3f" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.7;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+              <span style="position:absolute;top:38%;left:34%;width:30px;height:30px;border:1.5px solid #c0494a;background:rgba(192,73,74,.3);"></span>
+              <span class="mono" style="position:absolute;bottom:10px;left:12px;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#160b04;background:#f26b1f;padding:3px 7px;">Verfügbar</span>
+            </div>
+            <div style="padding:16px;">
+              <div style="font-size:16px;font-weight:700;letter-spacing:-.01em;">Phineas Gage</div>
+              <div class="mono" style="font-size:9px;color:#8c8c8c;margin-top:5px;letter-spacing:.04em;">OFC / vmPFC · 6 Schritte</div>
+              <p style="font-size:12px;line-height:1.45;color:#b2b2b2;margin:10px 0 0;text-wrap:pretty;">Stangen-Durchtritt 1848; Rolle des präfrontalen Kortex für Sozialverhalten und Kontrolle.</p>
+              <div style="display:flex;gap:6px;margin-top:13px;flex-wrap:wrap;"><span class="mono" style="font-size:8px;color:#8c8c8c;border:1px solid #2c2c2c;padding:3px 7px;">Van Horn 2012</span><span class="mono" style="font-size:8px;color:#8c8c8c;border:1px solid #2c2c2c;padding:3px 7px;">Block 3</span></div>
+            </div>
+          </div>
+          <!-- Draft case -->
+          <div style="border:1px solid #2c2c2c;background:#161616;display:flex;flex-direction:column;cursor:pointer;">
+            <div style="height:168px;position:relative;background:#0c0c0c;display:flex;align-items:center;justify-content:center;">
+              <svg width="92" height="92" viewBox="0 0 24 24" fill="none" stroke="#33373c" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+              <span class="mono" style="position:absolute;bottom:10px;left:12px;font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#8c8c8c;border:1px solid #3a3a3a;padding:3px 7px;">Entwurf</span>
+            </div>
+            <div style="padding:16px;">
+              <div style="font-size:16px;font-weight:700;letter-spacing:-.01em;color:#b2b2b2;">Weiterer Fall</div>
+              <div class="mono" style="font-size:9px;color:#6f6f6f;margin-top:5px;letter-spacing:.04em;">Läsion / Region · Schritte offen</div>
+              <p style="font-size:12px;line-height:1.45;color:#8c8c8c;margin:10px 0 0;text-wrap:pretty;">Platzhalter — Inhalt, Quelle und Läsionsstrukturen werden beim Anlegen definiert.</p>
+            </div>
+          </div>
+          <!-- Add card -->
+          <div style="border:1.5px dashed #3a3a3a;background:transparent;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;min-height:300px;cursor:pointer;color:#6f6f6f;">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            <div style="text-align:center;"><div style="font-size:14px;font-weight:600;color:#b2b2b2;">Neuen Fall anlegen</div><div class="mono" style="font-size:9px;color:#6f6f6f;margin-top:5px;">GLB/GLTF + Schritt-Text + Quelle</div></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ============ 2 · FALL-ANSICHT (Landscape) ============ -->
+  <div style="margin-top:64px;">
+    <div class="dvlabel">2 · Fall-Ansicht — generische Schritt-Ansicht (Gage)</div>
+    <div class="dvsub">Gleiches Shell für jeden Fall: 3D-Modell mit Läsions-Färbung, fixer Schritt-Navigator (1/6) wie der Lernpfad, Schritt-Text + Quellenbeleg. Datengetrieben aus der case-study-Collection.</div>
+    <div class="scr" style="margin-top:14px;"><div style="width:1440px;height:900px;display:flex;background:#0e0e0e;color:#ededed;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+      <div class="rail">
+        <div style="width:34px;height:34px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#160b04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+        <div class="mono" style="font-size:7px;letter-spacing:.14em;color:#f26b1f;margin-top:9px;text-transform:uppercase;">Fälle</div>
+        <div style="display:flex;flex-direction:column;gap:3px;margin-top:22px;width:100%;">
+          <div class="ricon on"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg><span class="rlbl">Modus</span></div>
+          <div class="ricon on" style="color:#ededed;"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg><span class="rlbl">Inhalt</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="15.5" cy="9" r="1"/></svg><span class="rlbl">Färbung</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span class="rlbl">Kapitel</span></div>
+          <div class="ricon"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg><span class="rlbl">Mehr</span></div>
+        </div>
+        <div class="ricon" style="margin-top:auto;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><span class="rlbl">Hell</span></div>
+      </div>
+      <!-- panel -->
+      <div style="width:340px;flex:none;display:flex;flex-direction:column;background:#161616;border-right:1px solid #2a2a2a;">
+        <div style="flex:none;display:flex;align-items:center;gap:9px;padding:15px 18px;border-bottom:1px solid #242424;">
+          <span class="mono" style="font-size:10px;letter-spacing:.1em;color:#8c8c8c;flex:none;white-space:nowrap;">SCHRITT 04 / 06</span>
+          <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #2c2c2c;color:#ededed;cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <div style="flex:1;height:4px;background:#2c2c2c;position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:66%;background:#f26b1f;"></span></div>
+          <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #2c2c2c;color:#ededed;cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #f26b1f;color:#f26b1f;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        </div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:18px;">
+          <div class="eyb">Fall · Phineas Gage</div>
+          <div style="font-weight:700;font-size:21px;letter-spacing:-.02em;line-height:1.12;margin-top:8px;text-wrap:pretty;">Läsion: linker OFC / vmPFC</div>
+          <div class="mono" style="font-size:9.5px;letter-spacing:.04em;color:#8c8c8c;margin-top:7px;">Schritt 4 · Schadensausmaß</div>
+          <p style="font-size:13.5px;line-height:1.6;color:#d2d2d2;margin:18px 0 16px;text-wrap:pretty;">Die Stange zerstört vor allem den linken orbitofrontalen und ventromedialen präfrontalen Kortex. Diese Areale steuern Bewertung, Impulskontrolle und sozial-emotionales Verhalten — Funktionen, die nach dem Unfall verändert waren.</p>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="border:1px solid #2f2f2f;padding:12px 14px;border-left:3px solid #c0494a;"><div class="mono" style="font-size:11px;font-weight:600;">Linker OFC</div><div style="font-size:12px;line-height:1.4;color:#b2b2b2;margin-top:5px;">Bewertung & Belohnung</div></div>
+            <div style="border:1px solid #2f2f2f;padding:12px 14px;border-left:3px solid #c0494a;"><div class="mono" style="font-size:11px;font-weight:600;">Linker vmPFC</div><div style="font-size:12px;line-height:1.4;color:#b2b2b2;margin-top:5px;">Sozial-emotionale Regulation</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:#6f6f6f;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Van Horn et al. 2012 · schematisch</div>
+          <div style="border:1px solid #2c2c2c;padding:11px 13px;margin-top:14px;display:flex;align-items:center;justify-content:space-between;"><span class="mono" style="font-size:9px;letter-spacing:.06em;color:#8c8c8c;">Schädel-Transparenz</span><span style="width:34px;height:18px;border-radius:9px;background:#f26b1f;position:relative;"><span style="position:absolute;top:2px;right:2px;width:14px;height:14px;border-radius:50%;background:#160b04;"></span></span></div>
+        </div>
+      </div>
+      <!-- viewport -->
+      <div class="vp">
+        <div class="chip">Fall · Gage · Schritt 4</div>
+        <div style="position:absolute;top:16px;right:18px;width:172px;background:rgba(16,16,16,.66);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);padding:12px 13px;">
+          <div class="mono" style="font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Färbung · Läsion</div>
+          <div style="display:flex;flex-direction:column;gap:7px;margin-top:9px;">
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#c0494a;"></span><span class="mono" style="font-size:10px;color:#fff;">Läsion</span></div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#5b6470;"></span><span class="mono" style="font-size:10px;color:#fff;">Stange</span></div>
+            <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#cdbfb6;"></span><span class="mono" style="font-size:10px;color:#fff;">Schädel</span></div>
+          </div>
+        </div>
+        <div class="brainbg"><svg width="280" height="280" viewBox="0 0 24 24" fill="none" stroke="#4a4248" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" style="opacity:.55;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+        <!-- lesion + rod -->
+        <div style="position:absolute;top:42%;left:46%;width:54px;height:54px;border:1.5px solid #c0494a;background:rgba(192,73,74,.28);"></div>
+        <div style="position:absolute;top:20%;left:40%;width:3px;height:300px;background:#5b6470;transform:rotate(28deg);transform-origin:top;opacity:.7;"></div>
+        <div class="mono" style="position:absolute;bottom:16px;left:18px;font-size:9px;letter-spacing:.1em;color:#8c8c8c;">LATERAL · LINKS · SCHÄDEL TRANSPARENT</div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- ============ 3 · FALL-ANSICHT (Portrait) ============ -->
+  <div style="margin-top:64px;">
+    <div class="dvlabel">3 · Fall-Ansicht — Portrait (iPad / Phone)</div>
+    <div class="dvsub">Gleiche Fall-Ansicht im Hochformat: 3D oben, Schritt-Navigator + Text im Bottom-Drawer, Dock unten. Identisch zu Lernen/Explorer-Verhalten.</div>
+    <div style="display:flex;gap:48px;align-items:flex-start;margin-top:18px;">
+      <div class="scr"><div style="width:834px;height:1194px;display:flex;flex-direction:column;background:#0e0e0e;color:#ededed;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+        <!-- header -->
+        <div style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:#161616;border-bottom:1px solid #2a2a2a;">
+          <div style="display:flex;align-items:center;gap:11px;"><div style="width:32px;height:32px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#160b04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><div style="line-height:1.05;"><div style="font-weight:700;font-size:14px;">Iflands Neuro</div><div class="mono" style="font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;margin-top:2px;white-space:nowrap;">Lernvergnügen · Fälle</div></div></div>
+          <div class="mono" style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#ededed;border:1px solid #3a3a3a;padding:7px 11px;">Hell</div>
+        </div>
+        <!-- viewport -->
+        <div style="flex:1;min-height:0;position:relative;background:#0c0c0c;background-image:none;">
+          <div class="chip" style="top:14px;left:16px;">Fall · Gage · Schritt 4</div>
+          <div style="position:absolute;top:14px;right:16px;width:158px;background:rgba(16,16,16,.66);border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(10px);padding:11px 12px;">
+            <div class="mono" style="font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Färbung · Läsion</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;background:#c0494a;"></span><span class="mono" style="font-size:9.5px;color:#fff;">Läsion</span></div>
+              <div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;background:#5b6470;"></span><span class="mono" style="font-size:9.5px;color:#fff;">Stange</span></div>
+            </div>
+          </div>
+          <div class="brainbg"><svg width="240" height="240" viewBox="0 0 24 24" fill="none" stroke="#4a4248" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" style="opacity:.55;"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+          <div style="position:absolute;top:40%;left:45%;width:48px;height:48px;border:1.5px solid #c0494a;background:rgba(192,73,74,.28);"></div>
+          <div class="mono" style="position:absolute;bottom:14px;left:16px;font-size:9px;letter-spacing:.1em;color:#8c8c8c;white-space:nowrap;">LATERAL · LINKS</div>
+        </div>
+        <!-- bottom drawer -->
+        <div style="height:392px;flex:none;display:flex;flex-direction:column;background:#161616;border-top:1px solid #2a2a2a;">
+          <div style="flex:none;padding:10px 0 6px;display:flex;justify-content:center;"><span style="width:42px;height:5px;border-radius:3px;background:#6f6f6f;"></span></div>
+          <div style="flex:none;display:flex;align-items:center;gap:9px;padding:6px 18px 12px;border-bottom:1px solid #242424;">
+            <span class="mono" style="font-size:10px;letter-spacing:.1em;color:#8c8c8c;flex:none;white-space:nowrap;">SCHRITT 04 / 06</span>
+            <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #2c2c2c;color:#ededed;cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <div style="flex:1;height:4px;background:#2c2c2c;position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:66%;background:#f26b1f;"></span></div>
+            <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #2c2c2c;color:#ededed;cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:15px 18px 18px;">
+            <div class="eyb">Fall · Phineas Gage</div>
+            <div style="font-weight:700;font-size:20px;letter-spacing:-.02em;line-height:1.12;margin-top:6px;">Läsion: linker OFC / vmPFC</div>
+            <p style="font-size:13.5px;line-height:1.6;color:#d2d2d2;margin:14px 0 14px;text-wrap:pretty;">Die Stange zerstört vor allem den linken orbitofrontalen und ventromedialen präfrontalen Kortex — Areale für Bewertung, Impulskontrolle und sozial-emotionales Verhalten.</p>
+            <div style="display:flex;gap:9px;">
+              <div style="flex:1;border:1px solid #2f2f2f;padding:12px;border-left:3px solid #c0494a;"><div class="mono" style="font-size:11px;font-weight:600;">Linker OFC</div><div style="font-size:12px;line-height:1.4;color:#b2b2b2;margin-top:5px;">Bewertung & Belohnung</div></div>
+              <div style="flex:1;border:1px solid #2f2f2f;padding:12px;border-left:3px solid #c0494a;"><div class="mono" style="font-size:11px;font-weight:600;">Linker vmPFC</div><div style="font-size:12px;line-height:1.4;color:#b2b2b2;margin-top:5px;">Sozial-emotionale Regulation</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- dock -->
+        <div style="height:64px;flex:none;display:flex;background:#161616;border-top:1px solid #2a2a2a;">
+          <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#ededed;border-right:1px solid #242424;"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:#f26b1f;"></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg><span class="mono" style="font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Modus</span></div>
+          <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#ededed;border-right:1px solid #242424;"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:#f26b1f;"></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg><span class="mono" style="font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Inhalt</span></div>
+          <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#6f6f6f;border-right:1px solid #242424;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/></svg><span class="mono" style="font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Färbung</span></div>
+          <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#6f6f6f;border-right:1px solid #242424;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><span class="mono" style="font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Kapitel</span></div>
+          <div style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#6f6f6f;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg><span class="mono" style="font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Mehr</span></div>
+        </div>
+      </div></div>
+
+      <div style="padding-top:6px;max-width:300px;">
+        <div class="mono" style="font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;margin-bottom:12px;">Eine Ansicht, viele Fälle</div>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;">
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span class="mono" style="font-size:11px;font-weight:600;color:#b4490f;flex:none;">01</span><span><b>Datengetrieben.</b> Schritte, Läsionsstrukturen und Quellen kommen aus der case-study-Collection — kein Code je Fall.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span class="mono" style="font-size:11px;font-weight:600;color:#b4490f;flex:none;">02</span><span><b>Querverweis.</b> Im Vortrag (Block 3) springt ein Folien-Link direkt in den Gage-Fall und zurück.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span class="mono" style="font-size:11px;font-weight:600;color:#b4490f;flex:none;">03</span><span><b>Erweiterbar.</b> Neuer Fall = GLB/GLTF + Schritt-Text + Quelle. Erscheint automatisch im Browser.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

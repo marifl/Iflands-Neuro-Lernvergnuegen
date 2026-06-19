@@ -6,7 +6,9 @@ Verdict: `FAIL`
 
 Dieses Gate entscheidet, ob nach dem Shape-Vertrag direkt V2-Code starten darf.
 Antwort: Nein. `docs/specs/unified-learning-mode-shape.md` ist als
-Planungsgrundlage ausreichend, aber nicht als Code-Freigabe.
+Planungsgrundlage ausreichend, aber weiterhin nicht als Code-Freigabe. Die
+Handoff-/Screenshot-/Prototype-State-Lücken aus der ersten Gate-Version sind
+jetzt geschlossen; die verbleibenden Blocker sind Runtime- und Doku-Verträge.
 
 ## Scope-Abgrenzung
 
@@ -29,31 +31,36 @@ Live-Screenshot-Evidence noch Unified-Mode-Readiness ab.
 | Kriterium | Status | Evidenz |
 |---|---|---|
 | Shape-Vertrag vorhanden | `PASS` | `docs/specs/unified-learning-mode-shape.md` existiert und definiert Unified Learning Mode als V2-Planungsgrundlage. |
-| Mockup-/Frame-Mapping ausreichend | `FAIL` | Nur teilweise klassifiziert; `iBJCrwzOMeU6` steht live noch `To-do`. |
-| Debug/Raw optional und aus | `PASS mit Evidence-Lücke` | Shape-Vertrag sagt default-off; Debug-off/on ist aber noch nicht live visuell belegt. |
+| Mockup-/Frame-Mapping ausreichend | `PASS` | `docs/specs/v2-handoff-frame-mapping.md` mappt alle 31 aktuellen Handoff-Frames auf Entscheidung, Unified-Surface und Dart-Scope. |
+| Prototype-State entschieden | `PASS` | `docs/specs/v2-prototype-state-inventory.md` entscheidet die `ifn-*`-Mechaniken und verbietet neue Handoff-`localStorage`-Keys. |
+| Debug/Raw optional und aus | `PASS` | Shape-Vertrag sagt default-off; `docs/specs/v2-live-screenshot-set.md` zeigt in 15 Live-Captures `debugVisible=false`. |
 | Atlas als Supplement definiert | `PASS` | Shape-Vertrag definiert Atlas als Lern-Supplement, nicht als Startmodus. |
-| Mobile/Tablet/Desktop beschrieben | `PASS mit Evidence-Lücke` | Desktop, Tablet, Phone Portrait und Phone Landscape sind spezifiziert; Live-Screenshot-Set fehlt. |
+| Mobile/Tablet/Desktop beschrieben | `PASS` | Desktop, Tablet, Phone Portrait und Phone Landscape sind spezifiziert und in `docs/specs/screenshots/v2-live/` als Live-Screenshot-Set belegt. |
 | Canvas Loading/Error/Empty-State-Vertrag vorhanden | `FAIL` | Shape fordert ihn, aber TARO-Canvas nutzt aktuell `Suspense fallback={null}`; `tLMwOp54qQph` ist noch offen. |
-| erster Code-Slice klar und klein | `FAIL` | Ein kleiner Slice ist ableitbar, aber durch offene Gate-Blocker nicht freigegeben. |
+| erster Code-Slice klar und klein | `PASS mit Blocker` | Der kleine Anschluss-Slice ist unten definiert, darf aber erst nach dem Canvas-State-Vertrag starten. |
 | Dart-Scope korrigiert | `PASS` | Kommentar `fZ3kmBUmLdIF` trennt `2bf933b` sauber von Atlas-/Vortragsfarben-Arbeit. |
 
 ## Befunde pro Scout
 
 ### Shape-/Mockup-Compliance
 
-Mockup-Readiness ist `FAIL`.
+Mockup-Readiness ist `PASS`.
 
 Der Shape-Vertrag beschreibt Desktop, Tablet, Phone Portrait und Phone
-Landscape konkret genug als Zielbild. Die Mockups sind aber nur teilweise so
-klassifiziert, dass ein ausführender Agent ohne Interpretation starten könnte.
-Besonders fehlt die vollständige Frame-Matrix: jedes der 31 Handoff-Frames muss
-auf Entscheidung, Unified-Mode-Surface und Dart-Scope gemappt sein.
+Landscape konkret genug als Zielbild. Die 31 aktuellen Handoff-Frames sind jetzt
+vollständig klassifiziert: Entscheidung, Unified-Mode-Surface, aktuelle App-
+Entsprechung, Konflikt/No-Go und Dart-Scope stehen in
+`docs/specs/v2-handoff-frame-mapping.md`.
 
-Offen:
+Zusätzlich entscheidet `docs/specs/v2-prototype-state-inventory.md` die
+Prototype-Mechaniken: `ifn-theme`, `ifn-start-mode`, `ifn-reduced-motion`,
+`ifn-contrast`, `ifn-role`, `ifn-ruhe`, `ifn-ruhe-style`, `ifn-nav`, `ifn-h`
+und statische `.dc.html`-Links werden nicht als neue Runtime-Keys übernommen.
 
-1. `iBJCrwzOMeU6` - alle 31 Handoff-Frames mappen.
-2. `I3SsEI0tLcqq` - Live-Screenshot-Set der aktuellen App erzeugen.
-3. `nFvwRWp5GPIo` - Prototype-State und `localStorage`-Mechaniken entscheiden.
+Live-Readiness ist für die aktuelle Baseline `PASS`: 15 Screenshots aus der
+laufenden App decken Launcher, Learn, Explorer, Phineas und Atlas über Phone,
+Tablet, Large Tablet und Desktop ab. Alle Captures haben `PASS`, `overflowX=0`
+und keinen sichtbaren Debug-/Raw-/Admin-/Authoring-Text.
 
 ### Runtime-/Architecture
 
@@ -80,21 +87,25 @@ nicht als erfüllte Unified-Shape-Arbeit zählen. Ein Zusatzkommentar auf
 
 ### Verification
 
-Verification-Readiness ist `PASS als Plan`, aber `FAIL als ausgeführte Evidence`.
+Verification-Readiness ist `PASS` für den Doku-/Evidence-Slice und `FAIL` als
+Code-Freigabe.
 
 Für diese Doku-Session sind keine Browser-Smokes nötig, weil kein Code geändert
-wird. Für den ersten V2-Code-Slice reichen `typecheck` und `test` aber nicht:
+wird. Für die Live-Baseline lief zusätzlich das Playwright-Screenshot-Script aus
+`docs/specs/screenshots/v2-live/capture-v2-live-screenshots.mjs`; die PNG-
+Abmessungen wurden mit `sips` geprüft und `magick identify` bestätigt, dass die
+Dateien keine einfarbigen Platzhalter sind.
+
+Für den ersten V2-Code-Slice reichen `typecheck` und `test` weiterhin nicht:
 UI-/Runtime-Claims brauchen Browser-visible Evidence, also Screenshots oder
 Canvas-Pixel-/Runtime-Mesh-Proben.
 
 ## Blocker
 
-1. `iBJCrwzOMeU6` ist `To-do`: vollständiges Frame-Mapping fehlt.
-2. `I3SsEI0tLcqq` ist `To-do`: Live-Screenshot-Set fehlt.
-3. `nFvwRWp5GPIo` ist `To-do`: Prototype-State und `localStorage` sind nicht entschieden.
-4. `n0RsZZ5gXo5X` ist `To-do`: aktuelle Doku-Drift ist nicht bereinigt.
-5. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant.
-6. `tLMwOp54qQph` ist durch dieses Gate blockiert: Loading/Empty/Error/Disabled-State-Vertrag ist für Code-Qualität offen.
+1. `n0RsZZ5gXo5X` ist `To-do`: aktuelle Doku-Drift ist nicht bereinigt.
+2. `B2XryEO9UyxB` ist `In Review`: Atlas-Farbarchitektur muss als aktuelle Preset-/Scene-Grundlage bestätigt bleiben.
+3. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant.
+4. `tLMwOp54qQph` ist durch dieses Gate blockiert: Loading/Empty/Error/Disabled-State-Vertrag ist für Code-Qualität offen.
 
 ## Erster Code-Slice bei späterem PASS
 
@@ -165,6 +176,7 @@ Nicht ausreichend:
 
 ## Dart-Updates in dieser Session
 
-1. `AyAovH9EtPL6` wurde auf `Doing` gesetzt.
-2. Nach Dokumentation dieses Gate-Verdicts wird `AyAovH9EtPL6` kommentiert.
-3. Empfohlener Abschlussstatus: `Blocked`, weil externe Frame-/Screenshot-/Prototype-State-Evidence fehlt.
+1. `iBJCrwzOMeU6` ist durch `docs/specs/v2-handoff-frame-mapping.md` belegbar.
+2. `nFvwRWp5GPIo` ist durch `docs/specs/v2-prototype-state-inventory.md` belegbar.
+3. `I3SsEI0tLcqq` ist durch `docs/specs/v2-live-screenshot-set.md` und die 15 PNGs unter `docs/specs/screenshots/v2-live/` belegbar.
+4. `AyAovH9EtPL6` bleibt blockiert, weil das Gate trotz geschlossener Evidence-Lücken wegen Farbarchitektur-, No-Fallback-, Runtime- und Doku-Verträgen weiter `FAIL` ist.

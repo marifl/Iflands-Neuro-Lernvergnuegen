@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>
+[data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);--brain:#475264;}
+[data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);--brain:#8d8a84;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+<helmet><script src="./a11y.js"></script></helmet>
+
+<div ref="{{ setRoot }}" data-theme="{{ themeAttr }}" style="width:100%;height:100%;background:var(--bg);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);overflow:hidden;position:relative;display:flex;align-items:{{ alignV }};justify-content:center;">
+<!-- ============ ZUSTAND-OVERLAY (laut statt still) ============ -->
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="width:100%;max-width:440px;padding:40px 36px;box-sizing:border-box;text-align:center;">
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:38px;height:38px;border:3px solid var(--line3);border-top-color:#f26b1f;border-radius:50%;animation:scSpin .8s linear infinite;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#f26b1f;">Lädt</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Wird vorbereitet …</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--t3);">Profil · Präferenzen</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--t4);">Leer</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Onboarding leer</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Keine Schritte konfiguriert — Standardpfad nicht gefunden.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;border:1px solid #7a3326;background:rgba(192,73,74,.12);padding:30px 26px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#e06a4a;">Fehler · nicht still</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Onboarding nicht ladbar</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Schritt-Quelle fehlt — kein stilles Überspringen.</div>
+          <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Erneut versuchen</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<helmet><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></helmet>
+  <div style="width:{{ cardW }};max-width:100%;height:{{ cardH }};display:flex;flex-direction:column;{{ cardBorder }}">
+    <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:22px 26px;">
+      <div style="display:flex;align-items:center;gap:10px;"><div style="width:30px;height:30px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--onacc)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Schritt {{ stepLabel }}</span></div>
+      <div style="display:flex;align-items:center;gap:10px;"><div role="button" tabindex="0" onClick="{{ themeToggle }}" title="Theme wechseln" style="display:flex;align-items:center;gap:7px;border:1px solid var(--line5);padding:8px 11px;cursor:pointer;color:var(--t1);background:var(--panel);"><sc-if value="{{ notHell }}" hint-placeholder-val="{{ true }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></sc-if><sc-if value="{{ isHell }}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg></sc-if><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;">{{ themeLabel }}</span></div><button onClick="{{ goLauncher }}" style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);background:none;border:none;cursor:pointer;">Überspringen</button></div>
+    </div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 26px 0;">
+      <!-- STEP 1 · Start-Modus & Rolle -->
+      <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+        <div style="font-size:24px;font-weight:700;letter-spacing:-.02em;">Womit möchtest du starten?</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--t3);margin-top:7px;">Bestimmt deinen Start-Modus. Jederzeit änderbar.</div>
+        <div style="display:grid;grid-template-columns:{{ cols }};gap:11px;margin-top:22px;">
+          <div role="button" tabindex="0" onClick="{{ pickLearn }}" style="{{ mLearn }}padding:15px;display:flex;flex-direction:column;gap:6px;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg><div style="font-size:14.5px;font-weight:700;color:var(--t1);">Selbst lernen</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;">Lernpfad, Explorer & Fälle im eigenen Tempo.</div></div>
+          <div role="button" tabindex="0" onClick="{{ pickFollow }}" style="{{ mFollow }}padding:15px;display:flex;flex-direction:column;gap:6px;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></svg><div style="font-size:14.5px;font-weight:700;color:var(--t1);">Vortrag folgen</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;">Per Code beitreten, Presenter folgen.</div></div>
+          <div role="button" tabindex="0" onClick="{{ pickExplore }}" style="{{ mExplore }}padding:15px;display:flex;flex-direction:column;gap:6px;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12V4M12 12l7 4M12 12l-7 4"/></svg><div style="font-size:14.5px;font-weight:700;color:var(--t1);">Frei erkunden</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;">Strukturen anklicken & isolieren.</div></div>
+          <div role="button" tabindex="0" onClick="{{ pickManage }}" style="{{ mManage }}padding:15px;display:flex;flex-direction:column;gap:6px;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/></svg><div style="font-size:14.5px;font-weight:700;color:var(--t1);">Vortragen / Verwalten</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;">Presenter & Admin (Anmeldung).</div></div>
+        </div>
+      </sc-if>
+      <!-- STEP 2 · Darstellung & Komfort -->
+      <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:24px;font-weight:700;letter-spacing:-.02em;">Darstellung & Komfort</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--t3);margin-top:7px;">Für ruhiges, lesbares Arbeiten. Jederzeit in den Einstellungen änderbar.</div>
+        <div style="display:flex;flex-direction:column;gap:11px;margin-top:22px;">
+          <div style="border:1px solid var(--line3);padding:14px 15px;">
+            <div style="font-size:14px;font-weight:700;color:var(--t1);">Erscheinungsbild</div>
+            <div style="font-size:11.5px;color:var(--t2b);margin-top:3px;line-height:1.4;">Dunkel schont die Augen, Hell für helle Räume.</div>
+            <div style="display:flex;gap:8px;margin-top:12px;">
+              <div role="button" tabindex="0" onClick="{{ setDark }}" style="{{ tDark }}flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;min-height:44px;box-sizing:border-box;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>Dunkel</div>
+              <div role="button" tabindex="0" onClick="{{ setHell }}" style="{{ tHell }}flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;min-height:44px;box-sizing:border-box;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>Hell</div>
+            </div>
+          </div>
+          <div role="button" tabindex="0" onClick="{{ toggleReduced }}" style="border:1px solid var(--line3);padding:14px 15px;display:flex;align-items:center;gap:13px;cursor:pointer;min-height:44px;box-sizing:border-box;">
+            <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:var(--t1);">Ruhemodus</div><div style="font-size:11.5px;color:var(--t2b);margin-top:3px;line-height:1.4;">Reduzierte Bewegung & Animationen.</div></div>
+            <span style="{{ redTrack }}width:42px;height:24px;border-radius:13px;position:relative;flex:none;transition:background .15s;"><span style="{{ redKnob }}position:absolute;top:3px;width:18px;height:18px;border-radius:50%;transition:all .15s;"></span></span>
+          </div>
+          <div role="button" tabindex="0" onClick="{{ toggleContrast }}" style="border:1px solid var(--line3);padding:14px 15px;display:flex;align-items:center;gap:13px;cursor:pointer;min-height:44px;box-sizing:border-box;">
+            <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:var(--t1);">Hoher Kontrast</div><div style="font-size:11.5px;color:var(--t2b);margin-top:3px;line-height:1.4;">Stärkere Kanten & Labels.</div></div>
+            <span style="{{ conTrack }}width:42px;height:24px;border-radius:13px;position:relative;flex:none;transition:background .15s;"><span style="{{ conKnob }}position:absolute;top:3px;width:18px;height:18px;border-radius:50%;transition:all .15s;"></span></span>
+          </div>
+        </div>
+      </sc-if>
+      <!-- STEP 3 · Orientierung -->
+      <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+        <div style="font-size:24px;font-weight:700;letter-spacing:-.02em;">Bereit, {{ modeLabel }}.</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--t3);margin-top:7px;">So findest du dich zurecht — alles bleibt jederzeit änderbar.</div>
+        <div style="display:flex;flex-direction:column;gap:9px;margin-top:22px;">
+          <div style="display:flex;align-items:flex-start;gap:13px;border:1px solid var(--line4);padding:13px 14px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><rect x="3" y="4" width="5" height="16"/><path d="M12 7h9M12 12h9M12 17h6"/></svg><div><div style="font-size:13.5px;font-weight:700;color:var(--t1);">Leiste immer erreichbar</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;margin-top:2px;">Lernen, Explorer, Fälle & mehr — ein Klick entfernt.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:13px;border:1px solid var(--line4);padding:13px 14px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><circle cx="12" cy="12" r="9.2"/><polygon points="15.6 8.4 10.6 10.6 8.4 15.6 13.4 13.4"/></svg><div><div style="font-size:13.5px;font-weight:700;color:var(--t1);">Anklicken & isolieren</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;margin-top:2px;">Strukturen wählen, einfärben, schneiden.</div></div></div>
+          <div style="display:flex;align-items:flex-start;gap:13px;border:1px solid var(--line4);padding:13px 14px;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:1px;"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg><div><div style="font-size:13.5px;font-weight:700;color:var(--t1);">Jederzeit anpassbar</div><div style="font-size:11.5px;color:var(--t2b);line-height:1.4;margin-top:2px;">Theme, A11y & Modus in den Einstellungen.</div></div></div>
+        </div>
+      </sc-if>
+    </div>
+    <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:18px 26px;border-top:1px solid var(--cell);">
+      <div style="display:flex;gap:6px;align-items:center;"><span style="{{ dot1 }}"></span><span style="{{ dot2 }}"></span><span style="{{ dot3 }}"></span></div>
+      <div style="display:flex;align-items:center;gap:9px;">
+        <sc-if value="{{ showBack }}" hint-placeholder-val="{{ false }}"><button onClick="{{ prevStep }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:1px solid var(--line3);color:var(--t1);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Zurück</button></sc-if>
+        <button onClick="{{ weiterAct }}" style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 22px;cursor:pointer;font-weight:600;min-height:44px;box-sizing:border-box;">{{ weiterLabel }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1194,&quot;height&quot;:834},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;hell&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Füllen&quot;,&quot;iPhone&quot;,&quot;iPad Mini&quot;,&quot;iPad Pro 11″&quot;,&quot;iPad Pro 12,9″&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Füllen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;orientation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portrait&quot;,&quot;landscape&quot;],&quot;default&quot;:&quot;landscape&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  _theme(){ if(this.state && this.state.theme) return this.state.theme; try{var t=localStorage.getItem('ifn-theme'); if(t==='hell'||t==='dark') return t;}catch(e){} return (this.props.theme === 'hell' ? 'hell' : 'dark'); }
+  _themeToggle = () => { var nx = this._theme()==='hell' ? 'dark' : 'hell'; try{localStorage.setItem('ifn-theme', nx);}catch(e){} this.setState({ theme: nx }); };
+  state = { w: 0, h: 0, step: 0, mode: 'learn', reduced: false, contrast: false }
+  setRoot = (el) => {
+    if (!el || el === this._root) return;
+    this._root = el; this._applyDev(el);
+    const m = () => this.setState({ w: el.clientWidth, h: el.clientHeight });
+    m(); this._ro = new ResizeObserver(m); this._ro.observe(el);
+  }
+  componentWillUnmount() { if (this._ro) try { this._ro.disconnect(); } catch (e) {} }
+  _DEV = { 'iPhone':[393,852,47], 'iPad Mini':[744,1133,24], 'iPad Pro 11″':[834,1194,22], 'iPad Pro 12,9″':[1024,1366,20], 'Desktop':[1440,900,10] };
+  _applyDev(el){ if(!el) return; var info=this._DEV[this.props.device]; var p=el.parentElement; if(info){ var isD=this.props.device==='Desktop'; var land=isD||this.props.orientation==='landscape'; var dw=isD?info[0]:(land?info[1]:info[0]); var dh=isD?info[1]:(land?info[0]:info[1]); var bez=isD?12:16; el.style.width=dw+'px'; el.style.height=dh+'px'; el.style.flex='none'; el.style.borderRadius=info[2]+'px'; el.style.overflow='hidden'; el.style.boxShadow='0 0 0 '+bez+'px #0c0c0c, 0 0 0 '+(bez+2)+'px #2c2c2c, 0 40px 100px rgba(0,0,0,.55)'; if(p){ p.style.display='flex'; p.style.alignItems='center'; p.style.justifyContent='center'; p.style.height='100vh'; p.style.minHeight='100vh'; p.style.overflow='hidden'; p.style.boxSizing='border-box'; p.style.background='#15140f'; } var aw=window.innerWidth, ah=window.innerHeight; var pad=60+bez*2; var s=Math.min(1,(aw-pad)/dw,(ah-pad)/dh); if(!isFinite(s)||s<=0) s=1; el.style.transformOrigin='center center'; el.style.transform='scale('+s+')'; if(!this._devResize){ this._devResize=function(){ this._applyDev(this._root); }.bind(this); window.addEventListener('resize',this._devResize); } } else { el.style.width='100%'; el.style.height='100%'; el.style.flex=''; el.style.borderRadius=''; el.style.transform=''; el.style.transformOrigin=''; el.style.boxShadow=''; if(p){ p.style.display=''; p.style.alignItems=''; p.style.justifyContent=''; p.style.height=''; p.style.minHeight=''; p.style.overflow=''; p.style.background=''; } } }
+  componentDidUpdate(prev){ if(prev && (prev.device!==this.props.device || prev.orientation!==this.props.orientation) && this._root){ this._applyDev(this._root); this.setState({ w:this._root.clientWidth, h:this._root.clientHeight }); } }
+  renderVals() {
+    const w = this.state.w || (this.props.orientation === 'portrait' ? 420 : 1280);
+    const h = this.state.h || (this.props.orientation === 'portrait' ? 880 : 800);
+    const shortLandscape = h < 480 && w > h;
+    const portrait = w < 820 && !shortLandscape;
+    const step = Math.max(0, Math.min(2, (this.state && this.state.step) || 0));
+    const mode = (this.state && this.state.mode) || 'learn';
+    const reduced = !!(this.state && this.state.reduced);
+    const contrast = !!(this.state && this.state.contrast);
+    const th = this._theme();
+    const sel = (on)=> on ? 'border:1px solid #f26b1f;background:rgba(242,107,31,.08);color:#f26b1f;' : 'border:1px solid var(--line3);color:var(--t2b);';
+    const dotA = 'width:22px;height:7px;border-radius:4px;background:#f26b1f;';
+    const dotI = 'width:7px;height:7px;border-radius:50%;background:var(--line5);';
+    const trackOn = 'background:#f26b1f;', trackOff = 'background:var(--ctrl);';
+    const knobOn = 'right:3px;left:auto;background:var(--onacc);', knobOff = 'left:3px;right:auto;background:var(--ctrlk);';
+    const MODES = { learn:'selbst zu lernen', follow:'dem Vortrag zu folgen', explore:'frei zu erkunden', manage:'zu pr\u00e4sentieren' };
+    const setMode = (m)=> ()=> this.setState({ mode: m });
+    return {
+      setRoot: this.setRoot, themeAttr: th, themeLabel: th === 'hell' ? 'Dunkel' : 'Hell', themeToggle: this._themeToggle, isHell: th==='hell', notHell: th!=='hell', st: (this.props.state||'idle'), showState: (this.props.state||'idle')!=='idle', isLoading: this.props.state==='loading', isEmpty: this.props.state==='empty', isError: this.props.state==='error',
+      goAuth: ()=>{ try{localStorage.setItem('ifn-start-mode', mode);}catch(e){} location.href='AuthFrame.dc.html'; },
+      goLauncher: ()=>{ location.href='LauncherFrame.dc.html'; },
+      alignV: portrait ? 'stretch' : 'center',
+      cardW: portrait ? '100%' : '600px',
+      cardH: portrait ? '100%' : 'auto',
+      cols: portrait ? '1fr' : '1fr 1fr',
+      cardBorder: portrait ? '' : 'border:1px solid var(--line);background:var(--bg);',
+      stepLabel: (step+1)+' / 3',
+      isStep1: step===0, isStep2: step===1, isStep3: step===2,
+      mLearn: sel(mode==='learn'), mFollow: sel(mode==='follow'), mExplore: sel(mode==='explore'), mManage: sel(mode==='manage'),
+      pickLearn: setMode('learn'), pickFollow: setMode('follow'), pickExplore: setMode('explore'), pickManage: setMode('manage'),
+      tDark: sel(th==='dark'), tHell: sel(th==='hell'),
+      setDark: ()=>{ try{localStorage.setItem('ifn-theme','dark');}catch(e){} this.setState({ theme:'dark' }); },
+      setHell: ()=>{ try{localStorage.setItem('ifn-theme','hell');}catch(e){} this.setState({ theme:'hell' }); },
+      redTrack: reduced?trackOn:trackOff, redKnob: reduced?knobOn:knobOff,
+      conTrack: contrast?trackOn:trackOff, conKnob: contrast?knobOn:knobOff,
+      toggleReduced: ()=>{ var nx=!reduced; try{localStorage.setItem('ifn-reduced-motion', nx?'1':'0');}catch(e){} this.setState({ reduced:nx }); },
+      toggleContrast: ()=>{ var nx=!contrast; try{localStorage.setItem('ifn-contrast', nx?'1':'0');}catch(e){} this.setState({ contrast:nx }); },
+      dot1: step===0?dotA:dotI, dot2: step===1?dotA:dotI, dot3: step===2?dotA:dotI,
+      showBack: step>0,
+      prevStep: ()=> this.setState(function(s){ return { step: Math.max(0, ((s&&s.step)||0)-1) }; }),
+      weiterLabel: step<2 ? 'Weiter' : 'Los geht\u2019s',
+      weiterAct: step<2 ? (()=> this.setState(function(s){ return { step: Math.min(2, ((s&&s.step)||0)+1) }; })) : (()=>{ try{localStorage.setItem('ifn-start-mode', mode);}catch(e){} location.href='AuthFrame.dc.html'; }),
+      modeLabel: MODES[mode] || MODES.learn,
+    };
+  }
+}
+</script>
+</body>
+</html>

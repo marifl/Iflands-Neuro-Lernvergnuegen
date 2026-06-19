@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  .phone{
+    --ed-canvas:#0e0e0e; --paper:#161616; --paper-raised:#1c1c1c; --fill:#1f1f1f;
+    --ink:#ededed; --g800:#d2d2d2; --g700:#b2b2b2; --g600:#8c8c8c; --g500:#6f6f6f; --g400:#555;
+    --line:#c8c8c8; --line-soft:#2c2c2c; --orange:#f26b1f; --on-accent:#160b04;
+    --app-bg:#0e0e0e; --field-bg:#0e0e0e;
+    --viewport-bg:#0e0e0e;
+    --hud-bg:rgba(16,16,16,.66); --hud-border:rgba(255,255,255,.2); --hud-fg:#fff;
+    --ed-display:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --ed-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  .phone[data-theme="light"]{
+    --paper:#fff; --paper-raised:#fff; --fill:#f4f4f4;
+    --ink:#111; --g800:#2a2a2a; --g700:#4f4f4f; --g600:#6b6b6b; --g500:#8c8c8c; --g400:#aeaeae;
+    --line:#111; --line-soft:#e2e2e2; --app-bg:#e7e7e7; --field-bg:#fff;
+    --viewport-bg:#c7c4bf;
+    --hud-bg:rgba(255,255,255,.72); --hud-border:rgba(0,0,0,.2); --hud-fg:#111;
+  }
+  .drw{transition:height .3s cubic-bezier(.2,.9,.25,1)}
+  .drw[data-drag="true"]{transition:none}
+  image-slot{display:block;--is-bg:var(--viewport-bg)}
+  body{margin:0}
+  .eyb{font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#c7c4bf;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:44px 40px 72px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:880px;margin:0 auto;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;">Lernen · Lernpfad · v2</div>
+    <h1 style="font-size:32px;font-weight:700;letter-spacing:-.03em;margin:8px 0 6px;line-height:1;">Lernpfad als Bühne + Navigator</h1>
+    <p style="font-size:14px;line-height:1.5;color:#4a4744;max-width:600px;margin:0;text-wrap:pretty;">Statt drei gestapelter Karten über dem halb verdeckten Modell: Der 3D-Körper bleibt sichtbar, die Färbung schrumpft zur schwebenden Legende, und der Lernpfad sitzt als Peek-Navigator über dem Dock. Folientext, volle Legende und das Kapitel öffnen im selben Zieh-Drawer.</p>
+
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:52px;margin-top:40px;align-items:start;">
+
+      <!-- PHONE -->
+      <div style="background:#0a0a0a;padding:11px;border-radius:46px;box-shadow:0 26px 60px rgba(0,0,0,.32);width:412px;flex:none;">
+        <div class="phone" data-theme="{{ theme }}" style="position:relative;width:390px;height:784px;border-radius:36px;overflow:hidden;background:var(--app-bg);display:flex;flex-direction:column;font-family:var(--ed-display);">
+
+          <!-- status -->
+          <div style="height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:var(--ed-mono);font-size:12px;font-weight:600;color:var(--ink);">
+            <span>9:41</span>
+            <span style="display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.06em;"><span>5G</span><span style="display:inline-block;width:20px;height:10px;border:1.4px solid var(--ink);border-radius:2px;position:relative;"><span style="position:absolute;inset:1.6px;right:5px;background:var(--ink);"></span></span></span>
+          </div>
+
+          <!-- app header -->
+          <div style="height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--paper);border-bottom:1.5px solid var(--line);z-index:30;">
+            <div style="display:flex;align-items:center;gap:9px;">
+              <div style="width:27px;height:27px;background:var(--orange);display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--on-accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+              <div style="line-height:1;">
+                <div style="font-weight:700;font-size:12px;letter-spacing:-.01em;color:var(--ink);">Iflands Neuro</div>
+                <div class="eyb" style="font-size:7px;margin-top:2px;">Lernvergnügen</div>
+              </div>
+            </div>
+            <button onClick="{{ themeToggle }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--line);padding:6px 11px;cursor:pointer;">{{ themeLabel }}</button>
+          </div>
+
+          <!-- viewport -->
+          <div style="position:relative;flex:1;min-height:0;background:var(--viewport-bg);">
+            <image-slot id="vp-lern" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="3D-RENDER ABLEGEN"></image-slot>
+            <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 40%, rgba(86,108,140,.16), transparent 60%);pointer-events:none;"></div>
+            <div style="position:absolute;bottom:12px;left:14px;font-family:var(--ed-mono);font-size:8px;letter-spacing:.1em;color:var(--g600);display:flex;align-items:center;gap:6px;z-index:2;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg>LATERAL · LINKS</div>
+
+            <!-- floating compact Färbung legend -->
+            <sc-if value="{{ floatLegend }}" hint-placeholder-val="{{ true }}">
+              <button onClick="{{ openFaerbung }}" style="position:absolute;top:12px;right:12px;z-index:6;width:152px;text-align:left;background:var(--hud-bg);border:1.5px solid var(--hud-border);backdrop-filter:blur(10px);color:var(--hud-fg);padding:10px 11px 11px;cursor:pointer;">
+                <div style="display:flex;align-items:center;justify-content:space-between;">
+                  <span style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--orange);">Färbung</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.6;"><path d="m9 18 6-6-6-6"/></svg>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+                  <div style="display:flex;align-items:center;gap:8px;"><span style="width:11px;height:11px;background:#3268a8;flex:none;"></span><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.02em;">Kognition</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;"><span style="width:11px;height:11px;background:#b9763f;flex:none;"></span><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.02em;">Emotion</span></div>
+                  <div style="display:flex;align-items:center;gap:8px;"><span style="width:11px;height:11px;background:#3fae6a;flex:none;"></span><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.02em;">Motivation</span></div>
+                </div>
+              </button>
+            </sc-if>
+
+            <!-- collapse catcher -->
+            <sc-if value="{{ expanded }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ collapse }}" style="position:absolute;inset:0;background:rgba(4,4,4,.42);z-index:5;"></div>
+            </sc-if>
+          </div>
+
+          <!-- DRAWER -->
+          <div class="drw" data-drag="{{ dragging }}" style="position:absolute;left:0;right:0;bottom:66px;z-index:20;height:{{ sheetH }}px;min-height:118px;background:var(--paper);border-top:1.5px solid var(--line);display:flex;flex-direction:column;">
+            <div onPointerDown="{{ onDown }}" onPointerMove="{{ onMove }}" onPointerUp="{{ onUp }}" onClick="{{ onCycle }}" style="flex:none;padding:8px 0 6px;display:flex;justify-content:center;cursor:grab;touch-action:none;">
+              <span style="width:42px;height:5px;border-radius:3px;background:var(--g500);"></span>
+            </div>
+
+            <!-- nav strip — always visible in peek AND expanded -->
+            <div style="flex:none;display:flex;align-items:center;gap:8px;padding:6px 16px 8px;border-bottom:1px solid var(--line-soft);">
+              <span style="font-family:var(--ed-mono);font-size:9px;letter-spacing:.1em;color:var(--g600);flex:none;white-space:nowrap;">Folie {{ folio }}</span>
+              <button onClick="{{ prev }}" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <div style="flex:1;height:4px;background:var(--line-soft);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ progressPct }}%;background:var(--orange);transition:width .2s ease;"></span></div>
+              <button onClick="{{ next }}" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+              <sc-if value="{{ showClose }}" hint-placeholder-val="{{ false }}"><button onClick="{{ collapse }}" title="Schließen" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--orange);color:var(--orange);cursor:pointer;margin-left:2px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button></sc-if>
+            </div>
+
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:0 16px 18px;">
+
+              <!-- ===== PEEK : LERNPFAD-NAVIGATOR ===== -->
+              <sc-if value="{{ peekNav }}" hint-placeholder-val="{{ true }}">
+                <div>
+                  <div class="eyb">Lernpfad · Kapitel 11</div>
+                  <div style="display:flex;align-items:flex-start;gap:8px;margin-top:5px;">
+                    <div style="flex:1;font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--ink);line-height:1.2;text-wrap:pretty;">{{ curTitle }}</div>
+                    <button onClick="{{ openInhalt }}" title="Inhalt öffnen" style="flex:none;width:30px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--orange);color:var(--orange);cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                  </div>
+                  <div style="font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.04em;color:var(--g600);margin-top:4px;">{{ curMeta }}</div>
+                </div>
+              </sc-if>
+
+              <!-- ===== EXPANDED HEADER ===== -->
+              <sc-if value="{{ expanded }}" hint-placeholder-val="{{ false }}">
+                <div style="padding-bottom:12px;border-bottom:1px solid var(--line-soft);margin-bottom:14px;">
+                  <div class="eyb">{{ secEyebrow }}</div>
+                  <div style="font-weight:700;font-size:14px;letter-spacing:-.01em;color:var(--ink);margin-top:3px;text-wrap:pretty;">{{ secTitle }}</div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: INHALT (Folientext) -->
+              <sc-if value="{{ eInhalt }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;margin-bottom:13px;">
+                    <span style="font-family:var(--ed-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--g600);">{{ curSection }}</span>
+                    <span style="font-family:var(--ed-mono);font-size:9px;letter-spacing:.06em;color:var(--on-accent);background:var(--orange);padding:2px 6px;">{{ figTag }}</span>
+                  </div>
+
+                  <!-- slide 1: drei Schleifen -->
+                  <sc-if value="{{ isLoop }}" hint-placeholder-val="{{ true }}">
+                    <div>
+                      <p style="font-size:12.5px;line-height:1.5;color:var(--g800);margin:0 0 11px;text-wrap:pretty;">Drei fronto-striatale Schleifen ordnen die exekutiven Funktionen. Jede projiziert über Striatum, Pallidum und Thalamus zurück in ihr frontales Kontrollnetz.</p>
+                      <div style="display:flex;flex-direction:column;gap:8px;">
+                        <div style="display:flex;border:1.5px solid var(--line);">
+                          <div style="width:108px;flex:none;padding:10px 10px;border-right:1.5px solid var(--line);font-family:var(--ed-mono);font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;">DLPFC-Schleife</div>
+                          <div style="flex:1;padding:10px 10px;font-size:12px;line-height:1.35;color:var(--g800);">Planung, Arbeitsgedächtnis, kognitive Kontrolle</div>
+                        </div>
+                        <div style="display:flex;border:1.5px solid var(--line);">
+                          <div style="width:108px;flex:none;padding:10px 10px;border-right:1.5px solid var(--line);font-family:var(--ed-mono);font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;">VMPFC/OFC-Schleife</div>
+                          <div style="flex:1;padding:10px 10px;font-size:12px;line-height:1.35;color:var(--g800);">Bewertung, Motivation, emotionale Regulation</div>
+                        </div>
+                        <div style="display:flex;border:1.5px solid var(--line);">
+                          <div style="width:108px;flex:none;padding:10px 10px;border-right:1.5px solid var(--line);font-family:var(--ed-mono);font-size:11px;font-weight:600;color:var(--ink);line-height:1.25;">ACC-Schleife</div>
+                          <div style="flex:1;padding:10px 10px;font-size:12px;line-height:1.35;color:var(--g800);">Konfliktmonitoring und Handlungsanpassung</div>
+                        </div>
+                      </div>
+                      <div style="display:flex;align-items:center;gap:7px;margin-top:14px;font-family:var(--ed-mono);font-size:9px;letter-spacing:.06em;color:var(--g500);"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Jäncke · Kap. 11.3.3 · Abb. 11-04</div>
+                    </div>
+                  </sc-if>
+
+                  <!-- other slides: schematic step -->
+                  <sc-if value="{{ isOther }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <p style="font-size:13.5px;line-height:1.55;color:var(--g800);margin:0 0 14px;text-wrap:pretty;">{{ otherBody }}</p>
+                      <div style="border:1.5px solid var(--line);padding:15px;display:flex;align-items:center;gap:12px;">
+                        <span style="width:40px;height:40px;flex:none;border:1.5px solid var(--orange);color:var(--orange);display:flex;align-items:center;justify-content:center;font-family:var(--ed-mono);font-size:13px;font-weight:600;">{{ stepNum }}</span>
+                        <div style="min-width:0;"><div style="font-weight:700;font-size:14px;color:var(--ink);line-height:1.2;text-wrap:pretty;">{{ curTitle }}</div><div style="font-family:var(--ed-mono);font-size:9px;letter-spacing:.06em;color:var(--g600);margin-top:3px;">{{ figTag }} · im 3D-Kontext fokussiert</div></div>
+                      </div>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-if>
+
+              <!-- expanded: FÄRBUNG (volle Legende) -->
+              <sc-if value="{{ eFaerbung }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <p style="font-size:13.5px;line-height:1.55;color:var(--g800);margin:0 0 16px;text-wrap:pretty;">Drei fronto-subkortikale Schleifen werden als kognitive, emotionale und motivationale Funktionskreise getrennt.</p>
+                  <div style="display:flex;flex-direction:column;gap:14px;">
+                    <div style="display:flex;gap:11px;">
+                      <span style="width:16px;height:16px;background:#3268a8;flex:none;margin-top:2px;"></span>
+                      <div><div style="font-size:14px;font-weight:700;color:var(--ink);">Kognition</div><div style="font-size:12.5px;line-height:1.45;color:var(--g700);margin-top:3px;text-wrap:pretty;">DLPFC/parietaler Kortex mit dorsalem Striatum, Pallidum und Thalamus.</div></div>
+                    </div>
+                    <div style="display:flex;gap:11px;">
+                      <span style="width:16px;height:16px;background:#b9763f;flex:none;margin-top:2px;"></span>
+                      <div><div style="font-size:14px;font-weight:700;color:var(--ink);">Emotion</div><div style="font-size:12.5px;line-height:1.45;color:var(--g700);margin-top:3px;text-wrap:pretty;">OFC/vmPFC mit Amygdala und Hippocampus als affektiver Regelkreis.</div></div>
+                    </div>
+                    <div style="display:flex;gap:11px;">
+                      <span style="width:16px;height:16px;background:#3fae6a;flex:none;margin-top:2px;"></span>
+                      <div><div style="font-size:14px;font-weight:700;color:var(--ink);">Motivation</div><div style="font-size:12.5px;line-height:1.45;color:var(--g700);margin-top:3px;text-wrap:pretty;">dACC und Nucleus accumbens als motivationaler Handlungsantrieb.</div></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;gap:7px;margin-top:18px;">
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Eingefärbt</button>
+                    <button style="flex:1;font-family:var(--ed-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:12px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Andere dimmen</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: KAPITEL (Schrittliste) -->
+              <sc-if value="{{ eKapitel }}" hint-placeholder-val="{{ false }}">
+                <div>
+                  <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line-soft);padding:10px 11px;margin-bottom:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);">Schritt suchen</span></div>
+                  <div style="display:flex;flex-direction:column;">
+                    <sc-for list="{{ kapitelRows }}" as="row" hint-placeholder-count="6">
+                      <button onClick="{{ row.onSelect }}" style="display:flex;align-items:center;gap:11px;text-align:left;padding:11px 10px;border:none;border-bottom:1px solid var(--line-soft);background:{{ row.bg }};color:var(--ink);cursor:pointer;">
+                        <span style="font-family:var(--ed-mono);font-size:10px;font-weight:600;color:{{ row.numColor }};flex:none;width:20px;">{{ row.num }}</span>
+                        <span style="flex:1;min-width:0;font-size:12.5px;font-weight:{{ row.weight }};line-height:1.25;color:var(--ink);text-wrap:pretty;">{{ row.title }}</span>
+                        <span style="font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.04em;color:var(--g600);flex:none;">{{ row.fig }}</span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- expanded: MODUS -->
+              <sc-if value="{{ eModus }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:7px;">
+                  <button style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Lernen<span class="eyb" style="color:inherit;opacity:.6;">Lernpfad</span></button>
+                  <button style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Explorer<span class="eyb" style="color:var(--g500);">3D</span></button>
+                  <button style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Phineas Gage<span class="eyb" style="color:var(--g500);">Fall</span></button>
+                </div>
+              </sc-if>
+
+              <!-- expanded: MEHR -->
+              <sc-if value="{{ eMehr }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Ansicht</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Kamera</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Lateral · Anterior · Superior</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Kontext</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Schädel</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Transparent · Solide</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Beleg</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Quellen</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Jäncke · Kap. 11</div></div>
+                  <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Zustand</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Datei</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Export · Import</div></div>
+                </div>
+              </sc-if>
+
+            </div>
+          </div>
+
+          <!-- DOCK -->
+          <div style="height:66px;flex:none;display:flex;background:var(--paper);border-top:1.5px solid var(--line);position:relative;z-index:25;">
+            <button onClick="{{ tapModus }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actModus }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Modus</span>
+            </button>
+            <button onClick="{{ tapInhalt }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actInhalt }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Inhalt</span>
+            </button>
+            <button onClick="{{ tapFaerbung }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actFaerbung }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="15.5" cy="9" r="1"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Färbung</span>
+            </button>
+            <button onClick="{{ tapKapitel }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actKapitel }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6h11M10 12h11M10 18h11"/><path d="M4 6h.01M4 12h.01M4 18h.01"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Kapitel</span>
+            </button>
+            <button onClick="{{ tapMehr }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;color:var(--g700);cursor:pointer;">
+              <sc-if value="{{ actMehr }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></svg>
+              <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Mehr</span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div style="padding-top:6px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.18em;text-transform:uppercase;color:#b4490f;margin-bottom:12px;">Was sich ändert</div>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:14px;">
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">01</span><span><b>Eine Bühne statt Kartenstapel.</b> Der 3D-Körper bleibt frei sichtbar — Folientext, Tabelle und Legende liegen nicht mehr darüber, sondern im Drawer.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">02</span><span><b>Lernpfad-Navigator im Peek.</b> Folie, Titel, Fortschritt und Sprung sind immer da. Prev/Next blättert echte 21 Schritte aus Kapitel 11.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">03</span><span><b>Färbung als kompakte Legende.</b> Schwebt klein oben rechts; die volle Erklärung mit Bedeutungen öffnet per Tipp im Drawer.</span></li>
+          <li style="display:flex;gap:11px;align-items:flex-start;font-size:13px;line-height:1.5;color:#3c3936;"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:#b4490f;flex:none;">04</span><span><b>Kapitel statt Dropdown.</b> Sieben überlaufende Dock-Icons werden zu fünf Kategorien; der Schrittwähler ist eine durchsuchbare Liste.</span></li>
+        </ul>
+        <div style="margin-top:24px;font-family:'IBM Plex Mono',monospace;font-size:11px;line-height:1.7;color:#6b6b6b;border-top:1px solid #a8a5a0;padding-top:14px;">Tippe Inhalt / Färbung / Kapitel · blättere im Peek · lege einen Render ab</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:880,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { detent: 'peek', section: 'inhalt', dragH: null, theme: 'dark', idx: 0 }
+
+  set(patch) { this.setState((s) => ({ ...s, ...patch })) }
+  detentH(d) { return d === 'full' ? 600 : d === 'half' ? 360 : 144 }
+
+  slides() {
+    return [
+      { t: 'Drei Basalganglien-Schleifen', sec: '11.3.3 · Basalganglienschleifen', fig: '11-04' },
+      { t: 'PFC-Funktionen nach Petrides', sec: '11.3.3 · funktionsspezifischer PFC', fig: '11-05' },
+      { t: 'Fuster-Modell: Wahrnehmungs-Handlungs-Zyklus', sec: '11.3.3 · hierarchische PFC-Modelle', fig: '11-06' },
+      { t: 'Badre: rostrokaudaler PFC-Gradient', sec: '11.3.3 · rostrokaudale Organisation', fig: '11-07' },
+      { t: 'Domänenspezifisch zu domänenübergreifend', sec: '11.3.3 · Badre-Modelle', fig: '11-08A' },
+      { t: 'Relationale Komplexität im PFC', sec: '11.3.3 · Badre-Modelle', fig: '11-08B' },
+      { t: 'Kaskadenmodell der Kontrolle', sec: '11.3.3 · Badre-Modelle', fig: '11-08C' },
+      { t: 'Konflikttypen entlang der Kontrollhierarchie', sec: '11.3.3 · Badre-Modelle', fig: '11-08D' },
+      { t: 'WCST: frontoparietales Kontrollnetzwerk', sec: '11.3.3 · Testverfahren', fig: '11-09' },
+      { t: 'Flüssigkeitsaufgaben: fünf Aktivierungsfoki', sec: '11.3.3 · Fluency-Aufgaben', fig: '11-10' },
+      { t: 'Tower of London und DLPFC-Aktivierung', sec: '11.3.3 · Planen', fig: '11-11A/B' },
+      { t: 'DLPFC-Reaktion nach Aufgaben-Schwierigkeit', sec: '11.3.3 · Planen', fig: '11-11C' },
+      { t: 'Flanker-Aufgabe: kongruent vs. inkongruent', sec: '11.4 · ACC und Konflikt', fig: '11-12' },
+      { t: 'ACC nach Bush: kognitiv und emotional', sec: '11.4 · ACC und Konflikt', fig: '11-13' },
+      { t: 'Go-/No-go-Aufgaben — Reaktion hemmen', sec: '11.4 · cinguläres Kontrollsystem', fig: '' },
+      { t: 'Visueller Konzentrationsverlaufstest (VCPT)', sec: '11.4 · VCPT', fig: '11-14' },
+      { t: 'ICA — drei ERP-Komponenten', sec: '11.4 · ICA', fig: '' },
+      { t: 'P3a — Konfliktmonitoring (No-go)', sec: '11.4 · cinguläres Kontrollsystem', fig: '11-15(1)' },
+      { t: 'P3b — Engagement (Go)', sec: '11.4 · cinguläres Kontrollsystem', fig: '11-15(2)' },
+      { t: 'P3z — Inhibition (No-go)', sec: '11.4 · cinguläres Kontrollsystem', fig: '11-15(3)' },
+      { t: 'Zusammenfassung — exekutive Funktionen', sec: '11.5 · Zusammenfassung', fig: '' },
+    ]
+  }
+
+  renderVals() {
+    const s = this.state
+    const S = this.slides()
+    const N = S.length
+    const i = Math.max(0, Math.min(N - 1, s.idx))
+    const cur = S[i]
+    const expanded = s.detent !== 'peek'
+    const figTag = cur.fig ? ('Abb. ' + cur.fig) : 'Vortrag'
+
+    const collapse = () => this.set({ detent: 'peek', dragH: null })
+    const open = (sec) => this.set({ section: sec, detent: s.detent === 'peek' ? 'half' : s.detent, dragH: null })
+    const tap = (sec) => {
+      if (s.section === sec && expanded) { collapse(); return }
+      open(sec)
+    }
+
+    const onDown = (e) => {
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
+      this._start = { y: e.clientY, base: this.detentH(this.state.detent) }
+      this._h = this.detentH(this.state.detent)
+      this._moved = false
+    }
+    const onMove = (e) => {
+      if (!this._start) return
+      const dy = e.clientY - this._start.y
+      if (Math.abs(dy) > 4) this._moved = true
+      const h = Math.max(120, Math.min(640, this._start.base - dy))
+      this._h = h
+      this.set({ dragH: h })
+    }
+    const onUp = () => {
+      if (!this._start) return
+      this._start = null
+      if (!this._moved) { this.set({ dragH: null }); return }
+      const h = this._h
+      const tg = [['peek', 122], ['half', 388], ['full', 620]]
+      let best = tg[0]
+      for (const x of tg) { if (Math.abs(x[1] - h) < Math.abs(best[1] - h)) best = x }
+      this.set({ detent: best[0], dragH: null })
+    }
+    const onCycle = () => {
+      if (this._moved) { this._moved = false; return }
+      const order = { peek: 'half', half: 'full', full: 'peek' }
+      this.set({ detent: order[this.state.detent], dragH: null })
+    }
+
+    const sheetH = s.dragH != null ? Math.round(s.dragH) : this.detentH(s.detent)
+
+    const secTitles = {
+      inhalt: ['Folieninhalt', cur.t],
+      faerbung: ['Färbung · Abb. 11-04', 'Basalganglienschleifen'],
+      kapitel: ['Lernpfad · Kapitel 11', 'Alle 21 Schritte'],
+      modus: ['Modus', 'Ansicht wählen'],
+      mehr: ['Mehr', 'Weitere Werkzeuge'],
+    }
+    const t = secTitles[s.section] || ['', '']
+
+    const kapitelRows = S.map((sl, k) => {
+      const active = k === i
+      return {
+        num: String(k + 1).padStart(2, '0'),
+        title: sl.t,
+        fig: sl.fig ? sl.fig : '—',
+        bg: active ? 'color-mix(in srgb,var(--orange) 14%,transparent)' : 'transparent',
+        numColor: active ? 'var(--orange)' : 'var(--g500)',
+        weight: active ? 700 : 400,
+        onSelect: () => this.set({ idx: k, section: 'inhalt' }),
+      }
+    })
+
+    return {
+      theme: s.theme,
+      themeLabel: s.theme === 'dark' ? 'Hell' : 'Dunkel',
+      themeToggle: () => this.set({ theme: s.theme === 'dark' ? 'light' : 'dark' }),
+
+      expanded,
+      showClose: expanded,
+      peekNav: !expanded,
+      floatLegend: !expanded,
+      sheetH,
+      dragging: s.dragH != null ? 'true' : 'false',
+      onDown, onMove, onUp, onCycle, collapse,
+
+      // peek navigator
+      folio: (i + 1) + ' / ' + N,
+      curTitle: cur.t,
+      curMeta: cur.sec + (cur.fig ? (' · Abb. ' + cur.fig) : ''),
+      curSection: cur.sec,
+      figTag,
+      stepNum: String(i + 1).padStart(2, '0'),
+      progressPct: Math.round(((i + 1) / N) * 100),
+      prev: () => this.set({ idx: Math.max(0, i - 1) }),
+      next: () => this.set({ idx: Math.min(N - 1, i + 1) }),
+      openInhalt: () => open('inhalt'),
+      openFaerbung: () => open('faerbung'),
+
+      // expanded panels
+      secEyebrow: t[0], secTitle: t[1],
+      eInhalt: expanded && s.section === 'inhalt',
+      eFaerbung: expanded && s.section === 'faerbung',
+      eKapitel: expanded && s.section === 'kapitel',
+      eModus: expanded && s.section === 'modus',
+      eMehr: expanded && s.section === 'mehr',
+      isLoop: i === 0,
+      isOther: i !== 0,
+      otherBody: 'Dieser Schritt fokussiert „' + cur.t + '“ im Vortragsmodus. Das 3D-Modell hebt die zugehörigen Regionen hervor; der Buchabbildung folgt eine eigene, datenehrliche Darstellung.',
+      kapitelRows,
+
+      // dock
+      actModus: expanded && s.section === 'modus',
+      actInhalt: expanded && s.section === 'inhalt',
+      actFaerbung: expanded && s.section === 'faerbung',
+      actKapitel: expanded && s.section === 'kapitel',
+      actMehr: expanded && s.section === 'mehr',
+      tapModus: () => tap('modus'),
+      tapInhalt: () => tap('inhalt'),
+      tapFaerbung: () => tap('faerbung'),
+      tapKapitel: () => tap('kapitel'),
+      tapMehr: () => tap('mehr'),
+    }
+  }
+}
+</script>
+</body>
+</html>

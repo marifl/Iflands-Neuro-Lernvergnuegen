@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>
+[data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);--brain:#2f3a48;}
+[data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);--brain:#8d8a84;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+
+<div ref="{{ setRoot }}" data-theme="{{ themeAttr }}" style="width:100%;height:100%;background:var(--bg);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);overflow:hidden;position:relative;">
+<helmet><script src="./image-slot.js"></script></helmet>
+<helmet><script src="./ifn-nav.js"></script></helmet>
+<helmet><script src="./a11y.js"></script></helmet>
+
+<!-- ============ LANDSCAPE: RAIL LINKS + PANEL LINKS ============ -->
+<sc-if value="{{ isLandscape }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%;height:100%;display:flex;">
+
+    <!-- GLOBALE NAVIGATION -->
+    <ifn-nav variant="rail" active="{{ navActive }}"></ifn-nav>
+
+    <!-- SIDE PANEL -->
+    <sc-if value="{{ showPanel }}" hint-placeholder-val="{{ true }}">
+      <div style="width:328px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);">
+        <sc-if value="{{ isLernen }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex;flex-direction:column;height:100%;min-height:0;">
+            <div style="flex:none;display:flex;align-items:center;gap:9px;padding:15px 18px;border-bottom:1px solid var(--line2);">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t3);flex:none;white-space:nowrap;">FOLIE {{ lpNum }} / 21</span>
+              <button onClick="{{ lpPrev }}" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line3);color:var(--t1);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+              <div style="flex:1;height:4px;background:var(--line3);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:{{ lpProgress }};background:#f26b1f;transition:width .2s ease;"></span></div>
+              <button onClick="{{ lpNext }}" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line3);color:var(--t1);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+              <button title="Einklappen" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #f26b1f;color:#f26b1f;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:18px;">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;">{{ lpKicker }}</div>
+              <div style="font-weight:700;font-size:21px;letter-spacing:-.02em;line-height:1.12;margin-top:8px;text-wrap:pretty;">{{ lpTitle }}</div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.04em;color:var(--t3);margin-top:7px;">{{ lpSub }}</div>
+              <p style="font-size:13.5px;line-height:1.6;color:var(--t2);margin:18px 0 16px;text-wrap:pretty;">{{ lpBody }}</p>
+              <div style="display:flex;flex-direction:column;gap:9px;">
+                <div style="border:1px solid var(--line4);padding:13px 14px;border-left:3px solid #3268a8;"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--t1);">DLPFC-Schleife</div><div style="font-size:12.5px;line-height:1.4;color:var(--t2b);margin-top:5px;">Planung, Arbeitsgedächtnis, kognitive Kontrolle</div></div>
+                <div style="border:1px solid var(--line4);padding:13px 14px;border-left:3px solid #b9763f;"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--t1);">VMPFC/OFC-Schleife</div><div style="font-size:12.5px;line-height:1.4;color:var(--t2b);margin-top:5px;">Bewertung, Motivation, emotionale Regulation</div></div>
+                <div style="border:1px solid var(--line4);padding:13px 14px;border-left:3px solid #3fae6a;"><div style="font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;color:var(--t1);">ACC-Schleife</div><div style="font-size:12.5px;line-height:1.4;color:var(--t2b);margin-top:5px;">Konfliktmonitoring und Handlungsanpassung</div></div>
+              </div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:18px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--t4);"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>Jäncke · Kap. 11.3.3 · Abb. 11-04</div>
+            </div>
+          </div>
+        </sc-if>
+        <sc-if value="{{ isExplorer }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;height:100%;min-height:0;">
+            <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:15px 18px;border-bottom:1px solid var(--line2);">
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Struktur</span>
+              <button title="Einklappen" style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #f26b1f;color:#f26b1f;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            </div>
+            <div style="flex:1;min-height:0;overflow-y:auto;padding:18px;">
+              <div style="display:flex;align-items:center;gap:9px;border:1px solid var(--line3);padding:11px 13px;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--t4);">Struktur suchen</span></div>
+              <div style="border:1px solid var(--line4);border-left:3px solid #b9763f;padding:15px;margin-top:16px;">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Ausgewählt</div>
+                <div style="font-weight:700;font-size:19px;letter-spacing:-.015em;margin-top:6px;">Putamen</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.04em;color:var(--t3);margin-top:5px;">Dorsales Striatum · bilateral</div>
+                <p style="font-size:12.5px;line-height:1.5;color:var(--t2b);margin:12px 0 0;text-wrap:pretty;">Eingangsstruktur der motorischen Schleife; erhält kortikale Projektionen und moduliert Bewegung über das Pallidum.</p>
+                <div style="display:flex;gap:8px;margin-top:15px;">
+                  <button style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:11px;border:1px solid #f26b1f;background:#f26b1f;color:var(--onacc);cursor:pointer;">Isolieren</button>
+                  <button style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:11px;border:1px solid var(--line3);background:transparent;color:var(--t1);cursor:pointer;">Zurücksetzen</button>
+                </div>
+              </div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:20px 0 10px;">Basalganglien</div>
+              <div style="display:flex;flex-direction:column;">
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line2);"><span style="width:10px;height:10px;background:#3268a8;flex:none;"></span><span style="flex:1;font-size:13px;">Ncl. caudatus</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);">L/R</span></div>
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line2);background:rgba(242,107,31,.12);"><span style="width:10px;height:10px;background:#b9763f;flex:none;"></span><span style="flex:1;font-size:13px;font-weight:700;">Putamen</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#f26b1f;">aktiv</span></div>
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line2);"><span style="width:10px;height:10px;background:#3fae6a;flex:none;"></span><span style="flex:1;font-size:13px;">Pallidum</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);">L/R</span></div>
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line2);"><span style="width:10px;height:10px;background:#9a6cb0;flex:none;"></span><span style="flex:1;font-size:13px;">Thalamus</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);">L/R</span></div>
+                <div style="display:flex;align-items:center;gap:11px;padding:11px 4px;border-bottom:1px solid var(--line2);"><span style="width:10px;height:10px;background:#c0494a;flex:none;"></span><span style="flex:1;font-size:13px;">Ncl. accumbens</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);">L/R</span></div>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ collapsed }}" hint-placeholder-val="{{ false }}">
+      <div style="width:30px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel);border-right:1px solid var(--line);cursor:pointer;">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:#f26b1f;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;writing-mode:vertical-rl;">Panel</span></div>
+      </div>
+    </sc-if>
+
+    <!-- VIEWPORT -->
+    <div style="flex:1;min-width:0;position:relative;background:var(--vp);background-image:none;">
+      <div style="position:absolute;bottom:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--t3);display:flex;align-items:center;gap:7px;white-space:nowrap;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg>LATERAL · LINKS</div>
+      <div style="position:absolute;top:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onacc);background:#f26b1f;padding:5px 10px;white-space:nowrap;">{{ chip }}</div>
+      <div style="position:absolute;top:16px;right:18px;width:168px;background:var(--hudbg);border:1px solid var(--hudln);backdrop-filter:blur(10px);padding:12px 13px 13px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Färbung</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--hudtx)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.55;"><path d="m9 18 6-6-6-6"/></svg></div>
+        <div style="display:flex;flex-direction:column;gap:7px;margin-top:9px;">
+          <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#3268a8;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--hudtx);">Kognition</span></div>
+          <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#b9763f;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--hudtx);">Emotion</span></div>
+          <div style="display:flex;align-items:center;gap:9px;"><span style="width:11px;height:11px;background:#3fae6a;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--hudtx);">Motivation</span></div>
+        </div>
+      </div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><image-slot id="vp-app" placeholder="GLB-Render ablegen" shape="rect" style="width:240px;height:240px;pointer-events:auto;opacity:.97;"></image-slot></div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ PORTRAIT: HEADER OBEN + DRAWER UNTEN + DOCK ============ -->
+<sc-if value="{{ isPortrait }}" hint-placeholder-val="{{ false }}">
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;">
+
+    <!-- HEADER -->
+    <div style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line);">
+      <div style="display:flex;align-items:center;gap:11px;">
+        <div style="width:32px;height:32px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--onacc)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+        <div style="line-height:1.05;"><div style="font-weight:700;font-size:14px;letter-spacing:-.01em;">Iflands Neuro</div><div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;margin-top:2px;white-space:nowrap;">Lernvergnügen · {{ modeLabel }}</div></div>
+      </div>
+      <div role="button" tabindex="0" style="display:flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--t1);border:1px solid var(--line5);padding:7px 11px;;cursor:pointer" onClick="{{ themeToggle }}" title="Theme wechseln">{{ themeLabel }}</div>
+    </div>
+
+    <!-- VIEWPORT -->
+    <div style="flex:1;min-height:0;position:relative;background:var(--vp);background-image:none;">
+      <div style="position:absolute;top:14px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onacc);background:#f26b1f;padding:5px 10px;white-space:nowrap;">{{ chip }}</div>
+      <div style="position:absolute;top:14px;right:16px;width:160px;background:var(--hudbg);border:1px solid var(--hudln);backdrop-filter:blur(10px);padding:11px 12px 12px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Färbung</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--hudtx)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="opacity:.55;"><path d="m9 18 6-6-6-6"/></svg></div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-top:8px;">
+          <div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;background:#3268a8;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--hudtx);">Kognition</span></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;background:#b9763f;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--hudtx);">Emotion</span></div>
+          <div style="display:flex;align-items:center;gap:8px;"><span style="width:10px;height:10px;background:#3fae6a;flex:none;"></span><span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--hudtx);">Motivation</span></div>
+        </div>
+      </div>
+      <div style="position:absolute;bottom:14px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--t3);display:flex;align-items:center;gap:7px;white-space:nowrap;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg>LATERAL · LINKS</div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><image-slot id="vp-app" placeholder="GLB-Render ablegen" shape="rect" style="width:220px;height:220px;pointer-events:auto;opacity:.97;"></image-slot></div>
+    </div>
+
+    <!-- BOTTOM DRAWER -->
+    <div style="height:340px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line);">
+      <div style="flex:none;padding:10px 0 6px;display:flex;justify-content:center;"><span style="width:42px;height:5px;border-radius:3px;background:var(--t4);"></span></div>
+
+      <sc-if value="{{ isLernen }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;min-height:0;flex:1;">
+          <div style="flex:none;display:flex;align-items:center;gap:9px;padding:6px 18px 12px;border-bottom:1px solid var(--line2);">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--t3);flex:none;white-space:nowrap;">FOLIE 01 / 21</span>
+            <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line3);color:var(--t1);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+            <div style="flex:1;height:4px;background:var(--line3);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:5%;background:#f26b1f;"></span></div>
+            <button style="width:34px;height:30px;flex:none;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line3);color:var(--t1);cursor:pointer;"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:15px 18px 18px;">
+            <div style="display:flex;align-items:flex-start;gap:10px;">
+              <div style="flex:1;">
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;">Lernpfad · Kapitel 11</div>
+                <div style="font-weight:700;font-size:20px;letter-spacing:-.02em;line-height:1.12;margin-top:6px;text-wrap:pretty;">Drei Basalganglien-Schleifen</div>
+                <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.04em;color:var(--t3);margin-top:5px;">11.3.3 · Abb. 11-04</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:15px;">
+              <div style="display:flex;border:1px solid var(--line4);border-left:3px solid #3268a8;"><div style="width:140px;flex:none;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;">DLPFC-Schleife</div><div style="flex:1;padding:12px;font-size:12.5px;line-height:1.35;color:var(--t2b);border-left:1px solid var(--line2);">Planung, Arbeitsgedächtnis, kognitive Kontrolle</div></div>
+              <div style="display:flex;border:1px solid var(--line4);border-left:3px solid #b9763f;"><div style="width:140px;flex:none;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;">VMPFC/OFC-Schleife</div><div style="flex:1;padding:12px;font-size:12.5px;line-height:1.35;color:var(--t2b);border-left:1px solid var(--line2);">Bewertung, Motivation, emotionale Regulation</div></div>
+              <div style="display:flex;border:1px solid var(--line4);border-left:3px solid #3fae6a;"><div style="width:140px;flex:none;padding:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;">ACC-Schleife</div><div style="flex:1;padding:12px;font-size:12.5px;line-height:1.35;color:var(--t2b);border-left:1px solid var(--line2);">Konfliktmonitoring und Handlungsanpassung</div></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isExplorer }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;min-height:0;flex:1;">
+          <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:6px 18px 12px;border-bottom:1px solid var(--line2);">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Struktur · Putamen</span>
+          </div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:15px 18px 18px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div style="border:1px solid var(--line4);border-left:3px solid #b9763f;padding:14px;">
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Ausgewählt</div>
+              <div style="font-weight:700;font-size:18px;letter-spacing:-.015em;margin-top:6px;">Putamen</div>
+              <p style="font-size:12.5px;line-height:1.5;color:var(--t2b);margin:10px 0 0;text-wrap:pretty;">Eingangsstruktur der motorischen Schleife; erhält kortikale Projektionen und moduliert Bewegung über das Pallidum.</p>
+              <div style="display:flex;gap:8px;margin-top:14px;"><button style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:10px;border:1px solid #f26b1f;background:#f26b1f;color:var(--onacc);cursor:pointer;">Isolieren</button><button style="flex:1;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:10px;border:1px solid var(--line3);background:transparent;color:var(--t1);cursor:pointer;">Reset</button></div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:8px;">Basalganglien</div>
+              <div style="display:flex;flex-direction:column;">
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line2);"><span style="width:9px;height:9px;background:#3268a8;flex:none;"></span><span style="flex:1;font-size:12.5px;">Ncl. caudatus</span></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line2);background:rgba(242,107,31,.12);"><span style="width:9px;height:9px;background:#b9763f;flex:none;"></span><span style="flex:1;font-size:12.5px;font-weight:700;">Putamen</span></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line2);"><span style="width:9px;height:9px;background:#3fae6a;flex:none;"></span><span style="flex:1;font-size:12.5px;">Pallidum</span></div>
+                <div style="display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line2);"><span style="width:9px;height:9px;background:#9a6cb0;flex:none;"></span><span style="flex:1;font-size:12.5px;">Thalamus</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- GLOBALE NAVIGATION -->
+    <ifn-nav variant="dock" active="{{ navActive }}"></ifn-nav>
+  </div>
+</sc-if>
+
+<!-- ============ ZUSTAND-OVERLAY (laut statt still) ============ -->
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="width:100%;max-width:440px;padding:40px 36px;box-sizing:border-box;text-align:center;">
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:38px;height:38px;border:3px solid var(--line3);border-top-color:#f26b1f;border-radius:50%;animation:scSpin .8s linear infinite;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#f26b1f;">Lädt</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Szene wird geladen …</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--t3);">Lernpfad · Kamera · Overlays</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16"/><path d="M3 9h18M8 14h8M8 17h5"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--t4);">Leer</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Keine Szene aktiv</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Wähle einen Lernpfad oder wechsle den Modus über die Leiste.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;border:1px solid #7a3326;background:rgba(192,73,74,.12);padding:30px 26px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#e06a4a;">Fehler · nicht still</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Szene nicht ladbar</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">GLB-Quelle fehlt — kein stiller Platzhalter. Quelle prüfen.</div>
+          <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Erneut versuchen</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1194,&quot;height&quot;:834},&quot;mode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;lernen&quot;,&quot;explorer&quot;],&quot;default&quot;:&quot;lernen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;hell&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Füllen&quot;,&quot;iPhone&quot;,&quot;iPad Mini&quot;,&quot;iPad Pro 11″&quot;,&quot;iPad Pro 12,9″&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Füllen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;orientation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portrait&quot;,&quot;landscape&quot;],&quot;default&quot;:&quot;landscape&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;collapsed&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;}}">
+class Component extends DCLogic {
+  _theme(){ if(this.state && this.state.theme) return this.state.theme; try{var t=localStorage.getItem('ifn-theme'); if(t==='hell'||t==='dark') return t;}catch(e){} return (this.props.theme === 'hell' ? 'hell' : 'dark'); }
+  _themeToggle = () => { var nx = this._theme()==='hell' ? 'dark' : 'hell'; try{localStorage.setItem('ifn-theme', nx);}catch(e){} this.setState({ theme: nx }); };
+  state = { w: 0, h: 0 }
+  setRoot = (el) => {
+    if (!el || el === this._root) return;
+    this._root = el; this._applyDev(el);
+    const measure = () => this.setState({ w: el.clientWidth, h: el.clientHeight });
+    measure();
+    this._ro = new ResizeObserver(measure);
+    this._ro.observe(el);
+  }
+  componentWillUnmount() { if (this._ro) try { this._ro.disconnect(); } catch (e) {} }
+  _DEV = { 'iPhone':[393,852,47], 'iPad Mini':[744,1133,24], 'iPad Pro 11″':[834,1194,22], 'iPad Pro 12,9″':[1024,1366,20], 'Desktop':[1440,900,10] };
+  _applyDev(el){ if(!el) return; var info=this._DEV[this.props.device]; var p=el.parentElement; if(info){ var isD=this.props.device==='Desktop'; var land=isD||this.props.orientation==='landscape'; var dw=isD?info[0]:(land?info[1]:info[0]); var dh=isD?info[1]:(land?info[0]:info[1]); var bez=isD?12:16; el.style.width=dw+'px'; el.style.height=dh+'px'; el.style.flex='none'; el.style.borderRadius=info[2]+'px'; el.style.overflow='hidden'; el.style.boxShadow='0 0 0 '+bez+'px #0c0c0c, 0 0 0 '+(bez+2)+'px #2c2c2c, 0 40px 100px rgba(0,0,0,.55)'; if(p){ p.style.display='flex'; p.style.alignItems='center'; p.style.justifyContent='center'; p.style.height='100vh'; p.style.minHeight='100vh'; p.style.overflow='hidden'; p.style.boxSizing='border-box'; p.style.background='#15140f'; } var aw=window.innerWidth, ah=window.innerHeight; var pad=60+bez*2; var s=Math.min(1,(aw-pad)/dw,(ah-pad)/dh); if(!isFinite(s)||s<=0) s=1; el.style.transformOrigin='center center'; el.style.transform='scale('+s+')'; if(!this._devResize){ this._devResize=function(){ this._applyDev(this._root); }.bind(this); window.addEventListener('resize',this._devResize); } } else { el.style.width='100%'; el.style.height='100%'; el.style.flex=''; el.style.borderRadius=''; el.style.transform=''; el.style.transformOrigin=''; el.style.boxShadow=''; if(p){ p.style.display=''; p.style.alignItems=''; p.style.justifyContent=''; p.style.height=''; p.style.minHeight=''; p.style.overflow=''; p.style.background=''; } } }
+  componentDidUpdate(prev){ if(prev && (prev.device!==this.props.device || prev.orientation!==this.props.orientation) && this._root){ this._applyDev(this._root); this.setState({ w:this._root.clientWidth, h:this._root.clientHeight }); } }
+  renderVals() {
+    const urlMode = (()=>{ try{ return new URLSearchParams(location.search).get('mode'); }catch(e){ return null; } })();
+    const mode = (this.props.mode === 'explorer' || urlMode === 'explorer') ? 'explorer' : 'lernen';
+    const isLernen = mode === 'lernen';
+    const propCollapsed = this.props.collapsed === true || this.props.collapsed === 'true';
+    const muted = 'var(--t4)';
+    // container-query tiers: measured size decides layout, not orientation alone
+    const w = this.state.w || (this.props.orientation === 'portrait' ? 420 : 1280);
+    const h = this.state.h || (this.props.orientation === 'portrait' ? 880 : 800);
+    const shortLandscape = h < 480 && w > h;        // phone landscape
+    const columns = w >= 820 && !shortLandscape;     // ipad11/13 portrait, all landscape, desktop
+    const isPortrait = !columns && !shortLandscape;  // phone portrait, ipad-mini portrait → stacked
+    const collapsed = shortLandscape ? true : (propCollapsed && columns); // short landscape hides panel
+    const LP = [
+      {n:'01',k:'Lernpfad · Kapitel 11',t:'Drei Basalganglien-Schleifen',s:'11.3.3 · Abb. 11-04',b:'Drei fronto-striatale Schleifen ordnen die exekutiven Funktionen. Jede projiziert über Striatum, Pallidum und Thalamus zurück in ihr frontales Kontrollnetz.'},
+      {n:'02',k:'Lernpfad · Schleife 1',t:'DLPFC-Schleife',s:'11.3.4 · dorsolateral',b:'Der dorsolaterale Pfad trägt Planung, Arbeitsgedächtnis und kognitive Kontrolle — die „Denk"-Schleife des Frontalhirns.'},
+      {n:'03',k:'Lernpfad · Schleife 2',t:'VMPFC / OFC-Schleife',s:'11.3.5 · ventromedial',b:'Der ventromediale/orbitofrontale Pfad bewertet Reize, steuert Motivation und reguliert Emotion — genau der Pfad, der im Fall Gage zerstört wurde.'},
+      {n:'04',k:'Lernpfad · Schleife 3',t:'ACC-Schleife',s:'11.3.6 · cingulär',b:'Der cinguläre Pfad überwacht Konflikte und passt Handlungen an — die Grundlage von Fehlererkennung und -korrektur.'},
+    ];
+    const lpStep = (this.state && this.state.lpStep!=null) ? Math.max(0, Math.min(LP.length-1, this.state.lpStep)) : 0;
+    const lp = LP[lpStep];
+    return {
+      lpNum: lp.n, lpKicker: lp.k, lpTitle: lp.t, lpSub: lp.s, lpBody: lp.b,
+      lpProgress: Math.round((lpStep+1)/21*100)+'%',
+      lpPrev: ()=> this.setState(function(st){ var c=(st&&st.lpStep!=null)?st.lpStep:0; return { lpStep: Math.max(0,c-1) }; }),
+      lpNext: ()=> this.setState(function(st){ var c=(st&&st.lpStep!=null)?st.lpStep:0; return { lpStep: Math.min(3,c+1) }; }),
+      setRoot: this.setRoot, themeAttr: this._theme(), themeLabel: this._theme() === 'hell' ? 'Dunkel' : 'Hell', themeToggle: this._themeToggle, isHell: this._theme()==='hell', notHell: this._theme()!=='hell',
+      goHome: ()=>{ location.href='LauncherFrame.dc.html'; },
+      goFaerbung: ()=>{ location.href='FaerbungFrame.dc.html'; },
+      goKapitel: ()=>{ location.href='WikiFrame.dc.html'; },
+      goMehr: ()=>{ location.href='SettingsFrame.dc.html'; },
+      navActive: isLernen ? 'lernen' : 'explorer',
+      st: (this.props.state||'idle'), showState: (this.props.state||'idle')!=='idle', isLoading: this.props.state==='loading', isEmpty: this.props.state==='empty', isError: this.props.state==='error',
+      isLernen,
+      isExplorer: !isLernen,
+      isPortrait,
+      isLandscape: columns || shortLandscape,
+      collapsed,
+      showPanel: (columns || shortLandscape) ? !collapsed : false,
+      modeLabel: isLernen ? 'Lernen' : 'Explorer',
+      chip: isLernen ? 'Modus · Lernen' : 'Modus · Explorer',
+      actModus: !isLernen,
+      actInhalt: isLernen,
+      cModus: !isLernen ? 'var(--t1)' : muted,
+      cInhalt: isLernen ? 'var(--t1)' : muted,
+    };
+  }
+}
+</script>
+</body>
+</html>

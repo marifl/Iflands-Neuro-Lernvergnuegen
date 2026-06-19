@@ -1,0 +1,414 @@
+[
+  {
+    "file": "01-mobile-launcher.png",
+    "surface": "Start / launcher",
+    "path": "/",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hasTouch": true,
+    "waitForText": {},
+    "dartScope": "iBJCrwzOMeU6 / I3SsEI0tLcqq",
+    "frames": [
+      "LauncherFrame.dc.html",
+      "Device Matrix - Launcher Faelle Onboarding v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 368,
+        "height": 589
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN · KAPITEL 11\nWomit möchtest du starten?\n\nWähle einen Modus. Du kannst jederzeit unten in der Fussleiste unter „Modus\" wechseln.\n\nLERNEN\nEMPFOHLEN\nLERNPF"
+    },
+    "errors": []
+  },
+  {
+    "file": "02-mobile-learning-step.png",
+    "surface": "Learning step",
+    "path": "/?mode=learn&config=vcpt&scene=vcpt",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hasTouch": true,
+    "waitForSelector": "[aria-label=\"Szene springen\"]",
+    "dartScope": "I3SsEI0tLcqq / 1rYGOyvdhRm8",
+    "frames": [
+      "AppFrame.dc.html",
+      "Viewport 3D v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 368,
+        "height": 330
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nLERNPFAD\nLernpfad Kapitel 11\nFolie 16 / 21 · Step 1\nVisueller Konzentrationsverlaufstest (VCPT)\n◀\n16 / 21\n▶\n11-14\nVisueller Konzentrationsverlaufstest (VCPT)\nNO-GO\nReiz 2/6\n"
+    },
+    "errors": []
+  },
+  {
+    "file": "03-mobile-explorer-drawer.png",
+    "surface": "Explorer supplement / mobile drawer",
+    "path": "/?mode=explore",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hasTouch": true,
+    "action": "open-structure-drawer",
+    "dartScope": "I3SsEI0tLcqq / EQrweA6CmVE8",
+    "frames": [
+      "ExplorerToolsFrame.dc.html",
+      "Device Matrix v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 368,
+        "height": 589
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nSTRUKTUR\nStruktur anklicken\nSTRUKTURBAUM\nFÄRBUNG\nAnatomisch\naktiver Färbungsmodus\nKognition\nEmotion\nMotivation\nSTRUKTURBAUM\nSCHLIESSEN\nSTRUKTURBAUM\nANSICHT\nVOLLER ATLAS\nKAPI"
+    },
+    "errors": []
+  },
+  {
+    "file": "04-mobile-phineas-case.png",
+    "surface": "Case supplement / Phineas",
+    "path": "/?mode=phineas",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hasTouch": true,
+    "waitForText": {},
+    "dartScope": "I3SsEI0tLcqq / dSfvOVH6Dwoq",
+    "frames": [
+      "FaelleFrame.dc.html",
+      "FaelleBrowserFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 368,
+        "height": 330
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nFALLSTUDIE\nPhineas Gage (1848)\nKAP. 11 · VAN HORN ET AL. 2012 · SCHRITT 1/6\n1 — 13. September 1848: Beim Sprengen einer Eisenbahntrasse treibt eine Explosion dem Vorarbeiter"
+    },
+    "errors": []
+  },
+  {
+    "file": "05-mobile-atlas-supplement.png",
+    "surface": "Atlas supplement",
+    "path": "/?mode=atlas",
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "hasTouch": true,
+    "waitForText": {},
+    "dartScope": "I3SsEI0tLcqq / AtlasErpFrame.dc.html",
+    "frames": [
+      "AtlasErpFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 368,
+        "height": 589
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nATLAS · FSAVERAGE\nStandardhirn — Regionen präzise.\nNicht das TARO-Lern-Hirn.\n–\n▸ MAKROANATOMIE\n–\n▸ ZYTOARCHITEKTONIK\nOBERFLAECHE\nINFLATEDPIAL\nAREAL\nBewege oder klicke auf ei"
+    },
+    "errors": []
+  },
+  {
+    "file": "06-mobile-landscape-learning.png",
+    "surface": "Phone landscape learning",
+    "path": "/?mode=learn&config=vcpt&scene=vcpt",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "hasTouch": true,
+    "waitForSelector": "[aria-label=\"Szene springen\"]",
+    "dartScope": "I3SsEI0tLcqq / HfDyMF0aT88a",
+    "frames": [
+      "AppFrame.dc.html",
+      "Device Matrix v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "landscape-rail",
+      "canvas": {
+        "width": 451,
+        "height": 252
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nLERNPFAD\nLernpfad Kapitel 11\nFolie 16 / 21 · Step 1\nVisueller Konzentrationsverlaufstest (VCPT)\n◀\n16 / 21\n▶\n11-14\nVisueller Konzentrationsverlaufstest (VCPT)\nNO-GO\nReiz 2/6\n"
+    },
+    "errors": []
+  },
+  {
+    "file": "07-tablet-portrait-learning.png",
+    "surface": "Tablet portrait learning",
+    "path": "/?mode=learn&config=vcpt&scene=vcpt",
+    "viewport": {
+      "width": 768,
+      "height": 1024
+    },
+    "hasTouch": true,
+    "waitForSelector": "[aria-label=\"Szene springen\"]",
+    "dartScope": "I3SsEI0tLcqq / HfDyMF0aT88a",
+    "frames": [
+      "Device Matrix v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 746,
+        "height": 460
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nLERNPFAD\nLernpfad Kapitel 11\nFolie 16 / 21 · Step 1\nVisueller Konzentrationsverlaufstest (VCPT)\n◀\n16 / 21\n▶\n11-14\nVisueller Konzentrationsverlaufstest (VCPT)\nNO-GO\nReiz 2/6\n"
+    },
+    "errors": []
+  },
+  {
+    "file": "08-tablet-landscape-explorer.png",
+    "surface": "Tablet landscape explorer",
+    "path": "/?mode=explore",
+    "viewport": {
+      "width": 1024,
+      "height": 768
+    },
+    "hasTouch": true,
+    "waitForSelector": "[data-testid=\"structure-tree-panel\"]",
+    "dartScope": "I3SsEI0tLcqq / EQrweA6CmVE8",
+    "frames": [
+      "ExplorerToolsFrame.dc.html",
+      "Device Matrix v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "landscape-rail",
+      "canvas": {
+        "width": 551,
+        "height": 623
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nSTRUKTUR\nStruktur anklicken\nFÄRBUNG\nAnatomisch\naktiver Färbungsmodus\nKognition\nEmotion\nMotivation\nSTRUKTURBAUM\nANSICHT\nVOLLER ATLAS\nKAPITEL "
+    },
+    "errors": []
+  },
+  {
+    "file": "09-ipad-pro-portrait-learning.png",
+    "surface": "Large tablet portrait learning",
+    "path": "/?mode=learn&config=vcpt&scene=vcpt",
+    "viewport": {
+      "width": 834,
+      "height": 1194
+    },
+    "hasTouch": true,
+    "waitForSelector": "[aria-label=\"Szene springen\"]",
+    "dartScope": "I3SsEI0tLcqq / HfDyMF0aT88a",
+    "frames": [
+      "Device Matrix v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "portrait-drawer",
+      "canvas": {
+        "width": 812,
+        "height": 460
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "DUNKEL\nLERNPFAD\nLernpfad Kapitel 11\nFolie 16 / 21 · Step 1\nVisueller Konzentrationsverlaufstest (VCPT)\n◀\n16 / 21\n▶\n11-14\nVisueller Konzentrationsverlaufstest (VCPT)\nNO-GO\nReiz 2/6\n"
+    },
+    "errors": []
+  },
+  {
+    "file": "10-ipad-pro-landscape-atlas.png",
+    "surface": "Large tablet landscape atlas",
+    "path": "/?mode=atlas",
+    "viewport": {
+      "width": 1194,
+      "height": 834
+    },
+    "hasTouch": true,
+    "waitForText": {},
+    "dartScope": "I3SsEI0tLcqq / AtlasErpFrame.dc.html",
+    "frames": [
+      "AtlasErpFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 1172,
+        "height": 703
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nATLAS · FSAVERAGE\nStandardhirn — Regionen präzise.\nNicht das TARO-Lern-Hirn.\n–\n▸ MAKROANATOMIE\n–\n▸ ZYTOARCHITEKTONIK\nOBERFLAECHE\nINFLATEDPIA"
+    },
+    "errors": []
+  },
+  {
+    "file": "11-large-tablet-portrait-phineas.png",
+    "surface": "Large tablet portrait Phineas",
+    "path": "/?mode=phineas",
+    "viewport": {
+      "width": 1024,
+      "height": 1366
+    },
+    "hasTouch": true,
+    "waitForText": {},
+    "dartScope": "I3SsEI0tLcqq / dSfvOVH6Dwoq",
+    "frames": [
+      "FaelleFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 542,
+        "height": 1235
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nFALLSTUDIE\nPhineas Gage (1848)\nKAP. 11 · VAN HORN ET AL. 2012 · SCHRITT 1/6\n1 — 13. September 1848: Beim Sprengen einer Eisenbahntrasse trei"
+    },
+    "errors": []
+  },
+  {
+    "file": "12-large-tablet-landscape-explorer.png",
+    "surface": "Large tablet landscape explorer",
+    "path": "/?mode=explore",
+    "viewport": {
+      "width": 1366,
+      "height": 1024
+    },
+    "hasTouch": true,
+    "waitForSelector": "[data-testid=\"structure-tree-panel\"]",
+    "dartScope": "I3SsEI0tLcqq / EQrweA6CmVE8",
+    "frames": [
+      "ExplorerToolsFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 1004,
+        "height": 893
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nSTRUKTUR\nStruktur anklicken\nFÄRBUNG\nAnatomisch\naktiver Färbungsmodus\nKognition\nEmotion\nMotivation\nSTRUKTURBAUM\nANSICHT\nVOLLER ATLAS\nKAPITEL "
+    },
+    "errors": []
+  },
+  {
+    "file": "13-desktop-learning-step.png",
+    "surface": "Desktop learning step",
+    "path": "/?mode=learn&config=vcpt&scene=vcpt",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "hasTouch": false,
+    "waitForSelector": "[aria-label=\"Szene springen\"]",
+    "dartScope": "I3SsEI0tLcqq / 1rYGOyvdhRm8",
+    "frames": [
+      "AppFrame.dc.html",
+      "Viewport 3D v2.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 958,
+        "height": 777
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nLERNPFAD\nLernpfad Kapitel 11\nFolie 16 / 21 · Step 1\nVisueller Konzentrationsverlaufstest (VCPT)\n◀\n16 / 21\n▶\n11-14\nVisueller Konzentrationsve"
+    },
+    "errors": []
+  },
+  {
+    "file": "14-desktop-explorer-supplement.png",
+    "surface": "Desktop explorer supplement",
+    "path": "/?mode=explore",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "hasTouch": false,
+    "waitForSelector": "[data-testid=\"structure-tree-panel\"]",
+    "dartScope": "I3SsEI0tLcqq / EQrweA6CmVE8",
+    "frames": [
+      "ExplorerToolsFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 1078,
+        "height": 777
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nSTRUKTUR\nStruktur anklicken\nFÄRBUNG\nAnatomisch\naktiver Färbungsmodus\nKognition\nEmotion\nMotivation\nSTRUKTURBAUM\nANSICHT\nVOLLER ATLAS\nKAPITEL "
+    },
+    "errors": []
+  },
+  {
+    "file": "15-desktop-atlas-supplement.png",
+    "surface": "Desktop atlas supplement",
+    "path": "/?mode=atlas",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "hasTouch": false,
+    "waitForText": {},
+    "dartScope": "I3SsEI0tLcqq / AtlasErpFrame.dc.html",
+    "frames": [
+      "AtlasErpFrame.dc.html"
+    ],
+    "status": "PASS",
+    "inspection": {
+      "shell": "desktop-split",
+      "canvas": {
+        "width": 1418,
+        "height": 777
+      },
+      "overflowX": 0,
+      "debugVisible": false,
+      "bodyTextSample": "IFLANDS NEURO LERNVERGNÜGEN\nDUNKEL\nHELL\nATLAS · FSAVERAGE\nStandardhirn — Regionen präzise.\nNicht das TARO-Lern-Hirn.\n–\n▸ MAKROANATOMIE\n–\n▸ ZYTOARCHITEKTONIK\nOBERFLAECHE\nINFLATEDPIA"
+    },
+    "errors": []
+  }
+]

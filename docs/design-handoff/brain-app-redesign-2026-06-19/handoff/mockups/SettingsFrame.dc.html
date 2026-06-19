@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>
+[data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);--brain:#475264;}
+[data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);--brain:#8d8a84;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+<helmet><script src="./ifn-nav.js"></script></helmet>
+<helmet><script src="./a11y.js"></script></helmet>
+
+<div ref="{{ setRoot }}" data-theme="{{ themeAttr }}" style="width:100%;height:100%;background:var(--bg);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);overflow:hidden;position:relative;">
+<!-- ============ ZUSTAND-OVERLAY (laut statt still) ============ -->
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="width:100%;max-width:440px;padding:40px 36px;box-sizing:border-box;text-align:center;">
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:38px;height:38px;border:3px solid var(--line3);border-top-color:#f26b1f;border-radius:50%;animation:scSpin .8s linear infinite;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#f26b1f;">Lädt</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Einstellungen werden geladen …</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--t3);">Konto · Theme · A11y</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 0 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 14H3a2 2 0 0 1 0-4h.1A1.6 1.6 0 0 0 4.6 7"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--t4);">Leer</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Keine Einstellungen</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Profil nicht geladen — Konto erneut verbinden.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;border:1px solid #7a3326;background:rgba(192,73,74,.12);padding:30px 26px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#e06a4a;">Fehler · nicht still</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Einstellungen nicht ladbar</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Konto-Quelle fehlt — kein stiller Default.</div>
+          <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Erneut versuchen</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<helmet><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></helmet>
+
+<!-- LANDSCAPE -->
+<sc-if value="{{ isLandscape }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%;height:100%;display:flex;">
+    <ifn-nav variant="rail" active="settings" here="settings"></ifn-nav>
+    <!-- category nav -->
+    <div style="width:236px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);">
+      <div style="flex:none;padding:18px 16px 14px;border-bottom:1px solid var(--line2);"><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;">Mehr</div><div style="font-size:19px;font-weight:700;letter-spacing:-.02em;margin-top:5px;">Einstellungen</div></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 0;font-size:12.5px;">
+        <div style="padding:11px 14px;color:var(--t1);border-left:3px solid #f26b1f;background:var(--sel);">Darstellung & A11y</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Start & Modus</div>
+        <div style="padding:11px 14px;color:var(--t2b);">3D-Viewport</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Färbung</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Lernpfad</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Sprache</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Atlas & Sammlungen</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Presenter</div>
+        <div style="padding:11px 14px;color:var(--t2b);">Daten & Konto</div>
+      </div>
+    </div>
+    <!-- content -->
+    <div style="flex:1;min-width:0;display:flex;flex-direction:column;">
+      <div style="flex:none;padding:20px 28px 16px;border-bottom:1px solid var(--line2);"><div style="font-size:21px;font-weight:700;letter-spacing:-.02em;">Darstellung & Barrierefreiheit</div><div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--t3);margin-top:4px;">ADHD-/Autism-freundliche Defaults</div></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:22px 28px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:12px;">Darstellung</div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div><div style="font-size:14px;font-weight:600;">Theme</div></div><div style="display:flex;border:1px solid var(--line3);"><span onClick="{{ setSys }}" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;padding:8px 13px;color:var(--t2b);border-right:1px solid var(--line3);cursor:pointer;">System</span><span onClick="{{ setHell }}" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;padding:8px 13px;color:var(--t2b);border-right:1px solid var(--line3);cursor:pointer;{{ segHellOn }}">Hell</span><span onClick="{{ setDark }}" style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;padding:8px 13px;color:var(--t2b);cursor:pointer;{{ segDarkOn }}">Dunkel</span></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div style="font-size:14px;font-weight:600;">Schriftgröße</div><div style="width:200px;height:4px;background:var(--line3);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:40%;background:#f26b1f;"></span><span style="position:absolute;left:40%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#f26b1f;"></span></div></div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:24px 0 12px;">Barrierefreiheit</div>
+        <div role="button" tabindex="0" onClick="{{ toggleRuhe }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);cursor:pointer;"><div><div style="font-size:14px;font-weight:600;">Ruhemodus</div><div style="font-size:12px;color:var(--t3);margin-top:2px;">Reizarm, ein Fokus pro Screen.</div></div><span style="width:42px;height:23px;border-radius:12px;position:relative;flex:none;{{ ruheTrack }}"><span style="position:absolute;top:3px;width:17px;height:17px;border-radius:50%;{{ ruheKnob }}"></span></span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div><div style="font-size:14px;font-weight:600;">Bewegung reduzieren</div></div><span style="width:42px;height:23px;border-radius:12px;background:#f26b1f;position:relative;flex:none;"><span style="position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;background:var(--onacc);"></span></span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;"><div><div style="font-size:14px;font-weight:600;">Hoher Kontrast</div></div><span style="width:42px;height:23px;border-radius:12px;background:var(--ctrl);position:relative;flex:none;"><span style="position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--ctrlk);"></span></span></div>
+      </div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- PORTRAIT -->
+<sc-if value="{{ isPortrait }}" hint-placeholder-val="{{ false }}">
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;">
+    <div style="height:52px;flex:none;display:flex;align-items:center;gap:11px;padding:0 16px;border-bottom:1px solid var(--line);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg><span style="flex:1;font-size:15px;font-weight:700;">Darstellung & A11y</span></div>
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:11px;">Darstellung</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div style="font-size:14px;font-weight:600;">Theme</div><div style="display:flex;border:1px solid var(--line3);"><span onClick="{{ setHell }}" style="font-family:'IBM Plex Mono',monospace;font-size:9px;padding:7px 11px;color:var(--t2b);border-right:1px solid var(--line3);cursor:pointer;{{ segHellOn }}">Hell</span><span onClick="{{ setDark }}" style="font-family:'IBM Plex Mono',monospace;font-size:9px;padding:7px 11px;color:var(--t2b);cursor:pointer;{{ segDarkOn }}">Dunkel</span></div></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div style="font-size:14px;font-weight:600;">Schriftgröße</div><div style="width:130px;height:4px;background:var(--line3);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:40%;background:#f26b1f;"></span><span style="position:absolute;left:40%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#f26b1f;"></span></div></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:22px 0 11px;">Barrierefreiheit</div>
+      <div role="button" tabindex="0" onClick="{{ toggleRuhe }}" style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);cursor:pointer;"><div><div style="font-size:14px;font-weight:600;">Ruhemodus</div><div style="font-size:11.5px;color:var(--t3);margin-top:2px;">Reizarm, ein Fokus.</div></div><span style="width:42px;height:23px;border-radius:12px;position:relative;flex:none;{{ ruheTrack }}"><span style="position:absolute;top:3px;width:17px;height:17px;border-radius:50%;{{ ruheKnob }}"></span></span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line2);"><div style="font-size:14px;font-weight:600;">Bewegung reduzieren</div><span style="width:42px;height:23px;border-radius:12px;background:#f26b1f;position:relative;flex:none;"><span style="position:absolute;top:3px;right:3px;width:17px;height:17px;border-radius:50%;background:var(--onacc);"></span></span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 0;"><div style="font-size:14px;font-weight:600;">Hoher Kontrast</div><span style="width:42px;height:23px;border-radius:12px;background:var(--ctrl);position:relative;flex:none;"><span style="position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:var(--ctrlk);"></span></span></div>
+    </div>
+    <ifn-nav variant="dock" active="settings" here="settings"></ifn-nav>
+  </div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1194,&quot;height&quot;:834},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;hell&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Füllen&quot;,&quot;iPhone&quot;,&quot;iPad Mini&quot;,&quot;iPad Pro 11″&quot;,&quot;iPad Pro 12,9″&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Füllen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;orientation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portrait&quot;,&quot;landscape&quot;],&quot;default&quot;:&quot;portrait&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  _theme(){ if(this.state && this.state.theme) return this.state.theme; try{var t=localStorage.getItem('ifn-theme'); if(t==='hell'||t==='dark') return t;}catch(e){} return (this.props.theme === 'hell' ? 'hell' : 'dark'); }
+  _themeToggle = () => { var nx = this._theme()==='hell' ? 'dark' : 'hell'; try{localStorage.setItem('ifn-theme', nx);}catch(e){} this.setState({ theme: nx }); };
+  state = { w: 0, h: 0 }
+  setRoot = (el) => {
+    if (!el || el === this._root) return;
+    this._root = el; this._applyDev(el);
+    const m = () => this.setState({ w: el.clientWidth, h: el.clientHeight });
+    m(); this._ro = new ResizeObserver(m); this._ro.observe(el);
+  }
+  componentWillUnmount() { if (this._ro) try { this._ro.disconnect(); } catch (e) {} }
+  _DEV = { 'iPhone':[393,852,47], 'iPad Mini':[744,1133,24], 'iPad Pro 11″':[834,1194,22], 'iPad Pro 12,9″':[1024,1366,20], 'Desktop':[1440,900,10] };
+  _applyDev(el){ if(!el) return; var info=this._DEV[this.props.device]; var p=el.parentElement; if(info){ var isD=this.props.device==='Desktop'; var land=isD||this.props.orientation==='landscape'; var dw=isD?info[0]:(land?info[1]:info[0]); var dh=isD?info[1]:(land?info[0]:info[1]); var bez=isD?12:16; el.style.width=dw+'px'; el.style.height=dh+'px'; el.style.flex='none'; el.style.borderRadius=info[2]+'px'; el.style.overflow='hidden'; el.style.boxShadow='0 0 0 '+bez+'px #0c0c0c, 0 0 0 '+(bez+2)+'px #2c2c2c, 0 40px 100px rgba(0,0,0,.55)'; if(p){ p.style.display='flex'; p.style.alignItems='center'; p.style.justifyContent='center'; p.style.height='100vh'; p.style.minHeight='100vh'; p.style.overflow='hidden'; p.style.boxSizing='border-box'; p.style.background='#15140f'; } var aw=window.innerWidth, ah=window.innerHeight; var pad=60+bez*2; var s=Math.min(1,(aw-pad)/dw,(ah-pad)/dh); if(!isFinite(s)||s<=0) s=1; el.style.transformOrigin='center center'; el.style.transform='scale('+s+')'; if(!this._devResize){ this._devResize=function(){ this._applyDev(this._root); }.bind(this); window.addEventListener('resize',this._devResize); } } else { el.style.width='100%'; el.style.height='100%'; el.style.flex=''; el.style.borderRadius=''; el.style.transform=''; el.style.transformOrigin=''; el.style.boxShadow=''; if(p){ p.style.display=''; p.style.alignItems=''; p.style.justifyContent=''; p.style.height=''; p.style.minHeight=''; p.style.overflow=''; p.style.background=''; } } }
+  componentDidUpdate(prev){ if(prev && (prev.device!==this.props.device || prev.orientation!==this.props.orientation) && this._root){ this._applyDev(this._root); this.setState({ w:this._root.clientWidth, h:this._root.clientHeight }); } }
+  _ruhe(){ if(this.state && this.state.ruhe!=null) return this.state.ruhe; try{return localStorage.getItem('ifn-ruhe')==='1';}catch(e){return false;} }
+  _toggleRuhe = () => { var nx=!this._ruhe(); if(window.ifnSetRuhe) window.ifnSetRuhe(nx); else { try{localStorage.setItem('ifn-ruhe', nx?'1':'0');}catch(e){} } this.setState({ruhe:nx}); };
+  renderVals() {
+    const w = this.state.w || (this.props.orientation === 'portrait' ? 420 : 1280);
+    const h = this.state.h || (this.props.orientation === 'portrait' ? 880 : 800);
+    const shortLandscape = h < 480 && w > h;
+    const portrait = w < 820 && !shortLandscape;
+    const hell = this._theme() === 'hell';
+    const onSeg = 'background:#f26b1f;color:var(--onacc);font-weight:600;';
+    return { setRoot: this.setRoot, themeAttr: this._theme(), themeLabel: this._theme() === 'hell' ? 'Dunkel' : 'Hell', themeToggle: this._themeToggle, isHell: this._theme()==='hell', notHell: this._theme()!=='hell', st: (this.props.state||'idle'), showState: (this.props.state||'idle')!=='idle', isLoading: this.props.state==='loading', isEmpty: this.props.state==='empty', isError: this.props.state==='error', isPortrait: portrait, isLandscape: !portrait,
+      segHellOn: hell ? onSeg : '', segDarkOn: hell ? '' : onSeg,
+      ruheOn: this._ruhe(), toggleRuhe: this._toggleRuhe,
+      ruheTrack: this._ruhe() ? 'background:#f26b1f;' : 'background:var(--ctrl);',
+      ruheKnob: this._ruhe() ? 'right:3px;background:var(--onacc);' : 'left:3px;background:var(--ctrlk);',
+      setHell: () => this.setState({ theme: 'hell' }), setDark: () => this.setState({ theme: 'dark' }),
+      setSys: () => this.setState({ theme: this.props.theme === 'hell' ? 'hell' : 'dark' }) };
+  }
+}
+</script>
+</body>
+</html>
