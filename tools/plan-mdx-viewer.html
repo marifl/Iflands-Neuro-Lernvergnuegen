@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ALRAH Plan/Recap MDX Viewer</title>
+<style>
+  :root{
+    color-scheme: light dark;
+    --bg:#f6f7f9; --paper:#fff; --ink:#0f172a; --muted:#64748b; --line:#d7dce3;
+    --accent:#2563eb; --soft:#eff6ff; --add:#e6ffed; --addln:#a7f3c0; --del:#ffeef0; --delln:#f5b8c0;
+    --code:#f4f5f7; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --badge-added:#1a7f37; --badge-modified:#9a6700; --badge-removed:#cf222e; --badge-renamed:#8250df;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#0b0f17; --paper:#0f172a; --ink:#e2e8f0; --muted:#94a3b8; --line:#26344a;
+    --soft:#15233f; --add:#0f2a17; --addln:#1f6f3a; --del:#2a1416; --delln:#7a2230; --code:#111a2b;
+  }}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink)}
+  main{max-width:1100px;margin:0 auto;padding:32px 20px 64px}
+  h1{font-size:clamp(1.6rem,4vw,2.6rem);margin:0 0 6px}
+  h2{font-size:1.3rem;margin:30px 0 10px;border-bottom:1px solid var(--line);padding-bottom:6px}
+  h3{font-size:1.05rem;margin:18px 0 8px}
+  p,li{line-height:1.6}
+  a{color:var(--accent)}
+  code{font-family:var(--mono);background:var(--code);padding:1px 5px;border-radius:4px;font-size:.9em}
+  .brief{color:var(--muted);font-size:1.02rem;margin:0 0 18px}
+  .drop{border:2px dashed var(--line);border-radius:12px;padding:34px;text-align:center;color:var(--muted);margin:18px 0;cursor:pointer}
+  .drop.hot{border-color:var(--accent);background:var(--soft)}
+  .block{border:1px solid var(--line);border-radius:10px;background:var(--paper);margin:14px 0;overflow:hidden}
+  .block>.bhead{padding:8px 12px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.82rem;color:var(--muted);background:var(--soft)}
+  .ft{list-style:none;margin:0;padding:8px 0}
+  .ft li{display:flex;gap:10px;align-items:baseline;padding:4px 14px;font-family:var(--mono);font-size:.86rem}
+  .badge{font-size:.66rem;text-transform:uppercase;letter-spacing:.04em;border-radius:4px;padding:1px 6px;color:#fff;flex:none}
+  .b-added{background:var(--badge-added)} .b-modified{background:var(--badge-modified)}
+  .b-removed{background:var(--badge-removed)} .b-renamed{background:var(--badge-renamed)}
+  .ft .note{color:var(--muted);font-family:inherit;font-size:.82rem}
+  .tabs{display:flex;flex-wrap:wrap;gap:4px;padding:8px 8px 0;background:var(--soft);border-bottom:1px solid var(--line)}
+  .tab{border:1px solid var(--line);border-bottom:none;border-radius:6px 6px 0 0;padding:6px 12px;cursor:pointer;font-family:var(--mono);font-size:.8rem;background:var(--paper);color:var(--muted)}
+  .tab.active{color:var(--ink);font-weight:600;border-color:var(--accent)}
+  .tabpanel{padding:12px;display:none}.tabpanel.active{display:block}
+  .summary{font-size:.9rem;color:var(--muted);margin:0 0 10px}
+  .diff{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-family:var(--mono);font-size:.8rem}
+  .diff .side{overflow:auto}
+  .diff .side.before{border-right:1px solid var(--line)}
+  .diff .sh{padding:4px 10px;font-weight:600;color:var(--muted);background:var(--soft);border-bottom:1px solid var(--line);position:sticky;top:0}
+  .diff pre{margin:0;padding:0}
+  .diff .ln{display:flex}
+  .diff .ln .n{flex:none;width:34px;text-align:right;padding:1px 8px 1px 0;color:var(--muted);user-select:none}
+  .diff .ln .t{white-space:pre;padding:1px 8px}
+  .diff .before .ln.chg{background:var(--del)} .diff .after .ln.chg{background:var(--add)}
+  .acode{font-family:var(--mono);font-size:.8rem;border:1px solid var(--line);border-radius:8px;overflow:auto}
+  .acode .ln{display:flex}.acode .ln .n{flex:none;width:34px;text-align:right;padding:1px 8px 1px 0;color:var(--muted)}
+  .acode .ln .t{white-space:pre;padding:1px 8px}.acode .ln.hot{background:var(--soft)}
+  .annos{margin:8px 0 0;padding:0;list-style:none}
+  .annos li{font-size:.84rem;margin:4px 0;padding-left:10px;border-left:3px solid var(--accent)}
+  .annos .lbl{font-weight:600}
+  .annos .loc{font-family:var(--mono);color:var(--muted);font-size:.78rem}
+  .fallback{margin:0;padding:12px;background:var(--code);overflow:auto;font-family:var(--mono);font-size:.78rem;white-space:pre-wrap}
+  .warn{color:var(--badge-removed);font-size:.85rem}
+  /* visual blocks */
+  .wf{--wf-bg:var(--paper);--wf-ink:var(--ink);--wf-line:var(--line);--wf-muted:var(--muted);--wf-accent:var(--accent);--wf-soft:var(--soft);
+      border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--paper)}
+  .wf-mobile{max-width:380px;margin:0 auto}
+  .wf .wfbar{height:28px;background:var(--soft);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:0 10px}
+  .wf .wfdot{width:9px;height:9px;border-radius:50%;background:var(--line)}
+  .wf .wfbody{padding:16px}
+  .wfcap{color:var(--muted);font-size:.82rem;margin:6px 0 0}
+  .dm{display:flex;flex-wrap:wrap;gap:14px}
+  .dm .ent{border:1px solid var(--line);border-radius:8px;min-width:230px;background:var(--paper);overflow:hidden}
+  .dm .ent h4{margin:0;padding:8px 12px;background:var(--soft);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.9rem}
+  .dm .fld{display:flex;gap:8px;align-items:baseline;padding:5px 12px;font-family:var(--mono);font-size:.82rem;border-bottom:1px solid var(--line)}
+  .dm .fld:last-child{border-bottom:none}.dm .ty{color:var(--muted);margin-left:auto}
+  .dm .k{font-size:.6rem;border-radius:3px;padding:0 4px;color:#fff}
+  .dm .k-pk{background:var(--badge-modified)}.dm .k-fk{background:var(--badge-renamed)}.dm .k-null{background:var(--muted)}
+  .dm-rel{margin:12px 0 0;color:var(--muted);font-size:.82rem;font-family:var(--mono)}
+  .ep{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .ep .ephead{display:flex;gap:10px;align-items:center;padding:8px 12px;background:var(--soft);font-family:var(--mono);flex-wrap:wrap}
+  .ep .meth{font-weight:700;color:#fff;border-radius:4px;padding:2px 8px;font-size:.78rem}
+  .m-GET{background:#1a7f37}.m-POST{background:#2563eb}.m-PUT{background:#9a6700}.m-DELETE{background:#cf222e}.m-PATCH{background:#8250df}
+  .ep .epbody{padding:6px 12px 12px}
+  .ep table{border-collapse:collapse;width:100%;font-size:.8rem;margin:6px 0}
+  .ep th,.ep td{border:1px solid var(--line);padding:4px 8px;text-align:left;font-family:var(--mono)}
+  .diagram-wrap{border:1px solid var(--line);border-radius:8px;padding:16px;background:var(--paper)}
+  .diagram-panel{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .diagram-col{display:flex;flex-direction:column;gap:10px}
+  .diagram-node,.diagram-box{border:1px solid var(--line);border-radius:8px;padding:8px 12px;background:var(--soft);font-size:.85rem;text-align:center}
+  .diagram-pill{border-radius:999px;padding:4px 12px;background:var(--soft);border:1px solid var(--line);font-size:.8rem}
+  .diagram-arrow{color:var(--muted);font-size:1.2rem}.diagram-muted{color:var(--muted)}
+  footer{margin-top:40px;color:var(--muted);font-size:.8rem}
+</style>
+</head>
+<body>
+<main>
+  <div id="drop" class="drop">plan.mdx hierher ziehen oder klicken zum Auswaehlen<br><small>(rein lokal, nichts wird hochgeladen)</small></div>
+  <input id="file" type="file" accept=".mdx,.md" hidden />
+  <div id="out"></div>
+  <footer>ALRAH Plan/Recap Viewer — eigenstaendiger Mini-Renderer fuer agent-native Blocks. Kein Server, keine Dependencies.</footer>
+</main>
+<script>
+"use strict";
+
+// ---- Prop / tag parsing -------------------------------------------------
+// Scan a string from index i over a JS string/template literal; return end index (the closing quote).
+function skipStr(s,i){const q=s[i];for(i++;i<s.length;i++){if(s[i]==="\\"){i++;continue}if(s[i]===q)return i}return s.length}
+// From the index of "{", return index of the matching "}" (string-aware).
+function matchBrace(s,i,open,close){let d=0;for(;i<s.length;i++){const c=s[i];if(c==='"'||c==="'"||c==="`"){i=skipStr(s,i);continue}if(c===open)d++;else if(c===close){d--;if(d===0)return i}}return -1}
+
+// Parse one block tag starting at index `start` (s[start] === "<"). Returns {tag, props, end}.
+function parseTag(s,start){
+  const m=/^<([A-Za-z][A-Za-z0-9]*)/.exec(s.slice(start));
+  if(!m)return null;
+  const tag=m[1];
+  let i=start+m[0].length;
+  const props={};
+  while(i<s.length){
+    // skip whitespace
+    while(i<s.length&&/\s/.test(s[i]))i++;
+    if(s[i]==="/"&&s[i+1]===">")return {tag,props,end:i+2};
+    if(s[i]===">"){ // has children — capture until </tag>
+      const close=s.indexOf("</"+tag,i);
+      props.__children=close>-1?s.slice(i+1,close):"";
+      const gt=close>-1?s.indexOf(">",close):i;
+      return {tag,props,end:gt+1};
+    }
+    const am=/^([A-Za-z_][A-Za-z0-9_]*)\s*=/.exec(s.slice(i));
+    if(!am){i++;continue}
+    const name=am[1];i+=am[0].length;
+    while(i<s.length&&/\s/.test(s[i]))i++;
+    let raw,val;
+    if(s[i]==="{"){const e=matchBrace(s,i,"{","}");raw=s.slice(i+1,e);i=e+1;val=evalLit(raw);}
+    else if(s[i]==='"'||s[i]==="'"||s[i]==="`"){const e=skipStr(s,i);raw=s.slice(i,e+1);i=e+1;val=evalLit(raw);}
+    else {const e=/[\s/>]/.exec(s.slice(i));const len=e?e.index:1;raw=s.slice(i,i+len);i+=len;val=raw;}
+    props[name]=val;
+  }
+  return {tag,props,end:s.length};
+}
+// Evaluate a JS literal (object/array/string/number) from the file. Local trusted input.
+function evalLit(src){try{return (new Function("return ("+src+")"))();}catch(e){return src;}}
+
+const BLOCK_TAGS=/<(FileTree|TabsBlock|Diff|AnnotatedCode|Code|WireframeBlock|DataModel|Endpoint|Diagram|Mermaid|Callout|Table|Columns|Checklist|Json|OpenApi|QuestionForm)\b/;
+
+function parseDoc(text){
+  // frontmatter
+  let fm={},body=text;
+  const fmM=/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text);
+  if(fmM){body=text.slice(fmM[0].length);for(const line of fmM[1].split(/\r?\n/)){const km=/^(\w+)\s*:\s*(.*)$/.exec(line);if(km){let v=km[2].trim().replace(/^["']|["']$/g,"");fm[km[1]]=v;}}}
+  const nodes=[];let rest=body;
+  while(rest.length){
+    const m=BLOCK_TAGS.exec(rest);
+    if(!m){if(rest.trim())nodes.push({kind:"md",text:rest});break;}
+    if(m.index>0){const pre=rest.slice(0,m.index);if(pre.trim())nodes.push({kind:"md",text:pre});}
+    const parsed=parseTag(rest,m.index);
+    if(!parsed){nodes.push({kind:"md",text:rest});break;}
+    nodes.push({kind:"block",tag:parsed.tag,props:parsed.props});
+    rest=rest.slice(parsed.end);
+  }
+  return {fm,nodes};
+}
+
+// ---- tiny markdown ------------------------------------------------------
+function esc(s){return String(s==null?"":s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));}
+function mdInline(s){return esc(s).replace(/`([^`]+)`/g,"<code>$1</code>").replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>").replace(/\*([^*]+)\*/g,"<em>$1</em>");}
+function md(text){
+  const out=[];const lines=text.split(/\r?\n/);let para=[],list=[];
+  const flushP=()=>{if(para.length){out.push("<p>"+mdInline(para.join(" "))+"</p>");para=[];}};
+  const flushL=()=>{if(list.length){out.push("<ul>"+list.map(x=>"<li>"+mdInline(x)+"</li>").join("")+"</ul>");list=[];}};
+  for(const ln of lines){
+    const h=/^(#{1,4})\s+(.*)$/.exec(ln);
+    if(h){flushP();flushL();out.push("<h"+h[1].length+">"+mdInline(h[2])+"</h"+h[1].length+">");continue;}
+    const li=/^\s*[-*]\s+(.*)$/.exec(ln);
+    if(li){flushP();list.push(li[1]);continue;}
+    if(!ln.trim()){flushP();flushL();continue;}
+    flushL();para.push(ln.trim());
+  }
+  flushP();flushL();return out.join("\n");
+}
+
+// ---- block renderers ----------------------------------------------------
+function rChange(c){return c?'<span class="badge b-'+esc(c)+'">'+esc(c)+'</span>':'';}
+function rFileTree(p){
+  const items=(p.entries||[]).map(e=>'<li>'+rChange(e.change)+'<span>'+esc(e.path)+'</span>'+(e.note?'<span class="note">— '+esc(e.note)+'</span>':'')+'</li>').join("");
+  return blockWrap(p.title||"FileTree",'<ul class="ft">'+items+'</ul>');
+}
+function codeLines(code,hotSet){
+  return String(code||"").split("\n").map((t,idx)=>{const n=idx+1;const hot=hotSet&&hotSet.has(n);return '<div class="ln'+(hot?' hot':'')+'"><span class="n">'+n+'</span><span class="t">'+esc(t)+'</span></div>';}).join("");
+}
+function annoHot(annotations){const s=new Set();(annotations||[]).forEach(a=>{const r=String(a.lines||"").split("-").map(x=>parseInt(x,10));if(r.length===1&&r[0])s.add(r[0]);else if(r.length===2){for(let n=r[0];n<=r[1];n++)s.add(n);}});return s;}
+function rAnnos(annotations){if(!annotations||!annotations.length)return"";return '<ul class="annos">'+annotations.map(a=>'<li><span class="loc">L'+esc(a.lines)+(a.side?" ("+esc(a.side)+")":"")+'</span> '+(a.label?'<span class="lbl">'+esc(a.label)+':</span> ':'')+mdInline(a.note||"")+'</li>').join("")+'</ul>';}
+function rAnnotatedCode(p){
+  return blockWrap(p.filename||"code",'<div class="acode">'+codeLines(p.code,annoHot(p.annotations))+'</div>'+rAnnos(p.annotations));
+}
+function rDiff(p){
+  const body='<div class="diff"><div class="side before"><div class="sh">before</div><div>'+diffLines(p.before)+'</div></div><div class="side after"><div class="sh">after</div><div>'+diffLines(p.after)+'</div></div></div>'+rAnnos(p.annotations);
+  return blockWrap(p.filename||"diff",(p.summary?'<p class="summary">'+mdInline(p.summary)+'</p>':'')+body);
+}
+function diffLines(code){return String(code||"").split("\n").map((t,idx)=>'<div class="ln"><span class="n">'+(idx+1)+'</span><span class="t">'+esc(t)+'</span></div>').join("");}
+function rChildBlock(b){
+  const d=b.data||{};
+  if(b.type==="rich-text")return md(d.markdown||"");
+  if(b.type==="diff")return rDiff(d);
+  if(b.type==="annotated-code")return rAnnotatedCode(d);
+  if(b.type==="code")return blockWrap(d.filename||"code",'<div class="acode">'+codeLines(d.code)+'</div>');
+  return '<pre class="fallback">'+esc(JSON.stringify(b,null,2))+'</pre>';
+}
+let TABSEQ=0;
+function rTabs(p){
+  const id="tabs"+(TABSEQ++);const tabs=p.tabs||[];
+  const heads=tabs.map((t,i)=>'<div class="tab'+(i===0?' active':'')+'" data-t="'+id+'_'+i+'">'+esc(t.label||("Tab "+(i+1)))+'</div>').join("");
+  const panels=tabs.map((t,i)=>'<div class="tabpanel'+(i===0?' active':'')+'" id="'+id+'_'+i+'">'+(t.blocks||[]).map(rChildBlock).join("")+'</div>').join("");
+  return '<div class="block"><div class="tabs">'+heads+'</div>'+panels+'</div>';
+}
+function blockWrap(head,inner){return '<div class="block"><div class="bhead">'+esc(head)+'</div><div style="padding:12px">'+inner+'</div></div>';}
+function rFallback(tag,props){return blockWrap(tag+" (kein Renderer — Source)",'<pre class="fallback">'+esc(JSON.stringify(props,(k,v)=>k==="__children"?undefined:v,2))+'</pre>');}
+
+function rWireframe(p){
+  const surface=p.surface||"desktop";
+  const bar=(surface==="desktop"||surface==="browser")?'<div class="wfbar"><span class="wfdot"></span><span class="wfdot"></span><span class="wfdot"></span></div>':'';
+  const html=p.html!=null?p.html:(p.__children?'<pre class="fallback">'+esc(p.__children)+'</pre>':'<span class="diagram-muted">(kein html-Prop — &lt;Screen&gt;-DSL wird hier nicht gerendert)</span>');
+  return blockWrap("Wireframe · "+surface,'<div class="wf wf-'+esc(surface)+'">'+bar+'<div class="wfbody">'+html+'</div></div>'+(p.caption?'<p class="wfcap">'+esc(p.caption)+'</p>':''));
+}
+function rDataModel(p){
+  const ents=(p.entities||[]).map(e=>{
+    const fields=(e.fields||[]).map(f=>'<div class="fld"><span>'+esc(f.name)+'</span>'+(f.pk?'<span class="k k-pk">PK</span>':'')+(f.fk?'<span class="k k-fk">FK&rarr;'+esc(f.fk)+'</span>':'')+(f.nullable?'<span class="k k-null">null</span>':'')+'<span class="ty">'+esc(f.type||'')+'</span></div>').join('');
+    return '<div class="ent"><h4>'+esc(e.name||e.id)+'</h4>'+fields+'</div>';
+  }).join('');
+  const rels=(p.relations||[]).map(r=>esc(r.from)+' '+esc(r.kind||'—')+' '+esc(r.to)).join('  ·  ');
+  return blockWrap("DataModel (ERD)",'<div class="dm">'+ents+'</div>'+(rels?'<div class="dm-rel">'+rels+'</div>':''));
+}
+function rDiagram(p){
+  const d=p.data||p;
+  const css=d.css?'<style>'+d.css+'</style>':'';
+  const html=d.html!=null?d.html:'<pre class="fallback">'+esc(JSON.stringify(d,null,2))+'</pre>';
+  return blockWrap("Diagram",'<div class="diagram-wrap">'+css+html+'</div>'+(d.caption?'<p class="wfcap">'+esc(d.caption)+'</p>':''));
+}
+function rEndpoint(p){
+  const meth=String(p.method||"GET").toUpperCase();
+  const params=(p.params||[]).map(a=>'<tr><td>'+esc(a.name)+'</td><td>'+esc(a.in||'')+'</td><td>'+esc(a.type||'')+'</td><td>'+(a.required?'required':'')+'</td></tr>').join('');
+  const resps=(p.responses||[]).map(r=>'<tr><td>'+esc(r.status)+'</td><td>'+esc(r.description||'')+'</td><td><code>'+esc(r.example||'')+'</code></td></tr>').join('');
+  let body='';
+  if(p.__children&&p.__children.trim())body+=md(p.__children);
+  if(params)body+='<h3>Params</h3><table><tr><th>name</th><th>in</th><th>type</th><th></th></tr>'+params+'</table>';
+  if(p.request&&p.request.example)body+='<h3>Request</h3><pre class="fallback">'+esc(p.request.example)+'</pre>';
+  if(resps)body+='<h3>Responses</h3><table><tr><th>status</th><th>desc</th><th>example</th></tr>'+resps+'</table>';
+  return blockWrap("Endpoint",'<div class="ep"><div class="ephead"><span class="meth m-'+esc(meth)+'">'+esc(meth)+'</span><span>'+esc(p.path||'')+'</span>'+(p.summary?'<span class="diagram-muted">— '+esc(p.summary)+'</span>':'')+'</div><div class="epbody">'+body+'</div></div>');
+}
+
+function renderNode(n){
+  if(n.kind==="md")return md(n.text);
+  const p=n.props||{};
+  switch(n.tag){
+    case"FileTree":return rFileTree(p);
+    case"TabsBlock":return rTabs(p);
+    case"Diff":return rDiff(p);
+    case"AnnotatedCode":return rAnnotatedCode(p);
+    case"Code":return blockWrap(p.filename||"code",'<div class="acode">'+codeLines(p.code)+'</div>');
+    case"WireframeBlock":return rWireframe(p);
+    case"DataModel":return rDataModel(p);
+    case"Diagram":return rDiagram(p);
+    case"Endpoint":return rEndpoint(p);
+    default:return rFallback(n.tag,p);
+  }
+}
+
+function render(text){
+  const {fm,nodes}=parseDoc(text);
+  let html="";
+  if(fm.title)html+="<h1>"+esc(fm.title)+"</h1>";
+  if(fm.brief)html+='<p class="brief">'+mdInline(fm.brief)+"</p>";
+  html+=nodes.map(renderNode).join("\n");
+  const out=document.getElementById("out");out.innerHTML=html;
+  out.querySelectorAll(".tab").forEach(tb=>tb.addEventListener("click",()=>{
+    const target=tb.getAttribute("data-t");const wrap=tb.closest(".block");
+    wrap.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x===tb));
+    wrap.querySelectorAll(".tabpanel").forEach(x=>x.classList.toggle("active",x.id===target));
+  }));
+  document.getElementById("drop").style.display="none";
+}
+
+// ---- file loading -------------------------------------------------------
+const drop=document.getElementById("drop"),file=document.getElementById("file");
+drop.addEventListener("click",()=>file.click());
+file.addEventListener("change",e=>{const f=e.target.files[0];if(f)f.text().then(render);});
+["dragover","dragenter"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add("hot");}));
+["dragleave","drop"].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove("hot");}));
+drop.addEventListener("drop",e=>{const f=e.dataTransfer.files[0];if(f)f.text().then(render);});
+// Served over http: ?file=<url> renders that plan; otherwise show an index of all plans.
+const qp=new URLSearchParams(location.search).get("file");
+if(qp&&location.protocol.startsWith("http")){fetch(qp).then(r=>r.text()).then(render).catch(()=>{});}
+else if(location.protocol.startsWith("http")){
+  fetch("/api/plans").then(r=>r.json()).then(list=>{
+    if(!list||!list.length)return;
+    const items=list.map(p=>'<li><a href="?file='+encodeURIComponent("/plan?path="+p)+'">'+esc(p)+'</a></li>').join("");
+    document.getElementById("out").innerHTML='<h1>ALRAH Plans &amp; Recaps</h1><ul style="line-height:1.9;font-family:var(--mono);font-size:.9rem">'+items+'</ul>';
+    document.getElementById("drop").style.display="none";
+  }).catch(()=>{});
+}
+</script>
+</body>
+</html>
