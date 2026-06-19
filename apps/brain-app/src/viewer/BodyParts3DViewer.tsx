@@ -28,6 +28,7 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { ShellControlButton } from './ShellStatePrimitives'
+import { CanvasContentErrorBoundary, CanvasStateHtml } from './CanvasViewportState'
 import PerformanceGateProbe, { performanceGateEnabled } from './PerformanceGateProbe'
 import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
 import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
@@ -1206,28 +1207,38 @@ export default function BodyParts3DViewer() {
               <hemisphereLight args={[0xf8efe5, 0x181818, 0.42]} />
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
               <directionalLight position={[-160, -80, -200]} intensity={0.28} />
-              <Suspense fallback={null}>
-                <Brain brainModel={brainModel} dimOpacity={dimOpacity} />
-                <ContextSkull dimOpacity={dimOpacity} />
-                <ContextHead dimOpacity={dimOpacity} />
-                {ATLAS3D.map((a) => (
-                  <AtlasOverObject
-                    key={a.key}
-                    atlasKey={a.key}
-                    glb={a.glb}
-                    rootLabels={a.rootLabels}
-                    aliasesByName={atlasAliases[a.key]}
-                    dimOpacity={dimOpacity}
-                  />
-                ))}
-                <SubParcels />
-                <EegHeadset />
-                <AuthoringSceneObjects />
-                <ManifestAssetObjects dimOpacity={dimOpacity} />
-                <PhineasGageAssets />
-                <AtlasOverlay effectiveConfig={effectiveConfig} />
-                <CutCaps />
-              </Suspense>
+              <CanvasContentErrorBoundary resetKey={brainModel.id}>
+                <Suspense
+                  fallback={(
+                    <CanvasStateHtml
+                      state="loading"
+                      title="3D-Hirn wird geladen"
+                      detail="BrainModel und Atlas-Layer werden vorbereitet."
+                    />
+                  )}
+                >
+                  <Brain brainModel={brainModel} dimOpacity={dimOpacity} />
+                  <ContextSkull dimOpacity={dimOpacity} />
+                  <ContextHead dimOpacity={dimOpacity} />
+                  {ATLAS3D.map((a) => (
+                    <AtlasOverObject
+                      key={a.key}
+                      atlasKey={a.key}
+                      glb={a.glb}
+                      rootLabels={a.rootLabels}
+                      aliasesByName={atlasAliases[a.key]}
+                      dimOpacity={dimOpacity}
+                    />
+                  ))}
+                  <SubParcels />
+                  <EegHeadset />
+                  <AuthoringSceneObjects />
+                  <ManifestAssetObjects dimOpacity={dimOpacity} />
+                  <PhineasGageAssets />
+                  <AtlasOverlay effectiveConfig={effectiveConfig} />
+                  <CutCaps />
+                </Suspense>
+              </CanvasContentErrorBoundary>
               <TampingIron />
               <CutPickBridge />
               <OrbitControls makeDefault enableDamping autoRotate={autoRotate && !reduceMotion} autoRotateSpeed={0.35} />

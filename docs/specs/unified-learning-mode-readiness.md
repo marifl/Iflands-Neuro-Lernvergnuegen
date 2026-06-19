@@ -6,9 +6,12 @@ Verdict: `FAIL`
 
 Dieses Gate entscheidet, ob nach dem Shape-Vertrag direkt V2-Code starten darf.
 Antwort: Nein. `docs/specs/unified-learning-mode-shape.md` ist als
-Planungsgrundlage ausreichend, aber weiterhin nicht als Code-Freigabe. Die
-Handoff-/Screenshot-/Prototype-State-Lücken aus der ersten Gate-Version sind
-jetzt geschlossen; die verbleibenden Blocker sind Runtime- und Doku-Verträge.
+Planungsgrundlage ausreichend, aber weiterhin nicht als vollständige
+Code-Freigabe. Die Handoff-/Screenshot-/Prototype-State-Lücken aus der ersten
+Gate-Version sind geschlossen; der Canvas-Loading-/Error-State ist seit
+`2026-06-19-canvas-loading-error-empty-sta` im regulären BrainModel-Viewport
+belegt. Die verbleibenden Blocker sind No-Fallback-/Doku-Verträge und der
+eigentliche Unified-Shell-Migrationsslice.
 
 ## Scope-Abgrenzung
 
@@ -36,8 +39,8 @@ Live-Screenshot-Evidence noch Unified-Mode-Readiness ab.
 | Debug/Raw optional und aus | `PASS` | Shape-Vertrag sagt default-off; `docs/specs/v2-live-screenshot-set.md` zeigt in 15 Live-Captures `debugVisible=false`. |
 | Atlas als Supplement definiert | `PASS` | Shape-Vertrag definiert Atlas als Lern-Supplement, nicht als Startmodus. |
 | Mobile/Tablet/Desktop beschrieben | `PASS` | Desktop, Tablet, Phone Portrait und Phone Landscape sind spezifiziert und in `docs/specs/screenshots/v2-live/` als Live-Screenshot-Set belegt. |
-| Canvas Loading/Error/Empty-State-Vertrag vorhanden | `FAIL` | Shape fordert ihn, aber TARO-Canvas nutzt aktuell `Suspense fallback={null}`; `tLMwOp54qQph` ist noch offen. |
-| erster Code-Slice klar und klein | `PASS mit Blocker` | Der kleine Anschluss-Slice ist unten definiert, darf aber erst nach dem Canvas-State-Vertrag starten. |
+| Canvas Loading/Error/Empty-State-Vertrag vorhanden | `PASS` | Regulärer BrainModel-Canvas nutzt `CanvasStateHtml` als sichtbaren Suspense-Status und `CanvasContentErrorBoundary` als viewport-lokalen Error-State; Unit-Test `CanvasViewportState.test.tsx`. |
+| erster Code-Slice klar und klein | `PASS mit Restblockern` | Der kleine Anschluss-Slice ist unten definiert; Canvas-State blockiert nicht mehr, aber No-Fallback-/Doku-Restklassen bleiben vor einer vollständigen Unified-Shell-Migration relevant. |
 | Dart-Scope korrigiert | `PASS` | Kommentar `fZ3kmBUmLdIF` trennt `2bf933b` sauber von Atlas-/Vortragsfarben-Arbeit. |
 
 ## Befunde pro Scout
@@ -72,9 +75,12 @@ nach `appMode`, `ModeLauncher.tsx` rendert weiterhin peer mode cards und
 `FooterBar.tsx` bleibt ein globales Werkzeug-/Modus-Cockpit. Das ist eine echte
 Migrationsquelle, aber nicht das V2-Zielbild.
 
-Zusätzlich ist der stille Canvas-Zustand ein Blocker: der reguläre TARO-Pfad
-nutzt `Suspense fallback={null}`. Die app-weite Error Boundary ist hilfreich,
-ersetzt aber keinen viewport-lokalen Loading/Error/Empty-State.
+Der stille Canvas-Zustand ist geschlossen: der reguläre BrainModel-Pfad nutzt
+keinen `Suspense fallback={null}` mehr. Asynchron geladene 3D-Layer zeigen
+einen `ShellStateBlock` im Canvas-Viewport; Renderfehler in Canvas-Kindern
+werden dort über `CanvasContentErrorBoundary` als `role=alert` gemeldet. Die
+app-weite Error Boundary bleibt als Root-Schutz bestehen, ersetzt aber nicht
+mehr den lokalen 3D-State.
 
 ### Dart-Scope-/Commit-Truth
 
@@ -105,21 +111,21 @@ Canvas-Pixel-/Runtime-Mesh-Proben.
 1. `n0RsZZ5gXo5X` ist `To-do`: aktuelle Doku-Drift ist nicht bereinigt.
 2. `B2XryEO9UyxB` ist `In Review`: Atlas-Farbarchitektur muss als aktuelle Preset-/Scene-Grundlage bestätigt bleiben.
 3. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant.
-4. `tLMwOp54qQph` ist durch dieses Gate blockiert: Loading/Empty/Error/Disabled-State-Vertrag ist für Code-Qualität offen.
+4. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
+   Canvas-Loading-/Error-Blocker ist durch
+   `2026-06-19-canvas-loading-error-empty-sta` geschlossen.
 
 ## Erster Code-Slice bei späterem PASS
 
 Wenn dieses Gate später `PASS` bekommt, ist der kleinste sinnvolle Slice:
 
-`Unified Shell Skeleton + ein echter Lernschritt + 3D-Bühnen-State + Device-Smoke`
+`Unified Shell Skeleton + ein echter Lernschritt + Device-Smoke`
 
 Konkret heißt das:
 
-1. viewport-lokale Loading/Error/Empty-Zustände in den TARO-Canvas-Pfad einziehen.
-2. `Suspense fallback={null}` im regulären Canvas-Pfad ersetzen.
-3. einen echten Lernschritt als primären Anker zeigen.
-4. Shell nur soweit anpassen, dass Desktop, Tablet, Phone Portrait und Phone Landscape smokebar sind.
-5. keine Atlas-/Vortragsfarben-, Phineas-, Chat-, Wiki- oder vollständige Explorer-Migration mitnehmen.
+1. einen echten Lernschritt als primären Anker zeigen.
+2. Shell nur soweit anpassen, dass Desktop, Tablet, Phone Portrait und Phone Landscape smokebar sind.
+3. keine Atlas-/Vortragsfarben-, Phineas-, Chat-, Wiki- oder vollständige Explorer-Migration mitnehmen.
 
 Passende Anschlussaufgabe nach einem späteren `PASS`: zuerst eine kleine Task
 unter `Kognitive Neurowissenschaften/Tech_BOARD_V2` für diesen Shell-/State-Slice
