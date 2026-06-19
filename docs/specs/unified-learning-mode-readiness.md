@@ -10,8 +10,9 @@ Planungsgrundlage ausreichend, aber weiterhin nicht als vollständige
 Code-Freigabe. Die Handoff-/Screenshot-/Prototype-State-Lücken aus der ersten
 Gate-Version sind geschlossen; der Canvas-Loading-/Error-State ist seit
 `2026-06-19-canvas-loading-error-empty-sta` im regulären BrainModel-Viewport
-belegt. Die verbleibenden Blocker sind No-Fallback-/Doku-Verträge und der
-eigentliche Unified-Shell-Migrationsslice.
+belegt. Doku-Drift und Atlas-Farbarchitektur sind am 19. Juni 2026 mit
+frischer Evidenz geschlossen. Die verbleibenden Blocker sind No-Fallback-
+Restklassen und der eigentliche Unified-Shell-Migrationsslice.
 
 ## Scope-Abgrenzung
 
@@ -91,7 +92,9 @@ Shape-Evidenz. `2eeba1a` bleibt Atlas-/SP5.1-/Vortragsfarben-Kontext und darf
 nicht als erfüllte Unified-Shape-Arbeit zählen. Der Doku-Drift-Blocker
 `n0RsZZ5gXo5X` ist am 19. Juni 2026 erledigt; `pnpm --dir apps/brain-app
 docs:drift` ist das mechanische Gate gegen erneute Drift in aktueller
-Arbeitsdoku.
+Arbeitsdoku. `B2XryEO9UyxB` ist ebenfalls erledigt: Builder-, Vitest-,
+Typecheck-, Such- und `smoke-figures`-Evidenz bestätigen den aktuellen
+Preset-/Scene-Farbvertrag.
 
 ### Verification
 
@@ -110,9 +113,8 @@ Canvas-Pixel-/Runtime-Mesh-Proben.
 
 ## Blocker
 
-1. `B2XryEO9UyxB` ist `In Review`: Atlas-Farbarchitektur muss als aktuelle Preset-/Scene-Grundlage bestätigt bleiben.
-2. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant; mehrere Untertasks sind weiter `To-do`.
-3. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
+1. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant; mehrere Untertasks sind weiter `To-do`.
+2. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
    Canvas-Loading-/Error-Blocker ist durch
    `2026-06-19-canvas-loading-error-empty-sta` geschlossen.
 
