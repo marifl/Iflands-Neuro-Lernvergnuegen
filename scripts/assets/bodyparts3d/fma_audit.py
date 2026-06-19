@@ -14,7 +14,7 @@ Geprueft wird je Struktur:
   4. part-of-Eltern       aus FMA, als Kontext + Plausibilitaet
   5. Source-Konsistenz    unser fileId im Source-Set? FMA passt?
 
-Keine stillen Fallbacks: OLS4-Fehler werden explizit als FETCH_FAILED erfasst,
+Keine stillen Ersatzpfade: OLS4-Fehler werden explizit als FETCH_FAILED erfasst,
 gezaehlt und im Report laut ausgewiesen. Cache unter reference/fma_ols_cache.json
 macht Reruns billig.
 
@@ -87,7 +87,7 @@ def fma_iri(fma_id: str) -> str:
 
 def _get(url: str, retries: int = 4) -> dict | None:
     """JSON holen. 404 -> None (Term existiert nicht). Andere Fehler -> Retry,
-    dann Exception (kein stiller Fallback)."""
+    dann Exception (kein stiller Ersatzpfad)."""
     last = None
     for attempt in range(retries):
         req = urllib.request.Request(url, headers={"Accept": "application/json"})

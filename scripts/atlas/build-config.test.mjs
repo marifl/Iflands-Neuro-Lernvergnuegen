@@ -462,42 +462,42 @@ test('validateConfig wirft bei ungueltigen Mesh-Mappings', () => {
 
 test('validateConfig verbietet veraltete Julich-Einzelmeshes in Figure-Buckets', () => {
   const idx = indexCatalog(CATALOG)
-  const legacyMappings = {
-    buckets: { legacy: { meshes: ['left-julich-mfg1'] } },
+  const obsoleteMappings = {
+    buckets: { obsolete: { meshes: ['left-julich-mfg1'] } },
     scene_regions: MESH_MAPPINGS.scene_regions,
   }
-  const legacyContext = {
+  const obsoleteContext = {
     ...VALIDATION_CONTEXT,
-    bucketMappings: legacyMappings.buckets,
+    bucketMappings: obsoleteMappings.buckets,
     meshIds: new Set(['mesh-a', 'left-julich-mfg1']),
   }
   assert.throws(
     () => validateConfig(baseConfig({
-      mesh_mappings: legacyMappings,
+      mesh_mappings: obsoleteMappings,
       color_presets: {
-        'legacy-preset': {
-          label: 'Legacy Preset',
+        'obsolete-preset': {
+          label: 'Obsolete Preset',
           intent: 'Testet veraltete Meshes.',
           coverage: 'full',
           dimOthers: true,
-          groups: [{ label: 'Legacy', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['legacy'] }],
+          groups: [{ label: 'Obsolete', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['obsolete'] }],
         },
       },
       configurations: {
         a: {
           ...VALID_CONFIGURATION,
           view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
-          regions: { ...VALID_CONFIGURATION.regions, buckets: ['legacy'] },
+          regions: { ...VALID_CONFIGURATION.regions, buckets: ['obsolete'] },
           colors: {
             ...VALID_CONFIGURATION.colors,
             enabled: true,
             scheme: 'preset',
-            preset: 'legacy-preset',
+            preset: 'obsolete-preset',
             coverage: 'full',
           },
         },
       },
-    }), idx, legacyContext),
+    }), idx, obsoleteContext),
     /veraltetes Julich-Einzelmesh/,
   )
 })

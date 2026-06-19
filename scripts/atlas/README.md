@@ -140,7 +140,7 @@ Fidelity-Audit sind KEINE Fehler (Nearest-Fill-Tiling bzw. korrekte Within-Host-
 
 - **Within-Host-Partition (zentroid-aligned):** Pro TARO-Host alle zugeordneten Parzellen gemeinsam auf den Host-Schwerpunkt zentrieren (entfernt den ~22 mm Bulk-Offset), dann jeden Host-Vertex der naechsten Parzelle zuweisen. Nur die RELATIVE Anordnung entscheidet die innere Grenze → robust gegen lateralen Registrierungs-Fehler. **Ohne Zentroid-Alignment reisst die am weitesten versetzte Teilregion (z.B. parsorbitalis) auf 0 Vertices.**
 - **Subkortex-Affine:** Kortikal gefittete Affine extrapoliert auf tiefe Strukturen katastrophal (accumbens ~60 mm daneben). Eigene Affine aus Striatum/Pallidum-Landmarks (LOO 5.4 mm). Flag `warp:subcortical`.
-- **Backfill (Transform-Pipeline):** In ueberfuellten Hosts (IFG bekommt 15+ Julich-Areale) verlieren winzige Parzellen per argmin alle Vertices. Backfill gibt ihnen garantiert ihre `FLOOR`=12 naechsten Host-Vertices (ueberlappend, ehrlich `backfill:true` markiert). `atlas_bake.mjs` hat einen Face-Fallback fuer Patches an Combined-Host-Naehten.
+- **Backfill (Transform-Pipeline):** In ueberfuellten Hosts (IFG bekommt 15+ Julich-Areale) verlieren winzige Parzellen per argmin alle Vertices. Backfill gibt ihnen garantiert ihre `FLOOR`=12 naechsten Host-Vertices (ueberlappend, ehrlich `backfill:true` markiert). `atlas_bake.mjs` nutzt fuer Patches an Combined-Host-Naehten einen Backfill-Inzidenzmodus.
 - **AUTO_NEAREST:** Gapmaps (Atlas-Uebergangszonen ohne klaren Namens-Host) → geometrisch dem zentroid-naechsten Kortex-Gyrus zugewiesen, im Log nachvollziehbar.
 
 ---

@@ -270,7 +270,7 @@ export function buildCatalog() {
         else if (L.id === 'dkt') lobe = lobeOfDktName(entry.name)
         else if (L.id === 'julich') lobe = lobeOfJulichName(entry.name)
         else if (L.id === 'brodmann') lobe = lobeOfBrodmannBA(code)
-        else throw new Error(`buildCatalog: ${L.id}:${code}:${side} ohne Carve-Host und ohne Name-Fallback`)
+        else throw new Error(`buildCatalog: ${L.id}:${code}:${side} ohne Carve-Host und ohne namebasierte Lappenaufloesung`)
 
         const area = {
           id: areaId,

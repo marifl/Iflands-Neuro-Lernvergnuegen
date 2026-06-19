@@ -101,8 +101,8 @@ export function weldedNormals(V, F, keyScale = 64) {
  * Normale (Step 3d). Dort wuerden degenerierte Null-Cluster die tangentiale Glaettung kippen lassen
  * (Positions-Spikes). Diese Funktion aendert ausschliesslich Normalen, nie Positionen.
  *
- * Fallback-Kette gegen Null-Normalen (schwarze Vertices): Cluster-Summe -> Vertex-eigene Flaechen-
- * Summe -> Positions-Gesamtsumme (= weldedNormals-Verhalten) -> [0,0,1].
+ * Deterministische Ersatzkette gegen Null-Normalen (schwarze Vertices): Cluster-Summe ->
+ * Vertex-eigene Flaechen-Summe -> Positions-Gesamtsumme (= weldedNormals-Verhalten) -> [0,0,1].
  */
 export function weldedNormalsDirectional(V, F, keyScale = 64, cosThresh = 0.3) {
   const key = (p) => `${Math.round(p[0] * keyScale)},${Math.round(p[1] * keyScale)},${Math.round(p[2] * keyScale)}`
@@ -124,7 +124,7 @@ export function weldedNormalsDirectional(V, F, keyScale = 64, cosThresh = 0.3) {
   for (const verts of groups.values()) {
     const posSum = [0, 0, 0]
     for (const i of verts) { posSum[0] += vFace[i][0]; posSum[1] += vFace[i][1]; posSum[2] += vFace[i][2] }
-    const posDir = norm(posSum) // Fallback = weldedNormals-Verhalten
+    const posDir = norm(posSum) // Positionsrichtung entspricht weldedNormals-Verhalten
     const clusters = [] // { sum:[x,y,z], members:number[] }
     for (const i of verts) {
       const fn = norm(vFace[i])

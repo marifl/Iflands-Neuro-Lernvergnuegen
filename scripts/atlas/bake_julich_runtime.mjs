@@ -5,7 +5,7 @@
 // Akkumulation/Orphans). Bei Aenderung der register.py-Basis: neu bauen + diesen Snapshot updaten.
 // Quelle der Geometrie: work/atlas_labels_julich.json (auf TARO transformiert) + taro_cortex_hosts.json
 // (combined-Host-Rekonstruktion wie atlas_bake.mjs / register_atlas.py).
-// KEINE stillen Fehler-Fallbacks: fehlende Slugs, Namens-Kollision oder 0 baubare Faces werfen laut.
+// KEINE stillen Fehler-Ersatzpfade: fehlende Slugs, Namens-Kollision oder 0 baubare Faces werfen laut.
 import { Document, NodeIO } from '@gltf-transform/core'
 import { readFileSync, writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'

@@ -21,7 +21,7 @@ if (useWarped) console.log(`${source}: NON-RIGID gewarpte Geometrie (warp_overla
 
 // (nur falls NICHT gewarpt) Bevorzugt die PER-LAPPEN-Korrespondenz-Affine (fit_overlay_affine.mjs: je Hirnlappen eine eigene
 // Affine ueber Parzelle-MNI-Centroid -> Carve-Patch-TARO-Centroid; anatomisch korrekt orientiert,
-// kein Flip, ~5-7mm). Fallback: Zentroid-Affine (register_atlas.py, unterskaliert).
+// kein Flip, ~5-7mm). Globale Zentroid-Affine (register_atlas.py) bleibt Review-Projektion.
 const aff = (B, t) => (v) => [
   v[0] * B[0][0] + v[1] * B[1][0] + v[2] * B[2][0] + t[0],
   v[0] * B[0][1] + v[1] * B[1][1] + v[2] * B[2][1] + t[1],
@@ -46,7 +46,7 @@ if (useWarped) {
     v[0] * A[0][2] + v[1] * A[1][2] + v[2] * A[2][2] + A[3][2],
   ]
   affineFor = () => f
-  console.log(`${source}: Zentroid-Affine (Fallback — unterskaliert ein Overlay)`)
+  console.log(`${source}: globale Zentroid-Affine (Review-Projektion; unterskaliert ein Overlay)`)
 }
 
 const doc = new Document()

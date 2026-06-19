@@ -50,7 +50,7 @@ for (const [slug, { host, vertex_indices }] of Object.entries(labels)) {
   let keep = new Set(vertex_indices)
   // Strikt: nur Faces, deren 3 Ecken alle behalten sind.
   let kf = H.faces.filter((f) => keep.has(f[0]) && keep.has(f[1]) && keep.has(f[2]))
-  // Fallback (Backfill-Patches an Combined-Host-Naehten): falls 0 Faces, alle Faces nehmen,
+  // Backfill-Inzidenzmodus an Combined-Host-Naehten: falls 0 Faces, alle Faces nehmen,
   // die >=1 behaltenen Vertex beruehren.
   if (kf.length === 0) {
     kf = H.faces.filter((f) => keep.has(f[0]) || keep.has(f[1]) || keep.has(f[2]))

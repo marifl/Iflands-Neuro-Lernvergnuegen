@@ -1549,10 +1549,10 @@
         "label": "Fasertrakte",
         "children": [
           {
-            "name": "legacy",
+            "name": "pre-hcp1065",
             "type": "EMPTY",
-            "id": "brain__fasertrakte__legacy",
-            "label": "Legacy-Fasertrakte (vor HCP1065)",
+            "id": "brain__fasertrakte__pre-hcp1065",
+            "label": "Archivierte Fasertrakte (vor HCP1065)",
             "children": [
               {
                 "name": "anterior-commissure",

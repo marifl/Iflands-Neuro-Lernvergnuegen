@@ -192,7 +192,7 @@ def build_atlas(atlas, A_ft, man):
     used_names = set()
     n_built = 0
     n_watertight = 0
-    n_open_fallback = 0
+    n_open_pial_patch = 0
     no_surface = []  # LUT-Labels mit 0 Vertices in BEIDEN Hemis -> kein Oberflaechen-Areal (z.B. DKT corpuscallosum)
 
     for lid, name in targets:
@@ -215,10 +215,10 @@ def build_atlas(atlas, A_ft, man):
                 verts, fcs = sv, sf
                 n_watertight += 1
             else:
-                # Open-DoubleSide-Patch-Fallback: roher Pial-Patch (furchen-echt, nicht volumen-geschlossen)
+                # Offener Pial-Patch-Modus: roher Pial-Patch (furchen-echt, nicht volumen-geschlossen)
                 verts, fcs = pv, pf
-                n_open_fallback += 1
-                print(f"  [{atlas}] {name} ({hemi}) open-fallback ({nok}/{ncomp} comps watertight)")
+                n_open_pial_patch += 1
+                print(f"  [{atlas}] {name} ({hemi}) open-pial-patch ({nok}/{ncomp} comps watertight)")
             verts = R.apply_affine(A_ft, verts)
             mesh_name = f"{atlas}-{slug}-{hemi.lower()}"
             if mesh_name in used_names:
@@ -243,7 +243,7 @@ def build_atlas(atlas, A_ft, man):
         "no_surface": [n for _, n in no_surface],
         "n_built": n_built,
         "n_watertight": n_watertight,
-        "n_open_fallback": n_open_fallback,
+        "n_open_pial_patch": n_open_pial_patch,
         "n_decimated": 0,
     }
     return scene, report
@@ -324,7 +324,7 @@ def full():
         reports.append(rep)
         total_draco += draco_mb
         print(f"  -> atlas3d-{atlas}.glb  built={rep['n_built']} watertight={rep['n_watertight']} "
-              f"open-fallback={rep['n_open_fallback']} decimated={n_dec}  "
+              f"open-pial-patch={rep['n_open_pial_patch']} decimated={n_dec}  "
               f"raw={raw_mb:.2f}MB draco={draco_mb:.2f}MB")
     (WORK / "atlas3d_report.json").write_text(json.dumps(reports, indent=2))
     print("\n=== GESAMT ===")

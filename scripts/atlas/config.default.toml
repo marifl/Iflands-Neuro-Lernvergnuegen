@@ -1350,7 +1350,7 @@ enabled = false
 scheme = "scene"
 coverage = "not-applicable"
 review_status = "final"
-reason = "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; kein allgemeiner PPC-Fallback."
+reason = "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; keine allgemeine PPC-Ersatzzuordnung."
 [configurations.right-parietal-lesion.visibility]
 dim_others = true
 dim_opacity = 0.12

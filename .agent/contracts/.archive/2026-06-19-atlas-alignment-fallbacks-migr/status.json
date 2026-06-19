@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-atlas-alignment-fallbacks-migr",
+  "title": "Atlas Alignment Fallbacks migrieren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T21:42:18.773Z",
+  "updated": "2026-06-19T21:49:38.243Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T21:43:23.176Z"
+      }
+    ]
+  }
+}

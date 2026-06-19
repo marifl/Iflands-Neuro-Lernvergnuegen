@@ -38,7 +38,7 @@ test('prettyArea baut Anzeigenamen', () => {
   assert.equal(prettyArea('brodmann', 'BA44', 'R'), 'BA44 · R')
 })
 
-test('lobeOf* (Carve-Host + Name-Fallbacks)', () => {
+test('lobeOf* (Carve-Host + namebasierte Lappenaufloesung)', () => {
   assert.equal(lobeOfHostStem('inferior-frontal-gyrus'), 'frontal')
   assert.equal(lobeOfHostStem('cingulate-gyrus'), 'limbic')
   assert.equal(lobeOfDestrieux('G_front_inf-Triangul'), 'frontal')

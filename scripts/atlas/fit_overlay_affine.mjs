@@ -88,7 +88,7 @@ const src = jsonCentroids(JSON.parse(readFileSync(resolve(here, `work/${source}_
 const labels = JSON.parse(readFileSync(resolve(here, `work/atlas_labels_${source}.json`)))
 const names = Object.keys(src).filter((k) => dst[k] && labels[k])
 
-// Global (Fallback) + je Lappen.
+// Globale Baseline + je Lappen.
 const global = fitAffine(names, src, dst)
 const byLobe = {}
 for (const n of names) (byLobe[lobeOfHost(labels[n].host)] ??= []).push(n)

@@ -49,7 +49,7 @@ Quelle der Empfehlung: Recherche-Synthese (threejsfundamentals „Indexed Textur
 BrainBrowser, pycortex, Nilearn `view_surf`).
 
 - **Geometrie:** EINE fsaverage-Oberfläche. Standard = **163.842 Vertices/Hemisphäre** (≈ 327k gesamt);
-  Low-Res-Fallback **fsaverage6 = 40.962/Hemi**. Alle Surface-Varianten (`pial`/`white`/`inflated`)
+  Low-Res-Option **fsaverage6 = 40.962/Hemi**. Alle Surface-Varianten (`pial`/`white`/`inflated`)
   teilen denselben Vertex-Index → Morph zwischen pial↔inflated gratis.
   Beleg: mne.tools FreeSurfer-Background, diedrichsenlab surface-guide.
 - **Label-Layer:** pro Atlas EIN `Int`-Attribut je Vertex (`aLabelJulich`, `aLabelDKT`, …), alle
@@ -119,7 +119,7 @@ Begründung:
   **Vertex-Index-Identität gesichert**.
 - Performance-Spike (§2) bestätigt: 327k Verts in 1 Draw-Call, 60 FPS stabil.
 
-Fsaverage6 (41k) nur als Fallback wenn Mobile-Performance gemessen schlechter.
+Fsaverage6 (41k) bleibt Reserveoption, falls Mobile-Performance gemessen schlechter ist.
 
 **Belege:** templateflow S3 (bestätigt via Download 2026-06-13), nibabel `load(label.gii).darrays[0].data.shape = (163842,)` gemessen; siibra Fehler-Trace `MapNotFound` reproduziert; vol_to_surf-Outputs gemessen (163842,).
 

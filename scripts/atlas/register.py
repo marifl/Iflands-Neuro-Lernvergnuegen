@@ -180,7 +180,7 @@ def stage_h3(learn, taro_hosts, A_lt):
                 print(" (Affine besser, behalte Affine)")
                 regs[wk] = ("affine", None, A_lt)
         except Exception as e:
-            print(f"H3 CPD {host_taro}: Fehler {e} → Affine-Fallback")
+            print(f"H3 CPD {host_taro}: Fehler {e} -> Affine-Basis bleibt aktiv")
             regs[wk] = ("affine", None, A_lt)
 
     return regs
