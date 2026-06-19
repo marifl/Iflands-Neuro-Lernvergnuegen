@@ -1,14 +1,14 @@
 # Atlas-Config (.ini-Style). Authored TOML -> build-config.mjs -> config.json (validiert).
 # Scope-Keys: axis:<id> | atlas:<id> | group:<atlas>:<lobe> | area:<atlas>:<code>:<side>.
-# preset = aktive Default-Basis; configurations.* = benannte Figure/Scene-Atome;
-# presentation/learning.* = Sequenzen.
+# preset = aktive Default-Basis; color_presets.* = kanonische Farbgruppen;
+# configurations.* = benannte Figure/Scene-Atome; presentation/learning.* = Sequenzen.
 #
 # SP5.1 Figure/Scene-Atom-Schema:
 # Required fuer kanonische Atome:
 #   label_de, title, section, view, camera, regions, colors,
 #   visibility, cuts, overlay, sequencing, scopes.
 # Optional bei Bedarf:
-#   replaces_figure, facets, camera.pose, colors.groups, cuts.planes,
+#   replaces_figure, facets, camera.pose, cuts.planes,
 #   overlay. Buch-/Kapitelbilder sind in der Runtime verboten.
 # Bestehende SP3-Felder bleiben erhalten: presets, scopes, facets, view, camera
 # und presentation/learning. localStorage ist nur UI-Override und nie kanonische
@@ -54,6 +54,9 @@ meshes = [
   "left-middle-frontal-gyrus", "right-middle-frontal-gyrus",
   "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
 ]
+
+[mesh_mappings.buckets.right-dlpfc]
+meshes = ["right-middle-frontal-gyrus", "right-superior-frontal-gyrus"]
 
 [mesh_mappings.buckets.vlpfc]
 meshes = [
@@ -108,6 +111,9 @@ meshes = [
   "left-angular-gyrus", "right-angular-gyrus",
 ]
 
+[mesh_mappings.buckets.right-parietal-body]
+meshes = ["right-superior-parietal-lobule", "right-supramarginal-gyrus", "right-angular-gyrus"]
+
 [mesh_mappings.buckets.pcc-praecuneus]
 meshes = ["left-precuneus", "right-precuneus"]
 
@@ -153,11 +159,429 @@ meshes = [
 [mesh_mappings.scene_regions.acc-anterior]
 meshes = ["left-anterior-cingulate", "right-anterior-cingulate"]
 
+[mesh_mappings.scene_regions.vm-ofc]
+meshes = [
+  "left-lateral-orbitofrontal", "right-lateral-orbitofrontal",
+  "left-medial-orbitofrontal", "right-medial-orbitofrontal",
+  "left-anterior-orbital-gyrus", "right-anterior-orbital-gyrus",
+  "left-posterior-orbital-gyrus", "right-posterior-orbital-gyrus",
+  "left-medial-orbital-gyrus", "right-medial-orbital-gyrus",
+  "left-subcallosal-area", "right-subcallosal-area",
+]
+
 [mesh_mappings.scene_regions.sma]
 meshes = ["left-sma", "right-sma"]
 
 [mesh_mappings.scene_regions.pre-sma]
 meshes = ["left-pre-sma", "right-pre-sma"]
+
+[mesh_mappings.scene_regions.dlpfc]
+meshes = [
+  "left-middle-frontal-gyrus", "right-middle-frontal-gyrus",
+  "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
+]
+
+[mesh_mappings.scene_regions.pfc-overlap]
+meshes = [
+  "left-middle-frontal-gyrus", "right-middle-frontal-gyrus",
+  "left-superior-frontal-gyrus", "right-superior-frontal-gyrus",
+  "left-parsopercularis", "right-parsopercularis",
+  "left-parstriangularis", "right-parstriangularis",
+  "left-parsorbitalis", "right-parsorbitalis",
+]
+
+[mesh_mappings.scene_regions.right-dlpfc]
+meshes = ["right-middle-frontal-gyrus", "right-superior-frontal-gyrus"]
+
+[mesh_mappings.scene_regions.vmpfc]
+meshes = [
+  "left-medial-orbital-gyrus", "right-medial-orbital-gyrus",
+  "left-subcallosal-area", "right-subcallosal-area",
+]
+
+[mesh_mappings.scene_regions.ppc]
+meshes = [
+  "left-superior-parietal-lobule", "right-superior-parietal-lobule",
+  "left-supramarginal-gyrus", "right-supramarginal-gyrus",
+  "left-angular-gyrus", "right-angular-gyrus",
+]
+
+[mesh_mappings.scene_regions.right-parietal-body]
+meshes = ["right-superior-parietal-lobule", "right-supramarginal-gyrus", "right-angular-gyrus"]
+
+[mesh_mappings.scene_regions.basalganglia-recap]
+meshes = [
+  "left-caudate-nucleus", "right-caudate-nucleus",
+  "left-putamen", "right-putamen",
+  "left-gpi", "right-gpi", "left-gpe", "right-gpe",
+  "left-ventral-anterior-nucleus", "right-ventral-anterior-nucleus",
+  "caudal-part-of-left-ventral-lateral-nucleus",
+  "caudal-part-of-right-ventral-lateral-nucleus",
+  "left-nucleus-accumbens", "right-nucleus-accumbens",
+]
+
+[mesh_mappings.scene_regions.dacc]
+meshes = ["left-caudal-anterior-cingulate", "right-caudal-anterior-cingulate"]
+
+# --- Color-Presets: kanonische didaktische Farbgruppen ---------------------
+# Farb-Presets sind Teil dieser Atlas-Config. Keine separate Companion-JSON-Quelle.
+[color_presets.basalganglienschleifen]
+label = "Basalganglienschleifen (Abb. 11-04)"
+sourceFigure = "11-04"
+intent = "Drei fronto-subkortikale Schleifen werden als kognitive, emotionale und motivationale Funktionskreise getrennt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.basalganglienschleifen.groups]]
+label = "Kognition"
+role = "cognition"
+meaning = "DLPFC/parietaler Kortex mit dorsalem Striatum, Pallidum und Thalamus."
+hue = 210
+buckets = ["dlpfc", "ppc", "striatum-dorsal", "globus-pallidus", "thalamus"]
+
+[[color_presets.basalganglienschleifen.groups]]
+label = "Emotion"
+role = "emotion"
+meaning = "OFC/VMPFC mit Amygdala und Hippocampus als affektiver Regelkreis."
+hue = 30
+buckets = ["ofc", "vmpfc", "amygdala", "hippocampus"]
+
+[[color_presets.basalganglienschleifen.groups]]
+label = "Motivation"
+role = "motivation"
+meaning = "dACC und Nucleus accumbens als motivationaler Handlungsantrieb."
+hue = 150
+buckets = ["dacc", "nucleus-accumbens"]
+
+[color_presets.pfc-petrides]
+label = "PFC Petrides (Abb. 11-05)"
+sourceFigure = "11-05"
+intent = "Arbeitsgedächtnis-Funktionen werden nach dorsolateralem, ventrolateralem und posteriorem Anteil getrennt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.pfc-petrides.groups]]
+label = "DLPFC (Manipulieren)"
+role = "working-memory"
+meaning = "Manipulieren und Umordnen mentaler Inhalte."
+hue = 210
+buckets = ["dlpfc"]
+
+[[color_presets.pfc-petrides.groups]]
+label = "VLPFC (Halten/Abrufen)"
+role = "selection-control"
+meaning = "Halten, Abrufen und kontrollierter Zugriff auf Inhalte."
+hue = 30
+buckets = ["vlpfc"]
+
+[[color_presets.pfc-petrides.groups]]
+label = "Posterior (Speicher)"
+role = "posterior-storage"
+meaning = "Parietale und posterior-mediale Speicher-/Arbeitsflächen."
+hue = 270
+buckets = ["ppc", "pcc-praecuneus"]
+
+[color_presets.fuster-gradient]
+label = "Fuster-Gradient (Abb. 11-06)"
+sourceFigure = "11-06"
+intent = "Posterior-parietale Repräsentation und präfrontale Kontrollanteile werden entlang des Wahrnehmungs-Handlungs-Zyklus getrennt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.fuster-gradient.groups]]
+label = "Frontopolar (Kontext)"
+role = "abstract-control"
+meaning = "Abstrakter Kontext und längerfristige Ziele."
+hue = 200
+buckets = ["frontopolar"]
+
+[[color_presets.fuster-gradient.groups]]
+label = "DLPFC (Kontrolle)"
+role = "working-memory"
+meaning = "Aktive Kontrolle und Manipulation von Handlungsregeln."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.fuster-gradient.groups]]
+label = "VLPFC (Auswahl)"
+role = "selection-control"
+meaning = "Abruf, Auswahl und Antwortselektion."
+hue = 180
+buckets = ["vlpfc"]
+
+[[color_presets.fuster-gradient.groups]]
+label = "Posterior (Repräsentation)"
+role = "posterior-storage"
+meaning = "Parietale Repräsentations- und Speicheranteile."
+hue = 270
+buckets = ["ppc"]
+
+[color_presets.badre-rostrokaudal]
+label = "Rostro-kaudaler Gradient (Abb. 11-07)"
+sourceFigure = "11-07"
+intent = "Kontrollabstraktion wird rostro-kaudal vom frontopolaren PFC bis zu SMA/pre-SMA gestaffelt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.badre-rostrokaudal.groups]]
+label = "Frontopolar (BA 10)"
+role = "abstract-control"
+meaning = "Abstrakte, übergeordnete Kontextkontrolle."
+hue = 200
+buckets = ["frontopolar"]
+
+[[color_presets.badre-rostrokaudal.groups]]
+label = "DLPFC (BA 9/46)"
+role = "context-control"
+meaning = "Kontext- und Regelkontrolle."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.badre-rostrokaudal.groups]]
+label = "SMA/pre-SMA (BA 8/6)"
+role = "response-control"
+meaning = "Antwortauswahl und motornahe Kontrolle."
+hue = 260
+buckets = ["sma-presma"]
+
+[[color_presets.badre-rostrokaudal.groups]]
+label = "VLPFC (BA 47/45/44)"
+role = "selection-control"
+meaning = "Auswahl und kontrollierter Abruf."
+hue = 180
+buckets = ["vlpfc"]
+
+[color_presets.badre-domainen]
+label = "Domänenorganisation (Abb. 11-08A)"
+sourceFigure = "11-08A"
+intent = "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.badre-domainen.groups]]
+label = "Frontopolar"
+role = "abstract-control"
+meaning = "Übergeordnete, abstrakte Kontrollziele."
+hue = 200
+buckets = ["frontopolar"]
+
+[[color_presets.badre-domainen.groups]]
+label = "DLPFC"
+role = "context-control"
+meaning = "Kontextuelle Regelkontrolle."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.badre-domainen.groups]]
+label = "VLPFC"
+role = "selection-control"
+meaning = "Antwortauswahl und kontrollierter Abruf."
+hue = 180
+buckets = ["vlpfc"]
+
+[color_presets.badre-relationale-komplexitaet]
+label = "Relationale Komplexität (Abb. 11-08B)"
+sourceFigure = "11-08B"
+intent = "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.badre-relationale-komplexitaet.groups]]
+label = "Frontopolar"
+role = "abstract-control"
+meaning = "Übergeordnete, abstrakte Kontrollziele."
+hue = 200
+buckets = ["frontopolar"]
+
+[[color_presets.badre-relationale-komplexitaet.groups]]
+label = "DLPFC"
+role = "context-control"
+meaning = "Kontextuelle Regelkontrolle."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.badre-relationale-komplexitaet.groups]]
+label = "VLPFC"
+role = "selection-control"
+meaning = "Antwortauswahl und kontrollierter Abruf."
+hue = 180
+buckets = ["vlpfc"]
+
+[color_presets.badre-kaskade]
+label = "Kaskadenmodell (Abb. 11-08C)"
+sourceFigure = "11-08C"
+intent = "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.badre-kaskade.groups]]
+label = "Frontopolar"
+role = "abstract-control"
+meaning = "Übergeordnete, abstrakte Kontrollziele."
+hue = 200
+buckets = ["frontopolar"]
+
+[[color_presets.badre-kaskade.groups]]
+label = "DLPFC"
+role = "context-control"
+meaning = "Kontextuelle Regelkontrolle."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.badre-kaskade.groups]]
+label = "VLPFC"
+role = "selection-control"
+meaning = "Antwortauswahl und kontrollierter Abruf."
+hue = 180
+buckets = ["vlpfc"]
+
+[color_presets.badre-konflikttypen]
+label = "Konflikttypen (Abb. 11-08D)"
+sourceFigure = "11-08D"
+intent = "Kontroll- und Konflikttypen werden zwischen DLPFC, VLPFC und dACC unterschieden."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.badre-konflikttypen.groups]]
+label = "DLPFC (Kontext)"
+role = "context-control"
+meaning = "Kontextbezogene Kontrollkonflikte."
+hue = 220
+buckets = ["dlpfc"]
+
+[[color_presets.badre-konflikttypen.groups]]
+label = "VLPFC (Auswahl)"
+role = "selection-control"
+meaning = "Auswahl- und Abrufkonflikte."
+hue = 180
+buckets = ["vlpfc"]
+
+[[color_presets.badre-konflikttypen.groups]]
+label = "dACC (Konflikt)"
+role = "conflict-monitoring"
+meaning = "Konfliktmonitoring und Fehler-/Kontrollbedarf."
+hue = 35
+buckets = ["dacc"]
+
+[color_presets.wcst-frontoparietal]
+label = "WCST/fMRT (Abb. 11-09)"
+sourceFigure = "11-09"
+intent = "Set-Shifting wird als frontoparietales Kontrollnetzwerk dargestellt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.wcst-frontoparietal.groups]]
+label = "DLPFC"
+role = "working-memory"
+meaning = "Regelhalten und Regelwechsel."
+hue = 210
+buckets = ["dlpfc"]
+
+[[color_presets.wcst-frontoparietal.groups]]
+label = "VLPFC"
+role = "selection-control"
+meaning = "Auswahl und kontrollierter Abruf."
+hue = 30
+buckets = ["vlpfc"]
+
+[[color_presets.wcst-frontoparietal.groups]]
+label = "Parietal"
+role = "frontoparietal-control"
+meaning = "Aufmerksamkeits- und Arbeitsgedächtnisanteil im frontoparietalen Netzwerk."
+hue = 270
+buckets = ["ppc"]
+
+[color_presets.fluency-foci]
+label = "Fluency-Foci (Abb. 11-10)"
+sourceFigure = "11-10"
+intent = "Verbale Flüssigkeit trennt präfrontale Such-/Abrufanteile von motorischer Sequenzplanung."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.fluency-foci.groups]]
+label = "DLPFC"
+role = "working-memory"
+meaning = "Strategische Suche und Arbeitsgedächtnis."
+hue = 210
+buckets = ["dlpfc"]
+
+[[color_presets.fluency-foci.groups]]
+label = "VLPFC"
+role = "selection-control"
+meaning = "Lexikalischer Abruf und Auswahl."
+hue = 30
+buckets = ["vlpfc"]
+
+[[color_presets.fluency-foci.groups]]
+label = "SMA/pre-SMA"
+role = "motor-planning"
+meaning = "Sequenzierung und Antwortinitiierung."
+hue = 260
+buckets = ["sma-presma"]
+
+[color_presets.tower-of-london-dlpfc]
+label = "Tower of London DLPFC (Abb. 11-11A/B)"
+sourceFigure = "11-11A/B"
+intent = "Planungsanforderung wird als fokussierte DLPFC-Aktivierung gezeigt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.tower-of-london-dlpfc.groups]]
+label = "DLPFC-Aktivierung"
+role = "task-activation"
+meaning = "Planung, Zielhierarchie und Manipulation von Zwischenschritten."
+hue = 210
+buckets = ["dlpfc"]
+
+[color_presets.tower-of-london-schweregrad]
+label = "Tower of London Schwierigkeit (Abb. 11-11C)"
+sourceFigure = "11-11C"
+intent = "Planungsanforderung wird als fokussierte DLPFC-Aktivierung gezeigt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.tower-of-london-schweregrad.groups]]
+label = "DLPFC-Aktivierung"
+role = "task-activation"
+meaning = "Planung, Zielhierarchie und Manipulation von Zwischenschritten."
+hue = 210
+buckets = ["dlpfc"]
+
+[color_presets.acc-bush]
+label = "ACC Bush (Abb. 11-13)"
+sourceFigure = "11-13"
+intent = "Dorsale kognitive und ventrale affektive ACC/OFC-Anteile werden getrennt."
+coverage = "full"
+dimOthers = true
+
+[[color_presets.acc-bush.groups]]
+label = "Dorsales ACC (kognitiv)"
+role = "conflict-monitoring"
+meaning = "Kognitives Konfliktmonitoring und Kontrollbedarf."
+hue = 210
+buckets = ["dacc"]
+
+[[color_presets.acc-bush.groups]]
+label = "Ventrales ACC/OFC"
+role = "affective-control"
+meaning = "Affektive Bewertung und orbitofrontale Regulation."
+hue = 30
+buckets = ["vmpfc", "ofc"]
+
+[color_presets.ofc-phineas]
+label = "OFC / Phineas Gage"
+sourceFigure = "Fallstudie Phineas Gage"
+intent = "Läsionsnaher VMPFC/OFC wird als Kernbereich der Phineas-Gage-Fallstudie markiert."
+coverage = "partial"
+coverageNote = "Die Farbsemantik ist fachlich gesetzt; die historische Schädel-/Stangen-Geometrie wird über die Phineas-Szene separat geführt."
+dimOthers = true
+
+[[color_presets.ofc-phineas.groups]]
+label = "Läsionsgebiet"
+role = "lesion"
+meaning = "VMPFC/OFC als Läsionskern der Fallstudie."
+hue = 0
+buckets = ["ofc", "vmpfc"]
 
 # --- Configurations: benannte Atome (Folie / Lernschritt / Abb.-Ersetzung) --
 [configurations.broca-areal]
@@ -195,9 +619,6 @@ enabled = false
 kind = "prose"
 scene = "broca-areal"
 [configurations.broca-areal.sequencing]
-presentation = "kapitel11-vorlesung"
-learning = "kapitel11-pfad"
-step = "broca-areal"
 [configurations.broca-areal.scopes]
 "area:julich:area-44:l" = true
 "area:julich:area-45:l" = true
@@ -223,9 +644,10 @@ margin = 1.4
 [configurations.ofc-phineas.regions]
 areas = ["dkt:lateralorbitofrontal:l", "dkt:medialorbitofrontal:l"]
 buckets = ["ofc", "vmpfc"]
+scene_regions = ["vm-ofc"]
 [configurations.ofc-phineas.colors]
 scheme = "preset"
-preset = "phineas-gage"
+preset = "ofc-phineas"
 dim_others = true
 coverage = "partial"
 review_status = "final"
@@ -237,9 +659,9 @@ dim_opacity = 0.12
 enabled = false
 [configurations.ofc-phineas.overlay]
 kind = "prose"
+scene = "ofc-phineas"
 [configurations.ofc-phineas.sequencing]
 presentation = "kapitel11-vorlesung"
-learning = "kapitel11-pfad"
 step = "ofc-phineas"
 [configurations.ofc-phineas.scopes]
 "area:dkt:lateralorbitofrontal:l" = true
@@ -345,9 +767,51 @@ scene = "pfc-petrides"
 position = "right"
 size = "md"
 [configurations.pfc-petrides.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "pfc-petrides"
 [configurations.pfc-petrides.scopes]
+
+[configurations.duncan-owen-overlap]
+label_de = "Duncan/Owen Overlap"
+title = "Überlappende frontale Aktivierungen"
+section = "11.3.3"
+[configurations.duncan-owen-overlap.facets]
+clinic = false
+function = true
+chapter = true
+provenance = true
+[configurations.duncan-owen-overlap.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.duncan-owen-overlap.camera]
+shot = "lateral-left"
+fit = "bounds"
+margin = 1.4
+[configurations.duncan-owen-overlap.regions]
+buckets = ["dlpfc", "vlpfc"]
+scene_regions = ["pfc-overlap"]
+[configurations.duncan-owen-overlap.colors]
+enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Vortragsfolie 14 zeigt Aktivitaetsueberlappung/Methodenlimit; kein Petrides-Funktionsgruppen-Reuse."
+[configurations.duncan-owen-overlap.visibility]
+dim_others = true
+dim_opacity = 0.12
+[configurations.duncan-owen-overlap.cuts]
+enabled = false
+[configurations.duncan-owen-overlap.overlay]
+kind = "flowchart"
+scene = "duncan-owen-overlap"
+position = "right"
+size = "md"
+[configurations.duncan-owen-overlap.sequencing]
+presentation = "kapitel11-vorlesung"
+step = "duncan-owen-overlap"
+[configurations.duncan-owen-overlap.scopes]
 
 [configurations.fuster-gradient]
 label_de = "Fuster-Gradient (Abb. 11-06)"
@@ -387,6 +851,7 @@ scene = "fuster-gradient"
 position = "right"
 size = "md"
 [configurations.fuster-gradient.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "fuster-gradient"
 [configurations.fuster-gradient.scopes]
@@ -429,6 +894,7 @@ scene = "badre-rostrokaudal"
 position = "right"
 size = "md"
 [configurations.badre-rostrokaudal.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "badre-rostrokaudal"
 [configurations.badre-rostrokaudal.scopes]
@@ -455,7 +921,7 @@ margin = 1.4
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-domainen.colors]
 scheme = "preset"
-preset = "badre-core-pfc"
+preset = "badre-domainen"
 dim_others = true
 coverage = "full"
 review_status = "final"
@@ -471,6 +937,7 @@ scene = "badre-domainen"
 position = "right"
 size = "md"
 [configurations.badre-domainen.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "badre-domainen"
 [configurations.badre-domainen.scopes]
@@ -497,7 +964,7 @@ margin = 1.4
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-relationale-komplexitaet.colors]
 scheme = "preset"
-preset = "badre-core-pfc"
+preset = "badre-relationale-komplexitaet"
 dim_others = true
 coverage = "full"
 review_status = "final"
@@ -513,6 +980,7 @@ scene = "badre-relationale-komplexitaet"
 position = "right"
 size = "md"
 [configurations.badre-relationale-komplexitaet.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "badre-relationale-komplexitaet"
 [configurations.badre-relationale-komplexitaet.scopes]
@@ -539,7 +1007,7 @@ margin = 1.4
 buckets = ["frontopolar", "dlpfc", "vlpfc"]
 [configurations.badre-kaskade.colors]
 scheme = "preset"
-preset = "badre-core-pfc"
+preset = "badre-kaskade"
 dim_others = true
 coverage = "full"
 review_status = "final"
@@ -555,6 +1023,7 @@ scene = "badre-kaskade"
 position = "right"
 size = "md"
 [configurations.badre-kaskade.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "badre-kaskade"
 [configurations.badre-kaskade.scopes]
@@ -597,9 +1066,51 @@ scene = "badre-konflikttypen"
 position = "right"
 size = "md"
 [configurations.badre-konflikttypen.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "badre-konflikttypen"
 [configurations.badre-konflikttypen.scopes]
+
+[configurations.dlpfc-schaedigung]
+label_de = "DLPFC-Schädigung"
+title = "DLPFC-Schädigung und Perseveration"
+section = "11.3.3"
+[configurations.dlpfc-schaedigung.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.dlpfc-schaedigung.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.dlpfc-schaedigung.camera]
+shot = "lateral-left"
+fit = "bounds"
+margin = 1.4
+[configurations.dlpfc-schaedigung.regions]
+buckets = ["dlpfc"]
+scene_regions = ["dlpfc"]
+[configurations.dlpfc-schaedigung.colors]
+enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Vortragsfolie 34 ist ein klinischer DLPFC-Auftrag; keine Wiederverwendung der Tower-of-London-Faerbung."
+[configurations.dlpfc-schaedigung.visibility]
+dim_others = true
+dim_opacity = 0.12
+[configurations.dlpfc-schaedigung.cuts]
+enabled = false
+[configurations.dlpfc-schaedigung.overlay]
+kind = "prose"
+scene = "dlpfc-schaedigung"
+position = "right"
+size = "md"
+[configurations.dlpfc-schaedigung.sequencing]
+presentation = "kapitel11-vorlesung"
+step = "dlpfc-schaedigung"
+[configurations.dlpfc-schaedigung.scopes]
 
 [configurations.wcst-frontoparietal]
 label_de = "WCST/fMRT (Abb. 11-09)"
@@ -639,6 +1150,7 @@ scene = "wcst-frontoparietal"
 position = "right"
 size = "md"
 [configurations.wcst-frontoparietal.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "wcst-frontoparietal"
 [configurations.wcst-frontoparietal.scopes]
@@ -669,7 +1181,7 @@ preset = "fluency-foci"
 dim_others = true
 coverage = "full"
 review_status = "final"
-reason = "Preset deckt DLPFC, VLPFC und SMA/preSMA-Foci ab."
+reason = "Preset deckt DLPFC, VLPFC und SMA/pre-SMA-Foci ab."
 [configurations.fluency-foci.visibility]
 dim_others = true
 dim_opacity = 0.12
@@ -681,6 +1193,7 @@ scene = "fluency-foci"
 position = "right"
 size = "md"
 [configurations.fluency-foci.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "fluency-foci"
 [configurations.fluency-foci.scopes]
@@ -707,7 +1220,7 @@ margin = 1.4
 buckets = ["dlpfc"]
 [configurations.tower-of-london-dlpfc.colors]
 scheme = "preset"
-preset = "tower-dlpfc"
+preset = "tower-of-london-dlpfc"
 dim_others = true
 coverage = "full"
 review_status = "final"
@@ -723,6 +1236,7 @@ scene = "tower-of-london-dlpfc"
 position = "right"
 size = "md"
 [configurations.tower-of-london-dlpfc.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "tower-of-london-dlpfc"
 [configurations.tower-of-london-dlpfc.scopes]
@@ -749,7 +1263,7 @@ margin = 1.4
 buckets = ["dlpfc"]
 [configurations.tower-of-london-schweregrad.colors]
 scheme = "preset"
-preset = "tower-dlpfc"
+preset = "tower-of-london-schweregrad"
 dim_others = true
 coverage = "full"
 review_status = "final"
@@ -765,9 +1279,92 @@ scene = "tower-of-london-schweregrad"
 position = "right"
 size = "md"
 [configurations.tower-of-london-schweregrad.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "tower-of-london-schweregrad"
 [configurations.tower-of-london-schweregrad.scopes]
+
+[configurations.right-dlpfc-selbstkontrolle]
+label_de = "Rechter DLPFC - Selbstkontrolle"
+title = "Rechter DLPFC und Selbstkontrolle"
+section = "11.3.3"
+[configurations.right-dlpfc-selbstkontrolle.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.right-dlpfc-selbstkontrolle.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.right-dlpfc-selbstkontrolle.camera]
+shot = "lateral-right"
+fit = "bounds"
+margin = 1.4
+[configurations.right-dlpfc-selbstkontrolle.regions]
+buckets = ["right-dlpfc"]
+scene_regions = ["right-dlpfc"]
+[configurations.right-dlpfc-selbstkontrolle.colors]
+enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Vortragsfolie 47 nennt explizit den rechten DLPFC; die Config trennt ihn vom bilateralen Tower-DLPFC."
+[configurations.right-dlpfc-selbstkontrolle.visibility]
+dim_others = true
+dim_opacity = 0.12
+[configurations.right-dlpfc-selbstkontrolle.cuts]
+enabled = false
+[configurations.right-dlpfc-selbstkontrolle.overlay]
+kind = "prose"
+scene = "right-dlpfc-selbstkontrolle"
+position = "right"
+size = "md"
+[configurations.right-dlpfc-selbstkontrolle.sequencing]
+presentation = "kapitel11-vorlesung"
+step = "right-dlpfc-selbstkontrolle"
+[configurations.right-dlpfc-selbstkontrolle.scopes]
+
+[configurations.right-parietal-lesion]
+label_de = "Rechts-parietale Körperwissen-Läsion"
+title = "Rechtsseitiger Parietallappen und Körperwissen"
+section = "11.3.3"
+[configurations.right-parietal-lesion.facets]
+clinic = true
+function = true
+chapter = true
+provenance = false
+[configurations.right-parietal-lesion.view]
+surface = "pial"
+subcortex = false
+carve_on_taro = "off"
+[configurations.right-parietal-lesion.camera]
+shot = "lateral-right"
+fit = "bounds"
+margin = 1.4
+[configurations.right-parietal-lesion.regions]
+buckets = ["right-parietal-body"]
+scene_regions = ["right-parietal-body"]
+[configurations.right-parietal-lesion.colors]
+enabled = false
+scheme = "scene"
+coverage = "not-applicable"
+review_status = "final"
+reason = "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; kein allgemeiner PPC-Fallback."
+[configurations.right-parietal-lesion.visibility]
+dim_others = true
+dim_opacity = 0.12
+[configurations.right-parietal-lesion.cuts]
+enabled = false
+[configurations.right-parietal-lesion.overlay]
+kind = "prose"
+scene = "right-parietal-lesion"
+position = "right"
+size = "md"
+[configurations.right-parietal-lesion.sequencing]
+presentation = "kapitel11-vorlesung"
+step = "right-parietal-lesion"
+[configurations.right-parietal-lesion.scopes]
 
 [configurations.flanker-aufgabe]
 label_de = "Flanker-Aufgabe (Abb. 11-12)"
@@ -806,6 +1403,7 @@ scene = "flanker-aufgabe"
 position = "right"
 size = "md"
 [configurations.flanker-aufgabe.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "flanker-aufgabe"
 [configurations.flanker-aufgabe.scopes]
@@ -849,6 +1447,7 @@ scene = "acc-bush"
 position = "right"
 size = "md"
 [configurations.acc-bush.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "acc-bush"
 [configurations.acc-bush.scopes]
@@ -973,6 +1572,7 @@ scene = "go-nogo-intro"
 position = "right"
 size = "md"
 [configurations.go-nogo-intro.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "go-nogo-intro"
 [configurations.go-nogo-intro.scopes]
@@ -1008,6 +1608,7 @@ scene = "ica-uebersicht"
 position = "right"
 size = "md"
 [configurations.ica-uebersicht.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "ica-uebersicht"
 [configurations.ica-uebersicht.scopes]
@@ -1044,6 +1645,7 @@ scene = "p3b-engagement"
 position = "right"
 size = "md"
 [configurations.p3b-engagement.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "p3b-engagement"
 [configurations.p3b-engagement.scopes]
@@ -1080,6 +1682,7 @@ scene = "p3z-inhibition"
 position = "right"
 size = "md"
 [configurations.p3z-inhibition.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "p3z-inhibition"
 [configurations.p3z-inhibition.scopes]
@@ -1097,7 +1700,12 @@ shot = "lateral-left"
 fit = "bounds"
 margin = 1.4
 [configurations.zusammenfassung.regions]
-scene_regions = ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-presma"]
+buckets = [
+  "dlpfc", "vmpfc", "ppc",
+  "striatum-dorsal", "globus-pallidus", "thalamus", "nucleus-accumbens",
+  "dacc", "sma-presma",
+]
+scene_regions = ["dlpfc", "vmpfc", "ppc", "basalganglia-recap", "dacc", "acc-cingulum", "sma-presma"]
 [configurations.zusammenfassung.colors]
 enabled = false
 scheme = "scene"
@@ -1110,11 +1718,12 @@ dim_opacity = 0.12
 [configurations.zusammenfassung.cuts]
 enabled = false
 [configurations.zusammenfassung.overlay]
-kind = "prose"
+kind = "flowchart"
 scene = "zusammenfassung"
 position = "right"
 size = "lg"
 [configurations.zusammenfassung.sequencing]
+presentation = "kapitel11-vorlesung"
 learning = "kapitel11-pfad"
 step = "zusammenfassung"
 [configurations.zusammenfassung.scopes]
@@ -1122,7 +1731,34 @@ step = "zusammenfassung"
 # --- Sequenzen: geordnete Configuration-Namen ------------------------------
 [presentation.kapitel11-vorlesung]
 label_de = "Kapitel 11 — Vorlesung"
-steps = ["basalganglienschleifen", "broca-areal", "vcpt", "p3a-konfliktmonitoring"]
+steps = [
+  "pfc-petrides",
+  "duncan-owen-overlap",
+  "fuster-gradient",
+  "badre-rostrokaudal",
+  "badre-domainen",
+  "badre-relationale-komplexitaet",
+  "badre-kaskade",
+  "badre-konflikttypen",
+  "dlpfc-schaedigung",
+  "wcst-frontoparietal",
+  "fluency-foci",
+  "tower-of-london-dlpfc",
+  "tower-of-london-schweregrad",
+  "right-dlpfc-selbstkontrolle",
+  "ofc-phineas",
+  "right-parietal-lesion",
+  "acc-bush",
+  "flanker-aufgabe",
+  "go-nogo-intro",
+  "vcpt",
+  "ica-uebersicht",
+  "p3a-konfliktmonitoring",
+  "p3b-engagement",
+  "p3z-inhibition",
+  "basalganglienschleifen",
+  "zusammenfassung",
+]
 
 [learning.kapitel11-pfad]
 label_de = "Lernpfad Kapitel 11"

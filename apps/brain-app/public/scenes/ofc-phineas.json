@@ -1,0 +1,21 @@
+{
+  "id": "ofc-phineas",
+  "section": "11.4 · VMPFC und Phineas Gage",
+  "author": "ifland",
+  "order": 18,
+  "title": "VMPFC/OFC und Phineas Gage",
+  "brain": { "regions": ["vm-ofc"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "prose",
+    "position": "right",
+    "size": "md"
+  },
+  "companion": {
+    "summary": "Die Phineas-Gage-Folie verbindet die somatische-Marker-Logik mit ventromedialem und orbitofrontalem PFC. Die App nutzt dafür die aktuelle ofc-phineas-Konfiguration: VMPFC/OFC als läsionsnaher Bewertungs- und Hemmungsbereich. Die historische Schädel- und Stangen-Geometrie bleibt getrennt vom Farbvertrag.",
+    "sources": [
+      { "key": "jaencke_kap11", "note": "Kap. 11.4, VMPFC und somatische Marker" },
+      { "key": "damasio_1994", "note": "Phineas-Gage-Kontext und ventromedialer PFC" },
+      { "key": "config.default.toml", "note": "configuration ofc-phineas, color_presets.ofc-phineas" }
+    ]
+  }
+}

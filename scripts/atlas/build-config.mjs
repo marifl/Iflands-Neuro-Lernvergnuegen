@@ -14,7 +14,6 @@ const APP_SRC = join(REPO, 'apps/brain-app/src')
 const GENERATED_MESH_MAPPINGS = join(APP_SRC, 'viewer/meshMappings.generated.json')
 const FIGURE_MAPPING = join(REPO, 'docs/KAPITEL11_ABBILDUNGEN_MAPPING.md')
 const STRUCTURE_COORDS = join(APP_PUBLIC, 'scenes/structure-coords.json')
-const COLOR_PRESETS = join(APP_PUBLIC, 'companion/config/color-presets.json')
 
 /** Sammelt valide Scope-IDs aus dem Katalog (axes/atlases/groups/areas). */
 export function indexCatalog(catalog) {
@@ -51,7 +50,7 @@ export function validateScopeKey(key, idx) {
 const FACET_KEYS = new Set(['clinic', 'function', 'chapter', 'provenance'])
 const SURFACES = new Set(['pial', 'inflated'])
 const CARVE = new Set(['off', 'dkt', 'julich'])
-const ROOT_KEYS = new Set(['preset', 'presets', 'mesh_mappings', 'configurations', 'presentation', 'learning'])
+const ROOT_KEYS = new Set(['preset', 'presets', 'mesh_mappings', 'color_presets', 'configurations', 'presentation', 'learning'])
 const PRESET_KEYS = new Set(['label_de', 'scopes', 'visibility'])
 const MESH_MAPPINGS_KEYS = new Set(['buckets', 'scene_regions'])
 const MESH_MAPPING_KEYS = new Set(['meshes', 'known_gap', 'gap_reason'])
@@ -64,13 +63,12 @@ const CAMERA_KEYS = new Set(['target', 'shot', 'fit', 'bounds', 'margin', 'fov',
 const CAMERA_BOUNDS_KEYS = new Set(['center', 'radius'])
 const CAMERA_POSE_KEYS = new Set(['position', 'look_at'])
 const REGION_KEYS = new Set(['areas', 'buckets', 'meshes', 'scene_regions'])
-const COLOR_KEYS = new Set(['enabled', 'scheme', 'preset', 'groups', 'dim_others', 'coverage', 'review_status', 'reason'])
-const COLOR_GROUP_KEYS = new Set(['label', 'hue', 'buckets'])
-const COLOR_PRESET_KEYS = new Set(['id', 'label', 'sourceFigure', 'intent', 'coverage', 'coverageNote', 'groups', 'dimOthers'])
+const COLOR_KEYS = new Set(['enabled', 'scheme', 'preset', 'dim_others', 'coverage', 'review_status', 'reason'])
+const COLOR_PRESET_KEYS = new Set(['label', 'sourceFigure', 'intent', 'coverage', 'coverageNote', 'groups', 'dimOthers'])
 const COLOR_PRESET_GROUP_KEYS = new Set(['label', 'role', 'meaning', 'hue', 'buckets'])
 const COLOR_SCHEMES = new Set(['preset', 'atlas', 'scene', 'none'])
 const COLOR_COVERAGE = new Set(['full', 'partial', 'not-applicable'])
-const COLOR_REVIEW_STATUS = new Set(['final', 'needs-review', 'legacy'])
+const COLOR_REVIEW_STATUS = new Set(['final', 'needs-review'])
 const COLOR_ROLES = new Set([
   'cognition',
   'emotion',
@@ -98,7 +96,7 @@ const SEQUENCE_KEYS = new Set(['label_de', 'steps'])
 const CAMERA_FITS = new Set(['bounds', 'target'])
 const CUT_AXES = new Set(['x', 'y', 'z'])
 const CUT_KEEP = new Set(['positive', 'negative'])
-const REQUIRED_ROOT_KEYS = ['preset', 'presets', 'mesh_mappings', 'configurations', 'presentation', 'learning']
+const REQUIRED_ROOT_KEYS = ['preset', 'presets', 'mesh_mappings', 'color_presets', 'configurations', 'presentation', 'learning']
 const REQUIRED_CONFIGURATION_KEYS = [
   'label_de', 'title', 'section', 'view', 'camera', 'regions',
   'colors', 'visibility', 'cuts', 'overlay', 'sequencing', 'scopes',
@@ -379,38 +377,26 @@ export function loadScenesContext(config, scenesRoot = join(APP_PUBLIC, 'scenes'
 
 function loadValidationContext(config) {
   const cameraDirections = loadTsObject(join(APP_SRC, 'scene/cameraPresets.ts'), 'CAMERA_DIRECTIONS')
-  const colorPresets = loadColorPresets()
   const meshIds = new Set(Object.keys(JSON.parse(readFileSync(STRUCTURE_COORDS, 'utf8'))))
   return {
     ...loadScenesContext(config),
     bucketMappings: config.mesh_mappings?.buckets,
     cameraShots: new Set(Object.keys(cameraDirections)),
-    colorPresets: new Map(colorPresets.map((preset) => [preset.id, preset])),
     knownFigures: loadKnownFigures(),
     meshIds,
     sceneRegionMappings: config.mesh_mappings?.scene_regions,
   }
 }
 
-function loadColorPresets(path = COLOR_PRESETS) {
-  let raw
-  try {
-    raw = JSON.parse(readFileSync(path, 'utf8'))
-  } catch {
-    throw new Error(`build-config: ${path} ist kein gueltiges JSON`)
-  }
-  if (raw.version !== 2) throw new Error('build-config: color-presets.json braucht version=2')
-  if (!Array.isArray(raw.presets) || raw.presets.length === 0) {
-    throw new Error('build-config: color-presets.json braucht presets[]')
-  }
-  const seen = new Set()
-  for (const [i, preset] of raw.presets.entries()) {
-    const context = `color-presets[${i}]`
+function validateColorPresets(colorPresets, ctx) {
+  assertPlainObject(colorPresets, 'color_presets')
+  const entries = Object.entries(colorPresets)
+  if (entries.length === 0) throw new Error('build-config: color_presets braucht mindestens einen Eintrag')
+  for (const [id, preset] of entries) {
+    assertString(id, 'color_presets key')
+    const context = `color_presets.${id}`
     assertPlainObject(preset, context)
     assertKnownKeys(preset, COLOR_PRESET_KEYS, context)
-    assertString(preset.id, `${context}.id`)
-    if (seen.has(preset.id)) throw new Error(`build-config: color-presets id "${preset.id}" doppelt`)
-    seen.add(preset.id)
     assertString(preset.label, `${context}.label`)
     assertOptionalString(preset.sourceFigure, `${context}.sourceFigure`)
     assertString(preset.intent, `${context}.intent`)
@@ -437,14 +423,30 @@ function loadColorPresets(path = COLOR_PRESETS) {
       assertString(group.meaning, `${groupContext}.meaning`)
       assertFiniteNumber(group.hue, `${groupContext}.hue`)
       assertStringArray(group.buckets, `${groupContext}.buckets`)
+      for (const bucket of group.buckets) assertKnownBucket(bucket, ctx, `${groupContext}.buckets`)
     }
   }
-  return raw.presets
 }
 
 function validateColorPresetBuckets(preset, ctx, context) {
   for (const group of preset.groups ?? []) {
     for (const bucket of group.buckets ?? []) assertKnownBucket(bucket, ctx, context)
+  }
+}
+
+function validateConfigurationPresetBuckets(name, c, preset) {
+  const configBuckets = new Set(c.regions?.buckets ?? [])
+  if (configBuckets.size === 0) {
+    throw new Error(`build-config: configuration "${name}" colors.preset braucht regions.buckets`)
+  }
+  const presetBuckets = new Set((preset.groups ?? []).flatMap((group) => group.buckets ?? []))
+  const missing = [...configBuckets].filter((bucket) => !presetBuckets.has(bucket))
+  const extra = [...presetBuckets].filter((bucket) => !configBuckets.has(bucket))
+  if (missing.length > 0 || extra.length > 0) {
+    const parts = []
+    if (missing.length > 0) parts.push(`fehlt im Preset: ${missing.join(', ')}`)
+    if (extra.length > 0) parts.push(`nicht in regions.buckets: ${extra.join(', ')}`)
+    throw new Error(`build-config: configuration "${name}" colors.preset Bucket-Mismatch — ${parts.join('; ')}`)
   }
 }
 
@@ -502,17 +504,6 @@ function validateConfigurationSchema(name, c, idx) {
   assertOptionalString(c.colors.coverage, `${context}.colors.coverage`)
   assertOptionalString(c.colors.review_status, `${context}.colors.review_status`)
   assertOptionalString(c.colors.reason, `${context}.colors.reason`)
-  if (c.colors.groups !== undefined) {
-    if (!Array.isArray(c.colors.groups)) throw new Error(`build-config: ${context}.colors.groups muss ein Array sein`)
-    c.colors.groups.forEach((group, i) => {
-      assertPlainObject(group, `${context}.colors.groups[${i}]`)
-      assertKnownKeys(group, COLOR_GROUP_KEYS, `${context}.colors.groups[${i}]`)
-      assertString(group.label, `${context}.colors.groups[${i}].label`)
-      assertFiniteNumber(group.hue, `${context}.colors.groups[${i}].hue`)
-      assertStringArray(group.buckets, `${context}.colors.groups[${i}].buckets`)
-    })
-  }
-
   validateVisibilitySchema(c.visibility, `${context}.visibility`, true)
 
   assertPlainObject(c.cuts, `${context}.cuts`)
@@ -597,9 +588,7 @@ function validateFigureFields(name, c, idx, ctx) {
     const preset = ctx.colorPresets?.get(c.colors.preset)
     if (!preset) throw new Error(`build-config: configuration "${name}" colors.preset "${c.colors.preset}" unbekannt`)
     validateColorPresetBuckets(preset, ctx, `configuration "${name}" colors.preset "${c.colors.preset}" Bucket`)
-  }
-  for (const group of c.colors?.groups ?? []) {
-    for (const bucket of group.buckets ?? []) assertKnownBucket(bucket, ctx, `configuration "${name}" colors.groups Bucket`)
+    validateConfigurationPresetBuckets(name, c, preset)
   }
   validateVisibilityMeshRefs(c.visibility, ctx, `configuration "${name}" visibility`)
   for (const [i, plane] of (c.cuts?.planes ?? []).entries()) {
@@ -618,8 +607,24 @@ function validateSequencingRefs(name, c, config) {
   if (c.sequencing?.presentation !== undefined && !config.presentation?.[c.sequencing.presentation]) {
     throw new Error(`build-config: configuration "${name}" sequencing.presentation "${c.sequencing.presentation}" unbekannt`)
   }
+  if (
+    c.sequencing?.presentation !== undefined &&
+    !config.presentation[c.sequencing.presentation].steps.includes(name)
+  ) {
+    throw new Error(
+      `build-config: configuration "${name}" sequencing.presentation "${c.sequencing.presentation}" referenziert Sequenz ohne diesen Step`,
+    )
+  }
   if (c.sequencing?.learning !== undefined && !config.learning?.[c.sequencing.learning]) {
     throw new Error(`build-config: configuration "${name}" sequencing.learning "${c.sequencing.learning}" unbekannt`)
+  }
+  if (
+    c.sequencing?.learning !== undefined &&
+    !config.learning[c.sequencing.learning].steps.includes(name)
+  ) {
+    throw new Error(
+      `build-config: configuration "${name}" sequencing.learning "${c.sequencing.learning}" referenziert Sequenz ohne diesen Step`,
+    )
   }
   if (c.sequencing?.step !== undefined && !config.configurations?.[c.sequencing.step]) {
     throw new Error(`build-config: configuration "${name}" sequencing.step "${c.sequencing.step}" unbekannt`)
@@ -651,8 +656,8 @@ function validateColorMetadata(name, colors) {
   if (colors.preset !== undefined && colors.scheme !== undefined && colors.scheme !== 'preset') {
     throw new Error(`build-config: configuration "${name}" colors.preset braucht scheme="preset"`)
   }
-  if (colors.scheme === 'preset' && colors.preset === undefined && colors.groups === undefined) {
-    throw new Error(`build-config: configuration "${name}" scheme="preset" braucht colors.preset oder colors.groups`)
+  if (colors.scheme === 'preset' && colors.preset === undefined) {
+    throw new Error(`build-config: configuration "${name}" scheme="preset" braucht colors.preset`)
   }
   if (colors.enabled === false && colors.scheme === 'preset') {
     throw new Error(`build-config: configuration "${name}" colors.enabled=false widerspricht scheme="preset"`)
@@ -684,6 +689,7 @@ export function validateConfig(config, idx, ctx = {}) {
   assertKnownKeys(config, ROOT_KEYS, 'root')
   assertString(config.preset, 'root.preset')
   assertPlainObject(config.presets, 'presets')
+  assertPlainObject(config.color_presets, 'color_presets')
   assertPlainObject(config.configurations, 'configurations')
   assertPlainObject(config.presentation, 'presentation')
   assertPlainObject(config.learning, 'learning')
@@ -694,8 +700,10 @@ export function validateConfig(config, idx, ctx = {}) {
   const validationCtx = {
     ...ctx,
     bucketMappings: config.mesh_mappings.buckets,
+    colorPresets: new Map(Object.entries(config.color_presets ?? {}).map(([id, preset]) => [id, { id, ...preset }])),
     sceneRegionMappings: config.mesh_mappings.scene_regions,
   }
+  validateColorPresets(config.color_presets, validationCtx)
   for (const [name, p] of Object.entries(config.presets)) {
     assertPlainObject(p, `preset "${name}"`)
     assertString(p.label_de, `preset "${name}".label_de`)

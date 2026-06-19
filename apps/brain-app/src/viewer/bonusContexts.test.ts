@@ -19,13 +19,13 @@ const ofcNode: OntologyNode = {
 }
 
 describe('bonusContexts', () => {
-  it('heftet Phineas als Bonus-Kontext an OFC/vmPFC-Knoten', () => {
+  it('heftet Phineas als Bonus-Kontext an VMPFC/OFC-Knoten', () => {
     const ids = bonusContextIdsForNode(ofcNode)
 
     expect(ids).toContain('phineas-gage')
     expect(resolveBonusContextIds(ids).find((context) => context.id === 'phineas-gage')).toMatchObject({
       kind: 'case-study',
-      title: 'Phineas Gage (OFC/vmPFC)',
+      title: 'Phineas Gage (VMPFC/OFC)',
     })
   })
 

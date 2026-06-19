@@ -1,9 +1,20 @@
 {
   "id": "zusammenfassung", "section": "11.5 · Zusammenfassung", "author": "ifland", "order": 70,
   "title": "Zusammenfassung — exekutive Funktionen",
-  "brain": { "regions": ["inhibition-network", "acc-cingulum", "parietal-frontal", "sma-presma"], "camera": "lateral-left" },
+  "brain": { "regions": ["dlpfc", "vmpfc", "ppc", "basalganglia-recap", "dacc", "acc-cingulum", "sma-presma"], "camera": "lateral-left" },
   "overlay": {
-    "kind": "prose", "position": "right", "size": "lg"
+    "kind": "flowchart", "position": "right", "size": "lg",
+    "data": {
+      "heading": "Recap am ganzen Hirn",
+      "nodes": [
+        { "id": "dlpfc", "label": "DLPFC", "result": "Planung, Flexibilität, Selbstkontrolle" },
+        { "id": "vmpfc", "label": "VMPFC", "result": "Verhaltenshemmung, Konsequenzen abschätzen" },
+        { "id": "ppc", "label": "PPC · Parietal", "result": "Aufmerksamkeit, Eigen-/Fremd" },
+        { "id": "basalganglia", "label": "Basalganglien", "result": "drei Schleifen → drei Syndrome" },
+        { "id": "dacc", "label": "dACC · Cingulum", "result": "Konfliktbearbeitung → Quelle der P3a" },
+        { "id": "sma", "label": "SMA / pre-SMA", "result": "Inhibition → Quelle der P3z" }
+      ]
+    }
   },
   "companion": {
     "summary": "Exekutive Funktionen sind Kontrollprozesse zur situationsgerechten Verhaltensoptimierung. Beteiligt sind v.a. DLPFC, VMPFC, posteriorer Parietallappen und Basalganglien (drei BG-Schleifen: DLPFC-, VMPFC-, ACC-Schleife). Diskutiert werden domänen-/funktionsspezifische und hierarchische PFC-Modelle. Tests (WCST, Stroop, Flüssigkeit, ToL) aktivieren je spezifische Areale. Das cinguläre System bearbeitet Konflikte (dorsal/kognitiv vs. ventral/emotional). Der VCPT evoziert ERPs, die per ICA in drei Komponenten zerlegt werden: P3a (Konfliktmonitoring, Cingulum), P3b (Engagement, Parietal/Frontal), P3z (Inhibition, medialer Frontalkortex/SMA).",

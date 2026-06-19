@@ -227,6 +227,7 @@ aber kein vollständiger neuroanatomischer Thesaurus.
 
 | Areal/Netzwerk | Vortrag/Lernen | App-Pfad |
 | --- | --- | --- |
+| Live-Recap-Knoten | Folie 93: DLPFC, VMPFC, PPC · Parietal, Basalganglien, dACC · Cingulum, SMA / pre-SMA | `?sequence=presentation.kapitel11-vorlesung&config=zusammenfassung&scene=zusammenfassung&step=0` |
 | ACC / Cingulum | Konfliktmonitoring, Flanker/Stroop, P3a | Explorer-Flyout -> P3a |
 | Parietal + Frontal | P3b, Engagement/Aufmerksamkeitsressourcen | Explorer-Flyout -> P3b |
 | SMA / pre-SMA | P3z, Inhibition | Explorer-Flyout -> P3z |

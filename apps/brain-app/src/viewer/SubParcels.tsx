@@ -3,7 +3,7 @@ import { useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useViewerStore } from './viewerStore'
-import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
+import { ATLAS_VIEWER_COLORS, PRESET_COLOR_EMISSIVE_INTENSITY } from './atlasColorSystem'
 import { resolvePresetColors } from './colorPresets'
 import { approachTransitionValue } from './transitions'
 
@@ -99,7 +99,7 @@ export default function SubParcels() {
           setOpacityTarget(m, 1)
           mat.color.set(hex)
           mat.emissive.set(hex)
-          mat.emissiveIntensity = 0.22
+          mat.emissiveIntensity = PRESET_COLOR_EMISSIVE_INTENSITY
         } else {
           setOpacityTarget(m, 0)
         }

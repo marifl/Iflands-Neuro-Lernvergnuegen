@@ -1,0 +1,28 @@
+{
+  "id": "duncan-owen-overlap",
+  "section": "11.3.3 · funktionsspezifische Modelle",
+  "author": "ifland",
+  "order": 7,
+  "title": "Duncan/Owen: überlappende frontale Aktivierungen",
+  "brain": { "regions": ["pfc-overlap"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "flowchart",
+    "position": "right",
+    "size": "md",
+    "data": {
+      "nodes": [
+        { "id": "tasks", "label": "EF-Aufgaben", "result": "verschiedene Anforderungen aktivieren ähnliche frontale Areale" },
+        { "id": "overlap", "label": "DLPFC/VLPFC", "result": "Überlappung statt sauber getrennter Funktionsinseln" },
+        { "id": "reason", "label": "Warum", "result": "Aufmerksamkeit und Arbeitsgedächtnis werden fast immer benötigt" },
+        { "id": "limit", "label": "Limit", "result": "stark überlappende Gebiete sind nicht trennscharf auflösbar" }
+      ]
+    }
+  },
+  "companion": {
+    "summary": "Die Duncan/Owen-Folie zeigt keine Petrides-Arbeitsteilung, sondern überlappende frontale Aktivierungen im DLPFC/VLPFC bei unterschiedlichen exekutiven Anforderungen. Die App markiert deshalb einen gemeinsamen PFC-Überlappungsraum und erklärt die Semantik als Multiple-Demand-/Methodenlimit-Punkt: Viele Aufgaben brauchen Aufmerksamkeit und Arbeitsgedächtnis, deshalb erscheinen Aktivierungen schwer trennbar. Interaktive Abfrage: Warum wäre eine saubere Zuordnung einzelner exekutiver Funktionen zu getrennten PFC-Inseln hier problematisch?",
+    "sources": [
+      { "key": "vortrag_pdf_2026_06_18_s14", "note": "PDF-Seite 14: Duncan & Owen, DLPFC/VLPFC-Überlappung" },
+      { "key": "duncan_owen_2000", "note": "Foliensource laut Deck" }
+    ]
+  }
+}

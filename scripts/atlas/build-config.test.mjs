@@ -41,23 +41,76 @@ const MESH_MAPPINGS = {
 
 const VALIDATION_CONTEXT = {
   cameraShots: new Set(['lateral-left']),
-  colorPresets: new Map([
-    ['ok-preset', { groups: [{ buckets: ['ok'] }] }],
-    ['gap-preset', { groups: [{ buckets: ['gap'] }] }],
-  ]),
   knownFigures: new Set(['11-04', '11-14', '11-15(1)']),
   meshIds: new Set(['mesh-a']),
   sceneIds: new Set(['vcpt']),
 }
 
+const CURRENT_PDF_PRESENTATION_STEPS = [
+  'pfc-petrides',
+  'duncan-owen-overlap',
+  'fuster-gradient',
+  'badre-rostrokaudal',
+  'badre-domainen',
+  'badre-relationale-komplexitaet',
+  'badre-kaskade',
+  'badre-konflikttypen',
+  'dlpfc-schaedigung',
+  'wcst-frontoparietal',
+  'fluency-foci',
+  'tower-of-london-dlpfc',
+  'tower-of-london-schweregrad',
+  'right-dlpfc-selbstkontrolle',
+  'ofc-phineas',
+  'right-parietal-lesion',
+  'acc-bush',
+  'flanker-aufgabe',
+  'go-nogo-intro',
+  'vcpt',
+  'ica-uebersicht',
+  'p3a-konfliktmonitoring',
+  'p3b-engagement',
+  'p3z-inhibition',
+  'basalganglienschleifen',
+  'zusammenfassung',
+]
+
 const FIGURE_MATRIX_DOC = new URL('../../docs/SP5_1_FIGURE_MATRIX.md', import.meta.url)
 const GENERATED_MESH_MAPPINGS = new URL('../../apps/brain-app/src/viewer/meshMappings.generated.json', import.meta.url)
+const SCENES_ROOT = new URL('../../apps/brain-app/public/scenes/', import.meta.url)
+
+function sortedValues(values) {
+  return [...values].sort()
+}
+
+function assertSameMembers(actual, expected, message) {
+  assert.deepEqual(sortedValues(actual), sortedValues(expected), message)
+}
+
+function sceneJson(id) {
+  return JSON.parse(readFileSync(new URL(`${id}.json`, SCENES_ROOT), 'utf8'))
+}
+
+function presetGroupBuckets(config, presetId, groupLabel) {
+  const group = config.color_presets[presetId]?.groups.find((candidate) => candidate.label === groupLabel)
+  assert.ok(group, `Preset "${presetId}" braucht Gruppe "${groupLabel}"`)
+  return group.buckets
+}
 
 function baseConfig(overrides = {}) {
   return {
     preset: 'p',
     presets: { p: { label_de: 'Preset', scopes: {} } },
     mesh_mappings: MESH_MAPPINGS,
+    color_presets: {
+      'ok-preset': {
+        label: 'OK Preset',
+        intent: 'Test-Preset mit buildbarem Bucket.',
+        coverage: 'full',
+        dimOthers: true,
+        groups: [{ label: 'OK', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['ok'] }],
+      },
+    },
     configurations: {},
     presentation: {},
     learning: {},
@@ -173,6 +226,36 @@ test('validateConfig prueft sequencing-Referenzen', () => {
   )
 })
 
+test('validateConfig prueft sequencing-Mitgliedschaft in Zielsequenzen', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(baseConfig({
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' },
+          sequencing: { presentation: 'talk', step: 'a' },
+        },
+      },
+      presentation: { talk: { label_de: 'Vorlesung', steps: [] } },
+    }), idx, VALIDATION_CONTEXT),
+    /configuration "a" sequencing\.presentation "talk" referenziert Sequenz ohne diesen Step/,
+  )
+  assert.throws(
+    () => validateConfig(baseConfig({
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          overlay: { ...VALID_CONFIGURATION.overlay, scene: 'vcpt' },
+          sequencing: { learning: 'learn', step: 'a' },
+        },
+      },
+      learning: { learn: { label_de: 'Lernpfad', steps: [] } },
+    }), idx, VALIDATION_CONTEXT),
+    /configuration "a" sequencing\.learning "learn" referenziert Sequenz ohne diesen Step/,
+  )
+})
+
 test('validateConfig verlangt overlay.scene fuer first-class Sequenzsteps', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
@@ -280,21 +363,38 @@ test('validateConfig wirft bei unbekanntem nested Config-Key', () => {
   )
   assert.throws(
     () => validateConfig(configWith({
-      colors: {
-        ...VALID_CONFIGURATION.colors,
-        groups: [{ label: 'Gruppe', hue: 120, buckets: ['ok'], alpha: 0.5 }],
-      },
-    }), idx, VALIDATION_CONTEXT),
-    /configuration "a"\.colors\.groups\[0\] hat unbekannten Key "alpha"/,
-  )
-  assert.throws(
-    () => validateConfig(configWith({
       cuts: {
         ...VALID_CONFIGURATION.cuts,
         planes: [{ axis: 'x', position: 0, keep: 'positive', softness: 0.2 }],
       },
     }), idx, VALIDATION_CONTEXT),
     /configuration "a"\.cuts\.planes\[0\] hat unbekannten Key "softness"/,
+  )
+})
+
+test('validateConfig verbietet alte Inline-Farbgruppen', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        ...VALID_CONFIGURATION.colors,
+        groups: [{ label: 'Gruppe', hue: 120, buckets: ['ok'] }],
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /configuration "a"\.colors hat unbekannten Key "groups"/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({
+      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+      colors: {
+        ...VALID_CONFIGURATION.colors,
+        enabled: true,
+        scheme: 'preset',
+        coverage: 'full',
+        groups: [{ label: 'Gruppe', hue: 120, buckets: ['ok'] }],
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /configuration "a"\.colors hat unbekannten Key "groups"/,
   )
 })
 
@@ -369,12 +469,20 @@ test('validateConfig verbietet veraltete Julich-Einzelmeshes in Figure-Buckets',
   const legacyContext = {
     ...VALIDATION_CONTEXT,
     bucketMappings: legacyMappings.buckets,
-    colorPresets: new Map([['legacy-preset', { groups: [{ buckets: ['legacy'] }] }]]),
     meshIds: new Set(['mesh-a', 'left-julich-mfg1']),
   }
   assert.throws(
     () => validateConfig(baseConfig({
       mesh_mappings: legacyMappings,
+      color_presets: {
+        'legacy-preset': {
+          label: 'Legacy Preset',
+          intent: 'Testet veraltete Meshes.',
+          coverage: 'full',
+          dimOthers: true,
+          groups: [{ label: 'Legacy', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['legacy'] }],
+        },
+      },
       configurations: {
         a: {
           ...VALID_CONFIGURATION,
@@ -430,6 +538,39 @@ test('validateConfig verbietet Atlas-Carves fuer Color-Preset-Configurations', (
   )
 })
 
+test('validateConfig verbietet Preset-Buckets ausserhalb der Config-Relevanzmenge', () => {
+  const idx = indexCatalog(CATALOG)
+  assert.throws(
+    () => validateConfig(baseConfig({
+      mesh_mappings: {
+        ...MESH_MAPPINGS,
+        buckets: { ...MESH_MAPPINGS.buckets, extra: { meshes: ['mesh-a'] } },
+      },
+      color_presets: {
+        'wide-preset': {
+          label: 'Wide Preset',
+          intent: 'Test-Preset mit zu breiter Bucket-Menge.',
+          coverage: 'full',
+          dimOthers: true,
+          groups: [
+            { label: 'OK', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['ok'] },
+            { label: 'Extra', role: 'task-activation', meaning: 'Irrelevante Testgruppe', hue: 240, buckets: ['extra'] },
+          ],
+        },
+      },
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+          regions: { ...VALID_CONFIGURATION.regions, buckets: ['ok'] },
+          colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'wide-preset', coverage: 'full' },
+        },
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /Bucket-Mismatch.*nicht in regions\.buckets: extra/,
+  )
+})
+
 test('validateConfig wirft bei unbekanntem oder leerem Bucket', () => {
   const idx = indexCatalog(CATALOG)
   assert.throws(
@@ -441,9 +582,23 @@ test('validateConfig wirft bei unbekanntem oder leerem Bucket', () => {
     /keine Geometrie/,
   )
   assert.throws(
-    () => validateConfig(configWith({
-      view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
-      colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'gap-preset', coverage: 'full' },
+    () => validateConfig(baseConfig({
+      color_presets: {
+        'gap-preset': {
+          label: 'Gap Preset',
+          intent: 'Test-Preset mit Geometrie-Luecke.',
+          coverage: 'full',
+          dimOthers: true,
+          groups: [{ label: 'Gap', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['gap'] }],
+        },
+      },
+      configurations: {
+        a: {
+          ...VALID_CONFIGURATION,
+          view: { ...VALID_CONFIGURATION.view, carve_on_taro: 'off' },
+          colors: { ...VALID_CONFIGURATION.colors, enabled: true, scheme: 'preset', preset: 'gap-preset', coverage: 'full' },
+        },
+      },
     }), idx, VALIDATION_CONTEXT),
     /keine Geometrie/,
   )
@@ -474,6 +629,15 @@ test('validateConfig verlangt Farbmetadaten je Configuration', () => {
       },
     }), idx, VALIDATION_CONTEXT),
     /colors\.coverage fehlt/,
+  )
+  assert.throws(
+    () => validateConfig(configWith({
+      colors: {
+        ...VALID_CONFIGURATION.colors,
+        review_status: 'legacy',
+      },
+    }), idx, VALIDATION_CONTEXT),
+    /colors\.review_status "legacy" ungueltig/,
   )
 })
 
@@ -593,6 +757,13 @@ test('buildConfig: reale config.default.toml validiert gegen echten Katalog', as
   assert.equal(config.configurations.basalganglienschleifen.replaces_figure, '11-04')
   assert.equal(config.configurations.vcpt.overlay.scene, 'vcpt')
   assert.equal(config.configurations['p3a-konfliktmonitoring'].overlay.kind, 'erp')
+  assert.ok(config.color_presets['ofc-phineas'])
+  assert.ok(!config.color_presets['phineas-gage'])
+  assert.ok(!config.color_presets['badre-core-pfc'])
+  assert.ok(!config.color_presets['tower-dlpfc'])
+  assert.equal(config.configurations['ofc-phineas'].colors.preset, 'ofc-phineas')
+  assert.equal(config.configurations['badre-domainen'].colors.preset, 'badre-domainen')
+  assert.equal(config.configurations['tower-of-london-dlpfc'].colors.preset, 'tower-of-london-dlpfc')
   assert.equal(config.mesh_mappings.buckets.ifj.known_gap, true)
   assert.ok(config.mesh_mappings.scene_regions['sma-presma'].meshes.length > 0)
   assert.equal(
@@ -602,7 +773,79 @@ test('buildConfig: reale config.default.toml validiert gegen echten Katalog', as
   )
   assert.deepEqual(
     config.presentation['kapitel11-vorlesung'].steps,
-    ['basalganglienschleifen', 'broca-areal', 'vcpt', 'p3a-konfliktmonitoring'],
+    CURRENT_PDF_PRESENTATION_STEPS,
+  )
+  for (const step of CURRENT_PDF_PRESENTATION_STEPS) {
+    assert.equal(
+      config.configurations[step].sequencing.presentation,
+      'kapitel11-vorlesung',
+      `${step} muss seine aktuelle Vorlesungssequenz deklarieren`,
+    )
+  }
+})
+
+test('Vortrags-Semantik ordnet Folienbegriffe strikt auf Buckets und Scene-Regions ab', async () => {
+  const { config } = await buildConfig()
+
+  assertSameMembers(
+    presetGroupBuckets(config, 'pfc-petrides', 'DLPFC (Manipulieren)'),
+    ['dlpfc'],
+    'Petrides: DLPFC darf nicht auf VLPFC oder posterioren Kontext zeigen',
+  )
+  assertSameMembers(
+    presetGroupBuckets(config, 'pfc-petrides', 'VLPFC (Halten/Abrufen)'),
+    ['vlpfc'],
+    'Petrides: VLPFC muss der Halten/Abrufen-Bucket bleiben',
+  )
+
+  const duncan = config.configurations['duncan-owen-overlap']
+  assert.equal(duncan.colors.scheme, 'scene')
+  assertSameMembers(duncan.regions.buckets, ['dlpfc', 'vlpfc'], 'Duncan/Owen bleibt DLPFC/VLPFC-Overlap')
+  assertSameMembers(duncan.regions.scene_regions, ['pfc-overlap'], 'Duncan/Owen nutzt den Overlap-Scene-Vertrag')
+  assertSameMembers(sceneJson('duncan-owen-overlap').brain.regions, ['pfc-overlap'])
+
+  assertSameMembers(
+    presetGroupBuckets(config, 'badre-rostrokaudal', 'SMA/pre-SMA (BA 8/6)'),
+    ['sma-presma'],
+    'Badre 11-07 muss SMA/pre-SMA auf den SMA/pre-SMA-Bucket mappen',
+  )
+  assertSameMembers(
+    presetGroupBuckets(config, 'badre-konflikttypen', 'dACC (Konflikt)'),
+    ['dacc'],
+    'Badre 11-08D muss dACC als Konflikt-Bucket führen',
+  )
+
+  assertSameMembers(
+    config.configurations['dlpfc-schaedigung'].regions.buckets,
+    ['dlpfc'],
+    'DLPFC-Schädigung ist klinischer DLPFC-Kontext, kein Tower-of-London-Reuse',
+  )
+  const rightDlpfc = config.configurations['right-dlpfc-selbstkontrolle']
+  assertSameMembers(rightDlpfc.regions.buckets, ['right-dlpfc'], 'Selbstkontrolle nennt rechten DLPFC')
+  assertSameMembers(rightDlpfc.regions.scene_regions, ['right-dlpfc'], 'Selbstkontrolle darf nicht bilateralen dlpfc nutzen')
+  assert.ok(!rightDlpfc.regions.buckets.includes('dlpfc'), 'rechter DLPFC darf nicht auf bilateralen dlpfc zurückfallen')
+
+  const phineas = config.configurations['ofc-phineas']
+  assertSameMembers(phineas.regions.buckets, ['ofc', 'vmpfc'], 'Phineas-Gage-Färbung bleibt VMPFC/OFC')
+  assertSameMembers(presetGroupBuckets(config, 'ofc-phineas', 'Läsionsgebiet'), ['ofc', 'vmpfc'])
+  const phineasSummary = sceneJson('ofc-phineas').companion.summary
+  assert.match(phineasSummary, /VMPFC\/OFC/)
+  assert.doesNotMatch(phineasSummary, /Vergleichsareale|emotionale und kognitive Vergleichsareale/)
+
+  const parietalLesion = config.configurations['right-parietal-lesion']
+  assertSameMembers(parietalLesion.regions.buckets, ['right-parietal-body'], 'Parietallappen-Läsion bleibt rechtsseitig')
+  assertSameMembers(parietalLesion.regions.scene_regions, ['right-parietal-body'])
+  assert.ok(!parietalLesion.regions.buckets.includes('ppc'), 'rechtsseitige Parietal-Läsion darf nicht allgemeiner PPC werden')
+
+  assertSameMembers(presetGroupBuckets(config, 'acc-bush', 'Dorsales ACC (kognitiv)'), ['dacc'])
+  assertSameMembers(presetGroupBuckets(config, 'acc-bush', 'Ventrales ACC/OFC'), ['ofc', 'vmpfc'])
+
+  const summaryLabels = sceneJson('zusammenfassung').overlay.data.nodes.map((node) => node.label)
+  assert.equal(sceneJson('zusammenfassung').overlay.data.heading, 'Recap am ganzen Hirn')
+  assertSameMembers(
+    summaryLabels,
+    ['DLPFC', 'VMPFC', 'PPC · Parietal', 'Basalganglien', 'dACC · Cingulum', 'SMA / pre-SMA'],
+    'Live-Recap muss die sechs Folienbegriffe explizit führen',
   )
 })
 

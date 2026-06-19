@@ -94,6 +94,7 @@ export const CUT_AXIS_COLORS = {
 
 export const PRESET_HUE_SATURATION = 0.46
 export const PRESET_HUE_LIGHTNESS = 0.52
+export const PRESET_COLOR_EMISSIVE_INTENSITY = 0.22
 export const ATLAS_PARCEL_SATURATION = 0.52
 export const ATLAS_PARCEL_LIGHTNESS = 0.56
 
@@ -141,11 +142,6 @@ export const REGION_COLORS: Record<string, string> = {
   'cranial-nerves': '#bdae56',
   'visual-pathway': '#6d9d69',
 }
-
-export const REGION_FALLBACK_PALETTE = [
-  '#c2724a', '#5f8a86', '#6f86a6', '#9a9255', '#8a7196',
-  '#a8895f', '#6f9a7a', '#9a6f86', '#7d8a5f', '#8a6f6f',
-] as const
 
 export const COLOR_ROLE_VALUES = [
   'cognition',

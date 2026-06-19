@@ -22,6 +22,7 @@ const FILE: AtlasConfigFile = {
     voll: { label_de: 'Voll', scopes: { 'axis:cyto': true }, visibility: { hidden: [] } },
   },
   mesh_mappings: { buckets: {}, scene_regions: {} },
+  color_presets: {},
   configurations: {
     'area-44-only': {
       label_de: 'Area 44',
@@ -201,7 +202,7 @@ describe('kanonische Farb-Metadaten', () => {
       if (!colors?.coverage) issues.push(`${name}: coverage fehlt`)
       if (!colors?.review_status) issues.push(`${name}: review_status fehlt`)
       if (!colors?.reason) issues.push(`${name}: reason fehlt`)
-      if (colors?.scheme === 'preset' && !colors.preset && !colors.groups) issues.push(`${name}: preset/groups fehlt`)
+      if (colors?.scheme === 'preset' && !colors.preset) issues.push(`${name}: preset fehlt`)
       if (colors?.preset && colors.scheme !== 'preset') issues.push(`${name}: preset ohne scheme=preset`)
     }
     expect(issues).toEqual([])

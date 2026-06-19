@@ -96,7 +96,7 @@ flowchart TB
 
 ```mermaid
 flowchart LR
-    PRESET["color-presets.json<br/>(Preset = Gruppen aus Buckets + Hue)"]
+    PRESET["config.default.toml<br/>color_presets = Gruppen aus Buckets + Hue"]
     RESOLVE["resolvePresetColors<br/>(colorPresets.ts)"]
     BUCKET["bucketToMeshes<br/>(bucketMeshes.ts — wirft laut bei Lücke)"]
     GLB["k11-subparcels.glb"]
@@ -201,7 +201,7 @@ morphometrisch exakt — nein; `backfill:true` = überlappende Näherung.
 
 ### Phase 4 — Färb-Engine Wave 1 ✅
 
-- [x] W1-A · `colorPresets.ts` (zod-Loader, `resolvePresetColors`, `hueToHex`), `bucketMeshes.ts` (fail-loud), `ColorMode+='preset'`, Apply in `BodyParts3DViewer`, `FooterBar`-Picker, 9 Tests, `smoke-preset`
+- [x] W1-A · `colorPresets.ts` (zod-Loader, `resolvePresetColors`, `hueToHex`), `bucketMeshes.ts` (fail-loud), `ColorMode+='preset'`, Apply in `BodyParts3DViewer`, `FooterBar`-Picker, 9 Tests, `smoke-figures`
 - [x] W1-B · `register.py` generalisiert (`targets.json`: absolute/partition); 22 Patches (pars\*, rostral/caudal ACC, lateral/medial OFC, accumbens). Befunde: Subkortex-Affine (LOO 5.4 mm), Zentroid-aligned Within-Host-Split. `SubParcels` Preset-Färbung. `smoke-carve`
 - [x] W1-C · `PresetLegend.tsx`; Abb. 11-05 Petrides + 11-13 ACC-Bush live; 11-04 freigeschaltet (accumbens). `smoke-figures`
 - [x] W1-D · `erpAnimation.ts` (+6 Tests), Store-ERP-Uhr, `ErpChart` rAF-Cursor + Topografie, P3a-Quellen-Puls. `smoke-eeg`
@@ -232,7 +232,7 @@ morphometrisch exakt — nein; `backfill:true` = überlappende Näherung.
 - [x] P4b-fp · `frontopolar`→Julich `fp1/fp2` (löst geometrischen Pol-Carve ab)
 - [x] P4b-dlpfc · `dlpfc`→14 Julich-Subareale je l/r (mfg1/2/4, 8v1/2, sfs1/2, sfg2/3/4, 8d1/2, 2 gapmaps); Prämotor/SMA (6\*) aussen vor
 - [x] P4d-gpi/gpe · `globus-pallidus`→GPi/GPe (CIT168 within-host-Split, `register.py` partition/warp:subcortical; Quellgeometrie `subcort_gp_extra.json`). Thalamus VA/VLp liegen bereits **nativ** in TARO. Komplementär: left 1359+2104=3463, right 1047+1568=2615
-- [x] Tests/Smokes angepasst (`colorPresets.test`, `smoke-preset`, `smoke-figures`, `smoke-frontopolar`); GLB 60 Patches
+- [x] Tests/Smokes angepasst (`colorPresets.test`, `smoke-figures`, `smoke-frontopolar`); GLB 60 Patches
 
 #### Build-Kette (reproduzierbar)
 

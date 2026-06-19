@@ -3,7 +3,6 @@ import {
   ATLAS_VIEWER_COLORS,
   FUNCTION_COLORS,
   REGION_COLORS,
-  REGION_FALLBACK_PALETTE,
   LATERALITY_COLORS,
   type AnatomicalMaterialRole,
   type FunctionalSystem,
@@ -264,7 +263,7 @@ export function buildColorIndex(tree: OntologyNode): Map<string, ColorEntry> {
   return map
 }
 
-/** Default-Anatomie-Beige (auch Fallback fuer nicht klassifizierbare Strukturen). */
+/** Neutraler Anatomie-Grundton fuer unselektierte Strukturen. */
 export const ANATOMICAL_COLOR = ATLAS_VIEWER_COLORS.anatomical
 
 export function anatomicalMaterialRole(id: string, group: string): AnatomicalMaterialRole {
@@ -331,15 +330,12 @@ export function functionSystem(role: string | undefined, id = '', group = ''): F
   return 'other'
 }
 
-const regionColorCache = new Map<string, string>()
 function regionColor(group: string): string {
-  const cached = regionColorCache.get(group)
-  if (cached) return cached
-  // Stabiler Index aus dem Gruppen-Slug (deterministisch, ohne globalen Zaehler).
-  let hash = 0
-  for (let i = 0; i < group.length; i++) hash = (hash * 31 + group.charCodeAt(i)) >>> 0
-  const color = REGION_COLORS[group] ?? REGION_FALLBACK_PALETTE[hash % REGION_FALLBACK_PALETTE.length]
-  regionColorCache.set(group, color)
+  const color = REGION_COLORS[group]
+  if (!color) {
+    const knownGroups = Object.keys(REGION_COLORS).sort().join(', ')
+    throw new Error(`Keine Regionsfarbe fuer Ontologie-Gruppe "${group}". Bekannte Gruppen: ${knownGroups}`)
+  }
   return color
 }
 

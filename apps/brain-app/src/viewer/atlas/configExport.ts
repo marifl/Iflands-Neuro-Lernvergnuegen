@@ -85,13 +85,6 @@ export function toTomlConfiguration(name: string, input: ExportInput): string {
     ['enabled', input.colors?.enabled?.toString()],
     ['scheme', input.colors?.scheme !== undefined ? tomlStr(input.colors.scheme) : undefined],
     ['preset', input.colors?.preset !== undefined ? tomlStr(input.colors.preset) : undefined],
-    ['groups', input.colors?.groups !== undefined
-      ? `[${input.colors.groups.map((group) => inlineTable([
-        ['label', tomlStr(group.label)],
-        ['hue', group.hue.toString()],
-        ['buckets', tomlStringArray(group.buckets)],
-      ])).join(', ')}]`
-      : undefined],
     ['dim_others', input.colors?.dim_others?.toString()],
     ['coverage', input.colors?.coverage !== undefined ? tomlStr(input.colors.coverage) : undefined],
     ['review_status', input.colors?.review_status !== undefined ? tomlStr(input.colors.review_status) : undefined],

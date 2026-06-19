@@ -156,7 +156,7 @@ export interface ColorLegendState {
 }
 
 const DEFAULT_PRESET_VIEW_OPTIONS: PresetViewOptions = {
-  hideUncolored: false,
+  hideUncolored: true,
   focusColored: false,
 }
 
@@ -602,7 +602,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   })),
   setPreset: (activePreset) =>
     set((s) => activePreset
-      ? { ...clearedCarveOverlayState(s), activePreset, colorMode: 'preset' }
+      ? { ...clearedCarveOverlayState(s), activePreset, colorMode: 'preset', presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS }
       : { activePreset: null, colorMode: 'region', presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS }),
   setPresetViewOptions: (options) =>
     set((s) => ({

@@ -253,9 +253,9 @@ Migration:
 4. Jeder Mapping-Knoten braucht `meshes = [...]`. Bekannte Geometrie-Lücken
    werden explizit mit `meshes = []`, `known_gap = true` und `gap_reason`
    dokumentiert.
-5. Configuration-Felder wie `regions.buckets`, `regions.scene_regions` und
-   `colors.groups[].buckets` referenzieren diese Slugs; sie duplizieren keine
-   Mesh-Listen.
+5. Configuration-Felder wie `regions.buckets` und `regions.scene_regions`
+   referenzieren diese Slugs; Preset-Gruppen liegen zentral unter
+   `[color_presets.<id>]` in derselben TOML. Mesh-Listen werden nicht dupliziert.
 6. Aus dem Repo-Root bauen und prüfen:
    ```bash
    node scripts/atlas/build-config.mjs
@@ -276,8 +276,8 @@ Der aktuelle produktive Pfad für didaktische Figure-Färbungen läuft über
 
 1. Buckets werden in `scripts/atlas/config.default.toml` unter
    `[mesh_mappings.buckets.<slug>]` gepflegt.
-2. Didaktische Presets werden in
-   `apps/brain-app/public/companion/config/color-presets.json` definiert:
+2. Didaktische Presets werden in `scripts/atlas/config.default.toml` unter
+   `[color_presets.<preset-id>]` definiert:
    `label`, `role`, `meaning`, `hue`, `buckets`.
 3. Figure-Configurations referenzieren das Preset in der TOML:
    `colors.scheme = "preset"` und `colors.preset = "<preset-id>"`.
@@ -286,9 +286,9 @@ Der aktuelle produktive Pfad für didaktische Figure-Färbungen läuft über
 5. `scripts/atlas/smoke-figures.mjs` prüft pro `?config=...`, dass Legende und
    alle erwarteten Bucket-Meshes exakt diese Preset-Farbe verwenden.
 
-`colors.groups` ist aktuell validierte Config-/Export-Metadaten, aber nicht der
-aktive Figure-Renderpfad. Für echte Abbildungsfärbungen deshalb `colors.preset`
-verwenden.
+`colors.groups` ist kein aktueller Config- oder Exportpfad mehr. Für echte
+Abbildungsfärbungen deshalb immer `colors.preset` verwenden; Scene-/Atlas-
+Färbungen bleiben explizit als solche markiert.
 
 Ausführliche, human- und AI-freundliche Anleitung:
 [`docs/FAERBUNGEN_GUIDE.md`](docs/FAERBUNGEN_GUIDE.md).

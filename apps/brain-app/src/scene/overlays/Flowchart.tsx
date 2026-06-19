@@ -8,20 +8,46 @@ interface FlowNode extends IcaSeparationNode {
   result: string
 }
 
+interface FlowchartData {
+  mode?: string
+  nodes?: FlowNode[]
+  stimuli?: VcptStimulus[]
+  evidence?: string
+  heading?: string
+}
+
 export default function Flowchart({ scene }: { scene: Scene }) {
-  const data = scene.overlay.data as { mode?: string; nodes?: FlowNode[]; stimuli?: VcptStimulus[]; evidence?: string } | undefined
+  const data = scene.overlay.data as FlowchartData | undefined
   if (data?.mode === 'vcpt-sequence') {
     if (!data.stimuli?.length) throw new Error(`Flowchart: scene ${scene.id} hat keine overlay.data.stimuli`)
     return <VcptSequence stimuli={data.stimuli} evidence={data.evidence} />
   }
   if (!data?.nodes?.length) throw new Error(`Flowchart: scene ${scene.id} hat keine overlay.data.nodes`)
   if (data.mode === 'ica-separation') return <IcaSeparation nodes={data.nodes} evidence={data.evidence} />
+  const heading = data.heading?.trim()
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+      {heading ? (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '2px 0 8px', borderBottom: '2px solid var(--orange)' }}>
+          <h3 style={{ margin: 0, fontFamily: 'var(--ed-display)', fontSize: 18, lineHeight: 1.15, fontWeight: 800, color: 'var(--ink)' }}>
+            {heading}
+          </h3>
+        </div>
+      ) : null}
       {data.nodes.map((n) => (
-        <div key={n.id} className="ed-frame" style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 12px' }}>
-          <span style={{ fontFamily: 'var(--ed-mono)', fontWeight: 700, color: 'var(--ink)' }}>{n.label}</span>
-          <span style={{ fontFamily: 'var(--ed-display)', color: 'var(--g800)' }}>{n.result}</span>
+        <div
+          key={n.id}
+          className="ed-frame"
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'minmax(120px, 0.72fr) minmax(0, 1.8fr)',
+            gap: 14,
+            alignItems: 'start',
+            padding: '8px 12px',
+          }}
+        >
+          <span style={{ fontFamily: 'var(--ed-mono)', fontWeight: 700, color: 'var(--ink)', minWidth: 0, overflowWrap: 'anywhere' }}>{n.label}</span>
+          <span style={{ fontFamily: 'var(--ed-display)', color: 'var(--g800)', minWidth: 0, textAlign: 'right', overflowWrap: 'anywhere' }}>{n.result}</span>
         </div>
       ))}
     </div>

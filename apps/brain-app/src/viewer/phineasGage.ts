@@ -17,6 +17,8 @@ import type { SequenceTargetRef } from './sequenceTargetRef'
 
 export interface PhineasStep {
   captionDe: string
+  /** Praesentationslabel fuer konkret betroffene Laesionsareale. */
+  focusAreasDe?: string[]
   /** Hervorgehobene Hirn-Strukturen (Slugs) in diesem Schritt. */
   highlight: string[]
   showSkull: boolean
@@ -121,6 +123,24 @@ export const LESION_STRUCTURES: string[] = [
   'left-subcallosal-area',
 ]
 
+export const LESION_STRUCTURE_LABELS: Record<string, string> = {
+  'left-straight-gyrus': 'Gyrus rectus links',
+  'left-medial-orbital-gyrus': 'medialer Orbitofrontalcortex links',
+  'left-medial-orbital-gyrus-v2': 'medialer Orbitofrontalcortex links (zweites Parcel)',
+  'left-anterior-orbital-gyrus': 'anteriorer Orbitofrontalcortex links',
+  'left-posterior-orbital-gyrus': 'posteriorer Orbitofrontalcortex links',
+  'left-lateral-orbital-gyrus': 'lateraler Orbitofrontalcortex links',
+  'left-subcallosal-area': 'subkallosales Areal links',
+}
+
+function lesionStructureLabel(slug: string): string {
+  const label = LESION_STRUCTURE_LABELS[slug]
+  if (!label) throw new Error(`Phineas-Gage-Laesionslabel fehlt fuer Struktur "${slug}"`)
+  return label
+}
+
+export const LESION_FOCUS_AREAS_DE = LESION_STRUCTURES.map(lesionStructureLabel)
+
 export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
@@ -167,20 +187,22 @@ export const PHINEAS_GAGE = {
     },
     {
       captionDe:
-        '5 — Läsion: zerstört wurde vor allem der linke ventromediale Präfrontalcortex und der orbitofrontale Cortex (Gyrus rectus, Gyri orbitales, subkallosales Areal) — hier hervorgehoben.',
+        '5 — Läsion: zerstört wurde vor allem der linke ventromediale Präfrontalcortex und der orbitofrontale Cortex. Die markierten Areale liegen links-frontal entlang der rekonstruierten Stangentrajektorie.',
+      focusAreasDe: LESION_FOCUS_AREAS_DE,
       highlight: LESION_STRUCTURES,
-      showSkull: false,
-      skullOpacity: 0,
-      showRod: false,
+      showSkull: true,
+      skullOpacity: 0.14,
+      showRod: true,
       rodPhase: ROD_PHASE_EXIT,
     },
     {
       captionDe:
         '6 — Bedeutung für Kapitel 11: Gage überlebte, doch Persönlichkeit, Sozialverhalten und Handlungsplanung veränderten sich drastisch ("no longer Gage"). Der Fall wurde zum Schlüsselbeleg für die Rolle des präfrontalen Cortex bei exekutiven Funktionen und sozialer Selbststeuerung.',
+      focusAreasDe: LESION_FOCUS_AREAS_DE,
       highlight: LESION_STRUCTURES,
-      showSkull: false,
-      skullOpacity: 0,
-      showRod: false,
+      showSkull: true,
+      skullOpacity: 0.12,
+      showRod: true,
       rodPhase: ROD_PHASE_EXIT,
     },
   ] as PhineasStep[],

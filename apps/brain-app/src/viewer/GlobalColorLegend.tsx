@@ -37,7 +37,7 @@ export const CORE_COLOR_ROLE_SWATCHES: readonly RoleSwatch[] = [
   {
     role: 'emotion',
     label: 'Emotion',
-    detail: 'OFC/vmPFC mit Amygdala und Hippocampus als affektiver Regelkreis.',
+    detail: 'OFC/VMPFC mit Amygdala und Hippocampus als affektiver Regelkreis.',
     color: hueToHex(30),
   },
   {

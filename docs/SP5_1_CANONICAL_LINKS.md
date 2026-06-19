@@ -21,8 +21,9 @@ Der neue Autoritätsort ist `scripts/atlas/config.default.toml`:
 3. Jeder Knoten setzt `meshes = [...]`. Bekannte Lücken setzen stattdessen
    `meshes = []`, `known_gap = true` und einen konkreten `gap_reason`.
 4. Configurations referenzieren nur die Slugs (`regions.buckets`,
-   `regions.scene_regions`, `colors.groups[].buckets`); Mesh-Listen werden dort
-   nicht erneut gepflegt.
+   `regions.scene_regions`); Mesh-Listen werden dort nicht erneut gepflegt.
+   Preset-Gruppen leben ausschließlich unter `[color_presets.<id>]` in
+   `scripts/atlas/config.default.toml`.
 
 Migration und Verifikation aus dem Repo-Root:
 

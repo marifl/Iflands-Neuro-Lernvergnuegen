@@ -39,6 +39,16 @@ describe('Flowchart', () => {
     expect(screen.getByText('B')).toBeInTheDocument()
   })
 
+  it('rendert eine eigene Ueberschrift fuer statische Flowcharts', () => {
+    render(<Flowchart scene={flowScene({
+      heading: 'Recap am ganzen Hirn',
+      nodes: [{ id: 'dlpfc', label: 'DLPFC', result: 'Planung' }],
+    })} />)
+
+    expect(screen.getByRole('heading', { level: 3, name: 'Recap am ganzen Hirn' })).toBeInTheDocument()
+    expect(screen.getByText('DLPFC')).toBeInTheDocument()
+  })
+
   it('rendert die ICA-Zerlegung mit pausierbarer Animation und Schematisch-Hinweis', () => {
     render(<Flowchart scene={flowScene({
       mode: 'ica-separation',

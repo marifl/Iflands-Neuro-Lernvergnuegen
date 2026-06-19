@@ -3,9 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
-import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
+import { ATLAS_VIEWER_COLORS, PRESET_COLOR_EMISSIVE_INTENSITY } from './atlasColorSystem'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
-import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
+import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors, restrictPresetToBuckets } from './colorPresets'
 import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
 import { useEffectiveConfig, type ConfigCuts, type ConfigVisibility, type EffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
@@ -118,9 +118,9 @@ function hasUvAttribute(mesh: THREE.Mesh): boolean {
   return Boolean(mesh.geometry.getAttribute('uv'))
 }
 
-function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null, fallback: number): number {
+function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null, defaultOpacity: number): number {
   const dimOpacity = effectiveConfig?.visibility.dim_opacity
-  if (dimOpacity === undefined) return fallback
+  if (dimOpacity === undefined) return defaultOpacity
   if (!Number.isFinite(dimOpacity) || dimOpacity < 0 || dimOpacity > 1) {
     throw new Error('Config-Link: visibility.dim_opacity muss zwischen 0 und 1 liegen')
   }
@@ -264,8 +264,9 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
         if (!alive) return
         const preset = presets.find((item) => item.id === presetId)
         if (!preset) throw new Error(`Config-Link: Farb-Preset "${presetId}" nicht gefunden`)
+        const configPreset = restrictPresetToBuckets(preset, configuration.regions?.buckets ?? [], activeConfiguration)
         setPreset({
-          ...preset,
+          ...configPreset,
           dimOthers: configuration.colors?.dim_others ?? preset.dimOthers,
         })
       })
@@ -371,13 +372,14 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     // Waehrend einer Animation (Highlight-Set aktiv) werden nicht-aktive Strukturen
     // transparent, damit die tiefen Strukturen (Striatum, Pallidum, Thalamus) durch
     // den Cortex sichtbar werden.
-    const animating = highlightSet.size > 0
     const presetViewActive = colorMode === 'preset' && Boolean(presetColors && activePreset)
-    const hidePresetUncolored = presetViewActive && presetViewOptions.hideUncolored
+    const sceneHighlightActive = highlightSet.size > 0 && !presetViewActive
+    const hidePresetUncolored = presetViewActive
     const focusPresetColored = presetViewActive && presetViewOptions.focusColored
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const isPresetColored = Boolean(presetColors?.has(mesh.name))
+      const presetColor = presetColors?.get(mesh.name)
+      const isPresetColored = Boolean(presetColor)
       // Hierarchisches Ein-/Ausblenden ueber den Baum: unsichtbar UND nicht pickbar.
       const visible = !hidden.has(mesh.name) && !cutHidden(mesh) && !(hidePresetUncolored && !isPresetColored)
       mesh.visible = visible
@@ -389,23 +391,25 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
       // Basisfarbe nach aktivem Farbmodus (Auswahl/Hover ueberlagern als Emissive).
       // Preset-Modus: Gruppen-Farbe je Mesh; nicht-gruppierte Strukturen gedimmt (dimOthers).
       if (colorMode === 'preset' && presetColors && activePreset) {
-        const c = presetColors.get(mesh.name)
-        material.color.set(c ?? (activePreset.dimOthers ? PRESET_DIM_COLOR : ANATOMICAL_COLOR))
+        material.color.set(presetColor ?? (activePreset.dimOthers ? PRESET_DIM_COLOR : ANATOMICAL_COLOR))
       } else {
         material.color.set(meshColor(colorIndex.get(mesh.name), colorMode))
       }
-      const isActive = selectedSlugs.has(mesh.name) || highlightSet.has(mesh.name)
-      if (isActive) {
+      const isActive = !presetViewActive && (selectedSlugs.has(mesh.name) || highlightSet.has(mesh.name))
+      if (presetViewActive && presetColor) {
+        material.emissive.set(presetColor)
+        material.emissiveIntensity = PRESET_COLOR_EMISSIVE_INTENSITY
+      } else if (isActive) {
         material.emissive.set(SELECT_COLOR)
         material.emissiveIntensity = 0.7
-      } else if (mesh.name === hovered) {
+      } else if (!presetViewActive && mesh.name === hovered) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
         material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
-      const dim = visible && ((animating && !isActive) || focusDimmed)
+      const dim = visible && ((sceneHighlightActive && !isActive) || focusDimmed)
       setOpacityTarget(mesh, dim ? dimOpacity : 1)
     }
   }, [
@@ -1258,12 +1262,8 @@ export default function BodyParts3DViewer() {
               />
             ) : null}
 
-            {isExploreMode ? (
-              <>
-                <PresetLegend />
-                <GlobalColorLegend />
-              </>
-            ) : null}
+            <PresetLegend />
+            {isExploreMode ? <GlobalColorLegend /> : null}
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (

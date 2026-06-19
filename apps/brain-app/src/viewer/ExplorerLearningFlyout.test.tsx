@@ -28,10 +28,10 @@ describe('ExplorerLearningFlyout', () => {
     expect(learningTargetForNode(accNode)).toBeNull()
   })
 
-  it('ordnet OFC/vmPFC-Knoten dem Phineas-Bonuskontext zu', () => {
+  it('ordnet VMPFC/OFC-Knoten dem Phineas-Bonuskontext zu', () => {
     expect(learningTargetForNode(ofcNode)).toEqual({
       mode: 'phineas',
-      label: 'Bonus-Kontext: Phineas Gage (OFC/vmPFC)',
+      label: 'Bonus-Kontext: Phineas Gage (VMPFC/OFC)',
       actionLabel: 'Bonus-Kontext öffnen',
       bonusContextId: 'phineas-gage',
       launch: {
@@ -86,7 +86,7 @@ describe('ExplorerLearningFlyout', () => {
 
     expect(screen.queryByText('Medialer orbitofrontaler Cortex')).not.toBeInTheDocument()
     expect(screen.queryByText('VMPFC / OFC')).not.toBeInTheDocument()
-    expect(screen.getByText('Bonus-Kontext: Phineas Gage (OFC/vmPFC)')).toBeInTheDocument()
+    expect(screen.getByText('Bonus-Kontext: Phineas Gage (VMPFC/OFC)')).toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Lernen öffnen' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Bonus-Kontext öffnen' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Atlas öffnen' })).toBeInTheDocument()
