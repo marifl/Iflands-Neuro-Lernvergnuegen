@@ -82,6 +82,10 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
   // Beide Auswahl-Werkzeuge markieren ihre Strukturen: das gewaehlte Blatt stark, die
   // Mitglieder einer Gruppen-Auswahl schwach.
   const isMember = !isSelected && selectedSlugs.has(node.id)
+  const nodeLabel = node.labels[lang]
+  const statusLabel = node.k11Role
+    ?? (node.mirrored || node.reconstructed ? 'gespiegelt' : node.lateralityNote ? 'einseitig' : '')
+  const accessibleName = [nodeLabel, statusLabel].filter(Boolean).join(' ')
 
   const rowRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
@@ -101,6 +105,7 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
     >
       <button
         type="button"
+        aria-label={accessibleName}
         onClick={(event) => select(node.id, { additive: event.shiftKey || event.metaKey || event.ctrlKey })}
         onMouseEnter={() => setHovered(node.id)}
         onMouseLeave={() => setHovered(null)}
@@ -124,15 +129,15 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
           cursor: 'pointer',
         }}
       >
-      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node.labels[lang]}</span>
-      {node.k11Role ? (
-        <span className="ed-pill orange">{node.k11Role}</span>
-      ) : null}
-      {node.mirrored || node.reconstructed ? (
-        <span className="ed-pill out" title={node.lateralityNote ?? undefined}>gespiegelt</span>
-      ) : node.lateralityNote ? (
-        <span className="ed-pill solid" title={node.lateralityNote}>einseitig</span>
-      ) : null}
+        <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{nodeLabel}</span>
+        {node.k11Role ? (
+          <span className="ed-pill orange">{node.k11Role}</span>
+        ) : null}
+        {node.mirrored || node.reconstructed ? (
+          <span className="ed-pill out" title={node.lateralityNote ?? undefined}>gespiegelt</span>
+        ) : node.lateralityNote ? (
+          <span className="ed-pill solid" title={node.lateralityNote}>einseitig</span>
+        ) : null}
       </button>
       <IsoToggle id={node.id} />
       <VisToggle leaves={[node.id]} />

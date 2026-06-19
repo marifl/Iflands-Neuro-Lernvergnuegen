@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-dependency-deprecated-hinweise",
+  "title": "Dependency-Deprecated-Hinweise klaeren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T21:28:26.852Z",
+  "updated": "2026-06-19T21:38:02.145Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T21:29:41.221Z"
+      }
+    ]
+  }
+}
