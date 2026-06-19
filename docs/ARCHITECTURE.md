@@ -122,6 +122,10 @@ Config-Bausteine:
 
 Unbekannte Presets, Configurations, Areas oder invalides JSON sollen laut
 fehlschlagen. Stille Reparaturpfade sind nicht Teil der Architektur.
+Legacy-/Fallback-/Deprecated-Reststellen werden zentral in
+[`docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md`](NO_FALLBACK_ARCHITECTURE_INVENTORY.md)
+geführt. Diese Inventur gewinnt gegen ältere Notizen, solange die jeweilige
+Restklasse nicht umgesetzt und verifiziert ist.
 
 `visibility.hidden` und `visibility.isolated` dürfen auf Preset- und
 Configuration-Ebene stehen. `atlasConfig.ts` mergt Preset-Defaults mit der
