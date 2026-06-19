@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-deprecated-browser-konsole-fri",
+  "title": "Deprecated Browser-Konsole frisch pruefen",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T21:15:42.532Z",
+  "updated": "2026-06-19T21:24:27.171Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T21:19:54.750Z"
+      }
+    ]
+  }
+}

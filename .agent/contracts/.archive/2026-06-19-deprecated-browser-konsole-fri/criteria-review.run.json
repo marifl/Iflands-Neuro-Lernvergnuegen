@@ -1,0 +1,12 @@
+{
+  "skill": "evaluator",
+  "scope": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-deprecated-browser-konsole-fri/criteria.md",
+  "backend": "claude",
+  "mode": "manual",
+  "status": "waiting-for-review",
+  "startedAt": "2026-06-19T21:19:39.005Z",
+  "updatedAt": "2026-06-19T21:19:39.005Z",
+  "promptPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-deprecated-browser-konsole-fri/.criteria-review-prompt.md",
+  "streamPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-deprecated-browser-konsole-fri/criteria-review.log",
+  "outputPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-deprecated-browser-konsole-fri/criteria-review.md"
+}

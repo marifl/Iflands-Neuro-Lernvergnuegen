@@ -1,0 +1,62 @@
+---
+outcome:
+  user_signal: |
+    Release-Review sieht eine frische Browser-Konsolenentscheidung statt eines
+    alten THREE.Clock-Artefakts.
+  observable_in: |
+    docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md und frisches Konsolenprotokoll
+    aus dem aktuellen Vite-Runtime-Smoke.
+  guardrail: |
+    Keine alte Konsolen- oder Deprecated-Quelle darf als aktuelle Runtime-Wahrheit
+    bestehen bleiben.
+  read_horizon: |
+    Direkt nach Smoke, Doku-Update, ALRAH-Eval und vor Dart-Done.
+---
+
+# Akzeptanzkriterien — Deprecated Browser-Konsole frisch prüfen
+
+> Contract-ID: `2026-06-19-deprecated-browser-konsole-fri`
+> Revision: v1 (2026-06-19)
+
+## C1 — Frische Konsolenquelle
+- Szenario: aktueller Vite-Server rendert zentrale Runtime-Routen.
+  - Input: Playwright öffnet `/`, `/?mode=explore`, `/?config=ofc-phineas`
+    und `/?mode=atlas`.
+  - Erwartet: Das Protokoll enthält für jede Route die Anzahl von
+    `console.error`, `console.warning` und `pageerror` sowie Source-Locations,
+    falls der Browser sie liefert.
+
+## C2 — Deprecated-Entscheidung
+- Szenario: `THREE.Clock` oder ein Deprecated-Hinweis erscheint im frischen
+  Browser-Protokoll.
+  - Input: Konsolenmeldung enthält `THREE.Clock`, `deprecated` oder
+    `Deprecated`.
+  - Erwartet: Die NF-007-Auswertung benennt exakt eine Quelle:
+    App-Code migriert, externe Dependency nach NF-010 verschoben, oder
+    historisches Artefakt entfernt/markiert.
+
+## C3 — Negativfall alte Artefakte
+- Szenario: alte `native-highqual-browser-console*.md`-Dateien behaupten einen
+  früheren Konsolenstand.
+  - Input: `git ls-files 'apps/brain-app/native-highqual-browser-console*.md'`
+    und `ls apps/brain-app/native-highqual-browser-console*.md`.
+  - Erwartet: Keine dieser Dateien bleibt als aktuelle Wahrheit stehen; sie ist
+    gelöscht, ersetzt oder in NF-007 ausdrücklich als historisch klassifiziert.
+
+## C4 — App-Code-Suche
+- Szenario: aktuelle Runtime-Quellen werden auf direkte Deprecated-/Clock-Nutzung
+  geprüft.
+  - Input: `rg -n "THREE\\.Clock|new Clock|deprecated|Deprecated" apps/brain-app/src apps/brain-app/scripts scripts --glob '!node_modules'`.
+  - Erwartet: Jeder Treffer ist entweder produktiv migriert, test-/diagnostisch
+    erlaubt oder als externe/historische Quelle dokumentiert.
+
+## C5 — Repo-Gates
+- Szenario: NF-007 endet ohne Runtime-Codeänderung.
+  - Input: `pnpm --dir apps/brain-app docs:drift` und `git diff --check`.
+  - Erwartet: Beide Befehle beenden mit Exit 0.
+
+## C6 — Zusatz-Gate bei Codeänderung
+- Szenario: NF-007 verändert TypeScript-/Runtime-Code.
+  - Input: fokussierte Vitest-Dateien für den geänderten Pfad und
+    `pnpm --dir apps/brain-app typecheck`.
+  - Erwartet: Alle betroffenen Tests und Typecheck beenden mit Exit 0.
