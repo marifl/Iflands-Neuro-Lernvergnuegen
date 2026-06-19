@@ -34,7 +34,7 @@ describe('target picking', () => {
     })
   })
 
-  it('setzt fuer Legacy-Hirn-Picks denselben TargetRef-Vertrag', () => {
+  it('setzt fuer Ontologie-Mesh-Picks denselben TargetRef-Vertrag', () => {
     useViewerStore.getState().pick('left-insula')
 
     const state = useViewerStore.getState()

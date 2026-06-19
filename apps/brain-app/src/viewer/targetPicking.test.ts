@@ -6,15 +6,16 @@ import {
   TARGET_PICKABLE_USER_DATA,
   isAuthoringTargetRef,
   isSequenceTargetPickableMesh,
-  pickTargetFromLegacyMeshName,
+  ontologyMeshTargetUserData,
+  pickTargetFromOntologyMeshName,
   pickTargetFromTargetRef,
   resolvePickTargetFromObject,
   sequenceTargetUserData,
 } from './targetPicking'
 
 describe('targetPicking', () => {
-  it('bildet Legacy-Hirnmesh-Namen auf Ontologie-TargetRefs ab', () => {
-    expect(pickTargetFromLegacyMeshName('left-insula')).toEqual({
+  it('bildet Ontologie-Meshnamen auf den aktuellen TargetRef-Vertrag ab', () => {
+    expect(pickTargetFromOntologyMeshName('left-insula')).toEqual({
       targetRef: {
         targetKind: 'ontology-node',
         collectionId: 'taro',
@@ -23,7 +24,20 @@ describe('targetPicking', () => {
       objectGraphId: 'target:ontology-node:taro:left-insula',
       selectionId: 'left-insula',
     })
-    expect(pickTargetFromLegacyMeshName('')).toBeNull()
+    expect(pickTargetFromOntologyMeshName('')).toBeNull()
+  })
+
+  it('stellt Target-UserData fuer pickbare Ontologie-Meshes bereit', () => {
+    expect(ontologyMeshTargetUserData('left-insula')).toEqual({
+      [SEQUENCE_TARGET_REF_USER_DATA]: {
+        targetKind: 'ontology-node',
+        collectionId: 'taro',
+        ontologyNodeId: 'left-insula',
+      },
+      [OBJECT_GRAPH_ID_USER_DATA]: 'target:ontology-node:taro:left-insula',
+      [TARGET_PICKABLE_USER_DATA]: true,
+    })
+    expect(ontologyMeshTargetUserData('')).toBeNull()
   })
 
   it('liest pickbare Asset-Parts aus Object3D-UserData', () => {

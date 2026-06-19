@@ -12,7 +12,6 @@ import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
 import { flushAuthoringTransformDrafts } from './authoringTransformDraftRegistry'
 import {
   isAuthoringTargetRef,
-  pickTargetFromLegacyMeshName,
   resolvePickTargetFromObject,
   type ViewerPickTarget,
 } from './targetPicking'
@@ -104,7 +103,7 @@ export default function CutPickBridge() {
     const targetForHit = (hit: THREE.Intersection | null): ViewerPickTarget | null => {
       if (!hit) return null
       const mesh = hit.object as THREE.Mesh
-      return resolvePickTargetFromObject(mesh) ?? pickTargetFromLegacyMeshName(mesh.name)
+      return resolvePickTargetFromObject(mesh)
     }
 
     const updateAuthoringTarget = (target: ViewerPickTarget | null) => {

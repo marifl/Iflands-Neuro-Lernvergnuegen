@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-legacy-mesh-picking-fallback-m",
+  "title": "Legacy-Mesh-Picking-Fallback migrieren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T20:07:31.980Z",
+  "updated": "2026-06-19T20:14:01.536Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T20:10:01.026Z"
+      }
+    ]
+  }
+}

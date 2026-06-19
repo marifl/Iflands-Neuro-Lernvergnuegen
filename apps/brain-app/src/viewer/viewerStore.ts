@@ -13,7 +13,7 @@ import {
 import { CUT_AXES, clampCutPosition, type CutAxis, type CutConfig, type CutMode } from './cutCapsMerged'
 import type { ColorPreset } from './colorPresets'
 import { objectGraphIdForTarget, sequenceTargetRefFromObjectGraphId, type SequenceTargetRef } from './sequenceTargetRef'
-import { pickTargetFromLegacyMeshName, pickTargetFromTargetRef, type ViewerPickTarget } from './targetPicking'
+import { pickTargetFromOntologyMeshName, pickTargetFromTargetRef, type ViewerPickTarget } from './targetPicking'
 
 export type { CutAxis, CutConfig, CutMode }
 
@@ -205,7 +205,7 @@ interface ViewerState {
   /** Zuletzt durch Preset/Config gesetzte Start-Sichtbarkeit; nicht Teil von Snapshots. */
   defaultVisibility: AppliedDefaultVisibility | null
   selected: string | null
-  /** Stabiler Target-Vertrag zur aktuellen Auswahl; legacy Mesh-Namen werden auf Ontologie-Refs gemappt. */
+  /** Stabiler Target-Vertrag zur aktuellen Auswahl; Ontologie-Meshnamen werden auf TargetRefs gemappt. */
   activeTargetRef: SequenceTargetRef | null
   activeObjectGraphId: string | null
   /** Expliziter Edit-Modus fuer persistente Asset-Transforms. */
@@ -515,7 +515,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       const explicitTargetRef = sequenceTargetRefFromObjectGraphId(id)
       const target = explicitTargetRef
         ? pickTargetFromTargetRef(explicitTargetRef, node?.labels?.de)
-        : pickTargetFromLegacyMeshName(id)
+        : pickTargetFromOntologyMeshName(id, node?.labels?.de)
       if (options?.additive && target) {
         return {
           ...selectionStateForTargets(state, toggleTargetRef(state.selectedTargetRefs, target.targetRef), target.label),
@@ -534,7 +534,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     }),
   setSelectMode: (selectMode) => set({ selectMode }),
   pick: (meshName, options) => {
-    const target = pickTargetFromLegacyMeshName(meshName)
+    const target = pickTargetFromOntologyMeshName(meshName)
     if (!target) return
     get().pickTarget(target, options)
   },

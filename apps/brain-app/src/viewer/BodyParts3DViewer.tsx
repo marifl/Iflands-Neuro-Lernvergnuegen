@@ -84,6 +84,7 @@ import {
   type BrainModelOption,
   type BrainModelOptionId,
 } from './brainModelOptions'
+import { ontologyMeshTargetUserData } from './targetPicking'
 
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
@@ -119,6 +120,12 @@ const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
 const NO_RAYCAST = () => {}
 function setPickable(mesh: THREE.Mesh, pickable: boolean): void {
   mesh.raycast = pickable ? THREE.Mesh.prototype.raycast : NO_RAYCAST
+}
+
+function attachOntologyMeshTarget(mesh: THREE.Mesh): void {
+  const targetUserData = ontologyMeshTargetUserData(mesh.name)
+  if (!targetUserData) return
+  mesh.userData = { ...mesh.userData, ...targetUserData }
 }
 
 function hasUvAttribute(mesh: THREE.Mesh): boolean {
@@ -349,6 +356,7 @@ function Brain({ brainModel, dimOpacity }: { brainModel: BrainModelOption; dimOp
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
+        attachOntologyMeshTarget(mesh)
         list.push(mesh)
       }
     })
@@ -542,6 +550,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
           transparent: true,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
+        attachOntologyMeshTarget(mesh)
         list.push(mesh)
       }
     })
@@ -601,6 +610,7 @@ function ContextHead({ dimOpacity }: { dimOpacity: number }) {
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
+        attachOntologyMeshTarget(mesh)
         list.push(mesh)
       }
     })
@@ -682,6 +692,7 @@ function AtlasOverObject({
           side: THREE.DoubleSide,
         })
         mesh.userData[CUT_SOURCE_FLAG] = true // von CutCaps gecappt, wenn geschnitten
+        attachOntologyMeshTarget(mesh)
         list.push(mesh)
       }
     })

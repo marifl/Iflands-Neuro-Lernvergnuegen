@@ -36,13 +36,19 @@ export function pickTargetFromTargetRef(targetRef: SequenceTargetRef, label?: st
   }
 }
 
-export function pickTargetFromLegacyMeshName(meshName: string): ViewerPickTarget | null {
-  if (meshName.trim() === '') return null
+export function pickTargetFromOntologyMeshName(meshName: string, label?: string): ViewerPickTarget | null {
+  const ontologyNodeId = meshName.trim()
+  if (ontologyNodeId === '') return null
   return pickTargetFromTargetRef({
     targetKind: 'ontology-node',
     collectionId: 'taro',
-    ontologyNodeId: meshName,
-  })
+    ontologyNodeId,
+  }, label)
+}
+
+export function ontologyMeshTargetUserData(meshName: string, label?: string, pickable = true): Record<string, unknown> | null {
+  const target = pickTargetFromOntologyMeshName(meshName, label)
+  return target ? sequenceTargetUserData(target, pickable) : null
 }
 
 export function isAuthoringTargetRef(targetRef: SequenceTargetRef): boolean {
