@@ -40,7 +40,7 @@ Live-Screenshot-Evidence noch Unified-Mode-Readiness ab.
 | Atlas als Supplement definiert | `PASS` | Shape-Vertrag definiert Atlas als Lern-Supplement, nicht als Startmodus. |
 | Mobile/Tablet/Desktop beschrieben | `PASS` | Desktop, Tablet, Phone Portrait und Phone Landscape sind spezifiziert und in `docs/specs/screenshots/v2-live/` als Live-Screenshot-Set belegt. |
 | Canvas Loading/Error/Empty-State-Vertrag vorhanden | `PASS` | Regulärer BrainModel-Canvas nutzt `CanvasStateHtml` als sichtbaren Suspense-Status und `CanvasContentErrorBoundary` als viewport-lokalen Error-State; Unit-Test `CanvasViewportState.test.tsx`. |
-| erster Code-Slice klar und klein | `PASS mit Restblockern` | Der kleine Anschluss-Slice ist unten definiert; Canvas-State blockiert nicht mehr, aber No-Fallback-/Doku-Restklassen bleiben vor einer vollständigen Unified-Shell-Migration relevant. |
+| erster Code-Slice klar und klein | `PASS mit Restblockern` | Der kleine Anschluss-Slice ist unten definiert; Canvas-State und aktuelle Doku-Drift blockieren nicht mehr, aber No-Fallback-Restklassen bleiben vor einer vollständigen Unified-Shell-Migration relevant. |
 | Dart-Scope korrigiert | `PASS` | Kommentar `fZ3kmBUmLdIF` trennt `2bf933b` sauber von Atlas-/Vortragsfarben-Arbeit. |
 
 ## Befunde pro Scout
@@ -88,8 +88,10 @@ Scope-Readiness ist `PASS`.
 
 Die Scope-Korrektur in Dart ist ausreichend: nur `2bf933b` ist direkte
 Shape-Evidenz. `2eeba1a` bleibt Atlas-/SP5.1-/Vortragsfarben-Kontext und darf
-nicht als erfüllte Unified-Shape-Arbeit zählen. Ein Zusatzkommentar auf
-`AyAovH9EtPL6` soll diese Trennung für das Gate wiederholen.
+nicht als erfüllte Unified-Shape-Arbeit zählen. Der Doku-Drift-Blocker
+`n0RsZZ5gXo5X` ist am 19. Juni 2026 erledigt; `pnpm --dir apps/brain-app
+docs:drift` ist das mechanische Gate gegen erneute Drift in aktueller
+Arbeitsdoku.
 
 ### Verification
 
@@ -108,10 +110,9 @@ Canvas-Pixel-/Runtime-Mesh-Proben.
 
 ## Blocker
 
-1. `n0RsZZ5gXo5X` ist `To-do`: aktuelle Doku-Drift ist nicht bereinigt.
-2. `B2XryEO9UyxB` ist `In Review`: Atlas-Farbarchitektur muss als aktuelle Preset-/Scene-Grundlage bestätigt bleiben.
-3. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant.
-4. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
+1. `B2XryEO9UyxB` ist `In Review`: Atlas-Farbarchitektur muss als aktuelle Preset-/Scene-Grundlage bestätigt bleiben.
+2. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant; mehrere Untertasks sind weiter `To-do`.
+3. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
    Canvas-Loading-/Error-Blocker ist durch
    `2026-06-19-canvas-loading-error-empty-sta` geschlossen.
 
