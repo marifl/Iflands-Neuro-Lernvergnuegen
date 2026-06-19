@@ -1,0 +1,8 @@
+# Managed by ALRAH. Keep project-specific Codex overrides outside this block.
+# ALRAH:START
+sandbox_mode = "workspace-write"
+project_doc_fallback_filenames = ["AGENTS.md", "CLAUDE.md", "CODEX.md", ".agents.md"]
+# ALRAH:END
+
+[features]
+codex_hooks = true

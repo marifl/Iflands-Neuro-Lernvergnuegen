@@ -63,3 +63,105 @@ scripts/atlas/node_modules
 
 # Lokale Session-Handover-Notizen (enthalten lokale Pfade) — nicht ins Repo
 docs/END_SESSION_*.md
+
+# ALRAH .gitignore defaults v1
+# Von `alrah init` geschrieben. Projektspezifische Eintraege unten anhaengen;
+# die Markerzeile oben nicht entfernen (sie macht den Sync idempotent).
+
+# Secrets / env — NIEMALS committen
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+credentials.json
+service-account*.json
+
+# Node / JS / TS
+node_modules/
+dist/
+build/
+out/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.vite/
+.cache/
+.parcel-cache/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+.eslintcache
+.pnp.*
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Python / uv
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+*.egg-info/
+.ipynb_checkpoints/
+
+# Native / Rust (falls genutzt)
+target/
+*.o
+*.so
+*.dylib
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editoren / IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.zed/
+
+# Logs / temp
+*.log
+logs/
+tmp/
+*.tmp
+
+# ALRAH runtime / Session-State (maschinen-lokal, nicht geteilt)
+.agent/.session-start
+.agent/.compact-context.json
+.agent/.serena-activated
+.agent/session-snapshot.json
+.agent/CODE_REGISTRY.json
+.agent/VERIFICATION_LOG.json
+.agent/scan-report.md
+.agent/claude-progress.md
+.agent/evidence/
+.agent/screenshots/
+.agent/runtime/
+**/.agent/session-snapshot.json
+**/.agent/runtime/
+.alrah/generated/
+.claude/.bash-log
+.claude/.compact-log
+.claude/.compact-pending
+.claude/.current-task
+.claude/.pre-compact-context
+.claude/settings.local.json
+
+# Codex lokaler State (Projekt-Config tracken, Sessions/Cache ignorieren)
+.codex/sessions/
+.codex/cache/
+
+# agent-native visual-plan/recap — lokale Review-Ansichten, nie im Repo
+docs/visual/
+/plans/
+**/.plan-state.json
+plan-blocks.md
