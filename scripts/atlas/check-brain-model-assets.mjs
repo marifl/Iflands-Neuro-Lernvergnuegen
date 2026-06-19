@@ -1,12 +1,20 @@
-import { NodeIO } from '@gltf-transform/core'
-import { KHRDracoMeshCompression } from '@gltf-transform/extensions'
-import draco3d from 'draco3dgltf'
 import { existsSync, statSync } from 'node:fs'
+import { createRequire } from 'node:module'
 import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath, pathToFileURL } from 'node:url'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const repoRoot = resolve(here, '../..')
+const appRequire = createRequire(resolve(repoRoot, 'apps/brain-app/package.json'))
+
+async function importAppDependency(packageName) {
+  return import(pathToFileURL(appRequire.resolve(packageName)).href)
+}
+
+const { NodeIO } = await importAppDependency('@gltf-transform/core')
+const { KHRDracoMeshCompression } = await importAppDependency('@gltf-transform/extensions')
+const draco3dModule = await importAppDependency('draco3dgltf')
+const draco3d = draco3dModule.default ?? draco3dModule
 
 const BRAIN_MODELS = [
   {

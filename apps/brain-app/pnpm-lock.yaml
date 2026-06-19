@@ -78,6 +78,9 @@ importers:
       '@gltf-transform/core':
         specifier: ^4.4.0
         version: 4.4.0
+      '@gltf-transform/extensions':
+        specifier: ^4.4.0
+        version: 4.4.0
       '@playwright/test':
         specifier: 1.49.1
         version: 1.49.1
@@ -108,6 +111,9 @@ importers:
       '@vitejs/plugin-react':
         specifier: 4.3.4
         version: 4.3.4(vite@5.4.11(@types/node@22.19.17)(lightningcss@1.32.0))
+      draco3dgltf:
+        specifier: ^1.5.7
+        version: 1.5.7
       fake-indexeddb:
         specifier: ^6.2.5
         version: 6.2.5
@@ -399,6 +405,9 @@ packages:
 
   '@gltf-transform/core@4.4.0':
     resolution: {integrity: sha512-cOPxOhHFFz5hwmix+li1+Nnq5qMV/QD3fTCsVlApxxFACtFdjkt2R/juseD4gvZ7D2c/yl6OilKH0pvI735YyQ==}
+
+  '@gltf-transform/extensions@4.4.0':
+    resolution: {integrity: sha512-ZwEgFkkqnUR7d4m6roK9BycxxdoqJNtVyo7w5ShJ9syKBoQiXw2QrTSLwXaUAImSrEIl9Jh/wZTtvSVyviQuXg==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -1228,6 +1237,9 @@ packages:
   draco3d@1.5.7:
     resolution: {integrity: sha512-m6WCKt/erDXcw+70IJXnG7M3awwQPAsZvJGX5zY7beBqpELw6RDGkYVU0W43AFxye4pDZ5i2Lbyc/NNGqwjUVQ==}
 
+  draco3dgltf@1.5.7:
+    resolution: {integrity: sha512-LeqcpmoHIyYUi0z70/H3tMkGj8QhqVxq6FJGPjlzR24BNkQ6jyMheMvFKJBI0dzGZrEOUyQEmZ8axM1xRrbRiw==}
+
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
     engines: {node: '>= 0.4'}
@@ -1415,6 +1427,9 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  ktx-parse@1.1.0:
+    resolution: {integrity: sha512-mKp3y+FaYgR7mXWAbyyzpa/r1zDWeaunH+INJO4fou3hb45XuNSwar+7llrRyvpMWafxSIi99RNFJ05MHedaJQ==}
 
   lie@3.3.0:
     resolution: {integrity: sha512-UaiMJzeWRlEujzAuw5LokY1L5ecNQYZKfmyZ9L7wDHb/p5etKaxXhohBcrw0EYby+G/NA52vRSN4N39dxHAIwQ==}
@@ -2286,6 +2301,11 @@ snapshots:
     dependencies:
       property-graph: 4.1.0
 
+  '@gltf-transform/extensions@4.4.0':
+    dependencies:
+      '@gltf-transform/core': 4.4.0
+      ktx-parse: 1.1.0
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.5
@@ -3007,6 +3027,8 @@ snapshots:
 
   draco3d@1.5.7: {}
 
+  draco3dgltf@1.5.7: {}
+
   dunder-proto@1.0.1:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -3213,6 +3235,8 @@ snapshots:
   jsesc@3.1.0: {}
 
   json5@2.2.3: {}
+
+  ktx-parse@1.1.0: {}
 
   lie@3.3.0:
     dependencies:

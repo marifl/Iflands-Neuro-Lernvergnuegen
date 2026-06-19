@@ -54,6 +54,7 @@
   "devDependencies": {
     "@fontsource/lexend": "5.2.11",
     "@gltf-transform/core": "^4.4.0",
+    "@gltf-transform/extensions": "^4.4.0",
     "@playwright/test": "1.49.1",
     "@tailwindcss/vite": "^4.2.0",
     "@testing-library/jest-dom": "6.6.3",
@@ -64,6 +65,7 @@
     "@types/react-window": "^1.8.8",
     "@types/three": "^0.184.0",
     "@vitejs/plugin-react": "4.3.4",
+    "draco3dgltf": "^1.5.7",
     "fake-indexeddb": "^6.2.5",
     "jsdom": "25.0.1",
     "tailwindcss": "^4.2.0",
