@@ -1,0 +1,12 @@
+{
+  "skill": "evaluator",
+  "scope": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-brain-model-normalen-gate-h-rt/criteria.md",
+  "backend": "claude",
+  "mode": "manual",
+  "status": "waiting-for-review",
+  "startedAt": "2026-06-19T20:23:01.097Z",
+  "updatedAt": "2026-06-19T20:23:01.097Z",
+  "promptPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-brain-model-normalen-gate-h-rt/.criteria-review-prompt.md",
+  "streamPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-brain-model-normalen-gate-h-rt/criteria-review.log",
+  "outputPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-brain-model-normalen-gate-h-rt/criteria-review.md"
+}

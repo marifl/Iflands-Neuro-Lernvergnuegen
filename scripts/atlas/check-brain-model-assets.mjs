@@ -23,6 +23,9 @@ const BRAIN_MODELS = [
     expectedMeshes: 600,
     maxBytes: 7_000_000,
     maxFaceNormalBadRatio: 0.001,
+    maxInwardLikelyMeshes: 2,
+    expectedWorstOutwardName: 'corpus-callosum',
+    minWorstOutwardRatio: 0.4100,
   },
   {
     id: 'mni-mobile-r05',
@@ -30,6 +33,9 @@ const BRAIN_MODELS = [
     expectedMeshes: 544,
     maxBytes: 8_000_000,
     maxFaceNormalBadRatio: 0.03,
+    maxInwardLikelyMeshes: 1,
+    expectedWorstOutwardName: 'amygdala__bigbrain-julich__bigbrain-amy-astr-r',
+    minWorstOutwardRatio: 0.3085,
   },
   {
     id: 'mni-mobile-r06',
@@ -37,6 +43,9 @@ const BRAIN_MODELS = [
     expectedMeshes: 544,
     maxBytes: 9_000_000,
     maxFaceNormalBadRatio: 0.03,
+    maxInwardLikelyMeshes: 1,
+    expectedWorstOutwardName: 'amygdala__bigbrain-julich__bigbrain-amy-astr-r',
+    minWorstOutwardRatio: 0.3102,
   },
   {
     id: 'mni-mobile-r08',
@@ -44,6 +53,9 @@ const BRAIN_MODELS = [
     expectedMeshes: 544,
     maxBytes: 11_000_000,
     maxFaceNormalBadRatio: 0.03,
+    maxInwardLikelyMeshes: 1,
+    expectedWorstOutwardName: 'amygdala__bigbrain-julich__bigbrain-amy-astr-r',
+    minWorstOutwardRatio: 0.3055,
   },
   {
     id: 'mni-desktop-r18',
@@ -51,6 +63,9 @@ const BRAIN_MODELS = [
     expectedMeshes: 544,
     maxBytes: 20_000_000,
     maxFaceNormalBadRatio: 0.02,
+    maxInwardLikelyMeshes: 2,
+    expectedWorstOutwardName: 'eye__allen-hra-hires__trabecular-meshwork-l',
+    minWorstOutwardRatio: 0.4000,
   },
 ]
 
@@ -215,6 +230,21 @@ function assertBrainModel(model, result) {
   }
   if (result.faceNormalBadRatio > model.maxFaceNormalBadRatio) {
     failures.push(`face/normal bad ratio ${result.faceNormalBadRatio} > ${model.maxFaceNormalBadRatio}`)
+  }
+  if (typeof model.maxInwardLikelyMeshes !== 'number') {
+    failures.push('missing maxInwardLikelyMeshes budget')
+  } else if (result.inwardLikelyMeshes > model.maxInwardLikelyMeshes) {
+    failures.push(`inward likely meshes ${result.inwardLikelyMeshes} > ${model.maxInwardLikelyMeshes}`)
+  }
+  if (!model.expectedWorstOutwardName) {
+    failures.push('missing expectedWorstOutwardName budget')
+  } else if (result.worstOutward.name !== model.expectedWorstOutwardName) {
+    failures.push(`worst outward mesh ${result.worstOutward.name} != ${model.expectedWorstOutwardName}`)
+  }
+  if (typeof model.minWorstOutwardRatio !== 'number') {
+    failures.push('missing minWorstOutwardRatio budget')
+  } else if (result.worstOutward.ratio < model.minWorstOutwardRatio) {
+    failures.push(`worst outward ratio ${result.worstOutward.ratio} < ${model.minWorstOutwardRatio}`)
   }
   return failures
 }

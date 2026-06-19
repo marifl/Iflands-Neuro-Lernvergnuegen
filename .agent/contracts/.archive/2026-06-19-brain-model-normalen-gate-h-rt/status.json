@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-brain-model-normalen-gate-h-rt",
+  "title": "Brain-Model-Normalen-Gate härten",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T20:21:48.345Z",
+  "updated": "2026-06-19T20:26:55.805Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T20:23:34.077Z"
+      }
+    ]
+  }
+}
