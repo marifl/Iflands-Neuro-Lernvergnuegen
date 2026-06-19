@@ -1,6 +1,6 @@
 # brain-app Architektur
 
-Stand: 2026-06-16. Diese Datei ist die zentrale Einstiegskarte für neue
+Stand: 2026-06-19. Diese Datei ist die zentrale Einstiegskarte für neue
 Developer und für Produktentscheidungen. Sie beschreibt den aktuellen
 Implementierungsvertrag, nicht alte Neuro-Suite-Ideen.
 
@@ -36,7 +36,31 @@ der Produktarchitektur.
 | Scene-Inhalte | `apps/brain-app/public/scenes/*.json` | Prose, ERP, Flowchart, Image, Table- und Topography-Daten |
 | Authoring-Quelle | `scripts/atlas/config.default.toml` | editierbare Presets, Configurations, Presentation/Learning-Sequenzen |
 | Build-Gate | `scripts/atlas/build-config.mjs` | TOML nach `atlas-config.json`, Validierung, keine unbekannten Keys |
+| BrainModel-Gate | `scripts/atlas/check-brain-model-assets.mjs` | TARO-/MNI-Asset-Budgets, Normalen-Coverage und Face/Normal-Konsistenz |
 | Atlas-Geometrie | `scripts/atlas/README.md` | SSoT für MNI/TARO, Runtime-Patches, Carve-Pipeline und Limits |
+
+## Doku-Topologie
+
+Aktuelle Arbeitsdoku ist absichtlich auf wenige zuständige Dateien verteilt.
+Neue Agents sollen diese Kette nutzen und historische Protokolle nicht als
+aktuellen Vertrag lesen:
+
+1. `PRODUCT.md`: Produktzweck, reguläre Modi und V2-Zielbild.
+2. `DESIGN.md`: visuelle Editorial-Schicht und responsive Design-Leitplanken.
+3. `CLAUDE.md`: Repo-Einstieg, Atlas-Grenzen, Agent-Regeln und schnelle
+   Arbeitsanker.
+4. `apps/brain-app/DESIGN.md`: app-lokaler Produkt- und Implementierungsvertrag.
+5. `docs/ARCHITECTURE.md`: Runtime-, State-, Config-, Snapshot- und
+   Authoring-Vertrag.
+6. `scripts/atlas/README.md`: Atlas-, TARO-, fsaverage- und Asset-Pipeline.
+7. `docs/VORTRAGS_GRAFIK_AREAL_MATRIX.md`: konkrete Grafik-zu-Areal- und
+   Färbungsregeln.
+8. `docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md`: Restklassen für Legacy-,
+   Fallback- und Doku-Drift.
+
+Historische Reviews, END_SESSION-Dateien und nicht gemappte Handoff-Mockups
+sind Verlaufsevidenz. Sie dürfen Entscheidungen erklären, aber keine aktuelle
+Arbeitsanweisung über die obige Kette überschreiben.
 
 ## Architekturfluss
 
@@ -122,6 +146,10 @@ Config-Bausteine:
 
 Unbekannte Presets, Configurations, Areas oder invalides JSON sollen laut
 fehlschlagen. Stille Reparaturpfade sind nicht Teil der Architektur.
+Legacy-/Fallback-/Deprecated-Reststellen werden zentral in
+[`docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md`](NO_FALLBACK_ARCHITECTURE_INVENTORY.md)
+geführt. Diese Inventur gewinnt gegen ältere Notizen, solange die jeweilige
+Restklasse nicht umgesetzt und verifiziert ist.
 
 `visibility.hidden` und `visibility.isolated` dürfen auf Preset- und
 Configuration-Ebene stehen. `atlasConfig.ts` mergt Preset-Defaults mit der
@@ -169,6 +197,37 @@ Sidebar und Viewport-Zuschnitt nach `appMode`.
 Farbe, Schnitt, Ansicht, Kontext und Snapshot. Neue globale Werkzeuge gehören
 hier nur hin, wenn sie den Dozenten- oder Studentenfluss vereinfachen.
 
+## BrainModel-Vertrag
+
+`BodyParts3DViewer.tsx` lädt das sichtbare Hirn nicht mehr als implizit
+festen Pfad, sondern über `src/viewer/brainModelOptions.ts`. Der Default bleibt
+`taro` mit `public/assets/bodyparts3d/brain.glb`; zusätzliche MNI-Review-
+Modelle liegen unter `public/assets/brain-models/mni152/` und werden per
+`?brainModel=<id>` oder über den Review-Selector im 3D-Viewport gewählt.
+
+Aktuelle registrierte Optionen:
+
+1. `taro`: Produktionsdefault.
+2. `mni-mobile-r05`: kleinste MNI-Mobile-Review-Variante.
+3. `mni-mobile-r06`: balancierte MNI-Mobile-Review-Variante.
+4. `mni-mobile-r08`: ehemalige Mobile-Balanced-Referenz aus dem Monorepo.
+5. `mni-desktop-r18`: Desktop-Referenz für Detailvergleich.
+
+Release-Regel: Kein BrainModel darf ohne explizite Normalen und Budget-Gate in
+die App. `pnpm verify:brain-models` prüft dafür:
+
+1. Datei existiert und bleibt innerhalb des Größenbudgets.
+2. erwartete Meshzahl bleibt stabil.
+3. jedes Primitive besitzt `NORMAL`.
+4. Normalenlängen sind plausibel.
+5. Face/Normal-Abweichung bleibt unter dem modellbezogenen Grenzwert.
+
+Der MNI-Pfad ist aktuell ein Geometrie- und Performance-Review-Pfad. Er ersetzt
+TARO nicht als semantischen Produktionsdefault. TARO-spezifische
+Auswahl-Slugs, Carves und kuratierte Unterrichtslinks bleiben nur für TARO als
+vollständig produktiv belegt, bis eine eigene MNI-Registry mit Pick-,
+Overlay- und Atlas-Mapping-Gates vorliegt.
+
 ### Responsive Shell-Vertrag
 
 `apps/brain-app/src/viewer/explorerShellLayout.ts` benennt den
@@ -198,7 +257,7 @@ Playwright-/E2E-Schritt ableiten.
 ### Studentischer Fortschritt
 
 Studentisches Lernen nutzt denselben `learn`-Modus und denselben
-`learning.kapitel11-pfad` wie der Dozenten-Companion. Der erste Vertrag liegt
+`learning.kapitel11-pfad` wie der Vortragspfad. Der erste Vertrag liegt
 in `src/viewer/studentProgress.ts`:
 
 1. `StudentProgressState` ist versioniert, `learning`-only und referenziert

@@ -83,7 +83,6 @@ describe('toTomlConfiguration', () => {
       colors: {
         enabled: false,
         scheme: 'scene',
-        groups: [{ label: 'ACC', hue: 20, buckets: ['dacc'] }],
         dim_others: true,
         coverage: 'not-applicable',
         review_status: 'final',
@@ -102,7 +101,7 @@ describe('toTomlConfiguration', () => {
     expect(cfg.camera.bounds).toEqual({ center: [10, 20, 30], radius: 90 })
     expect(cfg.camera.pose.position).toEqual([1, 2, 3])
     expect(cfg.regions.scene_regions).toEqual(['acc-anterior'])
-    expect(cfg.colors.groups[0]).toEqual({ label: 'ACC', hue: 20, buckets: ['dacc'] })
+    expect(Object.hasOwn(cfg.colors, 'groups')).toBe(false)
     expect(cfg.colors.scheme).toBe('scene')
     expect(cfg.colors.coverage).toBe('not-applicable')
     expect(cfg.colors.review_status).toBe('final')
@@ -152,8 +151,17 @@ describe('toTomlConfiguration', () => {
       preset: 'p',
       presets: { p: { label_de: 'Preset', scopes: {} } },
       mesh_mappings: {
-        buckets: { unused: { meshes: [], known_gap: true, gap_reason: 'test fixture ohne Bucket-Nutzung' } },
-        scene_regions: { unused: { meshes: [], known_gap: true, gap_reason: 'test fixture ohne Scene-Region-Nutzung' } },
+        buckets: { ok: { meshes: ['mesh-a'] } },
+        scene_regions: { ok: { meshes: ['mesh-a'] } },
+      },
+      color_presets: {
+        'ok-preset': {
+          label: 'OK Preset',
+          intent: 'Root-Vertrag fuer Builder-Roundtrip.',
+          coverage: 'full',
+          dimOthers: true,
+          groups: [{ label: 'OK', role: 'task-activation', meaning: 'Testgruppe', hue: 120, buckets: ['ok'] }],
+        },
       },
       configurations: { 'builder-roundtrip': cfg },
       presentation: {},
@@ -168,6 +176,7 @@ describe('toTomlConfiguration', () => {
       preset: 'kapitel11',
       presets: { kapitel11: { label_de: 'K11', scopes: {} } },
       mesh_mappings: { buckets: {}, scene_regions: {} },
+      color_presets: {},
       configurations: {
         'p3a-konfliktmonitoring': {
           label_de: 'P3a Konfliktmonitoring',

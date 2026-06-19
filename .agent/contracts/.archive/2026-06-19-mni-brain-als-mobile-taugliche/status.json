@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-mni-brain-als-mobile-taugliche",
+  "title": "MNI Brain als mobile-taugliches Referenzmodell optimieren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T15:29:32.818Z",
+  "updated": "2026-06-19T18:14:50.867Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T15:34:27.210Z"
+      }
+    ]
+  }
+}

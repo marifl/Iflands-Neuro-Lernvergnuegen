@@ -37,11 +37,13 @@ public/
 ├── assets/       3D-Meshes + Atlas-Labels (BodyParts3D, fsaverage)
 ├── regions/      pro-Region-Markdown
 ├── scenes/       Lern-Szenen (JSON)
-├── companion/    Companion-Atlas + Presets
-└── config/       Presets / Szenen-Config
+└── config/       Geräte-/Anzeige-Defaults
 ```
 
 Architektur-Details und Authoring-Happy-Paths: [`../../docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md).
+Fachliche Presets, Lern-/Präsentationssequenzen, Figure-Färbungen und Atlas-
+Mappings werden in [`../../scripts/atlas/config.default.toml`](../../scripts/atlas/config.default.toml)
+gepflegt und per `pnpm atlas:build-config` in die Runtime-Config gebaut.
 
 Die App ist `@mu-kn/brain-app` und nutzt `@mu-kn/brain-runtime`
 (`file:../../packages/brain-runtime`) sowie `theme-tokens` über relativen

@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { Component, act, type ReactNode } from 'react'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import FooterBar from './FooterBar'
-import { fetchColorPresets } from './colorPresets'
+import { fetchColorPresets, fetchPresentationColorItems } from './colorPresets'
 import { useSettingsStore } from './settingsStore'
 import { useViewerStore } from './viewerStore'
 import { VIEWER_STATE_SNAPSHOT_VERSION } from './viewerStateSnapshot'
@@ -12,10 +12,12 @@ vi.mock('./colorPresets', async (importOriginal) => {
   return {
     ...actual,
     fetchColorPresets: vi.fn().mockResolvedValue([]),
+    fetchPresentationColorItems: vi.fn().mockResolvedValue([]),
   }
 })
 
 const fetchColorPresetsMock = vi.mocked(fetchColorPresets)
+const fetchPresentationColorItemsMock = vi.mocked(fetchPresentationColorItems)
 
 function mockViewportWidth(width: number) {
   Object.defineProperty(window, 'matchMedia', {
@@ -62,8 +64,11 @@ describe('FooterBar', () => {
   beforeEach(() => {
     mockViewportWidth(1200)
     localStorage.clear()
+    window.history.replaceState(null, '', '/')
     fetchColorPresetsMock.mockReset()
     fetchColorPresetsMock.mockResolvedValue([])
+    fetchPresentationColorItemsMock.mockReset()
+    fetchPresentationColorItemsMock.mockResolvedValue([])
     useSettingsStore.getState().resetSettings()
     useViewerStore.setState({
       appMode: 'explore',
@@ -73,7 +78,7 @@ describe('FooterBar', () => {
       isolated: null,
       isolationPath: [],
       isolatedSlugs: new Set(),
-      presetViewOptions: { hideUncolored: false, focusColored: false },
+      presetViewOptions: { hideUncolored: true, focusColored: false },
       selected: null,
       selectedSlugs: new Set(),
       selectedLabels: null,
@@ -169,7 +174,7 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().isolated).toBeNull()
   })
 
-  it('steuert die Figur-Ansicht ueber Slider statt Zusatz-Buttons', async () => {
+  it('zeigt die Figur-Ansicht als strikt relevante Preset-Regionen', async () => {
     fetchColorPresetsMock.mockResolvedValueOnce([{
       id: 'test-figure',
       label: 'Test-Figur',
@@ -178,9 +183,17 @@ describe('FooterBar', () => {
       dimOthers: true,
       groups: [
         { label: 'Kognition', role: 'cognition', meaning: 'DLPFC/dorsales Striatum', hue: 210, buckets: ['dlpfc'] },
-        { label: 'Emotion', role: 'emotion', meaning: 'OFC/vmPFC/Amygdala', hue: 30, buckets: ['ofc'] },
+        { label: 'Emotion', role: 'emotion', meaning: 'OFC/VMPFC/Amygdala', hue: 30, buckets: ['ofc'] },
         { label: 'Motivation', role: 'motivation', meaning: 'dACC/Nc. accumbens', hue: 150, buckets: ['dacc'] },
       ],
+    }])
+    fetchPresentationColorItemsMock.mockResolvedValueOnce([{
+      id: 'test-figure',
+      label: 'Test-Figur',
+      scene: 'test-figure',
+      colorScheme: 'preset',
+      colorPresetId: 'test-figure',
+      dimOthers: true,
     }])
     await renderFooterBar()
 
@@ -193,22 +206,18 @@ describe('FooterBar', () => {
     expect(screen.getByText('Kognition')).toBeInTheDocument()
     expect(screen.getByText('DLPFC/dorsales Striatum')).toBeInTheDocument()
     expect(screen.getByText('Emotion')).toBeInTheDocument()
-    expect(screen.getByText('OFC/vmPFC/Amygdala')).toBeInTheDocument()
+    expect(screen.getByText('OFC/VMPFC/Amygdala')).toBeInTheDocument()
     expect(screen.getByText('Motivation')).toBeInTheDocument()
     expect(screen.getByText('dACC/Nc. accumbens')).toBeInTheDocument()
-    expect(screen.getByText('Andere dimmen')).toBeInTheDocument()
-    const hideSlider = screen.getByLabelText('Andere ausblenden')
-    const focusSlider = screen.getByLabelText('Eingefärbte fokussieren')
-    expect(screen.queryByRole('button', { name: 'Andere ausblenden' })).not.toBeInTheDocument()
-    expect(screen.queryByRole('button', { name: 'Eingefärbte fokussieren' })).not.toBeInTheDocument()
-
-    fireEvent.change(hideSlider, { target: { value: '1' } })
-    fireEvent.change(focusSlider, { target: { value: '1' } })
-
-    expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: true })
+    expect(screen.getByText('Nur relevante Regionen')).toBeInTheDocument()
+    expect(screen.getByText('An')).toBeInTheDocument()
+    expect(screen.queryByLabelText('Andere ausblenden')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Eingefärbte fokussieren')).not.toBeInTheDocument()
+    expect(screen.queryByText('Andere dimmen')).not.toBeInTheDocument()
+    expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: false })
   })
 
-  it('bietet alle Basis-Färbungsmodi und den Preset-Modus an', async () => {
+  it('bietet alle Basis-Färbungsmodi und Vortrags-Färbungen an', async () => {
     fetchColorPresetsMock.mockResolvedValueOnce([{
       id: 'test-figure',
       label: 'Test-Figur',
@@ -216,6 +225,14 @@ describe('FooterBar', () => {
       coverage: 'full',
       dimOthers: true,
       groups: [{ label: 'DLPFC', role: 'cognition', meaning: 'Testgruppe', hue: 210, buckets: ['dlpfc'] }],
+    }])
+    fetchPresentationColorItemsMock.mockResolvedValueOnce([{
+      id: 'test-figure',
+      label: 'Test-Figur',
+      scene: 'test-figure',
+      colorScheme: 'preset',
+      colorPresetId: 'test-figure',
+      dimOthers: true,
     }])
     await renderFooterBar()
 
@@ -229,6 +246,8 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Funktionssystem/ }))
     fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
     expect(useViewerStore.getState().colorMode).toBe('preset')
+    expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=test-figure&scene=test-figure&step=0')
+    expect(useViewerStore.getState().appMode).toBe('learn')
   })
 
   it('bietet Snapshot-Export und -Import in der Fussleiste an', async () => {

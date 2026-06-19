@@ -1,0 +1,20 @@
+{
+  "id": "right-dlpfc-selbstkontrolle",
+  "section": "11.3.3 · Selbstkontrolle",
+  "author": "ifland",
+  "order": 18,
+  "title": "Rechter DLPFC und Selbstkontrolle",
+  "brain": { "regions": ["right-dlpfc"], "camera": "lateral-right" },
+  "overlay": {
+    "kind": "prose",
+    "position": "right",
+    "size": "md"
+  },
+  "companion": {
+    "summary": "Die Selbstkontrollfolie nennt explizit den rechten DLPFC. Deshalb zeigt diese Scene nur die rechtsseitige dorsolaterale PFC-Region statt des bilateralen Tower-of-London-DLPFC. Inhaltlicher Fokus: Top-down-Kontrolle reguliert Gefühle, Absichten und Antriebe; Hemmung des rechten DLPFC wird mit risikoreicherem und ungehemmterem Verhalten verknüpft. Interaktive Abfrage: Welche spontane Reaktion müsste hier durch bewusste Steuerung gebremst werden?",
+    "sources": [
+      { "key": "vortrag_pdf_2026_06_18_s47", "note": "PDF-Seite 47: Selbstkontrolle, rechter DLPFC, Top-down-Kontrolle" },
+      { "key": "jaencke_2017", "note": "Foliensource laut Deck" }
+    ]
+  }
+}

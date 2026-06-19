@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:18px;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.34);flex:none;}
+  .scr > div{border-radius:11px;overflow:hidden;}
+  .dvlabel{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.06em;color:#1c1a18;font-weight:600;}
+  .dvsub{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.04em;color:#7a756e;margin-top:3px;}
+  .dot{width:7px;height:7px;border-radius:50%;display:inline-block;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 96px;box-sizing:border-box;color:#1a1a1a;">
+
+  <!-- header -->
+  <div style="max-width:1200px;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Responsive System · v2</div>
+    <h1 style="font-size:38px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Fully-responsive Companion</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:680px;margin:0;text-wrap:pretty;">Ein adaptives Layout über alle Geräteklassen. Die mobile Bottom-Drawer-Logik wird auf größeren Screens zur <b>vertikalen Icon-Rail</b> plus <b>seitlichem, einklappbarem Panel</b> — der 3D-Viewport gewinnt maximalen Raum. Lernpfad-Navigation, Färbungs-Legende und Modus-Logik bleiben identisch. Ruhiger Kontrast, feste Platzierung, ein hervorgehobener Fokus: ADHD-/Autism-friendly.</p>
+
+    <div style="display:flex;gap:24px;margin-top:22px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#48443f;"><span class="dot" style="background:#f26b1f;"></span>Rail = 5 Kategorien + Modus</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#48443f;"><span class="dot" style="background:#3268a8;"></span>Panel einklappbar wie mobil</div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:#48443f;"><span class="dot" style="background:#3fae6a;"></span>Viewport skaliert fluid</div>
+    </div>
+  </div>
+
+  <!-- ===== iPad Mini ===== -->
+  <div style="margin-top:64px;">
+    <div style="display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid #a8a49d;padding-bottom:12px;margin-bottom:30px;">
+      <span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">iPad Mini</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a756e;letter-spacing:.04em;">768 × 1024 pt · Breakpoint ≥ 744</span>
+    </div>
+    <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;">
+      <div>
+        <div class="dvlabel">Hochformat · Lernen · Drawer unten</div>
+        <div class="dvsub">768 × 1024</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:768px;height:1024px;"><dc-import name="AppFrame" mode="lernen" orientation="portrait" collapsed="{{ false }}" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div>
+      </div>
+      <div>
+        <div class="dvlabel">Querformat · Explorer · Rail links</div>
+        <div class="dvsub">1024 × 768</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1024px;height:768px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" collapsed="{{ false }}" hint-size="1024px,768px" style="width:1024px;height:768px;"></dc-import></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== iPad Pro 11 ===== -->
+  <div style="margin-top:72px;">
+    <div style="display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid #a8a49d;padding-bottom:12px;margin-bottom:30px;">
+      <span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">iPad Pro 11"</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a756e;letter-spacing:.04em;">834 × 1194 pt</span>
+    </div>
+    <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;">
+      <div>
+        <div class="dvlabel">Hochformat · Explorer · Drawer unten</div>
+        <div class="dvsub">834 × 1194</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:834px;height:1194px;"><dc-import name="AppFrame" mode="explorer" orientation="portrait" collapsed="{{ false }}" hint-size="834px,1194px" style="width:834px;height:1194px;"></dc-import></div></div>
+      </div>
+      <div>
+        <div class="dvlabel">Querformat · Lernen · Rail links</div>
+        <div class="dvsub">1194 × 834</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1194px;height:834px;"><dc-import name="AppFrame" mode="lernen" orientation="landscape" collapsed="{{ false }}" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== iPad Pro 13 ===== -->
+  <div style="margin-top:72px;">
+    <div style="display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid #a8a49d;padding-bottom:12px;margin-bottom:30px;">
+      <span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">iPad Pro 13"</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a756e;letter-spacing:.04em;">1024 × 1366 pt</span>
+    </div>
+    <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap;">
+      <div>
+        <div class="dvlabel">Hochformat · Lernen · Drawer unten</div>
+        <div class="dvsub">1024 × 1366</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1024px;height:1366px;"><dc-import name="AppFrame" mode="lernen" orientation="portrait" collapsed="{{ false }}" hint-size="1024px,1366px" style="width:1024px;height:1366px;"></dc-import></div></div>
+      </div>
+      <div>
+        <div class="dvlabel">Querformat · Explorer · Rail links</div>
+        <div class="dvsub">1366 × 1024</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1366px;height:1024px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" collapsed="{{ false }}" hint-size="1366px,1024px" style="width:1366px;height:1024px;"></dc-import></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Desktop ===== -->
+  <div style="margin-top:72px;">
+    <div style="display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid #a8a49d;padding-bottom:12px;margin-bottom:30px;">
+      <span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">Desktop</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#7a756e;letter-spacing:.04em;">1440 × 900 · Breakpoint ≥ 1280</span>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:42px;">
+      <div>
+        <div class="dvlabel">Lernen · Panel offen</div>
+        <div class="dvsub">1440 × 900</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1440px;height:900px;"><dc-import name="AppFrame" mode="lernen" orientation="landscape" collapsed="{{ false }}" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div>
+      </div>
+      <div>
+        <div class="dvlabel">Explorer · Panel eingeklappt → Viewport voll</div>
+        <div class="dvsub">1440 × 900</div>
+        <div class="scr" style="margin-top:14px;"><div style="width:1440px;height:900px;"><dc-import name="AppFrame" mode="explorer" orientation="landscape" collapsed="{{ true }}" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

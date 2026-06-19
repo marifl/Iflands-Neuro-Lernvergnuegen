@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:14px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.28);flex:none;}
+  .scr > div{border-radius:8px;overflow:hidden;}
+  .lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.05em;color:#1c1a18;font-weight:600;margin-bottom:8px;}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#7a756e;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .surfh{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid #a8a49d;padding-bottom:12px;margin:0 0 28px;}
+  .row{display:flex;gap:34px;align-items:flex-start;flex-wrap:wrap;}
+  .cell{display:flex;flex-direction:column;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1100px;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Geräte-Matrix · v2</div>
+    <h1 style="font-size:36px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Launcher · Fälle · Onboarding</h1>
+    <p style="font-size:14px;line-height:1.6;color:#48443f;max-width:720px;margin:0;">Responsive Components über alle Geräteklassen und beide Orientierungen.</p>
+  </div>
+
+  <!-- LAUNCHER -->
+  <div style="margin-top:48px;">
+    <div class="surfh"><span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">Mode-Launcher</span><span class="sub">LauncherFrame</span></div>
+    <div class="row">
+      <div class="cell"><div class="lbl">iPhone · Portrait <span class="sub">390×844</span></div><div class="scr"><div style="width:390px;height:844px;"><dc-import name="LauncherFrame" orientation="portrait" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPhone · Landscape <span class="sub">844×390</span></div><div class="scr"><div style="width:844px;height:390px;"><dc-import name="LauncherFrame" orientation="landscape" hint-size="844px,390px" style="width:844px;height:390px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Portrait</div><div class="scr"><div style="width:768px;height:1024px;"><dc-import name="LauncherFrame" orientation="portrait" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Landscape</div><div class="scr"><div style="width:1024px;height:768px;"><dc-import name="LauncherFrame" orientation="landscape" hint-size="1024px,768px" style="width:1024px;height:768px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Portrait</div><div class="scr"><div style="width:834px;height:1194px;"><dc-import name="LauncherFrame" orientation="portrait" hint-size="834px,1194px" style="width:834px;height:1194px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Landscape</div><div class="scr"><div style="width:1194px;height:834px;"><dc-import name="LauncherFrame" orientation="landscape" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Portrait</div><div class="scr"><div style="width:1024px;height:1366px;"><dc-import name="LauncherFrame" orientation="portrait" hint-size="1024px,1366px" style="width:1024px;height:1366px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Landscape</div><div class="scr"><div style="width:1366px;height:1024px;"><dc-import name="LauncherFrame" orientation="landscape" hint-size="1366px,1024px" style="width:1366px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">Desktop <span class="sub">1440×900</span></div><div class="scr"><div style="width:1440px;height:900px;"><dc-import name="LauncherFrame" orientation="landscape" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- FÄLLE -->
+  <div style="margin-top:64px;">
+    <div class="surfh"><span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">Fälle (Fall-Ansicht)</span><span class="sub">FaelleFrame</span></div>
+    <div class="row">
+      <div class="cell"><div class="lbl">iPhone · Portrait</div><div class="scr"><div style="width:390px;height:844px;"><dc-import name="FaelleFrame" orientation="portrait" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPhone · Landscape</div><div class="scr"><div style="width:844px;height:390px;"><dc-import name="FaelleFrame" orientation="landscape" hint-size="844px,390px" style="width:844px;height:390px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Portrait</div><div class="scr"><div style="width:768px;height:1024px;"><dc-import name="FaelleFrame" orientation="portrait" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Landscape</div><div class="scr"><div style="width:1024px;height:768px;"><dc-import name="FaelleFrame" orientation="landscape" hint-size="1024px,768px" style="width:1024px;height:768px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Portrait</div><div class="scr"><div style="width:834px;height:1194px;"><dc-import name="FaelleFrame" orientation="portrait" hint-size="834px,1194px" style="width:834px;height:1194px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Landscape</div><div class="scr"><div style="width:1194px;height:834px;"><dc-import name="FaelleFrame" orientation="landscape" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Portrait</div><div class="scr"><div style="width:1024px;height:1366px;"><dc-import name="FaelleFrame" orientation="portrait" hint-size="1024px,1366px" style="width:1024px;height:1366px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Landscape</div><div class="scr"><div style="width:1366px;height:1024px;"><dc-import name="FaelleFrame" orientation="landscape" hint-size="1366px,1024px" style="width:1366px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">Desktop</div><div class="scr"><div style="width:1440px;height:900px;"><dc-import name="FaelleFrame" orientation="landscape" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+  <!-- ONBOARDING -->
+  <div style="margin-top:64px;">
+    <div class="surfh"><span style="font-size:22px;font-weight:700;letter-spacing:-.02em;">Onboarding</span><span class="sub">OnboardingFrame</span></div>
+    <div class="row">
+      <div class="cell"><div class="lbl">iPhone · Portrait</div><div class="scr"><div style="width:390px;height:844px;"><dc-import name="OnboardingFrame" orientation="portrait" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPhone · Landscape</div><div class="scr"><div style="width:844px;height:390px;"><dc-import name="OnboardingFrame" orientation="landscape" hint-size="844px,390px" style="width:844px;height:390px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Portrait</div><div class="scr"><div style="width:768px;height:1024px;"><dc-import name="OnboardingFrame" orientation="portrait" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Landscape</div><div class="scr"><div style="width:1024px;height:768px;"><dc-import name="OnboardingFrame" orientation="landscape" hint-size="1024px,768px" style="width:1024px;height:768px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Portrait</div><div class="scr"><div style="width:834px;height:1194px;"><dc-import name="OnboardingFrame" orientation="portrait" hint-size="834px,1194px" style="width:834px;height:1194px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Landscape</div><div class="scr"><div style="width:1194px;height:834px;"><dc-import name="OnboardingFrame" orientation="landscape" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Portrait</div><div class="scr"><div style="width:1024px;height:1366px;"><dc-import name="OnboardingFrame" orientation="portrait" hint-size="1024px,1366px" style="width:1024px;height:1366px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 13" · Landscape</div><div class="scr"><div style="width:1366px;height:1024px;"><dc-import name="OnboardingFrame" orientation="landscape" hint-size="1366px,1024px" style="width:1366px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">Desktop</div><div class="scr"><div style="width:1440px;height:900px;"><dc-import name="OnboardingFrame" orientation="landscape" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

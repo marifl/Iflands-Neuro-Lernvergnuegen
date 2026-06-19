@@ -1,8 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import { BookOpen, Camera, FileJson, Map, MousePointer2, Palette, Scissors, Settings2, Skull } from 'lucide-react'
-import { useViewerStore, type CutAxis, type PresetViewOptions, type SelectMode } from './viewerStore'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { BookOpen, Camera, FileJson, Map as MapIcon, MousePointer2, Palette, Scissors, Settings2, Skull } from 'lucide-react'
+import { useViewerStore, type CutAxis, type SelectMode } from './viewerStore'
 import { CUT_AXES, CUT_POS_MAX } from './cutCapsMerged'
-import { fetchColorPresets, presetIssue, type ColorPreset } from './colorPresets'
+import { fetchColorPresets, fetchPresentationColorItems, presetIssue, type ColorPreset, type PresentationColorItem } from './colorPresets'
 import { downloadViewerSnapshot, importViewerSnapshotFile } from './localDataActions'
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
@@ -13,6 +13,7 @@ import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExpla
 import SettingsPanel from './SettingsPanel'
 import { ShellControlButton } from './ShellStatePrimitives'
 import { AuthoringTransformControls } from './AuthoringTransformControls'
+import { replaceCanonicalLocation } from '../scene/router'
 
 type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | 'settings' | null
 
@@ -68,43 +69,6 @@ function Item({
   )
 }
 
-function PresetViewSlider({
-  label,
-  active,
-  onChange,
-}: {
-  label: string
-  active: boolean
-  onChange: (active: boolean) => void
-}) {
-  return (
-    <label
-      style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr auto',
-        gap: 8,
-        alignItems: 'center',
-        padding: '4px 8px 6px',
-      }}
-    >
-      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
-      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: active ? 'var(--orange)' : 'var(--g500)' }}>
-        {active ? 'An' : 'Aus'}
-      </span>
-      <input
-        type="range"
-        min={0}
-        max={1}
-        step={1}
-        value={active ? 1 : 0}
-        onChange={(event) => onChange(Number(event.currentTarget.value) === 1)}
-        aria-label={label}
-        style={{ gridColumn: '1 / -1', width: '100%', accentColor: 'var(--orange)', cursor: 'ew-resize' }}
-      />
-    </label>
-  )
-}
-
 interface BoxDef {
   key: Exclude<OpenFlyout, null>
   eyebrow: string
@@ -116,7 +80,7 @@ interface BoxDef {
 }
 
 const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
-const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'context', 'atlas', 'snapshot', 'settings']
+const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'atlas', 'snapshot', 'settings']
 
 /** Fussleiste als globales Viewport-Cockpit: App-Ebene (Atlas, Modus) plus modusuebergreifende
  *  Darstellungs-Werkzeuge. Box-breite Flyouts klappen nach oben auf; Boxen gleichmaessig verteilt. */
@@ -140,14 +104,20 @@ export default function FooterBar() {
   const activePreset = useViewerStore((s) => s.activePreset)
   const setPreset = useViewerStore((s) => s.setPreset)
   const presetViewOptions = useViewerStore((s) => s.presetViewOptions)
-  const setPresetViewOptions = useViewerStore((s) => s.setPresetViewOptions)
   const [presets, setPresets] = useState<ColorPreset[]>([])
+  const [presentationColorItems, setPresentationColorItems] = useState<PresentationColorItem[]>([])
   const [presetError, setPresetError] = useState<Error | null>(null)
-  // Figur-Presets einmal laden; Fehler laut nach oben (kein stiller Fallback).
+  // Vortrags-Färbungen einmal aus der kanonischen Atlas-Config laden; Fehler laut nach oben.
   useEffect(() => {
-    fetchColorPresets().then(setPresets, setPresetError)
+    Promise.all([fetchColorPresets(), fetchPresentationColorItems()])
+      .then(([loadedPresets, loadedItems]) => {
+        setPresets(loadedPresets)
+        setPresentationColorItems(loadedItems)
+      })
+      .catch(setPresetError)
   }, [])
   if (presetError) throw presetError
+  const presetsById = useMemo(() => new Map(presets.map((preset) => [preset.id, preset])), [presets])
   const cuts = useViewerStore((s) => s.cuts)
   const setCut = useViewerStore((s) => s.setCut)
   const cutMode = useViewerStore((s) => s.cutMode)
@@ -185,6 +155,33 @@ export default function FooterBar() {
   }
   if (snapshotError) throw snapshotError
 
+  const selectPresentationColorItem = (item: PresentationColorItem) => {
+    if (item.colorPresetId) {
+      const preset = presetsById.get(item.colorPresetId)
+      if (!preset) {
+        setPresetError(new Error(`Vortrags-Färbung "${item.id}" referenziert fehlendes Farb-Preset "${item.colorPresetId}"`))
+        return
+      }
+      const issue = presetIssue(preset)
+      if (issue) {
+        setPresetError(new Error(`Vortrags-Färbung "${item.id}" ist nicht auflösbar: ${issue}`))
+        return
+      }
+      setPreset({ ...preset, dimOthers: item.dimOthers ?? preset.dimOthers })
+    } else {
+      setPreset(null)
+    }
+    replaceCanonicalLocation({
+      sequenceKind: 'presentation',
+      sequenceName: 'kapitel11-vorlesung',
+      configName: item.id,
+      sceneId: item.scene,
+      step: 0,
+    })
+    setAppMode('learn')
+    close()
+  }
+
   // Box-Liste in Anzeige-Reihenfolge. Werkzeug kombiniert Auswahlmodus und expliziten Asset-Edit.
   const boxes: BoxDef[] = [
     {
@@ -192,7 +189,7 @@ export default function FooterBar() {
       eyebrow: 'Atlas',
       // Label zeigt das aktive Atlas-auf-Hirn-Overlay (Carve, 0 mm auf TARO) oder „Menü".
       label: showCarveDkt ? 'DKT' : showCarveJulich ? 'Julich' : showCarveBrodmann ? 'Brodmann' : 'Menü',
-      icon: <Map {...FOOTER_ICON_PROPS} />,
+      icon: <MapIcon {...FOOTER_ICON_PROPS} />,
       content: (
         <>
           {/* Atlas-Areale direkt auf dem TARO-Hirn (Carve = 0 mm, anklickbar zeigt Namen).
@@ -232,23 +229,26 @@ export default function FooterBar() {
               {definition.label}
             </Item>
           ))}
-          {/* Figur-spezifische Färbungen (Lehrbuch-Abbildungen) — didaktische Gruppen-Farben. */}
-          {presets.length > 0 ? (
+          {/* Vortrags-Färbungen kommen aus atlas-config.json/presentation, nicht aus Companion-JSON. */}
+          {presentationColorItems.length > 0 ? (
             <>
-              <div className="eyebrow" style={{ margin: '8px 0 4px' }}>Figur-Färbungen</div>
-              {presets.map((p) => {
-                // Noch nicht baubares Preset (Geometrie-Lücke) deaktivieren + Grund zeigen,
-                // statt beim Klick den Viewer crashen zu lassen (fail-loud am richtigen Ort).
-                const issue = presetIssue(p)
+              <div className="eyebrow" style={{ margin: '8px 0 4px' }}>Vortrags-Färbungen</div>
+              {presentationColorItems.map((item) => {
+                const preset = item.colorPresetId ? presetsById.get(item.colorPresetId) : null
+                const issue = item.colorPresetId && !preset
+                  ? `Farb-Preset "${item.colorPresetId}" fehlt`
+                  : preset
+                    ? presetIssue(preset)
+                    : null
                 return (
                   <Item
-                    key={p.id}
-                    active={colorMode === 'preset' && activePreset?.id === p.id}
+                    key={item.id}
+                    active={new URLSearchParams(window.location.search).get('config') === item.id}
                     disabled={issue !== null}
                     title={issue ?? undefined}
-                    onClick={() => { if (!issue) { setPreset(p); close() } }}
+                    onClick={() => { if (!issue) selectPresentationColorItem(item) }}
                   >
-                    {p.label}
+                    {item.label}
                   </Item>
                 )
               })}
@@ -257,17 +257,7 @@ export default function FooterBar() {
                   <div style={{ height: 8 }} />
                   <PresetGroupExplanation preset={activePreset} />
                   <div className="eyebrow" style={{ margin: '0 0 4px' }}>Aktionen</div>
-                  <PresetReadOnlyAction label="Andere dimmen" active={activePreset.dimOthers} />
-                  <PresetViewSlider
-                    label="Andere ausblenden"
-                    active={presetViewOptions.hideUncolored}
-                    onChange={(hideUncolored) => setPresetViewOptions({ hideUncolored } satisfies Partial<PresetViewOptions>)}
-                  />
-                  <PresetViewSlider
-                    label="Eingefärbte fokussieren"
-                    active={presetViewOptions.focusColored}
-                    onChange={(focusColored) => setPresetViewOptions({ focusColored } satisfies Partial<PresetViewOptions>)}
-                  />
+                  <PresetReadOnlyAction label="Nur relevante Regionen" active={presetViewOptions.hideUncolored} />
                 </>
               ) : null}
             </>

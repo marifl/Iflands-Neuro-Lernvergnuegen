@@ -19,7 +19,7 @@
     }
   },
   "companion": {
-    "summary": "Abb. 11-08A ist eine konzeptuelle Karte der rostrokaudalen Organisation: weiter rostrale Bereiche werden als domänenübergreifender beschrieben. Die Szene ersetzt das statische Schema durch ein lokales Flowchart mit Bildfallback.",
+    "summary": "Abb. 11-08A ist eine konzeptuelle Karte der rostrokaudalen Organisation: weiter rostrale Bereiche werden als domänenübergreifender beschrieben. Die Szene ersetzt das statische Schema durch ein lokales Flowchart im aktuellen Scene-Vertrag.",
     "sources": [{ "key": "jaencke_kap11", "note": "Kap. 11.3.3, Abb. 11-08A" }]
   }
 }

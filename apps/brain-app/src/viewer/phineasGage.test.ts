@@ -4,6 +4,7 @@ import {
   HISTORICAL_ROD_SHAFT_DIAMETER_MM,
   HISTORICAL_ROD_TIP_DIAMETER_MM,
   HISTORICAL_ROD_WEIGHT_KG,
+  LESION_FOCUS_AREAS_DE,
   LESION_STRUCTURES,
   PHINEAS_GAGE,
   PHINEAS_GAGE_ASSETS,
@@ -17,7 +18,9 @@ import {
 
 describe('Phineas-Gage-Szene', () => {
   it('modelliert die Penetration als monotone Eintritt-Durchtritt-Austritt-Sequenz', () => {
-    const phases = PHINEAS_GAGE.steps.filter((step) => step.showRod).map((step) => step.rodPhase)
+    const phases = PHINEAS_GAGE.steps
+      .filter((step) => step.showRod && step.highlight.length === 0)
+      .map((step) => step.rodPhase)
 
     expect(phases).toHaveLength(3)
     expect(phases[0]).toBeGreaterThan(0)
@@ -38,11 +41,28 @@ describe('Phineas-Gage-Szene', () => {
     expect(ROD_RADIUS_TIP).toBeLessThan(ROD_RADIUS_SHAFT)
   })
 
-  it('markiert nur linke orbitofrontale/vmPFC-nahe Laesionsstrukturen', () => {
+  it('markiert nur linke orbitofrontale/VMPFC-nahe Laesionsstrukturen', () => {
     expect(LESION_STRUCTURES.length).toBeGreaterThan(4)
     for (const slug of LESION_STRUCTURES) {
       expect(slug.startsWith('left-')).toBe(true)
       expect(slug).toMatch(/orbital|straight|subcallosal/)
+    }
+    for (const label of LESION_FOCUS_AREAS_DE) expect(label).toMatch(/\S/)
+  })
+
+  it('zeigt Laesionsschritte mit Stangen- und Schaedelkontekst statt isolierter Marker', () => {
+    const lesionSteps = PHINEAS_GAGE.steps.filter((step) => step.highlight.includes('left-straight-gyrus'))
+
+    expect(LESION_FOCUS_AREAS_DE).toHaveLength(LESION_STRUCTURES.length)
+    expect(LESION_FOCUS_AREAS_DE).toContain('Gyrus rectus links')
+    expect(lesionSteps).toHaveLength(2)
+    for (const step of lesionSteps) {
+      expect(step.showSkull).toBe(true)
+      expect(step.skullOpacity).toBeGreaterThan(0)
+      expect(step.skullOpacity).toBeLessThan(0.2)
+      expect(step.showRod).toBe(true)
+      expect(step.rodPhase).toBe(1)
+      expect(step.focusAreasDe).toEqual(LESION_FOCUS_AREAS_DE)
     }
   })
 

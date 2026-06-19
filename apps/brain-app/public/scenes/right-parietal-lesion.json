@@ -1,0 +1,20 @@
+{
+  "id": "right-parietal-lesion",
+  "section": "11.3.3 · Parietales Kontrollsystem",
+  "author": "ifland",
+  "order": 24,
+  "title": "Rechtsseitiger Parietallappen und Körperwissen",
+  "brain": { "regions": ["right-parietal-body"], "camera": "lateral-right" },
+  "overlay": {
+    "kind": "prose",
+    "position": "right",
+    "size": "md"
+  },
+  "companion": {
+    "summary": "Die Läsionsfolien zum parietalen Kontrollsystem nennen den rechtsseitigen Parietallappen als Struktur für Körperwissen und die Zuordnung zum Handelnden. Diese Scene markiert deshalb rechtsseitige parietale Kontrollareale statt des allgemeinen PPC-Buckets. Sie verbindet Aufmerksamkeitslenkung, motorische Transformation und Fremd-/Eigenunterscheidung mit den Läsionsfolgen Asomatognosie, Somatoparaphrenie und Anosodiaphorie. Interaktive Abfrage: Welche Störung passt dazu, wenn eine Extremität nicht mehr als eigene zugeordnet wird?",
+    "sources": [
+      { "key": "vortrag_pdf_2026_06_18_s58_59", "note": "PDF-Seiten 58-59: rechtsseitiger Parietallappen, Körperwissen, Läsionsfolgen" },
+      { "key": "mcgovern_medical_school", "note": "Foliensource für Parietallappen-Abbildung laut Deck" }
+    ]
+  }
+}

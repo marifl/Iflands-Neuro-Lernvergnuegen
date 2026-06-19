@@ -1,0 +1,14 @@
+{
+  "disableAllHooks": false,
+  "disableSessionStartHook": false,
+  "disablePreToolUseHook": false,
+  "disablePostToolUseHook": false,
+  "disableStopHook": false,
+  "disableUserPromptSubmitHook": false,
+  "enableBranchContext": true,
+  "enableDestructiveBashGuard": true,
+  "enableEvidenceLogging": true,
+  "enableGitWorkflowReminders": true,
+  "enablePromptCloseoutReminder": true,
+  "enableStopEvidenceGuard": true
+}

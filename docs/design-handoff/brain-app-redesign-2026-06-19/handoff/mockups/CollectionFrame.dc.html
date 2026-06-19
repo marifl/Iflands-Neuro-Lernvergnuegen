@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>
+[data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);--brain:#3a4a3f;}
+[data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);--brain:#8d8a84;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+
+<div ref="{{ setRoot }}" data-theme="{{ themeAttr }}" style="width:100%;height:100%;background:var(--bg);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);overflow:hidden;position:relative;">
+<helmet><script src="./image-slot.js"></script></helmet>
+<helmet><script src="./ifn-nav.js"></script></helmet>
+<helmet><script src="./a11y.js"></script></helmet>
+<helmet><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></helmet>
+
+<!-- ============ COLUMNS ============ -->
+<sc-if value="{{ isLandscape }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%;height:100%;display:flex;">
+    <!-- RAIL -->
+    <ifn-nav variant="rail" active="explorer" here="collection"></ifn-nav>
+
+    <!-- PANEL -->
+    <sc-if value="{{ showPanel }}" hint-placeholder-val="{{ true }}">
+      <div style="width:340px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);">
+        <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:16px 18px;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Sammlungen</span><button title="Einklappen" style="width:36px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid #f26b1f;color:#f26b1f;cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button></div>
+        <div style="flex:none;padding:14px 18px;border-bottom:1px solid var(--line2);"><button style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#f26b1f;border:none;color:var(--onacc);padding:14px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.04em;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>3D-OBJEKT IMPORTIEREN</button><div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);margin-top:7px;text-align:center;">GLB / GLTF · Asset-Slot · Gizmo</div></div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 18px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:8px;">Basis-Ontologie</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">TARO</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t3);margin-left:7px;">600</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);background:var(--badge);padding:3px 6px;flex:none;">Baum</span></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:16px 0 8px;">Atlanten</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">Jülich</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t3);margin-left:7px;">292</span></div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);color:var(--t3);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex:none;"><path d="M3 3l18 18M10.6 10.6a2.5 2.5 0 0 0 3.5 3.5M9.4 5.2A9.6 9.6 0 0 1 12 5c7 0 10 7 10 7a13 13 0 0 1-2.2 3M6.2 6.2A13 13 0 0 0 2 12s3 7 10 7a9.6 9.6 0 0 0 2.6-.4"/></svg><div style="flex:1;"><span style="font-size:13px;">DKT</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;margin-left:7px;">68</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);flex:none;">aus</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">Brodmann</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t3);margin-left:7px;">80</span></div></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">Destrieux</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t3);margin-left:7px;">148</span></div></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:16px 0 8px;">Objekte · Fälle · Devices</div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line2);min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">Kontext</span><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t3);margin-left:7px;">333</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);background:var(--badge);padding:3px 6px;flex:none;">Objekt-Set</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 8px;border-bottom:1px solid var(--line2);background:rgba(242,107,31,.1);margin:0 -8px;min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:700;">Phineas Gage</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#f26b1f;background:rgba(242,107,31,.18);padding:3px 6px;flex:none;">Fall</span></div>
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 0;min-height:44px;box-sizing:border-box;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:13px;font-weight:600;">EEG 10-20</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);background:var(--badge);padding:3px 6px;flex:none;">Device</span></div>
+        </div>
+      </div>
+    </sc-if>
+    <sc-if value="{{ collapsed }}" hint-placeholder-val="{{ false }}">
+      <div style="width:30px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel);border-right:1px solid var(--line);cursor:pointer;"><div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:#f26b1f;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;writing-mode:vertical-rl;">Sammlungen</span></div></div>
+    </sc-if>
+
+    <!-- VIEWPORT -->
+    <div style="flex:1;min-width:0;position:relative;background:var(--vp);">
+      <div style="position:absolute;top:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onacc);background:#f26b1f;padding:5px 10px;white-space:nowrap;z-index:3;">Mehr · Sammlungen</div>
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;"><image-slot id="vp-collection" placeholder="GLB-Render ablegen" shape="rect" style="width:200px;height:200px;pointer-events:auto;opacity:.97;"></image-slot></div>
+      <div style="position:absolute;top:38%;right:30%;width:120px;height:120px;">
+        <div style="position:absolute;inset:0;border:1px dashed rgba(242,107,31,.6);"></div>
+        <svg width="120" height="120" viewBox="0 0 120 120" style="position:absolute;inset:0;"><line x1="60" y1="60" x2="60" y2="8" stroke="#77c85b" stroke-width="2"/><line x1="60" y1="60" x2="112" y2="60" stroke="#c45646" stroke-width="2"/><line x1="60" y1="60" x2="26" y2="92" stroke="#35a6ff" stroke-width="2"/><circle cx="60" cy="60" r="4" fill="#f26b1f"/></svg>
+        <div style="position:absolute;top:-22px;left:0;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.1em;color:#f26b1f;background:var(--hudbg);padding:3px 6px;white-space:nowrap;">Neues Objekt · platzieren</div>
+      </div>
+      <div style="position:absolute;bottom:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;color:var(--t3);z-index:3;">SNAPSHOT · versioniert</div>
+    </div>
+
+    <!-- WIDE: Auswahl-Detail-Spalte (w>=1366) -->
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+      <div style="width:300px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);">
+        <div style="flex:none;padding:16px 18px;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Auswahl</span></div>
+        <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 18px;">
+          <div style="display:flex;align-items:center;gap:10px;"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><div style="font-size:15px;font-weight:700;letter-spacing:-.01em;">Phineas Gage</div></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#f26b1f;background:rgba(242,107,31,.18);padding:3px 7px;flex:none;">Fall</span></div>
+          <div style="display:flex;flex-direction:column;margin-top:16px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--t3);">Typ</span><span style="font-size:12.5px;">case-study</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--t3);">Objekte</span><span style="font-size:12.5px;">Modell + Läsion</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--t3);">Schritte</span><span style="font-size:12.5px;">6</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:9px 0;"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--t3);">Quelle</span><span style="font-size:12.5px;">Van Horn 2012</span></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;border:1px solid var(--line2);padding:11px 13px;margin-top:16px;"><span style="font-size:13px;">Sichtbar im Viewer</span><span style="width:40px;height:22px;border-radius:11px;background:#f26b1f;position:relative;flex:none;"><span style="position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:var(--onacc);"></span></span></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:18px 0 10px;">Enthaltene Strukturen</div>
+          <div style="display:flex;flex-direction:column;gap:9px;">
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:11px;height:11px;background:#c0494a;flex:none;"></span><span style="font-size:12.5px;">Linker OFC</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:11px;height:11px;background:#c0494a;flex:none;"></span><span style="font-size:12.5px;">Linker vmPFC</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:11px;height:11px;background:#5b6470;flex:none;"></span><span style="font-size:12.5px;">Stange</span></div>
+            <div style="display:flex;align-items:center;gap:10px;"><span style="width:11px;height:11px;background:#cdbfb6;flex:none;"></span><span style="font-size:12.5px;">Schädel</span></div>
+          </div>
+          <button style="width:100%;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px;cursor:pointer;margin-top:18px;">Im Viewer öffnen</button>
+        </div>
+      </div>
+    </sc-if>
+  </div>
+</sc-if>
+
+<!-- ============ STACK ============ -->
+<sc-if value="{{ isPortrait }}" hint-placeholder-val="{{ false }}">
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;">
+    <div style="flex:none;background:var(--panel);border-bottom:1px solid var(--line);">
+      <div style="height:14px;"></div>
+      <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;">
+        <div style="display:flex;align-items:center;gap:11px;"><div style="width:32px;height:32px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--onacc)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><div style="line-height:1.05;"><div style="font-weight:700;font-size:14px;letter-spacing:-.01em;">Iflands Neuro</div><div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;margin-top:2px;white-space:nowrap;">Mehr · Sammlungen</div></div></div>
+        <div role="button" tabindex="0" style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--t1);border:1px solid var(--line5);padding:8px 11px;;cursor:pointer" onClick="{{ themeToggle }}" title="Theme wechseln">{{ themeLabel }}</div>
+      </div>
+    </div>
+
+    <!-- IMPORT CTA -->
+    <div style="flex:none;padding:14px 18px;background:var(--rail);border-bottom:1px solid var(--line2);"><button style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#f26b1f;border:none;color:var(--onacc);padding:15px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>3D-OBJEKT IMPORTIEREN</button></div>
+
+    <!-- LIST -->
+    <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:8px;">Basis-Ontologie</div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line2);min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:14px;font-weight:600;">TARO</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--t3);margin-left:7px;">600</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);background:var(--badge);padding:4px 7px;flex:none;">Baum</span></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:16px 0 8px;">Atlanten</div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line2);min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:14px;font-weight:600;">Jülich</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--t3);margin-left:7px;">292</span></div></div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line2);color:var(--t3);min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex:none;"><path d="M3 3l18 18M10.6 10.6a2.5 2.5 0 0 0 3.5 3.5M9.4 5.2A9.6 9.6 0 0 1 12 5c7 0 10 7 10 7a13 13 0 0 1-2.2 3M6.2 6.2A13 13 0 0 0 2 12s3 7 10 7a9.6 9.6 0 0 0 2.6-.4"/></svg><div style="flex:1;"><span style="font-size:14px;">DKT</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;margin-left:7px;">68</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);flex:none;">aus</span></div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 0;border-bottom:1px solid var(--line2);min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:14px;font-weight:600;">Brodmann</span><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--t3);margin-left:7px;">80</span></div></div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:16px 0 8px;">Objekte · Fälle · Devices</div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 8px;border-bottom:1px solid var(--line2);background:rgba(242,107,31,.1);margin:0 -8px;min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f26b1f" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:14px;font-weight:700;">Phineas Gage</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:#f26b1f;background:rgba(242,107,31,.18);padding:4px 7px;flex:none;">Fall</span></div>
+      <div style="display:flex;align-items:center;gap:11px;padding:12px 0;min-height:48px;box-sizing:border-box;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--t1)" stroke-width="1.8" style="flex:none;"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><span style="font-size:14px;font-weight:600;">EEG 10-20</span></div><span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:var(--t4);background:var(--badge);padding:4px 7px;flex:none;">Device</span></div>
+    </div>
+
+    <!-- DOCK -->
+    <ifn-nav variant="dock" active="explorer" here="collection"></ifn-nav>
+    <div style="height:20px;flex:none;background:var(--panel);display:flex;align-items:center;justify-content:center;"><span style="width:128px;height:5px;border-radius:3px;background:var(--line5);"></span></div>
+  </div>
+</sc-if>
+
+<!-- ============ ZUSTAND-OVERLAY (laut statt still) ============ -->
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="width:100%;max-width:440px;padding:40px 36px;box-sizing:border-box;text-align:center;">
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:38px;height:38px;border:3px solid var(--line3);border-top-color:#f26b1f;border-radius:50%;animation:scSpin .8s linear infinite;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#f26b1f;">Lädt</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Sammlungen werden geladen …</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--t3);">Ontologie & Atlanten</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 7l1.5 13a2 2 0 0 0 2 1.8h11a2 2 0 0 0 2-1.8L21 7M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--t4);">Leer</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Keine Sammlung gewählt</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Importiere ein GLB/GLTF oder wähle eine Ontologie.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;border:1px solid #7a3326;background:rgba(192,73,74,.12);padding:30px 26px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#e06a4a;">Fehler · nicht still</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Import fehlgeschlagen</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">GLB konnte nicht geparst werden (Schema?). Datei prüfen.</div>
+          <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Erneut versuchen</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1194,&quot;height&quot;:834},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;hell&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Füllen&quot;,&quot;iPhone&quot;,&quot;iPad Mini&quot;,&quot;iPad Pro 11″&quot;,&quot;iPad Pro 12,9″&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Füllen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;orientation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portrait&quot;,&quot;landscape&quot;],&quot;default&quot;:&quot;landscape&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  _theme(){ if(this.state && this.state.theme) return this.state.theme; try{var t=localStorage.getItem('ifn-theme'); if(t==='hell'||t==='dark') return t;}catch(e){} return (this.props.theme === 'hell' ? 'hell' : 'dark'); }
+  _themeToggle = () => { var nx = this._theme()==='hell' ? 'dark' : 'hell'; try{localStorage.setItem('ifn-theme', nx);}catch(e){} this.setState({ theme: nx }); };
+  state = { w: 0, h: 0 }
+  setRoot = (el) => {
+    if (!el || el === this._root) return;
+    this._root = el; this._applyDev(el);
+    const m = () => this.setState({ w: el.clientWidth, h: el.clientHeight });
+    m(); this._ro = new ResizeObserver(m); this._ro.observe(el);
+  }
+  componentWillUnmount() { if (this._ro) try { this._ro.disconnect(); } catch (e) {} }
+  _DEV = { 'iPhone':[393,852,47], 'iPad Mini':[744,1133,24], 'iPad Pro 11″':[834,1194,22], 'iPad Pro 12,9″':[1024,1366,20], 'Desktop':[1440,900,10] };
+  _applyDev(el){ if(!el) return; var info=this._DEV[this.props.device]; var p=el.parentElement; if(info){ var isD=this.props.device==='Desktop'; var land=isD||this.props.orientation==='landscape'; var dw=isD?info[0]:(land?info[1]:info[0]); var dh=isD?info[1]:(land?info[0]:info[1]); var bez=isD?12:16; el.style.width=dw+'px'; el.style.height=dh+'px'; el.style.flex='none'; el.style.borderRadius=info[2]+'px'; el.style.overflow='hidden'; el.style.boxShadow='0 0 0 '+bez+'px #0c0c0c, 0 0 0 '+(bez+2)+'px #2c2c2c, 0 40px 100px rgba(0,0,0,.55)'; if(p){ p.style.display='flex'; p.style.alignItems='center'; p.style.justifyContent='center'; p.style.height='100vh'; p.style.minHeight='100vh'; p.style.overflow='hidden'; p.style.boxSizing='border-box'; p.style.background='#15140f'; } var aw=window.innerWidth, ah=window.innerHeight; var pad=60+bez*2; var s=Math.min(1,(aw-pad)/dw,(ah-pad)/dh); if(!isFinite(s)||s<=0) s=1; el.style.transformOrigin='center center'; el.style.transform='scale('+s+')'; if(!this._devResize){ this._devResize=function(){ this._applyDev(this._root); }.bind(this); window.addEventListener('resize',this._devResize); } } else { el.style.width='100%'; el.style.height='100%'; el.style.flex=''; el.style.borderRadius=''; el.style.transform=''; el.style.transformOrigin=''; el.style.boxShadow=''; if(p){ p.style.display=''; p.style.alignItems=''; p.style.justifyContent=''; p.style.height=''; p.style.minHeight=''; p.style.overflow=''; p.style.background=''; } } }
+  componentDidUpdate(prev){ if(prev && (prev.device!==this.props.device || prev.orientation!==this.props.orientation) && this._root){ this._applyDev(this._root); this.setState({ w:this._root.clientWidth, h:this._root.clientHeight }); } }
+  renderVals() {
+    const w = this.state.w || (this.props.orientation === 'portrait' ? 420 : 1280);
+    const h = this.state.h || (this.props.orientation === 'portrait' ? 880 : 800);
+    const shortLandscape = h < 480 && w > h;
+    const columns = w >= 820 && !shortLandscape;
+    const isPortrait = !columns && !shortLandscape;
+    return {
+      setRoot: this.setRoot, themeAttr: this._theme(), themeLabel: this._theme() === 'hell' ? 'Dunkel' : 'Hell', themeToggle: this._themeToggle, isHell: this._theme()==='hell', notHell: this._theme()!=='hell',
+      st: (this.props.state||'idle'), showState: (this.props.state||'idle')!=='idle', isLoading: this.props.state==='loading', isEmpty: this.props.state==='empty', isError: this.props.state==='error',
+      isLandscape: columns || shortLandscape,
+      isPortrait,
+      showPanel: columns,
+      collapsed: shortLandscape,
+      wide: w >= 1366 && columns,
+    };
+  }
+}
+</script>
+</body>
+</html>

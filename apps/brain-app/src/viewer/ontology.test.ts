@@ -59,6 +59,24 @@ describe('globale Farbmodi', () => {
     expect(meshColor(cortex, 'region')).toBe(REGION_COLORS.telencephalon)
   })
 
+  it('deckt alle Top-Level-Gruppen der echten Ontologie explizit mit Regionsfarben ab', () => {
+    const expectedGroups = (realOntology().tree.children ?? []).map((group) => group.id).sort()
+    const configuredGroups = Object.keys(REGION_COLORS).sort()
+
+    expect(configuredGroups).toEqual(expectedGroups)
+  })
+
+  it('wirft bei fehlendem Regionsfarbvertrag statt eine Ersatzfarbe zu hashen', () => {
+    expect(() =>
+      meshColor({
+        id: 'probe-unknown',
+        group: 'unknown-region',
+        anatomicalRole: 'brain-cortex',
+        functionSystem: 'other',
+      }, 'region'),
+    ).toThrow(/Keine Regionsfarbe fuer Ontologie-Gruppe "unknown-region"/)
+  })
+
   it('ordnet wichtige Grenzfaelle reproduzierbar zu', () => {
     expect(anatomicalMaterialRole('right-caudate-nucleus', 'telencephalon')).toBe('subcortical-gray')
     expect(anatomicalMaterialRole('corpus-callosum', 'commissures')).toBe('white-matter')
@@ -67,4 +85,3 @@ describe('globale Farbmodi', () => {
     expect(functionSystem(undefined, 'right-caudate-nucleus', 'telencephalon')).toBe('basal-ganglia-loop')
   })
 })
-

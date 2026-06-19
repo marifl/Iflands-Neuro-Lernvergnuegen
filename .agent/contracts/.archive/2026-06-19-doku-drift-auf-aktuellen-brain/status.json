@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-19-doku-drift-auf-aktuellen-brain",
+  "title": "Doku-Drift auf aktuellen brain-app Architekturvertrag migrieren",
+  "status": "done",
+  "round": 1,
+  "created": "2026-06-19T14:34:41.042Z",
+  "updated": "2026-06-19T14:45:16.915Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-19T14:38:59.367Z"
+      }
+    ]
+  }
+}

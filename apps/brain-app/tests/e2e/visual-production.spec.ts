@@ -19,16 +19,6 @@ async function attachScreenshot(page: Page, testInfo: TestInfo, name: string) {
   await testInfo.attach(name, { body, contentType: 'image/png' })
 }
 
-async function setRangeValue(page: Page, label: string, value: number) {
-  await page.getByLabel(label).evaluate((node, nextValue) => {
-    const input = node as HTMLInputElement
-    const setter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set
-    setter?.call(input, String(nextValue))
-    input.dispatchEvent(new Event('input', { bubbles: true }))
-    input.dispatchEvent(new Event('change', { bubbles: true }))
-  }, value)
-}
-
 test('Vortragspfad rendert im Beamer-Viewport mit ERP-Overlay', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1920, height: 1080 })
   await page.goto('/?config=p3a-konfliktmonitoring')
@@ -54,8 +44,12 @@ test('Färbungs-Legende lässt sich minimieren, ausblenden und wieder anzeigen',
   await page.goto('/?mode=explore')
 
   await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
-  await page.getByRole('button', { name: /Färbung/ }).click()
+  await page.locator('.ed-foot').getByRole('button', { name: /Färbung/ }).click()
   await page.getByRole('button', { name: 'Lateralität' }).click()
+  const openColorDetails = page.getByLabel('Färbungsdetails öffnen')
+  if (await openColorDetails.isVisible()) {
+    await openColorDetails.click()
+  }
 
   await expect(page.getByText('Lateralität').first()).toBeVisible()
   await expect(page.getByText('sinistral')).toBeVisible()
@@ -64,14 +58,14 @@ test('Färbungs-Legende lässt sich minimieren, ausblenden und wieder anzeigen',
   await expect(page.getByText('Lateralität').first()).toBeVisible()
   await expect(page.getByText('sinistral')).toBeHidden()
 
-  await page.getByRole('button', { name: 'Legende erweitern' }).click()
+  await page.getByLabel('Färbungsdetails öffnen').click()
   await expect(page.getByText('sinistral')).toBeVisible()
 
   await page.getByRole('button', { name: 'Legende verbergen' }).click()
   await expect(page.getByText('sinistral')).toBeHidden()
-  await expect(page.getByRole('button', { name: 'Legende anzeigen' })).toBeVisible()
+  await expect(page.getByLabel('Färbungsdetails öffnen')).toBeVisible()
 
-  await page.getByRole('button', { name: 'Legende anzeigen' }).click()
+  await page.getByLabel('Färbungsdetails öffnen').click()
   await expect(page.getByText('sinistral')).toBeVisible()
 
   await expectBrainCanvas(page)
@@ -85,7 +79,7 @@ test('Atlas-Carve erzeugt im Cut-Modus sichtbare Cap-Flächen', async ({ page },
   await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
   await page.getByRole('group', { name: 'Carve-Atlas-Overlay' }).getByRole('button', { name: 'Julich' }).click()
   await page.getByRole('button', { name: /Schnitte/ }).click()
-  await page.getByRole('button', { name: 'Sagittal' }).click()
+  await page.getByLabel('Schnitte: Aus').getByRole('button', { name: 'Sagittal' }).click()
 
   await page.waitForFunction(() => {
     let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
@@ -148,9 +142,9 @@ test('Atlas-Carve erzeugt im Cut-Modus sichtbare Cap-Flächen', async ({ page },
 
 test('Config-Atlas-Carve respektiert Area-Scopes mit LUT-Alpha und Cap-Proxies', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1440, height: 900 })
-  await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=broca-areal&scene=broca-areal&step=0&off=julich%3Aarea-44%3Al')
+  await page.goto('/?mode=explore&config=broca-areal&off=julich%3Aarea-44%3Al')
 
-  await expect(page.getByRole('heading', { name: /Broca-Areal/ })).toBeVisible({ timeout: 60_000 })
+  await expect(page.getByText('Struktur anklicken')).toBeVisible({ timeout: 60_000 })
   const handle = await page.waitForFunction(() => {
     let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
     if (!root) return null
@@ -218,7 +212,7 @@ test('Figur-Färbung räumt aktive Atlas-Carves aus dem Viewer-State', async ({ 
     return atlasSurfaceMeshes > 0
   }, { timeout: 60_000 })
 
-  await page.getByRole('button', { name: /Färbung/ }).click()
+  await page.locator('.ed-foot').getByRole('button', { name: /Färbung/ }).click()
   await page.getByRole('button', { name: 'Basalganglienschleifen (Abb. 11-04)' }).click()
   await expect(page.getByRole('button', { name: /Basalganglienschleifen/ })).toBeVisible()
 
@@ -241,44 +235,27 @@ test('Figur-Färbung räumt aktive Atlas-Carves aus dem Viewer-State', async ({ 
   }), { timeout: 30_000 }).toEqual({ atlasSurfaceMeshes: 0, atlasCapSources: 0, legacyPresetMeshes: [] })
 
   await page.getByRole('button', { name: /Basalganglienschleifen/ }).click()
-  await setRangeValue(page, 'Relevante Areale fokussieren', 1)
+  await expect(page.locator('.ed-foot').getByText('Nur relevante Regionen')).toBeVisible()
   await expect.poll(async () => page.evaluate(() => {
     let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
     while (root?.parent) root = root.parent
-    const out: Record<string, { visible: boolean; opacity: number; transparent: boolean; color: string | null }> = {}
+    const out: Record<string, { visible: boolean; color: string | null }> = {}
     root?.traverse((obj: any) => {
       if (!obj?.isMesh || !['left-inferior-frontal-gyrus', 'left-caudate-nucleus'].includes(obj.name)) return
       out[obj.name] = {
         visible: obj.visible === true,
-        opacity: Number(obj.material?.opacity ?? 1),
-        transparent: obj.material?.transparent === true,
         color: obj.material?.color?.getHexString?.() ?? null,
       }
     })
     const uncolored = out['left-inferior-frontal-gyrus']
     const colored = out['left-caudate-nucleus']
     return {
-      uncoloredDimmed: Boolean(uncolored?.visible && uncolored.transparent && uncolored.opacity < 0.5),
-      coloredSubcortexVisible: Boolean(colored?.visible && !colored.transparent && colored.color === '4c85bd'),
+      uncoloredHidden: uncolored?.visible === false,
+      coloredSubcortexVisible: Boolean(colored?.visible && colored.color === '4c85bd'),
     }
   }), { timeout: 30_000 }).toEqual({
-    uncoloredDimmed: true,
+    uncoloredHidden: true,
     coloredSubcortexVisible: true,
-  })
-
-  await setRangeValue(page, 'Ungefärbte ausblenden', 1)
-  await expect.poll(async () => page.evaluate(() => {
-    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
-    while (root?.parent) root = root.parent
-    const out: Record<string, boolean> = {}
-    root?.traverse((obj: any) => {
-      if (!obj?.isMesh || !['left-inferior-frontal-gyrus', 'left-caudate-nucleus'].includes(obj.name)) return
-      out[obj.name] = obj.visible === true
-    })
-    return out
-  }), { timeout: 30_000 }).toEqual({
-    'left-inferior-frontal-gyrus': false,
-    'left-caudate-nucleus': true,
   })
 
   await expectBrainCanvas(page)
@@ -291,53 +268,58 @@ test('Phineas-Modus rendert im Phone-Viewport mit Asset-Hinweis', async ({ page 
 
   await expect(page.getByText('Phineas Gage (1848)')).toBeVisible({ timeout: 60_000 })
   await expect(page.getByText(/Standalone-Gage-GLBs aus \/assets\/phineas/)).toBeVisible()
+  await page.getByRole('button', { name: '⟲ Anfang' }).click()
   await expect.poll(async () => page.evaluate(() => {
-    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
-    while (root?.parent) root = root.parent
-    const visible: Record<string, { visible: boolean; targetKind: string | null; collectionId: string | null; pickable: boolean }> = {
-      'phineas-gage-skull': { visible: false, targetKind: null, collectionId: null, pickable: false },
-      'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: null, collectionId: null, pickable: false },
-      'phineas-gage-iron-rod': { visible: false, targetKind: null, collectionId: null, pickable: false },
+    const snapshot = (window as any).__phineasGageAssets
+    if (!snapshot) return null
+    return {
+      showSkull: snapshot.showSkull,
+      rodVisible: snapshot.rodVisible,
+      skullBaseVisible: snapshot.layers.skullBase.visible,
+      skullBasePickable: snapshot.layers.skullBase.pickableMeshCount > 0,
+      skullBaseTargets: snapshot.layers.skullBase.targetInstanceIds,
+      skullCalvariaVisible: snapshot.layers.skullCalvaria.visible,
+      skullCalvariaPickable: snapshot.layers.skullCalvaria.pickableMeshCount > 0,
+      skullCalvariaTargets: snapshot.layers.skullCalvaria.targetInstanceIds,
+      ironRodVisible: snapshot.layers.ironRod.visible,
+      ironRodPickable: snapshot.layers.ironRod.pickableMeshCount > 0,
+      ironRodTargets: snapshot.layers.ironRod.targetInstanceIds,
     }
-    root?.traverse((obj: any) => {
-      if (!obj?.isMesh || !(obj.name in visible)) return
-      visible[obj.name] = {
-        visible: obj.visible === true,
-        targetKind: obj.userData?.sequenceTargetRef?.targetKind ?? null,
-        collectionId: obj.userData?.sequenceTargetRef?.collectionId ?? null,
-        pickable: obj.userData?.targetPickable === true,
-      }
-    })
-    return visible
   }), { timeout: 60_000 }).toEqual({
-    'phineas-gage-skull': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
-    'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
-    'phineas-gage-iron-rod': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    showSkull: true,
+    rodVisible: false,
+    skullBaseVisible: true,
+    skullBasePickable: true,
+    skullBaseTargets: ['phineas-gage-skull-base-01'],
+    skullCalvariaVisible: true,
+    skullCalvariaPickable: true,
+    skullCalvariaTargets: ['phineas-gage-skull-calvaria-01'],
+    ironRodVisible: false,
+    ironRodPickable: false,
+    ironRodTargets: ['phineas-gage-iron-rod-01'],
   })
 
-  await page.getByRole('button', { name: '▶' }).click()
+  await page.getByRole('button', { name: '▶', exact: true }).click()
   await expect.poll(async () => page.evaluate(() => {
-    let root = (window as unknown as { __THREE_SCENE__?: ThreeLikeRoot }).__THREE_SCENE__
-    while (root?.parent) root = root.parent
-    const visible: Record<string, { visible: boolean; targetKind: string | null; collectionId: string | null; pickable: boolean }> = {
-      'phineas-gage-skull': { visible: false, targetKind: null, collectionId: null, pickable: false },
-      'phineas-gage-skull-calvarium-cut': { visible: false, targetKind: null, collectionId: null, pickable: false },
-      'phineas-gage-iron-rod': { visible: false, targetKind: null, collectionId: null, pickable: false },
+    const snapshot = (window as any).__phineasGageAssets
+    if (!snapshot) return null
+    return {
+      showSkull: snapshot.showSkull,
+      rodVisible: snapshot.rodVisible,
+      skullBaseVisible: snapshot.layers.skullBase.visible,
+      skullCalvariaVisible: snapshot.layers.skullCalvaria.visible,
+      ironRodVisible: snapshot.layers.ironRod.visible,
+      ironRodPickable: snapshot.layers.ironRod.pickableMeshCount > 0,
+      ironRodTargets: snapshot.layers.ironRod.targetInstanceIds,
     }
-    root?.traverse((obj: any) => {
-      if (!obj?.isMesh || !(obj.name in visible)) return
-      visible[obj.name] = {
-        visible: obj.visible === true,
-        targetKind: obj.userData?.sequenceTargetRef?.targetKind ?? null,
-        collectionId: obj.userData?.sequenceTargetRef?.collectionId ?? null,
-        pickable: obj.userData?.targetPickable === true,
-      }
-    })
-    return visible
   }), { timeout: 60_000 }).toEqual({
-    'phineas-gage-skull': { visible: false, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
-    'phineas-gage-skull-calvarium-cut': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
-    'phineas-gage-iron-rod': { visible: true, targetKind: 'asset-part', collectionId: 'case-phineas-gage', pickable: true },
+    showSkull: true,
+    rodVisible: true,
+    skullBaseVisible: true,
+    skullCalvariaVisible: true,
+    ironRodVisible: true,
+    ironRodPickable: true,
+    ironRodTargets: ['phineas-gage-iron-rod-01'],
   })
   await expectBrainCanvas(page)
   await attachScreenshot(page, testInfo, 'phone-phineas')

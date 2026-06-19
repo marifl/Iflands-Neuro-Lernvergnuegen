@@ -86,6 +86,22 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
       <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13.5, lineHeight: 1.55, color: 'var(--g800)', minHeight: 84 }}>
         {current.captionDe}
       </div>
+      {current.focusAreasDe?.length ? (
+        <div
+          style={{
+            marginTop: 8,
+            display: 'grid',
+            gap: 4,
+            fontFamily: 'var(--ed-mono)',
+            fontSize: 10.5,
+            lineHeight: 1.45,
+            color: 'var(--g700)',
+          }}
+        >
+          <span style={{ color: 'var(--orange)', fontWeight: 700 }}>Markierte Läsionsareale</span>
+          <span>{current.focusAreasDe.join(' · ')}</span>
+        </div>
+      ) : null}
 
       <div style={{ marginTop: 10, fontFamily: 'var(--ed-mono)', fontSize: 10.5, lineHeight: 1.45, color: 'var(--g600)' }}>
         {scene.trajectoryNoteDe}<br />

@@ -3,9 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 import { ANATOMICAL_COLOR, buildAtlasTree, buildContextTree, flattenStructures, meshColor, type Lang, type Ontology, type OntologyNode } from './ontology'
-import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
+import { ATLAS_VIEWER_COLORS, PRESET_COLOR_EMISSIVE_INTENSITY } from './atlasColorSystem'
 import { parcelColor, prettyAtlasRegion } from './atlasParcels'
-import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors } from './colorPresets'
+import { fetchColorPresets, PRESET_DIM_COLOR, resolvePresetColors, restrictPresetToBuckets } from './colorPresets'
 import { useViewerStore, type CutAxis, type CutConfig } from './viewerStore'
 import { useEffectiveConfig, type ConfigCuts, type ConfigVisibility, type EffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
@@ -28,6 +28,7 @@ import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
 import { configRegionsToMeshes } from '../scene/brainBridge'
 import { ShellControlButton } from './ShellStatePrimitives'
+import { CanvasContentErrorBoundary, CanvasStateHtml } from './CanvasViewportState'
 import PerformanceGateProbe, { performanceGateEnabled } from './PerformanceGateProbe'
 import { appModeForRegistryLaunch, registryLaunchLocation } from './registryLaunch'
 import { loadSettings, useSettingsStore, type RenderQuality } from './settingsStore'
@@ -75,8 +76,15 @@ import {
   authoringHistoryActionForKeyboardEvent,
   isEditableKeyboardTarget,
 } from './authoringKeyboardShortcuts'
+import {
+  BRAIN_MODEL_OPTIONS,
+  DEFAULT_BRAIN_MODEL_OPTION,
+  brainModelReviewSearch,
+  resolveBrainModelOptionFromSearch,
+  type BrainModelOption,
+  type BrainModelOptionId,
+} from './brainModelOptions'
 
-const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
 // Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt die furchige
@@ -92,7 +100,6 @@ const ATLAS3D: { key: Atlas3dKey; glb: string; rootLabels: Record<Lang, string> 
 const ONTOLOGY_URL = '/assets/bodyparts3d/ontology.json'
 
 useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
-useGLTF.preload(BRAIN_GLB)
 useGLTF.preload(SKULL_GLB)
 useGLTF.preload(HEAD_GLB)
 
@@ -118,9 +125,9 @@ function hasUvAttribute(mesh: THREE.Mesh): boolean {
   return Boolean(mesh.geometry.getAttribute('uv'))
 }
 
-function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null, fallback: number): number {
+function dimOpacityFromConfig(effectiveConfig: EffectiveConfig | null, defaultOpacity: number): number {
   const dimOpacity = effectiveConfig?.visibility.dim_opacity
-  if (dimOpacity === undefined) return fallback
+  if (dimOpacity === undefined) return defaultOpacity
   if (!Number.isFinite(dimOpacity) || dimOpacity < 0 || dimOpacity > 1) {
     throw new Error('Config-Link: visibility.dim_opacity muss zwischen 0 und 1 liegen')
   }
@@ -221,7 +228,8 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
     setCarveOverlay('dkt', carveLayer === 'dkt')
     setCarveOverlay('brodmann', false)
 
-    if (configuration.overlay?.scene && appMode === 'explore' && routedConfig.current !== activeConfiguration) {
+    const explicitExploreMode = new URLSearchParams(window.location.search).get('mode') === 'explore'
+    if (configuration.overlay?.scene && appMode === 'explore' && !explicitExploreMode && routedConfig.current !== activeConfiguration) {
       routedConfig.current = activeConfiguration
       setAppMode('learn')
       return
@@ -264,8 +272,9 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
         if (!alive) return
         const preset = presets.find((item) => item.id === presetId)
         if (!preset) throw new Error(`Config-Link: Farb-Preset "${presetId}" nicht gefunden`)
+        const configPreset = restrictPresetToBuckets(preset, configuration.regions?.buckets ?? [], activeConfiguration)
         setPreset({
-          ...preset,
+          ...configPreset,
           dimOthers: configuration.colors?.dim_others ?? preset.dimOthers,
         })
       })
@@ -302,8 +311,8 @@ function useCutHidden(): (mesh: THREE.Mesh) => boolean {
   }, [cuts, cutMode])
 }
 
-function Brain({ dimOpacity }: { dimOpacity: number }) {
-  const { scene } = useGLTF(BRAIN_GLB)
+function Brain({ brainModel, dimOpacity }: { brainModel: BrainModelOption; dimOpacity: number }) {
+  const { scene } = useGLTF(brainModel.url)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const highlight = useViewerStore((s) => s.highlight)
@@ -323,6 +332,10 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     () => (activePreset ? resolvePresetColors(activePreset) : null),
     [activePreset],
   )
+  useEffect(() => {
+    const runtimeWindow = window as Window & { __brainModelOption?: BrainModelOption }
+    runtimeWindow.__brainModelOption = brainModel
+  }, [brainModel])
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -371,13 +384,14 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     // Waehrend einer Animation (Highlight-Set aktiv) werden nicht-aktive Strukturen
     // transparent, damit die tiefen Strukturen (Striatum, Pallidum, Thalamus) durch
     // den Cortex sichtbar werden.
-    const animating = highlightSet.size > 0
     const presetViewActive = colorMode === 'preset' && Boolean(presetColors && activePreset)
-    const hidePresetUncolored = presetViewActive && presetViewOptions.hideUncolored
+    const sceneHighlightActive = highlightSet.size > 0 && !presetViewActive
+    const hidePresetUncolored = presetViewActive
     const focusPresetColored = presetViewActive && presetViewOptions.focusColored
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const isPresetColored = Boolean(presetColors?.has(mesh.name))
+      const presetColor = presetColors?.get(mesh.name)
+      const isPresetColored = Boolean(presetColor)
       // Hierarchisches Ein-/Ausblenden ueber den Baum: unsichtbar UND nicht pickbar.
       const visible = !hidden.has(mesh.name) && !cutHidden(mesh) && !(hidePresetUncolored && !isPresetColored)
       mesh.visible = visible
@@ -389,23 +403,25 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
       // Basisfarbe nach aktivem Farbmodus (Auswahl/Hover ueberlagern als Emissive).
       // Preset-Modus: Gruppen-Farbe je Mesh; nicht-gruppierte Strukturen gedimmt (dimOthers).
       if (colorMode === 'preset' && presetColors && activePreset) {
-        const c = presetColors.get(mesh.name)
-        material.color.set(c ?? (activePreset.dimOthers ? PRESET_DIM_COLOR : ANATOMICAL_COLOR))
+        material.color.set(presetColor ?? (activePreset.dimOthers ? PRESET_DIM_COLOR : ANATOMICAL_COLOR))
       } else {
         material.color.set(meshColor(colorIndex.get(mesh.name), colorMode))
       }
-      const isActive = selectedSlugs.has(mesh.name) || highlightSet.has(mesh.name)
-      if (isActive) {
+      const isActive = !presetViewActive && (selectedSlugs.has(mesh.name) || highlightSet.has(mesh.name))
+      if (presetViewActive && presetColor) {
+        material.emissive.set(presetColor)
+        material.emissiveIntensity = PRESET_COLOR_EMISSIVE_INTENSITY
+      } else if (isActive) {
         material.emissive.set(SELECT_COLOR)
         material.emissiveIntensity = 0.7
-      } else if (mesh.name === hovered) {
+      } else if (!presetViewActive && mesh.name === hovered) {
         material.emissive.set(HOVER_COLOR)
         material.emissiveIntensity = 0.35
       } else {
         material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
-      const dim = visible && ((animating && !isActive) || focusDimmed)
+      const dim = visible && ((sceneHighlightActive && !isActive) || focusDimmed)
       setOpacityTarget(mesh, dim ? dimOpacity : 1)
     }
   }, [
@@ -449,6 +465,57 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
+}
+
+function BrainModelReviewSelector({
+  brainModel,
+  isNarrow,
+  onSelect,
+}: {
+  brainModel: BrainModelOption
+  isNarrow: boolean
+  onSelect: (id: BrainModelOptionId) => void
+}) {
+  return (
+    <label
+      className="ed-panel ed-frame"
+      style={{
+        position: 'absolute',
+        top: isNarrow ? undefined : 16,
+        right: isNarrow ? 12 : 16,
+        bottom: isNarrow ? 64 : undefined,
+        zIndex: 18,
+        display: 'grid',
+        gap: 6,
+        padding: '8px 10px',
+        minWidth: isNarrow ? 170 : 188,
+        pointerEvents: 'auto',
+      }}
+    >
+      <span className="eyebrow">Hirnmodell</span>
+      <select
+        aria-label="Hirnmodell waehlen"
+        value={brainModel.id}
+        onChange={(event) => onSelect(event.target.value as BrainModelOptionId)}
+        style={{
+          width: '100%',
+          border: '1px solid color-mix(in srgb, var(--line), transparent 10%)',
+          borderRadius: 6,
+          background: 'var(--paper)',
+          color: 'var(--ink)',
+          font: '600 12px var(--ed-mono)',
+          padding: '6px 8px',
+        }}
+      >
+        {BRAIN_MODEL_OPTIONS.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <span style={{ color: 'var(--g600)', fontSize: 11, lineHeight: 1.25 }}>{brainModel.reviewNote}</span>
+    </label>
+  )
 }
 
 /** Kontext-Schaedel (Phineas-Gage-Layer). Default versteckt; nicht anklickbar, damit die
@@ -800,6 +867,20 @@ export default function BodyParts3DViewer() {
   // ueberspringen, Deep-Links behalten immer Vorrang.
   const [launched, setLaunched] = useState(() => !shouldShowModeLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
+  const [brainModel, setBrainModel] = useState(() => resolveBrainModelOptionFromSearch(window.location.search))
+  const [brainModelReviewActive, setBrainModelReviewActive] = useState(() => (
+    new URLSearchParams(window.location.search).has('brainModel')
+  ))
+
+  const selectBrainModel = (optionId: BrainModelOptionId) => {
+    const option = BRAIN_MODEL_OPTIONS.find((candidate) => candidate.id === optionId)
+    if (!option) throw new Error(`Brain model "${optionId}" ist nicht registriert`)
+    const nextSearch = brainModelReviewSearch(optionId, window.location.search)
+    const nextUrl = `${window.location.pathname}${nextSearch}${window.location.hash}`
+    window.history.replaceState(null, '', nextUrl)
+    setBrainModel(option)
+    setBrainModelReviewActive(optionId !== DEFAULT_BRAIN_MODEL_OPTION.id)
+  }
 
   useEffect(() => {
     applyAppearanceSettings({
@@ -1126,28 +1207,38 @@ export default function BodyParts3DViewer() {
               <hemisphereLight args={[0xf8efe5, 0x181818, 0.42]} />
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
               <directionalLight position={[-160, -80, -200]} intensity={0.28} />
-              <Suspense fallback={null}>
-                <Brain dimOpacity={dimOpacity} />
-                <ContextSkull dimOpacity={dimOpacity} />
-                <ContextHead dimOpacity={dimOpacity} />
-                {ATLAS3D.map((a) => (
-                  <AtlasOverObject
-                    key={a.key}
-                    atlasKey={a.key}
-                    glb={a.glb}
-                    rootLabels={a.rootLabels}
-                    aliasesByName={atlasAliases[a.key]}
-                    dimOpacity={dimOpacity}
-                  />
-                ))}
-                <SubParcels />
-                <EegHeadset />
-                <AuthoringSceneObjects />
-                <ManifestAssetObjects dimOpacity={dimOpacity} />
-                <PhineasGageAssets />
-                <AtlasOverlay effectiveConfig={effectiveConfig} />
-                <CutCaps />
-              </Suspense>
+              <CanvasContentErrorBoundary resetKey={brainModel.id}>
+                <Suspense
+                  fallback={(
+                    <CanvasStateHtml
+                      state="loading"
+                      title="3D-Hirn wird geladen"
+                      detail="BrainModel und Atlas-Layer werden vorbereitet."
+                    />
+                  )}
+                >
+                  <Brain brainModel={brainModel} dimOpacity={dimOpacity} />
+                  <ContextSkull dimOpacity={dimOpacity} />
+                  <ContextHead dimOpacity={dimOpacity} />
+                  {ATLAS3D.map((a) => (
+                    <AtlasOverObject
+                      key={a.key}
+                      atlasKey={a.key}
+                      glb={a.glb}
+                      rootLabels={a.rootLabels}
+                      aliasesByName={atlasAliases[a.key]}
+                      dimOpacity={dimOpacity}
+                    />
+                  ))}
+                  <SubParcels />
+                  <EegHeadset />
+                  <AuthoringSceneObjects />
+                  <ManifestAssetObjects dimOpacity={dimOpacity} />
+                  <PhineasGageAssets />
+                  <AtlasOverlay effectiveConfig={effectiveConfig} />
+                  <CutCaps />
+                </Suspense>
+              </CanvasContentErrorBoundary>
               <TampingIron />
               <CutPickBridge />
               <OrbitControls makeDefault enableDamping autoRotate={autoRotate && !reduceMotion} autoRotateSpeed={0.35} />
@@ -1155,7 +1246,10 @@ export default function BodyParts3DViewer() {
               <CameraRig />
               {perfGate ? <PerformanceGateProbe /> : null}
             </Canvas>
-            <AuthoringTransformControls layout="toolbar" includeEditToggle includeResetAction />
+            <AuthoringTransformControls layout="toolbar" includeEditToggle includeNudgeAction includeResetAction />
+            {brainModelReviewActive ? (
+              <BrainModelReviewSelector brainModel={brainModel} isNarrow={isNarrow} onSelect={selectBrainModel} />
+            ) : null}
 
             {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). Authoring-Werkzeuge
                 liegen nur im aktiven Asset-Edit als Viewport-Toolbar darueber. */}
@@ -1258,12 +1352,8 @@ export default function BodyParts3DViewer() {
               />
             ) : null}
 
-            {isExploreMode ? (
-              <>
-                <PresetLegend />
-                <GlobalColorLegend />
-              </>
-            ) : null}
+            <PresetLegend />
+            {isExploreMode ? <GlobalColorLegend /> : null}
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (

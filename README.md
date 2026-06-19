@@ -118,16 +118,20 @@ Erscheint im Terminal `Local: http://localhost:5173/`, öffne diese Adresse im B
 
 ## Was die App kann
 
-Drei Grundmodi, umgeschaltet über eine kontextsensitive Steuerleiste am unteren Rand:
+Aktuell nutzt die App drei reguläre Modi, umgeschaltet über die
+kontextsensitive Steuerleiste am unteren Rand:
 
 - **Lernen** — geführte Szenen (VCPT, ICA, P3a/P3b/P3z, Zusammenfassung) mit
-  Companion-Text, Kamerafahrten und Overlays. Für Selbststudium **und** Vortrag.
+  Lerntext, Kamerafahrten und Overlays. Für Selbststudium **und** Vortrag.
 - **Explorer** — freier Strukturbaum: jede Hirnregion anklicken, isolieren,
   einfärben (funktionale vs. laterale Färbemodi), schneiden (Cut-Plane).
 - **Phineas Gage** — animierte Fallstudie (Läsion + Schädelkontext).
 
-Dazu: zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop,
-Tablet und Phone, WCAG-AA-Kontraste.
+Atlas ist ein Supplement statt ein regulärer Startmodus: `Atlas auf Hirn`
+zeigt DKT-, Julich- oder Brodmann-Carves direkt auf TARO, der kanonische
+fsaverage-Atlas bleibt per Deep-Link und kuratierter Brücke erreichbar. Dazu:
+zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop, Tablet
+und Phone, WCAG-AA-Kontraste.
 
 > Inhaltlicher Fokus und Designprinzipien: [`PRODUCT.md`](PRODUCT.md) · [`DESIGN.md`](DESIGN.md) ·
 > zentrale Architekturkarte: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
@@ -183,6 +187,7 @@ Alle in `apps/brain-app` ausführen:
 | `pnpm test` | Atlas-Config erzeugen, dann Vitest einmalig (CI-tauglich) |
 | `pnpm test:watch` | Atlas-Config erzeugen, dann Vitest im lokalen Watch-Modus |
 | `pnpm test:e2e` | Playwright End-to-End-Smoke-Tests |
+| `pnpm verify:brain-models` | TARO-/MNI-GLBs auf Größenbudget, Meshzahl, Normalen-Coverage und Face/Normal-Konsistenz prüfen |
 
 ---
 
@@ -211,13 +216,17 @@ apps/brain-app/              Die App (Vite / React / R3F)
     │   └── atlas-canonical/ fsaverage-Atlas-Labels (.i16/.f32/.u32)
     ├── regions/             pro-Region-Markdown (Funktion, Brodmann-Areal, Quellen)
     ├── scenes/              Lern-Szenen als JSON (eigener didaktischer Content)
-    ├── companion/           Companion-Atlas-Daten + Presets
-    └── config/              Farb-/Material-Presets, Szenen-Config
+    └── config/              Geräte-/Anzeige-Defaults; fachliche Config liegt in scripts/atlas
 
 packages/brain-runtime/      Koordinaten-Helfer (file:-Dependency der App)
 packages/theme-tokens/       Design-Tokens (via relativem CSS-Import)
 scripts/                     Asset-Erzeugungs-Pipelines
 ```
+
+Fachliche Presets, Lernpfade, Präsentationsschritte und Figure-Färbungen werden
+in `scripts/atlas/config.default.toml` authored und nach
+`public/assets/atlas-canonical/atlas-config.json` gebaut. Ältere Datenordner im
+App-Public-Baum sind nicht die aktuelle Source of Truth für neue Configs.
 
 `brain-runtime` und `theme-tokens` lösen rein über die Verzeichnisstruktur auf —
 **keine `pnpm-workspace.yaml` nötig**.
@@ -253,9 +262,9 @@ Migration:
 4. Jeder Mapping-Knoten braucht `meshes = [...]`. Bekannte Geometrie-Lücken
    werden explizit mit `meshes = []`, `known_gap = true` und `gap_reason`
    dokumentiert.
-5. Configuration-Felder wie `regions.buckets`, `regions.scene_regions` und
-   `colors.groups[].buckets` referenzieren diese Slugs; sie duplizieren keine
-   Mesh-Listen.
+5. Configuration-Felder wie `regions.buckets` und `regions.scene_regions`
+   referenzieren diese Slugs; Preset-Gruppen liegen zentral unter
+   `[color_presets.<id>]` in derselben TOML. Mesh-Listen werden nicht dupliziert.
 6. Aus dem Repo-Root bauen und prüfen:
    ```bash
    node scripts/atlas/build-config.mjs
@@ -276,8 +285,8 @@ Der aktuelle produktive Pfad für didaktische Figure-Färbungen läuft über
 
 1. Buckets werden in `scripts/atlas/config.default.toml` unter
    `[mesh_mappings.buckets.<slug>]` gepflegt.
-2. Didaktische Presets werden in
-   `apps/brain-app/public/companion/config/color-presets.json` definiert:
+2. Didaktische Presets werden in `scripts/atlas/config.default.toml` unter
+   `[color_presets.<preset-id>]` definiert:
    `label`, `role`, `meaning`, `hue`, `buckets`.
 3. Figure-Configurations referenzieren das Preset in der TOML:
    `colors.scheme = "preset"` und `colors.preset = "<preset-id>"`.
@@ -286,9 +295,9 @@ Der aktuelle produktive Pfad für didaktische Figure-Färbungen läuft über
 5. `scripts/atlas/smoke-figures.mjs` prüft pro `?config=...`, dass Legende und
    alle erwarteten Bucket-Meshes exakt diese Preset-Farbe verwenden.
 
-`colors.groups` ist aktuell validierte Config-/Export-Metadaten, aber nicht der
-aktive Figure-Renderpfad. Für echte Abbildungsfärbungen deshalb `colors.preset`
-verwenden.
+`colors.groups` ist kein aktueller Config- oder Exportpfad mehr. Für echte
+Abbildungsfärbungen deshalb immer `colors.preset` verwenden; Scene-/Atlas-
+Färbungen bleiben explizit als solche markiert.
 
 Ausführliche, human- und AI-freundliche Anleitung:
 [`docs/FAERBUNGEN_GUIDE.md`](docs/FAERBUNGEN_GUIDE.md).

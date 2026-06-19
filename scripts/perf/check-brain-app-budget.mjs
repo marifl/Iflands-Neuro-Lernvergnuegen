@@ -19,6 +19,8 @@ const BUDGETS = {
   cssGzipTotal: 80 * KiB,
   publicAssetsTotal: 120 * MiB,
   publicAssetLargest: 24 * MiB,
+  brainModelReviewAssetsTotal: 45 * MiB,
+  brainModelReviewAssetLargest: 20 * MiB,
   // Skull base, calvaria and rod are separate runtime assets so they can be
   // toggled and transformed independently in the authoring path.
   phineasAssetsTotal: 2.25 * MiB,
@@ -73,8 +75,13 @@ const distAssets = filesUnder(distAssetsRoot)
 const jsFiles = distAssets.filter((path) => extname(path) === '.js')
 const cssFiles = distAssets.filter((path) => extname(path) === '.css')
 const publicAssets = filesUnder(publicAssetsRoot)
+const brainModelReviewAssets = publicAssets.filter((path) => path.includes('/assets/brain-models/'))
+const runtimePublicAssets = publicAssets.filter((path) => !path.includes('/assets/brain-models/'))
 const phineasAssets = publicAssets.filter((path) => path.includes('/assets/phineas/'))
-const largestPublicAsset = publicAssets
+const largestPublicAsset = runtimePublicAssets
+  .map((path) => ({ path, size: bytes(path) }))
+  .sort((a, b) => b.size - a.size)[0]
+const largestBrainModelReviewAsset = brainModelReviewAssets
   .map((path) => ({ path, size: bytes(path) }))
   .sort((a, b) => b.size - a.size)[0]
 
@@ -92,11 +99,30 @@ check('JS raw total', sum(jsRawSizes), BUDGETS.jsRawTotal, failures)
 check('JS gzip total', sum(jsGzipSizes), BUDGETS.jsGzipTotal, failures)
 check('JS largest raw chunk', Math.max(...jsRawSizes), BUDGETS.jsLargestRaw, failures)
 check('CSS gzip total', sum(cssGzipSizes), BUDGETS.cssGzipTotal, failures)
-check('public/assets total', sum(publicAssets.map(bytes)), BUDGETS.publicAssetsTotal, failures)
+check('runtime public/assets total', sum(runtimePublicAssets.map(bytes)), BUDGETS.publicAssetsTotal, failures)
 check('public/assets largest file', largestPublicAsset.size, BUDGETS.publicAssetLargest, failures)
+check(
+  'BrainModel review assets total',
+  sum(brainModelReviewAssets.map(bytes)),
+  BUDGETS.brainModelReviewAssetsTotal,
+  failures,
+)
+if (largestBrainModelReviewAsset) {
+  check(
+    'BrainModel review largest file',
+    largestBrainModelReviewAsset.size,
+    BUDGETS.brainModelReviewAssetLargest,
+    failures,
+  )
+}
 check('Phineas assets total', sum(phineasAssets.map(bytes)), BUDGETS.phineasAssetsTotal, failures)
 
 console.log(`largest runtime asset: ${relative(repoRoot, largestPublicAsset.path)} (${formatBytes(largestPublicAsset.size)})`)
+if (largestBrainModelReviewAsset) {
+  console.log(
+    `largest BrainModel review asset: ${relative(repoRoot, largestBrainModelReviewAsset.path)} (${formatBytes(largestBrainModelReviewAsset.size)})`,
+  )
+}
 
 if (failures.length > 0) {
   process.exitCode = 1

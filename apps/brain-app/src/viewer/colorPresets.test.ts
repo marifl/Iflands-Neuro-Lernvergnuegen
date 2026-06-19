@@ -4,12 +4,13 @@ import { dirname, resolve } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { bucketToMeshes, BUCKET_MAPPINGS } from './bucketMeshes'
 import { COLOR_ROLE_VALUES } from './atlasColorSystem'
-import { hueToHex, parseColorPresets, resolvePresetColors, type ColorPreset } from './colorPresets'
+import { hueToHex, parseColorPresets, presentationColorItemsFromConfig, resolvePresetColors, restrictPresetToBuckets, type ColorPreset } from './colorPresets'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const PRESETS_PATH = resolve(here, '../../public/companion/config/color-presets.json')
+const ATLAS_CONFIG_PATH = resolve(here, '../../public/assets/atlas-canonical/atlas-config.json')
 const STRUCTURE_COORDS_PATH = resolve(here, '../../public/scenes/structure-coords.json')
-const real = (): ColorPreset[] => parseColorPresets(JSON.parse(readFileSync(PRESETS_PATH, 'utf8')))
+const realConfig = () => JSON.parse(readFileSync(ATLAS_CONFIG_PATH, 'utf8'))
+const real = (): ColorPreset[] => parseColorPresets(realConfig())
 
 describe('bucketToMeshes', () => {
   it('loest einen buildbaren Bucket aus dem generierten Mapping auf', () => {
@@ -38,17 +39,21 @@ describe('hueToHex', () => {
 })
 
 describe('parseColorPresets', () => {
-  it('validiert die echte color-presets.json', () => {
+  it('validiert die echten color_presets aus atlas-config.json', () => {
     const presets = real()
     expect(presets.length).toBeGreaterThanOrEqual(10)
     expect(presets.map((p) => p.id)).toContain('pfc-petrides')
     expect(presets.map((p) => p.id)).toContain('fuster-gradient')
     expect(presets.map((p) => p.id)).toContain('wcst-frontoparietal')
+    expect(presets.map((p) => p.id)).toContain('ofc-phineas')
+    expect(presets.map((p) => p.id)).not.toContain('badre-core-pfc')
+    expect(presets.map((p) => p.id)).not.toContain('tower-dlpfc')
+    expect(presets.map((p) => p.id)).not.toContain('phineas-gage')
   })
 
   it('wirft laut bei Schema-Verstoss', () => {
-    expect(() => parseColorPresets({ version: 1, presets: [] })).toThrow()
-    expect(() => parseColorPresets({ presets: [{ id: 'x' }] })).toThrow()
+    expect(() => parseColorPresets({ color_presets: {} })).toThrow()
+    expect(() => parseColorPresets({ color_presets: { x: { label: 'x' } } })).toThrow()
   })
 
   it('erzwingt Rollen, Bedeutung und Coverage fuer jede produktive Preset-Gruppe', () => {
@@ -63,6 +68,44 @@ describe('parseColorPresets', () => {
       }
     }
     expect(issues).toEqual([])
+  })
+})
+
+describe('presentationColorItemsFromConfig', () => {
+  it('liefert die komplette Vortragsliste aus der aktuellen Atlas-Config', () => {
+    const items = presentationColorItemsFromConfig(realConfig())
+    expect(items).toHaveLength(26)
+    expect(items.map((item) => item.id)).toEqual([
+      'pfc-petrides',
+      'duncan-owen-overlap',
+      'fuster-gradient',
+      'badre-rostrokaudal',
+      'badre-domainen',
+      'badre-relationale-komplexitaet',
+      'badre-kaskade',
+      'badre-konflikttypen',
+      'dlpfc-schaedigung',
+      'wcst-frontoparietal',
+      'fluency-foci',
+      'tower-of-london-dlpfc',
+      'tower-of-london-schweregrad',
+      'right-dlpfc-selbstkontrolle',
+      'ofc-phineas',
+      'right-parietal-lesion',
+      'acc-bush',
+      'flanker-aufgabe',
+      'go-nogo-intro',
+      'vcpt',
+      'ica-uebersicht',
+      'p3a-konfliktmonitoring',
+      'p3b-engagement',
+      'p3z-inhibition',
+      'basalganglienschleifen',
+      'zusammenfassung',
+    ])
+    expect(items.find((item) => item.id === 'ofc-phineas')?.colorPresetId).toBe('ofc-phineas')
+    expect(items.find((item) => item.id === 'tower-of-london-dlpfc')?.colorPresetId).toBe('tower-of-london-dlpfc')
+    expect(items.find((item) => item.id === 'badre-domainen')?.colorPresetId).toBe('badre-domainen')
   })
 })
 
@@ -97,6 +140,34 @@ describe('resolvePresetColors', () => {
       groups: [{ label: 'Gap', role: 'task-activation', meaning: 'Testgruppe', hue: 0, buckets: [gapBucket!] }],
     }
     expect(() => resolvePresetColors(gap)).toThrow(/keine Geometrie/)
+  })
+})
+
+describe('restrictPresetToBuckets', () => {
+  it('schneidet ein breites Preset auf die Buckets der aktiven Config', () => {
+    const phineas = real().find((p) => p.id === 'ofc-phineas')!
+    const restricted = restrictPresetToBuckets(phineas, ['ofc', 'vmpfc'], 'ofc-phineas')
+
+    expect(restricted.groups).toHaveLength(1)
+    expect(restricted.groups[0]).toEqual({
+      ...phineas.groups[0],
+      buckets: expect.arrayContaining(['ofc', 'vmpfc']),
+    })
+    expect(restricted.groups[0].buckets).toHaveLength(2)
+
+    const colors = resolvePresetColors(restricted)
+    expect(colors.has('left-lateral-orbitofrontal')).toBe(true)
+    expect(colors.has('left-medial-orbital-gyrus')).toBe(true)
+    expect(colors.has('left-amygdala')).toBe(false)
+    expect(colors.has('left-middle-frontal-gyrus')).toBe(false)
+  })
+
+  it('wirft laut, wenn die Config einen nicht vom Preset gedeckten Bucket nutzt', () => {
+    const phineas = real().find((p) => p.id === 'ofc-phineas')!
+
+    expect(() => restrictPresetToBuckets(phineas, ['ofc', 'does-not-exist'], 'synthetic-config')).toThrow(
+      /deckt Config "synthetic-config" nicht ab/,
+    )
   })
 })
 

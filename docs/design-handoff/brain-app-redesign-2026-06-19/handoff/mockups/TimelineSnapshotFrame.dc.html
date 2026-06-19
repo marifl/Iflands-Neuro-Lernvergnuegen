@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><style>
+[data-theme="dark"]{--bg:#0e0e0e;--vp:#0c0c0c;--rail:#131313;--panel:#161616;--sel:#1c1c1c;--cell:#1f1f1f;--line:#2a2a2a;--line2:#242424;--line3:#2c2c2c;--line4:#2f2f2f;--line5:#3a3a3a;--ctrl:#333;--ctrlk:#888;--badge:#222;--t1:#ededed;--t2:#d2d2d2;--t2b:#b2b2b2;--t3:#8c8c8c;--t4:#6f6f6f;--onacc:#160b04;--hudtx:#fff;--hudbg:rgba(16,16,16,.66);--hudln:rgba(255,255,255,.18);--brain:#475264;}
+[data-theme="hell"]{--bg:#e9e6e1;--vp:#c7c4bf;--rail:#f0eee9;--panel:#ffffff;--sel:#fdf1e9;--cell:#efece6;--line:#e2e2e2;--line2:#eeeeee;--line3:#dddddd;--line4:#e6e6e6;--line5:#cfccc6;--ctrl:#d8d5cf;--ctrlk:#b3b0aa;--badge:#eceae5;--t1:#111111;--t2:#333333;--t2b:#4a4a4a;--t3:#6b6b6b;--t4:#9a9a9a;--onacc:#ffffff;--hudtx:#222;--hudbg:rgba(255,255,255,.82);--hudln:rgba(0,0,0,.12);--brain:#8d8a84;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+@keyframes scSpin{to{transform:rotate(360deg)}}
+</style></helmet>
+
+<div ref="{{ setRoot }}" data-theme="{{ themeAttr }}" style="width:100%;height:100%;background:var(--bg);font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:var(--t1);overflow:hidden;position:relative;">
+<helmet><script src="./image-slot.js"></script></helmet>
+<helmet><script src="./ifn-nav.js"></script></helmet>
+<helmet><script src="./a11y.js"></script></helmet>
+<helmet><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"></helmet>
+
+<!-- ============ COLUMNS ============ -->
+<sc-if value="{{ isLandscape }}" hint-placeholder-val="{{ true }}">
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;">
+    <div style="flex:1;min-height:0;display:flex;">
+      <!-- RAIL -->
+      <ifn-nav variant="rail" active="explorer" here="timeline"></ifn-nav>
+
+      <!-- SNAPSHOT PANEL (left, nur Großbildschirm w>=1366) -->
+      <sc-if value="{{ wide }}" hint-placeholder-val="{{ false }}">
+        <div style="width:296px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-right:1px solid var(--line);">
+          <div style="flex:none;display:flex;align-items:center;justify-content:space-between;padding:16px 16px;border-bottom:1px solid var(--line2);"><div><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Snapshots</span><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);margin-top:3px;">Schema v3</div></div><div style="display:flex;gap:6px;"><button title="Import" style="width:34px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line3);color:var(--t1);cursor:pointer;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></button></div></div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 16px;">
+            <button style="width:100%;display:flex;align-items:center;justify-content:center;gap:8px;background:#f26b1f;border:none;color:var(--onacc);padding:13px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.04em;margin-bottom:16px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>AKTUELLEN SICHERN</button>
+            <div style="border:1px solid var(--line3);background:var(--rail);margin-bottom:12px;">
+              <div style="height:84px;background:var(--vp);display:flex;align-items:center;justify-content:center;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--brain)" stroke-width="0.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+              <div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Basalganglien · Schleifen</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);margin-top:4px;">v3 · 11.3.3 · vor 1 Tag</div></div>
+            </div>
+            <div style="border:1px solid var(--line3);background:var(--rail);margin-bottom:12px;">
+              <div style="height:84px;background:var(--vp);display:flex;align-items:center;justify-content:center;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--brain)" stroke-width="0.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div>
+              <div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;">Gage · Läsion</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);margin-top:4px;">v3 · Fall · vor 3 Tagen</div></div>
+            </div>
+            <div style="border:1px solid #3a2a1a;background:var(--rail);">
+              <div style="height:84px;background:var(--vp);display:flex;align-items:center;justify-content:center;position:relative;"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--brain)" stroke-width="0.8" stroke-linecap="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15"/></svg><span style="font-family:'IBM Plex Mono',monospace;position:absolute;bottom:8px;left:10px;font-size:7px;letter-spacing:.1em;text-transform:uppercase;color:#e0a04a;background:rgba(60,42,20,.7);padding:3px 6px;">Migration nötig</span></div>
+              <div style="padding:11px 13px;"><div style="font-size:13px;font-weight:700;color:var(--t2b);">VCPT · Import</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#e0a04a;margin-top:4px;">v2 · alte Version</div></div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ collapsed }}" hint-placeholder-val="{{ false }}">
+        <div style="width:30px;flex:none;display:flex;align-items:center;justify-content:center;background:var(--panel);border-right:1px solid var(--line);cursor:pointer;"><div style="display:flex;flex-direction:column;align-items:center;gap:8px;color:#f26b1f;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;writing-mode:vertical-rl;">Snapshots</span></div></div>
+      </sc-if>
+
+      <!-- VIEWPORT -->
+      <div style="flex:1;min-width:0;position:relative;background:var(--vp);">
+        <div style="position:absolute;top:16px;left:18px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onacc);background:#f26b1f;padding:5px 10px;white-space:nowrap;z-index:3;">Autor · Sequenz · Schritt 3</div>
+        <div style="position:absolute;top:16px;right:18px;display:flex;gap:7px;z-index:3;"><button style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:transparent;border:1px solid var(--line3);color:var(--t1);padding:9px 13px;cursor:pointer;">Vorschau</button><button style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:9px 13px;cursor:pointer;">Keyframe setzen</button></div>
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><image-slot id="vp-timelinesnapshot" placeholder="GLB-Render ablegen" shape="rect" style="width:240px;height:240px;pointer-events:auto;opacity:.97;"></image-slot></div>
+        <div style="position:absolute;top:42%;left:46%;width:48px;height:48px;border-radius:50%;background:rgba(242,107,31,.20);"></div>
+      </div>
+
+      <!-- INSPECTOR (right) -->
+      <sc-if value="{{ showPanel }}" hint-placeholder-val="{{ true }}">
+        <div style="width:280px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-left:1px solid var(--line);">
+          <div style="flex:none;padding:15px 18px;border-bottom:1px solid var(--line2);"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Schritt 3 · Kanäle</span></div>
+          <div style="flex:1;min-height:0;overflow-y:auto;padding:16px 18px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line2);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#77c85b" stroke-width="1.7"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Kamera</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);">Shot: anterior</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line2);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#5f86b2" stroke-width="1.7"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Sichtbarkeit</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);">isoliert: ACC, Cz</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--line2);"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#b9763f" stroke-width="1.7"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/></svg><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Färbung</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);">Preset: p3a</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+            <div style="display:flex;align-items:center;gap:10px;padding:11px 0;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.7"><path d="M3 12h4l3 8 4-16 3 8h4" stroke-linecap="round" stroke-linejoin="round"/></svg><div style="flex:1;"><div style="font-size:13px;font-weight:600;color:var(--t3);">Overlay</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t4);">ERP: leer</div></div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--line5)" stroke-width="2"><circle cx="12" cy="12" r="5"/></svg></div>
+          </div>
+        </div>
+      </sc-if>
+    </div>
+
+    <!-- TIMELINE -->
+    <div style="height:138px;flex:none;background:var(--rail);border-top:1px solid var(--line);padding:14px 22px;display:flex;flex-direction:column;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);">Timeline · vcpt-erp-pfad</span><button style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;background:transparent;border:1px solid var(--line3);color:var(--t1);padding:7px 11px;cursor:pointer;">+ Schritt</button></div>
+      <div style="display:flex;flex-direction:column;gap:6px;">
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#77c85b;width:74px;flex:none;">KAMERA</span><div style="flex:1;display:flex;gap:6px;"><span style="flex:1;height:14px;background:var(--line3);position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#77c85b;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--cell);border:1px solid #f26b1f;position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#77c85b;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--line3);"></span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#5f86b2;width:74px;flex:none;">SICHTBARK.</span><div style="flex:1;display:flex;gap:6px;"><span style="flex:1;height:14px;background:var(--line3);position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#5f86b2;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--cell);border:1px solid #f26b1f;position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#5f86b2;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#5f86b2;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);"></span></div></div>
+        <div style="display:flex;align-items:center;gap:10px;"><span style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#b9763f;width:74px;flex:none;">FÄRBUNG</span><div style="flex:1;display:flex;gap:6px;"><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--line3);position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#b9763f;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--cell);border:1px solid #f26b1f;position:relative;"><i style="position:absolute;left:8px;top:50%;transform:translateY(-50%);width:9px;height:9px;background:#b9763f;rotate:45deg;"></i></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--line3);"></span></div></div>
+      </div>
+      <div style="display:flex;gap:6px;margin-top:8px;padding-left:84px;"><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S1</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S2</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:#f26b1f;text-align:center;">S3</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S4</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S5</span></div>
+    </div>
+  </div>
+</sc-if>
+
+<!-- ============ STACK ============ -->
+<sc-if value="{{ isPortrait }}" hint-placeholder-val="{{ false }}">
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;">
+    <div style="flex:none;background:var(--panel);border-bottom:1px solid var(--line);">
+      <div style="height:14px;"></div>
+      <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;">
+        <div style="display:flex;align-items:center;gap:11px;"><div style="width:32px;height:32px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--onacc)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></div><div style="line-height:1.05;"><div style="font-weight:700;font-size:14px;letter-spacing:-.01em;">Iflands Neuro</div><div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;letter-spacing:.22em;text-transform:uppercase;color:#f26b1f;margin-top:2px;white-space:nowrap;">Autor · Sequenz</div></div></div>
+        <div role="button" tabindex="0" style="font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--t1);border:1px solid var(--line5);padding:8px 11px;;cursor:pointer" onClick="{{ themeToggle }}" title="Theme wechseln">{{ themeLabel }}</div>
+      </div>
+    </div>
+
+    <!-- VIEWPORT -->
+    <div style="flex:1;min-height:0;position:relative;background:var(--vp);">
+      <div style="position:absolute;top:14px;left:16px;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--onacc);background:#f26b1f;padding:5px 10px;white-space:nowrap;z-index:3;">Sequenz · Schritt 3</div>
+      <div style="position:absolute;top:14px;right:16px;z-index:3;"><button style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:10px 13px;cursor:pointer;">Keyframe</button></div>
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;"><image-slot id="vp-timelinesnapshot" placeholder="GLB-Render ablegen" shape="rect" style="width:190px;height:190px;pointer-events:auto;opacity:.97;"></image-slot></div>
+    </div>
+
+    <!-- TIMELINE compact -->
+    <div style="flex:none;background:var(--rail);border-top:1px solid var(--line);padding:12px 18px;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--t3);margin-bottom:9px;">Timeline · vcpt-erp-pfad</div>
+      <div style="display:flex;gap:5px;">
+        <span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--cell);border:1px solid #f26b1f;"></span><span style="flex:1;height:14px;background:var(--line3);"></span><span style="flex:1;height:14px;background:var(--line3);"></span>
+      </div>
+      <div style="display:flex;gap:5px;margin-top:6px;"><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S1</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S2</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:#f26b1f;text-align:center;">S3</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S4</span><span style="font-family:'IBM Plex Mono',monospace;flex:1;font-size:7.5px;color:var(--t4);text-align:center;">S5</span></div>
+    </div>
+
+    <!-- DRAWER: inspector + snapshots -->
+    <div style="height:280px;flex:none;display:flex;flex-direction:column;background:var(--panel);border-top:1px solid var(--line);">
+      <div style="flex:none;padding:10px 0 6px;display:flex;justify-content:center;"><span style="width:42px;height:5px;border-radius:3px;background:var(--t4);"></span></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:6px 18px 16px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin-bottom:11px;">Schritt 3 · Kanäle</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:11px;min-height:44px;box-sizing:border-box;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#77c85b" stroke-width="1.7"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg><span style="flex:1;font-size:12.5px;">Kamera</span><svg width="12" height="12" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:11px;min-height:44px;box-sizing:border-box;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5f86b2" stroke-width="1.7"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="2.5"/></svg><span style="flex:1;font-size:12.5px;">Sichtbark.</span><svg width="12" height="12" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:11px;min-height:44px;box-sizing:border-box;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#b9763f" stroke-width="1.7"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/></svg><span style="flex:1;font-size:12.5px;">Färbung</span><svg width="12" height="12" viewBox="0 0 24 24" fill="#f26b1f"><circle cx="12" cy="12" r="5"/></svg></div>
+          <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line2);padding:11px;min-height:44px;box-sizing:border-box;color:var(--t3);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.7"><path d="M3 12h4l3 8 4-16 3 8h4" stroke-linecap="round" stroke-linejoin="round"/></svg><span style="flex:1;font-size:12.5px;">Overlay</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--line5)" stroke-width="2"><circle cx="12" cy="12" r="5"/></svg></div>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--t4);margin:18px 0 11px;">Snapshots · v3</div>
+        <div style="display:flex;gap:10px;">
+          <div style="flex:1;border:1px solid var(--line3);padding:11px;"><div style="font-size:12.5px;font-weight:700;">Basalganglien</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--t3);margin-top:4px;">v3 · vor 1 Tag</div></div>
+          <div style="flex:1;border:1px solid #3a2a1a;padding:11px;"><div style="font-size:12.5px;font-weight:700;color:var(--t2b);">VCPT · Import</div><div style="font-family:'IBM Plex Mono',monospace;font-size:8px;color:#e0a04a;margin-top:4px;">v2 · Migration</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DOCK -->
+    <ifn-nav variant="dock" active="explorer" here="timeline"></ifn-nav>
+    <div style="height:20px;flex:none;background:var(--panel);display:flex;align-items:center;justify-content:center;"><span style="width:128px;height:5px;border-radius:3px;background:var(--line5);"></span></div>
+  </div>
+</sc-if>
+
+<!-- ============ ZUSTAND-OVERLAY (laut statt still) ============ -->
+<sc-if value="{{ showState }}" hint-placeholder-val="{{ false }}">
+  <div style="position:absolute;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;background:var(--bg);">
+    <div style="width:100%;max-width:440px;padding:40px 36px;box-sizing:border-box;text-align:center;">
+      <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+          <div style="width:38px;height:38px;border:3px solid var(--line3);border-top-color:#f26b1f;border-radius:50%;animation:scSpin .8s linear infinite;"></div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#f26b1f;">Lädt</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Snapshot wird migriert …</div>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--t3);">Schema v2 → v3</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--t4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18M3 7l1.5 13a2 2 0 0 0 2 1.8h11a2 2 0 0 0 2-1.8L21 7M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:var(--t4);">Leer</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Keine Keyframes</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Setze einen ersten Keyframe, um die Sequenz zu starten.</div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;border:1px solid #7a3326;background:rgba(192,73,74,.12);padding:30px 26px;">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#e06a4a" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.3 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.3a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg>
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#e06a4a;">Fehler · nicht still</div>
+          <div style="font-size:20px;font-weight:700;letter-spacing:-.02em;color:var(--t1);text-wrap:pretty;">Snapshot inkompatibel</div>
+          <div style="font-size:13px;line-height:1.55;color:var(--t2b);max-width:320px;text-wrap:pretty;">Schema v2 < v3 — Migration nötig, kein stiller Verlust.</div>
+          <button style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:#f26b1f;border:none;color:var(--onacc);padding:12px 18px;cursor:pointer;min-height:44px;box-sizing:border-box;">Erneut versuchen</button>
+        </div>
+      </sc-if>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1194,&quot;height&quot;:834},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dark&quot;,&quot;hell&quot;],&quot;default&quot;:&quot;dark&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;state&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;idle&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;idle&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;device&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Füllen&quot;,&quot;iPhone&quot;,&quot;iPad Mini&quot;,&quot;iPad Pro 11″&quot;,&quot;iPad Pro 12,9″&quot;,&quot;Desktop&quot;],&quot;default&quot;:&quot;Füllen&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;orientation&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;portrait&quot;,&quot;landscape&quot;],&quot;default&quot;:&quot;landscape&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  _theme(){ if(this.state && this.state.theme) return this.state.theme; try{var t=localStorage.getItem('ifn-theme'); if(t==='hell'||t==='dark') return t;}catch(e){} return (this.props.theme === 'hell' ? 'hell' : 'dark'); }
+  _themeToggle = () => { var nx = this._theme()==='hell' ? 'dark' : 'hell'; try{localStorage.setItem('ifn-theme', nx);}catch(e){} this.setState({ theme: nx }); };
+  state = { w: 0, h: 0 }
+  setRoot = (el) => {
+    if (!el || el === this._root) return;
+    this._root = el; this._applyDev(el);
+    const m = () => this.setState({ w: el.clientWidth, h: el.clientHeight });
+    m(); this._ro = new ResizeObserver(m); this._ro.observe(el);
+  }
+  componentWillUnmount() { if (this._ro) try { this._ro.disconnect(); } catch (e) {} }
+  _DEV = { 'iPhone':[393,852,47], 'iPad Mini':[744,1133,24], 'iPad Pro 11″':[834,1194,22], 'iPad Pro 12,9″':[1024,1366,20], 'Desktop':[1440,900,10] };
+  _applyDev(el){ if(!el) return; var info=this._DEV[this.props.device]; var p=el.parentElement; if(info){ var isD=this.props.device==='Desktop'; var land=isD||this.props.orientation==='landscape'; var dw=isD?info[0]:(land?info[1]:info[0]); var dh=isD?info[1]:(land?info[0]:info[1]); var bez=isD?12:16; el.style.width=dw+'px'; el.style.height=dh+'px'; el.style.flex='none'; el.style.borderRadius=info[2]+'px'; el.style.overflow='hidden'; el.style.boxShadow='0 0 0 '+bez+'px #0c0c0c, 0 0 0 '+(bez+2)+'px #2c2c2c, 0 40px 100px rgba(0,0,0,.55)'; if(p){ p.style.display='flex'; p.style.alignItems='center'; p.style.justifyContent='center'; p.style.height='100vh'; p.style.minHeight='100vh'; p.style.overflow='hidden'; p.style.boxSizing='border-box'; p.style.background='#15140f'; } var aw=window.innerWidth, ah=window.innerHeight; var pad=60+bez*2; var s=Math.min(1,(aw-pad)/dw,(ah-pad)/dh); if(!isFinite(s)||s<=0) s=1; el.style.transformOrigin='center center'; el.style.transform='scale('+s+')'; if(!this._devResize){ this._devResize=function(){ this._applyDev(this._root); }.bind(this); window.addEventListener('resize',this._devResize); } } else { el.style.width='100%'; el.style.height='100%'; el.style.flex=''; el.style.borderRadius=''; el.style.transform=''; el.style.transformOrigin=''; el.style.boxShadow=''; if(p){ p.style.display=''; p.style.alignItems=''; p.style.justifyContent=''; p.style.height=''; p.style.minHeight=''; p.style.overflow=''; p.style.background=''; } } }
+  componentDidUpdate(prev){ if(prev && (prev.device!==this.props.device || prev.orientation!==this.props.orientation) && this._root){ this._applyDev(this._root); this.setState({ w:this._root.clientWidth, h:this._root.clientHeight }); } }
+  renderVals() {
+    const w = this.state.w || (this.props.orientation === 'portrait' ? 420 : 1280);
+    const h = this.state.h || (this.props.orientation === 'portrait' ? 880 : 800);
+    const shortLandscape = h < 480 && w > h;
+    const columns = w >= 820 && !shortLandscape;
+    const isPortrait = !columns && !shortLandscape;
+    return {
+      setRoot: this.setRoot, themeAttr: this._theme(), themeLabel: this._theme() === 'hell' ? 'Dunkel' : 'Hell', themeToggle: this._themeToggle, isHell: this._theme()==='hell', notHell: this._theme()!=='hell',
+      st: (this.props.state||'idle'), showState: (this.props.state||'idle')!=='idle', isLoading: this.props.state==='loading', isEmpty: this.props.state==='empty', isError: this.props.state==='error',
+      isLandscape: columns || shortLandscape,
+      isPortrait,
+      showPanel: columns,
+      collapsed: shortLandscape,
+      wide: w >= 1366 && columns,
+    };
+  }
+}
+</script>
+</body>
+</html>

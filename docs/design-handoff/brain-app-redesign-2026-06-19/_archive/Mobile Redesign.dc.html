@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  .phone{
+    --ed-canvas:#0e0e0e; --paper:#161616; --paper-raised:#1c1c1c; --fill:#1f1f1f;
+    --ink:#ededed; --g800:#d2d2d2; --g700:#b2b2b2; --g600:#8c8c8c; --g500:#6f6f6f; --g400:#555;
+    --line:#c8c8c8; --line-soft:#2c2c2c; --orange:#f26b1f; --on-accent:#160b04;
+    --app-bg:#0e0e0e; --field-bg:#0e0e0e;
+    --ed-display:'Helvetica Neue',Helvetica,Arial,sans-serif;
+    --ed-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  }
+  .phone[data-theme="light"]{
+    --paper:#fff; --paper-raised:#fff; --fill:#f4f4f4;
+    --ink:#111; --g800:#2a2a2a; --g700:#4f4f4f; --g600:#6b6b6b; --g500:#8c8c8c; --g400:#aeaeae;
+    --line:#111; --line-soft:#e2e2e2; --app-bg:#e7e7e7; --field-bg:#fff;
+  }
+  .bsheet{transition:height .3s cubic-bezier(.2,.9,.25,1)}
+  .bsheet[data-drag="true"]{transition:none}
+  image-slot{display:block;--is-bg:#0c0c0c}
+  body{margin:0}
+  .eyb{font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#c7c4bf;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:44px 40px 72px;box-sizing:border-box;color:#1a1a1a;">
+
+  <div style="max-width:1080px;margin:0 auto;">
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;">Mobile · Redesign · Companion</div>
+    <h1 style="font-size:34px;font-weight:700;letter-spacing:-.03em;margin:8px 0 6px;line-height:1;">Mobile View — neu gedacht</h1>
+    <p style="font-size:14px;line-height:1.5;color:#4a4744;max-width:620px;margin:0;text-wrap:pretty;">Zwei interaktive Richtungen für den Companion. Tippe die Leiste an, wechsle den Modus, zieh das Sheet. Lege einen echten 3D-Render in die Bühne ab.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:44px;align-items:start;">
+
+      <!-- ============ VARIANT A : KONSERVATIV ============ -->
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;border-bottom:1.5px solid #1a1a1a;padding-bottom:8px;margin-bottom:6px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;letter-spacing:-.04em;color:#b4490f;">A</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-.02em;">Aufgeräumt</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b;">Eine Dock-Reihe · Bottom-Sheets</span>
+        </div>
+        <p style="font-size:12px;line-height:1.5;color:#5a5754;margin:0 0 20px;">Bekannte Bedienung, aber acht Footer-Icons werden zu fünf Aktionen plus „Mehr". Flyouts steigen als Sheets auf und verdecken das Modell nicht mehr.</p>
+
+        <div style="background:#0a0a0a;padding:11px;border-radius:46px;box-shadow:0 26px 60px rgba(0,0,0,.32);width:412px;">
+          <div class="phone" data-theme="{{ aTheme }}" style="position:relative;width:390px;height:784px;border-radius:36px;overflow:hidden;background:var(--app-bg);display:flex;flex-direction:column;font-family:var(--ed-display);">
+
+            <!-- status -->
+            <div style="height:38px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:var(--ed-mono);font-size:12px;font-weight:600;color:var(--ink);">
+              <span>9:41</span>
+              <span style="display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.06em;"><span>5G</span><span style="display:inline-block;width:20px;height:10px;border:1.4px solid var(--ink);border-radius:2px;position:relative;"><span style="position:absolute;inset:1.6px;right:5px;background:var(--ink);"></span></span></span>
+            </div>
+
+            <!-- app header -->
+            <div style="height:48px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 14px;background:var(--paper);border-bottom:1.5px solid var(--line);">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:27px;height:27px;background:var(--orange);display:flex;align-items:center;justify-content:center;"><span style="font-weight:700;font-size:13px;color:var(--on-accent);letter-spacing:-.05em;">ri</span></div>
+                <div style="line-height:1;">
+                  <div style="font-weight:700;font-size:13px;letter-spacing:-.01em;color:var(--ink);">Neuro</div>
+                  <div class="eyb" style="font-size:7px;margin-top:2px;">Lernvergnügen</div>
+                </div>
+              </div>
+              <button onClick="{{ aThemeToggle }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:transparent;border:1px solid var(--line);padding:6px 11px;cursor:pointer;">{{ aThemeToggleLabel }}</button>
+            </div>
+
+            <!-- viewport -->
+            <div style="position:relative;flex:1;min-height:0;background:#0e0e0e;">
+              <image-slot id="vp-a" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="3D-RENDER ABLEGEN"></image-slot>
+              <div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 38%, rgba(86,108,140,.16), transparent 60%);pointer-events:none;"></div>
+              <div style="position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(#0e0e0e,transparent);pointer-events:none;"></div>
+
+              <!-- struktur HUD -->
+              <div style="position:absolute;top:12px;left:12px;right:12px;background:color-mix(in srgb, var(--paper) 88%, transparent);border:1.5px solid var(--line);backdrop-filter:blur(9px);padding:9px 11px;display:flex;align-items:center;gap:10px;">
+                <div style="flex:1;min-width:0;">
+                  <div class="eyb">Struktur</div>
+                  <div style="font-weight:700;font-size:15px;letter-spacing:-.01em;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;">Insel — ganz · links</div>
+                </div>
+                <div style="display:flex;gap:5px;flex:none;">
+                  <button title="Einblenden" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1.4px solid var(--line);color:var(--ink);cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                  <button title="Isolieren" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1.4px solid var(--line);color:var(--ink);cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22"/></svg></button>
+                  <button title="Lösen" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:1.4px solid var(--line);color:var(--g600);cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+                </div>
+              </div>
+
+              <!-- lesson strip (learn only) -->
+              <sc-if value="{{ aIsLearn }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute;left:12px;right:12px;bottom:54px;background:color-mix(in srgb, var(--paper) 90%, transparent);border:1.5px solid var(--line);backdrop-filter:blur(9px);padding:10px 12px;">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;">
+                    <div class="eyb">Lernpfad</div>
+                    <div style="font-family:var(--ed-mono);font-size:8.5px;letter-spacing:.1em;color:var(--g600);">Folie 16 / 21 · Step 1</div>
+                  </div>
+                  <div style="font-weight:700;font-size:13.5px;letter-spacing:-.01em;color:var(--ink);margin:5px 0 8px;line-height:1.15;">Visueller Konzentrationsverlaufstest</div>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <button style="width:34px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                    <div style="flex:1;height:4px;background:var(--line-soft);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:76%;background:var(--orange);"></span></div>
+                    <button style="width:34px;height:30px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                    <button onClick="{{ aOpenTool }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--on-accent);background:var(--orange);border:1px solid var(--orange);padding:8px 11px;cursor:pointer;">Aufgabe</button>
+                  </div>
+                </div>
+              </sc-if>
+
+              <!-- strukturbaum btn (explore only) -->
+              <sc-if value="{{ aIsExplore }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ aOpenBaum }}" style="position:absolute;bottom:12px;right:12px;display:flex;align-items:center;gap:7px;font-family:var(--ed-mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);background:color-mix(in srgb, var(--paper) 90%, transparent);border:1.4px solid var(--line);backdrop-filter:blur(8px);padding:9px 12px;cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/></svg>Baum</button>
+              </sc-if>
+
+              <!-- gizmo -->
+              <div style="position:absolute;bottom:12px;left:12px;font-family:var(--ed-mono);font-size:8px;letter-spacing:.1em;color:var(--g600);display:flex;align-items:center;gap:6px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 12V4M12 12l7 4M12 12l-7 4" stroke-linecap="round"/></svg>ANTERIOR</div>
+            </div>
+
+            <!-- A : SHEET overlay -->
+            <sc-if value="{{ aSheetOpen }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ aClose }}" style="position:absolute;top:86px;left:0;right:0;bottom:66px;background:rgba(4,4,4,.5);z-index:40;"></div>
+              <div style="position:absolute;left:0;right:0;bottom:66px;z-index:41;background:var(--paper);border-top:1.5px solid var(--line);max-height:64%;display:flex;flex-direction:column;animation:none;">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px 11px;border-bottom:1px solid var(--line-soft);flex:none;">
+                  <div><div class="eyb">{{ aSheetEyebrow }}</div><div style="font-weight:700;font-size:16px;letter-spacing:-.01em;color:var(--ink);margin-top:3px;">{{ aSheetTitle }}</div></div>
+                  <button onClick="{{ aClose }}" style="width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+                </div>
+                <div style="overflow-y:auto;padding:12px 16px 18px;">
+
+                  <sc-if value="{{ aSModus }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:7px;">
+                      <button onClick="{{ aModeLearn }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Lernen<span class="eyb" style="color:var(--g500);">Lernpfad</span></button>
+                      <button onClick="{{ aModeExplore }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Explorer<span class="eyb" style="color:var(--on-accent);opacity:.7;">Aktiv</span></button>
+                      <button onClick="{{ aModePhineas }}" style="display:flex;align-items:center;justify-content:space-between;font-family:var(--ed-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Phineas Gage<span class="eyb" style="color:var(--g500);">Fall</span></button>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSWerkzeug }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <div class="eyb" style="margin-bottom:7px;">Klickmodus</div>
+                      <div style="display:flex;gap:7px;margin-bottom:14px;">
+                        <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">▸ Gruppe</button>
+                        <button style="flex:1;font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:11px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">▹ Direkt</button>
+                      </div>
+                      <div class="eyb" style="margin-bottom:7px;">Auswahl</div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                        <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Ausblenden</button>
+                        <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Isolieren</button>
+                        <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Alles zeigen</button>
+                        <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--g600);cursor:pointer;">Lösen</button>
+                      </div>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSAufgabe }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                        <span style="font-family:var(--ed-mono);font-size:13px;font-weight:600;letter-spacing:.1em;color:#3fae6a;">GO</span>
+                        <span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;color:var(--g600);">Reiz 1 / 6</span>
+                      </div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                        <div style="aspect-ratio:1.4;border:1.5px solid var(--line);background:var(--field-bg);display:flex;align-items:flex-end;justify-content:center;padding:9px;"><span class="eyb" style="color:var(--g500);">Cue</span></div>
+                        <div style="aspect-ratio:1.4;border:1.5px solid var(--orange);background:var(--orange-wash, color-mix(in srgb,var(--orange) 12%, transparent));display:flex;align-items:flex-end;justify-content:center;padding:9px;"><span class="eyb">Probe</span></div>
+                      </div>
+                      <button style="width:100%;margin-top:12px;font-family:var(--ed-mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:14px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Antwort prüfen</button>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSAusrichten }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;">
+                      <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:16px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Anterior</button>
+                      <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:16px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Lateral</button>
+                      <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:16px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Superior</button>
+                      <button style="font-family:var(--ed-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:16px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Medial</button>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSFarbe }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;flex-direction:column;gap:7px;">
+                      <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Anatomisch</button>
+                      <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Funktionssystem</button>
+                      <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Lateralität</button>
+                      <button style="text-align:left;font-family:var(--ed-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:13px;border:1px solid var(--line-soft);background:transparent;color:var(--ink);cursor:pointer;">Region</button>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSMehr }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                      <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Schnitte</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Aus</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Sagittal · Coronal · Axial</div></div>
+                      <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Kontext</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Schädel</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Transparent · Solide</div></div>
+                      <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Atlas</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Menü</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">DKT · Julich · Brodmann</div></div>
+                      <div style="border:1px solid var(--line-soft);padding:13px;"><div class="eyb">Zustand</div><div style="font-size:13px;font-weight:700;color:var(--ink);margin-top:5px;">Datei</div><div style="font-family:var(--ed-mono);font-size:9px;color:var(--g600);margin-top:3px;">Export · Import</div></div>
+                    </div>
+                  </sc-if>
+
+                  <sc-if value="{{ aSBaum }}" hint-placeholder-val="{{ false }}">
+                    <div>
+                      <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line-soft);padding:9px 11px;margin-bottom:10px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);">Struktur suchen</span></div>
+                      <div style="display:flex;flex-direction:column;">
+                        <div style="display:flex;align-items:center;gap:9px;padding:10px 4px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);">Großhirn</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+                        <div style="display:flex;align-items:center;gap:9px;padding:10px 4px 10px 22px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);">Temporallappen</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div>
+                        <div style="display:flex;align-items:center;gap:9px;padding:10px 4px 10px 40px;border-bottom:1px solid var(--line-soft);background:color-mix(in srgb,var(--orange) 14%,transparent);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);font-weight:600;">Insel</span></div>
+                        <div style="display:flex;align-items:center;gap:9px;padding:10px 4px 10px 22px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);"></span><span style="font-size:13px;color:var(--g700);">Frontallappen</span><svg style="margin-left:auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></div>
+                      </div>
+                    </div>
+                  </sc-if>
+
+                </div>
+              </div>
+            </sc-if>
+
+            <!-- A : DOCK -->
+            <div style="height:66px;flex:none;display:flex;background:var(--paper);border-top:1.5px solid var(--line);position:relative;z-index:30;">
+              <button onClick="{{ aOpenModus }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ aActModus }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v13"/><path d="M3 6a2 2 0 0 1 2-2h4a3 3 0 0 1 3 3 3 3 0 0 1 3-3h4a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-5a2 2 0 0 0-2 1 2 2 0 0 0-2-1H5a2 2 0 0 1-2-2Z"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Modus</span>
+              </button>
+              <sc-if value="{{ aIsExplore }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ aOpenTool }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                  <sc-if value="{{ aActTool }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 16 2-6.5L19.5 11 4 4Z"/></svg>
+                  <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Werkzeug</span>
+                </button>
+              </sc-if>
+              <sc-if value="{{ aIsLearn }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ aOpenTool }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                  <sc-if value="{{ aActTool }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5a2 2 0 0 1 2-2h11v18H6a2 2 0 0 0-2 2Z"/><path d="M8 7h6M8 11h6"/></svg>
+                  <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Aufgabe</span>
+                </button>
+              </sc-if>
+              <button onClick="{{ aOpenView }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ aActView }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h0a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.2"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Ansicht</span>
+              </button>
+              <button onClick="{{ aOpenFarbe }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;border-right:1px solid var(--line-soft);color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ aActFarbe }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/><circle cx="15.5" cy="9" r="1"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Farbe</span>
+              </button>
+              <button onClick="{{ aOpenMehr }}" style="position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:transparent;border:none;color:var(--g700);cursor:pointer;">
+                <sc-if value="{{ aActMehr }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:0;left:0;right:0;height:2px;background:var(--orange);"></span></sc-if>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+                <span style="font-family:var(--ed-mono);font-size:7.5px;letter-spacing:.1em;text-transform:uppercase;">Mehr</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <ul style="list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Fünf statt acht.</b> Dock auf eine Reihe; selten genutzte Werkzeuge wandern ins „Mehr"-Sheet.</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Sheets statt Vollbild-Flyouts.</b> Max. 64% Höhe — das Modell bleibt oben sichtbar.</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Lernpfad kompakt.</b> Nur Navigation + Fortschritt im Bild; die Aufgabe öffnet als Sheet.</span></li>
+        </ul>
+      </div>
+
+      <!-- ============ VARIANT B : MUTIG ============ -->
+      <div>
+        <div style="display:flex;align-items:baseline;gap:12px;border-bottom:1.5px solid #1a1a1a;padding-bottom:8px;margin-bottom:6px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:700;letter-spacing:-.04em;color:#b4490f;">B</span>
+          <span style="font-size:17px;font-weight:700;letter-spacing:-.02em;">Neu gedacht</span>
+          <span style="margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.14em;text-transform:uppercase;color:#6b6b6b;">Vollbild · Zieh-Sheet · Gesten</span>
+        </div>
+        <p style="font-size:12px;line-height:1.5;color:#5a5754;margin:0 0 20px;">Das Modell füllt den Screen. Ein Sheet mit drei Rasten (Griff antippen oder ziehen) trägt Struktur, Werkzeuge und Lernpfad — die Anatomie bleibt immer im Blick.</p>
+
+        <div style="background:#0a0a0a;padding:11px;border-radius:46px;box-shadow:0 26px 60px rgba(0,0,0,.32);width:412px;">
+          <div class="phone" data-theme="{{ bTheme }}" style="position:relative;width:390px;height:784px;border-radius:36px;overflow:hidden;background:#0e0e0e;font-family:var(--ed-display);">
+
+            <!-- immersive viewport -->
+            <image-slot id="vp-b" style="position:absolute;inset:0;width:100%;height:100%;" shape="rect" fit="cover" placeholder="3D-RENDER ABLEGEN"></image-slot>
+            <div style="position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 32%, rgba(86,108,140,.18), transparent 58%);pointer-events:none;"></div>
+            <div style="position:absolute;top:0;left:0;right:0;height:170px;background:linear-gradient(rgba(8,8,8,.78),transparent);pointer-events:none;"></div>
+
+            <!-- status -->
+            <div style="position:absolute;top:0;left:0;right:0;height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 22px;font-family:var(--ed-mono);font-size:12px;font-weight:600;color:#fff;z-index:20;">
+              <span>9:41</span>
+              <span style="display:flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.06em;"><span>5G</span><span style="display:inline-block;width:20px;height:10px;border:1.4px solid #fff;border-radius:2px;position:relative;"><span style="position:absolute;inset:1.6px;right:5px;background:#fff;"></span></span></span>
+            </div>
+
+            <!-- floating header pill -->
+            <div style="position:absolute;top:46px;left:12px;right:12px;z-index:20;display:flex;align-items:center;justify-content:space-between;background:rgba(18,18,18,.72);border:1.5px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);padding:7px 9px 7px 7px;">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <div style="width:25px;height:25px;background:var(--orange);display:flex;align-items:center;justify-content:center;"><span style="font-weight:700;font-size:12px;color:var(--on-accent);letter-spacing:-.05em;">ri</span></div>
+                <span style="font-weight:700;font-size:13px;color:#fff;letter-spacing:-.01em;">Neuro</span>
+              </div>
+              <button onClick="{{ bThemeToggle }}" style="font-family:var(--ed-mono);font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:transparent;border:1px solid rgba(255,255,255,.3);padding:6px 10px;cursor:pointer;">{{ bThemeToggleLabel }}</button>
+            </div>
+
+            <!-- floating mode segmented -->
+            <div style="position:absolute;top:92px;left:50%;transform:translateX(-50%);z-index:20;display:flex;background:rgba(18,18,18,.72);border:1.5px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);">
+              <button onClick="{{ bModeExplore }}" style="font-family:var(--ed-mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border:none;cursor:pointer;background:{{ bExploreBg }};color:{{ bExploreFg }};">Explorer</button>
+              <button onClick="{{ bModeLearn }}" style="font-family:var(--ed-mono);font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border:none;border-left:1.5px solid rgba(255,255,255,.16);cursor:pointer;background:{{ bLearnBg }};color:{{ bLearnFg }};">Lernpfad</button>
+            </div>
+
+            <!-- collapse catcher -->
+            <sc-if value="{{ bExpanded }}" hint-placeholder-val="{{ false }}">
+              <div onClick="{{ bToPeek }}" style="position:absolute;top:130px;left:0;right:0;bottom:140px;z-index:10;"></div>
+            </sc-if>
+
+            <!-- right control column -->
+            <div style="position:absolute;right:12px;top:140px;z-index:15;display:flex;flex-direction:column;gap:8px;">
+              <button onClick="{{ bToHalf }}" title="Ausrichten" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(18,18,18,.72);border:1.5px solid rgba(255,255,255,.18);backdrop-filter:blur(12px);color:#fff;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L19 6h0a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><circle cx="12" cy="13" r="3.2"/></svg></button>
+              <button onClick="{{ bToHalf }}" title="Schnitte" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(18,18,18,.72);border:1.5px solid rgba(255,255,255,.18);backdrop-filter:blur(12px);color:#fff;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M14.5 14.5 20 20M8.2 8.2 12 12"/></svg></button>
+              <button onClick="{{ bToFull }}" title="Mehr" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;background:rgba(18,18,18,.72);border:1.5px solid rgba(255,255,255,.18);backdrop-filter:blur(12px);color:#fff;cursor:pointer;"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="12" r="1.4" fill="currentColor"/><circle cx="12" cy="12" r="1.4" fill="currentColor"/><circle cx="19" cy="12" r="1.4" fill="currentColor"/></svg></button>
+            </div>
+
+            <!-- DRAG SHEET -->
+            <div class="bsheet" data-drag="{{ bDragging }}" style="position:absolute;left:0;right:0;bottom:0;z-index:25;height:{{ bSheetH }}px;min-height:140px;background:var(--paper);border-top:1.5px solid var(--line);display:flex;flex-direction:column;">
+              <!-- grabber -->
+              <div onPointerDown="{{ bDown }}" onPointerMove="{{ bMove }}" onPointerUp="{{ bUp }}" onClick="{{ bCycle }}" style="flex:none;padding:11px 0 9px;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:grab;touch-action:none;">
+                <span style="width:42px;height:5px;border-radius:3px;background:var(--g500);"></span>
+              </div>
+
+              <div style="flex:1;min-height:0;overflow-y:auto;padding:0 16px 20px;">
+
+                <!-- EXPLORE sheet content -->
+                <sc-if value="{{ bIsExplore }}" hint-placeholder-val="{{ true }}">
+                  <div>
+                    <!-- peek row: active structure -->
+                    <div style="display:flex;align-items:center;gap:11px;padding-bottom:14px;border-bottom:1px solid var(--line-soft);">
+                      <span style="width:11px;height:11px;background:var(--orange);flex:none;"></span>
+                      <div style="flex:1;min-width:0;"><div class="eyb">Struktur</div><div style="font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);margin-top:2px;">Insel — ganz · links</div></div>
+                    </div>
+                    <div style="display:flex;gap:7px;margin-top:13px;flex-wrap:wrap;">
+                      <button style="display:flex;align-items:center;gap:6px;font-family:var(--ed-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 13px;border:1.4px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Einblenden</button>
+                      <button style="display:flex;align-items:center;gap:6px;font-family:var(--ed-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 13px;border:1.4px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg>Isolieren</button>
+                      <button style="font-family:var(--ed-mono);font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:10px 13px;border:1.4px solid var(--line-soft);background:transparent;color:var(--g600);cursor:pointer;">Lösen</button>
+                    </div>
+
+                    <!-- werkzeuge grid (half+) -->
+                    <div style="margin-top:20px;"><div class="eyb" style="margin-bottom:10px;">Werkzeuge</div>
+                      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;">
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l7 16 2-6.5L19.5 11 4 4Z"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Gruppe</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Werkzeug</div></div>
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M14.5 14.5 20 20M8.2 8.2 12 12"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Aus</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Schnitte</div></div>
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.4 3.4A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.5" cy="11" r="1"/><circle cx="11" cy="7.5" r="1"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Anatomisch</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Farbe</div></div>
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13a7 7 0 1 1 14 0v3l-2 1v2H7v-2l-2-1Z"/><circle cx="9.2" cy="12" r="1.3" fill="currentColor"/><circle cx="14.8" cy="12" r="1.3" fill="currentColor"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Schädel</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Kontext</div></div>
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2Z"/><path d="M9 4v14M15 6v14"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Menü</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Atlas</div></div>
+                        <div style="border:1px solid var(--line-soft);padding:12px 10px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6Z"/><path d="M14 3v4h4"/></svg><div style="font-size:11.5px;font-weight:600;color:var(--ink);margin-top:8px;">Datei</div><div style="font-family:var(--ed-mono);font-size:8px;letter-spacing:.06em;color:var(--g600);text-transform:uppercase;margin-top:2px;">Zustand</div></div>
+                      </div>
+                    </div>
+
+                    <!-- tree (full) -->
+                    <div style="margin-top:20px;"><div class="eyb" style="margin-bottom:10px;">Strukturbaum</div>
+                      <div style="display:flex;align-items:center;gap:8px;border:1px solid var(--line-soft);padding:10px 11px;margin-bottom:8px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g600)" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.2-4.2"/></svg><span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--g500);">Struktur suchen</span></div>
+                      <div style="display:flex;align-items:center;gap:9px;padding:11px 4px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);">Großhirn</span></div>
+                      <div style="display:flex;align-items:center;gap:9px;padding:11px 4px 11px 22px;border-bottom:1px solid var(--line-soft);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);">Temporallappen</span></div>
+                      <div style="display:flex;align-items:center;gap:9px;padding:11px 4px 11px 40px;border-bottom:1px solid var(--line-soft);background:color-mix(in srgb,var(--orange) 14%,transparent);"><span style="width:13px;height:13px;border:1.5px solid var(--ink);background:var(--ink);"></span><span style="font-size:13px;color:var(--ink);font-weight:600;">Insel</span></div>
+                    </div>
+                  </div>
+                </sc-if>
+
+                <!-- LEARN sheet content -->
+                <sc-if value="{{ bIsLearn }}" hint-placeholder-val="{{ false }}">
+                  <div>
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;padding-bottom:6px;">
+                      <div class="eyb">Lernpfad · Kapitel 11</div>
+                      <div style="font-family:var(--ed-mono);font-size:9px;letter-spacing:.1em;color:var(--g600);">Folie 16 / 21</div>
+                    </div>
+                    <div style="font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);line-height:1.15;">Visueller Konzentrationsverlaufstest</div>
+                    <div style="display:flex;align-items:center;gap:8px;margin:14px 0 4px;">
+                      <button style="width:38px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+                      <div style="flex:1;height:5px;background:var(--line-soft);position:relative;"><span style="position:absolute;left:0;top:0;bottom:0;width:76%;background:var(--orange);"></span></div>
+                      <button style="width:38px;height:34px;display:flex;align-items:center;justify-content:center;background:transparent;border:1px solid var(--line-soft);color:var(--ink);cursor:pointer;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+                    </div>
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin:20px 0 11px;">
+                      <span style="font-family:var(--ed-mono);font-size:14px;font-weight:600;letter-spacing:.1em;color:#3fae6a;">GO</span>
+                      <span style="font-family:var(--ed-mono);font-size:10px;letter-spacing:.1em;color:var(--g600);">Reiz 1 / 6</span>
+                    </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;">
+                      <div style="aspect-ratio:1.5;border:1.5px solid var(--line);background:var(--field-bg);display:flex;align-items:flex-end;padding:10px;"><span class="eyb" style="color:var(--g500);">Cue</span></div>
+                      <div style="aspect-ratio:1.5;border:1.5px solid var(--orange);background:color-mix(in srgb,var(--orange) 12%,transparent);display:flex;align-items:flex-end;padding:10px;"><span class="eyb">Probe</span></div>
+                    </div>
+                    <button style="width:100%;margin-top:13px;font-family:var(--ed-mono);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:15px;border:1px solid var(--orange);background:var(--orange);color:var(--on-accent);cursor:pointer;">Antwort prüfen</button>
+                  </div>
+                </sc-if>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <ul style="list-style:none;padding:0;margin:22px 0 0;display:flex;flex-direction:column;gap:9px;">
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Anatomie zuerst.</b> Das Modell ist randlos und immer sichtbar — Steuerung schwebt darüber.</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Ein Zieh-Sheet, drei Rasten.</b> Griff antippen oder ziehen: Struktur → Werkzeuge → Baum.</span></li>
+          <li style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.45;color:#3c3936;"><span style="width:7px;height:7px;background:#f26b1f;flex:none;margin-top:5px;"></span><span><b>Lernpfad im Sheet.</b> Aufgabe unten, Modell oben — kein gequetschter 3D-Bereich mehr.</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    a: { mode: 'explore', sheet: null, theme: 'dark' },
+    b: { mode: 'explore', detent: 'peek', theme: 'dark', dragH: null },
+  }
+
+  setA(patch) { this.setState((s) => ({ a: { ...s.a, ...patch } })) }
+  setB(patch) { this.setState((s) => ({ b: { ...s.b, ...patch } })) }
+  detentH(d) { return d === 'full' ? 720 : d === 'half' ? 430 : 140 }
+
+  renderVals() {
+    const a = this.state.a
+    const b = this.state.b
+    const aIsLearn = a.mode === 'learn'
+    const aIsExplore = a.mode === 'explore'
+    // In learn mode the second dock slot opens the lesson task (Aufgabe);
+    // in explore it opens the Werkzeug sheet.
+    const toolSheet = aIsLearn ? 'aufgabe' : 'werkzeug'
+
+    const titles = {
+      modus: ['Modus', 'Ansicht wählen'],
+      werkzeug: ['Werkzeug', 'Auswahl & Transform'],
+      aufgabe: ['Lernpfad', 'Aufgabe 16'],
+      view: ['Ansicht', 'Kamera ausrichten'],
+      farbe: ['Farbe', 'Färbung wählen'],
+      mehr: ['Mehr', 'Weitere Werkzeuge'],
+      baum: ['Struktur', 'Strukturbaum'],
+    }
+    const cur = a.sheet ? titles[a.sheet] : ['', '']
+
+    // B drag
+    const bDown = (e) => {
+      try { e.currentTarget.setPointerCapture(e.pointerId) } catch (_) {}
+      this._bStart = { y: e.clientY, base: this.detentH(this.state.b.detent) }
+      this._bH = this.detentH(this.state.b.detent)
+      this._bMoved = false
+    }
+    const bMove = (e) => {
+      if (!this._bStart) return
+      const dy = e.clientY - this._bStart.y
+      if (Math.abs(dy) > 4) this._bMoved = true
+      const h = Math.max(120, Math.min(744, this._bStart.base - dy))
+      this._bH = h
+      this.setB({ dragH: h })
+    }
+    const bUp = () => {
+      if (!this._bStart) return
+      this._bStart = null
+      if (!this._bMoved) { this.setB({ dragH: null }); return }
+      const h = this._bH
+      const targets = [['peek', 140], ['half', 430], ['full', 720]]
+      let best = targets[0]
+      for (const t of targets) { if (Math.abs(t[1] - h) < Math.abs(best[1] - h)) best = t }
+      this.setB({ detent: best[0], dragH: null })
+    }
+    const bCycle = () => {
+      if (this._bMoved) { this._bMoved = false; return }
+      const order = { peek: 'half', half: 'full', full: 'peek' }
+      this.setB({ detent: order[this.state.b.detent], dragH: null })
+    }
+
+    const bSheetH = b.dragH != null ? Math.round(b.dragH) : this.detentH(b.detent)
+    const bExploreActive = b.mode === 'explore'
+
+    return {
+      // A
+      aTheme: a.theme,
+      aThemeToggleLabel: a.theme === 'dark' ? 'Hell' : 'Dunkel',
+      aThemeToggle: () => this.setA({ theme: a.theme === 'dark' ? 'light' : 'dark' }),
+      aIsLearn, aIsExplore,
+      aModeLearn: () => this.setA({ mode: 'learn', sheet: null }),
+      aModeExplore: () => this.setA({ mode: 'explore', sheet: null }),
+      aModePhineas: () => this.setA({ mode: 'explore', sheet: null }),
+      aSheetOpen: a.sheet != null,
+      aSheetEyebrow: cur[0],
+      aSheetTitle: cur[1],
+      aSModus: a.sheet === 'modus',
+      aSWerkzeug: a.sheet === 'werkzeug',
+      aSAufgabe: a.sheet === 'aufgabe',
+      aSAusrichten: a.sheet === 'view',
+      aSFarbe: a.sheet === 'farbe',
+      aSMehr: a.sheet === 'mehr',
+      aSBaum: a.sheet === 'baum',
+      aActModus: a.sheet === 'modus',
+      aActTool: a.sheet === toolSheet,
+      aActView: a.sheet === 'view',
+      aActFarbe: a.sheet === 'farbe',
+      aActMehr: a.sheet === 'mehr',
+      aOpenModus: () => this.setA({ sheet: a.sheet === 'modus' ? null : 'modus' }),
+      aOpenTool: () => this.setA({ sheet: a.sheet === toolSheet ? null : toolSheet }),
+      aOpenView: () => this.setA({ sheet: a.sheet === 'view' ? null : 'view' }),
+      aOpenFarbe: () => this.setA({ sheet: a.sheet === 'farbe' ? null : 'farbe' }),
+      aOpenMehr: () => this.setA({ sheet: a.sheet === 'mehr' ? null : 'mehr' }),
+      aOpenBaum: () => this.setA({ sheet: 'baum' }),
+      aClose: () => this.setA({ sheet: null }),
+      // B
+      bTheme: b.theme,
+      bThemeToggleLabel: b.theme === 'dark' ? 'Hell' : 'Dunkel',
+      bThemeToggle: () => this.setB({ theme: b.theme === 'dark' ? 'light' : 'dark' }),
+      bIsExplore: b.mode === 'explore',
+      bIsLearn: b.mode === 'learn',
+      bModeExplore: () => this.setB({ mode: 'explore' }),
+      bModeLearn: () => this.setB({ mode: 'learn' }),
+      bExploreBg: bExploreActive ? 'var(--orange)' : 'transparent',
+      bExploreFg: bExploreActive ? 'var(--on-accent)' : '#fff',
+      bLearnBg: !bExploreActive ? 'var(--orange)' : 'transparent',
+      bLearnFg: !bExploreActive ? 'var(--on-accent)' : '#fff',
+      bDetent: b.detent,
+      bSheetH,
+      bDragging: b.dragH != null ? 'true' : 'false',
+      bExpanded: b.detent !== 'peek',
+      bDown, bMove, bUp, bCycle,
+      bToPeek: () => this.setB({ detent: 'peek', dragH: null }),
+      bToHalf: () => this.setB({ detent: 'half', dragH: null }),
+      bToFull: () => this.setB({ detent: 'full', dragH: null }),
+    }
+  }
+}
+</script>
+</body>
+</html>

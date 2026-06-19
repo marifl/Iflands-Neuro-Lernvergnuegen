@@ -1,4 +1,477 @@
 {
+  "color_presets": {
+    "acc-bush": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dacc"
+          ],
+          "hue": 210,
+          "label": "Dorsales ACC (kognitiv)",
+          "meaning": "Kognitives Konfliktmonitoring und Kontrollbedarf.",
+          "role": "conflict-monitoring"
+        },
+        {
+          "buckets": [
+            "vmpfc",
+            "ofc"
+          ],
+          "hue": 30,
+          "label": "Ventrales ACC/OFC",
+          "meaning": "Affektive Bewertung und orbitofrontale Regulation.",
+          "role": "affective-control"
+        }
+      ],
+      "intent": "Dorsale kognitive und ventrale affektive ACC/OFC-Anteile werden getrennt.",
+      "label": "ACC Bush (Abb. 11-13)",
+      "sourceFigure": "11-13"
+    },
+    "badre-domainen": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "frontopolar"
+          ],
+          "hue": 200,
+          "label": "Frontopolar",
+          "meaning": "Übergeordnete, abstrakte Kontrollziele.",
+          "role": "abstract-control"
+        },
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC",
+          "meaning": "Kontextuelle Regelkontrolle.",
+          "role": "context-control"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC",
+          "meaning": "Antwortauswahl und kontrollierter Abruf.",
+          "role": "selection-control"
+        }
+      ],
+      "intent": "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell.",
+      "label": "Domänenorganisation (Abb. 11-08A)",
+      "sourceFigure": "11-08A"
+    },
+    "badre-kaskade": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "frontopolar"
+          ],
+          "hue": 200,
+          "label": "Frontopolar",
+          "meaning": "Übergeordnete, abstrakte Kontrollziele.",
+          "role": "abstract-control"
+        },
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC",
+          "meaning": "Kontextuelle Regelkontrolle.",
+          "role": "context-control"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC",
+          "meaning": "Antwortauswahl und kontrollierter Abruf.",
+          "role": "selection-control"
+        }
+      ],
+      "intent": "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell.",
+      "label": "Kaskadenmodell (Abb. 11-08C)",
+      "sourceFigure": "11-08C"
+    },
+    "badre-konflikttypen": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC (Kontext)",
+          "meaning": "Kontextbezogene Kontrollkonflikte.",
+          "role": "context-control"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC (Auswahl)",
+          "meaning": "Auswahl- und Abrufkonflikte.",
+          "role": "selection-control"
+        },
+        {
+          "buckets": [
+            "dacc"
+          ],
+          "hue": 35,
+          "label": "dACC (Konflikt)",
+          "meaning": "Konfliktmonitoring und Fehler-/Kontrollbedarf.",
+          "role": "conflict-monitoring"
+        }
+      ],
+      "intent": "Kontroll- und Konflikttypen werden zwischen DLPFC, VLPFC und dACC unterschieden.",
+      "label": "Konflikttypen (Abb. 11-08D)",
+      "sourceFigure": "11-08D"
+    },
+    "badre-relationale-komplexitaet": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "frontopolar"
+          ],
+          "hue": 200,
+          "label": "Frontopolar",
+          "meaning": "Übergeordnete, abstrakte Kontrollziele.",
+          "role": "abstract-control"
+        },
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC",
+          "meaning": "Kontextuelle Regelkontrolle.",
+          "role": "context-control"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC",
+          "meaning": "Antwortauswahl und kontrollierter Abruf.",
+          "role": "selection-control"
+        }
+      ],
+      "intent": "Die drei PFC-Kernbereiche der Badre-Modelle bleiben farblich stabil über Domänen-, Komplexitäts- und Kaskadenmodell.",
+      "label": "Relationale Komplexität (Abb. 11-08B)",
+      "sourceFigure": "11-08B"
+    },
+    "badre-rostrokaudal": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "frontopolar"
+          ],
+          "hue": 200,
+          "label": "Frontopolar (BA 10)",
+          "meaning": "Abstrakte, übergeordnete Kontextkontrolle.",
+          "role": "abstract-control"
+        },
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC (BA 9/46)",
+          "meaning": "Kontext- und Regelkontrolle.",
+          "role": "context-control"
+        },
+        {
+          "buckets": [
+            "sma-presma"
+          ],
+          "hue": 260,
+          "label": "SMA/pre-SMA (BA 8/6)",
+          "meaning": "Antwortauswahl und motornahe Kontrolle.",
+          "role": "response-control"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC (BA 47/45/44)",
+          "meaning": "Auswahl und kontrollierter Abruf.",
+          "role": "selection-control"
+        }
+      ],
+      "intent": "Kontrollabstraktion wird rostro-kaudal vom frontopolaren PFC bis zu SMA/pre-SMA gestaffelt.",
+      "label": "Rostro-kaudaler Gradient (Abb. 11-07)",
+      "sourceFigure": "11-07"
+    },
+    "basalganglienschleifen": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc",
+            "ppc",
+            "striatum-dorsal",
+            "globus-pallidus",
+            "thalamus"
+          ],
+          "hue": 210,
+          "label": "Kognition",
+          "meaning": "DLPFC/parietaler Kortex mit dorsalem Striatum, Pallidum und Thalamus.",
+          "role": "cognition"
+        },
+        {
+          "buckets": [
+            "ofc",
+            "vmpfc",
+            "amygdala",
+            "hippocampus"
+          ],
+          "hue": 30,
+          "label": "Emotion",
+          "meaning": "OFC/VMPFC mit Amygdala und Hippocampus als affektiver Regelkreis.",
+          "role": "emotion"
+        },
+        {
+          "buckets": [
+            "dacc",
+            "nucleus-accumbens"
+          ],
+          "hue": 150,
+          "label": "Motivation",
+          "meaning": "dACC und Nucleus accumbens als motivationaler Handlungsantrieb.",
+          "role": "motivation"
+        }
+      ],
+      "intent": "Drei fronto-subkortikale Schleifen werden als kognitive, emotionale und motivationale Funktionskreise getrennt.",
+      "label": "Basalganglienschleifen (Abb. 11-04)",
+      "sourceFigure": "11-04"
+    },
+    "fluency-foci": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 210,
+          "label": "DLPFC",
+          "meaning": "Strategische Suche und Arbeitsgedächtnis.",
+          "role": "working-memory"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 30,
+          "label": "VLPFC",
+          "meaning": "Lexikalischer Abruf und Auswahl.",
+          "role": "selection-control"
+        },
+        {
+          "buckets": [
+            "sma-presma"
+          ],
+          "hue": 260,
+          "label": "SMA/pre-SMA",
+          "meaning": "Sequenzierung und Antwortinitiierung.",
+          "role": "motor-planning"
+        }
+      ],
+      "intent": "Verbale Flüssigkeit trennt präfrontale Such-/Abrufanteile von motorischer Sequenzplanung.",
+      "label": "Fluency-Foci (Abb. 11-10)",
+      "sourceFigure": "11-10"
+    },
+    "fuster-gradient": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "frontopolar"
+          ],
+          "hue": 200,
+          "label": "Frontopolar (Kontext)",
+          "meaning": "Abstrakter Kontext und längerfristige Ziele.",
+          "role": "abstract-control"
+        },
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 220,
+          "label": "DLPFC (Kontrolle)",
+          "meaning": "Aktive Kontrolle und Manipulation von Handlungsregeln.",
+          "role": "working-memory"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 180,
+          "label": "VLPFC (Auswahl)",
+          "meaning": "Abruf, Auswahl und Antwortselektion.",
+          "role": "selection-control"
+        },
+        {
+          "buckets": [
+            "ppc"
+          ],
+          "hue": 270,
+          "label": "Posterior (Repräsentation)",
+          "meaning": "Parietale Repräsentations- und Speicheranteile.",
+          "role": "posterior-storage"
+        }
+      ],
+      "intent": "Posterior-parietale Repräsentation und präfrontale Kontrollanteile werden entlang des Wahrnehmungs-Handlungs-Zyklus getrennt.",
+      "label": "Fuster-Gradient (Abb. 11-06)",
+      "sourceFigure": "11-06"
+    },
+    "ofc-phineas": {
+      "coverage": "partial",
+      "coverageNote": "Die Farbsemantik ist fachlich gesetzt; die historische Schädel-/Stangen-Geometrie wird über die Phineas-Szene separat geführt.",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "ofc",
+            "vmpfc"
+          ],
+          "hue": 0,
+          "label": "Läsionsgebiet",
+          "meaning": "VMPFC/OFC als Läsionskern der Fallstudie.",
+          "role": "lesion"
+        }
+      ],
+      "intent": "Läsionsnaher VMPFC/OFC wird als Kernbereich der Phineas-Gage-Fallstudie markiert.",
+      "label": "OFC / Phineas Gage",
+      "sourceFigure": "Fallstudie Phineas Gage"
+    },
+    "pfc-petrides": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 210,
+          "label": "DLPFC (Manipulieren)",
+          "meaning": "Manipulieren und Umordnen mentaler Inhalte.",
+          "role": "working-memory"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 30,
+          "label": "VLPFC (Halten/Abrufen)",
+          "meaning": "Halten, Abrufen und kontrollierter Zugriff auf Inhalte.",
+          "role": "selection-control"
+        },
+        {
+          "buckets": [
+            "ppc",
+            "pcc-praecuneus"
+          ],
+          "hue": 270,
+          "label": "Posterior (Speicher)",
+          "meaning": "Parietale und posterior-mediale Speicher-/Arbeitsflächen.",
+          "role": "posterior-storage"
+        }
+      ],
+      "intent": "Arbeitsgedächtnis-Funktionen werden nach dorsolateralem, ventrolateralem und posteriorem Anteil getrennt.",
+      "label": "PFC Petrides (Abb. 11-05)",
+      "sourceFigure": "11-05"
+    },
+    "tower-of-london-dlpfc": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 210,
+          "label": "DLPFC-Aktivierung",
+          "meaning": "Planung, Zielhierarchie und Manipulation von Zwischenschritten.",
+          "role": "task-activation"
+        }
+      ],
+      "intent": "Planungsanforderung wird als fokussierte DLPFC-Aktivierung gezeigt.",
+      "label": "Tower of London DLPFC (Abb. 11-11A/B)",
+      "sourceFigure": "11-11A/B"
+    },
+    "tower-of-london-schweregrad": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 210,
+          "label": "DLPFC-Aktivierung",
+          "meaning": "Planung, Zielhierarchie und Manipulation von Zwischenschritten.",
+          "role": "task-activation"
+        }
+      ],
+      "intent": "Planungsanforderung wird als fokussierte DLPFC-Aktivierung gezeigt.",
+      "label": "Tower of London Schwierigkeit (Abb. 11-11C)",
+      "sourceFigure": "11-11C"
+    },
+    "wcst-frontoparietal": {
+      "coverage": "full",
+      "dimOthers": true,
+      "groups": [
+        {
+          "buckets": [
+            "dlpfc"
+          ],
+          "hue": 210,
+          "label": "DLPFC",
+          "meaning": "Regelhalten und Regelwechsel.",
+          "role": "working-memory"
+        },
+        {
+          "buckets": [
+            "vlpfc"
+          ],
+          "hue": 30,
+          "label": "VLPFC",
+          "meaning": "Auswahl und kontrollierter Abruf.",
+          "role": "selection-control"
+        },
+        {
+          "buckets": [
+            "ppc"
+          ],
+          "hue": 270,
+          "label": "Parietal",
+          "meaning": "Aufmerksamkeits- und Arbeitsgedächtnisanteil im frontoparietalen Netzwerk.",
+          "role": "frontoparietal-control"
+        }
+      ],
+      "intent": "Set-Shifting wird als frontoparietales Kontrollnetzwerk dargestellt.",
+      "label": "WCST/fMRT (Abb. 11-09)",
+      "sourceFigure": "11-09"
+    }
+  },
   "configurations": {
     "acc-bush": {
       "camera": {
@@ -45,6 +518,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "acc-bush"
       },
       "title": "ACC nach Bush: kognitiv und emotional",
@@ -67,7 +541,7 @@
       "colors": {
         "coverage": "full",
         "dim_others": true,
-        "preset": "badre-core-pfc",
+        "preset": "badre-domainen",
         "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
         "review_status": "final",
         "scheme": "preset"
@@ -100,6 +574,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "badre-domainen"
       },
       "title": "Domänenspezifisch zu domänenübergreifend",
@@ -122,7 +597,7 @@
       "colors": {
         "coverage": "full",
         "dim_others": true,
-        "preset": "badre-core-pfc",
+        "preset": "badre-kaskade",
         "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
         "review_status": "final",
         "scheme": "preset"
@@ -155,6 +630,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "badre-kaskade"
       },
       "title": "Kaskadenmodell der Kontrolle",
@@ -210,6 +686,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "badre-konflikttypen"
       },
       "title": "Konflikttypen entlang der Kontrollhierarchie",
@@ -232,7 +709,7 @@
       "colors": {
         "coverage": "full",
         "dim_others": true,
-        "preset": "badre-core-pfc",
+        "preset": "badre-relationale-komplexitaet",
         "reason": "Preset deckt die drei PFC-Kernbereiche dieser Badre-Figur ab.",
         "review_status": "final",
         "scheme": "preset"
@@ -265,6 +742,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "badre-relationale-komplexitaet"
       },
       "title": "Relationale Komplexität im PFC",
@@ -321,6 +799,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "badre-rostrokaudal"
       },
       "title": "Badre: rostrokaudaler PFC-Gradient",
@@ -445,14 +924,119 @@
         "area:julich:area-45:l": true
       },
       "section": "11.3.3",
-      "sequencing": {
-        "learning": "kapitel11-pfad",
-        "presentation": "kapitel11-vorlesung",
-        "step": "broca-areal"
-      },
+      "sequencing": {},
       "title": "Rostrokaudale Organisation: Broca-Areal",
       "view": {
         "carve_on_taro": "julich",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_opacity": 0.12,
+        "dim_others": true
+      }
+    },
+    "dlpfc-schaedigung": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-left"
+      },
+      "colors": {
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Vortragsfolie 34 ist ein klinischer DLPFC-Auftrag; keine Wiederverwendung der Tower-of-London-Faerbung.",
+        "review_status": "final",
+        "scheme": "scene"
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": true,
+        "function": true,
+        "provenance": false
+      },
+      "label_de": "DLPFC-Schädigung",
+      "overlay": {
+        "kind": "prose",
+        "position": "right",
+        "scene": "dlpfc-schaedigung",
+        "size": "md"
+      },
+      "regions": {
+        "buckets": [
+          "dlpfc"
+        ],
+        "scene_regions": [
+          "dlpfc"
+        ]
+      },
+      "scopes": {},
+      "section": "11.3.3",
+      "sequencing": {
+        "presentation": "kapitel11-vorlesung",
+        "step": "dlpfc-schaedigung"
+      },
+      "title": "DLPFC-Schädigung und Perseveration",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_opacity": 0.12,
+        "dim_others": true
+      }
+    },
+    "duncan-owen-overlap": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-left"
+      },
+      "colors": {
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Vortragsfolie 14 zeigt Aktivitaetsueberlappung/Methodenlimit; kein Petrides-Funktionsgruppen-Reuse.",
+        "review_status": "final",
+        "scheme": "scene"
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": false,
+        "function": true,
+        "provenance": true
+      },
+      "label_de": "Duncan/Owen Overlap",
+      "overlay": {
+        "kind": "flowchart",
+        "position": "right",
+        "scene": "duncan-owen-overlap",
+        "size": "md"
+      },
+      "regions": {
+        "buckets": [
+          "dlpfc",
+          "vlpfc"
+        ],
+        "scene_regions": [
+          "pfc-overlap"
+        ]
+      },
+      "scopes": {},
+      "section": "11.3.3",
+      "sequencing": {
+        "presentation": "kapitel11-vorlesung",
+        "step": "duncan-owen-overlap"
+      },
+      "title": "Überlappende frontale Aktivierungen",
+      "view": {
+        "carve_on_taro": "off",
         "subcortex": false,
         "surface": "pial"
       },
@@ -501,6 +1085,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "flanker-aufgabe"
       },
       "title": "Flanker-Aufgabe: kongruent vs. inkongruent",
@@ -524,7 +1109,7 @@
         "coverage": "full",
         "dim_others": true,
         "preset": "fluency-foci",
-        "reason": "Preset deckt DLPFC, VLPFC und SMA/preSMA-Foci ab.",
+        "reason": "Preset deckt DLPFC, VLPFC und SMA/pre-SMA-Foci ab.",
         "review_status": "final",
         "scheme": "preset"
       },
@@ -556,6 +1141,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "fluency-foci"
       },
       "title": "Flüssigkeitsaufgaben: fünf Aktivierungsfoki",
@@ -612,6 +1198,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "fuster-gradient"
       },
       "title": "Fuster-Modell: Wahrnehmungs-Handlungs-Zyklus",
@@ -657,6 +1244,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "go-nogo-intro"
       },
       "title": "Go-/No-go-Aufgaben - Reaktion hemmen",
@@ -702,6 +1290,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "ica-uebersicht"
       },
       "title": "ICA - drei ERP-Komponenten",
@@ -725,7 +1314,7 @@
       "colors": {
         "coverage": "partial",
         "dim_others": true,
-        "preset": "phineas-gage",
+        "preset": "ofc-phineas",
         "reason": "Phineas-Farbsemantik ist gesetzt, historische Schaedel-/Stangen-Geometrie wird separat finalisiert.",
         "review_status": "final",
         "scheme": "preset"
@@ -741,7 +1330,8 @@
       },
       "label_de": "OFC / Phineas Gage",
       "overlay": {
-        "kind": "prose"
+        "kind": "prose",
+        "scene": "ofc-phineas"
       },
       "regions": {
         "areas": [
@@ -751,6 +1341,9 @@
         "buckets": [
           "ofc",
           "vmpfc"
+        ],
+        "scene_regions": [
+          "vm-ofc"
         ]
       },
       "scopes": {
@@ -759,7 +1352,6 @@
       },
       "section": "11.3.3",
       "sequencing": {
-        "learning": "kapitel11-pfad",
         "presentation": "kapitel11-vorlesung",
         "step": "ofc-phineas"
       },
@@ -871,6 +1463,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "p3b-engagement"
       },
       "title": "P3b - Engagement",
@@ -917,6 +1510,7 @@
       "section": "11.4",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "p3z-inhibition"
       },
       "title": "P3z - Inhibition",
@@ -973,9 +1567,118 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "pfc-petrides"
       },
       "title": "PFC-Funktionen nach Petrides",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_opacity": 0.12,
+        "dim_others": true
+      }
+    },
+    "right-dlpfc-selbstkontrolle": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-right"
+      },
+      "colors": {
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Vortragsfolie 47 nennt explizit den rechten DLPFC; die Config trennt ihn vom bilateralen Tower-DLPFC.",
+        "review_status": "final",
+        "scheme": "scene"
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": true,
+        "function": true,
+        "provenance": false
+      },
+      "label_de": "Rechter DLPFC - Selbstkontrolle",
+      "overlay": {
+        "kind": "prose",
+        "position": "right",
+        "scene": "right-dlpfc-selbstkontrolle",
+        "size": "md"
+      },
+      "regions": {
+        "buckets": [
+          "right-dlpfc"
+        ],
+        "scene_regions": [
+          "right-dlpfc"
+        ]
+      },
+      "scopes": {},
+      "section": "11.3.3",
+      "sequencing": {
+        "presentation": "kapitel11-vorlesung",
+        "step": "right-dlpfc-selbstkontrolle"
+      },
+      "title": "Rechter DLPFC und Selbstkontrolle",
+      "view": {
+        "carve_on_taro": "off",
+        "subcortex": false,
+        "surface": "pial"
+      },
+      "visibility": {
+        "dim_opacity": 0.12,
+        "dim_others": true
+      }
+    },
+    "right-parietal-lesion": {
+      "camera": {
+        "fit": "bounds",
+        "margin": 1.4,
+        "shot": "lateral-right"
+      },
+      "colors": {
+        "coverage": "not-applicable",
+        "enabled": false,
+        "reason": "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; kein allgemeiner PPC-Fallback.",
+        "review_status": "final",
+        "scheme": "scene"
+      },
+      "cuts": {
+        "enabled": false
+      },
+      "facets": {
+        "chapter": true,
+        "clinic": true,
+        "function": true,
+        "provenance": false
+      },
+      "label_de": "Rechts-parietale Körperwissen-Läsion",
+      "overlay": {
+        "kind": "prose",
+        "position": "right",
+        "scene": "right-parietal-lesion",
+        "size": "md"
+      },
+      "regions": {
+        "buckets": [
+          "right-parietal-body"
+        ],
+        "scene_regions": [
+          "right-parietal-body"
+        ]
+      },
+      "scopes": {},
+      "section": "11.3.3",
+      "sequencing": {
+        "presentation": "kapitel11-vorlesung",
+        "step": "right-parietal-lesion"
+      },
+      "title": "Rechtsseitiger Parietallappen und Körperwissen",
       "view": {
         "carve_on_taro": "off",
         "subcortex": false,
@@ -995,7 +1698,7 @@
       "colors": {
         "coverage": "full",
         "dim_others": true,
-        "preset": "tower-dlpfc",
+        "preset": "tower-of-london-dlpfc",
         "reason": "Preset deckt die fokussierte DLPFC-Aktivierung ab.",
         "review_status": "final",
         "scheme": "preset"
@@ -1026,6 +1729,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "tower-of-london-dlpfc"
       },
       "title": "Tower of London und DLPFC-Aktivierung",
@@ -1048,7 +1752,7 @@
       "colors": {
         "coverage": "full",
         "dim_others": true,
-        "preset": "tower-dlpfc",
+        "preset": "tower-of-london-schweregrad",
         "reason": "Preset deckt die fokussierte DLPFC-Schwierigkeitsmodulation ab.",
         "review_status": "final",
         "scheme": "preset"
@@ -1079,6 +1783,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "tower-of-london-schweregrad"
       },
       "title": "DLPFC-Reaktion nach Aufgaben-Schwierigkeit",
@@ -1187,6 +1892,7 @@
       "section": "11.3.3",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "wcst-frontoparietal"
       },
       "title": "WCST: frontoparietales Kontrollnetzwerk",
@@ -1218,16 +1924,30 @@
       },
       "label_de": "Zusammenfassung - exekutive Funktionen",
       "overlay": {
-        "kind": "prose",
+        "kind": "flowchart",
         "position": "right",
         "scene": "zusammenfassung",
         "size": "lg"
       },
       "regions": {
+        "buckets": [
+          "dlpfc",
+          "vmpfc",
+          "ppc",
+          "striatum-dorsal",
+          "globus-pallidus",
+          "thalamus",
+          "nucleus-accumbens",
+          "dacc",
+          "sma-presma"
+        ],
         "scene_regions": [
-          "inhibition-network",
+          "dlpfc",
+          "vmpfc",
+          "ppc",
+          "basalganglia-recap",
+          "dacc",
           "acc-cingulum",
-          "parietal-frontal",
           "sma-presma"
         ]
       },
@@ -1235,6 +1955,7 @@
       "section": "11.5",
       "sequencing": {
         "learning": "kapitel11-pfad",
+        "presentation": "kapitel11-vorlesung",
         "step": "zusammenfassung"
       },
       "title": "Zusammenfassung - exekutive Funktionen",
@@ -1364,6 +2085,19 @@
           "right-angular-gyrus"
         ]
       },
+      "right-dlpfc": {
+        "meshes": [
+          "right-middle-frontal-gyrus",
+          "right-superior-frontal-gyrus"
+        ]
+      },
+      "right-parietal-body": {
+        "meshes": [
+          "right-superior-parietal-lobule",
+          "right-supramarginal-gyrus",
+          "right-angular-gyrus"
+        ]
+      },
       "sma-presma": {
         "meshes": [
           "left-sma",
@@ -1426,6 +2160,38 @@
           "right-cingulate-gyrus"
         ]
       },
+      "basalganglia-recap": {
+        "meshes": [
+          "left-caudate-nucleus",
+          "right-caudate-nucleus",
+          "left-putamen",
+          "right-putamen",
+          "left-gpi",
+          "right-gpi",
+          "left-gpe",
+          "right-gpe",
+          "left-ventral-anterior-nucleus",
+          "right-ventral-anterior-nucleus",
+          "caudal-part-of-left-ventral-lateral-nucleus",
+          "caudal-part-of-right-ventral-lateral-nucleus",
+          "left-nucleus-accumbens",
+          "right-nucleus-accumbens"
+        ]
+      },
+      "dacc": {
+        "meshes": [
+          "left-caudal-anterior-cingulate",
+          "right-caudal-anterior-cingulate"
+        ]
+      },
+      "dlpfc": {
+        "meshes": [
+          "left-middle-frontal-gyrus",
+          "right-middle-frontal-gyrus",
+          "left-superior-frontal-gyrus",
+          "right-superior-frontal-gyrus"
+        ]
+      },
       "inhibition-network": {
         "meshes": [
           "left-superior-frontal-gyrus",
@@ -1444,10 +2210,47 @@
           "right-superior-frontal-gyrus"
         ]
       },
+      "pfc-overlap": {
+        "meshes": [
+          "left-middle-frontal-gyrus",
+          "right-middle-frontal-gyrus",
+          "left-superior-frontal-gyrus",
+          "right-superior-frontal-gyrus",
+          "left-parsopercularis",
+          "right-parsopercularis",
+          "left-parstriangularis",
+          "right-parstriangularis",
+          "left-parsorbitalis",
+          "right-parsorbitalis"
+        ]
+      },
+      "ppc": {
+        "meshes": [
+          "left-superior-parietal-lobule",
+          "right-superior-parietal-lobule",
+          "left-supramarginal-gyrus",
+          "right-supramarginal-gyrus",
+          "left-angular-gyrus",
+          "right-angular-gyrus"
+        ]
+      },
       "pre-sma": {
         "meshes": [
           "left-pre-sma",
           "right-pre-sma"
+        ]
+      },
+      "right-dlpfc": {
+        "meshes": [
+          "right-middle-frontal-gyrus",
+          "right-superior-frontal-gyrus"
+        ]
+      },
+      "right-parietal-body": {
+        "meshes": [
+          "right-superior-parietal-lobule",
+          "right-supramarginal-gyrus",
+          "right-angular-gyrus"
         ]
       },
       "sma": {
@@ -1463,6 +2266,30 @@
           "left-pre-sma",
           "right-pre-sma"
         ]
+      },
+      "vm-ofc": {
+        "meshes": [
+          "left-lateral-orbitofrontal",
+          "right-lateral-orbitofrontal",
+          "left-medial-orbitofrontal",
+          "right-medial-orbitofrontal",
+          "left-anterior-orbital-gyrus",
+          "right-anterior-orbital-gyrus",
+          "left-posterior-orbital-gyrus",
+          "right-posterior-orbital-gyrus",
+          "left-medial-orbital-gyrus",
+          "right-medial-orbital-gyrus",
+          "left-subcallosal-area",
+          "right-subcallosal-area"
+        ]
+      },
+      "vmpfc": {
+        "meshes": [
+          "left-medial-orbital-gyrus",
+          "right-medial-orbital-gyrus",
+          "left-subcallosal-area",
+          "right-subcallosal-area"
+        ]
       }
     }
   },
@@ -1470,10 +2297,32 @@
     "kapitel11-vorlesung": {
       "label_de": "Kapitel 11 — Vorlesung",
       "steps": [
-        "basalganglienschleifen",
-        "broca-areal",
+        "pfc-petrides",
+        "duncan-owen-overlap",
+        "fuster-gradient",
+        "badre-rostrokaudal",
+        "badre-domainen",
+        "badre-relationale-komplexitaet",
+        "badre-kaskade",
+        "badre-konflikttypen",
+        "dlpfc-schaedigung",
+        "wcst-frontoparietal",
+        "fluency-foci",
+        "tower-of-london-dlpfc",
+        "tower-of-london-schweregrad",
+        "right-dlpfc-selbstkontrolle",
+        "ofc-phineas",
+        "right-parietal-lesion",
+        "acc-bush",
+        "flanker-aufgabe",
+        "go-nogo-intro",
         "vcpt",
-        "p3a-konfliktmonitoring"
+        "ica-uebersicht",
+        "p3a-konfliktmonitoring",
+        "p3b-engagement",
+        "p3z-inhibition",
+        "basalganglienschleifen",
+        "zusammenfassung"
       ]
     }
   },

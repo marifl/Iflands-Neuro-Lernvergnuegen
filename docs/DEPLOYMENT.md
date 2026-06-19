@@ -1,6 +1,6 @@
 # Deployment
 
-Stand: 2026-06-16.
+Stand: 2026-06-19.
 
 ## Ziel
 
@@ -14,21 +14,31 @@ Alle Befehle laufen aus `apps/brain-app/`:
 
 ```bash
 pnpm install --frozen-lockfile
+pnpm verify:brain-models
 pnpm typecheck
 pnpm test
 pnpm build
 pnpm perf:budget
+pnpm test:e2e
 ```
 
 Der GitHub-Workflow `.github/workflows/brain-app.yml` führt für PRs und Pushes
-auf `main` Install, Typecheck, Unit-Tests, Build und `pnpm perf:budget` aus.
-Playwright-Smokes bleiben lokale/manuelle Verifikation und laufen nicht in
-GitHub Actions.
+auf `main` Install, Typecheck, Unit-Tests, Build und `pnpm perf:budget` aus. Die
+Release-Verifikation vor Merge ergänzt lokal `pnpm verify:brain-models` und
+`pnpm test:e2e`, weil BrainModel-Asset-Invarianten und Browser-Smokes nicht
+vollständig durch GitHub Actions abgedeckt sind.
 
 `pnpm perf:budget` setzt einen statischen Build-Schutz nach `pnpm build`: JS-/
-CSS-Gzip-Budget, größte Runtime-Asset-Datei, Gesamtgröße von `public/assets`
-und die Phineas-Asset-Gruppe. Das ist kein FPS-Test, verhindert aber stille
-Bundle- oder Asset-Ausreißer.
+CSS-Gzip-Budget, größte Runtime-Asset-Datei, Gesamtgröße der Runtime-Assets
+unter `public/assets` ohne BrainModel-Reviewmodelle, separates Budget für
+`public/assets/brain-models/` und die Phineas-Asset-Gruppe. Das ist kein
+FPS-Test, verhindert aber stille Bundle- oder Asset-Ausreißer.
+
+`pnpm verify:brain-models` schützt die TARO- und MNI-Reviewmodelle gegen
+fehlende Normalen, falsche Normalenlängen, auffällige Face-/Vertex-Normalen-
+Abweichungen, falsche Mesh-Anzahl und Asset-Budget-Ausreißer. Das Gate muss vor
+jedem Release laufen, wenn BrainModel-Dateien, Loader oder Review-Optionen
+berührt wurden.
 
 ## Base-Path
 

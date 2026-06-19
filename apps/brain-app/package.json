@@ -8,6 +8,7 @@
     "dev": "pnpm run atlas:build-config && vite",
     "generate:phineas-iron-rod": "node scripts/generate-phineas-iron-rod.mjs",
     "build": "pnpm run atlas:build-config && tsc -b && vite build",
+    "docs:drift": "node ../../scripts/check-doc-drift.mjs",
     "inventory:mesh-identity": "node scripts/mesh-identity-inventory.mjs --check",
     "perf:budget": "node ../../scripts/perf/check-brain-app-budget.mjs",
     "preview": "vite preview",
@@ -24,6 +25,7 @@
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:update": "playwright test --update-snapshots",
+    "verify:brain-models": "node ../../scripts/atlas/check-brain-model-assets.mjs",
     "verify:phineas-transform": "node scripts/verify-phineas-transform.mjs"
   },
   "dependencies": {

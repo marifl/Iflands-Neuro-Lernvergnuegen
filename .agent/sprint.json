@@ -1,0 +1,15 @@
+{
+  "$schema": "alrah-sprint-v1",
+  "sprint": {
+    "id": "bootstrap",
+    "name": "brain-app-standalone",
+    "goal": "Track work for brain-app-standalone"
+  },
+  "synced_at": null,
+  "source": "local",
+  "items": [],
+  "_meta": {
+    "max_items": 10,
+    "note": "Canonical ALRAH work queue"
+  }
+}

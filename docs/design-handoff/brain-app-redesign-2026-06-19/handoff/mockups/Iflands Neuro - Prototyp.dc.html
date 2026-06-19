@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .ifn-h *{box-sizing:border-box;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .sec{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:#b4490f;border-top:1.5px solid #a8a49d;padding-top:14px;margin-top:52px;}
+  .grid{display:grid;gap:14px;margin-top:20px;}
+  .node{display:flex;flex-direction:column;gap:5px;background:#fbfaf8;border:1px solid #b7b3ac;padding:15px 16px;text-decoration:none;color:#1a1a1a;outline:none;transition:border-color .12s,box-shadow .12s,transform .12s,background .12s;min-height:84px;}
+  .node:hover{border-color:#f26b1f;box-shadow:0 6px 20px rgba(0,0,0,.12);transform:translateY(-2px);background:#fff;}
+  .node:focus-visible{border-color:#f26b1f;box-shadow:0 0 0 3px rgba(242,107,31,.45);}
+  .node .nr{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.2em;text-transform:uppercase;}
+  .node .nn{font-size:16px;font-weight:700;letter-spacing:-.015em;}
+  .node .nd{font-size:11.5px;line-height:1.4;color:#6a655e;}
+  .node .nf{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.06em;color:#a39e96;margin-top:auto;padding-top:6px;}
+  .step{flex:1;min-width:150px;}
+  .arrow{display:flex;align-items:center;color:#b4490f;font-size:18px;flex:none;}
+  @media(max-width:760px){ .arrow{display:none;} }
+</style>
+</helmet>
+
+<div class="ifn-h" style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;color:#1a1a1a;">
+  <div style="max-width:1180px;margin:0 auto;">
+
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · V2 MVP · Klick-Prototyp</div>
+    <h1 style="font-size:40px;font-weight:700;letter-spacing:-.035em;margin:10px 0 10px;line-height:1;">Verbundener Prototyp — Flow &amp; IA</h1>
+    <p style="font-size:14.5px;line-height:1.6;color:#48443f;max-width:840px;margin:0;text-wrap:pretty;">Jede Kachel öffnet den echten Frame. Navigation läuft über relative Links zwischen den Standalone-Frames; Theme (Dunkel/Hell) bleibt über <span class="mono" style="font-size:12.5px;color:#b4490f;">localStorage</span> erhalten, sodass der Flow in beiden Themes durchgängig testbar ist. Rail/Dock und Moduskarten schalten die Surface wirklich um — die Moduswahl ist überall ein Klick entfernt, keine Sackgassen.</p>
+
+    <a href="OnboardingFrame.dc.html" class="node" style="margin-top:26px;flex-direction:row;align-items:center;gap:16px;min-height:0;padding:18px 22px;background:#1a1a1a;border-color:#1a1a1a;color:#f7f5f2;">
+      <span style="width:40px;height:40px;flex:none;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#160b04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/></svg></span>
+      <span style="flex:1;"><span style="display:block;font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;color:#f26b1f;">Prototyp starten</span><span style="display:block;font-size:18px;font-weight:700;margin-top:3px;">Onboarding → Anmelden → Moduswahl</span></span>
+      <span class="mono" style="font-size:11px;letter-spacing:.1em;color:#f26b1f;">START →</span>
+    </a>
+
+    <div class="sec">Einstieg · linearer Pfad</div>
+    <div style="display:flex;align-items:stretch;gap:10px;margin-top:20px;flex-wrap:wrap;">
+      <a href="OnboardingFrame.dc.html" class="node step"><span class="nr" style="color:#5f8f84;">01 · Einstieg</span><span class="nn">Onboarding</span><span class="nd">Start-Modus &amp; Rolle wählen, 3 Schritte.</span><span class="nf">OnboardingFrame</span></a>
+      <span class="arrow">→</span>
+      <a href="AuthFrame.dc.html" class="node step"><span class="nr" style="color:#5f8f84;">02 · Konto</span><span class="nn">Anmelden / Beitreten</span><span class="nd">Login oder Vortrags-Code (Participant).</span><span class="nf">AuthFrame</span></a>
+      <span class="arrow">→</span>
+      <a href="LauncherFrame.dc.html" class="node step"><span class="nr" style="color:#5f8f84;">03 · Hub</span><span class="nn">Moduswahl</span><span class="nd">Fortsetzen + vier Modi. Zentraler Hub.</span><span class="nf">LauncherFrame</span></a>
+    </div>
+
+    <div class="sec">Vier Rollen</div>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr);">
+      <a href="LauncherFrame.dc.html" class="node"><span class="nr" style="color:#5f8f84;">Selflearner</span><span class="nn">Selbst lernen</span><span class="nd">Lernpfad, Explorer &amp; Fälle im eigenen Tempo.</span><span class="nf">→ Launcher</span></a>
+      <a href="ParticipantFrame.dc.html" class="node"><span class="nr" style="color:#5f86b2;">Participant</span><span class="nn">Companion</span><span class="nd">Folgt dem Presenter live · ohne Konto.</span><span class="nf">ParticipantFrame</span></a>
+      <a href="PresenterFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Presenter</span><span class="nn">Vortrag steuern</span><span class="nd">Live-Steuerung, Companion synchron.</span><span class="nf">PresenterFrame</span></a>
+      <a href="AdminFrame.dc.html" class="node"><span class="nr" style="color:#c0494a;">Admin</span><span class="nn">Verwalten</span><span class="nd">Freischaltungen, Rollen, Authoring.</span><span class="nf">AdminFrame</span></a>
+    </div>
+
+    <div class="sec">Drei Modi · ab Launcher</div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+      <a href="AppFrame.dc.html?mode=lernen" class="node" style="border-left:3px solid #5f86b2;"><span class="nr" style="color:#5f86b2;">Modus 01 · Geführt</span><span class="nn">Lernen</span><span class="nd">App-Shell mit Lernpfad-Sidebar, 21 Szenen.</span><span class="nf">AppFrame · lernen</span></a>
+      <a href="AppFrame.dc.html?mode=explorer" class="node" style="border-left:3px solid #5f8f84;"><span class="nr" style="color:#5f8f84;">Modus 02 · Frei</span><span class="nn">Explorer</span><span class="nd">Struktur, Färbung, Atlas, Schnitt, Timeline.</span><span class="nf">AppFrame · explorer</span></a>
+      <a href="FaelleFrame.dc.html" class="node" style="border-left:3px solid #c0494a;"><span class="nr" style="color:#c0494a;">Modus 03 · Fallstudien</span><span class="nn">Fälle · Phineas Gage</span><span class="nd">Schädelkontext, Läsionspfad, TARO-Schritte.</span><span class="nf">FaelleFrame</span></a>
+    </div>
+
+    <div class="sec">Explorer-Surfaces</div>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr);">
+      <a href="FaerbungFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Surface</span><span class="nn">Färbung</span><span class="nd">5 Färb-Modi, Legende, System-Detail.</span><span class="nf">FaerbungFrame</span></a>
+      <a href="ExplorerToolsFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Surface</span><span class="nn">Werkzeuge</span><span class="nd">Isolieren, Dimmen, Schnittebenen.</span><span class="nf">ExplorerToolsFrame</span></a>
+      <a href="AtlasErpFrame.dc.html" class="node"><span class="nr" style="color:#7e57c2;">Surface</span><span class="nn">Atlas &amp; ERP</span><span class="nd">Atlas-Layer, Carve-Deckkraft, ERP-Kurve.</span><span class="nf">AtlasErpFrame</span></a>
+      <a href="TimelineSnapshotFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Surface</span><span class="nn">Timeline</span><span class="nd">Snapshots, Verlauf, Wiedergabe.</span><span class="nf">TimelineSnapshotFrame</span></a>
+      <a href="CollectionFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Surface</span><span class="nn">Collection</span><span class="nd">Gespeicherte Strukturen verwalten.</span><span class="nf">CollectionFrame</span></a>
+      <a href="WikiFrame.dc.html" class="node"><span class="nr" style="color:#3268a8;">Wissen</span><span class="nn">Wiki</span><span class="nd">Strukturdetails, Quellen, Querverweise.</span><span class="nf">WikiFrame</span></a>
+      <a href="ChatFrame.dc.html" class="node"><span class="nr" style="color:#3268a8;">Wissen</span><span class="nn">Companion-Chat</span><span class="nd">Fragen zur aktuellen Struktur.</span><span class="nf">ChatFrame</span></a>
+      <a href="FaelleBrowserFrame.dc.html" class="node"><span class="nr" style="color:#c0494a;">Fälle</span><span class="nn">Fälle-Browser</span><span class="nd">Klinische Fälle durchsuchen.</span><span class="nf">FaelleBrowserFrame</span></a>
+    </div>
+
+    <div class="sec">Vortrag &amp; Verwaltung</div>
+    <div class="grid" style="grid-template-columns:repeat(4,1fr);">
+      <a href="PresenterFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Vortrag</span><span class="nn">Presenter · Live</span><span class="nd">Folien, Kamera, Companion-Sync.</span><span class="nf">PresenterFrame</span></a>
+      <a href="PresenterDeckFrame.dc.html" class="node"><span class="nr" style="color:#bd6f45;">Vortrag</span><span class="nn">Deck-Import</span><span class="nd">Folien aus Deck übernehmen.</span><span class="nf">PresenterDeckFrame</span></a>
+      <a href="ParticipantFrame.dc.html" class="node"><span class="nr" style="color:#5f86b2;">Vortrag</span><span class="nn">Companion-View</span><span class="nd">Live folgen, frei umsehen, Reaktion senden.</span><span class="nf">ParticipantFrame</span></a>
+      <a href="AuthoringFrame.dc.html" class="node"><span class="nr" style="color:#c0494a;">Verwaltung</span><span class="nn">Authoring</span><span class="nd">Szenen &amp; Gizmo-Bearbeitung.</span><span class="nf">AuthoringFrame</span></a>
+      <a href="AdminFrame.dc.html" class="node"><span class="nr" style="color:#c0494a;">Verwaltung</span><span class="nn">Admin</span><span class="nd">Rollen &amp; Freischaltungen.</span><span class="nf">AdminFrame</span></a>
+      <a href="SettingsFrame.dc.html" class="node"><span class="nr" style="color:#6b6b6b;">System</span><span class="nn">Einstellungen</span><span class="nd">Theme, A11y, Ruhemodus, Konto.</span><span class="nf">SettingsFrame</span></a>
+    </div>
+
+    <div class="sec">Referenz-Matrizen &amp; Handoff</div>
+    <div class="grid" style="grid-template-columns:repeat(3,1fr);">
+      <a href="Theme Matrix v2.dc.html" class="node"><span class="nr" style="color:#6b6b6b;">Referenz</span><span class="nn">Theme-Matrix</span><span class="nd">Alle Frames · Dunkel &amp; Hell + Zustände.</span><span class="nf">Theme Matrix v2</span></a>
+      <a href="Device Matrix v2.dc.html" class="node"><span class="nr" style="color:#6b6b6b;">Referenz</span><span class="nn">Device-Matrix</span><span class="nd">Frames über alle Geräte-Tiers.</span><span class="nf">Device Matrix v2</span></a>
+      <a href="Zustaende v2.dc.html" class="node"><span class="nr" style="color:#6b6b6b;">Referenz</span><span class="nn">Zustände</span><span class="nd">Laden / Leer / Fehler — laut statt still.</span><span class="nf">Zustaende v2</span></a>
+      <a href="Token-Sheet v2.dc.html" class="node"><span class="nr" style="color:#b4490f;">Handoff</span><span class="nn">Token-Sheet</span><span class="nd">Neutrale Tokens, Bedeutungsfarben, Typo, Maße, Inventar.</span><span class="nf">Token-Sheet v2</span></a>
+      <a href="System-Komponenten v2.dc.html" class="node"><span class="nr" style="color:#b4490f;">Handoff</span><span class="nn">System-Komponenten</span><span class="nd">Modal · Toast · Such-Leer · Permission · Offline.</span><span class="nf">System-Komponenten v2</span></a>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -332,7 +332,7 @@ describe('carveOverlay', () => {
     const state = useViewerStore.getState()
     expect(state.activePreset).toBeNull()
     expect(state.colorMode).toBe('region')
-    expect(state.presetViewOptions).toEqual({ hideUncolored: false, focusColored: false })
+    expect(state.presetViewOptions).toEqual({ hideUncolored: true, focusColored: false })
   })
 })
 

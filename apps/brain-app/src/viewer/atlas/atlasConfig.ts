@@ -31,12 +31,27 @@ export interface ConfigRegions {
 export interface ConfigColors {
   enabled?: boolean
   preset?: string
-  groups?: { label: string; hue: number; buckets: string[] }[]
   dim_others?: boolean
   scheme?: 'preset' | 'atlas' | 'scene' | 'none'
   coverage?: 'full' | 'partial' | 'not-applicable'
-  review_status?: 'final' | 'needs-review' | 'legacy'
+  review_status?: 'final' | 'needs-review'
   reason?: string
+}
+export interface ConfigColorGroup {
+  label: string
+  role: string
+  meaning: string
+  hue: number
+  buckets: string[]
+}
+export interface ConfigColorPreset {
+  label: string
+  sourceFigure?: string
+  intent: string
+  coverage?: 'full' | 'partial'
+  coverageNote?: string
+  groups: ConfigColorGroup[]
+  dimOthers?: boolean
 }
 export interface ConfigVisibility { dim_others?: boolean; dim_opacity?: number; hidden?: string[]; isolated?: string[] }
 export interface ConfigCuts { enabled?: boolean; planes?: { axis: 'x' | 'y' | 'z'; position: number; keep?: 'positive' | 'negative' }[] }
@@ -73,6 +88,7 @@ export interface AtlasConfigFile {
   preset: string
   presets: Record<string, PresetNode>
   mesh_mappings: MeshMappings
+  color_presets: Record<string, ConfigColorPreset>
   configurations: Record<string, ConfigurationNode>
   presentation: Record<string, SequenceNode>
   learning: Record<string, SequenceNode>

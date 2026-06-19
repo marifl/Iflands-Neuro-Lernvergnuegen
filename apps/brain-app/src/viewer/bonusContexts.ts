@@ -43,7 +43,7 @@ export const BONUS_CONTEXTS: BonusContext[] = [
     id: 'phineas-gage',
     kind: 'case-study',
     collectionIds: ['case-phineas-gage'],
-    title: 'Phineas Gage (OFC/vmPFC)',
+    title: 'Phineas Gage (VMPFC/OFC)',
     summaryDe:
       'Fallstudie zur Rolle von orbitofrontalem und ventromedialem Präfrontalcortex für Handlungsplanung, Sozialverhalten und exekutive Kontrolle.',
     targets: phineasTargets,

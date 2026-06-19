@@ -1,0 +1,167 @@
+{
+  "project": "brain-app-standalone",
+  "version": "5.5.1",
+  "categories": [
+    "core",
+    "feature",
+    "fix",
+    "chore"
+  ],
+  "locLimits": {
+    "default": 350,
+    "paths": {
+      "cli": 400,
+      "plugin": 300
+    }
+  },
+  "profile": "full",
+  "maxRounds": 3,
+  "passThreshold": 3,
+  "validate": [],
+  "roles": {
+    "planner": {
+      "backend": "claude",
+      "model": "opus"
+    },
+    "implementer": {
+      "backend": "session",
+      "model": null
+    },
+    "reviewer": {
+      "backend": "claude",
+      "model": "sonnet"
+    },
+    "evaluator": {
+      "backend": "claude",
+      "model": "opus"
+    }
+  },
+  "backends": {
+    "claude": {
+      "command": "claude",
+      "flags": [
+        "--print"
+      ],
+      "modelFlag": "--model",
+      "models": [
+        "opus",
+        "sonnet",
+        "haiku"
+      ]
+    },
+    "gemini": {
+      "command": "gemini",
+      "flags": [
+        "--yolo"
+      ],
+      "modelFlag": "--model",
+      "models": [
+        "gemini-3.1-pro-preview",
+        "gemini-2.5-pro",
+        "gemini-2.5-flash"
+      ]
+    },
+    "codex": {
+      "command": "codex",
+      "flags": [
+        "exec",
+        "-c",
+        "approval_policy=\"never\"",
+        "-c",
+        "sandbox_mode=\"workspace-write\"",
+        "--skip-git-repo-check",
+        "--color",
+        "never"
+      ],
+      "modelFlag": "--model",
+      "models": [
+        "gpt-5.4",
+        "gpt-5.4-mini",
+        "gpt-5.3-codex-spark",
+        "o3",
+        "o4-mini"
+      ]
+    },
+    "pi": {
+      "command": "pi",
+      "flags": [
+        "-p"
+      ],
+      "modelFlag": "--model",
+      "models": [
+        "claude-opus-4-6",
+        "claude-sonnet-4-6",
+        "gpt-5.4",
+        "gemini-2.5-pro"
+      ]
+    }
+  },
+  "hooks": {
+    "enabled": true,
+    "quiet": true
+  },
+  "evalDimensions": [
+    {
+      "name": "correctness",
+      "weight": 3,
+      "description": "Funktionale Korrektheit gegen Spec"
+    },
+    {
+      "name": "completeness",
+      "weight": 2,
+      "description": "Vollstaendigkeit der Implementation"
+    },
+    {
+      "name": "quality",
+      "weight": 2,
+      "description": "Code-Qualitaet, Patterns, Error-Handling"
+    },
+    {
+      "name": "craft",
+      "weight": 1,
+      "description": "Technische Ausfuehrung, Types, Tests"
+    },
+    {
+      "name": "fab",
+      "weight": 1,
+      "description": "FAB Design-Prinzipien: Lesbar, Minimal, Ehrlich, Konsistent"
+    }
+  ],
+  "auto": {
+    "mode": "full",
+    "gates": [
+      "plan",
+      "eval"
+    ],
+    "timeout": 300
+  },
+  "learnings": {
+    "pruneMaxAgeDays": 30,
+    "pruneMinConfidence": 0.6,
+    "injectLimit": 10
+  },
+  "worktree": {
+    "enabled": true,
+    "parentDir": "auto",
+    "autoFinish": true,
+    "mergeStrategy": "pr",
+    "prLabels": [
+      "alrah",
+      "auto-generated"
+    ],
+    "prMergeTimeoutMs": 86400000,
+    "prPollIntervalMs": 60000,
+    "validate": [],
+    "validateCwd": "worktree",
+    "branchPrefix": "alrah/wt",
+    "baseBranch": "main",
+    "autoCreateRemote": false,
+    "remoteVisibility": "private",
+    "deleteBranchAfterMerge": true,
+    "archiveContractAfterMerge": true
+  },
+  "setup": {
+    "pythonVersion": "3.13",
+    "uvLayout": "bare"
+  }
+}

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  .scr{background:#0a0a0a;border-radius:14px;padding:8px;box-shadow:0 16px 40px rgba(0,0,0,.28);flex:none;}
+  .scr > div{border-radius:8px;overflow:hidden;}
+  .lbl{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.05em;color:#1c1a18;font-weight:600;margin-bottom:8px;}
+  .sub{font-family:'IBM Plex Mono',monospace;font-size:9px;color:#7a756e;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .surfh{display:flex;align-items:baseline;gap:14px;border-bottom:2px solid #a8a49d;padding-bottom:12px;margin:0 0 26px;}
+  .row{display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap;}
+  .cell{display:flex;flex-direction:column;}
+
+/*ifn-focus*/:focus-visible{outline:2px solid #f26b1f;outline-offset:2px;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#cbc8c2;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;padding:52px 56px 110px;box-sizing:border-box;color:#1a1a1a;">
+  <div style="max-width:1100px;">
+    <div class="mono" style="font-size:9px;letter-spacing:.26em;text-transform:uppercase;color:#b4490f;">Iflands Neuro · Presenter Deck-Import · v2</div>
+    <h1 style="font-size:36px;font-weight:700;letter-spacing:-.035em;margin:10px 0 8px;line-height:1;">Deck importieren · Folie ↔ 3D</h1>
+    <p style="font-size:14px;line-height:1.6;color:#48443f;max-width:760px;margin:0;text-wrap:pretty;">Speaker importieren ihre Präsentation (PPTX, PDF, Keynote, Google Slides). Folien werden im Presenter angezeigt; jede Folie kann mit einer 3D-Szene verknüpft werden — der Speaker schaltet mit einem Tipp von der Folie auf das relevante 3D-Brain und zurück.</p>
+  </div>
+
+  <!-- IMPORT EMPTY STATE -->
+  <div style="margin-top:46px;">
+    <div class="surfh"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">1 · Import</span></div>
+    <div class="scr"><div style="width:1100px;height:520px;background:#0e0e0e;color:#ededed;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;display:flex;flex-direction:column;">
+      <div style="height:54px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 24px;border-bottom:1px solid #1f1f1f;"><div style="display:flex;align-items:center;gap:10px;"><div style="width:28px;height:28px;background:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#160b04" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h20v14H2zM8 21h8M12 17v4"/></svg></div><span style="font-weight:700;font-size:15px;">Presenter · Deck</span></div><span class="mono" style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#8c8c8c;">Marcus Ifland</span></div>
+      <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:36px;">
+        <div style="width:560px;max-width:100%;border:1.5px dashed #3a3a3a;padding:44px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;">
+          <div style="width:58px;height:58px;border:1.5px solid #f26b1f;color:#f26b1f;display:flex;align-items:center;justify-content:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg></div>
+          <div><div style="font-size:18px;font-weight:700;">Deck hierher ziehen</div><div style="font-size:13px;color:#8c8c8c;margin-top:6px;line-height:1.5;">oder Datei wählen — Folien werden automatisch eingelesen.</div></div>
+          <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center;">
+            <span class="mono" style="font-size:9px;letter-spacing:.06em;border:1px solid #2c2c2c;color:#b2b2b2;padding:6px 10px;">.PPTX</span>
+            <span class="mono" style="font-size:9px;letter-spacing:.06em;border:1px solid #2c2c2c;color:#b2b2b2;padding:6px 10px;">.PDF</span>
+            <span class="mono" style="font-size:9px;letter-spacing:.06em;border:1px solid #2c2c2c;color:#b2b2b2;padding:6px 10px;">.KEY</span>
+            <span class="mono" style="font-size:9px;letter-spacing:.06em;border:1px solid #2c2c2c;color:#b2b2b2;padding:6px 10px;">Google Slides</span>
+          </div>
+          <button class="mono" style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;background:#f26b1f;border:none;color:#160b04;padding:12px 20px;cursor:pointer;font-weight:600;margin-top:4px;">Datei wählen</button>
+        </div>
+      </div>
+    </div></div>
+  </div>
+
+  <!-- PRESENTING: FOLIE vs 3D -->
+  <div style="margin-top:60px;">
+    <div class="surfh"><span style="font-size:21px;font-weight:700;letter-spacing:-.02em;">2 · Präsentieren — Folie ↔ 3D</span><span class="sub">PresenterDeckFrame</span></div>
+    <div class="row">
+      <div class="cell"><div class="lbl">Desktop · Folie <span class="sub">1440×900</span></div><div class="scr"><div style="width:1440px;height:900px;"><dc-import name="PresenterDeckFrame" orientation="landscape" view="folie" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">Desktop · 3D <span class="sub">1440×900</span></div><div class="scr"><div style="width:1440px;height:900px;"><dc-import name="PresenterDeckFrame" orientation="landscape" view="brain" hint-size="1440px,900px" style="width:1440px;height:900px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Pro 11" · Landscape · Folie <span class="sub">1194×834</span></div><div class="scr"><div style="width:1194px;height:834px;"><dc-import name="PresenterDeckFrame" orientation="landscape" view="folie" hint-size="1194px,834px" style="width:1194px;height:834px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPad Mini · Portrait · 3D <span class="sub">768×1024</span></div><div class="scr"><div style="width:768px;height:1024px;"><dc-import name="PresenterDeckFrame" orientation="portrait" view="brain" hint-size="768px,1024px" style="width:768px;height:1024px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPhone · Portrait · Folie <span class="sub">390×844</span></div><div class="scr"><div style="width:390px;height:844px;"><dc-import name="PresenterDeckFrame" orientation="portrait" view="folie" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+      <div class="cell"><div class="lbl">iPhone · Portrait · 3D <span class="sub">390×844</span></div><div class="scr"><div style="width:390px;height:844px;"><dc-import name="PresenterDeckFrame" orientation="portrait" view="brain" hint-size="390px,844px" style="width:390px;height:844px;"></dc-import></div></div></div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

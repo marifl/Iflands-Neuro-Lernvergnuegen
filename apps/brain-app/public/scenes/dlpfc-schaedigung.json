@@ -1,0 +1,20 @@
+{
+  "id": "dlpfc-schaedigung",
+  "section": "11.3.3 · DLPFC-Schädigung",
+  "author": "ifland",
+  "order": 12,
+  "title": "DLPFC-Schädigung und Perseveration",
+  "brain": { "regions": ["dlpfc"], "camera": "lateral-left" },
+  "overlay": {
+    "kind": "prose",
+    "position": "right",
+    "size": "md"
+  },
+  "companion": {
+    "summary": "Die Vortragsfolie zu DLPFC-Schädigung ist kein Tower-of-London-Befund, sondern ein klinischer Kontrollpunkt: Wenn DLPFC-Funktion ausfällt, bleiben alte Regeln und Reaktionsmuster zu dominant. Die App markiert den bilateralen DLPFC als Arbeits- und Kontrollbereich für flexibles Umstellen. Interaktive Abfrage: Warum entsteht Perseveration, wenn neue Anforderungen nicht mehr ausreichend gegen alte Information durchgesetzt werden?",
+    "sources": [
+      { "key": "vortrag_pdf_2026_06_18_s34", "note": "PDF-Seite 34: DLPFC-Schädigung, Perseveration, neue Anforderungen" },
+      { "key": "jaencke_2017", "note": "Foliensource laut Deck" }
+    ]
+  }
+}

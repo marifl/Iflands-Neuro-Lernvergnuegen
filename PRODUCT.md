@@ -17,7 +17,9 @@ Die App muss beide Kontexte und alle Bildschirmgrößen (Desktop, Tablet, Phone)
 
 Eine interaktive 3D-Lern-Experience, die komplexe Neuroanatomie räumlich begreifbar macht. Erfolg heißt: der Lerninhalt bleibt hängen (Verständnis, Klausur) UND die Experience überzeugt durch Qualität (Note, Portfolio-Wirkung). Didaktische Wirksamkeit und visuelle Exzellenz sind kein Widerspruch, sondern bedingen sich.
 
-Drei Grundmodi tragen das: Lernen (geführte Szenen), Explorer (freier Strukturbaum), Phineas Gage (animierte Fallstudie). Eine kontextsensitive Steuerleiste am unteren Rand schaltet zwischen ihnen.
+Der aktuelle Runtime-Vertrag hat drei reguläre Nutzungsmodi: Lernen (geführte Szenen), Explorer (freier Strukturbaum) und Phineas Gage (animierte Fallstudie). Atlas ist kein gleichrangiger Startmodus, sondern ein präzises internes Supplement: TARO-Carves zeigen Areale direkt auf der didaktischen Bühne, der kanonische fsaverage-Atlas bleibt als Expert- und Deep-Link-Referenz erreichbar.
+
+Das V2-Zielbild führt diese Flows zu einem Unified Learning Mode zusammen. Explorer, Atlas, Fallstudien und Präsentation werden dort kontextuelle Surfaces im Lernraum, nicht parallele Mini-Apps.
 
 ## Brand Personality
 

@@ -10,7 +10,7 @@ als Vorarbeit, nicht als erledigte Abbildungs-Ersetzung.
 
 | Abb. | Status | Config(s) | Nachweis | Nächster Schritt |
 | :--- | :--- | :--- | :--- | :--- |
-| 11-04 | done | [basalganglienschleifen](../scripts/atlas/config.default.toml) | `smoke-figures.mjs`, `smoke-preset.mjs`, `build-config.test.mjs` | - |
+| 11-04 | done | [basalganglienschleifen](../scripts/atlas/config.default.toml) | `smoke-figures.mjs`, `build-config.test.mjs` | - |
 | 11-05 | done | [pfc-petrides](../scripts/atlas/config.default.toml) | `figureScenePackages.test.ts`, `build-config.test.mjs`, `smoke-figures.mjs` | - |
 | 11-06 | done | [fuster-gradient](../scripts/atlas/config.default.toml) | `figureScenePackages.test.ts`, `build-config.test.mjs` | - |
 | 11-07 | done | [badre-rostrokaudal](../scripts/atlas/config.default.toml) | `figureScenePackages.test.ts`, `build-config.test.mjs`, `smoke-figures.mjs` | - |

@@ -1,7 +1,7 @@
 /**
- * Figur-spezifische Farb-Presets: laedt `companion/config/color-presets.json` und loest
+ * Figur-spezifische Farb-Presets: lädt die kanonische Atlas-Config und löst
  * jede Gruppe (Buckets + Hue) auf konkrete Mesh-Farben auf. Trägt die didaktischen
- * Färbungen der Lehrbuch-Abbildungen (Abb. 11-04, 11-05, 11-13, ...).
+ * Färbungen der Lehrbuch-Abbildungen und Vortrags-Configs (Abb. 11-04, 11-05, 11-13, ...).
  *
  * Mehr-Hue-Palette ist hier bewusst erlaubt (didaktische Daten-Visualisierung: jede
  * funktionelle Gruppe braucht eine distinkte Farbe), bleibt aber gedaempft (kontrollierte
@@ -25,8 +25,7 @@ const ColorGroupSchema = z.object({
   buckets: z.array(z.string()).min(1),
 })
 
-const ColorPresetSchema = z.object({
-  id: z.string(),
+const ColorPresetNodeSchema = z.object({
   label: z.string(),
   sourceFigure: z.string().optional(),
   intent: z.string().min(1),
@@ -44,30 +43,91 @@ const ColorPresetSchema = z.object({
   }
 })
 
-const ColorPresetsFileSchema = z.object({
-  version: z.number(),
-  presets: z.array(ColorPresetSchema).min(1),
+const AtlasColorConfigSchema = z.object({
+  color_presets: z.record(ColorPresetNodeSchema),
+  configurations: z.record(z.object({
+    label_de: z.string(),
+    replaces_figure: z.string().optional(),
+    colors: z.object({
+      preset: z.string().optional(),
+      dim_others: z.boolean().optional(),
+      scheme: z.string().optional(),
+    }).optional(),
+    overlay: z.object({ scene: z.string().optional() }).optional(),
+  })),
+  presentation: z.record(z.object({
+    label_de: z.string(),
+    steps: z.array(z.string()),
+  })),
 })
 
 export type ColorGroup = z.infer<typeof ColorGroupSchema>
-export type ColorPreset = z.infer<typeof ColorPresetSchema>
+export type ColorPreset = z.infer<typeof ColorPresetNodeSchema> & { id: string }
 export type { ColorRole }
+
+export interface PresentationColorItem {
+  id: string
+  label: string
+  scene: string
+  sourceFigure?: string
+  colorScheme?: string
+  colorPresetId?: string
+  dimOthers?: boolean
+}
 
 /** Gedaempftes Neutral fuer nicht-gruppierte Strukturen, wenn `dimOthers` aktiv ist. */
 export const PRESET_DIM_COLOR = ATLAS_VIEWER_COLORS.presetDim
 
-const COLOR_PRESETS_URL = '/companion/config/color-presets.json'
+const ATLAS_CONFIG_URL = '/assets/atlas-canonical/atlas-config.json'
 
 /** Rohdaten gegen das Schema validieren (rein, fuer Tests + Loader). Wirft laut bei Verstoss. */
 export function parseColorPresets(raw: unknown): ColorPreset[] {
-  return ColorPresetsFileSchema.parse(raw).presets
+  const parsed = AtlasColorConfigSchema.parse(raw)
+  const entries = Object.entries(parsed.color_presets)
+  if (entries.length === 0) throw new Error('atlas-config.json enthaelt keine color_presets')
+  return entries.map(([id, preset]) => ({ id, ...preset }))
+}
+
+function parseAtlasColorConfig(raw: unknown): z.infer<typeof AtlasColorConfigSchema> {
+  return AtlasColorConfigSchema.parse(raw)
 }
 
 /** Presets laden + validieren. Wirft laut bei HTTP- oder Schema-Fehler (kein stiller Fallback). */
 export async function fetchColorPresets(): Promise<ColorPreset[]> {
-  const res = await fetch(COLOR_PRESETS_URL)
-  if (!res.ok) throw new Error(`color-presets.json nicht ladbar (HTTP ${res.status})`)
+  const res = await fetch(ATLAS_CONFIG_URL)
+  if (!res.ok) throw new Error(`atlas-config.json nicht ladbar (HTTP ${res.status})`)
   return parseColorPresets(await res.json())
+}
+
+export function presentationColorItemsFromConfig(raw: unknown, sequenceName = 'kapitel11-vorlesung'): PresentationColorItem[] {
+  const parsed = parseAtlasColorConfig(raw)
+  const sequence = parsed.presentation[sequenceName]
+  if (!sequence) throw new Error(`presentationColorItemsFromConfig: Sequence "${sequenceName}" fehlt`)
+  return sequence.steps.map((id) => {
+    const cfg = parsed.configurations[id]
+    if (!cfg) throw new Error(`presentationColorItemsFromConfig: Configuration "${id}" fehlt`)
+    const scene = cfg.overlay?.scene
+    if (!scene) throw new Error(`presentationColorItemsFromConfig: Configuration "${id}" hat kein overlay.scene`)
+    const colorPresetId = cfg.colors?.preset
+    if (colorPresetId && !parsed.color_presets[colorPresetId]) {
+      throw new Error(`presentationColorItemsFromConfig: Farb-Preset "${colorPresetId}" fehlt`)
+    }
+    return {
+      id,
+      label: cfg.label_de,
+      scene,
+      ...(cfg.replaces_figure === undefined ? {} : { sourceFigure: cfg.replaces_figure }),
+      ...(cfg.colors?.scheme === undefined ? {} : { colorScheme: cfg.colors.scheme }),
+      ...(colorPresetId === undefined ? {} : { colorPresetId }),
+      ...(cfg.colors?.dim_others === undefined ? {} : { dimOthers: cfg.colors.dim_others }),
+    }
+  })
+}
+
+export async function fetchPresentationColorItems(sequenceName = 'kapitel11-vorlesung'): Promise<PresentationColorItem[]> {
+  const res = await fetch(ATLAS_CONFIG_URL)
+  if (!res.ok) throw new Error(`atlas-config.json nicht ladbar (HTTP ${res.status})`)
+  return presentationColorItemsFromConfig(await res.json(), sequenceName)
 }
 
 /** Hue (0-360) -> gedaempftes Hex. Saettigung/Helligkeit fix, damit die Palette ruhig bleibt. */
@@ -108,6 +168,47 @@ export function resolvePresetColors(preset: ColorPreset): Map<string, string> {
     }
   }
   return out
+}
+
+/**
+ * Config-spezifischer Preset-Schnitt: Nur Buckets, die die aktive Config deklariert,
+ * bleiben in den Gruppen. Keine stillen Extra-Buckets in 3D oder Legende.
+ */
+export function restrictPresetToBuckets(preset: ColorPreset, buckets: readonly string[], context = preset.id): ColorPreset {
+  const wanted = new Set(buckets)
+  if (wanted.size === 0) {
+    throw new Error(`restrictPresetToBuckets: ${context} nutzt ein Farb-Preset ohne regions.buckets`)
+  }
+
+  const bucketOwners = new Map<string, string>()
+  for (const group of preset.groups) {
+    for (const bucket of group.buckets) {
+      const owner = bucketOwners.get(bucket)
+      if (owner && owner !== group.label) {
+        throw new Error(
+          `restrictPresetToBuckets: Bucket "${bucket}" liegt in mehreren Preset-Gruppen (${owner}, ${group.label})`,
+        )
+      }
+      bucketOwners.set(bucket, group.label)
+    }
+  }
+
+  const missing = [...wanted].filter((bucket) => !bucketOwners.has(bucket))
+  if (missing.length > 0) {
+    throw new Error(
+      `restrictPresetToBuckets: Preset "${preset.id}" deckt Config "${context}" nicht ab; fehlende Buckets: ${missing.join(', ')}`,
+    )
+  }
+
+  const groups = preset.groups.flatMap((group) => {
+    const relevantBuckets = group.buckets.filter((bucket) => wanted.has(bucket))
+    return relevantBuckets.length > 0 ? [{ ...group, buckets: relevantBuckets }] : []
+  })
+  if (groups.length === 0) {
+    throw new Error(`restrictPresetToBuckets: Config "${context}" hat keine relevante Preset-Gruppe`)
+  }
+
+  return { ...preset, groups }
 }
 
 /**

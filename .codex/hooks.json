@@ -1,0 +1,67 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\"; [ -z \"$ROOT\" ] && exit 0; exec uv run --no-project --quiet \"$ROOT/.codex/hooks/scripts/alrah_hooks.py\" --hook SessionStart'",
+            "timeout": 20,
+            "statusMessage": "Loading ALRAH Codex context"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\"; [ -z \"$ROOT\" ] && exit 0; exec uv run --no-project --quiet \"$ROOT/.codex/hooks/scripts/alrah_hooks.py\" --hook PreToolUse'",
+            "timeout": 10,
+            "statusMessage": "Checking Bash command against ALRAH policy"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\"; [ -z \"$ROOT\" ] && exit 0; exec uv run --no-project --quiet \"$ROOT/.codex/hooks/scripts/alrah_hooks.py\" --hook PostToolUse'",
+            "timeout": 10,
+            "statusMessage": "Applying ALRAH post-tool guidance"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\"; [ -z \"$ROOT\" ] && exit 0; exec uv run --no-project --quiet \"$ROOT/.codex/hooks/scripts/alrah_hooks.py\" --hook UserPromptSubmit'",
+            "timeout": 10,
+            "statusMessage": "Checking ALRAH prompt context"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -lc 'ROOT=\"$(git rev-parse --show-toplevel 2>/dev/null)\"; [ -z \"$ROOT\" ] && exit 0; exec uv run --no-project --quiet \"$ROOT/.codex/hooks/scripts/alrah_hooks.py\" --hook Stop'",
+            "timeout": 15,
+            "statusMessage": "Running ALRAH stop guard"
+          }
+        ]
+      }
+    ]
+  }
+}
