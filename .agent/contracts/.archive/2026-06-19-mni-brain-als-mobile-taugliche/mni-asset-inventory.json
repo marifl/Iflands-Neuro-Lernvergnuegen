@@ -1,0 +1,5096 @@
+{
+  "generatedAt": "2026-06-19T15:37:00.963Z",
+  "sourceRoot": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/MU - SS26 - Kognitive Neurowissenschaften",
+  "manifestPath": "apps/brain-app/public/figs3d/v2/brain-models.json",
+  "selectionRules": [
+    "brain-models.json referenced active GLBs",
+    "active mni152-native-highqual-brain*.glb",
+    "active mni152-learn-brain.glb",
+    "active mni152-composition-brain.glb",
+    "active subcortex-cit168.glb",
+    "active regions_bigbrain/*-{hires,medium,low}.glb",
+    "excluded _archive, .backup*, .pre-*, backup-pre*, pre-realign paths"
+  ],
+  "totals": {
+    "count": 163,
+    "mb": 240.52,
+    "vertices": 65837614,
+    "indices": 391376235
+  },
+  "mobileBudget": {
+    "fileMbMax": 8,
+    "verticesMax": 1600000,
+    "indicesMax": 10000000,
+    "materialsMax": 24,
+    "meshesMax": 550
+  },
+  "mobileCandidate": {
+    "path": "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-mobile-balanced.glb",
+    "mb": 6.37,
+    "vertices": 1523433,
+    "indices": 9036696,
+    "materials": 22,
+    "meshes": 544,
+    "pass": true
+  },
+  "reproducibility": {
+    "sortedPathHashListSha256": "247d36be5cc4623de5469a409189c8f6164328fa479975c51b692e8b31f67b1f",
+    "hashList": [
+      "apps/brain-app/public/figs3d/v2/glb/mni152-composition-brain.glb\tsha256:ac7701534ce3f47280a8c174bb84c0a1af1b62c928f57b090990e239cc66fb65",
+      "apps/brain-app/public/figs3d/v2/glb/mni152-learn-brain.glb\tsha256:1278461a205a7a81710ed3c04e945510791f36902c2cd2e533e67b37be5da45e",
+      "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-cutplane-balanced.glb\tsha256:7365e347a816a6b0027f22a116c07c4d56750a7bc1399abc111817a5092f1938",
+      "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-desktop-balanced.glb\tsha256:8ce7ef60eef5f78b71b34cee8f8cd62e6eecd0e908d8f609dc70805efba3a269",
+      "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-mobile-balanced.glb\tsha256:f8b803eb78b9c484b452b256a0fe9d1da03a6d4e9f2cb4240ea1711791edb36c",
+      "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain.glb\tsha256:dffbd9ea68f4dfeeef39165b20d4e6ad530a4a5d522d689b5196e81939bbb689",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-hires.glb\tsha256:37c16dc9d2d06bdb2ba77a292a3378cb602165dd1de7b24bcf679c553f7816f9",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-low.glb\tsha256:a9a0fa12403b4a6a30f3367c5c4eefae10565e65c66fb3e00024245bbefa9a30",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-medium.glb\tsha256:d923586d588c4d5c0b4765adbcea687de2631628dfe66fa3d07ebfd9eda105ab",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-hires.glb\tsha256:0553ea70a8237587feab3f0f201b9d391884904933205193b5e0da7406d1f295",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-low.glb\tsha256:05659a0402fff6805f2921450ffe0a2b19d8381716154a41e4e93b532d198e16",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-medium.glb\tsha256:044719d45565be9a874d1962b207a358b5a5ab771933b0d1827dddf174798431",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-hires.glb\tsha256:cf52e0af031aa84cd40906f28f33b733afb7c20171e0c65d7ef571b54e0bb43f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-low.glb\tsha256:f72bd03dc44a6d6ee3b7932411c57cdef6809b155da371994978248825a6c829",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-medium.glb\tsha256:7b9ad62575403ce7deba27bbd3eecfdb57c769d8751c55ab56f1a0acec1c2354",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-hires.glb\tsha256:45fe5a374dbb85b02cfc97939a7de09be2d624960ed39a325f11f332b26fed27",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-low.glb\tsha256:6483f3302b86154c1150ee87e9da30cddcb9062c33ec7af75b8b32511ddd1323",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-medium.glb\tsha256:17e5e8b144f9d3866a1da49cf973bd7062135fd76b116c2584bd63120f45da6a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-hires.glb\tsha256:4e411045f9193e3c1c1e05b7543d1bc9fddf477ef4c5f0ccf06b87940f64263a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-low.glb\tsha256:fa6150be0e3c779e4a4a32e4d443401be53416d61469276301d8979b90f67add",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-medium.glb\tsha256:236a97a4910bfd0626e73888c95145856ca8c1f913d2f668da36824252c90d2f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-hires.glb\tsha256:912a5be7289558741cb7619b95817f19d9846addbaebe56eba77f068cf352667",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-low.glb\tsha256:7a08999e6482fa478fa2637816f44a972501fcfa926de2ab1512e08c9704537b",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-medium.glb\tsha256:d2f6399de557e0eed8506c48d188866a250bae4b8d2c758e93ab4a97a2d34a2f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-hires.glb\tsha256:2104222f34cd2fa0d08877403550947b14d3f7f35729aca0ef98653918803877",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-low.glb\tsha256:8ba67c527ed4420ca46bf5241a930bdd54e4719fe39644b5d4da1bdcefb3223e",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-medium.glb\tsha256:bad2df2c0ad09395b12c02f79cc673ba54fc89ef29dc1a6e9183fbca89de40a4",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-hires.glb\tsha256:a9752a8630bd2a114475dce51764cf3f3b3c3c9e1c803b1184a776d8dc1ff5a3",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-low.glb\tsha256:9fb285071254545f626ff18dbf5a268f64c016eef915e33a689ab9688381b2f4",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-medium.glb\tsha256:d22aa62908bd3dae12cf686a97d3e3daf0d673742246600a5ff89bc84c5a9b77",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-hires.glb\tsha256:d6a904f2dcd0734a67e2bfa08658bd38896a538e8f443d11928b0bf432119abd",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-low.glb\tsha256:506ddb47d6e7ae394990eda2e3769544244d6c14fa35e4c4ecb408d275eb2561",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-medium.glb\tsha256:90509445bc0d6e510e0d5126a7750c04ab68252f549e2df3de190364591f5cf7",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-hires.glb\tsha256:e0d85313175ba1407f57d82b0a3eb9b7fc5547c0a1a465d47a4b4c57dd21d1ed",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-low.glb\tsha256:881e0b17bb22b6adc2c8008959a434fead4de21dd2d0a8638089655864408008",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-medium.glb\tsha256:c9b785175ce338c2b36d9d419087ba361b311503e86469bec48d1b6d43820cf4",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-hires.glb\tsha256:b541980a4497870829fc6920d4a2f077961a15175a0ab6346deba49a4e8f126f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-low.glb\tsha256:fb6205b67d653d12cb900f19859d59cdef95990b63b9c66b1cfc63d716b4f4e1",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-medium.glb\tsha256:d631b3a335a30908746da182e53ced4f4273699082eb987394568793c7d97478",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-hires.glb\tsha256:7b78141ef129ac3a92da2bb6a1a67045292bd6bb0089886da9d9934b38a1b1b2",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-low.glb\tsha256:d8c97f69a6da3aa1478b3d602b03fd5bbc0ec2d1be5ae803a48b347bfb6b4c2f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-medium.glb\tsha256:0bb4d38b8bf1c24e25bf34acf67841c56e41d82dc280c69dc5d6dd85cfe0a063",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-hires.glb\tsha256:ad5dd9615d8b9280e9567b2a277a9469b85296930f0c13dbf53b5f901195950e",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-low.glb\tsha256:81e011bb8d4eb582486758c8ca579e44aa588f1abe341850eeae142542a3d953",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-medium.glb\tsha256:d7d0ebcd73d6ecd0432ccc450ebe2c6817411455b79981476705d8eb08608762",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-hires.glb\tsha256:a64d631067b8c47b260b41fc6d8d7a3eb532b750fc870e27b4269cf512a31293",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-low.glb\tsha256:6b1ba723cd826f03d77c56740d6000a38456dbee6130891b7d413a373300d1fa",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-medium.glb\tsha256:ba0f97aba6f6c1df933eafe5cbd42c4c5bcb4111f517352ec4e670c4bbcfbb76",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-hires.glb\tsha256:c1dec5bad723c2f39e3ea1e5da10f6432e5e2e280ba665cf0dd377871f733d23",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-low.glb\tsha256:3587988bcd3f5e418b1c7398271fc38a99f53c3b983bbfd90a352b73e717a37b",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-medium.glb\tsha256:f2312ce24277302064a67ce322321f7220aa8ccc1b60595bee4221d1a23ee166",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-hires.glb\tsha256:83082d35e9816339c3f813503457a0d825fef442468306747810c03aaef8c7b7",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-low.glb\tsha256:d81707dcbc245b6d3a31c26408801824983ca2a6e29ed8621e2402cef2f00ed7",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-medium.glb\tsha256:b1efa25eb33c0c679bc698b064d1d9b14117135c4463fb680592cd776801e488",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-hires.glb\tsha256:04567a0fbad17f034be99819c303c9db62c9388a2ccf9aae35483e6fc33fd1e4",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-low.glb\tsha256:896705fe72517aab61e62b1c72d371aeeedf4aea83495497e0951a2cef8de3d4",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-medium.glb\tsha256:c9ad8e81c11eb7694eb1156a03803679ef91ae17c3279c15a8ef4e62f5f90483",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-hires.glb\tsha256:2b171d4090df32c94ef326248001c021231040d9df032ad3b111573cfe7f4f99",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-low.glb\tsha256:18746369343ddf81e1894823c3e303e2b5e336c16eb92d7ea1bede56651295e8",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-medium.glb\tsha256:4b2247b6929485e6c911867a28c330ac1b70f3f024156daa6816281287f0c13c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-hires.glb\tsha256:c84b67b0d1224ce2b721d8f84ded7e64d16b39ebec8d5d822465dae4c0956f10",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-low.glb\tsha256:ead29594f124271a89dc7cfc5ab91c6087b26ef4eec49439e7d14b6718a2aeed",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-medium.glb\tsha256:b6a88b1b205f80ed4fad1ab25200239cd24a846ee410f16bca7c93523ce2b516",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-hires.glb\tsha256:0deaaff24d1c265eb69a816246b4589e7d9b1b793e55c777b5f89f9504f505b5",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-low.glb\tsha256:438d3868e981132f18ab132a9a3f4251e722b07b2e20936d63f8e1654df1ef5c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-medium.glb\tsha256:eb02500d9fd9189576837827c7df26c7e129ffa0a2b5f1b30f0a66d5700df0ab",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-hires.glb\tsha256:55964964ed73db9a220c42e77511ad4f032c1b866ddf47e3b984a0b9839449fb",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-low.glb\tsha256:da734221be036bab49a5ae75e8e49f5361e2375893de90c76b0408f01e4d738f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-medium.glb\tsha256:edd6587e9d8d5955152ed39a679d97764d22b74a3cff6612485773aeeacb67c8",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-hires.glb\tsha256:cd98e93414c1bbe981a7b45c4e3bf40aeea94c81c1e4f772cddc1aa828d6a379",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-low.glb\tsha256:e8de6165c56d89cf5665f1bdf2d4043f223e20dc01f83a5ec814b73c9c5c9a2c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-medium.glb\tsha256:d5b673f766b6f3f504c7af8295e2f7ffb65cd2aecca7423cb08fad24876f14ab",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-hires.glb\tsha256:0df5ca852710d0bfe6379b7bcdae130f80282939ab6cb462f8a8e93c79216853",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-low.glb\tsha256:c5724e0c87a0bfce3103b3a47dc0cb2dae3b1993db51c69744d9373fad7d200a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-medium.glb\tsha256:705ee9e75d65ea7587d1f7f5cb02cee3cf67dae366f5656bf9860eb02bad03fe",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-hires.glb\tsha256:e0b2a78ac2da404333413e75e2dabae62f43f712885314b987aaf5e25b872579",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-low.glb\tsha256:c340ef25de494e1bf7512530dd8eb6d1fb2d2feb8cd6b5779ab3369365116175",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-medium.glb\tsha256:e7b5625212d79d0e8cbb7f2e12509a6d343597a5c94fd0f3aee024736c9b2321",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-hires.glb\tsha256:4a380974b27c07b6f37fd558ce16e3024fac317467bfe32ba6b4e17deadebcf3",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-low.glb\tsha256:0fab5d362a1f3504067640cd615aaf3ae8794d36c3fcaa3bc3430b40bdf75271",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-medium.glb\tsha256:4cb9490a72c8dde543561850a68b8cf0f5a49ebf59492b3153feb43beaa75b72",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-hires.glb\tsha256:7d7619066499baeec2eb2e6241fa92534a6e2848a1a4eeaf248f251e1f7b0d72",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-low.glb\tsha256:4cef7003da64e18ead5fa35a8c908d81414272fbc203f5abb0671e673be4c3b5",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-medium.glb\tsha256:08920c8c37881fd216b7a062c80b6f2e94dab1b8186d02ed7c98c77988e400e2",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-hires.glb\tsha256:2427e1f0cb283479449866dc28715e8343561ee2b081fc148699385cfaf24cfb",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-low.glb\tsha256:f5005fd039612346086eadf92b9f750da216ae35825662dd54557f911a9d1144",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-medium.glb\tsha256:cb121aa27d0daa26852d72d837e30721afc5ac82d66c3d7385359f3c3493a58d",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-hires.glb\tsha256:0c75f71383efda41f6b1a56128b3751c27d5941c4f1390b987f0635daf1c3241",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-low.glb\tsha256:8b84cf01a3d448f7bf8348f6cd20693eae5e99464c19b6866b426be8c11e848d",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-medium.glb\tsha256:755793763ed4f0cabff7172d7b92fa7fc2f45f02ed6adaca91ba76351c063c45",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-hires.glb\tsha256:0c0747c9c4952b6e2e247bce652ad4830c3925e5bdcf52558246c6c208445444",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-low.glb\tsha256:55ec2c54d4eeb6ec26880685f0d19ddeb8f5923e1440f6f4e1bba5be84fc7e63",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-medium.glb\tsha256:3c465d99b8d469de046708f9d9236ef2419fcd9430d3e6cfce5f7904d1ab9f65",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-hires.glb\tsha256:74e3f91b7a0629e84f8e0ed6e4e399298cb2ea44e4a2fffc8f3ddf974ed78f37",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-low.glb\tsha256:49b9f8e61eb6a82d4ea24ef3886db6909856394a1813402c5cb6095b30ecf702",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-medium.glb\tsha256:512ed19f88662ea8196ede425014942833330bd7e56a7eb052252edddc75438e",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-hires.glb\tsha256:c16711646d7961fec1ecdb6f563fb6518beda26844429f4c1bc00c75d7d6fd1a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-low.glb\tsha256:6488bd74d27f6abb17a37b9c7c000a09512466c54249ebc0dd2609c16ad60dff",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-medium.glb\tsha256:b15789e51231a4e5b119de36ebab3a50f6e8872937e3389287852596ad78edcf",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-hires.glb\tsha256:ec20900c08bfad3f9c010eb01705670c2e6d7c6cee05d8f24483b4be87dff253",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-low.glb\tsha256:68fc5314923198eba43ada89df4f755e34e426e6077defa94b046d2cf9db5b89",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-medium.glb\tsha256:02fe457a2a43c793469f7dcb2ccf46bc89b8c9b58d41a9d65ca1aa79a29ed215",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-hires.glb\tsha256:cb259c14c6748a8e4d65034f7caa73617f73eb187b053b0d8b7b6006bbc9aa41",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-low.glb\tsha256:14a62d7a06773a454ccfeedb6f7dc4466b913c8eac3284563626d3f05e2f6a78",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-medium.glb\tsha256:e18e63ba0d270ff01f4efa75da086726dd4f8fc065dd83cc13b68aecd482bc6e",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-hires.glb\tsha256:5420f17c6a15fd9f04e6e5cdc1bd7b2641ef55c24424235c4bee1b3ff6dd6088",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-low.glb\tsha256:ce6468e84120d5115774cec7e2a4c1455de4252fa1a60fb71f55e486a481be55",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-medium.glb\tsha256:2f9d4629d4f659e916dca12181fde0fab42cfb1a208af86363b2894adca22ea7",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-hires.glb\tsha256:e6e5860304fb068a568c778c8fec475e6e955455e8540177c3b100c3633baff0",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-low.glb\tsha256:b7d6d4ae3878456616d3929a8bd0ffa2b481a0748a196763c119cd109ad47f92",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-medium.glb\tsha256:4cbe4367c2e45e1ee68d52b79171fd021408520a2d285ad8cb2b1c0262150636",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-hires.glb\tsha256:d5fe666705b59ea868fede71aceaad9528bafc6ac093d0fe3ba0cebf712cab13",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-low.glb\tsha256:837b1ef0e89cd1f06a413535d450a6fff29cf280b27e8bea4f031ade4d017509",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-medium.glb\tsha256:0e28bb6f9ef9455e20ea5c668fde3fae257c1a005ec573aa920d6e77c644ba87",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-hires.glb\tsha256:9846afa6b135723544872661ff94b3c027830afb9e0d29b276236f37c9344441",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-low.glb\tsha256:935d4c76088b3330191862d1d14f565bc345a0f538e6bfa012d371f06f8c1df7",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-medium.glb\tsha256:ba0dcdd5e65ba5858a514cf88053539aff03ac7e411c798d002b9f8a101bf6d0",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-hires.glb\tsha256:c984b9d653cf4c04dc4fbe7c9680900b47c41f497d5473b512e9897f4a9c97d1",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-low.glb\tsha256:3a045c3ece2aa07d6a4d2181a4569f729ca83ec0f0f93224d84808abfda95a32",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-medium.glb\tsha256:cbe082bca6dc2c4d5a4422d81b94c728a77ccbef56f9f29c34f0c53b3d51dd1c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-hires.glb\tsha256:5307eda38d8ca6e234ace561c12591d536f0bdffa5f34d5453bdf259bfbacfc3",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-low.glb\tsha256:edf54d1d61157ba7276e0d326189cb72e263ea6e76b8cdcdcd0d8df6f7ff06ee",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-medium.glb\tsha256:ff7ef7b030c9b72aa6c8dddf2f0025dca3e3428839323870b09bd038fba0a88f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-hires.glb\tsha256:b58659a702202337c977ba6edac48ff1d7c7ef8ca3af273452ca50660b57ec42",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-low.glb\tsha256:9616faf4bcb657e01142602dc1771ad4fab8fc3097579ea82759d5986e084ec3",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-medium.glb\tsha256:5f9d099dd5a06d151d99183066a1529106b5998850068207ab9216c75143a698",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-hires.glb\tsha256:3aa7199888602bba0fd3421acb356d4c3899891af359a0da32ef52fec77cfeff",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-low.glb\tsha256:3dfeaad88fd186cff36d11d4e12f5ea1d88de9daefbc9ec2b03f52480353deb5",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-medium.glb\tsha256:1417ddab22c1fe45e73935dcb2f58c2f5e13b9827e4ade9a7c792a7c37d33dc9",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-hires.glb\tsha256:d9be1897d35a61aad75dd8b4fe51fab167f9db6ecdd8b7fae8c72bb0d78c4fad",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-low.glb\tsha256:c8c5734440fbcf5c85292764c365b09bf39890cb51f1a27c320bb1fb7839b68c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-medium.glb\tsha256:2b2553d348bbb90a2317175533dacb980a7a8d3e0f1e0e15d216abd38674c36e",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-hires.glb\tsha256:d56dc92062ece73b91e3e111ffae5f646f78296ffa6bc6c120efa270488e88f9",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-low.glb\tsha256:af9cd4c0eb295d458acc94636bd95bc5b0b85029af8be4ff8f2d67dfeac3eb57",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-medium.glb\tsha256:206cc2ccbd722f923d61973f94c2b615e84c130ac82cb409e98e75835ed2dc0c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-hires.glb\tsha256:e0759d49da218273ffda1f0c6eb9cd8209162e994198ecbb7cf704d624be9c5a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-low.glb\tsha256:b70a231d5038b7440fea16e296a3b56c223f94bd6656cbff73bc8423935d5b79",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-medium.glb\tsha256:e4ca530782a811e4aa2a4fb7890dcd4175ed7fe3b2331b4c34a16d87e544761f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-hires.glb\tsha256:c8880e72bc3461321fc29a3ec14a439c6dac3c109f63ff6cbdc706776e76f593",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-low.glb\tsha256:d47de078bdccbbe31cdaafd19b1a7d11703bbc3f3a95a6d7d5a607585541b49d",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-medium.glb\tsha256:aa675c3966b95e524eb3423ecfb8e03f5e219d2265dbec548f828ef5186d7c12",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-hires.glb\tsha256:e69fe2cee6ba5e83ea012154cd3f60895fe76043034d17063d9bdae2f1172a5f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-low.glb\tsha256:fc38b4b048e121ee10ee18c5ba2d1323f135fc8527c858e8b3ffb7c33b64c682",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-medium.glb\tsha256:ed84ebdc7fac8ea191c7034d38cb21ca3841f7039d9c737a6d289238a2a1b662",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-hires.glb\tsha256:67a808aada09856e765d03f871b26569b24afce5e5c49133c20f512725ca402a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-low.glb\tsha256:e5a7d456e1b4be6889320679f6fccd15fe474c9aeb13f698d53f6d5993266023",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-medium.glb\tsha256:91f51e480a825aedec545308ead47a0ffb08c517d758c95ae04dcdce95f2be7c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-hires.glb\tsha256:64dc956a045b5916154d3f184e597dcaa306ff8c207c9051e2893e2de060bbbb",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-low.glb\tsha256:c03d3e00de3b3716426b21b496b44fd17580a108311a83a7962e94135e0f4c27",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-medium.glb\tsha256:8e50bb0464f572539f4bbd39c551f871173b5be97306cbe1020c6b37586b6045",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-hires.glb\tsha256:0df838ab62ee64cbfdfcd041c1cfde22a52b5ed4a6b0fe12528328c32eb53e78",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-low.glb\tsha256:89e1240e0da97f8cdf6cd14562e770223b628f299c438f5fa92308e952e20b43",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-medium.glb\tsha256:4e80fd79e1d5dc9323d65dc7c4a2c02984e72abe223ea91a7703810e81e8e82a",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-hires.glb\tsha256:a9f8c3147f67c5721da5818e663b27c2e5cdf6deff3559b19729cc857c7f73b5",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-low.glb\tsha256:a394e2dc3b21c5ed1e376094f7f26a6a7b9592c331370861eae78238e2d587cb",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-medium.glb\tsha256:5c75826e8769022812ce0d419a66243b2d22612d446320aa8fc22aade357c84d",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-hires.glb\tsha256:e02b9678ef300dd22b7f7b2e9ed12c550390ec5730d599aa824f2c384823eecc",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-low.glb\tsha256:df84d7ade03606fdb3b46031d8188faf5b886db726d7a055d88e212dde43b53c",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-medium.glb\tsha256:ed6f7c1f62949938d7dc47686c87183f80c119a1e0b35f59c32a1abd86288055",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-hires.glb\tsha256:b43265698d3abd86f493745596be3db9d3db2e363618c21831a0a8c4a84f630f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-low.glb\tsha256:0ff4d7bea9487532d049581d34b1164f760d608ecf500d6180c8bc3d7503260f",
+      "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-medium.glb\tsha256:2f518dcbb28b280b15cbd66380b75ca9ef121d1a420251b70602ad69372c381b",
+      "apps/brain-app/public/figs3d/v2/glb/subcortex-cit168.glb\tsha256:7ab6541f3a08339558c55c7683e80b63a61836e8cceca8293e3804ad34d8255d"
+    ]
+  },
+  "assets": [
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-composition-brain.glb",
+      "exists": true,
+      "role": "legacy-composition",
+      "hash": "sha256:ac7701534ce3f47280a8c174bb84c0a1af1b62c928f57b090990e239cc66fb65",
+      "mb": 79.7,
+      "nodesWithMesh": 503,
+      "meshes": 503,
+      "materials": 300,
+      "primitives": 503,
+      "vertices": 15071198,
+      "indices": 89512848,
+      "bbox": {
+        "min": [
+          -77.471,
+          -94.846,
+          -95.502
+        ],
+        "max": [
+          77.991,
+          69.787,
+          92.2
+        ],
+        "size": [
+          155.462,
+          164.633,
+          187.702
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-learn-brain.glb",
+      "exists": true,
+      "role": "legacy-learn",
+      "hash": "sha256:1278461a205a7a81710ed3c04e945510791f36902c2cd2e533e67b37be5da45e",
+      "mb": 15.05,
+      "nodesWithMesh": 434,
+      "meshes": 434,
+      "materials": 434,
+      "primitives": 434,
+      "vertices": 2826038,
+      "indices": 14668329,
+      "bbox": {
+        "min": [
+          -72.194,
+          -84.964,
+          -107.164
+        ],
+        "max": [
+          71.402,
+          63.79,
+          89.695
+        ],
+        "size": [
+          143.595,
+          148.754,
+          196.858
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-cutplane-balanced.glb",
+      "exists": true,
+      "role": "manifest:cutplane-balanced",
+      "hash": "sha256:7365e347a816a6b0027f22a116c07c4d56750a7bc1399abc111817a5092f1938",
+      "mb": 15.29,
+      "nodesWithMesh": 546,
+      "meshes": 544,
+      "materials": 22,
+      "primitives": 544,
+      "vertices": 4176309,
+      "indices": 24982236,
+      "bbox": {
+        "min": [
+          -77.471,
+          -94.836,
+          -95.502
+        ],
+        "max": [
+          77.987,
+          68.686,
+          92.132
+        ],
+        "size": [
+          155.458,
+          163.522,
+          187.634
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-desktop-balanced.glb",
+      "exists": true,
+      "role": "manifest:desktop-balanced",
+      "hash": "sha256:8ce7ef60eef5f78b71b34cee8f8cd62e6eecd0e908d8f609dc70805efba3a269",
+      "mb": 11.61,
+      "nodesWithMesh": 546,
+      "meshes": 544,
+      "materials": 22,
+      "primitives": 544,
+      "vertices": 3054488,
+      "indices": 18244428,
+      "bbox": {
+        "min": [
+          -77.471,
+          -94.836,
+          -95.482
+        ],
+        "max": [
+          77.987,
+          68.686,
+          92.132
+        ],
+        "size": [
+          155.458,
+          163.522,
+          187.614
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain-mobile-balanced.glb",
+      "exists": true,
+      "role": "manifest:mobile-balanced",
+      "hash": "sha256:f8b803eb78b9c484b452b256a0fe9d1da03a6d4e9f2cb4240ea1711791edb36c",
+      "mb": 6.37,
+      "nodesWithMesh": 546,
+      "meshes": 544,
+      "materials": 22,
+      "primitives": 544,
+      "vertices": 1523433,
+      "indices": 9036696,
+      "bbox": {
+        "min": [
+          -77.471,
+          -94.746,
+          -95.482
+        ],
+        "max": [
+          77.807,
+          68.686,
+          91.905
+        ],
+        "size": [
+          155.278,
+          163.433,
+          187.387
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain.glb",
+      "exists": true,
+      "role": "manifest:source-hq",
+      "hash": "sha256:dffbd9ea68f4dfeeef39165b20d4e6ad530a4a5d522d689b5196e81939bbb689",
+      "mb": 45.51,
+      "nodesWithMesh": 546,
+      "meshes": 546,
+      "materials": 316,
+      "primitives": 546,
+      "vertices": 15235480,
+      "indices": 91344882,
+      "bbox": {
+        "min": [
+          -77.471,
+          -94.846,
+          -95.502
+        ],
+        "max": [
+          77.987,
+          68.686,
+          92.2
+        ],
+        "size": [
+          155.458,
+          163.532,
+          187.702
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:37c16dc9d2d06bdb2ba77a292a3378cb602165dd1de7b24bcf679c553f7816f9",
+      "mb": 0.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 174677,
+      "indices": 1047510,
+      "bbox": {
+        "min": [
+          -28.727,
+          -35.666,
+          -16.965
+        ],
+        "max": [
+          -15.116,
+          -28.243,
+          -4.066
+        ],
+        "size": [
+          13.611,
+          7.424,
+          12.898
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:a9a0fa12403b4a6a30f3367c5c4eefae10565e65c66fb3e00024245bbefa9a30",
+      "mb": 0.09,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 26216,
+      "indices": 157110,
+      "bbox": {
+        "min": [
+          -28.721,
+          -35.665,
+          -16.953
+        ],
+        "max": [
+          -15.117,
+          -28.244,
+          -4.074
+        ],
+        "size": [
+          13.605,
+          7.421,
+          12.879
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d923586d588c4d5c0b4765adbcea687de2631628dfe66fa3d07ebfd9eda105ab",
+      "mb": 0.27,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 87342,
+      "indices": 523749,
+      "bbox": {
+        "min": [
+          -28.727,
+          -35.666,
+          -16.953
+        ],
+        "max": [
+          -15.116,
+          -28.243,
+          -4.066
+        ],
+        "size": [
+          13.611,
+          7.423,
+          12.887
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0553ea70a8237587feab3f0f201b9d391884904933205193b5e0da7406d1f295",
+      "mb": 0.47,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 190651,
+      "indices": 1143804,
+      "bbox": {
+        "min": [
+          13.088,
+          -34.732,
+          -17.958
+        ],
+        "max": [
+          26.922,
+          -28.997,
+          -5.826
+        ],
+        "size": [
+          13.834,
+          5.736,
+          12.132
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:05659a0402fff6805f2921450ffe0a2b19d8381716154a41e4e93b532d198e16",
+      "mb": 0.1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 28599,
+      "indices": 171561,
+      "bbox": {
+        "min": [
+          13.088,
+          -34.721,
+          -17.959
+        ],
+        "max": [
+          26.917,
+          -28.997,
+          -5.827
+        ],
+        "size": [
+          13.829,
+          5.724,
+          12.132
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-aaa-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:044719d45565be9a874d1962b207a358b5a5ab771933b0d1827dddf174798431",
+      "mb": 0.29,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 95334,
+      "indices": 571890,
+      "bbox": {
+        "min": [
+          13.088,
+          -34.732,
+          -17.959
+        ],
+        "max": [
+          26.917,
+          -28.997,
+          -5.827
+        ],
+        "size": [
+          13.829,
+          5.736,
+          12.132
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:cf52e0af031aa84cd40906f28f33b733afb7c20171e0c65d7ef571b54e0bb43f",
+      "mb": 0.39,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 146224,
+      "indices": 876444,
+      "bbox": {
+        "min": [
+          -20.036,
+          -36.896,
+          -10.663
+        ],
+        "max": [
+          -15.828,
+          -32,
+          -4.645
+        ],
+        "size": [
+          4.208,
+          4.895,
+          6.018
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:f72bd03dc44a6d6ee3b7932411c57cdef6809b155da371994978248825a6c829",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 21941,
+      "indices": 131463,
+      "bbox": {
+        "min": [
+          -20.035,
+          -36.896,
+          -10.662
+        ],
+        "max": [
+          -15.828,
+          -32,
+          -4.648
+        ],
+        "size": [
+          4.206,
+          4.895,
+          6.014
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:7b9ad62575403ce7deba27bbd3eecfdb57c769d8751c55ab56f1a0acec1c2354",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 73126,
+      "indices": 438201,
+      "bbox": {
+        "min": [
+          -20.036,
+          -36.896,
+          -10.663
+        ],
+        "max": [
+          -15.828,
+          -32,
+          -4.646
+        ],
+        "size": [
+          4.208,
+          4.895,
+          6.017
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:45fe5a374dbb85b02cfc97939a7de09be2d624960ed39a325f11f332b26fed27",
+      "mb": 0.36,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 138649,
+      "indices": 830856,
+      "bbox": {
+        "min": [
+          14.059,
+          -34.963,
+          -12.074
+        ],
+        "max": [
+          18.817,
+          -31.838,
+          -5.454
+        ],
+        "size": [
+          4.757,
+          3.125,
+          6.62
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:6483f3302b86154c1150ee87e9da30cddcb9062c33ec7af75b8b32511ddd1323",
+      "mb": 0.07,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 20816,
+      "indices": 124620,
+      "bbox": {
+        "min": [
+          14.061,
+          -34.965,
+          -12.072
+        ],
+        "max": [
+          18.818,
+          -31.838,
+          -5.456
+        ],
+        "size": [
+          4.757,
+          3.127,
+          6.616
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahid-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:17e5e8b144f9d3866a1da49cf973bd7062135fd76b116c2584bd63120f45da6a",
+      "mb": 0.22,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 69343,
+      "indices": 415404,
+      "bbox": {
+        "min": [
+          14.061,
+          -34.963,
+          -12.074
+        ],
+        "max": [
+          18.817,
+          -31.838,
+          -5.454
+        ],
+        "size": [
+          4.756,
+          3.125,
+          6.62
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4e411045f9193e3c1c1e05b7543d1bc9fddf477ef4c5f0ccf06b87940f64263a",
+      "mb": 0.35,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 136389,
+      "indices": 816504,
+      "bbox": {
+        "min": [
+          -19.373,
+          -39.415,
+          -9.698
+        ],
+        "max": [
+          -15.134,
+          -34.415,
+          -6.782
+        ],
+        "size": [
+          4.239,
+          5,
+          2.916
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:fa6150be0e3c779e4a4a32e4d443401be53416d61469276301d8979b90f67add",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 20504,
+      "indices": 122457,
+      "bbox": {
+        "min": [
+          -19.372,
+          -39.411,
+          -9.698
+        ],
+        "max": [
+          -15.134,
+          -34.416,
+          -6.782
+        ],
+        "size": [
+          4.239,
+          4.995,
+          2.916
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:236a97a4910bfd0626e73888c95145856ca8c1f913d2f668da36824252c90d2f",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 68220,
+      "indices": 408237,
+      "bbox": {
+        "min": [
+          -19.373,
+          -39.415,
+          -9.697
+        ],
+        "max": [
+          -15.134,
+          -34.415,
+          -6.782
+        ],
+        "size": [
+          4.239,
+          5,
+          2.916
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:912a5be7289558741cb7619b95817f19d9846addbaebe56eba77f068cf352667",
+      "mb": 0.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 170025,
+      "indices": 1017912,
+      "bbox": {
+        "min": [
+          13.534,
+          -38.277,
+          -11.468
+        ],
+        "max": [
+          17.717,
+          -33.224,
+          -7.912
+        ],
+        "size": [
+          4.183,
+          5.053,
+          3.556
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:7a08999e6482fa478fa2637816f44a972501fcfa926de2ab1512e08c9704537b",
+      "mb": 0.1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 25552,
+      "indices": 152670,
+      "bbox": {
+        "min": [
+          13.535,
+          -38.277,
+          -11.466
+        ],
+        "max": [
+          17.713,
+          -33.226,
+          -7.912
+        ],
+        "size": [
+          4.177,
+          5.051,
+          3.554
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ahiv-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d2f6399de557e0eed8506c48d188866a250bae4b8d2c758e93ab4a97a2d34a2f",
+      "mb": 0.28,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 85038,
+      "indices": 508941,
+      "bbox": {
+        "min": [
+          13.534,
+          -38.277,
+          -11.466
+        ],
+        "max": [
+          17.717,
+          -33.224,
+          -7.912
+        ],
+        "size": [
+          4.183,
+          5.053,
+          3.554
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2104222f34cd2fa0d08877403550947b14d3f7f35729aca0ef98653918803877",
+      "mb": 0.36,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 139728,
+      "indices": 836976,
+      "bbox": {
+        "min": [
+          -26.681,
+          -47.418,
+          -20.183
+        ],
+        "max": [
+          -13.119,
+          -35.838,
+          -8.507
+        ],
+        "size": [
+          13.562,
+          11.581,
+          11.676
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:8ba67c527ed4420ca46bf5241a930bdd54e4719fe39644b5d4da1bdcefb3223e",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 20987,
+      "indices": 125535,
+      "bbox": {
+        "min": [
+          -26.674,
+          -47.419,
+          -20.168
+        ],
+        "max": [
+          -13.119,
+          -35.844,
+          -8.513
+        ],
+        "size": [
+          13.555,
+          11.575,
+          11.655
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:bad2df2c0ad09395b12c02f79cc673ba54fc89ef29dc1a6e9183fbca89de40a4",
+      "mb": 0.22,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 69875,
+      "indices": 418482,
+      "bbox": {
+        "min": [
+          -26.675,
+          -47.418,
+          -20.183
+        ],
+        "max": [
+          -13.119,
+          -35.838,
+          -8.509
+        ],
+        "size": [
+          13.556,
+          11.58,
+          11.674
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:a9752a8630bd2a114475dce51764cf3f3b3c3c9e1c803b1184a776d8dc1ff5a3",
+      "mb": 0.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 167656,
+      "indices": 1003608,
+      "bbox": {
+        "min": [
+          13.16,
+          -44.268,
+          -20.931
+        ],
+        "max": [
+          24.489,
+          -35.253,
+          -10.709
+        ],
+        "size": [
+          11.329,
+          9.015,
+          10.222
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:9fb285071254545f626ff18dbf5a268f64c016eef915e33a689ab9688381b2f4",
+      "mb": 0.09,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 25192,
+      "indices": 150531,
+      "bbox": {
+        "min": [
+          13.155,
+          -44.264,
+          -20.927
+        ],
+        "max": [
+          24.489,
+          -35.253,
+          -10.71
+        ],
+        "size": [
+          11.334,
+          9.012,
+          10.217
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-apir-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d22aa62908bd3dae12cf686a97d3e3daf0d673742246600a5ff89bc84c5a9b77",
+      "mb": 0.27,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 83844,
+      "indices": 501798,
+      "bbox": {
+        "min": [
+          13.159,
+          -44.266,
+          -20.928
+        ],
+        "max": [
+          24.489,
+          -35.253,
+          -10.709
+        ],
+        "size": [
+          11.329,
+          9.014,
+          10.219
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d6a904f2dcd0734a67e2bfa08658bd38896a538e8f443d11928b0bf432119abd",
+      "mb": 1.3,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 561382,
+      "indices": 3367146,
+      "bbox": {
+        "min": [
+          -31.837,
+          -39.393,
+          -12.689
+        ],
+        "max": [
+          -23.065,
+          -29.86,
+          -3.3
+        ],
+        "size": [
+          8.772,
+          9.533,
+          9.389
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:506ddb47d6e7ae394990eda2e3769544244d6c14fa35e4c4ecb408d275eb2561",
+      "mb": 0.29,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 84271,
+      "indices": 505005,
+      "bbox": {
+        "min": [
+          -31.84,
+          -39.393,
+          -12.69
+        ],
+        "max": [
+          -23.066,
+          -29.863,
+          -3.3
+        ],
+        "size": [
+          8.773,
+          9.53,
+          9.39
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:90509445bc0d6e510e0d5126a7750c04ab68252f549e2df3de190364591f5cf7",
+      "mb": 0.85,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 280719,
+      "indices": 1683537,
+      "bbox": {
+        "min": [
+          -31.837,
+          -39.392,
+          -12.689
+        ],
+        "max": [
+          -23.065,
+          -29.86,
+          -3.3
+        ],
+        "size": [
+          8.772,
+          9.532,
+          9.389
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e0d85313175ba1407f57d82b0a3eb9b7fc5547c0a1a465d47a4b4c57dd21d1ed",
+      "mb": 0.38,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 140602,
+      "indices": 843438,
+      "bbox": {
+        "min": [
+          22.267,
+          -40.291,
+          -13.678
+        ],
+        "max": [
+          29.172,
+          -30.062,
+          -3.119
+        ],
+        "size": [
+          6.905,
+          10.23,
+          10.559
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:881e0b17bb22b6adc2c8008959a434fead4de21dd2d0a8638089655864408008",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 21083,
+      "indices": 126501,
+      "bbox": {
+        "min": [
+          22.275,
+          -40.279,
+          -13.678
+        ],
+        "max": [
+          29.173,
+          -30.061,
+          -3.132
+        ],
+        "size": [
+          6.898,
+          10.218,
+          10.546
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-astr-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c9b785175ce338c2b36d9d419087ba361b311503e86469bec48d1b6d43820cf4",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 70300,
+      "indices": 421707,
+      "bbox": {
+        "min": [
+          22.268,
+          -40.279,
+          -13.677
+        ],
+        "max": [
+          29.171,
+          -30.061,
+          -3.122
+        ],
+        "size": [
+          6.903,
+          10.218,
+          10.555
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b541980a4497870829fc6920d4a2f077961a15175a0ab6346deba49a4e8f126f",
+      "mb": 0.75,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 294198,
+      "indices": 1764396,
+      "bbox": {
+        "min": [
+          -29.699,
+          -47.025,
+          -16.577
+        ],
+        "max": [
+          -15.575,
+          -33.54,
+          -6.447
+        ],
+        "size": [
+          14.124,
+          13.485,
+          10.13
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:fb6205b67d653d12cb900f19859d59cdef95990b63b9c66b1cfc63d716b4f4e1",
+      "mb": 0.16,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 44150,
+      "indices": 264633,
+      "bbox": {
+        "min": [
+          -29.703,
+          -47.014,
+          -16.581
+        ],
+        "max": [
+          -15.581,
+          -33.538,
+          -6.461
+        ],
+        "size": [
+          14.122,
+          13.476,
+          10.119
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d631b3a335a30908746da182e53ced4f4273699082eb987394568793c7d97478",
+      "mb": 0.46,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 147120,
+      "indices": 882156,
+      "bbox": {
+        "min": [
+          -29.699,
+          -47.025,
+          -16.577
+        ],
+        "max": [
+          -15.575,
+          -33.538,
+          -6.447
+        ],
+        "size": [
+          14.124,
+          13.487,
+          10.13
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:7b78141ef129ac3a92da2bb6a1a67045292bd6bb0089886da9d9934b38a1b1b2",
+      "mb": 0.75,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 302885,
+      "indices": 1816680,
+      "bbox": {
+        "min": [
+          14.118,
+          -44.379,
+          -17.413
+        ],
+        "max": [
+          28.225,
+          -33.25,
+          -6.824
+        ],
+        "size": [
+          14.107,
+          11.13,
+          10.589
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d8c97f69a6da3aa1478b3d602b03fd5bbc0ec2d1be5ae803a48b347bfb6b4c2f",
+      "mb": 0.16,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 45459,
+      "indices": 272466,
+      "bbox": {
+        "min": [
+          14.121,
+          -44.37,
+          -17.414
+        ],
+        "max": [
+          28.221,
+          -33.248,
+          -6.823
+        ],
+        "size": [
+          14.1,
+          11.123,
+          10.591
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bl-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0bb4d38b8bf1c24e25bf34acf67841c56e41d82dc280c69dc5d6dd85cfe0a063",
+      "mb": 0.46,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 151459,
+      "indices": 908319,
+      "bbox": {
+        "min": [
+          14.118,
+          -44.379,
+          -17.414
+        ],
+        "max": [
+          28.225,
+          -33.249,
+          -6.824
+        ],
+        "size": [
+          14.107,
+          11.13,
+          10.589
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ad5dd9615d8b9280e9567b2a277a9469b85296930f0c13dbf53b5f901195950e",
+      "mb": 1.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 628404,
+      "indices": 3769074,
+      "bbox": {
+        "min": [
+          -23.598,
+          -39.929,
+          -16.165
+        ],
+        "max": [
+          -17.108,
+          -31.335,
+          -6.63
+        ],
+        "size": [
+          6.491,
+          8.594,
+          9.535
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:81e011bb8d4eb582486758c8ca579e44aa588f1abe341850eeae142542a3d953",
+      "mb": 0.32,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 94325,
+      "indices": 565296,
+      "bbox": {
+        "min": [
+          -23.599,
+          -39.927,
+          -16.166
+        ],
+        "max": [
+          -17.108,
+          -31.336,
+          -6.63
+        ],
+        "size": [
+          6.492,
+          8.591,
+          9.536
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d7d0ebcd73d6ecd0432ccc450ebe2c6817411455b79981476705d8eb08608762",
+      "mb": 0.93,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 314228,
+      "indices": 1884507,
+      "bbox": {
+        "min": [
+          -23.598,
+          -39.928,
+          -16.165
+        ],
+        "max": [
+          -17.108,
+          -31.335,
+          -6.63
+        ],
+        "size": [
+          6.49,
+          8.594,
+          9.535
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:a64d631067b8c47b260b41fc6d8d7a3eb532b750fc870e27b4269cf512a31293",
+      "mb": 1.42,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 640403,
+      "indices": 3841062,
+      "bbox": {
+        "min": [
+          16.089,
+          -38.325,
+          -16.702
+        ],
+        "max": [
+          23.205,
+          -31.631,
+          -7.226
+        ],
+        "size": [
+          7.115,
+          6.694,
+          9.476
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:6b1ba723cd826f03d77c56740d6000a38456dbee6130891b7d413a373300d1fa",
+      "mb": 0.32,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 96113,
+      "indices": 576102,
+      "bbox": {
+        "min": [
+          16.091,
+          -38.325,
+          -16.702
+        ],
+        "max": [
+          23.207,
+          -31.632,
+          -7.226
+        ],
+        "size": [
+          7.116,
+          6.693,
+          9.477
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-bm-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ba0f97aba6f6c1df933eafe5cbd42c4c5bcb4111f517352ec4e670c4bbcfbb76",
+      "mb": 0.94,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 320239,
+      "indices": 1920486,
+      "bbox": {
+        "min": [
+          16.089,
+          -38.325,
+          -16.702
+        ],
+        "max": [
+          23.205,
+          -31.631,
+          -7.226
+        ],
+        "size": [
+          7.116,
+          6.694,
+          9.477
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c1dec5bad723c2f39e3ea1e5da10f6432e5e2e280ba665cf0dd377871f733d23",
+      "mb": 0.78,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 338250,
+      "indices": 2028222,
+      "bbox": {
+        "min": [
+          -25.775,
+          -34.702,
+          -12.636
+        ],
+        "max": [
+          -21.08,
+          -29.885,
+          -3.275
+        ],
+        "size": [
+          4.696,
+          4.817,
+          9.361
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:3587988bcd3f5e418b1c7398271fc38a99f53c3b983bbfd90a352b73e717a37b",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 50789,
+      "indices": 304194,
+      "bbox": {
+        "min": [
+          -25.779,
+          -34.702,
+          -12.636
+        ],
+        "max": [
+          -21.077,
+          -29.886,
+          -3.277
+        ],
+        "size": [
+          4.702,
+          4.816,
+          9.359
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:f2312ce24277302064a67ce322321f7220aa8ccc1b60595bee4221d1a23ee166",
+      "mb": 0.51,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 169153,
+      "indices": 1014081,
+      "bbox": {
+        "min": [
+          -25.775,
+          -34.702,
+          -12.636
+        ],
+        "max": [
+          -21.08,
+          -29.885,
+          -3.276
+        ],
+        "size": [
+          4.696,
+          4.817,
+          9.36
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:83082d35e9816339c3f813503457a0d825fef442468306747810c03aaef8c7b7",
+      "mb": 0.67,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 284513,
+      "indices": 1705638,
+      "bbox": {
+        "min": [
+          20.21,
+          -34.146,
+          -13.197
+        ],
+        "max": [
+          24.48,
+          -30.013,
+          -3.333
+        ],
+        "size": [
+          4.27,
+          4.133,
+          9.864
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d81707dcbc245b6d3a31c26408801824983ca2a6e29ed8621e2402cef2f00ed7",
+      "mb": 0.14,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 42726,
+      "indices": 255807,
+      "bbox": {
+        "min": [
+          20.21,
+          -34.144,
+          -13.196
+        ],
+        "max": [
+          24.481,
+          -30.012,
+          -3.335
+        ],
+        "size": [
+          4.271,
+          4.132,
+          9.86
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ce-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b1efa25eb33c0c679bc698b064d1d9b14117135c4463fb680592cd776801e488",
+      "mb": 0.41,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 142297,
+      "indices": 852762,
+      "bbox": {
+        "min": [
+          20.21,
+          -34.146,
+          -13.197
+        ],
+        "max": [
+          24.48,
+          -30.012,
+          -3.333
+        ],
+        "size": [
+          4.27,
+          4.133,
+          9.864
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:04567a0fbad17f034be99819c303c9db62c9388a2ccf9aae35483e6fc33fd1e4",
+      "mb": 1.04,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 461538,
+      "indices": 2768832,
+      "bbox": {
+        "min": [
+          -28.355,
+          -39.854,
+          -17.174
+        ],
+        "max": [
+          -18.308,
+          -31.987,
+          -10.573
+        ],
+        "size": [
+          10.048,
+          7.868,
+          6.602
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:896705fe72517aab61e62b1c72d371aeeedf4aea83495497e0951a2cef8de3d4",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 69255,
+      "indices": 415287,
+      "bbox": {
+        "min": [
+          -28.354,
+          -39.854,
+          -17.175
+        ],
+        "max": [
+          -18.308,
+          -31.989,
+          -10.573
+        ],
+        "size": [
+          10.046,
+          7.865,
+          6.603
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c9ad8e81c11eb7694eb1156a03803679ef91ae17c3279c15a8ef4e62f5f90483",
+      "mb": 0.68,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 230787,
+      "indices": 1384383,
+      "bbox": {
+        "min": [
+          -28.354,
+          -39.855,
+          -17.174
+        ],
+        "max": [
+          -18.308,
+          -31.987,
+          -10.573
+        ],
+        "size": [
+          10.046,
+          7.868,
+          6.601
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2b171d4090df32c94ef326248001c021231040d9df032ad3b111573cfe7f4f99",
+      "mb": 0.91,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 404987,
+      "indices": 2428242,
+      "bbox": {
+        "min": [
+          17.666,
+          -39.742,
+          -17.756
+        ],
+        "max": [
+          25.827,
+          -32.452,
+          -11.787
+        ],
+        "size": [
+          8.161,
+          7.29,
+          5.969
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:18746369343ddf81e1894823c3e303e2b5e336c16eb92d7ea1bede56651295e8",
+      "mb": 0.21,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 60760,
+      "indices": 364200,
+      "bbox": {
+        "min": [
+          17.668,
+          -39.736,
+          -17.756
+        ],
+        "max": [
+          25.828,
+          -32.452,
+          -11.788
+        ],
+        "size": [
+          8.161,
+          7.284,
+          5.968
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-ice-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4b2247b6929485e6c911867a28c330ac1b70f3f024156daa6816281287f0c13c",
+      "mb": 0.61,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 202496,
+      "indices": 1214094,
+      "bbox": {
+        "min": [
+          17.668,
+          -39.742,
+          -17.755
+        ],
+        "max": [
+          25.827,
+          -32.452,
+          -11.787
+        ],
+        "size": [
+          8.159,
+          7.29,
+          5.968
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c84b67b0d1224ce2b721d8f84ded7e64d16b39ebec8d5d822465dae4c0956f10",
+      "mb": 0.39,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 151135,
+      "indices": 906198,
+      "bbox": {
+        "min": [
+          -21.269,
+          -35.434,
+          -12.442
+        ],
+        "max": [
+          -18.004,
+          -31.679,
+          -4.648
+        ],
+        "size": [
+          3.265,
+          3.755,
+          7.794
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ead29594f124271a89dc7cfc5ab91c6087b26ef4eec49439e7d14b6718a2aeed",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 22682,
+      "indices": 135909,
+      "bbox": {
+        "min": [
+          -21.272,
+          -35.433,
+          -12.441
+        ],
+        "max": [
+          -18.005,
+          -31.68,
+          -4.648
+        ],
+        "size": [
+          3.266,
+          3.753,
+          7.793
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b6a88b1b205f80ed4fad1ab25200239cd24a846ee410f16bca7c93523ce2b516",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 75573,
+      "indices": 453081,
+      "bbox": {
+        "min": [
+          -21.269,
+          -35.434,
+          -12.442
+        ],
+        "max": [
+          -18.004,
+          -31.679,
+          -4.648
+        ],
+        "size": [
+          3.265,
+          3.755,
+          7.793
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0deaaff24d1c265eb69a816246b4589e7d9b1b793e55c777b5f89f9504f505b5",
+      "mb": 0.57,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 234532,
+      "indices": 1406610,
+      "bbox": {
+        "min": [
+          15.265,
+          -35.643,
+          -13.937
+        ],
+        "max": [
+          21.364,
+          -31.417,
+          -5.515
+        ],
+        "size": [
+          6.099,
+          4.227,
+          8.422
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:438d3868e981132f18ab132a9a3f4251e722b07b2e20936d63f8e1654df1ef5c",
+      "mb": 0.12,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 35201,
+      "indices": 210951,
+      "bbox": {
+        "min": [
+          15.268,
+          -35.643,
+          -13.937
+        ],
+        "max": [
+          21.366,
+          -31.417,
+          -5.518
+        ],
+        "size": [
+          6.098,
+          4.227,
+          8.419
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-icm-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:eb02500d9fd9189576837827c7df26c7e129ffa0a2b5f1b30f0a66d5700df0ab",
+      "mb": 0.35,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 117273,
+      "indices": 703272,
+      "bbox": {
+        "min": [
+          15.268,
+          -35.643,
+          -13.937
+        ],
+        "max": [
+          21.365,
+          -31.417,
+          -5.518
+        ],
+        "size": [
+          6.097,
+          4.227,
+          8.42
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:55964964ed73db9a220c42e77511ad4f032c1b866ddf47e3b984a0b9839449fb",
+      "mb": 0.95,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 420968,
+      "indices": 2524686,
+      "bbox": {
+        "min": [
+          -33.326,
+          -45.813,
+          -16.462
+        ],
+        "max": [
+          -24.322,
+          -34.358,
+          -10.452
+        ],
+        "size": [
+          9.003,
+          11.455,
+          6.01
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:da734221be036bab49a5ae75e8e49f5361e2375893de90c76b0408f01e4d738f",
+      "mb": 0.21,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 63171,
+      "indices": 378654,
+      "bbox": {
+        "min": [
+          -33.325,
+          -45.814,
+          -16.461
+        ],
+        "max": [
+          -24.323,
+          -34.359,
+          -10.451
+        ],
+        "size": [
+          9.001,
+          11.456,
+          6.01
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:edd6587e9d8d5955152ed39a679d97764d22b74a3cff6612485773aeeacb67c8",
+      "mb": 0.62,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 210492,
+      "indices": 1262310,
+      "bbox": {
+        "min": [
+          -33.326,
+          -45.813,
+          -16.462
+        ],
+        "max": [
+          -24.323,
+          -34.358,
+          -10.452
+        ],
+        "size": [
+          9.002,
+          11.455,
+          6.01
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:cd98e93414c1bbe981a7b45c4e3bf40aeea94c81c1e4f772cddc1aa828d6a379",
+      "mb": 1.06,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 470291,
+      "indices": 2821254,
+      "bbox": {
+        "min": [
+          22.311,
+          -43.14,
+          -17.432
+        ],
+        "max": [
+          30.396,
+          -33.888,
+          -11.494
+        ],
+        "size": [
+          8.085,
+          9.253,
+          5.938
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e8de6165c56d89cf5665f1bdf2d4043f223e20dc01f83a5ec814b73c9c5c9a2c",
+      "mb": 0.24,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 70557,
+      "indices": 423150,
+      "bbox": {
+        "min": [
+          22.312,
+          -43.137,
+          -17.432
+        ],
+        "max": [
+          30.395,
+          -33.888,
+          -11.495
+        ],
+        "size": [
+          8.083,
+          9.25,
+          5.937
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-iol-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d5b673f766b6f3f504c7af8295e2f7ffb65cd2aecca7423cb08fad24876f14ab",
+      "mb": 0.7,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 235162,
+      "indices": 1410585,
+      "bbox": {
+        "min": [
+          22.311,
+          -43.14,
+          -17.432
+        ],
+        "max": [
+          30.397,
+          -33.888,
+          -11.495
+        ],
+        "size": [
+          8.086,
+          9.253,
+          5.937
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0df5ca852710d0bfe6379b7bcdae130f80282939ab6cb462f8a8e93c79216853",
+      "mb": 0.95,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 388195,
+      "indices": 2328300,
+      "bbox": {
+        "min": [
+          -35.054,
+          -52.526,
+          -16.659
+        ],
+        "max": [
+          -20.897,
+          -32.558,
+          -7.728
+        ],
+        "size": [
+          14.157,
+          19.968,
+          8.931
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c5724e0c87a0bfce3103b3a47dc0cb2dae3b1993db51c69744d9373fad7d200a",
+      "mb": 0.2,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 58276,
+      "indices": 349191,
+      "bbox": {
+        "min": [
+          -35.052,
+          -52.53,
+          -16.661
+        ],
+        "max": [
+          -20.894,
+          -32.555,
+          -7.727
+        ],
+        "size": [
+          14.158,
+          19.975,
+          8.934
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:705ee9e75d65ea7587d1f7f5cb02cee3cf67dae366f5656bf9860eb02bad03fe",
+      "mb": 0.58,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 194130,
+      "indices": 1164102,
+      "bbox": {
+        "min": [
+          -35.054,
+          -52.525,
+          -16.66
+        ],
+        "max": [
+          -20.896,
+          -32.558,
+          -7.727
+        ],
+        "size": [
+          14.158,
+          19.967,
+          8.932
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e0b2a78ac2da404333413e75e2dabae62f43f712885314b987aaf5e25b872579",
+      "mb": 0.97,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 390342,
+      "indices": 2341668,
+      "bbox": {
+        "min": [
+          19.195,
+          -48.624,
+          -17.763
+        ],
+        "max": [
+          33.06,
+          -33.802,
+          -8.229
+        ],
+        "size": [
+          13.865,
+          14.822,
+          9.534
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c340ef25de494e1bf7512530dd8eb6d1fb2d2feb8cd6b5779ab3369365116175",
+      "mb": 0.2,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 58578,
+      "indices": 351207,
+      "bbox": {
+        "min": [
+          19.197,
+          -48.624,
+          -17.762
+        ],
+        "max": [
+          33.058,
+          -33.803,
+          -8.229
+        ],
+        "size": [
+          13.861,
+          14.821,
+          9.533
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-la-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e7b5625212d79d0e8cbb7f2e12509a6d343597a5c94fd0f3aee024736c9b2321",
+      "mb": 0.6,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 195188,
+      "indices": 1170804,
+      "bbox": {
+        "min": [
+          19.195,
+          -48.625,
+          -17.762
+        ],
+        "max": [
+          33.06,
+          -33.802,
+          -8.229
+        ],
+        "size": [
+          13.865,
+          14.822,
+          9.533
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4a380974b27c07b6f37fd558ce16e3024fac317467bfe32ba6b4e17deadebcf3",
+      "mb": 0.37,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 146253,
+      "indices": 877056,
+      "bbox": {
+        "min": [
+          -28.988,
+          -39.496,
+          -17.812
+        ],
+        "max": [
+          -18.086,
+          -29.625,
+          -3.312
+        ],
+        "size": [
+          10.902,
+          9.87,
+          14.5
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0fab5d362a1f3504067640cd615aaf3ae8794d36c3fcaa3bc3430b40bdf75271",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 21950,
+      "indices": 131553,
+      "bbox": {
+        "min": [
+          -28.988,
+          -39.496,
+          -17.808
+        ],
+        "max": [
+          -18.088,
+          -29.627,
+          -3.323
+        ],
+        "size": [
+          10.901,
+          9.869,
+          14.485
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4cb9490a72c8dde543561850a68b8cf0f5a49ebf59492b3153feb43beaa75b72",
+      "mb": 0.23,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 73142,
+      "indices": 438522,
+      "bbox": {
+        "min": [
+          -28.988,
+          -39.496,
+          -17.812
+        ],
+        "max": [
+          -18.085,
+          -29.626,
+          -3.316
+        ],
+        "size": [
+          10.903,
+          9.87,
+          14.496
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:7d7619066499baeec2eb2e6241fa92534a6e2848a1a4eeaf248f251e1f7b0d72",
+      "mb": 0.45,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 184865,
+      "indices": 1108704,
+      "bbox": {
+        "min": [
+          16.243,
+          -38.181,
+          -18.505
+        ],
+        "max": [
+          27.601,
+          -29.682,
+          -3.28
+        ],
+        "size": [
+          11.357,
+          8.499,
+          15.225
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4cef7003da64e18ead5fa35a8c908d81414272fbc203f5abb0671e673be4c3b5",
+      "mb": 0.1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 27738,
+      "indices": 166302,
+      "bbox": {
+        "min": [
+          16.243,
+          -38.184,
+          -18.511
+        ],
+        "max": [
+          27.6,
+          -29.684,
+          -3.285
+        ],
+        "size": [
+          11.356,
+          8.5,
+          15.226
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-me-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:08920c8c37881fd216b7a062c80b6f2e94dab1b8186d02ed7c98c77988e400e2",
+      "mb": 0.28,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 92436,
+      "indices": 554346,
+      "bbox": {
+        "min": [
+          16.243,
+          -38.183,
+          -18.505
+        ],
+        "max": [
+          27.601,
+          -29.682,
+          -3.28
+        ],
+        "size": [
+          11.357,
+          8.5,
+          15.225
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2427e1f0cb283479449866dc28715e8343561ee2b081fc148699385cfaf24cfb",
+      "mb": 0.39,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 151955,
+      "indices": 910602,
+      "bbox": {
+        "min": [
+          -27.716,
+          -51.773,
+          -16.698
+        ],
+        "max": [
+          -15.268,
+          -38.291,
+          -7.129
+        ],
+        "size": [
+          12.447,
+          13.482,
+          9.569
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:f5005fd039612346086eadf92b9f750da216ae35825662dd54557f911a9d1144",
+      "mb": 0.08,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 22803,
+      "indices": 136575,
+      "bbox": {
+        "min": [
+          -27.713,
+          -51.772,
+          -16.696
+        ],
+        "max": [
+          -15.272,
+          -38.291,
+          -7.133
+        ],
+        "size": [
+          12.441,
+          13.482,
+          9.564
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:cb121aa27d0daa26852d72d837e30721afc5ac82d66c3d7385359f3c3493a58d",
+      "mb": 0.24,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 75974,
+      "indices": 455289,
+      "bbox": {
+        "min": [
+          -27.716,
+          -51.771,
+          -16.697
+        ],
+        "max": [
+          -15.268,
+          -38.291,
+          -7.133
+        ],
+        "size": [
+          12.447,
+          13.481,
+          9.565
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0c75f71383efda41f6b1a56128b3751c27d5941c4f1390b987f0635daf1c3241",
+      "mb": 0.49,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 192980,
+      "indices": 1157748,
+      "bbox": {
+        "min": [
+          13.847,
+          -46.936,
+          -17.922
+        ],
+        "max": [
+          25.646,
+          -36.617,
+          -8.283
+        ],
+        "size": [
+          11.799,
+          10.32,
+          9.639
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:8b84cf01a3d448f7bf8348f6cd20693eae5e99464c19b6866b426be8c11e848d",
+      "mb": 0.1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 28947,
+      "indices": 173643,
+      "bbox": {
+        "min": [
+          13.848,
+          -46.94,
+          -17.92
+        ],
+        "max": [
+          25.652,
+          -36.619,
+          -8.283
+        ],
+        "size": [
+          11.804,
+          10.321,
+          9.637
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-pl-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:755793763ed4f0cabff7172d7b92fa7fc2f45f02ed6adaca91ba76351c063c45",
+      "mb": 0.3,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 96498,
+      "indices": 578850,
+      "bbox": {
+        "min": [
+          13.848,
+          -46.937,
+          -17.92
+        ],
+        "max": [
+          25.646,
+          -36.617,
+          -8.283
+        ],
+        "size": [
+          11.797,
+          10.319,
+          9.637
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0c0747c9c4952b6e2e247bce652ad4830c3925e5bdcf52558246c6c208445444",
+      "mb": 0.8,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 333580,
+      "indices": 1999488,
+      "bbox": {
+        "min": [
+          -23.135,
+          -40.607,
+          -17.757
+        ],
+        "max": [
+          -14.497,
+          -32.983,
+          -9.452
+        ],
+        "size": [
+          8.639,
+          7.624,
+          8.305
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:55ec2c54d4eeb6ec26880685f0d19ddeb8f5923e1440f6f4e1bba5be84fc7e63",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 50079,
+      "indices": 299898,
+      "bbox": {
+        "min": [
+          -23.134,
+          -40.604,
+          -17.757
+        ],
+        "max": [
+          -14.498,
+          -32.984,
+          -9.452
+        ],
+        "size": [
+          8.636,
+          7.62,
+          8.304
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:3c465d99b8d469de046708f9d9236ef2419fcd9430d3e6cfce5f7904d1ab9f65",
+      "mb": 0.5,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 166797,
+      "indices": 999720,
+      "bbox": {
+        "min": [
+          -23.135,
+          -40.607,
+          -17.757
+        ],
+        "max": [
+          -14.497,
+          -32.984,
+          -9.452
+        ],
+        "size": [
+          8.639,
+          7.623,
+          8.305
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:74e3f91b7a0629e84f8e0ed6e4e399298cb2ea44e4a2fffc8f3ddf974ed78f37",
+      "mb": 0.79,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 341839,
+      "indices": 2047386,
+      "bbox": {
+        "min": [
+          13.568,
+          -38.974,
+          -18.31
+        ],
+        "max": [
+          22.35,
+          -32.536,
+          -11.084
+        ],
+        "size": [
+          8.782,
+          6.438,
+          7.226
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:49b9f8e61eb6a82d4ea24ef3886db6909856394a1813402c5cb6095b30ecf702",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 51326,
+      "indices": 307083,
+      "bbox": {
+        "min": [
+          13.565,
+          -38.974,
+          -18.309
+        ],
+        "max": [
+          22.35,
+          -32.536,
+          -11.082
+        ],
+        "size": [
+          8.785,
+          6.437,
+          7.226
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcod-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:512ed19f88662ea8196ede425014942833330bd7e56a7eb052252edddc75438e",
+      "mb": 0.51,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 170925,
+      "indices": 1023669,
+      "bbox": {
+        "min": [
+          13.568,
+          -38.974,
+          -18.31
+        ],
+        "max": [
+          22.35,
+          -32.536,
+          -11.083
+        ],
+        "size": [
+          8.782,
+          6.438,
+          7.226
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c16711646d7961fec1ecdb6f563fb6518beda26844429f4c1bc00c75d7d6fd1a",
+      "mb": 0.65,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 283850,
+      "indices": 1702164,
+      "bbox": {
+        "min": [
+          -20.616,
+          -40.571,
+          -17.251
+        ],
+        "max": [
+          -14.436,
+          -35.069,
+          -8.355
+        ],
+        "size": [
+          6.18,
+          5.502,
+          8.896
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:6488bd74d27f6abb17a37b9c7c000a09512466c54249ebc0dd2609c16ad60dff",
+      "mb": 0.15,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 42614,
+      "indices": 255288,
+      "bbox": {
+        "min": [
+          -20.616,
+          -40.572,
+          -17.25
+        ],
+        "max": [
+          -14.432,
+          -35.07,
+          -8.354
+        ],
+        "size": [
+          6.184,
+          5.502,
+          8.896
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b15789e51231a4e5b119de36ebab3a50f6e8872937e3389287852596ad78edcf",
+      "mb": 0.43,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 141945,
+      "indices": 851061,
+      "bbox": {
+        "min": [
+          -20.616,
+          -40.571,
+          -17.25
+        ],
+        "max": [
+          -14.435,
+          -35.069,
+          -8.355
+        ],
+        "size": [
+          6.181,
+          5.502,
+          8.895
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ec20900c08bfad3f9c010eb01705670c2e6d7c6cee05d8f24483b4be87dff253",
+      "mb": 0.65,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 267731,
+      "indices": 1604520,
+      "bbox": {
+        "min": [
+          13.506,
+          -38.944,
+          -17.478
+        ],
+        "max": [
+          19.684,
+          -34.798,
+          -10.598
+        ],
+        "size": [
+          6.179,
+          4.146,
+          6.88
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:68fc5314923198eba43ada89df4f755e34e426e6077defa94b046d2cf9db5b89",
+      "mb": 0.14,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 40198,
+      "indices": 240666,
+      "bbox": {
+        "min": [
+          13.505,
+          -38.94,
+          -17.478
+        ],
+        "max": [
+          19.684,
+          -34.795,
+          -10.598
+        ],
+        "size": [
+          6.179,
+          4.145,
+          6.88
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vcov-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:02fe457a2a43c793469f7dcb2ccf46bc89b8c9b58d41a9d65ca1aa79a29ed215",
+      "mb": 0.42,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 133900,
+      "indices": 802245,
+      "bbox": {
+        "min": [
+          13.507,
+          -38.944,
+          -17.478
+        ],
+        "max": [
+          19.684,
+          -34.798,
+          -10.598
+        ],
+        "size": [
+          6.178,
+          4.146,
+          6.88
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:cb259c14c6748a8e4d65034f7caa73617f73eb187b053b0d8b7b6006bbc9aa41",
+      "mb": 0.93,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 426080,
+      "indices": 2553198,
+      "bbox": {
+        "min": [
+          -29.967,
+          -44.826,
+          -9.88
+        ],
+        "max": [
+          -19.603,
+          -31.102,
+          -3.278
+        ],
+        "size": [
+          10.364,
+          13.724,
+          6.602
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:14a62d7a06773a454ccfeedb6f7dc4466b913c8eac3284563626d3f05e2f6a78",
+      "mb": 0.21,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 63976,
+      "indices": 382962,
+      "bbox": {
+        "min": [
+          -29.965,
+          -44.821,
+          -9.881
+        ],
+        "max": [
+          -19.611,
+          -31.103,
+          -3.28
+        ],
+        "size": [
+          10.353,
+          13.718,
+          6.602
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e18e63ba0d270ff01f4efa75da086726dd4f8fc065dd83cc13b68aecd482bc6e",
+      "mb": 0.6,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 213063,
+      "indices": 1276590,
+      "bbox": {
+        "min": [
+          -29.966,
+          -44.821,
+          -9.88
+        ],
+        "max": [
+          -19.603,
+          -31.102,
+          -3.28
+        ],
+        "size": [
+          10.363,
+          13.719,
+          6.601
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:5420f17c6a15fd9f04e6e5cdc1bd7b2641ef55c24424235c4bee1b3ff6dd6088",
+      "mb": 0.33,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 126021,
+      "indices": 755178,
+      "bbox": {
+        "min": [
+          16.268,
+          -42.236,
+          -10.628
+        ],
+        "max": [
+          27.3,
+          -31.181,
+          -3.017
+        ],
+        "size": [
+          11.031,
+          11.054,
+          7.612
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ce6468e84120d5115774cec7e2a4c1455de4252fa1a60fb71f55e486a481be55",
+      "mb": 0.07,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 18916,
+      "indices": 113271,
+      "bbox": {
+        "min": [
+          16.273,
+          -42.233,
+          -10.628
+        ],
+        "max": [
+          27.298,
+          -31.181,
+          -3.017
+        ],
+        "size": [
+          11.025,
+          11.051,
+          7.611
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-amy-vtm-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2f9d4629d4f659e916dca12181fde0fab42cfb1a208af86363b2894adca22ea7",
+      "mb": 0.2,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 63031,
+      "indices": 377577,
+      "bbox": {
+        "min": [
+          16.268,
+          -42.236,
+          -10.628
+        ],
+        "max": [
+          27.3,
+          -31.181,
+          -3.017
+        ],
+        "size": [
+          11.031,
+          11.054,
+          7.611
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e6e5860304fb068a568c778c8fec475e6e955455e8540177c3b100c3633baff0",
+      "mb": 0.61,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 244865,
+      "indices": 1468926,
+      "bbox": {
+        "min": [
+          -26.109,
+          -32.207,
+          3.813
+        ],
+        "max": [
+          -17.536,
+          -23.557,
+          11.839
+        ],
+        "size": [
+          8.573,
+          8.651,
+          8.026
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b7d6d4ae3878456616d3929a8bd0ffa2b481a0748a196763c119cd109ad47f92",
+      "mb": 0.13,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 36745,
+      "indices": 220281,
+      "bbox": {
+        "min": [
+          -26.109,
+          -32.209,
+          3.816
+        ],
+        "max": [
+          -17.534,
+          -23.562,
+          11.84
+        ],
+        "size": [
+          8.574,
+          8.647,
+          8.024
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4cbe4367c2e45e1ee68d52b79171fd021408520a2d285ad8cb2b1c0262150636",
+      "mb": 0.37,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 122434,
+      "indices": 734430,
+      "bbox": {
+        "min": [
+          -26.109,
+          -32.207,
+          3.816
+        ],
+        "max": [
+          -17.536,
+          -23.562,
+          11.839
+        ],
+        "size": [
+          8.573,
+          8.644,
+          8.023
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d5fe666705b59ea868fede71aceaad9528bafc6ac093d0fe3ba0cebf712cab13",
+      "mb": 0.46,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 186156,
+      "indices": 1116786,
+      "bbox": {
+        "min": [
+          15.942,
+          -30.567,
+          3.319
+        ],
+        "max": [
+          24.494,
+          -22.755,
+          11.029
+        ],
+        "size": [
+          8.551,
+          7.812,
+          7.711
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:837b1ef0e89cd1f06a413535d450a6fff29cf280b27e8bea4f031ade4d017509",
+      "mb": 0.1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 27922,
+      "indices": 167511,
+      "bbox": {
+        "min": [
+          15.947,
+          -30.569,
+          3.325
+        ],
+        "max": [
+          24.491,
+          -22.757,
+          11.031
+        ],
+        "size": [
+          8.544,
+          7.812,
+          7.706
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam1-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0e28bb6f9ef9455e20ea5c668fde3fae257c1a005ec573aa920d6e77c644ba87",
+      "mb": 0.28,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 93086,
+      "indices": 558375,
+      "bbox": {
+        "min": [
+          15.943,
+          -30.567,
+          3.323
+        ],
+        "max": [
+          24.494,
+          -22.755,
+          11.029
+        ],
+        "size": [
+          8.551,
+          7.812,
+          7.706
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:9846afa6b135723544872661ff94b3c027830afb9e0d29b276236f37c9344441",
+      "mb": 0.64,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 247299,
+      "indices": 1482744,
+      "bbox": {
+        "min": [
+          -24.864,
+          -30.054,
+          5.407
+        ],
+        "max": [
+          -17.681,
+          -23.182,
+          12.357
+        ],
+        "size": [
+          7.184,
+          6.871,
+          6.95
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:935d4c76088b3330191862d1d14f565bc345a0f538e6bfa012d371f06f8c1df7",
+      "mb": 0.13,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 37084,
+      "indices": 222357,
+      "bbox": {
+        "min": [
+          -24.862,
+          -30.05,
+          5.409
+        ],
+        "max": [
+          -17.679,
+          -23.185,
+          12.356
+        ],
+        "size": [
+          7.183,
+          6.865,
+          6.947
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ba0dcdd5e65ba5858a514cf88053539aff03ac7e411c798d002b9f8a101bf6d0",
+      "mb": 0.39,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 123635,
+      "indices": 741321,
+      "bbox": {
+        "min": [
+          -24.864,
+          -30.05,
+          5.409
+        ],
+        "max": [
+          -17.68,
+          -23.182,
+          12.357
+        ],
+        "size": [
+          7.184,
+          6.868,
+          6.948
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c984b9d653cf4c04dc4fbe7c9680900b47c41f497d5473b512e9897f4a9c97d1",
+      "mb": 0.55,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 216389,
+      "indices": 1297794,
+      "bbox": {
+        "min": [
+          17.383,
+          -29.423,
+          5.388
+        ],
+        "max": [
+          25.366,
+          -22.479,
+          11.442
+        ],
+        "size": [
+          7.983,
+          6.943,
+          6.054
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:3a045c3ece2aa07d6a4d2181a4569f729ca83ec0f0f93224d84808abfda95a32",
+      "mb": 0.11,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 32465,
+      "indices": 194649,
+      "bbox": {
+        "min": [
+          17.381,
+          -29.423,
+          5.387
+        ],
+        "max": [
+          25.364,
+          -22.48,
+          11.441
+        ],
+        "size": [
+          7.983,
+          6.943,
+          6.055
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam2-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:cbe082bca6dc2c4d5a4422d81b94c728a77ccbef56f9f29c34f0c53b3d51dd1c",
+      "mb": 0.33,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 108204,
+      "indices": 648876,
+      "bbox": {
+        "min": [
+          17.383,
+          -29.423,
+          5.388
+        ],
+        "max": [
+          25.366,
+          -22.479,
+          11.441
+        ],
+        "size": [
+          7.983,
+          6.943,
+          6.054
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:5307eda38d8ca6e234ace561c12591d536f0bdffa5f34d5453bdf259bfbacfc3",
+      "mb": 0.99,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 392029,
+      "indices": 2350734,
+      "bbox": {
+        "min": [
+          -25.55,
+          -30.723,
+          4.725
+        ],
+        "max": [
+          -17.591,
+          -23.049,
+          12.427
+        ],
+        "size": [
+          7.959,
+          7.674,
+          7.702
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:edf54d1d61157ba7276e0d326189cb72e263ea6e76b8cdcdcd0d8df6f7ff06ee",
+      "mb": 0.21,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 58855,
+      "indices": 352533,
+      "bbox": {
+        "min": [
+          -25.55,
+          -30.723,
+          4.726
+        ],
+        "max": [
+          -17.59,
+          -23.049,
+          12.43
+        ],
+        "size": [
+          7.96,
+          7.674,
+          7.704
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ff7ef7b030c9b72aa6c8dddf2f0025dca3e3428839323870b09bd038fba0a88f",
+      "mb": 0.61,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 196046,
+      "indices": 1175286,
+      "bbox": {
+        "min": [
+          -25.55,
+          -30.723,
+          4.725
+        ],
+        "max": [
+          -17.591,
+          -23.049,
+          12.427
+        ],
+        "size": [
+          7.959,
+          7.674,
+          7.701
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b58659a702202337c977ba6edac48ff1d7c7ef8ca3af273452ca50660b57ec42",
+      "mb": 0.86,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 357114,
+      "indices": 2142408,
+      "bbox": {
+        "min": [
+          16.031,
+          -32.009,
+          2.725
+        ],
+        "max": [
+          24.59,
+          -22.147,
+          11.491
+        ],
+        "size": [
+          8.559,
+          9.862,
+          8.765
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:9616faf4bcb657e01142602dc1771ad4fab8fc3097579ea82759d5986e084ec3",
+      "mb": 0.18,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 53589,
+      "indices": 321336,
+      "bbox": {
+        "min": [
+          16.031,
+          -32.009,
+          2.731
+        ],
+        "max": [
+          24.59,
+          -22.148,
+          11.492
+        ],
+        "size": [
+          8.559,
+          9.861,
+          8.761
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam3-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:5f9d099dd5a06d151d99183066a1529106b5998850068207ab9216c75143a698",
+      "mb": 0.53,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 178583,
+      "indices": 1071168,
+      "bbox": {
+        "min": [
+          16.031,
+          -32.009,
+          2.728
+        ],
+        "max": [
+          24.59,
+          -22.147,
+          11.491
+        ],
+        "size": [
+          8.559,
+          9.862,
+          8.763
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:3aa7199888602bba0fd3421acb356d4c3899891af359a0da32ef52fec77cfeff",
+      "mb": 0.81,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 337383,
+      "indices": 2023800,
+      "bbox": {
+        "min": [
+          -23.56,
+          -32.676,
+          3.03
+        ],
+        "max": [
+          -17.511,
+          -22.454,
+          11.892
+        ],
+        "size": [
+          6.049,
+          10.222,
+          8.862
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:3dfeaad88fd186cff36d11d4e12f5ea1d88de9daefbc9ec2b03f52480353deb5",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 50632,
+      "indices": 303501,
+      "bbox": {
+        "min": [
+          -23.562,
+          -32.677,
+          3.03
+        ],
+        "max": [
+          -17.511,
+          -22.455,
+          11.89
+        ],
+        "size": [
+          6.051,
+          10.222,
+          8.861
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:1417ddab22c1fe45e73935dcb2f58c2f5e13b9827e4ade9a7c792a7c37d33dc9",
+      "mb": 0.5,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 168709,
+      "indices": 1011834,
+      "bbox": {
+        "min": [
+          -23.56,
+          -32.676,
+          3.03
+        ],
+        "max": [
+          -17.511,
+          -22.454,
+          11.892
+        ],
+        "size": [
+          6.049,
+          10.223,
+          8.862
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d9be1897d35a61aad75dd8b4fe51fab167f9db6ecdd8b7fae8c72bb0d78c4fad",
+      "mb": 0.78,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 327867,
+      "indices": 1966824,
+      "bbox": {
+        "min": [
+          15.389,
+          -31.913,
+          2.514
+        ],
+        "max": [
+          24.967,
+          -21.915,
+          10.817
+        ],
+        "size": [
+          9.578,
+          9.998,
+          8.302
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c8c5734440fbcf5c85292764c365b09bf39890cb51f1a27c320bb1fb7839b68c",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 49197,
+      "indices": 295002,
+      "bbox": {
+        "min": [
+          15.39,
+          -31.911,
+          2.513
+        ],
+        "max": [
+          24.966,
+          -21.915,
+          10.817
+        ],
+        "size": [
+          9.576,
+          9.997,
+          8.304
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam4-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2b2553d348bbb90a2317175533dacb980a7a8d3e0f1e0e15d216abd38674c36e",
+      "mb": 0.49,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 163952,
+      "indices": 983382,
+      "bbox": {
+        "min": [
+          15.389,
+          -31.911,
+          2.513
+        ],
+        "max": [
+          24.967,
+          -21.915,
+          10.817
+        ],
+        "size": [
+          9.578,
+          9.997,
+          8.303
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d56dc92062ece73b91e3e111ffae5f646f78296ffa6bc6c120efa270488e88f9",
+      "mb": 0.72,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 293354,
+      "indices": 1759398,
+      "bbox": {
+        "min": [
+          -23.527,
+          -30.84,
+          3.272
+        ],
+        "max": [
+          -18.466,
+          -22.101,
+          12.189
+        ],
+        "size": [
+          5.061,
+          8.739,
+          8.917
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:af9cd4c0eb295d458acc94636bd95bc5b0b85029af8be4ff8f2d67dfeac3eb57",
+      "mb": 0.15,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 44027,
+      "indices": 263868,
+      "bbox": {
+        "min": [
+          -23.526,
+          -30.84,
+          3.27
+        ],
+        "max": [
+          -18.465,
+          -22.102,
+          12.188
+        ],
+        "size": [
+          5.062,
+          8.738,
+          8.918
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:206cc2ccbd722f923d61973f94c2b615e84c130ac82cb409e98e75835ed2dc0c",
+      "mb": 0.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 146688,
+      "indices": 879669,
+      "bbox": {
+        "min": [
+          -23.527,
+          -30.839,
+          3.271
+        ],
+        "max": [
+          -18.466,
+          -22.101,
+          12.188
+        ],
+        "size": [
+          5.061,
+          8.738,
+          8.917
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e0759d49da218273ffda1f0c6eb9cd8209162e994198ecbb7cf704d624be9c5a",
+      "mb": 0.66,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 262744,
+      "indices": 1576002,
+      "bbox": {
+        "min": [
+          15.909,
+          -30.049,
+          2.579
+        ],
+        "max": [
+          23.976,
+          -21.86,
+          10.804
+        ],
+        "size": [
+          8.068,
+          8.189,
+          8.226
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b70a231d5038b7440fea16e296a3b56c223f94bd6656cbff73bc8423935d5b79",
+      "mb": 0.14,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 39427,
+      "indices": 236373,
+      "bbox": {
+        "min": [
+          15.908,
+          -30.044,
+          2.58
+        ],
+        "max": [
+          23.976,
+          -21.861,
+          10.803
+        ],
+        "size": [
+          8.068,
+          8.183,
+          8.223
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam5-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e4ca530782a811e4aa2a4fb7890dcd4175ed7fe3b2331b4c34a16d87e544761f",
+      "mb": 0.41,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 131366,
+      "indices": 787989,
+      "bbox": {
+        "min": [
+          15.909,
+          -30.045,
+          2.58
+        ],
+        "max": [
+          23.976,
+          -21.86,
+          10.804
+        ],
+        "size": [
+          8.068,
+          8.186,
+          8.224
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c8880e72bc3461321fc29a3ec14a439c6dac3c109f63ff6cbdc706776e76f593",
+      "mb": 1,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 409086,
+      "indices": 2453382,
+      "bbox": {
+        "min": [
+          -26.192,
+          -31.112,
+          3.034
+        ],
+        "max": [
+          -18.478,
+          -21.92,
+          12.221
+        ],
+        "size": [
+          7.713,
+          9.192,
+          9.187
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:d47de078bdccbbe31cdaafd19b1a7d11703bbc3f3a95a6d7d5a607585541b49d",
+      "mb": 0.21,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 61393,
+      "indices": 367947,
+      "bbox": {
+        "min": [
+          -26.191,
+          -31.114,
+          3.032
+        ],
+        "max": [
+          -18.48,
+          -21.923,
+          12.219
+        ],
+        "size": [
+          7.711,
+          9.191,
+          9.187
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:aa675c3966b95e524eb3423ecfb8e03f5e219d2265dbec548f828ef5186d7c12",
+      "mb": 0.62,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 204596,
+      "indices": 1226607,
+      "bbox": {
+        "min": [
+          -26.192,
+          -31.114,
+          3.034
+        ],
+        "max": [
+          -18.478,
+          -21.92,
+          12.221
+        ],
+        "size": [
+          7.713,
+          9.194,
+          9.187
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e69fe2cee6ba5e83ea012154cd3f60895fe76043034d17063d9bdae2f1172a5f",
+      "mb": 0.8,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 325550,
+      "indices": 1952430,
+      "bbox": {
+        "min": [
+          19.11,
+          -30.69,
+          2.014
+        ],
+        "max": [
+          25.356,
+          -21.908,
+          11.196
+        ],
+        "size": [
+          6.246,
+          8.782,
+          9.182
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:fc38b4b048e121ee10ee18c5ba2d1323f135fc8527c858e8b3ffb7c33b64c682",
+      "mb": 0.17,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 48858,
+      "indices": 292833,
+      "bbox": {
+        "min": [
+          19.11,
+          -30.689,
+          2.017
+        ],
+        "max": [
+          25.354,
+          -21.908,
+          11.196
+        ],
+        "size": [
+          6.244,
+          8.781,
+          9.179
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-cgl-lam6-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ed84ebdc7fac8ea191c7034d38cb21ca3841f7039d9c737a6d289238a2a1b662",
+      "mb": 0.49,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 162791,
+      "indices": 976182,
+      "bbox": {
+        "min": [
+          19.11,
+          -30.69,
+          2.016
+        ],
+        "max": [
+          25.356,
+          -21.908,
+          11.197
+        ],
+        "size": [
+          6.246,
+          8.782,
+          9.181
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:67a808aada09856e765d03f871b26569b24afce5e5c49133c20f512725ca402a",
+      "mb": 0.57,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 232038,
+      "indices": 1389432,
+      "bbox": {
+        "min": [
+          -17.338,
+          -25.886,
+          7.96
+        ],
+        "max": [
+          -10.709,
+          -20.191,
+          12.292
+        ],
+        "size": [
+          6.628,
+          5.695,
+          4.332
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e5a7d456e1b4be6889320679f6fccd15fe474c9aeb13f698d53f6d5993266023",
+      "mb": 0.13,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 34863,
+      "indices": 208392,
+      "bbox": {
+        "min": [
+          -17.336,
+          -25.884,
+          7.959
+        ],
+        "max": [
+          -10.709,
+          -20.191,
+          12.291
+        ],
+        "size": [
+          6.627,
+          5.693,
+          4.331
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:91f51e480a825aedec545308ead47a0ffb08c517d758c95ae04dcdce95f2be7c",
+      "mb": 0.37,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 116075,
+      "indices": 694656,
+      "bbox": {
+        "min": [
+          -17.338,
+          -25.886,
+          7.96
+        ],
+        "max": [
+          -10.709,
+          -20.191,
+          12.292
+        ],
+        "size": [
+          6.628,
+          5.695,
+          4.333
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:64dc956a045b5916154d3f184e597dcaa306ff8c207c9051e2893e2de060bbbb",
+      "mb": 0.57,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 229115,
+      "indices": 1371954,
+      "bbox": {
+        "min": [
+          8.999,
+          -26.981,
+          7.426
+        ],
+        "max": [
+          16.281,
+          -20.002,
+          11.688
+        ],
+        "size": [
+          7.283,
+          6.979,
+          4.261
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:c03d3e00de3b3716426b21b496b44fd17580a108311a83a7962e94135e0f4c27",
+      "mb": 0.12,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 34422,
+      "indices": 205773,
+      "bbox": {
+        "min": [
+          8.999,
+          -26.981,
+          7.429
+        ],
+        "max": [
+          16.282,
+          -20.004,
+          11.687
+        ],
+        "size": [
+          7.283,
+          6.976,
+          4.258
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbd-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:8e50bb0464f572539f4bbd39c551f871173b5be97306cbe1020c6b37586b6045",
+      "mb": 0.36,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 114594,
+      "indices": 685941,
+      "bbox": {
+        "min": [
+          8.999,
+          -26.981,
+          7.429
+        ],
+        "max": [
+          16.281,
+          -20.002,
+          11.688
+        ],
+        "size": [
+          7.283,
+          6.979,
+          4.259
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0df838ab62ee64cbfdfcd041c1cfde22a52b5ed4a6b0fe12528328c32eb53e78",
+      "mb": 0.5,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 201654,
+      "indices": 1207578,
+      "bbox": {
+        "min": [
+          -16.514,
+          -29.464,
+          7.904
+        ],
+        "max": [
+          -10.772,
+          -22.832,
+          12.284
+        ],
+        "size": [
+          5.742,
+          6.632,
+          4.38
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:89e1240e0da97f8cdf6cd14562e770223b628f299c438f5fa92308e952e20b43",
+      "mb": 0.11,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 30323,
+      "indices": 181101,
+      "bbox": {
+        "min": [
+          -16.515,
+          -29.465,
+          7.904
+        ],
+        "max": [
+          -10.772,
+          -22.832,
+          12.277
+        ],
+        "size": [
+          5.743,
+          6.632,
+          4.373
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:4e80fd79e1d5dc9323d65dc7c4a2c02984e72abe223ea91a7703810e81e8e82a",
+      "mb": 0.32,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 100873,
+      "indices": 603759,
+      "bbox": {
+        "min": [
+          -16.514,
+          -29.464,
+          7.904
+        ],
+        "max": [
+          -10.772,
+          -22.832,
+          12.284
+        ],
+        "size": [
+          5.742,
+          6.632,
+          4.38
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:a9f8c3147f67c5721da5818e663b27c2e5cdf6deff3559b19729cc857c7f73b5",
+      "mb": 0.44,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 172149,
+      "indices": 1030278,
+      "bbox": {
+        "min": [
+          8.915,
+          -30.785,
+          7.763
+        ],
+        "max": [
+          14.864,
+          -23.945,
+          12.123
+        ],
+        "size": [
+          5.949,
+          6.84,
+          4.361
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:a394e2dc3b21c5ed1e376094f7f26a6a7b9592c331370861eae78238e2d587cb",
+      "mb": 0.09,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 25876,
+      "indices": 154521,
+      "bbox": {
+        "min": [
+          8.917,
+          -30.785,
+          7.766
+        ],
+        "max": [
+          14.864,
+          -23.945,
+          12.124
+        ],
+        "size": [
+          5.947,
+          6.84,
+          4.358
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbm-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:5c75826e8769022812ce0d419a66243b2d22612d446320aa8fc22aade357c84d",
+      "mb": 0.27,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 86100,
+      "indices": 515121,
+      "bbox": {
+        "min": [
+          8.915,
+          -30.785,
+          7.763
+        ],
+        "max": [
+          14.864,
+          -23.945,
+          12.123
+        ],
+        "size": [
+          5.949,
+          6.84,
+          4.361
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:e02b9678ef300dd22b7f7b2e9ed12c550390ec5730d599aa824f2c384823eecc",
+      "mb": 0.33,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 122116,
+      "indices": 731172,
+      "bbox": {
+        "min": [
+          -17.208,
+          -28.755,
+          8.186
+        ],
+        "max": [
+          -12.407,
+          -24.107,
+          11.782
+        ],
+        "size": [
+          4.801,
+          4.648,
+          3.595
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:df84d7ade03606fdb3b46031d8188faf5b886db726d7a055d88e212dde43b53c",
+      "mb": 0.07,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 18353,
+      "indices": 109668,
+      "bbox": {
+        "min": [
+          -17.21,
+          -28.751,
+          8.183
+        ],
+        "max": [
+          -12.407,
+          -24.105,
+          11.782
+        ],
+        "size": [
+          4.803,
+          4.645,
+          3.599
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-l-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:ed6f7c1f62949938d7dc47686c87183f80c119a1e0b35f59c32a1abd86288055",
+      "mb": 0.2,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 61077,
+      "indices": 365580,
+      "bbox": {
+        "min": [
+          -17.207,
+          -28.755,
+          8.187
+        ],
+        "max": [
+          -12.407,
+          -24.107,
+          11.782
+        ],
+        "size": [
+          4.8,
+          4.648,
+          3.595
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-hires.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:b43265698d3abd86f493745596be3db9d3db2e363618c21831a0a8c4a84f630f",
+      "mb": 0.25,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 92992,
+      "indices": 557094,
+      "bbox": {
+        "min": [
+          11.009,
+          -29.197,
+          7.963
+        ],
+        "max": [
+          15.89,
+          -25.028,
+          11.307
+        ],
+        "size": [
+          4.881,
+          4.169,
+          3.345
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-low.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:0ff4d7bea9487532d049581d34b1164f760d608ecf500d6180c8bc3d7503260f",
+      "mb": 0.05,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 13956,
+      "indices": 83562,
+      "bbox": {
+        "min": [
+          11.009,
+          -29.198,
+          7.963
+        ],
+        "max": [
+          15.892,
+          -25.03,
+          11.306
+        ],
+        "size": [
+          4.883,
+          4.168,
+          3.343
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/regions_bigbrain/bigbrain-mgbv-r-medium.glb",
+      "exists": true,
+      "role": "bigbrain-region-lod",
+      "hash": "sha256:2f518dcbb28b280b15cbd66380b75ca9ef121d1a420251b70602ad69372c381b",
+      "mb": 0.16,
+      "nodesWithMesh": 1,
+      "meshes": 1,
+      "materials": 0,
+      "primitives": 1,
+      "vertices": 46492,
+      "indices": 278544,
+      "bbox": {
+        "min": [
+          11.009,
+          -29.197,
+          7.964
+        ],
+        "max": [
+          15.89,
+          -25.028,
+          11.308
+        ],
+        "size": [
+          4.88,
+          4.169,
+          3.344
+        ]
+      }
+    },
+    {
+      "path": "apps/brain-app/public/figs3d/v2/glb/subcortex-cit168.glb",
+      "exists": true,
+      "role": "subcortex-cit168",
+      "hash": "sha256:7ab6541f3a08339558c55c7683e80b63a61836e8cceca8293e3804ad34d8255d",
+      "mb": 2.47,
+      "nodesWithMesh": 32,
+      "meshes": 32,
+      "materials": 0,
+      "primitives": 32,
+      "vertices": 53503,
+      "indices": 320550,
+      "bbox": {
+        "min": [
+          -33.912,
+          -37.481,
+          -41.725
+        ],
+        "max": [
+          33.025,
+          4.991,
+          19.209
+        ],
+        "size": [
+          66.938,
+          42.472,
+          60.934
+        ]
+      }
+    }
+  ]
+}

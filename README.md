@@ -187,6 +187,7 @@ Alle in `apps/brain-app` ausführen:
 | `pnpm test` | Atlas-Config erzeugen, dann Vitest einmalig (CI-tauglich) |
 | `pnpm test:watch` | Atlas-Config erzeugen, dann Vitest im lokalen Watch-Modus |
 | `pnpm test:e2e` | Playwright End-to-End-Smoke-Tests |
+| `pnpm verify:brain-models` | TARO-/MNI-GLBs auf Größenbudget, Meshzahl, Normalen-Coverage und Face/Normal-Konsistenz prüfen |
 
 ---
 

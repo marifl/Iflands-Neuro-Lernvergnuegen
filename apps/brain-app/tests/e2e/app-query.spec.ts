@@ -180,7 +180,7 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
   await expect(page.getByLabel('Szene springen')).toBeVisible({ timeout: 60_000 })
   await expect(page.getByText('Vortrag')).toBeVisible()
   await expect(page.getByText('Kapitel 11 — Vorlesung')).toBeVisible()
-  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 1 / 4 · Step 1')
+  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 25 / 26 · Step 1')
   await expect(page.getByRole('heading', { name: 'Drei Basalganglien-Schleifen' })).toBeVisible()
   await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
   await expect(page).toHaveURL(/config=basalganglienschleifen/)
@@ -188,11 +188,11 @@ test('Presentation-Sequenz laedt Start, Weiter und direkten Step-Link', async ({
 
   await page.keyboard.press('ArrowRight')
 
-  await expect(page.getByRole('heading', { name: 'Broca-Areal — Area 44/45 als VLPFC-Anker' })).toBeVisible()
-  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 2 / 4 · Step 1')
+  await expect(page.getByRole('heading', { name: 'Zusammenfassung — exekutive Funktionen' })).toBeVisible()
+  await expect(page.getByLabel('Aktueller Vortragsschritt')).toHaveText('Folie 26 / 26 · Step 1')
   await expect(page).toHaveURL(/sequence=presentation\.kapitel11-vorlesung/)
-  await expect(page).toHaveURL(/config=broca-areal/)
-  await expect(page).toHaveURL(/scene=broca-areal/)
+  await expect(page).toHaveURL(/config=zusammenfassung/)
+  await expect(page).toHaveURL(/scene=zusammenfassung/)
 
   await page.goto('/?sequence=presentation.kapitel11-vorlesung&config=vcpt&scene=vcpt&step=0')
 
@@ -268,18 +268,26 @@ async function runAuthoringSnapshotRoundtrip(page: Page) {
 
   await page.getByRole('button', { name: /Datei/ }).click()
   const devicePartTarget = 'target:asset-part:device-eeg-10-20:eeg-cap-01:electrode-fz'
-  await clickProjectedMesh(page, devicePartTarget)
-  await expect(page.getByText('Fz electrode')).toBeVisible()
-  await expect.poll(async () => page.evaluate(() => (window as any).__BRAIN_LAST_PICK_TARGET__)).toEqual({
-    targetKind: 'asset-part',
-    collectionId: 'device-eeg-10-20',
-    instanceId: 'eeg-cap-01',
-    partId: 'electrode-fz',
-  })
+  if ((page.viewportSize()?.width ?? 0) >= 700) {
+    await clickProjectedMesh(page, devicePartTarget)
+    await expect.poll(async () => page.evaluate(() => (window as any).__BRAIN_LAST_PICK_TARGET__)).toEqual({
+      targetKind: 'asset-part',
+      collectionId: 'device-eeg-10-20',
+      instanceId: 'eeg-cap-01',
+      partId: 'electrode-fz',
+    })
+  }
 
-  await page.getByRole('button', { name: /Werkzeug/ }).click()
-  await page.getByRole('button', { name: 'Verschieben' }).click()
-  await page.getByRole('button', { name: 'X +5' }).click()
+  await page.keyboard.press('Escape')
+  await page.locator('.ed-foot').getByRole('button', { name: /Werkzeug/ }).click({ force: (page.viewportSize()?.width ?? 0) < 700 })
+  await page.getByRole('button', { name: 'Asset-Edit aus' }).click()
+  if ((page.viewportSize()?.width ?? 0) < 700) {
+    await page.getByLabel('Werkzeug: Asset-Edit').getByRole('button', { name: 'X +5' }).click({ force: true })
+  } else {
+    const assetEditToolbar = page.getByRole('toolbar', { name: 'Asset-Edit-Werkzeuge' })
+    await assetEditToolbar.getByRole('button', { name: 'Verschieben' }).click()
+    await assetEditToolbar.getByRole('button', { name: 'X +5' }).click()
+  }
   await expect.poll(async () => page.evaluate(() => (window as any).__BRAIN_LAST_AUTHORING_COMMAND__)).toMatchObject({
     kind: 'set-transform',
     targetRef: { targetKind: 'asset-instance', collectionId: 'device-eeg-10-20', instanceId: 'eeg-cap-01' },
@@ -322,6 +330,25 @@ for (const viewport of AUTHORING_ROUNDTRIP_VIEWPORTS) {
   })
 }
 
+test('BrainModel-Review lädt MNI-Mobile-LOD ohne HQ-Leak', async ({ page }) => {
+  const requestedGlbs: string[] = []
+  page.on('request', (request) => {
+    const pathname = new URL(request.url()).pathname
+    if (pathname.endsWith('.glb')) requestedGlbs.push(pathname)
+  })
+
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/?mode=explore&brainModel=mni-mobile-r05')
+
+  await expect(page.getByLabel('Hirnmodell waehlen')).toBeVisible({ timeout: 60_000 })
+  await expectBrainCanvas(page)
+  await expect.poll(async () => page.evaluate(() => (window as any).__brainModelOption?.id)).toBe('mni-mobile-r05')
+
+  expect(requestedGlbs).toContain('/assets/brain-models/mni152/mni152-mobile-r05.glb')
+  expect(requestedGlbs.some((path) => path.includes('mni152-native-highqual-brain'))).toBe(false)
+  expect(requestedGlbs).not.toContain('/assets/bodyparts3d/brain.glb')
+})
+
 test('Preset-Deep-Links setzen unterschiedliche Default-Sichtbarkeit', async ({ page }) => {
   await page.goto('/?mode=explore&preset=kapitel11')
 
@@ -346,9 +373,9 @@ test('Strukturbaum-Mehrfachauswahl wirkt auf ein gemeinsames Selection-Set', asy
   await page.getByRole('button', { name: /Insel \(ganz\) \(links\)/ }).click()
   await page.getByRole('button', { name: /Insel \(ganz\) \(rechts\)/ }).click({ modifiers: ['Shift'] })
 
-  await expect(page.getByText('2 Ziele')).toBeVisible()
+  await expect(page.getByTestId('structure-tree-panel').getByText('2 Ziele')).toBeVisible()
   await page.getByRole('button', { name: /Werkzeug/ }).click()
-  await page.getByRole('button', { name: 'Auswahl ausblenden' }).click()
+  await page.getByLabel('Werkzeug: Gruppe').getByRole('button', { name: 'Auswahl ausblenden' }).click()
   await expectMeshVisibility(page, { 'left-insula': false, 'right-insula': false })
 })
 

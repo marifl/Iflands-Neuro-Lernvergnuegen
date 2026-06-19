@@ -75,8 +75,15 @@ import {
   authoringHistoryActionForKeyboardEvent,
   isEditableKeyboardTarget,
 } from './authoringKeyboardShortcuts'
+import {
+  BRAIN_MODEL_OPTIONS,
+  DEFAULT_BRAIN_MODEL_OPTION,
+  brainModelReviewSearch,
+  resolveBrainModelOptionFromSearch,
+  type BrainModelOption,
+  type BrainModelOptionId,
+} from './brainModelOptions'
 
-const BRAIN_GLB = '/assets/bodyparts3d/brain.glb'
 const SKULL_GLB = '/assets/context/skull.glb'
 const HEAD_GLB = '/assets/context/head.glb'
 // Watertight-3D-Atlas-Ueber-Objekte (furchen-echt, fsaverage->TARO). Julich nutzt die furchige
@@ -92,7 +99,6 @@ const ATLAS3D: { key: Atlas3dKey; glb: string; rootLabels: Record<Lang, string> 
 const ONTOLOGY_URL = '/assets/bodyparts3d/ontology.json'
 
 useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/')
-useGLTF.preload(BRAIN_GLB)
 useGLTF.preload(SKULL_GLB)
 useGLTF.preload(HEAD_GLB)
 
@@ -221,7 +227,8 @@ function ConfigLinkStateApplier({ effectiveConfig }: { effectiveConfig: Effectiv
     setCarveOverlay('dkt', carveLayer === 'dkt')
     setCarveOverlay('brodmann', false)
 
-    if (configuration.overlay?.scene && appMode === 'explore' && routedConfig.current !== activeConfiguration) {
+    const explicitExploreMode = new URLSearchParams(window.location.search).get('mode') === 'explore'
+    if (configuration.overlay?.scene && appMode === 'explore' && !explicitExploreMode && routedConfig.current !== activeConfiguration) {
       routedConfig.current = activeConfiguration
       setAppMode('learn')
       return
@@ -303,8 +310,8 @@ function useCutHidden(): (mesh: THREE.Mesh) => boolean {
   }, [cuts, cutMode])
 }
 
-function Brain({ dimOpacity }: { dimOpacity: number }) {
-  const { scene } = useGLTF(BRAIN_GLB)
+function Brain({ brainModel, dimOpacity }: { brainModel: BrainModelOption; dimOpacity: number }) {
+  const { scene } = useGLTF(brainModel.url)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
   const highlight = useViewerStore((s) => s.highlight)
@@ -324,6 +331,10 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
     () => (activePreset ? resolvePresetColors(activePreset) : null),
     [activePreset],
   )
+  useEffect(() => {
+    const runtimeWindow = window as Window & { __brainModelOption?: BrainModelOption }
+    runtimeWindow.__brainModelOption = brainModel
+  }, [brainModel])
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -453,6 +464,57 @@ function Brain({ dimOpacity }: { dimOpacity: number }) {
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
+}
+
+function BrainModelReviewSelector({
+  brainModel,
+  isNarrow,
+  onSelect,
+}: {
+  brainModel: BrainModelOption
+  isNarrow: boolean
+  onSelect: (id: BrainModelOptionId) => void
+}) {
+  return (
+    <label
+      className="ed-panel ed-frame"
+      style={{
+        position: 'absolute',
+        top: isNarrow ? undefined : 16,
+        right: isNarrow ? 12 : 16,
+        bottom: isNarrow ? 64 : undefined,
+        zIndex: 18,
+        display: 'grid',
+        gap: 6,
+        padding: '8px 10px',
+        minWidth: isNarrow ? 170 : 188,
+        pointerEvents: 'auto',
+      }}
+    >
+      <span className="eyebrow">Hirnmodell</span>
+      <select
+        aria-label="Hirnmodell waehlen"
+        value={brainModel.id}
+        onChange={(event) => onSelect(event.target.value as BrainModelOptionId)}
+        style={{
+          width: '100%',
+          border: '1px solid color-mix(in srgb, var(--line), transparent 10%)',
+          borderRadius: 6,
+          background: 'var(--paper)',
+          color: 'var(--ink)',
+          font: '600 12px var(--ed-mono)',
+          padding: '6px 8px',
+        }}
+      >
+        {BRAIN_MODEL_OPTIONS.map((option) => (
+          <option key={option.id} value={option.id}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <span style={{ color: 'var(--g600)', fontSize: 11, lineHeight: 1.25 }}>{brainModel.reviewNote}</span>
+    </label>
+  )
 }
 
 /** Kontext-Schaedel (Phineas-Gage-Layer). Default versteckt; nicht anklickbar, damit die
@@ -804,6 +866,20 @@ export default function BodyParts3DViewer() {
   // ueberspringen, Deep-Links behalten immer Vorrang.
   const [launched, setLaunched] = useState(() => !shouldShowModeLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
+  const [brainModel, setBrainModel] = useState(() => resolveBrainModelOptionFromSearch(window.location.search))
+  const [brainModelReviewActive, setBrainModelReviewActive] = useState(() => (
+    new URLSearchParams(window.location.search).has('brainModel')
+  ))
+
+  const selectBrainModel = (optionId: BrainModelOptionId) => {
+    const option = BRAIN_MODEL_OPTIONS.find((candidate) => candidate.id === optionId)
+    if (!option) throw new Error(`Brain model "${optionId}" ist nicht registriert`)
+    const nextSearch = brainModelReviewSearch(optionId, window.location.search)
+    const nextUrl = `${window.location.pathname}${nextSearch}${window.location.hash}`
+    window.history.replaceState(null, '', nextUrl)
+    setBrainModel(option)
+    setBrainModelReviewActive(optionId !== DEFAULT_BRAIN_MODEL_OPTION.id)
+  }
 
   useEffect(() => {
     applyAppearanceSettings({
@@ -1131,7 +1207,7 @@ export default function BodyParts3DViewer() {
               <directionalLight position={[120, 200, 160]} intensity={1.4} />
               <directionalLight position={[-160, -80, -200]} intensity={0.28} />
               <Suspense fallback={null}>
-                <Brain dimOpacity={dimOpacity} />
+                <Brain brainModel={brainModel} dimOpacity={dimOpacity} />
                 <ContextSkull dimOpacity={dimOpacity} />
                 <ContextHead dimOpacity={dimOpacity} />
                 {ATLAS3D.map((a) => (
@@ -1159,7 +1235,10 @@ export default function BodyParts3DViewer() {
               <CameraRig />
               {perfGate ? <PerformanceGateProbe /> : null}
             </Canvas>
-            <AuthoringTransformControls layout="toolbar" includeEditToggle includeResetAction />
+            <AuthoringTransformControls layout="toolbar" includeEditToggle includeNudgeAction includeResetAction />
+            {brainModelReviewActive ? (
+              <BrainModelReviewSelector brainModel={brainModel} isNarrow={isNarrow} onSelect={selectBrainModel} />
+            ) : null}
 
             {/* HUD + Vertiefungs-Trigger nur im Explorer-Modus (floating). Authoring-Werkzeuge
                 liegen nur im aktiven Asset-Edit als Viewport-Toolbar darueber. */}

@@ -323,6 +323,7 @@ export default function StructureTree() {
         flexDirection: 'column',
         minHeight: 0,
         minWidth: 0,
+        overflow: 'hidden',
       }}
     >
       <div style={{ padding: 14, borderBottom: '1.5px solid var(--line)', display: 'flex', flexDirection: 'column', gap: 11 }}>

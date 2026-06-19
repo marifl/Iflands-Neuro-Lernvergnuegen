@@ -1,6 +1,6 @@
 # brain-app Architektur
 
-Stand: 2026-06-16. Diese Datei ist die zentrale Einstiegskarte für neue
+Stand: 2026-06-19. Diese Datei ist die zentrale Einstiegskarte für neue
 Developer und für Produktentscheidungen. Sie beschreibt den aktuellen
 Implementierungsvertrag, nicht alte Neuro-Suite-Ideen.
 
@@ -36,6 +36,7 @@ der Produktarchitektur.
 | Scene-Inhalte | `apps/brain-app/public/scenes/*.json` | Prose, ERP, Flowchart, Image, Table- und Topography-Daten |
 | Authoring-Quelle | `scripts/atlas/config.default.toml` | editierbare Presets, Configurations, Presentation/Learning-Sequenzen |
 | Build-Gate | `scripts/atlas/build-config.mjs` | TOML nach `atlas-config.json`, Validierung, keine unbekannten Keys |
+| BrainModel-Gate | `scripts/atlas/check-brain-model-assets.mjs` | TARO-/MNI-Asset-Budgets, Normalen-Coverage und Face/Normal-Konsistenz |
 | Atlas-Geometrie | `scripts/atlas/README.md` | SSoT für MNI/TARO, Runtime-Patches, Carve-Pipeline und Limits |
 
 ## Doku-Topologie
@@ -195,6 +196,37 @@ Sidebar und Viewport-Zuschnitt nach `appMode`.
 `FooterBar.tsx` ist das globale Cockpit. Es bündelt Moduswechsel, Atlas,
 Farbe, Schnitt, Ansicht, Kontext und Snapshot. Neue globale Werkzeuge gehören
 hier nur hin, wenn sie den Dozenten- oder Studentenfluss vereinfachen.
+
+## BrainModel-Vertrag
+
+`BodyParts3DViewer.tsx` lädt das sichtbare Hirn nicht mehr als implizit
+festen Pfad, sondern über `src/viewer/brainModelOptions.ts`. Der Default bleibt
+`taro` mit `public/assets/bodyparts3d/brain.glb`; zusätzliche MNI-Review-
+Modelle liegen unter `public/assets/brain-models/mni152/` und werden per
+`?brainModel=<id>` oder über den Review-Selector im 3D-Viewport gewählt.
+
+Aktuelle registrierte Optionen:
+
+1. `taro`: Produktionsdefault.
+2. `mni-mobile-r05`: kleinste MNI-Mobile-Review-Variante.
+3. `mni-mobile-r06`: balancierte MNI-Mobile-Review-Variante.
+4. `mni-mobile-r08`: ehemalige Mobile-Balanced-Referenz aus dem Monorepo.
+5. `mni-desktop-r18`: Desktop-Referenz für Detailvergleich.
+
+Release-Regel: Kein BrainModel darf ohne explizite Normalen und Budget-Gate in
+die App. `pnpm verify:brain-models` prüft dafür:
+
+1. Datei existiert und bleibt innerhalb des Größenbudgets.
+2. erwartete Meshzahl bleibt stabil.
+3. jedes Primitive besitzt `NORMAL`.
+4. Normalenlängen sind plausibel.
+5. Face/Normal-Abweichung bleibt unter dem modellbezogenen Grenzwert.
+
+Der MNI-Pfad ist aktuell ein Geometrie- und Performance-Review-Pfad. Er ersetzt
+TARO nicht als semantischen Produktionsdefault. TARO-spezifische
+Auswahl-Slugs, Carves und kuratierte Unterrichtslinks bleiben nur für TARO als
+vollständig produktiv belegt, bis eine eigene MNI-Registry mit Pick-,
+Overlay- und Atlas-Mapping-Gates vorliegt.
 
 ### Responsive Shell-Vertrag
 

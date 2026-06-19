@@ -1,0 +1,76 @@
+{
+  "source": {
+    "path": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/MU - SS26 - Kognitive Neurowissenschaften/apps/brain-app/public/figs3d/v2/glb/mni152-native-highqual-brain.glb",
+    "source_size_bytes": 47720000,
+    "note": "Quelle ist das ehemalige Monorepo-HQ-MNI-Brain. Review-Varianten wurden ohne Mesh-Join erzeugt, damit Mesh-Grenzen fuer spaetere Registry-Arbeit erhalten bleiben. Nach erster Inspektion hatten die MNI-LODs keine NORMAL-Attribute; Blender 5.1.1 hat die Normalen konsistent nach aussen recalculiert und Smooth Shading gesetzt, danach wurden die Dateien erneut mit Draco komprimiert."
+  },
+  "generated_at": "2026-06-19",
+  "variants": [
+    {
+      "id": "mni-mobile-r05",
+      "path": "apps/brain-app/public/assets/brain-models/mni152/mni152-mobile-r05.glb",
+      "size_bytes": 7256396,
+      "mesh_count": 544,
+      "render_vertex_count": 6100254,
+      "upload_vertex_count": 1020655,
+      "normal_mesh_count": 544,
+      "face_normal_bad_ratio": 0.028801,
+      "bbox_min": [-77.47127, -94.71644, -95.48192],
+      "bbox_max": [77.80684, 68.68633, 92.13207],
+      "sha256": "0b612c897e3e989a73b5a3c9dfcc1ff6cb28a13454b2eb9e64d932f774f39f1e",
+      "recipe": "gltf-transform optimize --simplify-ratio 0.05 --simplify-error 0.0035 --simplify-lock-border true --compress draco; Blender normals_make_consistent(inside=false) + Smooth Shading; gltf-transform draco --quantize-position 14 --quantize-normal 10"
+    },
+    {
+      "id": "mni-mobile-r06",
+      "path": "apps/brain-app/public/assets/brain-models/mni152/mni152-mobile-r06.glb",
+      "size_bytes": 8384576,
+      "mesh_count": 544,
+      "render_vertex_count": 7226400,
+      "upload_vertex_count": 1203987,
+      "normal_mesh_count": 544,
+      "face_normal_bad_ratio": 0.025266,
+      "bbox_min": [-77.47127, -94.71644, -95.48192],
+      "bbox_max": [77.80684, 68.68633, 91.80326],
+      "sha256": "aa31b2cf5a0611211bbf5ff59e5c94f63db871954045fbcaff9f3a77facbb733",
+      "recipe": "gltf-transform optimize --simplify-ratio 0.06 --simplify-error 0.003 --simplify-lock-border true --compress draco; Blender normals_make_consistent(inside=false) + Smooth Shading; gltf-transform draco --quantize-position 14 --quantize-normal 10"
+    },
+    {
+      "id": "mni-mobile-r08",
+      "path": "apps/brain-app/public/assets/brain-models/mni152/mni152-mobile-r08.glb",
+      "size_bytes": 10283444,
+      "mesh_count": 544,
+      "render_vertex_count": 9191178,
+      "upload_vertex_count": 1523550,
+      "normal_mesh_count": 544,
+      "face_normal_bad_ratio": 0.021083,
+      "bbox_min": [-77.47127, -94.74637, -95.48192],
+      "bbox_max": [77.80684, 68.68633, 91.90531],
+      "sha256": "56e51d39bd9b799c54b4ca3756b60531c12a516f3e6b3737006956bda51986f6",
+      "recipe": "kopiert aus ehemaligem Monorepo: mni152-native-highqual-brain-mobile-balanced.glb; Blender normals_make_consistent(inside=false) + Smooth Shading; gltf-transform draco --quantize-position 14 --quantize-normal 10"
+    },
+    {
+      "id": "mni-desktop-r18",
+      "path": "apps/brain-app/public/assets/brain-models/mni152/mni152-desktop-r18.glb",
+      "size_bytes": 18976444,
+      "mesh_count": 544,
+      "render_vertex_count": 18592074,
+      "upload_vertex_count": 3054545,
+      "normal_mesh_count": 544,
+      "face_normal_bad_ratio": 0.012229,
+      "bbox_min": [-77.47127, -94.83617, -95.48192],
+      "bbox_max": [77.98709, 68.68633, 92.13207],
+      "sha256": "2786892ee226b13d3d2623299d8233a18513eb981dac2c531fdf5c8612e6d46e",
+      "recipe": "kopiert aus ehemaligem Monorepo: mni152-native-highqual-brain-desktop-balanced.glb; Blender normals_make_consistent(inside=false) + Smooth Shading; gltf-transform draco --quantize-position 14 --quantize-normal 10"
+    }
+  ],
+  "normal_qa": {
+    "baseline_taro": {
+      "mesh_count": 600,
+      "normal_mesh_count": 600,
+      "face_normal_bad_ratio": 0.000085,
+      "inward_likely_meshes": 2,
+      "ambiguous_meshes": 58
+    },
+    "interpretation": "Die MNI-Review-Assets haben jetzt vollstaendige NORMAL-Coverage und keine fehlerhaften Normalenlaengen. Face/Normal-Abweichung liegt nach Smooth Shading zwischen 1.22% und 2.88%; TARO ist als Produktionsbaseline mit 0.0085% sauberer. Fuer die finale MNI-Produktionsfreigabe bleibt ein eigener Normalen-/Submesh-Gate noetig, aber der alte Zustand ohne NORMAL-Attribute ist beseitigt."
+  }
+}

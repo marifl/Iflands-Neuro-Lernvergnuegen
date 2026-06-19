@@ -1,0 +1,12 @@
+{
+  "skill": "evaluator",
+  "scope": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-mni-brain-als-mobile-taugliche/criteria.md",
+  "backend": "claude",
+  "mode": "manual",
+  "status": "waiting-for-review",
+  "startedAt": "2026-06-19T15:32:00.562Z",
+  "updatedAt": "2026-06-19T15:32:00.562Z",
+  "promptPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-mni-brain-als-mobile-taugliche/.criteria-review-prompt.md",
+  "streamPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-mni-brain-als-mobile-taugliche/criteria-review.log",
+  "outputPath": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-19-mni-brain-als-mobile-taugliche/criteria-review.md"
+}
