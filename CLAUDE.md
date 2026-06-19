@@ -49,9 +49,10 @@ Figur-Layer. Nicht erneut versuchen, den Voll-Atlas auf TARO zu zwingen.
 ## Didaktisches Onboarding
 
 Beim ersten Laden zeigt `ModeLauncher` (`apps/brain-app/src/viewer/ModeLauncher.tsx`) einen Start-Screen
-mit 4 benannten Modus-Karten (Lernen empfohlen / Explorer / Phineas / Atlas) — nimmt die Einstiegslast,
-macht die geführten Modi sichtbar (ADHD: Object Permanence, eine klare Aktion). Deep-Links
+für die regulären Modi Lernen, Explorer und Phineas — nimmt die Einstiegslast,
+macht die geführten Flows sichtbar (ADHD: Object Permanence, eine klare Aktion). Deep-Links
 (`?mode=<learn|explore|phineas|atlas>`, `?scene=<id>` ⇒ Lernen) überspringen ihn (`main.tsx`).
+`atlas` bleibt technisch erreichbar, ist aber internes/deep-linkbares Supplement statt normale Startkarte.
 Lern- und Phineas-Modus haben Fortschrittsbalken (Time-Blindness). UI-Stil: Memory
 `brain-app-editorial-design-system` (ed-btn/eyebrow/ed-panel, theme-tokens NICHT editieren).
 
@@ -169,4 +170,3 @@ alrah chain        Sequentielle Contract-Ketten (create/run/show/archive)
 ```
 
 Details: `.claude/rules/alrah.md`</alrah-block>
-

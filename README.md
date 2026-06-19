@@ -118,16 +118,20 @@ Erscheint im Terminal `Local: http://localhost:5173/`, öffne diese Adresse im B
 
 ## Was die App kann
 
-Drei Grundmodi, umgeschaltet über eine kontextsensitive Steuerleiste am unteren Rand:
+Aktuell nutzt die App drei reguläre Modi, umgeschaltet über die
+kontextsensitive Steuerleiste am unteren Rand:
 
 - **Lernen** — geführte Szenen (VCPT, ICA, P3a/P3b/P3z, Zusammenfassung) mit
-  Companion-Text, Kamerafahrten und Overlays. Für Selbststudium **und** Vortrag.
+  Lerntext, Kamerafahrten und Overlays. Für Selbststudium **und** Vortrag.
 - **Explorer** — freier Strukturbaum: jede Hirnregion anklicken, isolieren,
   einfärben (funktionale vs. laterale Färbemodi), schneiden (Cut-Plane).
 - **Phineas Gage** — animierte Fallstudie (Läsion + Schädelkontext).
 
-Dazu: zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop,
-Tablet und Phone, WCAG-AA-Kontraste.
+Atlas ist ein Supplement statt ein regulärer Startmodus: `Atlas auf Hirn`
+zeigt DKT-, Julich- oder Brodmann-Carves direkt auf TARO, der kanonische
+fsaverage-Atlas bleibt per Deep-Link und kuratierter Brücke erreichbar. Dazu:
+zwei gleichwertige Themes (hell/dunkel), responsive Layouts für Desktop, Tablet
+und Phone, WCAG-AA-Kontraste.
 
 > Inhaltlicher Fokus und Designprinzipien: [`PRODUCT.md`](PRODUCT.md) · [`DESIGN.md`](DESIGN.md) ·
 > zentrale Architekturkarte: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
@@ -211,13 +215,17 @@ apps/brain-app/              Die App (Vite / React / R3F)
     │   └── atlas-canonical/ fsaverage-Atlas-Labels (.i16/.f32/.u32)
     ├── regions/             pro-Region-Markdown (Funktion, Brodmann-Areal, Quellen)
     ├── scenes/              Lern-Szenen als JSON (eigener didaktischer Content)
-    ├── companion/           Companion-Atlas-Daten + Presets
-    └── config/              Farb-/Material-Presets, Szenen-Config
+    └── config/              Geräte-/Anzeige-Defaults; fachliche Config liegt in scripts/atlas
 
 packages/brain-runtime/      Koordinaten-Helfer (file:-Dependency der App)
 packages/theme-tokens/       Design-Tokens (via relativem CSS-Import)
 scripts/                     Asset-Erzeugungs-Pipelines
 ```
+
+Fachliche Presets, Lernpfade, Präsentationsschritte und Figure-Färbungen werden
+in `scripts/atlas/config.default.toml` authored und nach
+`public/assets/atlas-canonical/atlas-config.json` gebaut. Ältere Datenordner im
+App-Public-Baum sind nicht die aktuelle Source of Truth für neue Configs.
 
 `brain-runtime` und `theme-tokens` lösen rein über die Verzeichnisstruktur auf —
 **keine `pnpm-workspace.yaml` nötig**.

@@ -42,18 +42,20 @@ Strategie: **Restrained** (tinted neutrals + ein Akzent). Werte als Hex aus dem 
 - **`.ed-box`**: quadratische Checkbox (13px), `on` = Tinte gefüllt, `partial` = diagonaler Split.
 - **`.ed-pill`**: eckige Pills, Unterscheidung über Stil (`orange`/`solid`/`out`), nicht über Hue.
 - **`.eyebrow` / `.ed-block-label` / `.ed-tag`**: Mono-Marker; Block-Label trägt ein führendes 7px-Orange-Quadrat (Plan-Notation).
-- **`.ed-foot`**: untere Steuer-/Titelleiste. `display: grid`, `border-top: 1.5px var(--line)`. Spalten `.col` mit `padding: 9px 14px`, `border-right: 1px var(--line-soft)` (letzte ohne), Mono 8.5px, Versalien. Sub-Elemente `.h` (Orange-Mini-Label 7px), `.v` (Wert in Tinte), `.ellip` (Trunkierung). **Aktuell ohne responsive Behandlung** (Kandidat für Adapt).
+- **`.ed-foot`**: untere Steuer-/Titelleiste. `display: grid`, `border-top: 1.5px var(--line)`. Spalten `.col` mit `padding: 9px 14px`, `border-right: 1px var(--line-soft)` (letzte ohne), Mono 8.5px, Versalien. Sub-Elemente `.h` (Orange-Mini-Label 7px), `.v` (Wert in Tinte), `.ellip` (Trunkierung). Responsive Varianten folgen dem Shell-Vertrag in `docs/ARCHITECTURE.md` statt einem eigenen Breakpoint-Pfad.
 - **`.scrollbar-thin`**: 4px schlanke Scrollbar.
 
 ## Layout
 
 - App-Shell: feste Plate (`ed-frame`) über die volle Viewport-Fläche, Spalten: Kopfleiste (fhead) / Mitte (3D-Viewport + Sidebar) / Steuer-Fußleiste (ed-foot).
 - Breit (Desktop): 3D-Viewport links (nimmt Restraum), Sidebar feste Spalte rechts (340–460px je Inhalt).
-- Schmal: vertikaler Stack (3D oben mit fester Höhenzone ~42%, Inhalt darunter). Steuerung via `useIsNarrow()`-Hook (`useMediaQuery`).
+- Responsive Shell: `desktop-split`, `portrait-drawer` und `landscape-rail` sind der aktuelle Vertrag. Einzelne Komponenten dürfen nicht abweichend eigene Shell-Modi erfinden.
 - Keine Karten-Grids. Trennung über 1px/1.5px-Linien, nicht über Boxen mit Radien/Schatten.
 - Motion-Tokens aus `theme-tokens/styles/motion.css` (`--motion-fast` etc.); Transitions sparsam (Button-Füllung). Keine animierten Layout-Properties.
 
-## Responsive-Notiz (für Adapt-Arbeit)
+## Responsive-Notiz
 
-- `useIsNarrow()` ist der vorhandene Breakpoint-Hook. Sidebar/Stack folgen ihm bereits; die **`ed-foot`-Steuerleiste tut es noch nicht** (gridTemplateColumns inline gesetzt, kein Tablet/Phone-Layout).
-- Touch-Targets der Mono-Buttons (`5px 11px` Padding) sind unter dem 44px-Minimum für Phone. Adapt-Ziel: pro Gerät saubere, gleichwertige Layouts statt Schrumpfen.
+- Der verbindliche Layout-Vertrag steht in `docs/ARCHITECTURE.md` und wird in
+  `apps/brain-app/src/viewer/explorerShellLayout.ts` benannt.
+- Adapt-Arbeit muss pro Gerät gleichwertige Layouts liefern statt Desktop nur
+  zu schrumpfen. Touch-Targets bleiben für Phone mindestens 44 x 44 px.

@@ -38,6 +38,29 @@ der Produktarchitektur.
 | Build-Gate | `scripts/atlas/build-config.mjs` | TOML nach `atlas-config.json`, Validierung, keine unbekannten Keys |
 | Atlas-Geometrie | `scripts/atlas/README.md` | SSoT für MNI/TARO, Runtime-Patches, Carve-Pipeline und Limits |
 
+## Doku-Topologie
+
+Aktuelle Arbeitsdoku ist absichtlich auf wenige zuständige Dateien verteilt.
+Neue Agents sollen diese Kette nutzen und historische Protokolle nicht als
+aktuellen Vertrag lesen:
+
+1. `PRODUCT.md`: Produktzweck, reguläre Modi und V2-Zielbild.
+2. `DESIGN.md`: visuelle Editorial-Schicht und responsive Design-Leitplanken.
+3. `CLAUDE.md`: Repo-Einstieg, Atlas-Grenzen, Agent-Regeln und schnelle
+   Arbeitsanker.
+4. `apps/brain-app/DESIGN.md`: app-lokaler Produkt- und Implementierungsvertrag.
+5. `docs/ARCHITECTURE.md`: Runtime-, State-, Config-, Snapshot- und
+   Authoring-Vertrag.
+6. `scripts/atlas/README.md`: Atlas-, TARO-, fsaverage- und Asset-Pipeline.
+7. `docs/VORTRAGS_GRAFIK_AREAL_MATRIX.md`: konkrete Grafik-zu-Areal- und
+   Färbungsregeln.
+8. `docs/NO_FALLBACK_ARCHITECTURE_INVENTORY.md`: Restklassen für Legacy-,
+   Fallback- und Doku-Drift.
+
+Historische Reviews, END_SESSION-Dateien und nicht gemappte Handoff-Mockups
+sind Verlaufsevidenz. Sie dürfen Entscheidungen erklären, aber keine aktuelle
+Arbeitsanweisung über die obige Kette überschreiben.
+
 ## Architekturfluss
 
 ```mermaid
@@ -202,7 +225,7 @@ Playwright-/E2E-Schritt ableiten.
 ### Studentischer Fortschritt
 
 Studentisches Lernen nutzt denselben `learn`-Modus und denselben
-`learning.kapitel11-pfad` wie der Dozenten-Companion. Der erste Vertrag liegt
+`learning.kapitel11-pfad` wie der Vortragspfad. Der erste Vertrag liegt
 in `src/viewer/studentProgress.ts`:
 
 1. `StudentProgressState` ist versioniert, `learning`-only und referenziert

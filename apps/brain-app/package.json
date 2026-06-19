@@ -8,6 +8,7 @@
     "dev": "pnpm run atlas:build-config && vite",
     "generate:phineas-iron-rod": "node scripts/generate-phineas-iron-rod.mjs",
     "build": "pnpm run atlas:build-config && tsc -b && vite build",
+    "docs:drift": "node ../../scripts/check-doc-drift.mjs",
     "inventory:mesh-identity": "node scripts/mesh-identity-inventory.mjs --check",
     "perf:budget": "node ../../scripts/perf/check-brain-app-budget.mjs",
     "preview": "vite preview",

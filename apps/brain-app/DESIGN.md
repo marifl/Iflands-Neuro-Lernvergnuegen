@@ -17,12 +17,17 @@ Kognitiven Neurowissenschaften. Der 3D-Viewer ist die Hauptfläche; alle
 Bedienelemente dienen der Orientierung, Auswahl, Färbung, Schnittführung und
 didaktischen Begleitung.
 
-Produktive Modi:
+Reguläre Modi:
 
 1. **Lernen**: geführte Szenen mit Sidebar, Kamera, Overlays und ERP-/VCPT-Pfad.
 2. **Explorer**: freier Strukturbaum, Atlas-Layer, Färbung, Isolation und Cuts.
 3. **Phineas Gage**: Fallstudienmodus mit Schädelkontext, Läsionspfad und
-   schematischem TARO-Modell.
+   manifestierten Fallstudien-Assets.
+
+Atlas ist technisch als eigener `appMode` erreichbar, aber nicht Teil des
+normalen Modus-Flyouts. Produktiv ist Atlas ein Supplement: Carves liegen direkt
+auf TARO, der kanonische fsaverage-Atlas ist eine präzise Zweitsicht für
+kuratierte Brücken und Expert-Deep-Links.
 
 Der Startscreen dient nur der Moduswahl. Es gibt keine Marketing-Landingpage.
 
@@ -91,8 +96,9 @@ Ebenen trennen:
    Herkunft in `THIRD-PARTY-NOTICES.md`.
 2. TARO-Carve-Flächen sind registrierte Atlas-Darstellungen, keine
    morphometrisch exakte Patientendaten.
-3. Phineas Gage nutzt ein schematisches TARO-/Schädelmodell, solange kein
-   lizenziertes echtes Gage-Modell eingebunden ist.
+3. Phineas Gage nutzt manifestierte Kontext- und Fallstudien-Assets. Wo
+   Rekonstruktion, Spiegelung oder historische Näherung im Spiel ist, muss das
+   in Inventar, Quellen oder UI erkennbar bleiben.
 4. Gespiegelte oder rekonstruierte Assets müssen in Inventar, Quellen oder UI
    erkennbar bleiben.
 
