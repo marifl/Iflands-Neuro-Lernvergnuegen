@@ -1,4 +1,4 @@
-import { parseAssetManifestDocument, type AssetManifestDocument, type AssetManifestEntry } from './assetManifest'
+import { manifestRuntimeTransform, parseAssetManifestDocument, type AssetManifestDocument, type AssetManifestEntry } from './assetManifest'
 import { createAuthoringSceneFromManifestAssets } from './authoringAssetLoader'
 import {
   AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
@@ -6,7 +6,6 @@ import {
   type AuthoringSnapshotState,
 } from './authoringSnapshotStore'
 import { type AuthoringScene, type AuthoringTransform } from './authoringScene'
-import { manifestRuntimeTransform } from './phineasAssetManifest'
 import type { SequenceTargetRef } from './sequenceTargetRef'
 
 export const MANIFEST_AUTHORING_SCENE_ID = 'manifest-assets-authoring'

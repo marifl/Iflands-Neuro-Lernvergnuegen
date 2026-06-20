@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
 import type { AssetManifestDocument, AssetManifestEntry, AssetManifestPart } from './assetManifest'
-import { applyManifestRootTransform, loadPhineasAssetManifest } from './phineasAssetManifest'
+import { loadPhineasAssetManifest, manifestRuntimeTransform } from './assetManifest'
 import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
@@ -75,7 +75,12 @@ function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
 
 function cloneSceneForAsset(scene: THREE.Group, asset: AssetManifestEntry): THREE.Group {
   const clone = cloneSceneWithOwnMaterials(scene)
-  applyManifestRootTransform(clone, asset)
+  const transform = manifestRuntimeTransform(asset)
+  clone.position.set(...transform.position)
+  clone.rotation.set(...transform.rotation)
+  clone.scale.set(...transform.scale)
+  clone.updateMatrix()
+  clone.updateMatrixWorld(true)
   return clone
 }
 
@@ -215,7 +220,7 @@ function removeDevSnapshot(assetId: string): void {
   if (Object.keys(win.__manifestAssetObjects.assets).length === 0) delete win.__manifestAssetObjects
 }
 
-function usePhineasManifest(): AssetManifestDocument | null {
+function useAssetManifest(): AssetManifestDocument | null {
   const [state, setState] = useState<{ manifest: AssetManifestDocument | null; error: Error | null }>({
     manifest: null,
     error: null,
@@ -302,7 +307,7 @@ function ManifestAssetInstance({ asset, dimOpacity }: { asset: AssetManifestEntr
 
 export default function ManifestAssetObjects({ dimOpacity }: { dimOpacity: number }) {
   const appMode = useViewerStore((s) => s.appMode)
-  const manifest = usePhineasManifest()
+  const manifest = useAssetManifest()
   const assets = useMemo(() => (
     manifest?.assets.filter((asset) => asset.collectionId === PHINEAS_GAGE_COLLECTION_ID && asset.runtimeInstanceId) ?? []
   ), [manifest])

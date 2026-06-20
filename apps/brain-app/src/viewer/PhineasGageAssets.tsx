@@ -2,12 +2,13 @@ import { useGLTF } from '@react-three/drei'
 import { useEffect, useMemo, useState } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
-import type { AssetManifestDocument, AssetManifestEntry } from './assetManifest'
 import {
-  applyManifestRootTransform,
   assetManifestEntryByUri,
   loadPhineasAssetManifest,
-} from './phineasAssetManifest'
+  manifestRuntimeTransform,
+  type AssetManifestDocument,
+  type AssetManifestEntry,
+} from './assetManifest'
 import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS, useCaseStudyViewStore } from './phineasGage'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
@@ -86,7 +87,12 @@ function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
 
 function cloneSceneForAsset(scene: THREE.Group, asset: AssetManifestEntry): THREE.Group {
   const clone = cloneSceneWithOwnMaterials(scene)
-  applyManifestRootTransform(clone, asset)
+  const transform = manifestRuntimeTransform(asset)
+  clone.position.set(...transform.position)
+  clone.rotation.set(...transform.rotation)
+  clone.scale.set(...transform.scale)
+  clone.updateMatrix()
+  clone.updateMatrixWorld(true)
   return clone
 }
 

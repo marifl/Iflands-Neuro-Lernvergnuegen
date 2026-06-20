@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useAuthoringSnapshotStore } from './authoringSnapshotStore'
 import { ensureManifestAuthoringState } from './manifestAuthoringRuntime'
-import { loadPhineasAssetManifest } from './phineasAssetManifest'
+import { loadPhineasAssetManifest } from './assetManifest'
 
 export default function ManifestAuthoringBridge() {
   useEffect(() => {
