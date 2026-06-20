@@ -68,11 +68,6 @@ import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
 import { useIsNarrow, useIsTouchLandscape, useMediaQuery } from '../useMediaQuery'
 import {
-  ROD_RADIUS_SHAFT,
-  ROD_RADIUS_TIP,
-  rodSegmentForPhase,
-} from './phineasGage'
-import {
   authoringHistoryActionForKeyboardEvent,
   isEditableKeyboardTarget,
 } from './authoringKeyboardShortcuts'
@@ -107,7 +102,6 @@ useGLTF.preload(HEAD_GLB)
 const SELECT_COLOR = ATLAS_VIEWER_COLORS.selection
 const HOVER_COLOR = ATLAS_VIEWER_COLORS.hover
 const EMISSIVE_OFF_COLOR = ATLAS_VIEWER_COLORS.emissiveOff
-const ROD_COLOR = ATLAS_VIEWER_COLORS.rod
 const DIM_DEPTH_WRITE_THRESHOLD = 0.6
 const CONFIG_AXIS_TO_CUT_AXIS: Record<'x' | 'y' | 'z', CutAxis> = {
   x: 'sagittal',
@@ -738,46 +732,6 @@ function AtlasOverObject({
   return <primitive object={scene} />
 }
 
-/** Tampiereisen entlang der rekonstruierten Trajektorie (Eintritt Wange -> Austritt Scheitel),
- * spitz zulaufend, ueber den Schaedel hinaus verlaengert. */
-function TampingIron() {
-  const appMode = useViewerStore((s) => s.appMode)
-  const rodVisible = useViewerStore((s) => s.rodVisible)
-  const rodPhase = useViewerStore((s) => s.rodPhase)
-  const meshRef = useRef<THREE.Mesh>(null)
-  const renderedPhase = useRef(0)
-
-  const applySegment = (phase: number) => {
-    const mesh = meshRef.current
-    if (!mesh) return
-    const segment = rodSegmentForPhase(phase)
-    const tail = new THREE.Vector3(...segment.tail)
-    const tip = new THREE.Vector3(...segment.tip)
-    const dir = tip.clone().sub(tail).normalize()
-    mesh.position.copy(tail.clone().add(tip).multiplyScalar(0.5))
-    mesh.quaternion.copy(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir))
-    mesh.scale.set(1, segment.length, 1)
-  }
-
-  useEffect(() => {
-    if (!rodVisible) renderedPhase.current = 0
-  }, [rodVisible])
-
-  useFrame((_, delta) => {
-    if (!rodVisible) return
-    renderedPhase.current = approachTransitionValue(renderedPhase.current, rodPhase, delta, 0.005)
-    applySegment(renderedPhase.current)
-  })
-
-  if (!rodVisible || appMode === 'phineas') return null
-  // +Y-Ende liegt an der vorlaufenden Spitze, -Y-Ende am dickeren Schaft.
-  return (
-    <mesh ref={meshRef}>
-      <cylinderGeometry args={[ROD_RADIUS_TIP, ROD_RADIUS_SHAFT, 1, 24]} />
-      <meshStandardMaterial color={ROD_COLOR} roughness={0.5} metalness={0.6} />
-    </mesh>
-  )
-}
 
 /** Shell-Komponente: waehlt Sidebar nach appMode, koppelt HUD/Overlays an Modus. */
 export default function BodyParts3DViewer() {
@@ -1250,7 +1204,6 @@ export default function BodyParts3DViewer() {
                   <CutCaps />
                 </Suspense>
               </CanvasContentErrorBoundary>
-              <TampingIron />
               <CutPickBridge />
               <OrbitControls makeDefault enableDamping autoRotate={autoRotate && !reduceMotion} autoRotateSpeed={0.35} />
               <CutPlaneGizmoBridge />
