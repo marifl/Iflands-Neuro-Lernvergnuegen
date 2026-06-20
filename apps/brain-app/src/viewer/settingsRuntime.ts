@@ -26,6 +26,7 @@ export function explicitAppModeFromSearch(search: string): AppMode | null {
 
   const params = new URLSearchParams(search)
   const mode = params.get('mode')
+  if (mode === 'phineas') return 'explore'
   if (mode && APP_MODES.includes(mode as AppMode)) return mode as AppMode
   if (params.has('scene')) return 'learn'
   if (params.has('config')) return 'explore'

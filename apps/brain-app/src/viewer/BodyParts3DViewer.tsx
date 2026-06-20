@@ -986,8 +986,9 @@ export default function BodyParts3DViewer() {
   // Atlas-Modus zeigt das kanonische fsaverage-Hirn (NICHT TARO) -> eigener Canvas-Zweig statt
   // TARO-Viewport + Sidebar. Kopfleiste und Fussleiste (Modus-Wechsel) bleiben erhalten.
   const isAtlas = appMode === 'atlas'
+  const caseStudyActive = useCaseStudyViewStore((s) => s.showSkull || s.rodVisible)
   const sidebar =
-    appMode === 'learn' ? <LearnSidebar /> : appMode === 'phineas' ? <PhineasSidebar /> : <StructureTree />
+    appMode === 'learn' ? <LearnSidebar /> : caseStudyActive ? <PhineasSidebar /> : <StructureTree />
   const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode })
   const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, shellMode, mobileTreeOpen })
   const atlasTarget = bridgeFor(selected)

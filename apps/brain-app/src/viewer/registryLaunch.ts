@@ -5,7 +5,8 @@ import type { AppMode } from './viewerStore'
 export const REGISTRY_LAUNCH_SCHEMA_VERSION = 1
 
 export type RegistryLaunchEntrypoint =
-  | { kind: 'app-mode'; appMode: Extract<AppMode, 'learn' | 'explore' | 'phineas'> }
+  | { kind: 'app-mode'; appMode: Extract<AppMode, 'learn' | 'explore'> }
+  | { kind: 'case-study'; caseStudyId: string }
   | { kind: 'scene'; sceneId: string; configName?: string; step?: number }
   | { kind: 'config'; configName: string; sceneId?: string; step?: number }
   | { kind: 'animation'; animationId: string }
@@ -30,7 +31,7 @@ const SEARCH_CONTEXT = 'contextId'
 const SEARCH_ENTRYPOINT = 'entrypoint'
 
 const EXPLICIT_ENTRYPOINTS: Record<string, RegistryLaunchEntrypoint> = {
-  'case-phineas-gage/phineas-gage': { kind: 'app-mode', appMode: 'phineas' },
+  'case-phineas-gage/phineas-gage': { kind: 'case-study', caseStudyId: 'phineas-gage' },
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -115,10 +116,15 @@ function parseEntrypoint(raw: unknown, field: string): RegistryLaunchEntrypoint 
     case 'app-mode': {
       assertKnownKeys(value, ['kind', 'appMode'], field)
       const appMode = requiredString(value.appMode, `${field}.appMode`)
-      if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'phineas') {
+      if (appMode === 'phineas') return { kind: 'case-study', caseStudyId: 'phineas-gage' }
+      if (appMode !== 'learn' && appMode !== 'explore') {
         throw new Error(`RegistryLaunch: ${field}.appMode hat einen ungueltigen Wert`)
       }
       return { kind, appMode }
+    }
+    case 'case-study': {
+      assertKnownKeys(value, ['kind', 'caseStudyId'], field)
+      return { kind, caseStudyId: requiredString(value.caseStudyId, `${field}.caseStudyId`) }
     }
     case 'scene': {
       assertKnownKeys(value, ['kind', 'sceneId', 'configName', 'step'], field)
@@ -169,6 +175,7 @@ function parseEntrypointParam(value: string | null): RegistryLaunchEntrypoint | 
   const [kind, id] = value.split(':', 2)
   if (!kind || !id) throw new Error('RegistryLaunch: entrypoint muss kind:id sein')
   if (kind === 'mode') return parseEntrypoint({ kind: 'app-mode', appMode: id }, 'entrypoint')
+  if (kind === 'case-study') return parseEntrypoint({ kind: 'case-study', caseStudyId: id }, 'entrypoint')
   if (kind === 'scene') return parseEntrypoint({ kind: 'scene', sceneId: id, step: 0 }, 'entrypoint')
   if (kind === 'config') return parseEntrypoint({ kind: 'config', configName: id }, 'entrypoint')
   if (kind === 'animation') return parseEntrypoint({ kind: 'animation', animationId: id }, 'entrypoint')
@@ -181,6 +188,8 @@ function entrypointParam(entrypoint: RegistryLaunchEntrypoint): string {
   switch (entrypoint.kind) {
     case 'app-mode':
       return `mode:${entrypoint.appMode}`
+    case 'case-study':
+      return `case-study:${entrypoint.caseStudyId}`
     case 'scene':
       return `scene:${entrypoint.sceneId}`
     case 'config':
@@ -250,6 +259,10 @@ export function registryLaunchSearchParams(launch: RegistryLaunch): URLSearchPar
     case 'app-mode':
       params.set('mode', parsed.entrypoint.appMode)
       break
+    case 'case-study':
+      params.set('mode', 'explore')
+      params.set('case-study', parsed.entrypoint.caseStudyId)
+      break
     case 'scene':
       if (parsed.entrypoint.configName) params.set('config', parsed.entrypoint.configName)
       params.set('scene', parsed.entrypoint.sceneId)
@@ -280,6 +293,7 @@ export function hasRegistryLaunchSearch(search: string): boolean {
 export function appModeForRegistryLaunch(launch: RegistryLaunch): AppMode {
   const parsed = parseRegistryLaunch(launch)
   if (parsed.entrypoint.kind === 'app-mode') return parsed.entrypoint.appMode
+  if (parsed.entrypoint.kind === 'case-study') return 'explore'
   if (parsed.entrypoint.kind === 'config') return 'explore'
   return 'learn'
 }

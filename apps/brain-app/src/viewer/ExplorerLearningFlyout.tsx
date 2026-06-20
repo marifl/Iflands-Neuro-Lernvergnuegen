@@ -4,7 +4,7 @@ import type { OntologyNode } from './ontology'
 import { resolveRegistryLaunch, type RegistryLaunch } from './registryLaunch'
 
 export interface ExplorerLearningTarget {
-  mode: 'phineas'
+  mode: 'case-study'
   label: string
   actionLabel: string
   bonusContextId?: string
@@ -22,7 +22,7 @@ export function learningTargetForNode(node: OntologyNode | null): ExplorerLearni
   const phineasContext = bonusContexts.find((context) => context.id === 'phineas-gage')
   if (phineasContext) {
     return {
-      mode: 'phineas',
+      mode: 'case-study',
       label: `Bonus-Kontext: ${phineasContext.title}`,
       actionLabel: 'Bonus-Kontext öffnen',
       bonusContextId: phineasContext.id,

@@ -19,9 +19,9 @@ describe('registry launch contract', () => {
       schemaVersion: REGISTRY_LAUNCH_SCHEMA_VERSION,
       collectionId: 'case-phineas-gage',
       contextId: 'phineas-gage',
-      entrypoint: { kind: 'app-mode', appMode: 'phineas' },
+      entrypoint: { kind: 'case-study', caseStudyId: 'phineas-gage' },
     })
-    expect(appModeForRegistryLaunch(launch)).toBe('phineas')
+    expect(appModeForRegistryLaunch(launch)).toBe('explore')
   })
 
   it('rundet Registry-Launches durch URL-Parameter stabil', () => {
@@ -31,7 +31,7 @@ describe('registry launch contract', () => {
     })
     const location = registryLaunchLocation(launch)
 
-    expect(location).toBe('?collectionId=case-phineas-gage&contextId=phineas-gage&entrypoint=mode%3Aphineas&mode=phineas')
+    expect(location).toBe('?collectionId=case-phineas-gage&contextId=phineas-gage&entrypoint=case-study%3Aphineas-gage&mode=explore&case-study=phineas-gage')
     expect(parseRegistryLaunchFromSearch(location)).toEqual(launch)
   })
 

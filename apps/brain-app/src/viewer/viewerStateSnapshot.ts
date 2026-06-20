@@ -349,7 +349,7 @@ function parseSnapshotState(raw: unknown, defaults = defaultSnapshotState()): Vi
   return {
     activePreset,
     authoring: parseAuthoringSnapshotState(raw.authoring),
-    appMode: enumValue(raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : defaults.appMode, 'appMode'),
+    appMode: enumValue(raw.appMode === 'phineas' ? 'explore' : raw.appMode, APP_MODES, launch ? appModeForRegistryLaunch(launch) : defaults.appMode, 'appMode'),
     cameraPose: parseCameraPose(raw.cameraPose),
     cameraView: optionalString(raw.cameraView, 'cameraView'),
     clipAtlasOverlay: booleanValue(raw.clipAtlasOverlay, defaults.clipAtlasOverlay, 'clipAtlasOverlay'),

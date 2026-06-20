@@ -45,13 +45,13 @@ function cortexSurfaceSlugs(tree: OntologyNode): string[] {
 /** Auswahl-Werkzeug wie in Illustrator: 'group' = schwarzer Pfeil (hierarchisch grob->fein),
  *  'direct' = weisser Pfeil (Hierarchie uebergehen, direkt die Einzelstruktur). */
 export type SelectMode = 'group' | 'direct'
-export type AppMode = 'learn' | 'explore' | 'phineas' | 'atlas'
+export type AppMode = 'learn' | 'explore' | 'atlas'
 export type AuthoringTransformMode = 'translate' | 'rotate' | 'scale'
 export type AuthoringTransformSpace = 'world' | 'local'
 export interface SelectionOptions {
   additive?: boolean
 }
-export const APP_MODES = ['learn', 'explore', 'phineas', 'atlas'] as const satisfies readonly AppMode[]
+export const APP_MODES = ['learn', 'explore', 'atlas'] as const satisfies readonly AppMode[]
 export const AUTHORING_TRANSFORM_MODES = ['translate', 'rotate', 'scale'] as const satisfies readonly AuthoringTransformMode[]
 export const AUTHORING_TRANSFORM_SPACES = ['world', 'local'] as const satisfies readonly AuthoringTransformSpace[]
 // Schnittebenen durch den Kopf (sagittal=L/R/X, coronal=ant/post/Z, axial=sup/inf/Y) sind
@@ -233,7 +233,7 @@ interface ViewerState {
   erpPulse: number
   lang: Lang
   mode: ViewMode
-  /** Aktiver Grundmodus (Lernen/Explorer/Phineas) — steuert Sidebar + Fussleiste. */
+  /** Aktiver Grundmodus (Lernen/Explorer) — steuert Sidebar + Fussleiste. */
   appMode: AppMode
   search: string
   expanded: Record<string, boolean>
@@ -574,7 +574,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setLang: (lang) => set({ lang }),
   setMode: (mode) => set({ mode }),
   setAppMode: (appMode) => {
-    if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'phineas' && appMode !== 'atlas') {
+    if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'atlas') {
       throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
     }
     // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).

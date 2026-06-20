@@ -411,7 +411,7 @@ describe('viewer state snapshots', () => {
 
   it('exportiert nur stabile, versionierte Unterrichts-State-Felder', () => {
     useViewerStore.setState({
-      appMode: 'phineas',
+      appMode: 'explore',
       activePreset: {
         id: 'p3a',
         label: 'P3a',
@@ -494,7 +494,7 @@ describe('viewer state snapshots', () => {
       contextId: 'phineas-gage',
     })
     window.history.replaceState(null, '', registryLaunchLocation(launch))
-    useViewerStore.setState({ appMode: 'phineas' })
+    useViewerStore.setState({ appMode: 'explore' })
 
     const snapshot = exportViewerStateSnapshot()
 
@@ -507,8 +507,8 @@ describe('viewer state snapshots', () => {
       state: { launch },
     })
 
-    expect(window.location.search).toBe('?collectionId=case-phineas-gage&contextId=phineas-gage&entrypoint=mode%3Aphineas&mode=phineas')
-    expect(useViewerStore.getState().appMode).toBe('phineas')
+    expect(window.location.search).toBe('?collectionId=case-phineas-gage&contextId=phineas-gage&entrypoint=case-study%3Aphineas-gage&mode=explore&case-study=phineas-gage')
+    expect(useViewerStore.getState().appMode).toBe('explore')
   })
 
   it('exportiert und importiert AuthoringScene-State fuer Objekt- und Timeline-Roundtrips', () => {
@@ -666,7 +666,7 @@ describe('viewer state snapshots', () => {
     importViewerStateSnapshot({
       version: VIEWER_STATE_SNAPSHOT_VERSION,
       state: {
-        appMode: 'phineas',
+        appMode: 'explore',
         cameraView: 'medial-midline',
         clipAtlasOverlay: false,
         colorMode: 'region',
@@ -705,7 +705,7 @@ describe('viewer state snapshots', () => {
     })
 
     const state = useViewerStore.getState()
-    expect(state.appMode).toBe('phineas')
+    expect(state.appMode).toBe('explore')
     expect(state.cameraView).toEqual({ name: 'medial-midline', nonce: 1 })
     expect(state.cameraPose).toEqual({ position: [10, 20, 30], target: [1, 2, 3], fov: 45 })
     expect([...state.hidden].sort()).toEqual(['left-insula', 'right-insula'])

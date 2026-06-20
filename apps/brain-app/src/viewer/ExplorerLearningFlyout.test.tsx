@@ -30,7 +30,7 @@ describe('ExplorerLearningFlyout', () => {
 
   it('ordnet VMPFC/OFC-Knoten dem Phineas-Bonuskontext zu', () => {
     expect(learningTargetForNode(ofcNode)).toEqual({
-      mode: 'phineas',
+      mode: 'case-study',
       label: 'Bonus-Kontext: Phineas Gage (VMPFC/OFC)',
       actionLabel: 'Bonus-Kontext öffnen',
       bonusContextId: 'phineas-gage',
@@ -38,7 +38,7 @@ describe('ExplorerLearningFlyout', () => {
         schemaVersion: 1,
         collectionId: 'case-phineas-gage',
         contextId: 'phineas-gage',
-        entrypoint: { kind: 'app-mode', appMode: 'phineas' },
+        entrypoint: { kind: 'case-study', caseStudyId: 'phineas-gage' },
       },
     })
   })

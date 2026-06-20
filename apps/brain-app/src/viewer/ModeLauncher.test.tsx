@@ -24,11 +24,11 @@ describe('ModeLauncher', () => {
 
   it('bietet Fortsetzen fuer den gemerkten regulaeren Modus an', () => {
     const onPick = vi.fn()
-    render(<ModeLauncher onPick={onPick} continueMode="phineas" />)
+    render(<ModeLauncher onPick={onPick} continueMode="explore" />)
 
-    fireEvent.click(screen.getByRole('button', { name: /Fortsetzen.*Weiter mit Phineas Gage/s }))
+    fireEvent.click(screen.getByRole('button', { name: /Fortsetzen.*Weiter mit Explorer/s }))
 
-    expect(onPick).toHaveBeenCalledWith('phineas')
+    expect(onPick).toHaveBeenCalledWith('explore')
   })
 
   it('blendet Fortsetzen ohne gemerkten Modus aus', () => {

@@ -46,7 +46,7 @@ describe('settingsRuntime', () => {
   })
 
   it('laesst explizite Routen vor Settings-Defaults gewinnen', () => {
-    const settings = settingsWith({ start: { defaultMode: 'phineas', showOnboarding: false } })
+    const settings = settingsWith({ start: { defaultMode: 'explore', showOnboarding: false } })
 
     expect(explicitAppModeFromSearch('?scene=vcpt')).toBe('learn')
     expect(explicitAppModeFromSearch('?config=vcpt')).toBe('explore')
@@ -63,9 +63,9 @@ describe('settingsRuntime', () => {
     expect(localStorage.getItem(LAST_APP_MODE_STORAGE_KEY)).toBeNull()
     expect(loadRememberedAppMode()).toBeNull()
 
-    rememberAppMode('phineas')
-    expect(loadRememberedAppMode()).toBe('phineas')
-    expect(startupAppModeFromSettings('', settingsWith({ start: { defaultMode: 'last', showOnboarding: false } }))).toBe('phineas')
+    rememberAppMode('explore')
+    expect(loadRememberedAppMode()).toBe('explore')
+    expect(startupAppModeFromSettings('', settingsWith({ start: { defaultMode: 'last', showOnboarding: false } }))).toBe('explore')
   })
 
   it('verdrahtet unterstuetzte Viewer-Defaults ohne Inhalts-Deep-Link', () => {

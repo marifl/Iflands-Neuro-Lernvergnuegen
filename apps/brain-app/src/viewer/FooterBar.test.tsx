@@ -303,15 +303,13 @@ describe('FooterBar', () => {
         state: {
           appMode: 'phineas',
           hidden: ['left-insula'],
-          showSkull: true,
-          skullOpacity: 0.5,
         },
       }),
     ], 'unterricht.json', { type: 'application/json' })
 
     fireEvent.change(screen.getByLabelText('Unterrichts-Snapshot-Datei'), { target: { files: [file] } })
 
-    await waitFor(() => expect(useViewerStore.getState().appMode).toBe('phineas'))
+    await waitFor(() => expect(useViewerStore.getState().appMode).toBe('explore'))
     expect(useViewerStore.getState().hidden.has('left-insula')).toBe(true)
   })
 

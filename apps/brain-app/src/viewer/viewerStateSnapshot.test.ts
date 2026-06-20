@@ -8,7 +8,7 @@ import { useViewerStore } from './viewerStore'
 describe('viewerStateSnapshot', () => {
   it('nutzt stabile Schema-Defaults statt aktuellen Live-State fuer fehlende Snapshot-Felder', () => {
     useViewerStore.setState({
-      appMode: 'phineas',
+      appMode: 'explore',
       colorMode: 'function',
       cutMode: 'hide',
       lang: 'en',

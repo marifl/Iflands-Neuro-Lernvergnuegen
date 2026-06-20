@@ -18,7 +18,7 @@ export type ThemePreference = 'system' | 'light' | 'dark'
 export type ContrastPreference = 'standard' | 'high'
 export type FontSizePreference = 'standard' | 'large' | 'extra-large'
 export type MotionPreference = 'system' | 'reduce' | 'allow'
-export type DefaultAppMode = 'learn' | 'explore' | 'phineas' | 'last'
+export type DefaultAppMode = 'learn' | 'explore' | 'last'
 export type DefaultCameraView = 'lateral-left' | 'anterior' | 'superior'
 export type SkullContextDefault = 'hidden' | 'transparent' | 'solid'
 export type RenderQuality = 'auto' | 'battery' | 'quality'
@@ -213,7 +213,7 @@ function parseSettingsObject(value: Record<string, unknown>): BrainAppSettings {
       readableFont: booleanValue(accessibility.readableFont, base.accessibility.readableFont, 'accessibility.readableFont'),
     },
     start: {
-      defaultMode: enumValue(start.defaultMode, ['learn', 'explore', 'phineas', 'last'], base.start.defaultMode, 'start.defaultMode'),
+      defaultMode: enumValue(start.defaultMode === 'phineas' ? 'explore' : start.defaultMode, ['learn', 'explore', 'last'], base.start.defaultMode, 'start.defaultMode'),
       showOnboarding: booleanValue(start.showOnboarding, base.start.showOnboarding, 'start.showOnboarding'),
     },
     viewport: {

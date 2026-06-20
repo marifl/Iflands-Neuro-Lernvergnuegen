@@ -248,7 +248,7 @@ function categoryPanel<K extends SettingsCategory>({
   )
   if (category === 'start') return (
     <>
-      <SelectControl label="Default-Modus" value={settings.start.defaultMode} options={[{ value: 'learn', label: 'Lernen' }, { value: 'explore', label: 'Explorer' }, { value: 'phineas', label: 'Phineas' }, { value: 'last', label: 'Zuletzt' }]} onChange={(defaultMode) => update('start', { defaultMode })} />
+      <SelectControl label="Default-Modus" value={settings.start.defaultMode} options={[{ value: 'learn', label: 'Lernen' }, { value: 'explore', label: 'Explorer' }, { value: 'last', label: 'Zuletzt' }]} onChange={(defaultMode) => update('start', { defaultMode })} />
       <SwitchControl label="Onboarding anzeigen" checked={settings.start.showOnboarding} onChange={(showOnboarding) => update('start', { showOnboarding })} />
     </>
   )
