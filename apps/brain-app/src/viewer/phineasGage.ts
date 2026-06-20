@@ -16,17 +16,32 @@ import type { SequenceTargetRef } from './sequenceTargetRef'
  * Science, 264(5162), 1102-1105.
  */
 
-export interface PhineasStep {
-  captionDe: string
-  /** Praesentationslabel fuer konkret betroffene Laesionsareale. */
-  focusAreasDe?: string[]
-  /** Hervorgehobene Hirn-Strukturen (Slugs) in diesem Schritt. */
+export interface CaseStudyStep {
+  kick?: string
+  title?: string
+  body: string
+  areas?: string[]
+  note?: string
   highlight: string[]
+  showSkull?: boolean
+  skullOpacity?: number
+  showRod?: boolean
+  rodPhase?: number
+}
+
+export interface CaseStudy {
+  id: string
+  title: string
+  collectionId: string
+  steps: CaseStudyStep[]
+  lesionStructures?: string[]
+  source: string
+}
+
+export interface PhineasStep extends CaseStudyStep {
   showSkull: boolean
-  /** Schädel-Deckkraft 0..1 (transparent = Hirn/Stange sichtbar). */
   skullOpacity: number
   showRod: boolean
-  /** 0 = Spitze am Eintritt, 1 = Spitze über Austritt; wird weich animiert. */
   rodPhase: number
 }
 
@@ -176,13 +191,15 @@ export const useCaseStudyViewStore = create<
 export const PHINEAS_GAGE = {
   id: 'phineas-gage',
   title: 'Phineas Gage (1848)',
+  collectionId: 'case-phineas-gage',
   source: 'Kap. 11 · Van Horn et al. 2012',
+  lesionStructures: LESION_STRUCTURES,
   assetNoteDe: 'Aktueller Viewer: rendert die Standalone-Gage-GLBs aus /assets/phineas (Schädelbasis, Calvaria und generierte Eisenstange); Manifest und Transform-Vertrag pinnen Herkunft, Maße und Lizenzstatus.',
   trajectoryNoteDe: 'Trajektorie nach Van Horn et al. 2012 und Ratiu et al. 2004; die extrahierten Gage-Schädelteile sind per TARO-Fit-Matrix mit der generierten Eisenstange synchronisiert.',
   rodScaleNoteDe: 'Stange historisch ca. 1,1 m lang, 3,2 cm Schaftdurchmesser, ~6 kg; im Viewer wird das generierte Eisenstangen-GLB statt eines gekürzten Zylinder-Markers gerendert.',
   steps: [
     {
-      captionDe:
+      body:
         '1 — 13. September 1848: Beim Sprengen einer Eisenbahntrasse treibt eine Explosion dem Vorarbeiter Phineas Gage eine 1,1 m lange Stopfstange (Tampiereisen, ~6 kg) durch den Kopf. Der Schädel als anatomischer Kontext.',
       highlight: [],
       showSkull: true,
@@ -191,7 +208,7 @@ export const PHINEAS_GAGE = {
       rodPhase: 0,
     },
     {
-      captionDe:
+      body:
         '2 — Eintritt: Die Stange dringt mit der Spitze voran unter dem linken Jochbogen in die linke Wange ein (Oberkiefer-/Jochbein-Region), schräg nach oben gerichtet.',
       highlight: [],
       showSkull: true,
@@ -200,7 +217,7 @@ export const PHINEAS_GAGE = {
       rodPhase: ROD_PHASE_ENTRY,
     },
     {
-      captionDe:
+      body:
         '3 — Durchtritt: hinter der linken Augenhöhle vorbei, durch den linken Frontallappen. Der Schädel ist hier transparent, damit der Weg durch das Hirn sichtbar wird.',
       highlight: [],
       showSkull: true,
@@ -209,7 +226,7 @@ export const PHINEAS_GAGE = {
       rodPhase: ROD_PHASE_THROUGH,
     },
     {
-      captionDe:
+      body:
         '4 — Austritt: nahe der Mittellinie am hinteren Stirnbein (Nähe Sutura coronalis) tritt die Stange oben aus dem Schädeldach aus.',
       highlight: [],
       showSkull: true,
@@ -218,9 +235,9 @@ export const PHINEAS_GAGE = {
       rodPhase: ROD_PHASE_EXIT,
     },
     {
-      captionDe:
+      body:
         '5 — Läsion: zerstört wurde vor allem der linke ventromediale Präfrontalcortex und der orbitofrontale Cortex. Die markierten Areale liegen links-frontal entlang der rekonstruierten Stangentrajektorie.',
-      focusAreasDe: LESION_FOCUS_AREAS_DE,
+      areas: LESION_FOCUS_AREAS_DE,
       highlight: LESION_STRUCTURES,
       showSkull: true,
       skullOpacity: 0.14,
@@ -228,9 +245,9 @@ export const PHINEAS_GAGE = {
       rodPhase: ROD_PHASE_EXIT,
     },
     {
-      captionDe:
+      body:
         '6 — Bedeutung für Kapitel 11: Gage überlebte, doch Persönlichkeit, Sozialverhalten und Handlungsplanung veränderten sich drastisch ("no longer Gage"). Der Fall wurde zum Schlüsselbeleg für die Rolle des präfrontalen Cortex bei exekutiven Funktionen und sozialer Selbststeuerung.',
-      focusAreasDe: LESION_FOCUS_AREAS_DE,
+      areas: LESION_FOCUS_AREAS_DE,
       highlight: LESION_STRUCTURES,
       showSkull: true,
       skullOpacity: 0.12,
@@ -238,4 +255,4 @@ export const PHINEAS_GAGE = {
       rodPhase: ROD_PHASE_EXIT,
     },
   ] as PhineasStep[],
-}
+} satisfies CaseStudy & Record<string, unknown>

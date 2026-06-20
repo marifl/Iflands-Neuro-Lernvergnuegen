@@ -62,7 +62,7 @@ describe('Phineas-Gage-Szene', () => {
       expect(step.skullOpacity).toBeLessThan(0.2)
       expect(step.showRod).toBe(true)
       expect(step.rodPhase).toBe(1)
-      expect(step.focusAreasDe).toEqual(LESION_FOCUS_AREAS_DE)
+      expect(step.areas).toEqual(LESION_FOCUS_AREAS_DE)
     }
   })
 
