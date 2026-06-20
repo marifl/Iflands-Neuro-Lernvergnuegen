@@ -8,7 +8,7 @@ import { APP_MODES, useViewerStore, type AppMode } from './viewerStore'
 export const LAST_APP_MODE_STORAGE_KEY = LOCAL_LAST_APP_MODE_STORAGE_KEY
 
 export interface SupportedViewerDefaults {
-  viewport: Pick<BrainAppSettings['viewport'], 'defaultCameraView' | 'skullContext'>
+  viewport: Pick<BrainAppSettings['viewport'], 'defaultCameraView'>
   coloring: Pick<BrainAppSettings['coloring'], 'defaultColorMode' | 'dimOthers'>
   language: Pick<BrainAppSettings['language'], 'primary'>
   atlas: Pick<BrainAppSettings['atlas'], 'defaultLayer' | 'visibleCollections'>
@@ -80,12 +80,6 @@ export function applyLanguageDefault(settings: Pick<SupportedViewerDefaults, 'la
 export function applyViewportDefaults(settings: Pick<SupportedViewerDefaults, 'viewport'>): void {
   const store = useViewerStore.getState()
   store.setCameraView(settings.viewport.defaultCameraView)
-
-  if (settings.viewport.skullContext === 'hidden') {
-    store.setSkull(false, store.skullOpacity)
-  } else {
-    store.setSkull(true, settings.viewport.skullContext === 'solid' ? 0.85 : 0.25)
-  }
 }
 
 export function applyColoringDefaults(settings: Pick<SupportedViewerDefaults, 'coloring'>): void {

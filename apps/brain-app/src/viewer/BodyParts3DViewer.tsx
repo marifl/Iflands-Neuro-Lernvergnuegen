@@ -67,6 +67,7 @@ import CutCaps, { CUT_SOURCE_FLAG } from './CutCaps'
 import CutPickBridge from './CutPickBridge'
 import CutPlaneGizmoBridge from './CutPlaneGizmoBridge'
 import { useIsNarrow, useIsTouchLandscape, useMediaQuery } from '../useMediaQuery'
+import { useCaseStudyViewStore } from './phineasGage'
 import {
   authoringHistoryActionForKeyboardEvent,
   isEditableKeyboardTarget,
@@ -520,19 +521,18 @@ function BrainModelReviewSelector({
   )
 }
 
-/** Kontext-Schaedel (Phineas-Gage-Layer). Default versteckt; nicht anklickbar, damit die
- * Hirn-Auswahl frei bleibt. Deckkraft von der Szene gesteuert (transparent = Hirn sichtbar). */
 function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
   const { scene } = useGLTF(SKULL_GLB)
-  const appMode = useViewerStore((s) => s.appMode)
-  const showSkull = useViewerStore((s) => s.showSkull)
-  const skullOpacity = useViewerStore((s) => s.skullOpacity)
+  const skullContext = useSettingsStore((s) => s.viewport.skullContext)
+  const caseStudySkullActive = useCaseStudyViewStore((s) => s.showSkull)
   const hidden = useViewerStore((s) => s.hidden)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
   const cutHidden = useCutHidden()
   const colorMode = useViewerStore((s) => s.colorMode)
   const selectedSlugs = useViewerStore((s) => s.selectedSlugs)
   const hovered = useViewerStore((s) => s.hovered)
+  const showSkull = skullContext !== 'hidden'
+  const skullOpacity = skullContext === 'solid' ? 0.85 : 0.25
   const meshes = useMemo(() => {
     const list: THREE.Mesh[] = []
     scene.traverse((obj) => {
@@ -553,12 +553,10 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
 
   useClipPlanes(meshes)
 
-  // Sichtbar via Phineas-Szene (showSkull, halbtransparent) ODER via Baum-Toggle (solide).
-  // Praemisse: was sichtbar ist, ist auch pickbar; Ausgeblendetes nicht.
   useEffect(() => {
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
-      const visible = appMode !== 'phineas' && (showSkull || !hidden.has(mesh.name)) && !cutHidden(mesh)
+      const visible = !caseStudySkullActive && (showSkull || !hidden.has(mesh.name)) && !cutHidden(mesh)
       mesh.visible = visible
       const isoDimmed = iso && !isolatedSlugs.has(mesh.name)
       setPickable(mesh, visible && !isoDimmed)
@@ -579,7 +577,7 @@ function ContextSkull({ dimOpacity }: { dimOpacity: number }) {
       }
       material.needsUpdate = true
     }
-  }, [meshes, appMode, showSkull, skullOpacity, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
+  }, [meshes, showSkull, skullOpacity, caseStudySkullActive, hidden, isolatedSlugs, selectedSlugs, hovered, cutHidden, dimOpacity, colorMode])
 
   // Picking laeuft zentral ueber CutPickBridge (cut-aware), nicht ueber per-Mesh-Events.
   return <primitive object={scene} />
@@ -764,7 +762,6 @@ export default function BodyParts3DViewer() {
   const atlasOnBrain = showCarveJulich || showCarveDkt || showCarveBrodmann
   const atlasAreaLabel = pickedAtlasArea ?? hoveredAtlasArea ?? 'Areal anklicken'
   const defaultCameraView = useSettingsStore((s) => s.viewport.defaultCameraView)
-  const skullContext = useSettingsStore((s) => s.viewport.skullContext)
   const autoRotate = useSettingsStore((s) => s.viewport.autoRotate)
   const renderQuality = useSettingsStore((s) => s.viewport.renderQuality)
   const defaultColorMode = useSettingsStore((s) => s.coloring.defaultColorMode)
@@ -860,10 +857,9 @@ export default function BodyParts3DViewer() {
 
   useEffect(() => {
     if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return
-    if (appMode === 'phineas') return
     if (!canApplyFunctionalDefaults()) return
-    applyViewportDefaults({ viewport: { defaultCameraView, skullContext } })
-  }, [appMode, defaultCameraView, launched, skullContext])
+    applyViewportDefaults({ viewport: { defaultCameraView } })
+  }, [defaultCameraView, launched])
 
   useEffect(() => {
     if (!launched || hasImportedSnapshotRouteForCurrentLocation()) return

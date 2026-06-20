@@ -313,8 +313,6 @@ describe('FooterBar', () => {
 
     await waitFor(() => expect(useViewerStore.getState().appMode).toBe('phineas'))
     expect(useViewerStore.getState().hidden.has('left-insula')).toBe(true)
-    expect(useViewerStore.getState().showSkull).toBe(true)
-    expect(useViewerStore.getState().skullOpacity).toBe(0.5)
   })
 
   it('meldet Preset-Ladefehler an die naechste Error Boundary', async () => {

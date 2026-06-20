@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { PHINEAS_GAGE } from './phineasGage'
+import { PHINEAS_GAGE, useCaseStudyViewStore } from './phineasGage'
 import { useViewerStore } from './viewerStore'
 
 const STEP_MS = 5200
@@ -7,9 +7,10 @@ const STEP_MS = 5200
 export default function PhineasGageScene({ inline = false, asMode = false }: { inline?: boolean; asMode?: boolean } = {}) {
   const scene = PHINEAS_GAGE
   const setHighlight = useViewerStore((s) => s.setHighlight)
-  const setSkull = useViewerStore((s) => s.setSkull)
-  const setRodVisible = useViewerStore((s) => s.setRodVisible)
-  const setRodPhase = useViewerStore((s) => s.setRodPhase)
+  const setSkull = useCaseStudyViewStore((s) => s.setSkull)
+  const setRodVisible = useCaseStudyViewStore((s) => s.setRodVisible)
+  const setRodPhase = useCaseStudyViewStore((s) => s.setRodPhase)
+  const resetCaseStudyView = useCaseStudyViewStore((s) => s.reset)
   const [active, setActive] = useState(asMode)
   const [step, setStep] = useState(0)
   const [playing, setPlaying] = useState(asMode)
@@ -18,9 +19,7 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
   useEffect(() => {
     if (!active) {
       setHighlight([])
-      setSkull(false)
-      setRodVisible(false)
-      setRodPhase(0)
+      resetCaseStudyView()
       return
     }
     const s = scene.steps[step]
@@ -28,7 +27,7 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
     setSkull(s.showSkull, s.skullOpacity)
     setRodVisible(s.showRod)
     setRodPhase(s.rodPhase)
-  }, [active, step, scene, setHighlight, setSkull, setRodVisible, setRodPhase])
+  }, [active, step, scene, setHighlight, setSkull, setRodVisible, setRodPhase, resetCaseStudyView])
 
   useEffect(() => {
     if (!active || !playing) return

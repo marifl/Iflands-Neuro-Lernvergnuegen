@@ -286,8 +286,8 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     mode: state.mode,
     pickedAtlasArea: state.pickedAtlasArea,
     pickedAtlasSlug: state.pickedAtlasSlug,
-    rodPhase: state.rodPhase,
-    rodVisible: state.rodVisible,
+    rodPhase: 0,
+    rodVisible: false,
     route: currentRoute(),
     selectMode: state.selectMode,
     selected: state.selected,
@@ -296,8 +296,8 @@ function currentSnapshotState(): ViewerStateSnapshotState {
     showCarveBrodmann: state.showCarveBrodmann,
     showCarveDkt: state.showCarveDkt,
     showCarveJulich: state.showCarveJulich,
-    showSkull: state.showSkull,
-    skullOpacity: state.skullOpacity,
+    showSkull: false,
+    skullOpacity: 0.25,
     studentProgress: useStudentProgressStore.getState().progress,
   }
 }
@@ -428,8 +428,6 @@ export function importViewerStateSnapshot(raw: unknown): void {
     mode: snapshotState.mode,
     pickedAtlasArea: snapshotState.pickedAtlasArea,
     pickedAtlasSlug: snapshotState.pickedAtlasSlug,
-    rodPhase: snapshotState.rodPhase,
-    rodVisible: snapshotState.rodVisible,
     selectMode: snapshotState.selectMode,
     selected: null,
     activeTargetRef: null,
@@ -442,8 +440,6 @@ export function importViewerStateSnapshot(raw: unknown): void {
     showCarveBrodmann: snapshotState.showCarveBrodmann,
     showCarveDkt: snapshotState.showCarveDkt,
     showCarveJulich: snapshotState.showCarveJulich,
-    showSkull: snapshotState.showSkull,
-    skullOpacity: snapshotState.skullOpacity,
   })
   const store = useViewerStore.getState()
   if (snapshotState.selected) store.select(snapshotState.selected)

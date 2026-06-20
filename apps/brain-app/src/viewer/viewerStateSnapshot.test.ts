@@ -13,16 +13,12 @@ describe('viewerStateSnapshot', () => {
       cutMode: 'hide',
       lang: 'en',
       mode: 'k11',
-      rodPhase: 0.8,
-      rodVisible: true,
       selectMode: 'direct',
       showAtlasDkt: true,
       showAtlasJulich: true,
       showCarveBrodmann: true,
       showCarveDkt: true,
       showCarveJulich: true,
-      showSkull: true,
-      skullOpacity: 0.77,
       clipAtlasOverlay: false,
     })
 

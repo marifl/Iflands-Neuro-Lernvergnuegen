@@ -7,6 +7,7 @@ import { downloadViewerSnapshot, importViewerSnapshotFile } from './localDataAct
 import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
+import { useSettingsStore } from './settingsStore'
 import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
 import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
 import { PresetGroupExplanation, PresetReadOnlyAction } from './PresetColorExplanation'
@@ -129,9 +130,8 @@ export default function FooterBar() {
   const showCarveBrodmann = useViewerStore((s) => s.showCarveBrodmann)
   const setCarveOverlay = useViewerStore((s) => s.setCarveOverlay)
   const setCameraView = useViewerStore((s) => s.setCameraView)
-  const showSkull = useViewerStore((s) => s.showSkull)
-  const skullOpacity = useViewerStore((s) => s.skullOpacity)
-  const setSkull = useViewerStore((s) => s.setSkull)
+  const skullContext = useSettingsStore((s) => s.viewport.skullContext)
+  const updateSettings = useSettingsStore((s) => s.updateCategory)
   const [open, setOpen] = useState<OpenFlyout>(null)
   const [showSources, setShowSources] = useState(false)
   const [snapshotError, setSnapshotError] = useState<Error | null>(null)
@@ -318,13 +318,13 @@ export default function FooterBar() {
     {
       key: 'context',
       eyebrow: 'Kontext',
-      label: showSkull ? 'Schädel' : 'Aus',
+      label: skullContext !== 'hidden' ? 'Schädel' : 'Aus',
       icon: <Skull {...FOOTER_ICON_PROPS} />,
       content: (
         <>
-          <Item active={!showSkull} onClick={() => { setSkull(false); close() }}>Aus</Item>
-          <Item active={showSkull && skullOpacity <= 0.5} onClick={() => { setSkull(true, 0.25); close() }}>Schädel transparent</Item>
-          <Item active={showSkull && skullOpacity > 0.5} onClick={() => { setSkull(true, 0.85); close() }}>Schädel solide</Item>
+          <Item active={skullContext === 'hidden'} onClick={() => { updateSettings('viewport', { skullContext: 'hidden' }); close() }}>Aus</Item>
+          <Item active={skullContext === 'transparent'} onClick={() => { updateSettings('viewport', { skullContext: 'transparent' }); close() }}>Schädel transparent</Item>
+          <Item active={skullContext === 'solid'} onClick={() => { updateSettings('viewport', { skullContext: 'solid' }); close() }}>Schädel solide</Item>
         </>
       ),
     },

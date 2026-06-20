@@ -1,3 +1,4 @@
+import { create } from 'zustand'
 import type { SequenceTargetRef } from './sequenceTargetRef'
 
 /**
@@ -140,6 +141,37 @@ function lesionStructureLabel(slug: string): string {
 }
 
 export const LESION_FOCUS_AREAS_DE = LESION_STRUCTURES.map(lesionStructureLabel)
+
+export interface CaseStudyViewState {
+  showSkull: boolean
+  skullOpacity: number
+  rodVisible: boolean
+  rodPhase: number
+}
+
+const CASE_STUDY_VIEW_DEFAULTS: CaseStudyViewState = {
+  showSkull: false,
+  skullOpacity: 0.25,
+  rodVisible: false,
+  rodPhase: 0,
+}
+
+export const useCaseStudyViewStore = create<
+  CaseStudyViewState & {
+    setSkull: (visible: boolean, opacity?: number) => void
+    setRodVisible: (visible: boolean) => void
+    setRodPhase: (phase: number) => void
+    reset: () => void
+  }
+>((set) => ({
+  ...CASE_STUDY_VIEW_DEFAULTS,
+  setSkull: (visible, opacity) =>
+    set((s) => ({ showSkull: visible, skullOpacity: opacity ?? s.skullOpacity })),
+  setRodVisible: (rodVisible) => set({ rodVisible }),
+  setRodPhase: (phase) =>
+    set({ rodPhase: Number.isNaN(phase) ? 0 : Math.min(1, Math.max(0, phase)) }),
+  reset: () => set(CASE_STUDY_VIEW_DEFAULTS),
+}))
 
 export const PHINEAS_GAGE = {
   id: 'phineas-gage',

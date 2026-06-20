@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react'
 import { useThree } from '@react-three/fiber'
 import * as THREE from 'three'
+import { useCaseStudyViewStore } from './phineasGage'
+import { useSettingsStore } from './settingsStore'
 import { useViewerStore } from './viewerStore'
 import { activeCutPlanes } from './cutCapsMerged'
 import { pickCutAwareHit } from './cutPick'
@@ -38,8 +40,9 @@ export default function CutPickBridge() {
   const hidden = useViewerStore((s) => s.hidden)
   const appMode = useViewerStore((s) => s.appMode)
   const isolatedSlugs = useViewerStore((s) => s.isolatedSlugs)
-  const showSkull = useViewerStore((s) => s.showSkull)
-  const rodVisible = useViewerStore((s) => s.rodVisible)
+  const skullContext = useSettingsStore((s) => s.viewport.skullContext)
+  const caseStudySkullActive = useCaseStudyViewStore((s) => s.showSkull)
+  const caseStudyRodVisible = useCaseStudyViewStore((s) => s.rodVisible)
   const showAtlasJulich = useViewerStore((s) => s.showAtlasJulich)
   const showAtlasDkt = useViewerStore((s) => s.showAtlasDkt)
   const showCarveJulich = useViewerStore((s) => s.showCarveJulich)
@@ -67,8 +70,9 @@ export default function CutPickBridge() {
     isolatedSlugs,
     cuts,
     cutMode,
-    showSkull,
-    rodVisible,
+    skullContext,
+    caseStudySkullActive,
+    caseStudyRodVisible,
     showAtlasJulich,
     showAtlasDkt,
     showCarveJulich,

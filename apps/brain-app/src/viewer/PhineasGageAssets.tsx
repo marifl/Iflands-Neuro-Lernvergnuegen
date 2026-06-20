@@ -8,7 +8,7 @@ import {
   assetManifestEntryByUri,
   loadPhineasAssetManifest,
 } from './phineasAssetManifest'
-import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS } from './phineasGage'
+import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS, useCaseStudyViewStore } from './phineasGage'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
   TARGET_PICKABLE_USER_DATA,
@@ -16,7 +16,6 @@ import {
   sequenceTargetUserData,
   type ViewerPickTarget,
 } from './targetPicking'
-import { useViewerStore } from './viewerStore'
 import ManifestEditableObject from './ManifestEditableObject'
 
 const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
@@ -307,11 +306,10 @@ function PhineasGageAssetScenes({
 }
 
 export default function PhineasGageAssets() {
-  const appMode = useViewerStore((state) => state.appMode)
-  const showSkull = useViewerStore((state) => state.showSkull)
-  const skullOpacity = useViewerStore((state) => state.skullOpacity)
-  const rodVisible = useViewerStore((state) => state.rodVisible)
+  const showSkull = useCaseStudyViewStore((s) => s.showSkull)
+  const skullOpacity = useCaseStudyViewStore((s) => s.skullOpacity)
+  const rodVisible = useCaseStudyViewStore((s) => s.rodVisible)
 
-  if (appMode !== 'phineas') return null
+  if (!showSkull && !rodVisible) return null
   return <PhineasGageAssetScenes showSkull={showSkull} skullOpacity={skullOpacity} rodVisible={rodVisible} />
 }

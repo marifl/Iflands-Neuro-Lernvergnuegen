@@ -241,13 +241,6 @@ interface ViewerState {
   isolated: string | null
   isolatedSlugs: Set<string>
   isolationPath: IsolationCrumb[]
-  /** Kontext-Schaedel-Layer (Phineas-Gage): default versteckt. */
-  showSkull: boolean
-  skullOpacity: number
-  /** Stange sichtbar (von der Phineas-Gage-Szene gesteuert). */
-  rodVisible: boolean
-  /** Didaktischer Fortschritt der Stangen-Penetration: 0 = Eintritt, 1 = Austritt. */
-  rodPhase: number
   /** Roh-Atlas-Overlays (Original-Julich/DKT-Areale, Affine-transformiert): default versteckt. */
   showAtlasJulich: boolean
   showAtlasDkt: boolean
@@ -330,9 +323,6 @@ interface ViewerState {
   setCameraPose: (pose: CameraPose | null) => void
   setSearch: (search: string) => void
   toggleExpanded: (id: string) => void
-  setSkull: (visible: boolean, opacity?: number) => void
-  setRodVisible: (visible: boolean) => void
-  setRodPhase: (phase: number) => void
   setAtlasOverlay: (which: 'julich' | 'dkt', visible: boolean) => void
   setCarveOverlay: (which: 'julich' | 'dkt' | 'brodmann', visible: boolean) => void
   /** Angeklicktes Atlas-Areal auf TARO setzen/loeschen (Name + Slug fuer die Bruecke). */
@@ -420,10 +410,6 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   isolated: null,
   isolatedSlugs: new Set(),
   isolationPath: [],
-  showSkull: false,
-  skullOpacity: 0.25,
-  rodVisible: false,
-  rodPhase: 0,
   showAtlasJulich: false,
   showAtlasDkt: false,
   showCarveJulich: false,
@@ -592,7 +578,7 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
       throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
     }
     // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
-    set({ appMode, highlight: [], showSkull: false, rodVisible: false, rodPhase: 0 })
+    set({ appMode, highlight: [] })
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
   setColorMode: (colorMode) => set((s) => ({
@@ -630,11 +616,6 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
   setSearch: (search) => set({ search }),
   toggleExpanded: (id) =>
     set((state) => ({ expanded: { ...state.expanded, [id]: !state.expanded[id] } })),
-  setSkull: (visible, opacity) =>
-    set((state) => ({ showSkull: visible, skullOpacity: opacity ?? state.skullOpacity })),
-  setRodVisible: (rodVisible) => set({ rodVisible }),
-  setRodPhase: (phase) =>
-    set({ rodPhase: Number.isNaN(phase) ? 0 : Math.min(1, Math.max(0, phase)) }),
   setAtlasOverlay: (which, visible) =>
     set(which === 'julich' ? { showAtlasJulich: visible } : { showAtlasDkt: visible }),
   setCarveOverlay: (which, visible) =>

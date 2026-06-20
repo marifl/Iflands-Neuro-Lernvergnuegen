@@ -173,13 +173,9 @@ describe('target picking', () => {
 
 describe('appMode', () => {
   beforeEach(() => {
-    // Store auf modus-fremde Reststaende setzen, um den Reset zu pruefen.
     useViewerStore.setState({
       appMode: 'learn',
       highlight: ['x', 'y'],
-      showSkull: true,
-      rodVisible: true,
-      rodPhase: 0.7,
     })
   })
 
@@ -193,24 +189,11 @@ describe('appMode', () => {
     const s = useViewerStore.getState()
     expect(s.appMode).toBe('explore')
     expect(s.highlight).toEqual([])
-    expect(s.showSkull).toBe(false)
-    expect(s.rodVisible).toBe(false)
-    expect(s.rodPhase).toBe(0)
   })
 
   it('wirft laut bei unbekanntem Modus', () => {
     // @ts-expect-error absichtlich ungueltig
     expect(() => useViewerStore.getState().setAppMode('bogus')).toThrow(/appMode/)
-  })
-})
-
-describe('phineas rod state', () => {
-  it('klemmt den Rod-Fortschritt auf 0-1', () => {
-    useViewerStore.getState().setRodPhase(1.4)
-    expect(useViewerStore.getState().rodPhase).toBe(1)
-
-    useViewerStore.getState().setRodPhase(-0.2)
-    expect(useViewerStore.getState().rodPhase).toBe(0)
   })
 })
 
@@ -411,8 +394,6 @@ describe('viewer state snapshots', () => {
       mode: 'full',
       pickedAtlasArea: null,
       pickedAtlasSlug: null,
-      rodPhase: 0,
-      rodVisible: false,
       selectMode: 'group',
       selected: null,
       activeTargetRef: null,
@@ -425,8 +406,6 @@ describe('viewer state snapshots', () => {
       showCarveBrodmann: false,
       showCarveDkt: false,
       showCarveJulich: false,
-      showSkull: false,
-      skullOpacity: 0.25,
     })
   })
 
@@ -455,13 +434,9 @@ describe('viewer state snapshots', () => {
       isolated: 'left-cingulate-gyrus',
       pickedAtlasArea: 'Area 44 (L)',
       pickedAtlasSlug: 'julich3-area-44-ifg-l',
-      rodPhase: 0.4,
-      rodVisible: true,
       selected: 'left-cingulate-gyrus',
       selectMode: 'direct',
       showCarveDkt: true,
-      showSkull: true,
-      skullOpacity: 0.5,
       cameraPose: {
         position: [10, 20, 30],
         target: [1, 2, 3],
@@ -724,6 +699,8 @@ describe('viewer state snapshots', () => {
         showCarveJulich: false,
         showSkull: true,
         skullOpacity: 0.5,
+        // rodPhase/rodVisible/showSkull/skullOpacity werden im Snapshot toleriert (C10)
+        // aber nicht mehr auf viewerStore geschrieben
       },
     })
 
@@ -734,7 +711,6 @@ describe('viewer state snapshots', () => {
     expect([...state.hidden].sort()).toEqual(['left-insula', 'right-insula'])
     expect(state.cuts.sagittal.pos).toBe(110)
     expect(state.cuts.axial.pos).toBe(-110)
-    expect(state.rodPhase).toBe(1)
     expect(state.selected).toBe('left-cingulate-gyrus')
     expect(state.selectedTargetRefs).toEqual([
       {

@@ -42,8 +42,6 @@ describe('settingsRuntime', () => {
       showCarveBrodmann: false,
       showCarveDkt: false,
       showCarveJulich: false,
-      showSkull: false,
-      skullOpacity: 0.25,
     })
   })
 
@@ -83,8 +81,6 @@ describe('settingsRuntime', () => {
     const state = useViewerStore.getState()
     expect(state.lang).toBe('en')
     expect(state.cameraView?.name).toBe('superior')
-    expect(state.showSkull).toBe(true)
-    expect(state.skullOpacity).toBe(0.25)
     expect(state.colorMode).toBe('function')
     expect(state.showAtlasDkt).toBe(true)
     expect(state.showAtlasJulich).toBe(true)
@@ -106,7 +102,6 @@ describe('settingsRuntime', () => {
     const state = useViewerStore.getState()
     expect(state.lang).toBe('de')
     expect(state.cameraView).toBeNull()
-    expect(state.showSkull).toBe(false)
     expect(state.colorMode).toBe('region')
     expect(state.showCarveDkt).toBe(false)
   })
