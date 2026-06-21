@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { SequenceTargetRef } from './sequenceTargetRef'
+import { useViewerStore } from './viewerStore'
 
 /**
  * Phineas-Gage-Szene (Kapitel 11, exekutive Funktionen): historisch-anatomische
@@ -256,3 +257,11 @@ export const PHINEAS_GAGE = {
     },
   ] as PhineasStep[],
 } satisfies CaseStudy & Record<string, unknown>
+
+// ponytail: Moduswechsel weg von 'explore' deaktiviert die Case Study.
+// activeCaseStudyId hinzufuegen wenn Case Study #2 kommt.
+useViewerStore.subscribe((state, prev) => {
+  if (state.appMode !== prev.appMode && state.appMode !== 'explore') {
+    useCaseStudyViewStore.getState().reset()
+  }
+})

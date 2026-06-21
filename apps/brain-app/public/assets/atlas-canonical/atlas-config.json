@@ -1644,7 +1644,7 @@
       "colors": {
         "coverage": "not-applicable",
         "enabled": false,
-        "reason": "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; kein allgemeiner PPC-Fallback.",
+        "reason": "Vortragsfolien 58-59 nennen rechtsseitigen Parietallappen/Koerperwissen; keine allgemeine PPC-Ersatzzuordnung.",
         "review_status": "final",
         "scheme": "scene"
       },

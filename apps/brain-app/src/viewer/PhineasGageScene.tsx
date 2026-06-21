@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { PHINEAS_GAGE, useCaseStudyViewStore } from './phineasGage'
 import { useViewerStore } from './viewerStore'
 
@@ -14,26 +14,35 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
   const [active, setActive] = useState(asMode)
   const [step, setStep] = useState(0)
   const [playing, setPlaying] = useState(asMode)
+  const stepRef = useRef(step)
+  stepRef.current = step
 
-  // Aktiven Schritt in Highlight + Schädel + Stange spiegeln; beim Schließen zurücksetzen.
-  useEffect(() => {
-    if (!active) {
-      setHighlight([])
-      resetCaseStudyView()
-      return
-    }
-    const s = scene.steps[step]
+  const applyStep = useCallback((stepIndex: number) => {
+    const s = scene.steps[stepIndex]
     setHighlight(s.highlight)
     setSkull(s.showSkull, s.skullOpacity)
     setRodVisible(s.showRod)
     setRodPhase(s.rodPhase)
-  }, [active, step, scene, setHighlight, setSkull, setRodVisible, setRodPhase, resetCaseStudyView])
+  }, [scene, setHighlight, setSkull, setRodVisible, setRodPhase])
+
+  const clearView = useCallback(() => {
+    setHighlight([])
+    resetCaseStudyView()
+  }, [setHighlight, resetCaseStudyView])
+
+  useEffect(() => {
+    if (asMode) applyStep(0)
+  }, [asMode, applyStep])
 
   useEffect(() => {
     if (!active || !playing) return
-    const timer = setInterval(() => setStep((s) => (s + 1) % scene.steps.length), STEP_MS)
+    const timer = setInterval(() => {
+      const next = (stepRef.current + 1) % scene.steps.length
+      setStep(next)
+      applyStep(next)
+    }, STEP_MS)
     return () => clearInterval(timer)
-  }, [active, playing, scene.steps.length])
+  }, [active, playing, scene.steps.length, applyStep])
 
   if (!active && !asMode) {
     return (
@@ -44,6 +53,7 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
           setActive(true)
           setStep(0)
           setPlaying(true)
+          applyStep(0)
         }}
         style={
           inline
@@ -76,7 +86,7 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
         </span>
         <span style={{ flex: 1 }} />
         {!asMode ? (
-          <button type="button" className="ed-btn" onClick={() => { setActive(false); setPlaying(false) }}>
+          <button type="button" className="ed-btn" onClick={() => { setActive(false); setPlaying(false); clearView() }}>
             Schliessen
           </button>
         ) : null}
@@ -109,13 +119,17 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
       </div>
 
       <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-        <button type="button" className="ed-btn" onClick={() => { setStep(0); setPlaying(false) }}>
+        <button type="button" className="ed-btn" onClick={() => { setStep(0); setPlaying(false); applyStep(0) }}>
           ⟲ Anfang
         </button>
         <button
           type="button"
           className="ed-btn"
-          onClick={() => setStep((s) => (s - 1 + scene.steps.length) % scene.steps.length)}
+          onClick={() => {
+            const next = (step - 1 + scene.steps.length) % scene.steps.length
+            setStep(next)
+            applyStep(next)
+          }}
         >
           ◀
         </button>
@@ -129,7 +143,11 @@ export default function PhineasGageScene({ inline = false, asMode = false }: { i
         <button
           type="button"
           className="ed-btn"
-          onClick={() => setStep((s) => (s + 1) % scene.steps.length)}
+          onClick={() => {
+            const next = (step + 1) % scene.steps.length
+            setStep(next)
+            applyStep(next)
+          }}
         >
           ▶
         </button>

@@ -7,6 +7,7 @@ import BodyParts3DViewer from './viewer/BodyParts3DViewer'
 import { applyAppearanceSettings } from './viewer/appearanceRuntime'
 import { loadSettings, SETTINGS_STORAGE_KEY } from './viewer/settingsStore'
 import { startupAppModeFromSettings } from './viewer/settingsRuntime'
+import { PHINEAS_GAGE, useCaseStudyViewStore } from './viewer/phineasGage'
 import { useViewerStore } from './viewer/viewerStore'
 
 const initialSettings = loadSettings()
@@ -32,6 +33,12 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', apply
 {
   const mode = startupAppModeFromSettings(window.location.search, initialSettings)
   if (mode) useViewerStore.getState().setAppMode(mode)
+
+  const params = new URLSearchParams(window.location.search)
+  if (params.get('mode') === 'phineas') {
+    const step0 = PHINEAS_GAGE.steps[0]
+    useCaseStudyViewStore.getState().setSkull(step0.showSkull, step0.skullOpacity)
+  }
 }
 
 const root = document.getElementById('root')!
