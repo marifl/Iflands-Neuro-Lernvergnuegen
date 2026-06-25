@@ -184,10 +184,19 @@ function CarveSurface({ which, effectiveConfig }: { which: CarveLayer; effective
   // Areal-Farbe pro Dreieck aus -> alle 3 Vertices gleich -> keine Interpolation -> harte Kanten, kein
   // Batik. Material daher schlicht: vertexColors + smooth NORMAL (Furchen-Beleuchtung weich).
   // polygonOffset gegen z-Fight mit dem koinzidenten TARO-Cortex (reiner Tiefen-Bias, kein Geometrie-Versatz).
+  // alphaTest = harter Cutout im Opak-Pass: das per-Vertex-Alpha ist binaer (aktiviert = 1, deaktiviert =
+  // 0.04 via applyScopeColors). Fragmente < 0.5 werden verworfen -> deaktivierte Areale fallen ganz weg
+  // (die gedimmte Anatomie scheint als Kontext durch), aktivierte bleiben solide. Opak-Pass mit
+  // depthWrite/depthTest -> korrekte Selbst-Verdeckung UND keine Sortier-Interaktion mit den anderen
+  // transparenten (gedimmten) Meshes. Loest beides: Wurm-Gewirr (depthWrite=false) und Backface-Poppen
+  // (transparent+depthWrite) OHNE das Dither-Punktrauschen von alphaHash (Alpha ist binaer, kein Verlauf;
+  // non-indexed Mesh = eine Farbe/Dreieck -> saubere Grenzen). Braucht es spaeter weiche Teil-Transparenz,
+  // dann erst echtes OIT erwaegen.
   const mat = useMemo<THREE.Material>(() => new THREE.MeshPhongMaterial({
     vertexColors: true,
     side: THREE.DoubleSide,
     shininess: 6,
+    alphaTest: 0.5,
     polygonOffset: true,
     polygonOffsetFactor: -1,
     polygonOffsetUnits: -12,
@@ -204,18 +213,6 @@ function CarveSurface({ which, effectiveConfig }: { which: CarveLayer; effective
     return () => window.clearTimeout(id)
   }, [capProxyMaterials, bumpCutSourceRevision])
 
-  // Material + per-Vertex-Label-Attribut setzen, sobald Pick-Daten da sind (Reihenfolge == GLB-Vertices).
-  useEffect(() => {
-    const material = mat as THREE.MeshPhongMaterial
-    material.transparent = Boolean(labelScope)
-    // depthWrite MUSS an bleiben, sonst verliert die tief gefaltete Kortex-Flaeche jede
-    // Selbst-Verdeckung -> saemtliche Gyri/Sulci der ganzen Hemisphaere scheinen durcheinander
-    // durch (Wurm-Gewirr). transparent bleibt nur fuer die 0.04-Ghost-Fragmente deaktivierter
-    // Areale noetig; die sind koinzident auf der Oberflaeche, ihr Tiefen-Write ist unkritisch.
-    material.depthWrite = true
-    material.opacity = 1
-    material.needsUpdate = true
-  }, [mat, labelScope])
 
   useEffect(() => {
     const bundles: AtlasCapProxyBundle[] = []
