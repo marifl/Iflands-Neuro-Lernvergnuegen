@@ -208,7 +208,11 @@ function CarveSurface({ which, effectiveConfig }: { which: CarveLayer; effective
   useEffect(() => {
     const material = mat as THREE.MeshPhongMaterial
     material.transparent = Boolean(labelScope)
-    material.depthWrite = !labelScope
+    // depthWrite MUSS an bleiben, sonst verliert die tief gefaltete Kortex-Flaeche jede
+    // Selbst-Verdeckung -> saemtliche Gyri/Sulci der ganzen Hemisphaere scheinen durcheinander
+    // durch (Wurm-Gewirr). transparent bleibt nur fuer die 0.04-Ghost-Fragmente deaktivierter
+    // Areale noetig; die sind koinzident auf der Oberflaeche, ihr Tiefen-Write ist unkritisch.
+    material.depthWrite = true
     material.opacity = 1
     material.needsUpdate = true
   }, [mat, labelScope])
