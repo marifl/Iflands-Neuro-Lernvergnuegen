@@ -17,16 +17,17 @@ describe('GlobalColorLegend', () => {
     })
   })
 
-  it('zeigt standardmaessig die kompakte Rollen-Legende im Viewport', () => {
+  it('zeigt eingeklappt die Einträge des aktiven Färbungsmodus', () => {
     render(<GlobalColorLegend />)
 
     expect(screen.getByRole('button', { name: 'Färbungsdetails öffnen' })).toBeInTheDocument()
     expect(screen.getByText('Färbung')).toBeInTheDocument()
     expect(screen.getByText('Region')).toBeInTheDocument()
     expect(screen.getByText('aktiver Färbungsmodus')).toBeInTheDocument()
-    expect(screen.getByText('Kognition')).toBeInTheDocument()
-    expect(screen.getByText('Emotion')).toBeInTheDocument()
-    expect(screen.getByText('Motivation')).toBeInTheDocument()
+    // Region-Modus -> die Region-Zeilen, nicht die 3 Lernpfad-Rollen.
+    expect(screen.getByText('Großhirn')).toBeInTheDocument()
+    expect(screen.getByText('Zwischenhirn')).toBeInTheDocument()
+    expect(screen.queryByText('Kognition')).not.toBeInTheDocument()
     expect(screen.queryByText('Top-Level-Regionen der TARO-Ontologie; Gefäße und Nerven sind eigene Gruppen.')).not.toBeInTheDocument()
   })
 

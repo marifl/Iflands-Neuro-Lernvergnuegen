@@ -98,31 +98,44 @@ export const PRESET_COLOR_EMISSIVE_INTENSITY = 0.22
 export const ATLAS_PARCEL_SATURATION = 0.52
 export const ATLAS_PARCEL_LIGHTNESS = 0.56
 
-export const FUNCTION_COLORS: Record<FunctionalSystem, string> = {
-  'executive-control': '#bd6f45',
-  'language-control': '#c4864f',
-  sensorimotor: '#826da2',
-  'frontoparietal-attention': '#5f86b2',
-  'limbic-memory': '#b45d70',
-  'basal-ganglia-loop': '#5f8f84',
-  'salience-cingulo-opercular': '#a19a54',
-  visual: '#6f9f69',
-  auditory: '#8f73a6',
-  'thalamic-relay': '#8b8e5f',
-  'brainstem-autonomic': '#9c7868',
-  'cerebellar-coordination': '#7d9c9c',
-  'white-matter-communication': '#b6ab8d',
-  'csf-ventricular': '#6fa5b9',
-  vascular: '#a95f5b',
-  'cranial-nerve': '#bcae55',
-  'meningeal-protection': '#a89a7a',
-  'skeletal-support': '#a99d87',
-  musculoskeletal: '#a8685f',
-  'sensory-organ': '#6f9aa8',
-  'airway-oral': '#b58672',
-  endocrine: '#ad7488',
-  other: '#7d756c',
+// Zentrale Quelle je Funktionssystem: Farbe + Anzeigename + Kurzbeschreibung an EINER Stelle.
+// Legende, HUD und weitere Ableitungen lesen hieraus -> keine hart verdrahteten Teil-Listen,
+// die vom gemalten Palettenumfang abdriften ("keine stille Restklasse").
+export interface FunctionSystemInfo {
+  color: string
+  label: string
+  detail: string
 }
+
+export const FUNCTION_SYSTEMS: Record<FunctionalSystem, FunctionSystemInfo> = {
+  'executive-control': { color: '#bd6f45', label: 'Exekutive Kontrolle', detail: 'PFC/OFC, Frontallappen' },
+  'language-control': { color: '#c4864f', label: 'Sprachkontrolle', detail: 'Broca, inferior-frontale Areale' },
+  sensorimotor: { color: '#826da2', label: 'Sensomotorik', detail: 'M1/S1, SMA, Zentralregion' },
+  'frontoparietal-attention': { color: '#5f86b2', label: 'Aufmerksamkeit', detail: 'frontoparietale Netzwerke' },
+  'limbic-memory': { color: '#b45d70', label: 'Limbisches Gedächtnis', detail: 'Hippocampus, Amygdala, Fornix' },
+  'basal-ganglia-loop': { color: '#5f8f84', label: 'Basalganglien-Schleife', detail: 'Striatum, Pallidum, Accumbens' },
+  'salience-cingulo-opercular': { color: '#a19a54', label: 'Salienz/Cingulum', detail: 'ACC, Insula, Operculum' },
+  visual: { color: '#6f9f69', label: 'Visuelles System', detail: 'Sehbahn, okzipitaler Kortex' },
+  auditory: { color: '#8f73a6', label: 'Auditorisches System', detail: 'Heschl, temporaler Kortex' },
+  'thalamic-relay': { color: '#8b8e5f', label: 'Thalamische Relais', detail: 'Thalamus, Hypothalamus, Kerne' },
+  'brainstem-autonomic': { color: '#9c7868', label: 'Hirnstamm/autonom', detail: 'Mittelhirn, Pons, Medulla' },
+  'cerebellar-coordination': { color: '#7d9c9c', label: 'Zerebelläre Koordination', detail: 'Kleinhirn' },
+  'white-matter-communication': { color: '#b6ab8d', label: 'Marklager/Bahnen', detail: 'Kommissuren, Faszikel' },
+  'csf-ventricular': { color: '#6fa5b9', label: 'Ventrikelsystem', detail: 'Liquorräume, Plexus' },
+  vascular: { color: '#a95f5b', label: 'Vaskulär', detail: 'arterielle/venöse Versorgung' },
+  'cranial-nerve': { color: '#bcae55', label: 'Hirnnerven', detail: 'craniale Nervenbahnen' },
+  'meningeal-protection': { color: '#a89a7a', label: 'Meningealer Schutz', detail: 'Dura, Falx, Tentorium' },
+  'skeletal-support': { color: '#a99d87', label: 'Skelettstütze', detail: 'Schädel, Knochen' },
+  musculoskeletal: { color: '#a8685f', label: 'Muskulatur', detail: 'Muskeln, Bänder' },
+  'sensory-organ': { color: '#6f9aa8', label: 'Sinnesorgane', detail: 'Auge, Ohr' },
+  'airway-oral': { color: '#b58672', label: 'Atemweg/Mundraum', detail: 'Nase, Rachen, Mundhöhle' },
+  endocrine: { color: '#ad7488', label: 'Endokrin', detail: 'Hypophyse, Drüsen' },
+  other: { color: '#7d756c', label: 'Sonstige', detail: 'ohne spezifische Systemzuordnung' },
+}
+
+export const FUNCTION_COLORS = Object.fromEntries(
+  (Object.entries(FUNCTION_SYSTEMS) as [FunctionalSystem, FunctionSystemInfo][]).map(([key, info]) => [key, info.color]),
+) as Record<FunctionalSystem, string>
 
 export const LATERALITY_COLORS = {
   left: '#6f86a6',

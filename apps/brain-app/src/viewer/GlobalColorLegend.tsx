@@ -1,7 +1,7 @@
 import type { ColorMode } from './ontology'
 import {
   ANATOMICAL_MATERIAL_COLORS,
-  FUNCTION_COLORS,
+  FUNCTION_SYSTEMS,
   LATERALITY_COLORS,
   REGION_COLORS,
 } from './atlasColorSystem'
@@ -63,13 +63,8 @@ const LEGENDS: Record<GlobalMode, { title: string; subtitle: string; rows: Legen
   function: {
     title: 'Funktionssysteme',
     subtitle: 'Jede sichtbare TARO-Struktur ist einem System zugeordnet; keine stille Restklasse.',
-    rows: [
-      { label: 'Exekutive Kontrolle', detail: 'PFC/OFC/Frontallappen', color: FUNCTION_COLORS['executive-control'] },
-      { label: 'Aufmerksamkeit', detail: 'frontoparietale Netzwerke', color: FUNCTION_COLORS['frontoparietal-attention'] },
-      { label: 'Vaskulär', detail: 'arterielle und venöse Versorgung', color: FUNCTION_COLORS.vascular },
-      { label: 'Hirnnerven', detail: 'craniale Nerven', color: FUNCTION_COLORS['cranial-nerve'] },
-      { label: 'Ventrikel', detail: 'CSF-System', color: FUNCTION_COLORS['csf-ventricular'] },
-    ],
+    // Vollstaendig aus der zentralen Registry abgeleitet -> deckt jedes gemalte System ab.
+    rows: Object.values(FUNCTION_SYSTEMS).map((s) => ({ label: s.label, detail: s.detail, color: s.color })),
   },
   laterality: {
     title: 'Lateralität',
@@ -133,6 +128,37 @@ function CoreRoleSwatches({ compact = false }: { compact?: boolean }) {
   )
 }
 
+/** Kompakte Modus-Eintraege (Swatch + Name) fuer die eingeklappte Legende: zeigt die Farben des
+ *  aktiven Faerbungsmodus statt nur der Lernpfad-Rollen. */
+function CompactLegendRows({ rows }: { rows: LegendRow[] }) {
+  // ponytail: kein Cap/Scroll -> bei vielen Systemen (function) wird der Teaser hoch; Scroll
+  // nachruesten, falls das Panel ueberlaeuft.
+  return (
+    <div style={{ display: 'grid', gap: 4 }}>
+      {rows.map((row) => (
+        <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '10px 1fr', gap: 6, alignItems: 'center' }}>
+          <span
+            aria-hidden="true"
+            style={{ width: 10, height: 10, background: row.color, border: '1px solid var(--line-soft)' }}
+          />
+          <span
+            style={{
+              fontFamily: 'var(--ed-mono)',
+              fontSize: 10.5,
+              fontWeight: 700,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {row.label}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function GlobalColorLegend() {
   const colorMode = useViewerStore((s) => s.colorMode)
   const legendState = useViewerStore((s) => s.colorLegend)
@@ -171,7 +197,7 @@ export default function GlobalColorLegend() {
         <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--g600)', lineHeight: 1.25 }}>
           aktiver Färbungsmodus
         </span>
-        <CoreRoleSwatches compact />
+        <CompactLegendRows rows={legend.rows} />
       </button>
     )
   }
