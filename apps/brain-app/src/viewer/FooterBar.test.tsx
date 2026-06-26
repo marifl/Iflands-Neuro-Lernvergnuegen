@@ -175,7 +175,7 @@ describe('FooterBar', () => {
   })
 
   it('zeigt die Figur-Ansicht als strikt relevante Preset-Regionen', async () => {
-    fetchColorPresetsMock.mockResolvedValueOnce([{
+    fetchColorPresetsMock.mockResolvedValue([{
       id: 'test-figure',
       label: 'Test-Figur',
       intent: 'Testet die Preset-Ansichtsoptionen.',
@@ -187,7 +187,7 @@ describe('FooterBar', () => {
         { label: 'Motivation', role: 'motivation', meaning: 'dACC/Nc. accumbens', hue: 150, buckets: ['dacc'] },
       ],
     }])
-    fetchPresentationColorItemsMock.mockResolvedValueOnce([{
+    fetchPresentationColorItemsMock.mockResolvedValue([{
       id: 'test-figure',
       label: 'Test-Figur',
       scene: 'test-figure',
@@ -198,11 +198,13 @@ describe('FooterBar', () => {
     await renderFooterBar()
 
     fireEvent.click(screen.getByRole('button', { name: /Färbung/ }))
-    fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
+    // ColorFlyoutContent laedt Presets asynchron beim Mount — warten.
+    fireEvent.click(await screen.findByRole('button', { name: 'Test-Figur' }))
     expect(useViewerStore.getState().activePreset?.id).toBe('test-figure')
 
     fireEvent.click(screen.getByRole('button', { name: /Test-Figur/ }))
-    expect(screen.getByText('Bedeutungen')).toBeInTheDocument()
+    // ColorFlyoutContent remountet — async Preset-Laden abwarten.
+    expect(await screen.findByText('Bedeutungen')).toBeInTheDocument()
     expect(screen.getByText('Kognition')).toBeInTheDocument()
     expect(screen.getByText('DLPFC/dorsales Striatum')).toBeInTheDocument()
     expect(screen.getByText('Emotion')).toBeInTheDocument()
@@ -218,7 +220,7 @@ describe('FooterBar', () => {
   })
 
   it('bietet alle Basis-Färbungsmodi und Vortrags-Färbungen an', async () => {
-    fetchColorPresetsMock.mockResolvedValueOnce([{
+    fetchColorPresetsMock.mockResolvedValue([{
       id: 'test-figure',
       label: 'Test-Figur',
       intent: 'Testet die Preset-Auswahl.',
@@ -226,7 +228,7 @@ describe('FooterBar', () => {
       dimOthers: true,
       groups: [{ label: 'DLPFC', role: 'cognition', meaning: 'Testgruppe', hue: 210, buckets: ['dlpfc'] }],
     }])
-    fetchPresentationColorItemsMock.mockResolvedValueOnce([{
+    fetchPresentationColorItemsMock.mockResolvedValue([{
       id: 'test-figure',
       label: 'Test-Figur',
       scene: 'test-figure',
@@ -237,6 +239,8 @@ describe('FooterBar', () => {
     await renderFooterBar()
 
     fireEvent.click(screen.getByRole('button', { name: /Färbung/ }))
+    // Warten bis ColorFlyoutContent die Presets geladen hat.
+    await screen.findByRole('button', { name: 'Test-Figur' })
     for (const label of ['Anatomisch', 'Funktionssystem', 'Lateralität', 'Region']) {
       expect(screen.getByRole('button', { name: label })).toBeInTheDocument()
     }
@@ -244,7 +248,8 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().colorMode).toBe('function')
 
     fireEvent.click(screen.getByRole('button', { name: /Funktionssystem/ }))
-    fireEvent.click(screen.getByRole('button', { name: 'Test-Figur' }))
+    // Flyout remountet ColorFlyoutContent — erneut auf async Daten warten.
+    fireEvent.click(await screen.findByRole('button', { name: 'Test-Figur' }))
     expect(useViewerStore.getState().colorMode).toBe('preset')
     expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung&config=test-figure&scene=test-figure&step=0')
     expect(useViewerStore.getState().appMode).toBe('learn')
@@ -318,11 +323,16 @@ describe('FooterBar', () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     try {
-      render(
-        <TestErrorBoundary>
-          <FooterBar />
-        </TestErrorBoundary>,
-      )
+      await act(async () => {
+        render(
+          <TestErrorBoundary>
+            <FooterBar />
+          </TestErrorBoundary>,
+        )
+        await Promise.resolve()
+      })
+      // Faerbung-Flyout oeffnen, damit ColorFlyoutContent mountet und den Fehler wirft.
+      fireEvent.click(screen.getByRole('button', { name: /Färbung/ }))
       expect(await screen.findByRole('alert')).toHaveTextContent('preset load failed')
     } finally {
       consoleError.mockRestore()
