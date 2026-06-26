@@ -1,10 +1,26 @@
 import { describe, expect, it } from 'vitest'
 import {
+  assertOverlayMatchesBrainModel,
   BRAIN_MODEL_OPTIONS,
   brainModelReviewSearch,
+  getBrainModelOption,
   resolveBrainModelOptionFromSearch,
   resolveBrainModelOptionId,
 } from './brainModelOptions'
+import type { LabOverlay } from './overlayContract'
+
+function overlay(brainModelId: string, space: LabOverlay['space']): LabOverlay {
+  return {
+    version: 1,
+    id: 'ov-1',
+    label: 'Test-Overlay',
+    brainModelId,
+    space,
+    provenance: { source: 'Test' },
+    layers: [{ kind: 'discrete', atlasId: 'dkt', unit: 'unitless', regions: [{ id: 'r', label: 'R' }] }],
+    callouts: [],
+  }
+}
 
 describe('brainModelOptions', () => {
   it('laedt TARO als Default ohne URL-Parameter', () => {
@@ -39,5 +55,23 @@ describe('brainModelOptions', () => {
       ]),
     )
     expect(BRAIN_MODEL_OPTIONS.every((option) => option.url.startsWith('/assets/'))).toBe(true)
+  })
+
+  it('traegt Space-Metadaten pro Modell', () => {
+    expect(getBrainModelOption('taro').space).toBe('taro')
+    expect(getBrainModelOption('mni-desktop-r18').space).toBe('mni152')
+    expect(BRAIN_MODEL_OPTIONS.every((option) => option.space === 'taro' || option.space === 'mni152')).toBe(true)
+  })
+
+  it('akzeptiert ein passendes Overlay', () => {
+    expect(() => assertOverlayMatchesBrainModel(overlay('taro', 'taro'), 'taro')).not.toThrow()
+  })
+
+  it('lehnt Overlay mit falschem Modell blockierend ab', () => {
+    expect(() => assertOverlayMatchesBrainModel(overlay('mni-mobile-r05', 'mni152'), 'taro')).toThrow(/gehoert zu Brain model/)
+  })
+
+  it('lehnt Overlay mit falschem Raum blockierend ab', () => {
+    expect(() => assertOverlayMatchesBrainModel(overlay('taro', 'mni152'), 'taro')).toThrow(/Raum/)
   })
 })
