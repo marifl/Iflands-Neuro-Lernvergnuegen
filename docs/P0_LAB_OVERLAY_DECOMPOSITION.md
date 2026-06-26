@@ -41,7 +41,7 @@ Z ZkRPFEFqW1sy (4 Smoke-Routen) <- A,B,K,L
 | F | d1QSeLP9T2g7-B | data/math | pinpointProjection.ts | vitest synth buffer | E, A |
 | G ✅ | GDXRWz0ZsFoT-A (Dart nd1pYvTZAsns) | data | activationMappingContract.ts | vitest 8/8 | overlayContract |
 | H | GDXRWz0ZsFoT-D | data | demo-zscore-mni.json, labOverlayLoader.ts | vitest fetch-mock | overlayContract |
-| K | wGWNtFmxljyc-A | data+CSS | heatmapColormap.ts, HeatmapColorbar.tsx | vitest colormap | overlayContract |
+| K ✅ | wGWNtFmxljyc-A (Dart D3Wcr28fMsIs) | data+CSS | heatmapColormap.ts, HeatmapColorbar.tsx | vitest 10/10 | overlayContract |
 | L | wGWNtFmxljyc-B | render/shader | CanonicalSurface.tsx, CanonicalAtlasMode.tsx | smoke pixel-inhomogen | K, H |
 | M | wcaWy1qc25Wx | render/asset | e2e spec (+evtl. bake) | smoke Julich-Subparzel | CanonicalAtlasMode |
 | Z | ZkRPFEFqW1sy | verifikation | tests/e2e/visual-production.spec.ts | playwright 4 Routen | A,B,K,L |

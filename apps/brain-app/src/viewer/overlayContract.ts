@@ -101,6 +101,7 @@ export type BrainSpace = (typeof BRAIN_SPACES)[number]
 export type OverlayAtlasId = (typeof OVERLAY_ATLASES)[number]
 export type OverlayUnit = (typeof OVERLAY_UNITS)[number]
 export type OverlayColormap = (typeof OVERLAY_COLORMAPS)[number]
+export type ContinuousScale = z.infer<typeof ContinuousScaleSchema>
 export type LabOverlay = z.infer<typeof LabOverlaySchema>
 export type OverlayLayer = z.infer<typeof OverlayLayerSchema>
 
