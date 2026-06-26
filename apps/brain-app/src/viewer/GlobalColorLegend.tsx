@@ -113,11 +113,11 @@ function CoreRoleSwatches({ compact = false }: { compact?: boolean }) {
             }}
           />
           <span style={{ minWidth: 0 }}>
-            <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: compact ? 10.5 : 11, fontWeight: 700 }}>
+            <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: compact ? 'var(--fs-sm)' : 'var(--fs-base)', fontWeight: 700 }}>
               {row.label}
             </span>
             {compact ? null : (
-              <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g600)', lineHeight: 1.3 }}>
+              <span className="mono-sm" style={{ display: 'block', color: 'var(--g600)', lineHeight: 1.3 }}>
                 {row.detail}
               </span>
             )}
@@ -142,9 +142,8 @@ function CompactLegendRows({ rows }: { rows: LegendRow[] }) {
             style={{ width: 10, height: 10, background: row.color, border: '1px solid var(--line-soft)' }}
           />
           <span
+            className="mono-sm"
             style={{
-              fontFamily: 'var(--ed-mono)',
-              fontSize: 10.5,
               fontWeight: 700,
               whiteSpace: 'nowrap',
               overflow: 'hidden',
@@ -191,10 +190,10 @@ export default function GlobalColorLegend() {
         }}
       >
         <span className="eyebrow">Färbung</span>
-        <span style={{ fontFamily: 'var(--ed-display)', fontSize: 14, fontWeight: 700, lineHeight: 1.15 }}>
+        <span className="display-lg" style={{ lineHeight: 1.15 }}>
           {COLOR_MODE_LABEL[colorMode]}
         </span>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--g600)', lineHeight: 1.25 }}>
+        <span className="mono-xs" style={{ color: 'var(--g600)', lineHeight: 1.25 }}>
           aktiver Färbungsmodus
         </span>
         <CompactLegendRows rows={legend.rows} />
@@ -215,12 +214,12 @@ export default function GlobalColorLegend() {
                 height: 10,
                 marginTop: 3,
                 background: row.color,
-                border: '1px solid rgba(255,255,255,0.25)',
+                border: '1px solid var(--line-soft)',
               }}
             />
             <span style={{ display: 'grid', gap: 1 }}>
-              <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, fontWeight: 700 }}>{row.label}</span>
-              <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g600)', lineHeight: 1.25 }}>
+              <span className="mono-base" style={{ fontWeight: 700 }}>{row.label}</span>
+              <span className="mono-sm" style={{ color: 'var(--g600)', lineHeight: 1.25 }}>
                 {row.detail}
               </span>
             </span>

@@ -86,7 +86,7 @@ export default function ErpChart({ scene }: { scene: Scene }) {
             key={i}
             fill="none"
             strokeWidth={2}
-            stroke={s.color ?? (i === 0 ? '#c0392b' : '#2e7d32')}
+            stroke={s.color ?? (i === 0 ? 'var(--viz-nogo)' : 'var(--viz-go)')}
             points={toPolyline(s.points, BOX)
               .map((p) => p.join(','))
               .join(' ')}
@@ -107,7 +107,7 @@ export default function ErpChart({ scene }: { scene: Scene }) {
             const primary = point.role === 'primary'
             const radius = primary ? 9.5 : 4.5
             const opacity = primary ? 0.25 + 0.65 * erpPulse : 0.25 + 0.25 * erpPulse
-            const fill = primary ? data.series?.[0]?.color ?? '#c0392b' : '#f4b66d'
+            const fill = primary ? data.series?.[0]?.color ?? 'var(--viz-nogo)' : 'var(--viz-secondary)'
             return <circle key={point.site} cx={point.x} cy={point.y} r={radius} fill={fill} opacity={opacity} />
           })}
           {topography.points.map((point) => (
@@ -116,7 +116,7 @@ export default function ErpChart({ scene }: { scene: Scene }) {
             </text>
           ))}
         </svg>
-        <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--g500)', lineHeight: 1.45 }}>
+        <div className="mono-xs" style={{ color: 'var(--g500)', lineHeight: 1.45 }}>
           <div>{topography.component} · Topografie {topography.region} ({topography.primarySite})</div>
           <div>Quelle: {data.source} leuchtet am Maximum</div>
           {topography.sourceTargets.map((target) => (
@@ -125,11 +125,11 @@ export default function ErpChart({ scene }: { scene: Scene }) {
         </div>
       </div>
 
-      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g500)', marginTop: 6 }}>
+      <div className="mono-sm" style={{ color: 'var(--g500)', marginTop: 6 }}>
         {data.series.map((s) => s.label).join(' · ')}
         {data.markers?.length ? ` — ${data.markers.join(', ')}` : ''}
       </div>
-      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--g500)', marginTop: 4 }}>
+      <div className="mono-xs" style={{ color: 'var(--g500)', marginTop: 4 }}>
         {topography.evidence}
       </div>
     </div>

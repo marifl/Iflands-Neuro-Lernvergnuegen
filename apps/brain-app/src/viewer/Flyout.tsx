@@ -86,7 +86,7 @@ export default function Flyout({
         {icon ? <span className="flyout-icon">{icon}</span> : null}
         <div className="h">{eyebrow}</div>
         <span className="v ellip">
-          {label} <span className="flyout-caret" style={{ color: 'var(--g500)', fontSize: 9 }}>{open ? '▾' : '▴'}</span>
+          {label} <span className="flyout-caret" style={{ color: 'var(--g500)', fontSize: 'var(--fs-xs)' }}>{open ? '▾' : '▴'}</span>
         </span>
       </button>
       {open ? (

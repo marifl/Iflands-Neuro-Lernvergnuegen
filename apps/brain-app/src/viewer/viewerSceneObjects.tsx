@@ -285,7 +285,7 @@ export function BrainModelReviewSelector({
           </option>
         ))}
       </select>
-      <span style={{ color: 'var(--g600)', fontSize: 11, lineHeight: 1.25 }}>{brainModel.reviewNote}</span>
+      <span style={{ color: 'var(--g600)', fontSize: 'var(--fs-base)', lineHeight: 1.25 }}>{brainModel.reviewNote}</span>
     </label>
   )
 }

@@ -23,7 +23,7 @@ const COMPONENT_START_Y = 86
 const COMPONENT_GAP_Y = 45
 const COMPONENT_X = 178
 const MIXED_X = 12
-const DEFAULT_COLORS = ['#c0392b', '#2f80ed', '#9b59b6']
+const DEFAULT_COLORS = ['var(--viz-nogo)', 'var(--viz-novelty)', 'var(--viz-tertiary)']
 
 function componentColor(node: IcaSeparationNode, index: number): string {
   return node.color ?? DEFAULT_COLORS[index % DEFAULT_COLORS.length]
@@ -132,7 +132,7 @@ export default function IcaSeparation({ nodes, evidence = 'Schematisch/didaktisc
         >
           <RotateCcw size={14} aria-hidden="true" />
         </button>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--g500)', lineHeight: 1.45 }}>
+        <span className="mono-xs" style={{ color: 'var(--g500)', lineHeight: 1.45 }}>
           {evidence}
         </span>
       </div>

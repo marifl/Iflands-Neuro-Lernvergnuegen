@@ -27,22 +27,22 @@ export function AtlasFacetPanel({ area }: Props) {
 
       <div style={{ marginBottom: 8 }}>
         {contextKeys.length === 0 ? (
-          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--muted, #888)' }}>
+          <div className="mono-sm" style={{ color: 'var(--muted)' }}>
             Keine kuratierten Daten (Kontext folgt mit SP2).
           </div>
         ) : (
           contextKeys.map((k) => (
             <div key={k} style={{ marginBottom: 4 }}>
               <span className="eyebrow">{FACET_LABEL[k] ?? k}</span>
-              <div style={{ fontSize: 11, color: 'var(--fg, #ddd)' }}>{area.context[k]}</div>
+              <div style={{ fontSize: 'var(--fs-base)', color: 'var(--fg)' }}>{area.context[k]}</div>
             </div>
           ))
         )}
       </div>
 
-      <div style={{ borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 6 }}>
+      <div style={{ borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 6 }}>
         <div className="eyebrow" style={{ marginBottom: 3 }}>Provenienz</div>
-        <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--muted, #888)', lineHeight: 1.5 }}>
+        <div className="mono-xs" style={{ color: 'var(--muted)', lineHeight: 1.5 }}>
           Quelle: {area.provenance.source}<br />
           Affine-Det: {area.provenance.affine_det ?? '—'}
           {area.provenance.backfill ? <><br />Backfill-Patch</> : null}

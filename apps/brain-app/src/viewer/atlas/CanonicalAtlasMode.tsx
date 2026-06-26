@@ -107,7 +107,7 @@ export default function CanonicalAtlasMode() {
 
   if (err) throw err
   if (!m || !hemis || !effectiveConfig || active === '')
-    return <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e', color: '#ccc', padding: 20 }}>Lade fsaverage…</div>
+    return <div style={{ position: 'absolute', inset: 0, background: 'var(--viewport-bg)', color: 'var(--g600)', padding: 20 }}>Lade fsaverage…</div>
 
   const selectedArea = pickedAreaId ? areaById(effectiveConfig.catalog, pickedAreaId) : null
   const lut = m.lut[active]
@@ -178,7 +178,7 @@ export default function CanonicalAtlasMode() {
 
   return (
     // Fuellt die Viewport-Spalte des BodyParts3DViewer-Layouts (absolute, nicht fixed -> Footer/Kopfleiste bleiben frei).
-    <div style={{ position: 'absolute', inset: 0, background: '#0b0b0e' }}>
+    <div style={{ position: 'absolute', inset: 0, background: 'var(--viewport-bg)' }}>
       <AtlasLayerPanel
         layers={m.layers}
         active={active}

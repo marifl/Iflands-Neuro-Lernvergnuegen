@@ -33,7 +33,7 @@ export default function ModeLauncher({
             fontFamily: 'var(--ed-display)',
             fontWeight: 700,
             letterSpacing: '-0.02em',
-            fontSize: 26,
+            fontSize: 'var(--fs-2xl)',
             lineHeight: 1.1,
             color: 'var(--ink)',
             margin: '0 0 6px',
@@ -41,7 +41,7 @@ export default function ModeLauncher({
         >
           Womit möchtest du starten?
         </h1>
-        <p style={{ fontFamily: 'var(--ed-mono)', fontSize: 12, color: 'var(--g600)', margin: '0 0 22px', lineHeight: 1.5 }}>
+        <p className="mono-md" style={{ color: 'var(--g600)', margin: '0 0 22px', lineHeight: 1.5 }}>
           Wähle einen Modus. Du kannst jederzeit unten in der Fussleiste unter „Modus" wechseln.
         </p>
 
@@ -62,13 +62,13 @@ export default function ModeLauncher({
               whiteSpace: 'normal',
             }}
           >
-            <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, letterSpacing: '0.16em', textTransform: 'uppercase' }}>
+            <span className="mono-xs" style={{ letterSpacing: '0.16em', textTransform: 'uppercase' }}>
               Fortsetzen
             </span>
-            <span style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 18, letterSpacing: '-0.01em' }}>
+            <span className="display-xl" style={{ letterSpacing: '-0.01em' }}>
               Weiter mit {continueDefinition.label}
             </span>
-            <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11.5, lineHeight: 1.45 }}>
+            <span className="mono-base" style={{ lineHeight: 1.45 }}>
               Zuletzt genutzten Modus öffnen. Deep-Links und explizite Start-Defaults bleiben vorrangig.
             </span>
           </button>
@@ -95,12 +95,12 @@ export default function ModeLauncher({
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                <span style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 17, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
+                <span className="display-xl" style={{ color: 'var(--ink)', letterSpacing: '-0.01em' }}>
                   {card.label}
                 </span>
                 {card.recommended ? <span className="ed-pill orange">Empfohlen</span> : null}
               </div>
-              <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11.5, color: 'var(--g600)', lineHeight: 1.45 }}>
+              <span className="mono-base" style={{ color: 'var(--g600)', lineHeight: 1.45 }}>
                 {card.description}
               </span>
             </button>

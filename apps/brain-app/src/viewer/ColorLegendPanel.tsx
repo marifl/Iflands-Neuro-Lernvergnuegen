@@ -94,11 +94,9 @@ export default function ColorLegendPanel({
         <div style={{ minWidth: 0 }}>
           <div className="eyebrow">Färbung</div>
           <div
+            className="display-lg"
             style={{
-              fontFamily: 'var(--ed-display)',
-              fontWeight: 700,
               letterSpacing: '-0.02em',
-              fontSize: 14,
               color: 'var(--ink)',
               marginTop: 4,
               lineHeight: 1.15,
@@ -125,7 +123,7 @@ export default function ColorLegendPanel({
       {legend.minimized ? null : (
         <>
           {subtitle ? (
-            <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, lineHeight: 1.45, color: 'var(--g600)', margin: '8px 0' }}>
+            <div className="mono-xs" style={{ lineHeight: 1.45, color: 'var(--g600)', margin: '8px 0' }}>
               {subtitle}
             </div>
           ) : null}

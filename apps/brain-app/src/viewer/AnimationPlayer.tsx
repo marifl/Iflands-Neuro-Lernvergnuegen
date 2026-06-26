@@ -61,10 +61,10 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
     >
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, marginBottom: 10 }}>
         <span className="eyebrow">Animation</span>
-        <span style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 14, color: 'var(--ink)' }}>
+        <span className="display-lg" style={{ letterSpacing: '-0.02em', color: 'var(--ink)' }}>
           {timeline.title}
         </span>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--g500)' }}>
+        <span className="mono-xs" style={{ letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--g500)' }}>
           {timeline.source} · Schritt {step + 1}/{timeline.steps.length}
         </span>
         <span style={{ flex: 1 }} />
@@ -73,7 +73,7 @@ export default function AnimationPlayer({ inline = false }: { inline?: boolean }
         </button>
       </div>
 
-      <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13.5, lineHeight: 1.55, color: 'var(--g800)', minHeight: 64 }}>
+      <div style={{ fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-lg)', lineHeight: 1.55, color: 'var(--g800)', minHeight: 64 }}>
         {currentBody}
       </div>
 

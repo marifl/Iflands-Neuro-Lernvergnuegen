@@ -58,7 +58,7 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
       <div className="scrollbar-thin" style={{ flex: 1, overflowY: 'auto', padding: 18, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div>
           <div className="eyebrow">{scene.figure ?? scene.section}</div>
-          <h2 style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 18, color: 'var(--ink)', margin: '6px 0 0' }}>
+          <h2 className="display-xl" style={{ color: 'var(--ink)', margin: '6px 0 0' }}>
             {scene.title}
           </h2>
         </div>

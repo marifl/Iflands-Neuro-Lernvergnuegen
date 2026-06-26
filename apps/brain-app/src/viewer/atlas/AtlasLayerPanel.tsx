@@ -50,15 +50,15 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
         padding: '10px 12px',
         minWidth: 180,
         borderRadius: 4,
-        background: 'rgba(11,11,14,0.88)',
-        border: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--atlas-overlay-bg)',
+        border: '1px solid var(--atlas-overlay-border)',
       }}
     >
       {/* Rahmung: dieses Hirn ist NICHT das TARO-Lern-Hirn — sondern der Standardraum,
           in dem die Atlas-Areale exakt definiert sind (loest die „zwei Hirne"-Verwirrung). */}
-      <div style={{ marginBottom: 10, paddingBottom: 8, borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+      <div style={{ marginBottom: 10, paddingBottom: 8, borderBottom: '1px solid var(--atlas-overlay-border)' }}>
         <div className="eyebrow" style={{ marginBottom: 3 }}>Atlas · fsaverage</div>
-        <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9.5, color: 'var(--muted, #888)', lineHeight: 1.45 }}>
+        <div className="mono-xs" style={{ color: 'var(--muted)', lineHeight: 1.45 }}>
           Standardhirn — Regionen präzise.<br />Nicht das TARO-Lern-Hirn.
         </div>
       </div>
@@ -67,7 +67,7 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
           <div className="eyebrow" style={{ marginBottom: 2 }}>
             {AXIS_LABEL[group.axis]}
           </div>
-          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--muted, #888)', marginBottom: 6 }}>
+          <div className="mono-xs" style={{ color: 'var(--muted)', marginBottom: 6 }}>
             {AXIS_SUB[group.axis]}
           </div>
           {group.items.map((layer) => (
@@ -83,7 +83,7 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
           ))}
         </div>
       ))}
-      <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
+      <div style={{ marginTop: 10, borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 8 }}>
         <div className="eyebrow" style={{ marginBottom: 6 }}>Oberflaeche</div>
         <button
           type="button"
@@ -103,7 +103,7 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
         </button>
       </div>
       {showSub !== undefined ? (
-        <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
+        <div style={{ marginTop: 10, borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 8 }}>
           <div className="eyebrow" style={{ marginBottom: 6 }}>Subkortex</div>
           <button
             type="button"
@@ -113,23 +113,23 @@ export function AtlasLayerPanel({ layers, active, onSelect, surface, onSurface, 
           >
             Basalganglien/Thalamus
           </button>
-          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 8.5, color: 'var(--muted, #888)', marginTop: 2 }}>
+          <div className="mono-xs" style={{ color: 'var(--muted)', marginTop: 2 }}>
             (nur Pial-Ansicht)
           </div>
         </div>
       ) : null}
-      <div style={{ marginTop: 10, borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: 8 }}>
+      <div style={{ marginTop: 10, borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 8 }}>
         <div className="eyebrow" style={{ marginBottom: 4 }}>Areal</div>
         {!hasHover && !hasPick ? (
-          <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--muted, #888)', letterSpacing: '0.02em' }}>
+          <div className="mono-sm" style={{ color: 'var(--muted)', letterSpacing: '0.02em' }}>
             Bewege oder klicke auf eine Region
           </div>
         ) : (
           <>
-            <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: hasHover ? 'var(--ink)' : 'var(--orange)', letterSpacing: '0.02em' }}>
+            <div className="mono-md" style={{ fontWeight: 600, color: hasHover ? 'var(--ink)' : 'var(--orange)', letterSpacing: '0.02em' }}>
               {areaLabel}
             </div>
-            <div className="eyebrow" style={{ marginTop: 3, color: 'var(--muted, #888)' }}>
+            <div className="eyebrow" style={{ marginTop: 3, color: 'var(--muted)' }}>
               {hasHover ? 'unter Cursor' : 'ausgewählt'}
             </div>
           </>

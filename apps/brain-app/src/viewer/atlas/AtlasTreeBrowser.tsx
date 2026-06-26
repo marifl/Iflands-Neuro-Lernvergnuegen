@@ -24,10 +24,10 @@ function TriBox({ state, onClick }: { state: TriState; onClick: (e: React.MouseE
       onClick={onClick}
       style={{
         display: 'inline-block', width: 13, height: 13, lineHeight: '13px', textAlign: 'center',
-        fontSize: 10, marginRight: 6, borderRadius: 2, cursor: 'pointer',
-        border: '1px solid rgba(255,255,255,0.25)',
-        background: state === 'all' ? 'var(--orange, #e0792b)' : state === 'some' ? 'rgba(224,121,43,0.4)' : 'transparent',
-        color: state === 'none' ? 'transparent' : '#111',
+        fontSize: 'var(--fs-sm)', marginRight: 6, borderRadius: 2, cursor: 'pointer',
+        border: '1px solid var(--line-soft)',
+        background: state === 'all' ? 'var(--orange)' : state === 'some' ? 'color-mix(in srgb, var(--orange) 40%, transparent)' : 'transparent',
+        color: state === 'none' ? 'transparent' : 'var(--on-accent)',
       }}
     >
       {TRI_GLYPH[state]}
@@ -35,7 +35,7 @@ function TriBox({ state, onClick }: { state: TriState; onClick: (e: React.MouseE
   )
 }
 
-const ROW: React.CSSProperties = { display: 'flex', alignItems: 'center', padding: '2px 0', fontSize: 11 }
+const ROW: React.CSSProperties = { display: 'flex', alignItems: 'center', padding: '2px 0', fontSize: 'var(--fs-base)' }
 
 /** Hierarchischer Katalog-Browser = Settings-Menue. Zeigt effektiven On/Off (Tri-State), Toggle
  *  schreibt den Scope-Key (ueber onToggleScope -> Store), Areal-Klick selektiert (Highlight/Kamera). */
@@ -81,7 +81,7 @@ export function AtlasTreeBrowser({
                     <span
                       onClick={() => { onSelectAtlas(atlas.id); toggleOpen(atlasKey) }}
                       style={{ cursor: 'pointer', fontWeight: activeAtlas === atlas.id ? 700 : 400,
-                        color: activeAtlas === atlas.id ? 'var(--orange, #e0792b)' : undefined }}
+                        color: activeAtlas === atlas.id ? 'var(--orange)' : undefined }}
                     >
                       {atlasOpen ? '▾' : '▸'} {atlas.label_de}
                     </span>
@@ -104,8 +104,9 @@ export function AtlasTreeBrowser({
                               onClick={(e) => { e.stopPropagation(); onToggleScope(scopeKeyForArea(area.id)) }} />
                             <span
                               onClick={() => onPickArea(area.id)}
-                              style={{ cursor: 'pointer', fontFamily: 'var(--ed-mono)', fontSize: 10,
-                                color: pickedAreaId === area.id ? 'var(--orange, #e0792b)' : 'var(--muted, #aaa)' }}
+                              className="mono-sm"
+                              style={{ cursor: 'pointer',
+                                color: pickedAreaId === area.id ? 'var(--orange)' : 'var(--muted)' }}
                             >
                               {area.label_de}
                             </span>

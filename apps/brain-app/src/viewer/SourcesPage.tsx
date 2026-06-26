@@ -19,7 +19,7 @@ export default function SourcesPage({ onClose }: { onClose: () => void }) {
         position: 'fixed',
         inset: 0,
         zIndex: 50,
-        background: 'rgba(0,0,0,0.55)',
+        background: 'var(--backdrop)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -47,14 +47,14 @@ export default function SourcesPage({ onClose }: { onClose: () => void }) {
         <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 16 }}>
           <div>
             <div className="ed-block-label">3D-Anatomie</div>
-            <p style={{ fontFamily: 'var(--ed-display)', fontSize: 12, lineHeight: 1.6, color: 'var(--g800)', margin: '8px 0 0' }}>
+            <p style={{ fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-md)', lineHeight: 1.6, color: 'var(--g800)', margin: '8px 0 0' }}>
               Mitsuhashi, N., Fujieda, K., Tamura, T., Kawamoto, S., Takagi, T., &amp; Okubo, K. (2009).
               BodyParts3D: 3D structure database for anatomical concepts. <i>Nucleic Acids Research, 37</i>(Database issue), D782–D785.{' '}
               <a href="https://doi.org/10.1093/nar/gkn613" target="_blank" rel="noreferrer" style={{ color: 'var(--orange)' }}>
                 https://doi.org/10.1093/nar/gkn613
               </a>
             </p>
-            <p style={{ fontFamily: 'var(--ed-display)', fontSize: 11, lineHeight: 1.6, color: 'var(--g600)', margin: '8px 0 0' }}>
+            <p style={{ fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-base)', lineHeight: 1.6, color: 'var(--g600)', margin: '8px 0 0' }}>
               BodyParts3D, Copyright© The Database Center for Life Science licensed by CC Attribution-Share Alike 2.1 Japan.
             </p>
           </div>

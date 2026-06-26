@@ -38,10 +38,12 @@ img, svg { display: block; max-width: 100%; }
   --orange-wash-soft: color-mix(in srgb, var(--orange) 7%, transparent);
 
   /* Konstanten (themen-unabhaengig) */
-  --viewport-bg: #0e0e0e;   /* 3D-Bereich bleibt in beiden Themes dunkel (Cover-Logik) */
   --on-accent: #160b04;     /* Text auf Orange-Flaeche */
 
   /* Themen-abhaengig (Dunkel-Defaults; siehe [data-theme="light"]) */
+  --viewport-bg: #0e0e0e;   /* 3D-Viewport-Hintergrund (Atlas: flippt mit Theme) */
+  --atlas-overlay-bg: rgba(11, 11, 14, 0.88);
+  --atlas-overlay-border: rgba(255, 255, 255, 0.08);
   --app-bg: #0e0e0e;        /* Galerie/Body hinter der Plate */
   --on-ink: #0e0e0e;        /* Text auf ink-farbener Flaeche (solid-Pill, Tabellenkopf) */
   --field-bg: #0e0e0e;      /* Eingabefeld-Hintergrund */
@@ -49,6 +51,32 @@ img, svg { display: block; max-width: 100%; }
   /* Schrift: Helvetica Neue (Display/Body) + IBM Plex Mono (technische Ebene) */
   --ed-display: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --ed-mono: 'IBM Plex Mono', ui-monospace, Menlo, Monaco, monospace;
+
+  /* Type-Scale: 7 visuell unterscheidbare Stufen */
+  --fs-xs: 9px;          /* Eyebrows, Bildunterschriften, Pillen */
+  --fs-sm: 10.5px;       /* Labels, Badges, Legenden */
+  --fs-base: 11px;       /* kleine Body-Texte, Steuerelemente */
+  --fs-md: 12px;         /* Standard-Body, Eingabefelder, Baum */
+  --fs-lg: 14px;         /* Abschnitts-Ueberschriften, Fliesstext */
+  --fs-xl: 17px;         /* Karten-/Panel-Headings */
+  --fs-2xl: 24px;        /* Hero, Stat-Werte */
+
+  /* Semantische Farb-Aliase (waren Ghost-Variablen ohne Definition) */
+  --muted: var(--g500);
+  --fg: var(--g800);
+  --red: var(--danger-solid);
+
+  /* Data-Viz-Palette (Diagramme, VCPT, ERP, ICA — themen-stabil) */
+  --viz-go: #2e7d32;
+  --viz-nogo: #c0392b;
+  --viz-novelty: #2f80ed;
+  --viz-neutral: #6f6f6f;
+  --viz-secondary: #f4b66d;
+  --viz-tertiary: #9b59b6;
+
+  /* Overlay + Schatten */
+  --backdrop: rgba(0, 0, 0, 0.55);
+  --shadow-medium: rgba(0, 0, 0, 0.22);
 
   /* ── Bestehende Token-Namen auf Editorial umbiegen (Konsumenten/@theme) ── */
   --surface-canvas: var(--ed-canvas);
@@ -72,6 +100,14 @@ img, svg { display: block; max-width: 100%; }
   --border-strong: var(--line-soft);
   --border-muted: var(--line-soft);
   --focus-ring: var(--orange);
+
+  /* Semantische Status-Token (Editorial statt theme-tokens warm-pink Defaults) */
+  --text-inverse: var(--ed-canvas);
+  --text-accent: var(--ink);
+  --text-danger: #ffa39e;
+  --success-solid: #4aba7a;
+  --warning-solid: #e8a93e;
+  --danger-solid: #e05549;
 
   /* V2-Shell-Vertrag: semantische Chrome-Tokens statt Panel-Sonderfaelle. */
   --shell-header-bg: var(--paper);
@@ -117,6 +153,27 @@ img, svg { display: block; max-width: 100%; }
 
   --on-ink: #ffffff;        /* Text auf schwarzer ink-Flaeche */
   --field-bg: #ffffff;
+
+  --viewport-bg: #f0ebe4;   /* warm beige statt schwarz */
+  --atlas-overlay-bg: rgba(255, 255, 255, 0.88);
+  --atlas-overlay-border: rgba(0, 0, 0, 0.08);
+
+  /* Orange dunkler fuer Kontrast auf weiss (4.9:1 statt 3:1) */
+  --orange: #c25000;
+
+  --surface-interactive-hover: #eaeaea;
+  --surface-interactive-active: #e0e0e0;
+
+  --text-inverse: var(--paper);
+  --text-accent: var(--ink);
+  --text-danger: #8a1a14;
+  --success-solid: #1a7a4a;
+  --warning-solid: #9a6400;
+  --danger-solid: #c03428;
+
+  --muted: var(--g500);
+  --fg: var(--g800);
+  --red: var(--danger-solid);
 }
 
 [data-contrast='high'] {
@@ -151,17 +208,17 @@ img, svg { display: block; max-width: 100%; }
 
 [data-font-size='large'] .ed-btn,
 [data-font-size='extra-large'] .ed-btn {
-  font-size: calc(10px * var(--accessibility-font-scale));
+  font-size: calc(var(--fs-sm) * var(--accessibility-font-scale));
 }
 
 [data-font-size='large'] .ed-foot .col,
 [data-font-size='extra-large'] .ed-foot .col {
-  font-size: calc(8.5px * var(--accessibility-font-scale));
+  font-size: calc(var(--fs-xs) * var(--accessibility-font-scale));
 }
 
 [data-font-size='large'] .eyebrow,
 [data-font-size='extra-large'] .eyebrow {
-  font-size: calc(8.5px * var(--accessibility-font-scale));
+  font-size: calc(var(--fs-xs) * var(--accessibility-font-scale));
 }
 
 [data-quiet-mode='true'] {
@@ -229,16 +286,24 @@ img, svg { display: block; max-width: 100%; }
   }
 
   /* ── Eyebrow + technische Tags (Mono, Versalien) ── */
+  /* ── Kompositionsklassen: Font-Family + Size in einer Klasse ── */
+  .mono-xs  { font-family: var(--ed-mono); font-size: var(--fs-xs); }
+  .mono-sm  { font-family: var(--ed-mono); font-size: var(--fs-sm); }
+  .mono-base { font-family: var(--ed-mono); font-size: var(--fs-base); }
+  .mono-md  { font-family: var(--ed-mono); font-size: var(--fs-md); }
+  .display-lg { font-family: var(--ed-display); font-weight: 700; font-size: var(--fs-lg); }
+  .display-xl { font-family: var(--ed-display); font-weight: 700; font-size: var(--fs-xl); }
+
   .eyebrow {
     font-family: var(--ed-mono);
-    font-size: 8.5px;
+    font-size: var(--fs-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--orange);
   }
   .ed-tag {
     font-family: var(--ed-mono);
-    font-size: 9px;
+    font-size: var(--fs-xs);
     line-height: 1.7;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -266,14 +331,14 @@ img, svg { display: block; max-width: 100%; }
     font-family: var(--ed-display);
     font-weight: 700;
     letter-spacing: -0.02em;
-    font-size: 18px;
+    font-size: var(--fs-xl);
     line-height: 1;
     color: var(--ink);
   }
   .ed-sec .meta {
     margin-left: auto;
     font-family: var(--ed-mono);
-    font-size: 8.5px;
+    font-size: var(--fs-xs);
     letter-spacing: 0.13em;
     text-transform: uppercase;
     color: var(--g500);
@@ -285,7 +350,7 @@ img, svg { display: block; max-width: 100%; }
   /* ── Block-Label mit fuehrendem Orange-Quadrat (Plan-Notation) ── */
   .ed-block-label {
     font-family: var(--ed-mono);
-    font-size: 8.5px;
+    font-size: var(--fs-xs);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--ink);
@@ -304,7 +369,7 @@ img, svg { display: block; max-width: 100%; }
   /* ── Mono-Button: 1px Linie, Hover fuellt; .active = Orange ── */
   .ed-btn {
     font-family: var(--ed-mono);
-    font-size: 10px;
+    font-size: var(--fs-sm);
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -337,7 +402,7 @@ img, svg { display: block; max-width: 100%; }
     min-width: 0;
   }
   .shell-control-reason {
-    font-size: 9px;
+    font-size: var(--fs-xs);
     font-weight: 500;
     letter-spacing: 0;
     line-height: 1.25;
@@ -352,7 +417,7 @@ img, svg { display: block; max-width: 100%; }
     background: var(--shell-panel-bg);
     color: var(--g700);
     font-family: var(--ed-mono);
-    font-size: 11px;
+    font-size: var(--fs-base);
     line-height: 1.4;
   }
   .shell-state-title {
@@ -369,7 +434,7 @@ img, svg { display: block; max-width: 100%; }
 
   .cut-plane-frame-tab {
     font-family: var(--ed-mono);
-    font-size: 12px;
+    font-size: var(--fs-md);
     font-weight: 700;
     letter-spacing: 0.04em;
     color: var(--ink);
@@ -409,7 +474,7 @@ img, svg { display: block; max-width: 100%; }
   /* ── Eingabefeld ── */
   .ed-input {
     font-family: var(--ed-mono);
-    font-size: 12px;
+    font-size: var(--fs-md);
     letter-spacing: 0.02em;
     color: var(--ink);
     background: var(--field-bg);
@@ -417,7 +482,7 @@ img, svg { display: block; max-width: 100%; }
     padding: 7px 10px;
     outline: none;
   }
-  .ed-input::placeholder { color: var(--g500); text-transform: uppercase; letter-spacing: 0.12em; font-size: 10px; }
+  .ed-input::placeholder { color: var(--g500); text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--fs-sm); }
   .ed-input:focus { border-color: var(--orange); }
 
   /* ── Quadratische Checkbox (editorial .checks .box) ── */
@@ -464,7 +529,7 @@ img, svg { display: block; max-width: 100%; }
     padding: 9px 14px;
     border-right: 1px solid var(--line-soft);
     font-family: var(--ed-mono);
-    font-size: 8.5px;
+    font-size: var(--fs-xs);
     line-height: 1.7;
     color: var(--g700);
     text-transform: uppercase;

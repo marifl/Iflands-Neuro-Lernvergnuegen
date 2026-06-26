@@ -81,7 +81,7 @@ export default function ExplorerLearningFlyout({
         <div style={{ flex: 1, minWidth: 0 }}>
           <div className="eyebrow">Bonus-Kontext</div>
           {!compact ? (
-            <div style={{ marginTop: 5, fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 16, lineHeight: 1.2, color: 'var(--ink)' }}>
+            <div className="display-xl" style={{ marginTop: 5, lineHeight: 1.2, color: 'var(--ink)' }}>
               {node.labels.de}
             </div>
           ) : null}
@@ -101,7 +101,7 @@ export default function ExplorerLearningFlyout({
           <span className="ed-pill orange">{node.k11Role}</span>
         </div>
       ) : null}
-      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 10.5, lineHeight: 1.5, color: 'var(--g700)' }}>
+      <div className="mono-sm" style={{ lineHeight: 1.5, color: 'var(--g700)' }}>
         {target.label}
       </div>
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>

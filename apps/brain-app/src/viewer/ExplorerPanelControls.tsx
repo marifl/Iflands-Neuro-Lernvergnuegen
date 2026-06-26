@@ -56,10 +56,9 @@ export function ExplorerSelectionActions() {
     >
       <div className="eyebrow">Auswahl</div>
       <div
+        className="mono-base"
         title={selectionLabel}
         style={{
-          fontFamily: 'var(--ed-mono)',
-          fontSize: 11,
           color: hasSelection ? 'var(--ink)' : 'var(--g500)',
           overflow: 'hidden',
           textOverflow: 'ellipsis',

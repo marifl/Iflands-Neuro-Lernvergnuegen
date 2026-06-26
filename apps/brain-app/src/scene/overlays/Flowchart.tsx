@@ -29,7 +29,7 @@ export default function Flowchart({ scene }: { scene: Scene }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {heading ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '2px 0 8px', borderBottom: '2px solid var(--orange)' }}>
-          <h3 style={{ margin: 0, fontFamily: 'var(--ed-display)', fontSize: 18, lineHeight: 1.15, fontWeight: 800, color: 'var(--ink)' }}>
+          <h3 style={{ margin: 0, fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-xl)', lineHeight: 1.15, fontWeight: 800, color: 'var(--ink)' }}>
             {heading}
           </h3>
         </div>

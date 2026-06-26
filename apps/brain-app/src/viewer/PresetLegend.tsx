@@ -30,10 +30,10 @@ export default function PresetLegend() {
               style={{ width: 11, height: 11, marginTop: 2, background: hueToHex(g.hue), border: '1px solid var(--line-soft)' }}
             />
             <span>
-              <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 10.5, color: 'var(--g800)', letterSpacing: '0.01em' }}>
+              <span className="mono-sm" style={{ display: 'block', color: 'var(--g800)', letterSpacing: '0.01em' }}>
                 {g.label}
               </span>
-              <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 9.5, lineHeight: 1.35, color: 'var(--g600)' }}>
+              <span className="mono-xs" style={{ display: 'block', lineHeight: 1.35, color: 'var(--g600)' }}>
                 {g.meaning}
               </span>
             </span>

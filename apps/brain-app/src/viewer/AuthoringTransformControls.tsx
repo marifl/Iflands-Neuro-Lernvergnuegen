@@ -91,7 +91,7 @@ const TOOLBAR_ROOT_STYLE: CSSProperties = {
   overscrollBehaviorX: 'contain',
   background: 'color-mix(in srgb, var(--shell-panel-bg) 88%, transparent)',
   backdropFilter: 'blur(8px)',
-  boxShadow: '0 8px 26px rgba(0, 0, 0, 0.22)',
+  boxShadow: '0 8px 26px var(--shadow-medium)',
 }
 
 const TOOLBAR_GROUP_STYLE: CSSProperties = {
@@ -138,8 +138,6 @@ const MENU_NUMBER_FIELDS_STYLE: CSSProperties = {
 
 const NUMBER_GROUP_LABEL_STYLE: CSSProperties = {
   color: 'var(--muted)',
-  fontFamily: 'var(--ed-mono)',
-  fontSize: 11,
   fontWeight: 800,
   letterSpacing: 0,
 }
@@ -152,8 +150,6 @@ const NUMBER_INPUT_STYLE: CSSProperties = {
   background: 'var(--shell-panel-bg)',
   border: '1px solid var(--line)',
   borderRadius: 0,
-  fontFamily: 'var(--ed-mono)',
-  fontSize: 12,
   fontWeight: 700,
   letterSpacing: 0,
 }
@@ -166,8 +162,6 @@ const HISTORY_SELECT_STYLE: CSSProperties = {
   background: 'var(--shell-panel-bg)',
   border: '1px solid var(--line)',
   borderRadius: 0,
-  fontFamily: 'var(--ed-mono)',
-  fontSize: 12,
   fontWeight: 700,
   letterSpacing: 0,
 }
@@ -303,7 +297,7 @@ function TransformNumberFields({
     <div role="group" aria-label="Transform-Zahlen" style={rootStyle}>
       {VECTOR_FIELD_CONFIG.map((config) => (
         <span key={`${config.key}-row`} style={{ display: 'contents' }}>
-          <span aria-hidden="true" style={NUMBER_GROUP_LABEL_STYLE}>{config.shortLabel}</span>
+          <span aria-hidden="true" className="mono-base" style={NUMBER_GROUP_LABEL_STYLE}>{config.shortLabel}</span>
           {AXES.map((axis, axisIndex) => {
             const index = axisIndex as AxisIndex
             const rawValue = transform?.[config.key][index] ?? (config.key === 'scale' ? 1 : 0)
@@ -311,6 +305,7 @@ function TransformNumberFields({
               <input
                 key={`${config.key}-${axis}`}
                 aria-label={`${config.label} ${axis}`}
+                className="mono-md"
                 disabled={disabled}
                 inputMode="decimal"
                 step={config.step}
@@ -380,6 +375,7 @@ function AuthoringHistoryControls({
         <History {...ICON_PROPS} />
         <select
           aria-label="Transform-History"
+          className="mono-md"
           disabled={historyDisabled}
           title={disabledReason ?? (history.commands.length === 0 ? 'Keine History' : 'Transform-History')}
           value={history.cursor}

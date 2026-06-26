@@ -125,7 +125,7 @@ function SceneJumpPicker({
               )
             })
           ) : (
-            <div role="status" style={{ padding: '6px 8px', fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g600)' }}>
+            <div role="status" className="mono-sm" style={{ padding: '6px 8px', color: 'var(--g600)' }}>
               Kein Schritt gefunden
             </div>
           )}
@@ -154,10 +154,9 @@ export default function PresenterChrome() {
           <div className="eyebrow">{kindLabel}</div>
           <div
             title={sequence.label}
+            className="mono-base"
             style={{
               marginTop: 3,
-              fontFamily: 'var(--ed-mono)',
-              fontSize: 11,
               color: 'var(--ink-muted)',
               whiteSpace: 'nowrap',
               overflow: 'hidden',
@@ -169,17 +168,16 @@ export default function PresenterChrome() {
         </div>
         <div
           aria-label="Aktueller Vortragsschritt"
-          style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: 'var(--ink)', whiteSpace: 'nowrap', flex: 'none' }}
+          className="mono-base"
+          style={{ color: 'var(--ink)', whiteSpace: 'nowrap', flex: 'none' }}
         >
           Folie {sequence.stepIndex + 1} / {sequence.stepCount} · Step {step + 1}
         </div>
       </div>
       <div
         title={scene.title}
+        className="display-lg"
         style={{
-          fontFamily: 'var(--ed-display)',
-          fontSize: 14,
-          fontWeight: 700,
           color: 'var(--ink)',
           lineHeight: 1.15,
           minWidth: 0,
@@ -199,7 +197,7 @@ export default function PresenterChrome() {
         >
           ◀
         </ShellControlButton>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: 'var(--ink)', flex: 'none', whiteSpace: 'nowrap' }}>
+        <span className="mono-base" style={{ color: 'var(--ink)', flex: 'none', whiteSpace: 'nowrap' }}>
           {sequence.stepIndex + 1} / {sequence.stepCount}
         </span>
         <ShellControlButton

@@ -21,10 +21,10 @@ export function PresetGroupExplanation({ preset }: { preset: ColorPreset }) {
             }}
           />
           <span style={{ minWidth: 0 }}>
-            <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 10.5, fontWeight: 700, color: 'var(--g800)' }}>
+            <span className="mono-sm" style={{ display: 'block', fontWeight: 700, color: 'var(--g800)' }}>
               {group.label}
             </span>
-            <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: 9.5, lineHeight: 1.35, color: 'var(--g600)' }}>
+            <span className="mono-xs" style={{ display: 'block', lineHeight: 1.35, color: 'var(--g600)' }}>
               {group.meaning}
             </span>
           </span>
@@ -37,8 +37,8 @@ export function PresetGroupExplanation({ preset }: { preset: ColorPreset }) {
 export function PresetReadOnlyAction({ label, active }: { label: string; active: boolean }) {
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 8, alignItems: 'center', padding: '4px 8px 6px' }}>
-      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
-      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 11, color: active ? 'var(--orange)' : 'var(--g500)' }}>
+      <span style={{ fontSize: 'var(--fs-md)', color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
+      <span className="mono-base" style={{ color: active ? 'var(--orange)' : 'var(--g500)' }}>
         {active ? 'An' : 'Aus'}
       </span>
     </div>

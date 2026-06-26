@@ -4,8 +4,6 @@ import { useViewerStore } from './viewerStore'
 const CRUMB_STYLE: CSSProperties = {
   color: 'var(--g600)',
   cursor: 'pointer',
-  fontFamily: 'var(--ed-mono)',
-  fontSize: 11,
   letterSpacing: '0.04em',
   background: 'transparent',
   border: 0,
@@ -16,7 +14,6 @@ const CLOSE_STYLE: CSSProperties = {
   ...CRUMB_STYLE,
   marginLeft: 4,
   color: 'var(--g500)',
-  fontSize: 12,
 }
 
 /** Breadcrumb des Isolationsmodus: Alle -> Ober-Gruppe -> fokussierter Knoten. */
@@ -41,17 +38,18 @@ export default function IsolationBar() {
       }}
     >
       <span className="eyebrow">Isolation</span>
-      <button type="button" style={CRUMB_STYLE} onClick={() => setIsolated(null)}>
+      <button type="button" className="mono-base" style={CRUMB_STYLE} onClick={() => setIsolated(null)}>
         Alle
       </button>
       {path.map((crumb, index) => {
         const isCurrent = index === path.length - 1
         return (
           <span key={crumb.id} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-            <span aria-hidden style={{ color: 'var(--g500)', fontSize: 10 }}>›</span>
+            <span aria-hidden style={{ color: 'var(--g500)', fontSize: 'var(--fs-sm)' }}>›</span>
             <button
               type="button"
               aria-current={isCurrent ? 'page' : undefined}
+              className="mono-base"
               style={{
                 ...CRUMB_STYLE,
                 color: isCurrent ? 'var(--orange)' : 'var(--g600)',
@@ -64,7 +62,7 @@ export default function IsolationBar() {
           </span>
         )
       })}
-      <button type="button" aria-label="Isolation verlassen" title="Isolation verlassen (Esc)" onClick={() => setIsolated(null)} style={CLOSE_STYLE}>
+      <button type="button" aria-label="Isolation verlassen" className="mono-md" title="Isolation verlassen (Esc)" onClick={() => setIsolated(null)} style={CLOSE_STYLE}>
         ✕
       </button>
     </nav>

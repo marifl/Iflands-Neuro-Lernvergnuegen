@@ -43,7 +43,7 @@ const PANEL_STYLE = {
 function ControlRow({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <div style={{ display: 'grid', gap: 6, padding: '7px 6px' }}>
-      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
+      <span style={{ fontSize: 'var(--fs-md)', color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
       {children}
     </div>
   )
@@ -70,7 +70,7 @@ function SegmentedControl<T extends string>({
             className={`ed-btn${value === option.value ? ' active' : ''}`}
             aria-pressed={value === option.value}
             onClick={() => onChange(option.value)}
-            style={{ minWidth: 0, padding: '6px 7px', textAlign: 'center', fontSize: 11 }}
+            style={{ minWidth: 0, padding: '6px 7px', textAlign: 'center', fontSize: 'var(--fs-base)' }}
           >
             {option.label}
           </button>
@@ -83,7 +83,7 @@ function SegmentedControl<T extends string>({
 function SwitchControl({ label, checked, onChange }: { label: string; checked: boolean; onChange: (checked: boolean) => void }) {
   return (
     <label style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 10, alignItems: 'center', padding: '7px 6px' }}>
-      <span style={{ fontSize: 12, color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
+      <span style={{ fontSize: 'var(--fs-md)', color: 'var(--ink)', lineHeight: 1.25 }}>{label}</span>
       <input
         type="checkbox"
         checked={checked}
@@ -206,10 +206,10 @@ function DataAccountPanel({ settings, update }: { settings: BrainAppSettings; up
           style={{ display: 'none' }}
           onChange={(event) => { void importSnapshot(event.currentTarget.files?.[0]) }}
         />
-        {importError ? <div role="alert" style={{ color: 'var(--red)', fontSize: 12 }}>{importError}</div> : null}
+        {importError ? <div role="alert" style={{ color: 'var(--red)', fontSize: 'var(--fs-md)' }}>{importError}</div> : null}
       </ControlRow>
       <ControlRow label="Lernfortschritt">
-        <span style={{ fontSize: 12, color: 'var(--g700)', lineHeight: 1.35 }}>{summarizeStudentProgress(progress)}</span>
+        <span style={{ fontSize: 'var(--fs-md)', color: 'var(--g700)', lineHeight: 1.35 }}>{summarizeStudentProgress(progress)}</span>
         <ShellControlButton disabledReason={progress ? null : 'Kein Lernfortschritt gespeichert'} onClick={resetStudentProgress}>
           Lernfortschritt zurücksetzen
         </ShellControlButton>

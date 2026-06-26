@@ -50,14 +50,14 @@ export default class AppErrorBoundary extends Component<{ children: ReactNode },
           <h1
             style={{
               fontFamily: 'var(--ed-display)',
-              fontSize: 22,
+              fontSize: 'var(--fs-xl)',
               lineHeight: 1.15,
               margin: '8px 0 10px',
             }}
           >
             Die App konnte nicht starten
           </h1>
-          <p style={{ fontFamily: 'var(--ed-mono)', fontSize: 12, lineHeight: 1.55, margin: 0, color: 'var(--g700)' }}>
+          <p className="mono-md" style={{ lineHeight: 1.55, margin: 0, color: 'var(--g700)' }}>
             {error.message}
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 18 }}>

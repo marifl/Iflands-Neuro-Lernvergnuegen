@@ -30,7 +30,7 @@ function IsoToggle({ id }: { id: string }) {
       }}
       style={{
         cursor: 'pointer',
-        fontSize: 12,
+        fontSize: 'var(--fs-md)',
         width: 18,
         textAlign: 'center',
         color: active ? ACCENT : 'var(--g600)',
@@ -123,7 +123,7 @@ function StructureRow({ node, depth }: { node: OntologyNode; depth: number }) {
           background: 'transparent',
           color: isSelected ? ACCENT : 'var(--g800)',
           fontFamily: 'var(--ed-display)',
-          fontSize: 13,
+          fontSize: 'var(--fs-md)',
           fontWeight: isSelected ? 600 : 400,
           lineHeight: 1.35,
           cursor: 'pointer',
@@ -196,7 +196,7 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
             background: 'transparent',
             color: 'var(--g500)',
             fontFamily: 'var(--ed-display)',
-            fontSize: 13,
+            fontSize: 'var(--fs-md)',
             fontWeight: 700,
             lineHeight: 1.35,
             cursor: 'pointer',
@@ -222,14 +222,14 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
             background: 'transparent',
             color: isSelected ? 'var(--orange)' : 'var(--g700)',
             fontFamily: 'var(--ed-display)',
-            fontSize: 13,
+            fontSize: 'var(--fs-md)',
             fontWeight: 700,
             lineHeight: 1.35,
             cursor: 'pointer',
           }}
         >
           <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{node.labels[lang]}</span>
-          <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 10, color: 'var(--g500)' }}>{leaves.length}</span>
+          <span className="mono-sm" style={{ color: 'var(--g500)' }}>{leaves.length}</span>
           {selectionState !== 'none' ? (
             <span className={`ed-pill ${selectionState === 'all' ? 'orange' : 'out'}`}>
               {selectionState === 'all' ? 'aktiv' : 'teilweise'}
@@ -256,8 +256,8 @@ function GroupRow({ node, depth }: { node: OntologyNode; depth: number }) {
 function PlaceholderObject({ label }: { label: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 9px', opacity: 0.45 }}>
-      <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, color: 'var(--ink)' }}>▸ {label}</span>
-      <span className="eyebrow" style={{ fontSize: 9 }}>Inhalt folgt</span>
+      <span className="mono-md" style={{ color: 'var(--ink)' }}>▸ {label}</span>
+      <span className="eyebrow" style={{ fontSize: 'var(--fs-xs)' }}>Inhalt folgt</span>
     </div>
   )
 }

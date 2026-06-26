@@ -35,10 +35,10 @@ const KIND_LABELS: Record<VcptStimulusKind, string> = {
 }
 
 const KIND_COLORS: Record<VcptStimulusKind, string> = {
-  go: '#2e7d32',
-  nogo: '#c0392b',
-  ignore: '#6f6f6f',
-  novelty: '#2f80ed',
+  go: 'var(--viz-go)',
+  nogo: 'var(--viz-nogo)',
+  ignore: 'var(--viz-neutral)',
+  novelty: 'var(--viz-novelty)',
 }
 
 export function vcptStepForPhase(stimuli: readonly VcptStimulus[], phase: number): VcptStimulus {
@@ -54,7 +54,7 @@ function stepPhase(index: number, count: number): number {
 }
 
 function outcomeColor(outcome: VcptOutcome): string {
-  return outcome.endsWith('error') ? '#c0392b' : '#2e7d32'
+  return outcome.endsWith('error') ? 'var(--viz-nogo)' : 'var(--viz-go)'
 }
 
 function StimulusCard({ label, value, active }: { label: string; value: string; active?: boolean }) {
@@ -71,8 +71,8 @@ function StimulusCard({ label, value, active }: { label: string; value: string; 
       }}
     >
       <div style={{ textAlign: 'center' }}>
-        <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 8, color: 'var(--g500)', marginBottom: 6 }}>{label}</div>
-        <div style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 24, color: 'var(--ink)', lineHeight: 1 }}>{value}</div>
+        <div className="mono-xs" style={{ color: 'var(--g500)', marginBottom: 6 }}>{label}</div>
+        <div style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, fontSize: 'var(--fs-2xl)', color: 'var(--ink)', lineHeight: 1 }}>{value}</div>
       </div>
     </div>
   )
@@ -100,7 +100,7 @@ export default function VcptSequence({ stimuli, evidence = 'Schematisch/didaktis
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <span className="ed-tag" style={{ color: kindColor }}>{KIND_LABELS[current.kind]}</span>
         <span style={{ flex: 1 }} />
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--g500)' }}>
+        <span className="mono-xs" style={{ color: 'var(--g500)' }}>
           Reiz {index + 1}/{stimuli.length}
         </span>
       </div>
@@ -113,13 +113,13 @@ export default function VcptSequence({ stimuli, evidence = 'Schematisch/didaktis
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
         <div className="ed-frame" style={{ padding: '8px 10px', minWidth: 0 }}>
           <div className="ed-block-label">Regel</div>
-          <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13, lineHeight: 1.35, color: 'var(--g800)', marginTop: 7 }}>
+          <div style={{ fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-md)', lineHeight: 1.35, color: 'var(--g800)', marginTop: 7 }}>
             {current.expected}
           </div>
         </div>
         <div className="ed-frame" style={{ padding: '8px 10px', minWidth: 0, borderColor: outcomeColor(current.outcome) }}>
           <div className="ed-block-label">Antwort</div>
-          <div style={{ fontFamily: 'var(--ed-display)', fontSize: 13, lineHeight: 1.35, color: outcomeColor(current.outcome), marginTop: 7 }}>
+          <div style={{ fontFamily: 'var(--ed-display)', fontSize: 'var(--fs-md)', lineHeight: 1.35, color: outcomeColor(current.outcome), marginTop: 7 }}>
             {outcome}
           </div>
         </div>
@@ -131,8 +131,8 @@ export default function VcptSequence({ stimuli, evidence = 'Schematisch/didaktis
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
         <span className="ed-tag">Fehler</span>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: '#c0392b' }}>Kommissionsfehler: No-go gedrückt</span>
-        <span style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: '#c0392b' }}>Auslassungsfehler: Go verpasst</span>
+        <span className="mono-xs" style={{ color: 'var(--viz-nogo)' }}>Kommissionsfehler: No-go gedrückt</span>
+        <span className="mono-xs" style={{ color: 'var(--viz-nogo)' }}>Auslassungsfehler: Go verpasst</span>
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
@@ -174,7 +174,7 @@ export default function VcptSequence({ stimuli, evidence = 'Schematisch/didaktis
         />
       </div>
 
-      <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 9, color: 'var(--g500)', lineHeight: 1.45 }}>
+      <div className="mono-xs" style={{ color: 'var(--g500)', lineHeight: 1.45 }}>
         {evidence}
       </div>
     </div>

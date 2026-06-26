@@ -380,9 +380,8 @@ export default function BodyParts3DViewer() {
               }}
             >
               <span
+                className="mono-base"
                 style={{
-                  fontFamily: 'var(--ed-mono)',
-                  fontSize: 11,
                   fontWeight: 500,
                   letterSpacing: '0.16em',
                   textTransform: 'uppercase',
@@ -537,7 +536,7 @@ export default function BodyParts3DViewer() {
                 }}
               >
                 <div className="eyebrow">Struktur</div>
-                <div style={{ fontFamily: 'var(--ed-display)', fontWeight: 700, letterSpacing: '-0.02em', fontSize: 17, color: 'var(--ink)', marginTop: 5, lineHeight: 1.15 }}>
+                <div className="display-xl" style={{ letterSpacing: '-0.02em', color: 'var(--ink)', marginTop: 5, lineHeight: 1.15 }}>
                   {selectedLabels ? selectedLabels[lang] : 'Struktur anklicken'}
                 </div>
                 {isNarrow && selected ? (
@@ -631,7 +630,7 @@ export default function BodyParts3DViewer() {
                 style={{ position: 'absolute', top: 16, right: 16, padding: '9px 14px', pointerEvents: 'none', maxWidth: 280 }}
               >
                 <div className="eyebrow">Atlas-Areal{showCarveDkt ? ' · DKT' : showCarveJulich ? ' · Julich' : showCarveBrodmann ? ' · Brodmann' : ''}</div>
-                <div style={{ fontFamily: 'var(--ed-mono)', fontSize: 13, fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : hoveredAtlasArea ? 'var(--ink)' : 'var(--g600)', marginTop: 4 }}>
+                <div className="mono-md" style={{ fontWeight: 600, color: pickedAtlasArea ? 'var(--orange)' : hoveredAtlasArea ? 'var(--ink)' : 'var(--g600)', marginTop: 4 }}>
                   {atlasAreaLabel}
                 </div>
                 <div className="eyebrow" style={{ marginTop: 3, color: 'var(--g500)' }}>
