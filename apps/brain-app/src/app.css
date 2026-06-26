@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 @import '../../../packages/theme-tokens/styles/tokens.css';
+@import '../../../packages/theme-tokens/styles/typography.css';
+@import '../../../packages/theme-tokens/styles/motion.css';
 
 /* ponytail: Mini-Reset (ersetzt Tailwind-Preflight); erweitern wenn visuelles Artefakt auftaucht */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 img, svg { display: block; max-width: 100%; }
-@import '../../../packages/theme-tokens/styles/typography.css';
-@import '../../../packages/theme-tokens/styles/motion.css';
 
 /* =====================================================================
    Editorial (dunkel) — app-lokale Design-Schicht
