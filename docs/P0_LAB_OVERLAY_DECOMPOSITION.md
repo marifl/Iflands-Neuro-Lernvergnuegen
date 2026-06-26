@@ -39,7 +39,7 @@ Z ZkRPFEFqW1sy (4 Smoke-Routen) <- A,B,K,L
 | D ✅ | 9xGQeXYPZqS1-B (Dart oH8Hq0z9tnVd) | data | spaceTransformGraph.ts | vitest 6/6 | overlayContract |
 | E | d1QSeLP9T2g7-A | data | pinpointContract.ts | vitest limits/throw | C, D |
 | F | d1QSeLP9T2g7-B | data/math | pinpointProjection.ts | vitest synth buffer | E, A |
-| G | GDXRWz0ZsFoT-A | data | activationMappingContract.ts | vitest | overlayContract |
+| G ✅ | GDXRWz0ZsFoT-A (Dart nd1pYvTZAsns) | data | activationMappingContract.ts | vitest 8/8 | overlayContract |
 | H | GDXRWz0ZsFoT-D | data | demo-zscore-mni.json, labOverlayLoader.ts | vitest fetch-mock | overlayContract |
 | K | wGWNtFmxljyc-A | data+CSS | heatmapColormap.ts, HeatmapColorbar.tsx | vitest colormap | overlayContract |
 | L | wGWNtFmxljyc-B | render/shader | CanonicalSurface.tsx, CanonicalAtlasMode.tsx | smoke pixel-inhomogen | K, H |
