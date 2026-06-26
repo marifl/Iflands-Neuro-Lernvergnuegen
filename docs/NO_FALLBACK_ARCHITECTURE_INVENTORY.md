@@ -1,6 +1,6 @@
 # No-Fallback-Architektur-Inventur
 
-Stand: 19. Juni 2026.
+Stand: 26. Juni 2026.
 
 Diese Datei ist der aktuelle Arbeitsvertrag für die verbleibenden
 Legacy-/Fallback-/Deprecated-/localStorage-Unbekannten. Ein ausführender Agent
@@ -51,7 +51,46 @@ Vor jedem Code-Edit:
 | NF-010 | Dependency-Deprecated-Hinweise | `apps/brain-app/pnpm-lock.yaml`, frische Install-/Test-/Browser-Ausgaben | [Kläre Dependency-Deprecated-Hinweise und externe Warnungen](https://app.dartai.com/t/dGJ8yoDoPQbw-Kl-re-Dependency-Deprecated) | Lockfile migriert, Browser-Warnung extern blockierend offen am 19. Juni 2026: Der Lockfile-Deprecated-Treffer `whatwg-encoding@3.1.1` kam über `jsdom@25.0.1` und ist durch gezieltes Update auf `jsdom@29.1.1` entfernt. Die Browser-Warnung `THREE.Clock` bleibt upstream in `@react-three/fiber@9.6.1` mit `three@0.184.0`; beide sind laut Registry aktuell. Release-Entscheidung bleibt: upstream akzeptieren, Three downgraden oder R3F patchen. | `pnpm --dir apps/brain-app install --frozen-lockfile`; `rg -n "deprecated\|Deprecated" apps/brain-app/pnpm-lock.yaml apps/brain-app/package.json`; `pnpm --dir apps/brain-app test`; `pnpm --dir apps/brain-app typecheck`; `pnpm --dir apps/brain-app build`; `pnpm --dir apps/brain-app run verify:brain-models`; Browser-Konsole `/?mode=explore`; `pnpm --dir apps/brain-app perf:budget` |
 | NF-011 | Region-Farb-Default-Palette | `apps/brain-app/src/viewer/atlasColorSystem.ts`, `apps/brain-app/src/viewer/ontology.ts`, `apps/brain-app/src/viewer/ontology.test.ts` | [Kläre REGION_FALLBACK_PALETTE als aktuellen Farbvertrag](https://app.dartai.com/t/gMxBSoVbcb80-Kl-re-REGION-FALLBACK-PALETTE) | Migriert am 18. Juni 2026: die Palette ist aus dem Runtime-Code entfernt; Regionsfarben müssen alle Top-Level-Gruppen der echten Ontologie explizit abdecken, unbekannte Gruppen werfen laut. | `pnpm --dir apps/brain-app test -- src/viewer/ontology.test.ts src/viewer/phineasGage.test.ts src/viewer/colorPresets.test.ts`; `rg -n "REGION_FALLBACK_PALETTE|Fallback fuer nicht klassifizierbare" apps/brain-app/src` |
 | NF-012 | Parser-/Default-Fallbacks | `apps/brain-app/src/viewer/settingsStore.ts`, `apps/brain-app/src/viewer/atlas/atlasConfig.ts`, `apps/brain-app/src/viewer/authoringSnapshotStore.ts`, `apps/brain-app/src/viewer/viewerStateSnapshot.ts`, `apps/brain-app/src/viewer/manifestAuthoringRuntime.ts` | [Kläre Parser-/Default-Fallbacks in Settings, Snapshots und Authoring](https://app.dartai.com/t/67dIBiXChW0p-Kl-re-Parser-Default-Fallbacks) | Migriert am 19. Juni 2026: Settings und Atlas-Overrides laden bereits fail-loud; lokale Authoring-Snapshots und Command-History werfen nun mit Storage-Key statt korrupten State zu löschen; Viewer-Snapshot-Import nutzt stabile Schema-Defaults statt aktuellem Live-State; Manifest-Refresh ist als Baseline-Merge benannt, nicht als Fallback. | `pnpm --dir apps/brain-app exec vitest run src/viewer/authoringSnapshotStore.test.ts src/viewer/viewerStateSnapshot.test.ts src/viewer/manifestAuthoringRuntime.test.ts src/viewer/settingsStore.test.ts src/viewer/atlas/atlasConfigStore.test.ts`; `pnpm --dir apps/brain-app typecheck`; `pnpm --dir apps/brain-app docs:drift` |
-| NF-013 | Abschlussinventur | Ergebnisse aller Restklassen | [Erstelle Abschlussinventur für alle Legacy-/Fallback-Entscheidungen](https://app.dartai.com/t/q65CtkeJpGPz-Erstelle-Abschlussinventur-f) | Nach Umsetzung aller Einzelklassen Statusliste erstellen: entfernt, migriert, externer Nicht-App-Vertrag gekapselt oder blockierend offen. | Abschluss-`rg` gegen `legacy`, `fallback`, `deprecated`, `colors.groups`, `smoke-preset`, `localStorage` |
+| NF-013 | Abschlussinventur | Ergebnisse aller Restklassen | [Erstelle Abschlussinventur für alle Legacy-/Fallback-Entscheidungen](https://app.dartai.com/t/q65CtkeJpGPz-Erstelle-Abschlussinventur-f) | Erstellt am 26. Juni 2026: Statusliste aller Klassen siehe Abschnitt "Abschlussinventur" unten. Neuer Treffer NF-005a (`legacyTheme`-Migrationsbrücke in `main.tsx`) gefunden und entfernt. | Abschluss-`rg` (siehe unten) läuft sauber; jeder Resttreffer hat erlaubten Endzustand. |
+
+## Abschlussinventur (NF-013, 26. Juni 2026)
+
+Endzustand pro Restklasse. Erlaubte Endzustände: **entfernt**, **migriert**,
+**extern gekapselt** (Nicht-App-Vertrag hinter aktuellem Alias), **blockierend
+offen** (mit konkretem Lösch-/Migrationspfad).
+
+| ID | Restklasse | Endzustand | Beleg |
+| --- | --- | --- | --- |
+| NF-001 | Kamera-Legacy-Fallback | migriert | URL-/Scene-Kameras einzige Quelle; kein `legacy`-Source mehr |
+| NF-002 | Animation-Legacy | migriert | Basalganglien-Loop als registriertes `TimelineDocument` |
+| NF-003 | Mesh-Picking-Legacy | migriert | Picks nur über Object/UserData; Ontologie-MeshName-Vertrag |
+| NF-004 | Phineas-`legacy`-Vertrag | extern gekapselt | App-Space `phineas-gage-taro-fit-v1`, Archiv-Provenienz nur in Source-Feldern |
+| NF-005 | Lokale Persistenz | migriert | zentrale Key-Liste, korrupte Daten werfen laut |
+| NF-005a | `legacyTheme`-Migrationsbrücke (`main.tsx`) | **entfernt (26.06.)** | `ed-theme`-Lese-Brücke gelöscht; Theme nur noch aus `display.theme`; `ed-theme` bleibt reiner Purge-Key in `clearLocalBrainAppData` |
+| NF-006 | Buchbild-/ImageFallback | migriert/entfernt | kein Runtime-`figures/`-Ordner; Tests verbieten Image-Fallback-Keys |
+| NF-007 | THREE.Clock-Konsolenartefakt | blockierend offen → upstream akzeptiert | Quelle `@react-three/fiber@9.6.1`, kein App-Code; löst sich mit R3F-Upstream-Fix |
+| NF-008 | Doku-Drift | migriert | aktuelle Doku beschreibt `learn`/`explore`/`phineas`/Atlas-Supplement |
+| NF-009 | Atlas-/Alignment-Konflikte | migriert | deterministische benannte Methoden; rg-Resttreffer nur negative Tests (39+13+16 Tests grün) |
+| NF-010 | Dependency-Deprecated | migriert + extern akzeptiert | Lockfile sauber (jsdom@29, kein `whatwg-encoding`); THREE.Clock upstream akzeptiert |
+| NF-011 | Region-Farb-Default-Palette | entfernt | `REGION_FALLBACK_PALETTE` raus; unbekannte Gruppen werfen laut |
+| NF-012 | Parser-/Default-Fallbacks | migriert | Schema-Defaults nur bei `undefined`, invalide Werte werfen laut |
+| NF-013 | Abschlussinventur | erstellt | dieser Abschnitt |
+
+Verifikation am 26. Juni 2026: Vitest 82/82 Dateien, 440/440 Tests; `typecheck`
+grün; Atlas-Node-Tests grün; `pnpm install --frozen-lockfile` ohne Lockfile-Drift.
+Abschluss-`rg` (siehe unten) hat keinen verbotenen Resttreffer: verbleibende
+Treffer in App-Code sind No-Fallback-Doku-Kommentare, der zentrale
+`safeLocalStorage`-Wrapper, React `<Suspense fallback>` / Error-Boundary-
+`renderFallback`, dokumentierte `localStorage`-Schichten und Fail-loud-Schema-
+Defaults.
+
+### Offene Release-Entscheidung (nicht blockierend für Architektur)
+
+THREE.Clock-Deprecation (NF-007/NF-010) bleibt upstream in
+`@react-three/fiber@9.6.1` / `three@0.184.0`. Beide laut Registry aktuell.
+Entscheidung 26. Juni 2026: **upstream akzeptieren** — kein App-Code betroffen,
+ein `three`-Downgrade brächte Regressionsrisiko ohne Gewinn. Auflösung erfolgt
+automatisch mit dem nächsten R3F-Release, der `THREE.Clock` ersetzt.
 
 ## Nicht als Architektur-Fallback zählen
 
