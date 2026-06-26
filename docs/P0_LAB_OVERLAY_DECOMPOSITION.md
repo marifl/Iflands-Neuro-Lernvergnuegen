@@ -36,7 +36,7 @@ Z ZkRPFEFqW1sy (4 Smoke-Routen) <- A,B,K,L
 | A ✅ | kszuLGgyaTzx | asset/JSON | build_subcortical_manifest.mjs, manifest.json (+subcortical), subcorticalManifest.test.ts | vitest 4/4 | — |
 | B | IgzKaj2bV9aS | render | SubcorticalMeshes.tsx, CanonicalAtlasMode.tsx | smoke pick Thalamus | A |
 | C ✅ | 9xGQeXYPZqS1-A (Dart aWlm6sw5cSal) | data | brainModelManifest.ts, pickTargetContract.ts | vitest 11/11 | — |
-| D | 9xGQeXYPZqS1-B | data | spaceTransformGraph.ts | vitest path/throw | overlayContract |
+| D ✅ | 9xGQeXYPZqS1-B (Dart oH8Hq0z9tnVd) | data | spaceTransformGraph.ts | vitest 6/6 | overlayContract |
 | E | d1QSeLP9T2g7-A | data | pinpointContract.ts | vitest limits/throw | C, D |
 | F | d1QSeLP9T2g7-B | data/math | pinpointProjection.ts | vitest synth buffer | E, A |
 | G | GDXRWz0ZsFoT-A | data | activationMappingContract.ts | vitest | overlayContract |
