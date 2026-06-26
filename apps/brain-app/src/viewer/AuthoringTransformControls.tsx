@@ -32,13 +32,13 @@ import type { AuthoringTransform } from './authoringScene'
 import type { AuthoringCommand } from './authoringCommands'
 import { ShellControlButton } from './ShellStatePrimitives'
 
-export const TRANSFORM_MODE_LABEL: Record<AuthoringTransformMode, string> = {
+const TRANSFORM_MODE_LABEL: Record<AuthoringTransformMode, string> = {
   translate: 'Verschieben',
   rotate: 'Drehen',
   scale: 'Skalieren',
 }
 
-export const TRANSFORM_SPACE_LABEL: Record<AuthoringTransformSpace, string> = {
+const TRANSFORM_SPACE_LABEL: Record<AuthoringTransformSpace, string> = {
   world: 'Welt',
   local: 'Lokal',
 }

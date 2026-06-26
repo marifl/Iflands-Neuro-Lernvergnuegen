@@ -1,4 +1,5 @@
 import type { AuthoringTransform, Vec3 } from './authoringScene'
+import { requiredString, optionalString, enumValue } from './parseHelpers'
 import { parseSequenceTargetRef, type SequenceTargetRef } from './sequenceTargetRef'
 
 export type TimelineAnimationAction = 'play' | 'pause' | 'stop' | 'scrub'
@@ -90,18 +91,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   }
 }
 
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`TimelineDocument: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
-}
-
 function requiredBoolean(value: unknown, field: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`TimelineDocument: ${field} muss boolean sein`)
   return value
@@ -149,11 +138,6 @@ function parseOptionalArray<T>(
 ): T[] | undefined {
   if (value === undefined) return undefined
   return parseArray(value, field, parseItem)
-}
-
-function enumValue<T extends string>(value: unknown, allowed: readonly T[], field: string): T {
-  if (typeof value === 'string' && allowed.includes(value as T)) return value as T
-  throw new Error(`TimelineDocument: ${field} hat einen ungueltigen Wert`)
 }
 
 function parseCameraPose(raw: unknown, field: string): TimelineCameraPose {

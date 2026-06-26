@@ -4,6 +4,7 @@ import {
   type AuthoringScene,
   type AuthoringSelectablePart,
 } from './authoringScene'
+import { requiredString } from './parseHelpers'
 import { isEegSite, type EegSite } from './eegElectrodes'
 import type { OntologyNode } from './ontology'
 
@@ -57,13 +58,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   for (const key of Object.keys(value)) {
     if (!allowed.includes(key)) throw new Error(`SequenceTargetRef: ${field} enthaelt unbekanntes Feld "${key}"`)
   }
-}
-
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`SequenceTargetRef: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
 }
 
 function targetKindValue(value: unknown): SequenceTargetKind {

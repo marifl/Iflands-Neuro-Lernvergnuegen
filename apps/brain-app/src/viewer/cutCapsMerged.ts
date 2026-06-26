@@ -81,7 +81,7 @@ export function clampCutPosition(value: number): number {
 }
 
 // Schnittebenen-Normalen im Viewer-Raum (+X=links, +Y=superior, +Z=anterior).
-export function axisNormal(axis: CutCapAxis): Vector3 {
+function axisNormal(axis: CutCapAxis): Vector3 {
   if (axis === 'sagittal') return new Vector3(1, 0, 0) // X (L/R)
   if (axis === 'coronal') return new Vector3(0, 0, 1) // Z (anterior/posterior)
   return new Vector3(0, 1, 0) // Y (superior/inferior)
@@ -125,7 +125,7 @@ export function isHiddenByCutSlab(mesh: Mesh, cuts: Record<CutAxis, CutConfig>):
 }
 
 /** Deterministischer Schluessel fuer Early-Exit in setPlanes (keine redundanten Rebuilds). */
-export function cutCapsPlanesSignature(
+function cutCapsPlanesSignature(
   planesByAxis: Partial<Record<CutCapAxis, Plane | null>>,
 ): string {
   const axes: readonly CutCapAxis[] = ['sagittal', 'coronal', 'axial']

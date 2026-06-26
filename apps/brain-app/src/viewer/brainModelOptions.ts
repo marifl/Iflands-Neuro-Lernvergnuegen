@@ -12,7 +12,7 @@ export type BrainModelOption = {
   reviewNote: string
 }
 
-export const BRAIN_MODEL_QUERY_PARAM = 'brainModel'
+const BRAIN_MODEL_QUERY_PARAM = 'brainModel'
 
 export const BRAIN_MODEL_OPTIONS: readonly BrainModelOption[] = [
   {

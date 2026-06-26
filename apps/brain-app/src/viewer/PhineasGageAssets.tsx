@@ -1,14 +1,8 @@
 import { useGLTF } from '@react-three/drei'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
-import {
-  assetManifestEntryByUri,
-  loadPhineasAssetManifest,
-  manifestRuntimeTransform,
-  type AssetManifestDocument,
-  type AssetManifestEntry,
-} from './assetManifest'
+import { assetManifestEntryByUri } from './assetManifest'
 import { PHINEAS_GAGE_ASSETS, PHINEAS_GAGE_TARGETS, useCaseStudyViewStore } from './phineasGage'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
@@ -18,9 +12,7 @@ import {
   type ViewerPickTarget,
 } from './targetPicking'
 import ManifestEditableObject from './ManifestEditableObject'
-
-const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
-const NO_RAYCAST = () => {}
+import { DRACO_DECODER_PATH, NO_RAYCAST, cloneSceneForAsset, forEachMaterial, vec3Tuple, useAssetManifest } from './manifestAssetHelpers'
 
 type PhineasLayerSnapshot = {
   asset: string
@@ -64,38 +56,6 @@ useGLTF.preload(PHINEAS_GAGE_ASSETS.skullBase)
 useGLTF.preload(PHINEAS_GAGE_ASSETS.skullCalvaria)
 useGLTF.preload(PHINEAS_GAGE_ASSETS.ironRod)
 
-function cloneMaterial(material: THREE.Material | THREE.Material[]): THREE.Material | THREE.Material[] {
-  return Array.isArray(material) ? material.map((entry) => entry.clone()) : material.clone()
-}
-
-function forEachMaterial(material: THREE.Material | THREE.Material[], apply: (entry: THREE.Material) => void): void {
-  if (Array.isArray(material)) material.forEach(apply)
-  else apply(material)
-}
-
-function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
-  const clone = scene.clone(true)
-  clone.traverse((object) => {
-    const mesh = object as THREE.Mesh
-    if (!mesh.isMesh) return
-    mesh.material = cloneMaterial(mesh.material)
-    mesh.raycast = NO_RAYCAST
-    mesh.renderOrder = 7
-  })
-  return clone
-}
-
-function cloneSceneForAsset(scene: THREE.Group, asset: AssetManifestEntry): THREE.Group {
-  const clone = cloneSceneWithOwnMaterials(scene)
-  const transform = manifestRuntimeTransform(asset)
-  clone.position.set(...transform.position)
-  clone.rotation.set(...transform.rotation)
-  clone.scale.set(...transform.scale)
-  clone.updateMatrix()
-  clone.updateMatrixWorld(true)
-  return clone
-}
-
 function attachTarget(root: THREE.Object3D, target: ViewerPickTarget): void {
   root.userData = { ...root.userData, ...sequenceTargetUserData(target, true) }
   root.traverse((object) => {
@@ -131,10 +91,6 @@ function updateLayer(root: THREE.Object3D, options: {
       material.needsUpdate = true
     })
   })
-}
-
-function vec3Tuple(vector: THREE.Vector3): [number, number, number] {
-  return [vector.x, vector.y, vector.z]
 }
 
 function layerSnapshot(root: THREE.Object3D, asset: string): PhineasLayerSnapshot {
@@ -186,31 +142,6 @@ function layerSnapshot(root: THREE.Object3D, asset: string): PhineasLayerSnapsho
   }
 }
 
-function usePhineasAssetManifest(): AssetManifestDocument | null {
-  const [state, setState] = useState<{ manifest: AssetManifestDocument | null; error: Error | null }>({
-    manifest: null,
-    error: null,
-  })
-
-  useEffect(() => {
-    let active = true
-    loadPhineasAssetManifest()
-      .then((manifest) => {
-        if (active) setState({ manifest, error: null })
-      })
-      .catch((error: unknown) => {
-        const err = error instanceof Error ? error : new Error(String(error))
-        if (active) setState({ manifest: null, error: err })
-      })
-    return () => {
-      active = false
-    }
-  }, [])
-
-  if (state.error) throw state.error
-  return state.manifest
-}
-
 function PhineasGageAssetScenes({
   showSkull,
   skullOpacity,
@@ -220,7 +151,7 @@ function PhineasGageAssetScenes({
   skullOpacity: number
   rodVisible: boolean
 }) {
-  const manifest = usePhineasAssetManifest()
+  const manifest = useAssetManifest()
   const { scene: skullBaseScene } = useGLTF(PHINEAS_GAGE_ASSETS.skullBase)
   const { scene: skullCalvariaScene } = useGLTF(PHINEAS_GAGE_ASSETS.skullCalvaria)
   const { scene: rodScene } = useGLTF(PHINEAS_GAGE_ASSETS.ironRod)

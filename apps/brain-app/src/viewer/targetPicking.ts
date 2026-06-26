@@ -8,7 +8,7 @@ import {
 export const SEQUENCE_TARGET_REF_USER_DATA = 'sequenceTargetRef'
 export const OBJECT_GRAPH_ID_USER_DATA = 'objectGraphId'
 export const TARGET_PICKABLE_USER_DATA = 'targetPickable'
-export const TARGET_LABEL_USER_DATA = 'targetLabel'
+const TARGET_LABEL_USER_DATA = 'targetLabel'
 
 export interface ViewerPickTarget {
   targetRef: SequenceTargetRef
@@ -17,11 +17,7 @@ export interface ViewerPickTarget {
   label?: string
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-  return value !== null && typeof value === 'object' && !Array.isArray(value)
-}
-
-export function selectionIdForTargetRef(targetRef: SequenceTargetRef): string {
+function selectionIdForTargetRef(targetRef: SequenceTargetRef): string {
   if (targetRef.targetKind === 'ontology-node') return targetRef.ontologyNodeId
   return objectGraphIdForTarget(targetRef)
 }
@@ -55,7 +51,7 @@ export function isAuthoringTargetRef(targetRef: SequenceTargetRef): boolean {
   return targetRef.targetKind === 'asset-instance' || targetRef.targetKind === 'asset-part'
 }
 
-export function isSequenceTargetPickableObject(obj: Object3D): boolean {
+function isSequenceTargetPickableObject(obj: Object3D): boolean {
   return obj.userData[TARGET_PICKABLE_USER_DATA] === true && obj.userData[SEQUENCE_TARGET_REF_USER_DATA] !== undefined
 }
 
@@ -94,7 +90,3 @@ export function sequenceTargetUserData(target: ViewerPickTarget | SequenceTarget
   }
 }
 
-export function parseUserDataTarget(value: unknown): SequenceTargetRef | null {
-  if (!isRecord(value) || value[SEQUENCE_TARGET_REF_USER_DATA] === undefined) return null
-  return parseSequenceTargetRef(value[SEQUENCE_TARGET_REF_USER_DATA])
-}

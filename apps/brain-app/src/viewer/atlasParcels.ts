@@ -24,22 +24,9 @@ export function parcelColor(meshName: string): string {
   return `hsl(${hue}, ${Math.round(ATLAS_PARCEL_SATURATION * 100)}%, ${Math.round(ATLAS_PARCEL_LIGHTNESS * 100)}%)`
 }
 
-/** Dieselbe Farbe als RGB-Bytes (0-255) — fuer die Label-LUT-DataTexture der Atlas-Flaeche. */
-export function parcelRgb(meshName: string): [number, number, number] {
-  const base = baseName(meshName)
-  let h = 0
-  for (let i = 0; i < base.length; i++) h = (h * 31 + base.charCodeAt(i)) >>> 0
-  const hue = (h % 360) / 360
-  const s = ATLAS_PARCEL_SATURATION, l = ATLAS_PARCEL_LIGHTNESS
-  const k = (n: number) => (n + hue * 12) % 12
-  const a = s * Math.min(l, 1 - l)
-  const f = (n: number) => l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))
-  return [Math.round(f(0) * 255), Math.round(f(8) * 255), Math.round(f(4) * 255)]
-}
-
 /** Anzeigename fuer ein Mesh des watertight Julich-Brains (Namen: `julich-area-45-ifg-r`,
  *  `julich-dorsal-dentate-nucleus-cerebellum-l`, `julich-frontal-i-1-gapmap-r`). */
-export function prettyJulichRegion(meshName: string): string {
+function prettyJulichRegion(meshName: string): string {
   const s = meshName.endsWith('-r') ? ' (R)' : meshName.endsWith('-l') ? ' (L)' : ''
   const base = meshName.replace(/-(l|r)$/, '')
   if (base.startsWith('julich-area-')) {

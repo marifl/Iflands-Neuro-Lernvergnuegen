@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 
 /** Blickrichtung (Kamera -> Ziel) je benanntem Shot. Viewer-Raum: +X links, +Y superior, +Z anterior. */
+// fallow-ignore-next-line unused-exports — consumed by build-config.mjs via regex
 export const CAMERA_DIRECTIONS: Record<string, [number, number, number]> = {
   'lateral-left': [1, 0, 0],
   'lateral-right': [-1, 0, 0],

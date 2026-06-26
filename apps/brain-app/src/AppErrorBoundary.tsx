@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode } from 'react'
 import { removeLocalStorageItem } from './safeLocalStorage'
-import { LOCAL_BRAIN_APP_STORAGE_KEYS } from './localAppStorageKeys'
+import { LOCAL_BRAIN_APP_STORAGE_KEYS } from './viewer/localDataActions'
 
 interface AppErrorBoundaryState {
   error: Error | null

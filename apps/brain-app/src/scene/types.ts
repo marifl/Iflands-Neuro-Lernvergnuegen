@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const OverlayKind = z.enum(['erp', 'topography', 'flowchart', 'table', 'prose'])
+const OverlayKind = z.enum(['erp', 'topography', 'flowchart', 'table', 'prose'])
 
 export const SceneSchema = z.object({
   id: z.string(),

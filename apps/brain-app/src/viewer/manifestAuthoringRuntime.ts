@@ -1,4 +1,4 @@
-import { manifestRuntimeTransform, parseAssetManifestDocument, type AssetManifestDocument, type AssetManifestEntry } from './assetManifest'
+import { manifestRuntimeTransform, parseAssetManifestDocument, type AssetManifestEntry } from './assetManifest'
 import { createAuthoringSceneFromManifestAssets } from './authoringAssetLoader'
 import {
   AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION,
@@ -74,6 +74,3 @@ export function manifestAuthoringTransform(
   return instance?.transform ?? manifestRuntimeTransform(asset)
 }
 
-export function manifestAuthoringAssets(manifest: AssetManifestDocument): AssetManifestEntry[] {
-  return manifest.assets.filter((asset) => asset.runtimeInstanceId)
-}

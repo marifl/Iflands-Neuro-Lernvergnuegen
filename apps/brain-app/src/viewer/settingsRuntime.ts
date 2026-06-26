@@ -1,11 +1,10 @@
 import { getLocalStorageItem, setLocalStorageItem } from '../safeLocalStorage'
-import { LAST_APP_MODE_STORAGE_KEY as LOCAL_LAST_APP_MODE_STORAGE_KEY } from '../localAppStorageKeys'
 import { REGULAR_APP_MODE_DEFINITIONS, type RegularAppMode } from './appModeDefinitions'
 import { appModeForRegistryLaunch, parseRegistryLaunchFromSearch } from './registryLaunch'
 import type { BrainAppSettings } from './settingsStore'
 import { APP_MODES, useViewerStore, type AppMode } from './viewerStore'
 
-export const LAST_APP_MODE_STORAGE_KEY = LOCAL_LAST_APP_MODE_STORAGE_KEY
+export const LAST_APP_MODE_STORAGE_KEY = 'brain-app-last-app-mode'
 
 export interface SupportedViewerDefaults {
   viewport: Pick<BrainAppSettings['viewport'], 'defaultCameraView'>
@@ -34,7 +33,7 @@ export function explicitAppModeFromSearch(search: string): AppMode | null {
   return null
 }
 
-export function defaultAppModeFromSettings(settings: BrainAppSettings): RegularAppMode | null {
+function defaultAppModeFromSettings(settings: BrainAppSettings): RegularAppMode | null {
   if (settings.start.defaultMode === 'last') {
     return loadRememberedAppMode()
   }

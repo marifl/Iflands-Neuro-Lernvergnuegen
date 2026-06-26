@@ -15,8 +15,8 @@ interface TimelineHighlightStep {
 
 export const BASAL_GANGLIA_TIMELINE_ID = 'basal-ganglia-loop'
 export const BASAL_GANGLIA_CLIP_ID = `clip:${BASAL_GANGLIA_TIMELINE_ID}:highlight`
-export const DEFAULT_TIMELINE_COLLECTION_ID = 'taro'
-export const DEFAULT_TIMELINE_STEP_MS = 3800
+const DEFAULT_TIMELINE_COLLECTION_ID = 'taro'
+const DEFAULT_TIMELINE_STEP_MS = 3800
 
 const BG = (...names: string[]): string[] => names.flatMap((n) => [`left-${n}`, `right-${n}`])
 
@@ -116,6 +116,3 @@ export const BASAL_GANGLIA_TIMELINE: TimelineDocument = parseTimelineDocument({
 
 export const ANIMATION_TIMELINES: TimelineDocument[] = [BASAL_GANGLIA_TIMELINE]
 
-export function animationTimelineById(timelineId: string): TimelineDocument | null {
-  return ANIMATION_TIMELINES.find((timeline) => timeline.timelineId === timelineId) ?? null
-}

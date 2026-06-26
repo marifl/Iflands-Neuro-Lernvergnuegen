@@ -1,5 +1,3 @@
-export const ATLAS_COLOR_SYSTEM_VERSION = 2
-
 export const ATLAS_VIEWER_COLORS = {
   brainBase: '#cdbfb6',
   anatomical: '#d7b8a8',

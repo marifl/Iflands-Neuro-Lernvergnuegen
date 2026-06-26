@@ -1,4 +1,5 @@
 import { BONUS_CONTEXTS, type BonusContext } from './bonusContexts'
+import { requiredString, optionalString } from './parseHelpers'
 import { knowledgeCollectionById } from './knowledgeRegistry'
 import type { AppMode } from './viewerStore'
 
@@ -47,18 +48,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   for (const key of Object.keys(value)) {
     if (!allowed.includes(key)) throw new Error(`RegistryLaunch: ${field} enthaelt unbekanntes Feld "${key}"`)
   }
-}
-
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`RegistryLaunch: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
 }
 
 function optionalStep(value: unknown, field: string): number | undefined {
@@ -249,7 +238,7 @@ export function parseRegistryLaunchFromSearch(search: string): RegistryLaunch | 
   })
 }
 
-export function registryLaunchSearchParams(launch: RegistryLaunch): URLSearchParams {
+function registryLaunchSearchParams(launch: RegistryLaunch): URLSearchParams {
   const parsed = parseRegistryLaunch(launch)
   const params = new URLSearchParams()
   params.set(SEARCH_COLLECTION, parsed.collectionId)
@@ -283,11 +272,6 @@ export function registryLaunchSearchParams(launch: RegistryLaunch): URLSearchPar
 
 export function registryLaunchLocation(launch: RegistryLaunch): string {
   return `?${registryLaunchSearchParams(launch).toString()}`
-}
-
-export function hasRegistryLaunchSearch(search: string): boolean {
-  const params = new URLSearchParams(search)
-  return params.has(SEARCH_COLLECTION) || params.has(SEARCH_CONTEXT) || params.has(SEARCH_ENTRYPOINT)
 }
 
 export function appModeForRegistryLaunch(launch: RegistryLaunch): AppMode {

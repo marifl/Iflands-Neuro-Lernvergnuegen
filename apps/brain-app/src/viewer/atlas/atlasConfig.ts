@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { loadCatalog, type AtlasCatalog } from './atlasCatalog'
 import { ROUTE_CHANGE_EVENT } from '../../scene/router'
 import { getLocalStorageItem } from '../../safeLocalStorage'
-import { ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from '../../localAppStorageKeys'
 
 export type ScopeMap = Record<string, boolean>
 
@@ -153,7 +152,7 @@ export function parseUrlScopes(params: URLSearchParams): ScopeMap {
 
 /** localStorage-Schicht (Schicht 2): persistierte User-Overrides. */
 export interface LocalOverrides { preset: string | null; configuration: string | null; scopes: ScopeMap }
-export const LOCAL_OVERRIDES_STORAGE_KEY = ATLAS_CONFIG_OVERRIDES_STORAGE_KEY
+export const LOCAL_OVERRIDES_STORAGE_KEY = 'atlas-config-overrides'
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -177,7 +176,7 @@ function parseStoredScopeMap(value: unknown): ScopeMap {
   return scopes
 }
 
-export function parseLocalOverridesState(raw: unknown): LocalOverrides {
+function parseLocalOverridesState(raw: unknown): LocalOverrides {
   if (!isRecord(raw)) throw new Error('Root muss ein Objekt sein')
   return {
     preset: optionalString(raw.preset, 'preset'),

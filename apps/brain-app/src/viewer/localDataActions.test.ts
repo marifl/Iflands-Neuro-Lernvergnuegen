@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from 'vitest'
-import { LOCAL_BRAIN_APP_STORAGE_KEYS } from '../localAppStorageKeys'
 import { useAtlasConfigStore, LS_KEY as ATLAS_CONFIG_OVERRIDES_STORAGE_KEY } from './atlas/atlasConfigStore'
 import {
   clearLocalBrainAppData,
   importViewerSnapshotFile,
+  LOCAL_BRAIN_APP_STORAGE_KEYS,
   summarizeStudentProgress,
   THEME_STORAGE_KEY,
 } from './localDataActions'

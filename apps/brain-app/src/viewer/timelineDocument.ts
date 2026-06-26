@@ -1,3 +1,4 @@
+import { requiredString, optionalString } from './parseHelpers'
 import { parseTimelineChannels, type TimelineChannels } from './timelineChannels'
 
 export {
@@ -64,18 +65,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   for (const key of Object.keys(value)) {
     if (!allowed.includes(key)) throw new Error(`TimelineDocument: ${field} enthaelt unbekanntes Feld "${key}"`)
   }
-}
-
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`TimelineDocument: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
 }
 
 function finiteNumber(value: unknown, field: string): number {

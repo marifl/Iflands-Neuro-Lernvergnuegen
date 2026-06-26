@@ -50,7 +50,7 @@ export interface PhineasStep extends CaseStudyStep {
 export const ROD_ENTRY: [number, number, number] = [35.719045344841014, -19.013652801513672, 57.98141497183153]
 export const ROD_EXIT: [number, number, number] = [-19.312936840134633, 132.98634719848633, 43.63028320842616]
 /** Die reale Stange war länger als der Kopf -> über Eintritt/Austritt hinaus verlängern (mm). */
-export const ROD_OVERSHOOT = 38
+const ROD_OVERSHOOT = 38
 /** Tampiereisen lief spitz zu: Spitze vorn, Schaft hinten. Radien in mm. */
 export const ROD_RADIUS_TIP = 2.6
 export const ROD_RADIUS_SHAFT = 7
@@ -140,7 +140,7 @@ export const LESION_STRUCTURES: string[] = [
   'left-subcallosal-area',
 ]
 
-export const LESION_STRUCTURE_LABELS: Record<string, string> = {
+const LESION_STRUCTURE_LABELS: Record<string, string> = {
   'left-straight-gyrus': 'Gyrus rectus links',
   'left-medial-orbital-gyrus': 'medialer Orbitofrontalcortex links',
   'left-medial-orbital-gyrus-v2': 'medialer Orbitofrontalcortex links (zweites Parcel)',

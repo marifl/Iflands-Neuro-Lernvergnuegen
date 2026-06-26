@@ -48,7 +48,7 @@ function vec3(values: readonly number[], field: string): Vec3 {
   return [values[0], values[1], values[2]]
 }
 
-export function normalizeAuthoringTransform(transform: AuthoringTransform): AuthoringTransform {
+function normalizeAuthoringTransform(transform: AuthoringTransform): AuthoringTransform {
   return {
     position: vec3(transform.position, 'position'),
     rotation: vec3(transform.rotation, 'rotation'),
@@ -56,7 +56,7 @@ export function normalizeAuthoringTransform(transform: AuthoringTransform): Auth
   }
 }
 
-export function sameAuthoringTransform(a: AuthoringTransform, b: AuthoringTransform): boolean {
+function sameAuthoringTransform(a: AuthoringTransform, b: AuthoringTransform): boolean {
   return (
     a.position.every((value, index) => value === b.position[index]) &&
     a.rotation.every((value, index) => value === b.rotation[index]) &&

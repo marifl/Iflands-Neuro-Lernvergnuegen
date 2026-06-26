@@ -167,13 +167,6 @@ export function buildAtlasTree(
   return { tree: { id: atlasId, labels: rootLabels, children }, slugs }
 }
 
-/** Julich-Spezialfall (Rueckwaerts-Kompat): delegiert an buildAtlasTree. */
-export function buildJulichTree(
-  names: string[],
-  labelOf: (name: string) => string,
-): { tree: OntologyNode; slugs: string[] } {
-  return buildAtlasTree('julich', { de: 'Jülich', la: 'Atlas Julich-Brain', en: 'Julich' }, names, labelOf)
-}
 
 /** slug -> Liste der Gruppen-IDs vom Wurzel-Pfad (fuer Auto-Expand). */
 export function ancestorMap(tree: OntologyNode): Map<string, string[]> {

@@ -1,10 +1,6 @@
 import { create } from 'zustand'
 import { getLocalStorageItem, removeLocalStorageItem, setLocalStorageItem } from '../safeLocalStorage'
 import {
-  AUTHORING_COMMAND_HISTORY_STORAGE_KEY as LOCAL_AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
-  AUTHORING_SNAPSHOT_STORAGE_KEY as LOCAL_AUTHORING_SNAPSHOT_STORAGE_KEY,
-} from '../localAppStorageKeys'
-import {
   emptyAuthoringCommandHistory,
   parseAuthoringCommandHistory,
   pushAuthoringCommand,
@@ -15,6 +11,7 @@ import {
 } from './authoringCommandHistory'
 import type { AuthoringCommand } from './authoringCommands'
 import { parseAuthoringScene, type AuthoringScene } from './authoringScene'
+import { requiredString, optionalString } from './parseHelpers'
 import { BONUS_CONTEXTS } from './bonusContexts'
 import { KNOWLEDGE_COLLECTIONS } from './knowledgeRegistry'
 import {
@@ -29,8 +26,8 @@ import {
 } from './timelineDocument'
 
 export const AUTHORING_SNAPSHOT_STATE_SCHEMA_VERSION = 1
-export const AUTHORING_SNAPSHOT_STORAGE_KEY = LOCAL_AUTHORING_SNAPSHOT_STORAGE_KEY
-export const AUTHORING_COMMAND_HISTORY_STORAGE_KEY = LOCAL_AUTHORING_COMMAND_HISTORY_STORAGE_KEY
+export const AUTHORING_SNAPSHOT_STORAGE_KEY = 'brain-app-authoring-snapshot'
+export const AUTHORING_COMMAND_HISTORY_STORAGE_KEY = 'brain-app-authoring-command-history'
 
 export interface AuthoringRegistryContextState {
   collectionIds: string[]
@@ -90,18 +87,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   for (const key of Object.keys(value)) {
     if (!allowed.includes(key)) throw new Error(`AuthoringSnapshotState: ${field} enthaelt unbekanntes Feld "${key}"`)
   }
-}
-
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`AuthoringSnapshotState: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
 }
 
 function nonNegativeNumber(value: unknown, field: string): number {

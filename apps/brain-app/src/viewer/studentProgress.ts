@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { requiredString, optionalString, enumValue } from './parseHelpers'
 
 export const STUDENT_PROGRESS_SCHEMA_VERSION = 1
 
@@ -61,28 +62,11 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   }
 }
 
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`StudentProgress: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
-}
-
 function positiveInteger(value: unknown, field: string): number {
   if (typeof value !== 'number' || !Number.isSafeInteger(value) || value <= 0) {
     throw new Error(`StudentProgress: ${field} muss ein positiver Integer sein`)
   }
   return value
-}
-
-function enumValue<T extends string>(value: unknown, allowed: readonly T[], field: string): T {
-  if (typeof value === 'string' && allowed.includes(value as T)) return value as T
-  throw new Error(`StudentProgress: ${field} hat einen ungueltigen Wert`)
 }
 
 function parseArray<T>(value: unknown, field: string, parseItem: (item: unknown, field: string) => T): T[] {

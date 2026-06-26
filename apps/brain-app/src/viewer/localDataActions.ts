@@ -1,13 +1,13 @@
 import { removeLocalStorageItem } from '../safeLocalStorage'
-import {
-  LOCAL_BRAIN_APP_STORAGE_KEYS,
-  THEME_STORAGE_KEY as LOCAL_THEME_STORAGE_KEY,
-} from '../localAppStorageKeys'
 import { useAtlasConfigStore } from './atlas/atlasConfigStore'
-import { useSettingsStore } from './settingsStore'
+import { LOCAL_OVERRIDES_STORAGE_KEY } from './atlas/atlasConfig'
 import {
+  AUTHORING_SNAPSHOT_STORAGE_KEY,
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
   useAuthoringSnapshotStore,
 } from './authoringSnapshotStore'
+import { LAST_APP_MODE_STORAGE_KEY } from './settingsRuntime'
+import { SETTINGS_STORAGE_KEY, useSettingsStore } from './settingsStore'
 import {
   studentCompletionRatio,
   useStudentProgressStore,
@@ -15,10 +15,19 @@ import {
 } from './studentProgress'
 import { exportViewerStateSnapshotJson, importViewerStateSnapshotJson } from './viewerStateSnapshot'
 
-export const THEME_STORAGE_KEY = LOCAL_THEME_STORAGE_KEY
+export const THEME_STORAGE_KEY = 'ed-theme'
+
+export const LOCAL_BRAIN_APP_STORAGE_KEYS = [
+  LOCAL_OVERRIDES_STORAGE_KEY,
+  AUTHORING_COMMAND_HISTORY_STORAGE_KEY,
+  AUTHORING_SNAPSHOT_STORAGE_KEY,
+  LAST_APP_MODE_STORAGE_KEY,
+  SETTINGS_STORAGE_KEY,
+  THEME_STORAGE_KEY,
+] as const
 const APPEARANCE_DATASET_KEYS = ['theme', 'contrast', 'fontSize', 'readableFont', 'focusRings', 'motion', 'quietMode'] as const
 
-export function readSnapshotFile(file: File): Promise<string> {
+function readSnapshotFile(file: File): Promise<string> {
   if (typeof file.text === 'function') return file.text()
   return new Promise((resolve, reject) => {
     const reader = new FileReader()

@@ -115,9 +115,6 @@ function meshCutProbeHit(
   return best
 }
 
-export function meshCutProbeScore(mesh: Mesh, cutPlane: Plane, pointOnPlane: Vector3): number | null {
-  return meshCutProbeHit(mesh, cutPlane, pointOnPlane)?.score ?? null
-}
 
 function tieBreakCutCandidates(
   candidates: Array<{ mesh: Mesh; score: number; probeHit: Intersection }>,

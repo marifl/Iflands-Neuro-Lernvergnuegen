@@ -1,9 +1,8 @@
 import { useGLTF } from '@react-three/drei'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import * as THREE from 'three'
 import { ATLAS_VIEWER_COLORS } from './atlasColorSystem'
-import type { AssetManifestDocument, AssetManifestEntry, AssetManifestPart } from './assetManifest'
-import { loadPhineasAssetManifest, manifestRuntimeTransform } from './assetManifest'
+import type { AssetManifestEntry, AssetManifestPart } from './assetManifest'
 import { objectGraphIdForTarget, type SequenceTargetRef } from './sequenceTargetRef'
 import {
   SEQUENCE_TARGET_REF_USER_DATA,
@@ -14,9 +13,8 @@ import {
 } from './targetPicking'
 import { useViewerStore } from './viewerStore'
 import ManifestEditableObject from './ManifestEditableObject'
+import { DRACO_DECODER_PATH, NO_RAYCAST, cloneSceneForAsset, forEachMaterial, vec3Tuple, useAssetManifest } from './manifestAssetHelpers'
 
-const DRACO_DECODER_PATH = 'https://www.gstatic.com/draco/versioned/decoders/1.5.7/'
-const NO_RAYCAST = () => {}
 const PHINEAS_GAGE_COLLECTION_ID = 'case-phineas-gage'
 
 type ManifestAssetLayerSnapshot = {
@@ -51,38 +49,6 @@ type ManifestAssetObjectsWindow = Window & {
 }
 
 useGLTF.setDecoderPath(DRACO_DECODER_PATH)
-
-function cloneMaterial(material: THREE.Material | THREE.Material[]): THREE.Material | THREE.Material[] {
-  return Array.isArray(material) ? material.map((entry) => entry.clone()) : material.clone()
-}
-
-function forEachMaterial(material: THREE.Material | THREE.Material[], apply: (entry: THREE.Material) => void): void {
-  if (Array.isArray(material)) material.forEach(apply)
-  else apply(material)
-}
-
-function cloneSceneWithOwnMaterials(scene: THREE.Group): THREE.Group {
-  const clone = scene.clone(true)
-  clone.traverse((object) => {
-    const mesh = object as THREE.Mesh
-    if (!mesh.isMesh) return
-    mesh.material = cloneMaterial(mesh.material)
-    mesh.raycast = NO_RAYCAST
-    mesh.renderOrder = 7
-  })
-  return clone
-}
-
-function cloneSceneForAsset(scene: THREE.Group, asset: AssetManifestEntry): THREE.Group {
-  const clone = cloneSceneWithOwnMaterials(scene)
-  const transform = manifestRuntimeTransform(asset)
-  clone.position.set(...transform.position)
-  clone.rotation.set(...transform.rotation)
-  clone.scale.set(...transform.scale)
-  clone.updateMatrix()
-  clone.updateMatrixWorld(true)
-  return clone
-}
 
 function targetRefForPart(asset: AssetManifestEntry, part: AssetManifestPart): SequenceTargetRef {
   if (!asset.runtimeInstanceId) {
@@ -160,10 +126,6 @@ function resetMeshes(root: THREE.Object3D, assetVisible: boolean, mirrored: bool
   })
 }
 
-function vec3Tuple(vector: THREE.Vector3): [number, number, number] {
-  return [vector.x, vector.y, vector.z]
-}
-
 function layerSnapshot(root: THREE.Object3D, asset: AssetManifestEntry, objectGraphIds: string[]): ManifestAssetLayerSnapshot {
   let meshCount = 0
   let visibleMeshCount = 0
@@ -218,31 +180,6 @@ function removeDevSnapshot(assetId: string): void {
   if (!win.__manifestAssetObjects) return
   delete win.__manifestAssetObjects.assets[assetId]
   if (Object.keys(win.__manifestAssetObjects.assets).length === 0) delete win.__manifestAssetObjects
-}
-
-function useAssetManifest(): AssetManifestDocument | null {
-  const [state, setState] = useState<{ manifest: AssetManifestDocument | null; error: Error | null }>({
-    manifest: null,
-    error: null,
-  })
-
-  useEffect(() => {
-    let active = true
-    loadPhineasAssetManifest()
-      .then((manifest) => {
-        if (active) setState({ manifest, error: null })
-      })
-      .catch((error: unknown) => {
-        const err = error instanceof Error ? error : new Error(String(error))
-        if (active) setState({ manifest: null, error: err })
-      })
-    return () => {
-      active = false
-    }
-  }, [])
-
-  if (state.error) throw state.error
-  return state.manifest
 }
 
 function ManifestAssetInstance({ asset, dimOpacity }: { asset: AssetManifestEntry; dimOpacity: number }) {

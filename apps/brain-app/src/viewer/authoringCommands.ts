@@ -4,6 +4,7 @@ import {
   type AuthoringScene,
   type AuthoringTransform,
 } from './authoringScene'
+import { requiredString, optionalString } from './parseHelpers'
 import { parseSequenceTargetRef, type SequenceTargetRef } from './sequenceTargetRef'
 
 export const AUTHORING_COMMAND_SCHEMA_VERSION = 1
@@ -63,18 +64,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   for (const key of Object.keys(value)) {
     if (!allowed.includes(key)) throw new Error(`AuthoringCommand: ${field} enthaelt unbekanntes Feld "${key}"`)
   }
-}
-
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`AuthoringCommand: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
 }
 
 function commandKind(value: unknown, field: string): AuthoringCommandKind {

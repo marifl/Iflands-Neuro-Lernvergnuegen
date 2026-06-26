@@ -393,7 +393,7 @@ function fixedTabAnchor(axis: CutAxis): Vector3 {
   return new Vector3(edge, 0, 0) // axial: seitlich
 }
 
-export function labelCenterBeyondFrameEdge(
+function labelCenterBeyondFrameEdge(
   origin: Vector2,
   edgePoint: Vector2,
   buttonWidth: number,

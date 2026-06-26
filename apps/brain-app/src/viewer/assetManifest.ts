@@ -1,4 +1,6 @@
+import * as THREE from 'three'
 import type { AuthoringNodeRole, AuthoringOriginPolicy, AuthoringTransform, Vec3 } from './authoringScene'
+import { requiredString, optionalString, enumValue } from './parseHelpers'
 
 export const ASSET_MANIFEST_SCHEMA_VERSION = 1
 
@@ -90,18 +92,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   }
 }
 
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`AssetManifest: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
-}
-
 function requiredBoolean(value: unknown, field: string): boolean {
   if (typeof value !== 'boolean') throw new Error(`AssetManifest: ${field} muss boolean sein`)
   return value
@@ -129,11 +119,6 @@ function vec3Value(value: unknown, field: string): Vec3 {
     finiteNumber(value[1], `${field}[1]`),
     finiteNumber(value[2], `${field}[2]`),
   ]
-}
-
-function enumValue<T extends string>(value: unknown, allowed: readonly T[], field: string): T {
-  if (typeof value === 'string' && allowed.includes(value as T)) return value as T
-  throw new Error(`AssetManifest: ${field} hat einen ungueltigen Wert`)
 }
 
 function parseArray<T>(value: unknown, field: string, parseItem: (item: unknown, field: string) => T): T[] {
@@ -346,6 +331,15 @@ export function manifestRuntimeTransform(asset: AssetManifestEntry): AuthoringTr
     rotation: [...rootTransform.rotation],
     scale: scaledVec3(rootTransform.scale, scale),
   }
+}
+
+export function applyManifestRootTransform(root: THREE.Object3D, asset: AssetManifestEntry): void {
+  const transform = manifestRuntimeTransform(asset)
+  root.position.set(...transform.position)
+  root.rotation.set(...transform.rotation)
+  root.scale.set(...transform.scale)
+  root.updateMatrix()
+  root.updateMatrixWorld(true)
 }
 
 export function assetManifestEntryByUri(manifest: AssetManifestDocument, uri: string): AssetManifestEntry {

@@ -1,3 +1,5 @@
+import { requiredString, optionalString, enumValue } from './parseHelpers'
+
 export const AUTHORING_SCENE_SCHEMA_VERSION = 1
 
 export type Vec3 = [number, number, number]
@@ -78,18 +80,6 @@ function assertKnownKeys(value: Record<string, unknown>, allowed: readonly strin
   }
 }
 
-function requiredString(value: unknown, field: string): string {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`AuthoringScene: ${field} muss ein nicht-leerer String sein`)
-  }
-  return value
-}
-
-function optionalString(value: unknown, field: string): string | undefined {
-  if (value === undefined) return undefined
-  return requiredString(value, field)
-}
-
 function optionalStringOrNull(value: unknown, field: string): string | null | undefined {
   if (value === undefined) return undefined
   if (value === null) return null
@@ -117,11 +107,6 @@ function vec3Value(value: unknown, field: string): Vec3 {
     finiteNumber(value[1], `${field}[1]`),
     finiteNumber(value[2], `${field}[2]`),
   ]
-}
-
-function enumValue<T extends string>(value: unknown, allowed: readonly T[], field: string): T {
-  if (typeof value === 'string' && allowed.includes(value as T)) return value as T
-  throw new Error(`AuthoringScene: ${field} hat einen ungueltigen Wert`)
 }
 
 function parseTransform(raw: unknown, field: string): AuthoringTransform {

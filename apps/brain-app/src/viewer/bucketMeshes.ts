@@ -9,10 +9,6 @@ import meshMappings from './meshMappings.generated.json'
 
 export const BUCKET_MAPPINGS = meshMappings.buckets as Record<string, MeshMappingNode>
 
-/** Bucket-Slug -> Mesh-Namen. Generiert aus config.default.toml, nicht von Hand pflegen. */
-export const BUCKET_MESHES: Record<string, string[]> = Object.fromEntries(
-  Object.entries(BUCKET_MAPPINGS).map(([bucket, mapping]) => [bucket, mapping.meshes]),
-)
 
 /**
  * Mesh-Namen fuer einen Bucket. Wirft laut bei unbekanntem Bucket oder bekannter

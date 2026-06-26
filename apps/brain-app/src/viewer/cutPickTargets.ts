@@ -22,7 +22,7 @@ function hasActiveClippingPlanes(mesh: Mesh): boolean {
   })
 }
 
-export function isAtlasTarget(mesh: Mesh): boolean {
+function isAtlasTarget(mesh: Mesh): boolean {
   return mesh.userData[ATLAS_SURFACE_FLAG] === true || mesh.userData[ATLAS_PARCEL_FLAG] === true
 }
 
@@ -40,7 +40,7 @@ function isCutPickSource(mesh: Mesh): boolean {
   return isAtlasTarget(mesh) && hasActiveClippingPlanes(mesh)
 }
 
-export function collectCutPickTargets(root: Object3D): CutPickTargets {
+function collectCutPickTargets(root: Object3D): CutPickTargets {
   const raycastTargets: Mesh[] = []
   const cutSources: Mesh[] = []
   root.traverse((obj) => {
