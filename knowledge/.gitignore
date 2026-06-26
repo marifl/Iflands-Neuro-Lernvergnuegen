@@ -1,0 +1,7 @@
+# Nur kuratierte Wiki-Daten gehoeren ins Repo.
+# Alles andere unter knowledge/ (Arbeitsnotizen, Logs, Rohdaten) bleibt lokal.
+/*
+!.gitignore
+!wiki/
+!index.md
+!CLAUDE.md

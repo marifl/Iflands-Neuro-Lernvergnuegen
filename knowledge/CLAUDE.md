@@ -51,11 +51,15 @@ brain-app-standalone/knowledge/
 
 ### Type-Deklaration
 
-Das Projekt deklariert hier die Types, die in `wiki/` als Unterordner und in der `type:`-Frontmatter erscheinen duerfen. Beispiele aus anderen Projekten (nicht uebernehmen, nur Inspiration):
+Neben den kanonischen `sources/` und `topics/` verwendet dieses Projekt:
 
-- Domain-Wiki: `<eigene Kategorien wie laws / concepts / standards / calculations / authorities>`
-- Code-Wiki: `<eigene Kategorien wie modules / patterns / decisions / runbooks>`
-- Research-Wiki: `<eigene Kategorien wie papers / methods / datasets / experiments>`
+| Type | Ordner | Beschreibung |
+|------|--------|--------------|
+| `brain-region` | `wiki/brain-regions/` | Hirnregionen, Areale, Kerne (z.B. PFC, BA44, STN, Amygdala) |
+| `pathway` | `wiki/pathways/` | Fasertrakte, Schaltkreise, funktionelle Netzwerke (z.B. Cortico-BG-Loop, SLF) |
+| `method` | `wiki/methods/` | Mess-/Analyse-/Bildgebungsverfahren (z.B. EEG, fMRI, Source Localization) |
+| `atlas` | `wiki/atlases/` | Hirn-Atlanten, Koordinatensysteme, Parcellierungen (z.B. MNI, Julich-Brain, DKT) |
+| `disorder` | `wiki/disorders/` | Stoerungsbilder, klinische Syndrome (z.B. ADHS, Aphasie, Neglect) |
 
 Die canonical `sources/` und `topics/` Kategorien sind immer vorhanden.
 

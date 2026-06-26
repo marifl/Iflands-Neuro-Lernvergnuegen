@@ -17,6 +17,9 @@ coverage/
 # Rohdaten — Copyright-Material, nicht ins Repo
 raw/
 
+# FUSE-Muelldateien vom cloud-synchronisierten Mount (geloeschte, noch offene Dateien)
+.fuse_hidden*
+
 # Playwright MCP Session-Logs
 .playwright-mcp/
 
