@@ -61,7 +61,7 @@
           40,
           46
         ],
-        "name": "\u2014",
+        "name": "—",
         "medial": true
       },
       "1": {
@@ -352,7 +352,7 @@
           40,
           46
         ],
-        "name": "\u2014",
+        "name": "—",
         "medial": true
       },
       "1": {
@@ -963,7 +963,7 @@
           40,
           46
         ],
-        "name": "\u2014",
+        "name": "—",
         "medial": true
       },
       "1": {
@@ -2158,7 +2158,7 @@
           40,
           46
         ],
-        "name": "\u2014",
+        "name": "—",
         "medial": true
       },
       "1": {
@@ -2490,5 +2490,199 @@
         "name": "BA47"
       }
     }
-  }
+  },
+  "subcortical": [
+    {
+      "id": "thalamus",
+      "name_de": "Thalamus",
+      "side": "L",
+      "color": [
+        210,
+        90,
+        90
+      ],
+      "verts": 3856,
+      "faces": 7708,
+      "pos": "subcort_thalamus_L.f32",
+      "norm": "subcort_thalamus_L_norm.f32",
+      "faces_file": "subcort_thalamus_L_faces.u32"
+    },
+    {
+      "id": "thalamus",
+      "name_de": "Thalamus",
+      "side": "R",
+      "color": [
+        210,
+        90,
+        90
+      ],
+      "verts": 3790,
+      "faces": 7576,
+      "pos": "subcort_thalamus_R.f32",
+      "norm": "subcort_thalamus_R_norm.f32",
+      "faces_file": "subcort_thalamus_R_faces.u32"
+    },
+    {
+      "id": "caudate",
+      "name_de": "Nucleus caudatus",
+      "side": "L",
+      "color": [
+        90,
+        170,
+        210
+      ],
+      "verts": 2857,
+      "faces": 5722,
+      "pos": "subcort_caudate_L.f32",
+      "norm": "subcort_caudate_L_norm.f32",
+      "faces_file": "subcort_caudate_L_faces.u32"
+    },
+    {
+      "id": "caudate",
+      "name_de": "Nucleus caudatus",
+      "side": "R",
+      "color": [
+        90,
+        170,
+        210
+      ],
+      "verts": 2985,
+      "faces": 5970,
+      "pos": "subcort_caudate_R.f32",
+      "norm": "subcort_caudate_R_norm.f32",
+      "faces_file": "subcort_caudate_R_faces.u32"
+    },
+    {
+      "id": "putamen",
+      "name_de": "Putamen",
+      "side": "L",
+      "color": [
+        230,
+        150,
+        70
+      ],
+      "verts": 3396,
+      "faces": 6788,
+      "pos": "subcort_putamen_L.f32",
+      "norm": "subcort_putamen_L_norm.f32",
+      "faces_file": "subcort_putamen_L_faces.u32"
+    },
+    {
+      "id": "putamen",
+      "name_de": "Putamen",
+      "side": "R",
+      "color": [
+        230,
+        150,
+        70
+      ],
+      "verts": 3424,
+      "faces": 6844,
+      "pos": "subcort_putamen_R.f32",
+      "norm": "subcort_putamen_R_norm.f32",
+      "faces_file": "subcort_putamen_R_faces.u32"
+    },
+    {
+      "id": "accumbens",
+      "name_de": "Nucleus accumbens",
+      "side": "L",
+      "color": [
+        110,
+        200,
+        120
+      ],
+      "verts": 740,
+      "faces": 1484,
+      "pos": "subcort_accumbens_L.f32",
+      "norm": "subcort_accumbens_L_norm.f32",
+      "faces_file": "subcort_accumbens_L_faces.u32"
+    },
+    {
+      "id": "accumbens",
+      "name_de": "Nucleus accumbens",
+      "side": "R",
+      "color": [
+        110,
+        200,
+        120
+      ],
+      "verts": 687,
+      "faces": 1374,
+      "pos": "subcort_accumbens_R.f32",
+      "norm": "subcort_accumbens_R_norm.f32",
+      "faces_file": "subcort_accumbens_R_faces.u32"
+    },
+    {
+      "id": "gpe",
+      "name_de": "Globus pallidus externus (GPe)",
+      "side": "L",
+      "color": [
+        150,
+        100,
+        195
+      ],
+      "verts": 1918,
+      "faces": 3832,
+      "pos": "subcort_gpe_L.f32",
+      "norm": "subcort_gpe_L_norm.f32",
+      "faces_file": "subcort_gpe_L_faces.u32"
+    },
+    {
+      "id": "gpe",
+      "name_de": "Globus pallidus externus (GPe)",
+      "side": "R",
+      "color": [
+        150,
+        100,
+        195
+      ],
+      "verts": 1864,
+      "faces": 3724,
+      "pos": "subcort_gpe_R.f32",
+      "norm": "subcort_gpe_R_norm.f32",
+      "faces_file": "subcort_gpe_R_faces.u32"
+    },
+    {
+      "id": "gpi",
+      "name_de": "Globus pallidus internus (GPi)",
+      "side": "L",
+      "color": [
+        185,
+        130,
+        215
+      ],
+      "verts": 1060,
+      "faces": 2116,
+      "pos": "subcort_gpi_L.f32",
+      "norm": "subcort_gpi_L_norm.f32",
+      "faces_file": "subcort_gpi_L_faces.u32"
+    },
+    {
+      "id": "gpi",
+      "name_de": "Globus pallidus internus (GPi)",
+      "side": "R",
+      "color": [
+        185,
+        130,
+        215
+      ],
+      "verts": 1076,
+      "faces": 2148,
+      "pos": "subcort_gpi_R.f32",
+      "norm": "subcort_gpi_R_norm.f32",
+      "faces_file": "subcort_gpi_R_faces.u32"
+    }
+  ],
+  "subcortical_gaps": [
+    {
+      "id": "hippocampus",
+      "name_de": "Hippocampus",
+      "reason": "nicht gebacken; HO-Quelle vorhanden, Bake ausstehend"
+    },
+    {
+      "id": "amygdala",
+      "name_de": "Amygdala",
+      "reason": "nicht gebacken; HO-Quelle vorhanden, Bake ausstehend"
+    }
+  ]
 }
