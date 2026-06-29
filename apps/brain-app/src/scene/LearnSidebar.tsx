@@ -34,20 +34,28 @@ export default function LearnSidebar() {
   const setMode = useViewerStore((s) => s.setMode)
   const saveProgress = useSettingsStore((s) => s.learning.saveProgress)
   const routeSequenceRef = useRef<Pick<CanonicalQueryInput, 'sequenceKind' | 'sequenceName'> | null>(null)
+  // Generationszaehler: bei schnellem Sequence-Toggle (Vortrag an/aus) gewinnt nur der juengste
+  // loadScenes-Aufruf; ueberholte Promises verwerfen ihr Ergebnis (kein stale-scene-Zustand).
+  const loadGenRef = useRef(0)
 
   useEffect(() => {
     const loc = parseLocation(window.location.search)
+    const generation = ++loadGenRef.current
     routeSequenceRef.current = loc.sequenceKind && loc.sequenceName
       ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName }
       : null
     loadScenes({ sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName })
       .then((all) => {
+        if (loadGenRef.current !== generation) return
         setScenes(all)
         setMode('k11')
         const start = sceneIndexForLocation(all, loc)
         goto(start >= 0 ? start : 0, loc.step)
       })
-      .catch((error: unknown) => setLoadError(error instanceof Error ? error : new Error(String(error))))
+      .catch((error: unknown) => {
+        if (loadGenRef.current !== generation) return
+        setLoadError(error instanceof Error ? error : new Error(String(error)))
+      })
   }, [setScenes, goto, setMode])
 
   useEffect(() => {
@@ -60,16 +68,21 @@ export default function LearnSidebar() {
         : null
       // Sequence-Wechsel (z. B. Lernpfad -> Vortrag) laedt die Szenen neu, statt nur zu springen.
       if (locSequenceName !== curSequenceName) {
+        const generation = ++loadGenRef.current
         routeSequenceRef.current = loc.sequenceKind && loc.sequenceName
           ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName }
           : null
         loadScenes({ sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName })
           .then((all) => {
+            if (loadGenRef.current !== generation) return
             setScenes(all)
             const start = sceneIndexForLocation(all, loc)
             useSceneStore.getState().goto(start >= 0 ? start : 0, loc.step)
           })
-          .catch((error: unknown) => setLoadError(error instanceof Error ? error : new Error(String(error))))
+          .catch((error: unknown) => {
+            if (loadGenRef.current !== generation) return
+            setLoadError(error instanceof Error ? error : new Error(String(error)))
+          })
         return
       }
       if (!state.scenes.length) return

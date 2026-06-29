@@ -22,18 +22,20 @@ try {
 
     // Speaker-Notes + Rueckweg sichtbar, Step-State zeigt "Vortrag".
     await page.getByText('Sprechernotiz').first().waitFor({ state: 'visible', timeout: 60000 })
-    const leave = page.getByRole('button', { name: /Vortrag verlassen/ })
-    if (await leave.count() === 0) errors.push('rueckweg-fehlt')
-
     const overflowX = await page.evaluate(
       () => Math.max(document.documentElement.scrollWidth, document.body.scrollWidth) - window.innerWidth,
     )
     if (overflowX > 1) errors.push(`overflowX=${overflowX}`)
 
     // Rueckweg fuehrt zurueck in den Lernpfad (Sprechernotiz verschwindet).
-    await leave.first().click()
-    await page.waitForTimeout(1500)
-    if (await page.getByText('Sprechernotiz').count() > 0) errors.push('sprechernotiz-nach-rueckweg-sichtbar')
+    const leave = page.getByRole('button', { name: /Vortrag verlassen/ })
+    if (await leave.count() === 0) {
+      errors.push('rueckweg-fehlt')
+    } else {
+      await leave.first().click()
+      await page.waitForTimeout(1500)
+      if (await page.getByText('Sprechernotiz').count() > 0) errors.push('sprechernotiz-nach-rueckweg-sichtbar')
+    }
   } catch (error) {
     errors.push(error instanceof Error ? error.message : String(error))
   } finally {
