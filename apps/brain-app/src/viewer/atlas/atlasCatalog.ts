@@ -27,6 +27,10 @@ export interface AreaNode {
   refs: AreaRefs
   context: AreaContext
   provenance: AreaProvenance
+  coords?: {
+    centroid: [number, number, number]
+    bbox: { min: [number, number, number]; max: [number, number, number] }
+  }
 }
 export interface GroupNode { id: string; label_de: string; areas: AreaNode[] }
 export interface AtlasNode { id: string; axis: 'macro' | 'cyto'; label_de: string; groups: GroupNode[] }
@@ -105,6 +109,15 @@ export async function loadCatalog(): Promise<AtlasCatalog> {
         }
         if (area.context?.aliases && !area.context.aliases.every((alias) => typeof alias === 'string' && alias.trim())) {
           throw new Error(`loadCatalog: Areal-Aliase ungueltig: ${area.id}`)
+        }
+        if (area.coords) {
+          if (
+            !Array.isArray(area.coords.centroid) || area.coords.centroid.length !== 3 ||
+            !area.coords.bbox?.min || area.coords.bbox.min.length !== 3 ||
+            !area.coords.bbox?.max || area.coords.bbox.max.length !== 3
+          ) {
+            throw new Error(`loadCatalog: Areal-Koordinaten ungueltig: ${area.id}`)
+          }
         }
       }
     }

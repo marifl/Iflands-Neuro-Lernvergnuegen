@@ -1,5 +1,6 @@
 version: 1
 areas:
+  # --- DKT Atlanten ---
   "dkt:rostralmiddlefrontal:l":
     clinic: "DLPFC-Läsionen: Arbeitsgedächtnis, Planen, Set-Shifting und Tower-of-London-Leistung."
     function: "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis."
@@ -9,7 +10,7 @@ areas:
     function: "Dorsolateraler PFC: Manipulieren und Überwachen von Informationen im Arbeitsgedächtnis."
     chapter: "Kapitel 11.3.3; Abb. 11-5, 11-9, 11-11."
   "dkt:parstriangularis:l":
-    clinic: "VLPFC/Broca-Nähe: Sprachproduktion und kontrollierter Abruf als prüfungsrelevanter Anker."
+    clinic: "VLPFC/Broca-Nähe: Sprachproduktion und kontrollierter Abruf als linker IFG-Anker."
     function: "Ventrolateraler PFC: Aufrechterhalten, Auswählen und Abrufen zielrelevanter Information."
     chapter: "Kapitel 11.3.3; Abb. 11-5."
   "dkt:parstriangularis:r":
@@ -50,6 +51,234 @@ areas:
     function: "Anteriorer cingulärer Cortex: Handlungskonflikt, Kontrolle und motivational-affektive Bewertung."
     chapter: "Kapitel 11.3.3; Abb. 11-13, 11-15."
     aliases: ["ACC", "anterior cingulate cortex", "anteriorer cingulärer Cortex", "rostraler ACC", "cingulum", "cingulär", "cingullum", "Konfliktmonitoring"]
+  "dkt:precentral:l":
+    clinic: "M1-Schädigung: Kontralaterale schlaffe Lähmung, die sich zu Spastik entwickeln kann."
+    function: "Primärer motorischer Kortex: Ausführung von Willkürbewegungen der kontralateralen Körperhälfte."
+    chapter: "Kapitel 12.1.2; Tab. 11-2"
+  "dkt:precentral:r":
+    clinic: "M1-Schädigung: Kontralaterale schlaffe Lähmung, die sich zu Spastik entwickeln kann."
+    function: "Primärer motorischer Kortex: Ausführung von Willkürbewegungen der kontralateralen Körperhälfte."
+    chapter: "Kapitel 12.1.2; Tab. 11-2"
+  "dkt:postcentral:l":
+    clinic: "S1-Läsion: Kontralaterale Sensibilitätsstörungen und Störung der Zwei-Punkt-Diskrimination."
+    function: "Primärer somatosensorischer Kortex (S1): Verarbeitung taktiler, nozizeptiver und propriozeptiver Reize."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "dkt:postcentral:r":
+    clinic: "S1-Läsion: Kontralaterale Sensibilitätsstörungen und Störung der Zwei-Punkt-Diskrimination."
+    function: "Primärer somatosensorischer Kortex (S1): Verarbeitung taktiler, nozizeptiver und propriozeptiver Reize."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "dkt:superiortemporal:l":
+    clinic: "Wernicke-Aphasie: Logorrhoe, Paraphasien und schwer gestörtes Sprachverständnis."
+    function: "Sekundärer auditorischer Kortex (Wernicke-Areal): Phonologische Verarbeitung und Sprachverstehen."
+    chapter: "Kapitel 18.2.1; Abb. 18-1"
+  "dkt:superiortemporal:r":
+    clinic: "Sensorische Amusie: Defizite im Erkennen von Melodien, musikalischer Rhythmik und Tonhöhen."
+    function: "Sekundäre Hörrinde rechts: Analyse nicht-sprachlicher Tonstrukturen und Prosodie."
+    chapter: "Kapitel 3.4 & 18.2"
+  "dkt:inferiorparietal:l":
+    clinic: "Gerstmann-Syndrom (Tetrade): Agraphie, Akalkulie, Fingeragnosie, Rechts-Links-Schwäche."
+    function: "Gyrus angularis / IPL-Anteil: Multimodale Integration, Rechnen und semantische Assoziationen."
+    chapter: "Kapitel 8.2.3 & 16.3"
+  "dkt:inferiorparietal:r":
+    clinic: "Hemineglekt: Unaufmerksamkeit gegenüber der kontralateralen (meist linken) Raumhälfte."
+    function: "Temporoparietaler Übergangsbereich: Räumliche Aufmerksamkeit und Orientierung."
+    chapter: "Kapitel 8.2.3 & 11.3.3"
+  "dkt:supramarginal:l":
+    clinic: "Leitungsaphasie (gestörtes Nachsprechen) oder ideomotorische Apraxie (Handlungsplanungsdefekt)."
+    function: "Gyrus supramarginalis (IPL): Phonologische Schleife des Arbeitsgedächtnisses, Handlungsplanung."
+    chapter: "Kapitel 16.3 & 18.2"
+  "dkt:supramarginal:r":
+    clinic: "Visuell-räumliche Desorientierung und Apraxie der Raumkonstruktion."
+    function: "Gyrus supramarginalis rechts: Räumliche Orientierung und Körperbildintegration."
+    chapter: "Kapitel 8.2.3 & 11.3"
+  "dkt:fusiform:l":
+    clinic: "Agnosie für Zeichnungen und Buchstaben: Defizite im Erkennen visueller Muster."
+    function: "Gyrus fusiformis: Visuelle Musteranalyse und Wortformareal (VWFA)."
+    chapter: "Kapitel 8.2.3 & 16.3"
+  "dkt:fusiform:r":
+    clinic: "Prosopagnosie: Unfähigkeit zur Wiedererkennung bekannter Gesichter bei intaktem Sehvermögen."
+    function: "Fusiform Face Area (FFA): Holistische Gesichterverarbeitung und visuelle Expertise."
+    chapter: "Kapitel 8.2.3 & 11.3.3"
+
+  # --- Brodmann Areale ---
+  "brodmann:4:l":
+    clinic: "Kontralaterale Lähmung (Spastik im Verlauf) und Ausfall der Feinmotorik."
+    function: "Primärer motorischer Kortex (M1): Steuerung willkürlicher Muskelkontraktionen der kontralateralen Körperseite."
+    chapter: "Kapitel 12.1.2; Tab. 3-5, Tab. 11-2"
+  "brodmann:4:r":
+    clinic: "Kontralaterale Lähmung (Spastik im Verlauf) und Ausfall der Feinmotorik."
+    function: "Primärer motorischer Kortex (M1): Steuerung willkürlicher Muskelkontraktionen der kontralateralen Körperseite."
+    chapter: "Kapitel 12.1.2; Tab. 3-5, Tab. 11-2"
+  "brodmann:6:l":
+    clinic: "Ideomotorische Apraxie (Störung der Bewegungsausführung trotz intakter Kraft) und motorischer Neglekt."
+    function: "Prämotorischer Kortex und SMA: Planung komplexer Bewegungssequenzen und intern generierte Handlungen."
+    chapter: "Kapitel 12.1.2; Tab. 11-2, Abb. 12-4"
+  "brodmann:6:r":
+    clinic: "Ideomotorische Apraxie und motorischer Neglekt der kontralateralen Seite."
+    function: "Prämotorischer Kortex und SMA: Planung komplexer Bewegungssequenzen und motorisches Lernen."
+    chapter: "Kapitel 12.1.2; Tab. 11-2, Abb. 12-4"
+  "brodmann:8:l":
+    clinic: "Vorübergehende Abweichung der Augen zur Läsionsseite (Blickparese)."
+    function: "Frontales Augenfeld (FEF): Kontrolle der willkürlichen konjugierten Augenbewegungen (Sakkaden)."
+    chapter: "Kapitel 11.3.3 & 12.1.2; Tab. 11-2"
+  "brodmann:8:r":
+    clinic: "Vorübergehende Abweichung der Augen zur Läsionsseite (Blickparese)."
+    function: "Frontales Augenfeld (FEF): Kontrolle der willkürlichen konjugierten Augenbewegungen (Sakkaden)."
+    chapter: "Kapitel 11.3.3 & 12.1.2; Tab. 11-2"
+  "brodmann:9:l":
+    clinic: "DLPFC-Syndrom: Defizite im Planen, im kognitiven Set-Shifting und in Arbeitsgedächtnistests."
+    function: "Dorsolateraler Präfrontalkortex (DLPFC): Zielgerichtetes Verhalten, Arbeitsgedächtnis, Monitoring."
+    chapter: "Kapitel 11.3.3 & 16.3; Tab. 11-2"
+  "brodmann:9:r":
+    clinic: "DLPFC-Syndrom: Beeinträchtigung der Vigilanz, Daueraufmerksamkeit und exekutiven Verhaltenskontrolle."
+    function: "Dorsolateraler Präfrontalkortex (DLPFC): Vigilanzsteuerung und Überwachung kognitiver Prozesse."
+    chapter: "Kapitel 11.3.3 & 16.3; Tab. 11-2"
+  "brodmann:10:l":
+    clinic: "Dysexekutives Syndrom bei komplexen Handlungen; Verlust der Fähigkeit zur Theory of Mind."
+    function: "Rostraler/Frontopolarer PFC: Koordination von Teilzielen (Multitasking) und soziale Kognition."
+    chapter: "Kapitel 11.3.3; Tab. 11-2"
+  "brodmann:10:r":
+    clinic: "Dysexekutives Syndrom bei komplexen Alltagshandlungen und Multitasking."
+    function: "Rostraler/Frontopolarer PFC: Koordination von Teilzielen (Multitasking) und prospektives Gedächtnis."
+    chapter: "Kapitel 11.3.3; Tab. 11-2"
+  "brodmann:11:l":
+    clinic: "Soziale Enthemmung, Witzelsucht, Taktlosigkeit und pathologische Risikobereitschaft."
+    function: "Orbitofrontaler Kortex (OFC): Repräsentation von Belohnungswert und sozial-emotionaler Kontrolle."
+    chapter: "Kapitel 11.3.3; Tab. 11-2"
+  "brodmann:11:r":
+    clinic: "Soziale Enthemmung, Taktlosigkeit, emotionale Verflachung und Phineas-Gage-Symptomatik."
+    function: "Orbitofrontaler Kortex (OFC): Repräsentation von Belohnungswert und sozial-emotionaler Kontrolle."
+    chapter: "Kapitel 11.3.3; Tab. 11-2"
+  "brodmann:17:l":
+    clinic: "Rechtsseitige homonyme Hemianopsie (Sehfeldausfall) mit Makulaaussparung."
+    function: "Primärer visueller Kortex (V1, Area striata): Retinotop organisierte Detektion visueller Grundmerkmale."
+    chapter: "Kapitel 3.4 & 8.2; Tab. 3-5"
+  "brodmann:17:r":
+    clinic: "Linksseitige homonyme Hemianopsie (Sehfeldausfall) mit Makulaaussparung."
+    function: "Primärer visueller Kortex (V1, Area striata): Retinotop organisierte Detektion visueller Grundmerkmale."
+    chapter: "Kapitel 3.4 & 8.2; Tab. 3-5"
+  "brodmann:18:l":
+    clinic: "Visuelle Assoziationsstörungen: Objektagnosien, Farbagnosie."
+    function: "Sekundärer visueller Kortex (V2, extrastriär): Verarbeitung von Farbtönen, Kanten und Formkonturen."
+    chapter: "Kapitel 8.2; Tab. 3-5"
+  "brodmann:18:r":
+    clinic: "Visuelle Assoziationsstörungen: Akinetopsie, Prosopagnosie-Anteile."
+    function: "Sekundärer visueller Kortex (V2, extrastriär): Form- und Bewegungsintegration."
+    chapter: "Kapitel 8.2; Tab. 3-5"
+  "brodmann:19:l":
+    clinic: "Apperzeptive und assoziative visuelle Agnosien sowie Farbagnosie."
+    function: "Tertiärer / Assoziativer visueller Kortex: Komplexe Objektformanalyse und Farbintegration (V4)."
+    chapter: "Kapitel 8.2; Tab. 3-5"
+  "brodmann:19:r":
+    clinic: "Zerebrale Akinetopsie (Bewegungsblindheit) oder topografische Desorientierung."
+    function: "Tertiärer / Assoziativer visueller Kortex: Bewegungserkennung (V5/MT) und räumliche Assoziation."
+    chapter: "Kapitel 8.2; Tab. 3-5"
+  "brodmann:20:l":
+    clinic: "Assoziative Objektagnosie: Patienten sehen Details, können Objekte aber nicht benennen/erkennen."
+    function: "Unterer Temporallappen: Repräsentation komplexer Objektdetails im ventralen Pfad."
+    chapter: "Kapitel 8.2.3 & 16.3"
+  "brodmann:20:r":
+    clinic: "Prosopagnosie-Anteile und Störungen beim Zuordnen von Objektkategorien."
+    function: "Unterer Temporallappen: Visuelle Merkmalsanalyse und Kategorisierung im ventralen Pfad."
+    chapter: "Kapitel 8.2.3 & 16.3"
+  "brodmann:21:l":
+    clinic: "Semantische Aphasie / Demenz: Verlust des begrifflichen Wissens (Bedeutung von Wörtern)."
+    function: "Mittlerer Temporallappen: Zentraler Knotenpunkt für das semantische Langzeitgedächtnis."
+    chapter: "Kapitel 16.3 & 18.2; Tab. 18-2"
+  "brodmann:21:r":
+    clinic: "Beeinträchtigung des semantischen Wissens für visuelle oder nicht-verbale Kategorien."
+    function: "Mittlerer Temporallappen: Semantische Assoziationen und Repräsentationen rechterseits."
+    chapter: "Kapitel 16.3 & 18.2; Tab. 18-2"
+  "brodmann:22:l":
+    clinic: "Sensorische Aphasie (Wernicke-Aphasie): Sprachverständnisverlust bei flüssiger Sprache."
+    function: "Auditorischer Assoziationskortex: Dekodierung von Lauten zu bedeutungsvollen Wörtern."
+    chapter: "Kapitel 18.2; Abb. 18-1"
+  "brodmann:22:r":
+    clinic: "Sensorische Amusie und Störungen der sprachlichen Prosodie (Sprachmelodie)."
+    function: "Auditorischer Assoziationskortex rechts: Prosodieanalyse und Melodie- / Tonhöhenerkennung."
+    chapter: "Kapitel 3.4 & 18.2"
+  "brodmann:37:l":
+    clinic: "Alexie ohne Agraphie: Störung des Lesens bei intaktem Schreiben."
+    function: "Gyrus fusiformis links: Visuelles Wortformareal (VWFA) für orthografische Repräsentationen."
+    chapter: "Kapitel 16.3 & 18.2; Tab. 18-2"
+  "brodmann:37:r":
+    clinic: "Prosopagnosie: Unfähigkeit zur Erkennung bekannter Gesichter."
+    function: "Gyrus fusiformis rechts: Fusiform Face Area (FFA) zur holistischen Gesichtsidentifikation."
+    chapter: "Kapitel 8.2.3 & 11.3.3"
+  "brodmann:39:l":
+    clinic: "Gerstmann-Syndrom: Akalkulie, Agraphie, Fingeragnosie, Rechts-Links-Schwäche."
+    function: "Gyrus angularis (IPL): Multimodale Symbolintegration (Buchstaben- und Zahlenrepräsentationen)."
+    chapter: "Kapitel 8.2.3 & 16.3"
+  "brodmann:39:r":
+    clinic: "Räumlicher Neglekt (Hemineglekt links) und visuell-räumliche Konstruktionsstörungen."
+    function: "Gyrus angularis rechts (IPL): Räumliches Koordinatensystem und Aufmerksamkeitsverteilung."
+    chapter: "Kapitel 8.2.3 & 11.3.3"
+  "brodmann:40:l":
+    clinic: "Leitungsaphasie (Nachsprechdefekt) oder ideomotorische Apraxie (Gebrauchsapraxie)."
+    function: "Gyrus supramarginalis (IPL): Phonologische Schleife und motorische Handlungsplanung."
+    chapter: "Kapitel 16.3 & 18.2; Tab. 18-2"
+  "brodmann:40:r":
+    clinic: "Anosognosie (Krankheitsuneinsichtigkeit) und motorischer Neglekt."
+    function: "Gyrus supramarginalis rechts (IPL): Somatosensorische Integration und Körperbewusstsein."
+    chapter: "Kapitel 8.2.3 & 11.3"
+  "brodmann:44:l":
+    clinic: "Motorische Aphasie (Broca-Aphasie): Stockende Sprache, Agrammatismus, Sprechapraxie."
+    function: "Broca-Areal (pars opercularis): Motorische Sprachplanung und grammatikalische Sequenzierung."
+    chapter: "Kapitel 18.2; Abb. 18-1"
+  "brodmann:44:r":
+    clinic: "Beeinträchtigung der motorischen Prosodie (Ausdruckskraft der eigenen Stimme)."
+    function: "Inferiorer Frontalkortex rechts: Motorische Prosodieplanung und motorische Inhibition."
+    chapter: "Kapitel 11.3.3 & 18.2"
+  "brodmann:45:l":
+    clinic: "Broca-Aphasie: Wortfindungsstörungen und syntaktische Auswahlprobleme."
+    function: "Broca-Areal (pars triangularis): Kontrollierter semantischer Abruf und syntaktische Verarbeitung."
+    chapter: "Kapitel 18.2; Abb. 18-1"
+  "brodmann:45:r":
+    clinic: "Beeinträchtigung der Sprechinhibition und inadäquate motorische Steuerung."
+    function: "Inferiorer Frontalkortex rechts: Reaktionsinhibition und kognitive Kontrolle."
+    chapter: "Kapitel 11.3.3 & 18.2"
+  "brodmann:46:l":
+    clinic: "Arbeitsgedächtnisdefizite und Schwierigkeiten bei der Manipulation mentaler Inhalte."
+    function: "DLPFC (Mittelteil): Aktives Halten und Verarbeiten von Arbeitsgedächtnisinhalten."
+    chapter: "Kapitel 11.3.3 & 16.3; Tab. 11-2"
+  "brodmann:46:r":
+    clinic: "Aufmerksamkeitsstörungen, Defizite bei Vigilanz und Alertness."
+    function: "DLPFC rechts (Mittelteil): Vigilanz, Daueraufmerksamkeit und exekutives Monitoring."
+    chapter: "Kapitel 11.3.3 & 16.3; Tab. 11-2"
+  "brodmann:47:l":
+    clinic: "Eingeschränkter Abruf von semantischem Wissen und beeinträchtigtes Wortverstehen."
+    function: "VLPFC (pars orbitalis): Kontrollierter Abruf semantischer Konzepte."
+    chapter: "Kapitel 11.3.3 & 16.3"
+  "brodmann:47:r":
+    clinic: "Störungen der Reaktionsinhibition (z.B. Go/No-go Fehler)."
+    function: "VLPFC rechts (pars orbitalis): Inhibitorische Kontrolle und motorische Hemmung."
+    chapter: "Kapitel 11.3.3 & 16.3"
+  "brodmann:1:l":
+    clinic: "Kontralaterale Hypästhesie und gestörte Tiefensensibilität."
+    function: "Somatosensorischer Kortex (S1 anterior): Erste Station der taktilen Informationsverarbeitung."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "brodmann:1:r":
+    clinic: "Kontralaterale Hypästhesie und gestörte Tiefensensibilität."
+    function: "Somatosensorischer Kortex (S1 anterior): Erste Station der taktilen Informationsverarbeitung."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "brodmann:2:l":
+    clinic: "Taktile Agnosie (Astereognosie): Unfähigkeit, Objekte durch Ertasten zu erkennen."
+    function: "Somatosensorischer Kortex (S1 posterior): Integration taktiler und propriozeptiver Reize."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "brodmann:2:r":
+    clinic: "Taktile Agnosie (Astereognosie): Unfähigkeit, Objekte durch Ertasten zu erkennen."
+    function: "Somatosensorischer Kortex (S1 posterior): Integration taktiler und propriozeptiver Reize."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "brodmann:3:l":
+    clinic: "Deutliche kontralaterale Taubheit und mangelnde Propriozeption."
+    function: "Somatosensorischer Kortex (S1 Thalamus-Empfänger): Direkter Eingang thalamischer Fasern."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+  "brodmann:3:r":
+    clinic: "Deutliche kontralaterale Taubheit und mangelnde Propriozeption."
+    function: "Somatosensorischer Kortex (S1 Thalamus-Empfänger): Direkter Eingang thalamischer Fasern."
+    chapter: "Kapitel 12.1.2; Tab. 3-5"
+
+  # --- Jülich Areale ---
   "julich:area-44:l":
     clinic: "Broca-Areal: Sprachproduktion und kontrollierte Auswahl als linker IFG-Anker."
     function: "BA44/IFG: Auswahl, Sequenzierung und phonologische Kontrolle."

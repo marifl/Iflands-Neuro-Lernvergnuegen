@@ -220,6 +220,9 @@ export function buildCatalog() {
   const manifest = loadJson(join(APP_ASSETS, 'manifest.json'))
   const aggManifest = loadJson(join(WORK, 'atlas-manifest.json'))
   const atlasContext = loadAtlasContext()
+  const coordsDkt = loadJson(join(WORK, 'atlas-dkt-coords.json'))
+  const coordsJulich = loadJson(join(WORK, 'atlas-julich-coords.json'))
+  const coordsBrodmann = loadJson(join(WORK, 'atlas-brodmann-coords.json'))
   const atlases = []
   const orphanCarve = {}            // layer -> [unverbrauchte carveKeys]
   const excluded = {}               // layer -> Anzahl explizit geskippter LUT-Eintraege
@@ -272,6 +275,42 @@ export function buildCatalog() {
         else if (L.id === 'brodmann') lobe = lobeOfBrodmannBA(code)
         else throw new Error(`buildCatalog: ${L.id}:${code}:${side} ohne Carve-Host und ohne namebasierte Lappenaufloesung`)
 
+        const coordMap = L.id === 'dkt' ? coordsDkt
+                       : L.id === 'julich' ? coordsJulich
+                       : L.id === 'brodmann' ? coordsBrodmann
+                       : null
+        let areaCoords = null
+        if (coordMap && matches.length > 0) {
+          const coordList = []
+          for (const c of matches) {
+            const entry = coordMap[c.key]
+            if (entry) coordList.push(entry)
+          }
+          if (coordList.length > 0) {
+            let min = [Infinity, Infinity, Infinity]
+            let max = [-Infinity, -Infinity, -Infinity]
+            let sumCentroid = [0, 0, 0]
+            for (const c of coordList) {
+              for (let i = 0; i < 3; i++) {
+                min[i] = Math.min(min[i], c.bbox.min[i])
+                max[i] = Math.max(max[i], c.bbox.max[i])
+                sumCentroid[i] += c.centroid[i]
+              }
+            }
+            areaCoords = {
+              centroid: [
+                +(sumCentroid[0] / coordList.length).toFixed(3),
+                +(sumCentroid[1] / coordList.length).toFixed(3),
+                +(sumCentroid[2] / coordList.length).toFixed(3),
+              ],
+              bbox: {
+                min: min.map((x) => +x.toFixed(3)),
+                max: max.map((x) => +x.toFixed(3)),
+              },
+            }
+          }
+        }
+
         const area = {
           id: areaId,
           label_de: prettyArea(L.id, entry.name, side),
@@ -289,6 +328,9 @@ export function buildCatalog() {
             affine_det: aggManifest.sources?.[L.id]?.affine_det ?? null,
             backfill: matches.some((c) => c.backfill),
           },
+        }
+        if (areaCoords) {
+          area.coords = areaCoords
         }
         areaIds.add(areaId)
         if (!groups.has(lobe)) groups.set(lobe, [])

@@ -40,6 +40,17 @@ export function AtlasFacetPanel({ area }: Props) {
         )}
       </div>
 
+      {area.coords ? (
+        <div style={{ borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 6, marginBottom: 6 }}>
+          <div className="eyebrow" style={{ marginBottom: 3 }}>MNI-Koordinaten</div>
+          <div className="mono-xs" style={{ color: 'var(--muted)', lineHeight: 1.5 }}>
+            Zentroid: [{area.coords.centroid.join(', ')}]<br />
+            BBox-Min: [{area.coords.bbox.min.join(', ')}]<br />
+            BBox-Max: [{area.coords.bbox.max.join(', ')}]
+          </div>
+        </div>
+      ) : null}
+
       <div style={{ borderTop: '1px solid var(--atlas-overlay-border)', paddingTop: 6 }}>
         <div className="eyebrow" style={{ marginBottom: 3 }}>Provenienz</div>
         <div className="mono-xs" style={{ color: 'var(--muted)', lineHeight: 1.5 }}>
