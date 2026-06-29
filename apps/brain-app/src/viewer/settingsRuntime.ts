@@ -51,6 +51,18 @@ export function shouldShowModeLauncher(search: string, settings: BrainAppSetting
   return startupAppModeFromSettings(search, settings) === null
 }
 
+/** Case-Study-Launch aus der URL: `?mode=phineas` oder Registry-`case-study=<id>`.
+ *  Gibt die Case-Study-ID zurueck, sonst null. Treibt die Case-Aktivierung beim Start,
+ *  damit die Fall-Surface (PhineasSidebar) rendert statt des Strukturfokus-Baums. */
+export function caseStudyLaunchFromSearch(search: string): string | null {
+  const launch = parseRegistryLaunchFromSearch(search)
+  if (launch?.entrypoint.kind === 'case-study') return launch.entrypoint.caseStudyId
+  const params = new URLSearchParams(search)
+  if (params.get('mode') === 'phineas') return 'phineas-gage'
+  const caseStudy = params.get('case-study')
+  return caseStudy ? caseStudy : null
+}
+
 export function rememberAppMode(mode: AppMode): void {
   if (isRegularAppMode(mode)) setLocalStorageItem(LAST_APP_MODE_STORAGE_KEY, mode)
 }

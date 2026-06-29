@@ -21,9 +21,12 @@ export function shouldRenderInlineSidebar(input: {
   appMode: AppMode
   isAtlas: boolean
   shellMode: ResponsiveShellMode
+  caseStudyActive?: boolean
 }): boolean {
   if (input.isAtlas) return false
-  return input.shellMode !== 'portrait-drawer' || input.appMode !== 'explore'
+  // Der Strukturfokus-Baum wandert auf Portrait in den Drawer; die Fall-Surface (Phineas)
+  // rendert dagegen inline wie der Lernschritt, weil sie kein Baum ist.
+  return input.shellMode !== 'portrait-drawer' || input.appMode !== 'explore' || Boolean(input.caseStudyActive)
 }
 
 export function shouldRenderMobileTreeDrawer(input: {
@@ -31,17 +34,20 @@ export function shouldRenderMobileTreeDrawer(input: {
   isAtlas: boolean
   shellMode: ResponsiveShellMode
   mobileTreeOpen: boolean
+  caseStudyActive?: boolean
 }): boolean {
-  return !input.isAtlas && input.shellMode === 'portrait-drawer' && input.appMode === 'explore' && input.mobileTreeOpen
+  return !input.isAtlas && !input.caseStudyActive && input.shellMode === 'portrait-drawer' && input.appMode === 'explore' && input.mobileTreeOpen
 }
 
 export function viewportFlex(input: {
   appMode: AppMode
   isAtlas: boolean
   shellMode: ResponsiveShellMode
+  caseStudyActive?: boolean
 }): number | string {
   if (input.shellMode !== 'portrait-drawer' || input.isAtlas) return 1
-  return input.appMode === 'explore' ? 1 : MOBILE_LEARN_VIEWPORT_FLEX
+  // Phineas teilt sich Buehne + Panel wie der Lernschritt; nur der reine Strukturfokus nimmt voll.
+  return input.appMode === 'explore' && !input.caseStudyActive ? 1 : MOBILE_LEARN_VIEWPORT_FLEX
 }
 
 export function sidePanelFlex(shellMode: ResponsiveShellMode): string {

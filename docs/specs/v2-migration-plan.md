@@ -31,7 +31,10 @@ Bühne. Die V2-Migration ist also **Framing/Nav + Atlas-Supplement**, kein Rebui
 - [x] Schritt 2 — FooterBar „Modus"→„Lernraum": Lernen=Home + Rückweg zum Lernschritt
 - [x] Schritt 3 — Explorer→„Strukturfokus" (Label + lernnahe Beschreibung)
 - [ ] Schritt 4 — Atlas-Supplement (aus Kontext geöffnet, kein Peer) — `isAtlas` ersetzt noch die Bühne
-- [ ] Schritt 5 — Fall/Phineas-Surface (Case als Dateninstanz im Lernraum)
+- [x] Schritt 5 — Fall/Phineas-Surface: `/?mode=phineas` aktiviert den Case beim Start
+      (caseStudyLaunchFromSearch + setSkull-Bootstrap); Phineas rendert auf Portrait inline
+      wie der Lernschritt (caseStudyActive durch shouldRenderInlineSidebar/viewportFlex/
+      TreeDrawer-Gate gethreadet). Verify: smoke:responsive 6/6, smoke:phineas-gage 2/2
 - [x] Schritt 6 — No-Fallback-Restklassen geschlossen (verifiziert: Abschluss-rg sauber, NF-013)
 - [~] Schritt 7 — Smoke-Failures: learning-layout 2/3 grün (Route kanonisiert + Floating-Legende
       in Learn gegated = echter Bug-Fix). Offen: (a) phone-portrait `step-picker-unbrauchbar`

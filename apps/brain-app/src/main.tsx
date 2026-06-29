@@ -5,8 +5,9 @@ import AppErrorBoundary from './AppErrorBoundary'
 import BodyParts3DViewer from './viewer/BodyParts3DViewer'
 import { applyAppearanceSettings } from './viewer/appearanceRuntime'
 import { loadSettings } from './viewer/settingsStore'
-import { startupAppModeFromSettings } from './viewer/settingsRuntime'
+import { caseStudyLaunchFromSearch, startupAppModeFromSettings } from './viewer/settingsRuntime'
 import { useViewerStore } from './viewer/viewerStore'
+import { useCaseStudyViewStore } from './viewer/phineasGage'
 
 const initialSettings = loadSettings()
 applyAppearanceSettings(initialSettings)
@@ -27,6 +28,12 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', apply
 {
   const mode = startupAppModeFromSettings(window.location.search, initialSettings)
   if (mode) useViewerStore.getState().setAppMode(mode)
+}
+
+// Case-Study-Launch (z. B. ?mode=phineas) aktiviert die Fall-Surface beim Start. Sonst bliebe
+// caseStudyActive false und der Strukturfokus-Baum statt der Fall-Sidebar wuerde rendern.
+if (caseStudyLaunchFromSearch(window.location.search)) {
+  useCaseStudyViewStore.getState().setSkull(true)
 }
 
 const root = document.getElementById('root')!

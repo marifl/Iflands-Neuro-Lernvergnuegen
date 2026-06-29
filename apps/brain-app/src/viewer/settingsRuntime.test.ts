@@ -3,6 +3,7 @@ import { defaultSettings, type BrainAppSettings } from './settingsStore'
 import {
   LAST_APP_MODE_STORAGE_KEY,
   applySupportedViewerDefaults,
+  caseStudyLaunchFromSearch,
   explicitAppModeFromSearch,
   loadRememberedAppMode,
   rememberAppMode,
@@ -51,6 +52,13 @@ describe('settingsRuntime', () => {
     expect(explicitAppModeFromSearch('?scene=vcpt')).toBe('learn')
     expect(explicitAppModeFromSearch('?config=vcpt')).toBe('explore')
     expect(startupAppModeFromSettings('?mode=atlas', settings)).toBe('atlas')
+  })
+
+  it('erkennt Case-Study-Launches aus der URL', () => {
+    expect(caseStudyLaunchFromSearch('?mode=phineas')).toBe('phineas-gage')
+    expect(caseStudyLaunchFromSearch('?case-study=phineas-gage')).toBe('phineas-gage')
+    expect(caseStudyLaunchFromSearch('?mode=learn&scene=vcpt')).toBeNull()
+    expect(caseStudyLaunchFromSearch('')).toBeNull()
   })
 
   it('nutzt den Default-Modus nur wenn Onboarding ausgeschaltet ist', () => {

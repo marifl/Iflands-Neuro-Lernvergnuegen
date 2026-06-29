@@ -296,8 +296,8 @@ export default function BodyParts3DViewer() {
   const caseStudyActive = useCaseStudyViewStore((s) => s.showSkull || s.rodVisible)
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : caseStudyActive ? <PhineasSidebar /> : <StructureTree />
-  const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode })
-  const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, shellMode, mobileTreeOpen })
+  const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode, caseStudyActive })
+  const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, shellMode, mobileTreeOpen, caseStudyActive })
   const atlasTarget = bridgeFor(selected)
   const selectedSlugList = useMemo(() => [...selectedSlugs], [selectedSlugs])
   const selectionHasVisibleSlugs = selectedSlugList.some((slug) => !hidden.has(slug))
@@ -437,7 +437,7 @@ export default function BodyParts3DViewer() {
             style={{
               // Portrait: feste Hoehen-Zone oben; Split/Rail: nimmt den Restraum links.
               // Atlas-Modus hat keine Sidebar -> Viewport nimmt die volle Breite/Hoehe.
-              flex: viewportFlex({ appMode, isAtlas, shellMode }),
+              flex: viewportFlex({ appMode, isAtlas, shellMode, caseStudyActive }),
               position: 'relative',
               minWidth: 0,
               minHeight: 0,

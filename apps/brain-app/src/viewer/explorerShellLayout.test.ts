@@ -32,6 +32,14 @@ describe('explorerShellLayout', () => {
     expect(shouldRenderInlineSidebar({ appMode: 'learn', isAtlas: false, shellMode: 'portrait-drawer' })).toBe(true)
   })
 
+  it('rendert die Fall-Surface (Phineas) auf Portrait inline statt im Tree-Drawer', () => {
+    const shellMode = 'portrait-drawer'
+    // Phineas ist appMode 'explore' + caseStudyActive: Panel inline wie der Lernschritt, kein Tree-Drawer.
+    expect(shouldRenderInlineSidebar({ appMode: 'explore', isAtlas: false, shellMode, caseStudyActive: true })).toBe(true)
+    expect(shouldRenderMobileTreeDrawer({ appMode: 'explore', isAtlas: false, shellMode, mobileTreeOpen: true, caseStudyActive: true })).toBe(false)
+    expect(viewportFlex({ appMode: 'explore', isAtlas: false, shellMode, caseStudyActive: true })).toBe(MOBILE_LEARN_VIEWPORT_FLEX)
+  })
+
   it('gibt dem mobilen Portrait-Explorer die volle Viewport-Flaeche', () => {
     expect(viewportFlex({ appMode: 'explore', isAtlas: false, shellMode: 'portrait-drawer' })).toBe(1)
     expect(viewportFlex({ appMode: 'learn', isAtlas: false, shellMode: 'portrait-drawer' })).toBe(MOBILE_LEARN_VIEWPORT_FLEX)
