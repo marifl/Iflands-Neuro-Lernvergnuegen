@@ -5,48 +5,19 @@ import {
   LATERALITY_COLORS,
   REGION_COLORS,
 } from './atlasColorSystem'
-import { hueToHex, type ColorRole } from './colorPresets'
+import { hueToHex } from './colorPresets'
 import { useViewerStore } from './viewerStore'
 import ColorLegendPanel from './ColorLegendPanel'
 import { useIsNarrow } from '../useMediaQuery'
 import { COLOR_MODE_LABEL } from './colorModeDefinitions'
 
 type GlobalMode = Exclude<ColorMode, 'preset'>
-type CoreColorRole = Extract<ColorRole, 'cognition' | 'emotion' | 'motivation'>
 
 interface LegendRow {
   label: string
   detail: string
   color: string
 }
-
-interface RoleSwatch {
-  role: CoreColorRole
-  label: string
-  detail: string
-  color: string
-}
-
-export const CORE_COLOR_ROLE_SWATCHES: readonly RoleSwatch[] = [
-  {
-    role: 'cognition',
-    label: 'Kognition',
-    detail: 'DLPFC/parietaler Kortex als kognitive Kontrollschleife.',
-    color: hueToHex(210),
-  },
-  {
-    role: 'emotion',
-    label: 'Emotion',
-    detail: 'OFC/VMPFC mit Amygdala und Hippocampus als affektiver Regelkreis.',
-    color: hueToHex(30),
-  },
-  {
-    role: 'motivation',
-    label: 'Motivation',
-    detail: 'dACC und Nucleus accumbens als motivationaler Handlungsantrieb.',
-    color: hueToHex(150),
-  },
-] as const
 
 const LEGENDS: Record<GlobalMode, { title: string; subtitle: string; rows: LegendRow[] }> = {
   anatomical: {
@@ -63,7 +34,6 @@ const LEGENDS: Record<GlobalMode, { title: string; subtitle: string; rows: Legen
   function: {
     title: 'Funktionssysteme',
     subtitle: 'Jede sichtbare TARO-Struktur ist einem System zugeordnet; keine stille Restklasse.',
-    // Vollstaendig aus der zentralen Registry abgeleitet -> deckt jedes gemalte System ab.
     rows: Object.values(FUNCTION_SYSTEMS).map((s) => ({ label: s.label, detail: s.detail, color: s.color })),
   },
   laterality: {
@@ -88,51 +58,7 @@ const LEGENDS: Record<GlobalMode, { title: string; subtitle: string; rows: Legen
   },
 }
 
-function CoreRoleSwatches({ compact = false }: { compact?: boolean }) {
-  return (
-    <div style={{ display: 'grid', gap: compact ? 4 : 6 }}>
-      {CORE_COLOR_ROLE_SWATCHES.map((row) => (
-        <div
-          key={row.role}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: compact ? '10px 1fr' : '11px 1fr',
-            gap: compact ? 6 : 8,
-            alignItems: 'start',
-          }}
-        >
-          <span
-            data-color-role={row.role}
-            aria-hidden="true"
-            style={{
-              width: compact ? 10 : 11,
-              height: compact ? 10 : 11,
-              marginTop: compact ? 2 : 3,
-              background: row.color,
-              border: '1px solid var(--line-soft)',
-            }}
-          />
-          <span style={{ minWidth: 0 }}>
-            <span style={{ display: 'block', fontFamily: 'var(--ed-mono)', fontSize: compact ? 'var(--fs-sm)' : 'var(--fs-base)', fontWeight: 700 }}>
-              {row.label}
-            </span>
-            {compact ? null : (
-              <span className="mono-sm" style={{ display: 'block', color: 'var(--g600)', lineHeight: 1.3 }}>
-                {row.detail}
-              </span>
-            )}
-          </span>
-        </div>
-      ))}
-    </div>
-  )
-}
-
-/** Kompakte Modus-Eintraege (Swatch + Name) fuer die eingeklappte Legende: zeigt die Farben des
- *  aktiven Faerbungsmodus statt nur der Lernpfad-Rollen. */
-function CompactLegendRows({ rows }: { rows: LegendRow[] }) {
-  // ponytail: kein Cap/Scroll -> bei vielen Systemen (function) wird der Teaser hoch; Scroll
-  // nachruesten, falls das Panel ueberlaeuft.
+function CompactRows({ rows }: { rows: LegendRow[] }) {
   return (
     <div style={{ display: 'grid', gap: 4 }}>
       {rows.map((row) => (
@@ -143,12 +69,7 @@ function CompactLegendRows({ rows }: { rows: LegendRow[] }) {
           />
           <span
             className="mono-sm"
-            style={{
-              fontWeight: 700,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-            }}
+            style={{ fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
           >
             {row.label}
           </span>
@@ -158,14 +79,89 @@ function CompactLegendRows({ rows }: { rows: LegendRow[] }) {
   )
 }
 
-export default function GlobalColorLegend() {
-  const colorMode = useViewerStore((s) => s.colorMode)
+function ContextToggle() {
+  const defaultVisibility = useViewerStore((s) => s.defaultVisibility)
+  const { hideUncolored, contextOpacity } = useViewerStore((s) => s.presetViewOptions)
+  const toggleLearnContext = useViewerStore((s) => s.toggleLearnContext)
+  const setPresetViewOptions = useViewerStore((s) => s.setPresetViewOptions)
+  if (!defaultVisibility) return null
+  return (
+    <div style={{ borderTop: '1px solid var(--line-soft)', marginTop: 10, paddingTop: 8 }}>
+      <button
+        type="button"
+        className={`ed-btn${!hideUncolored ? ' active' : ''}`}
+        onClick={toggleLearnContext}
+        style={{ width: '100%', textAlign: 'left', padding: '5px 8px', marginBottom: 2 }}
+      >
+        Anatomischer Kontext
+      </button>
+      {!hideUncolored ? (
+        <div style={{ padding: '4px 8px 0' }}>
+          <label className="mono-xs" style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--g600)', marginBottom: 2 }}>
+            <span>Transparenz</span>
+            <span>{Math.round(contextOpacity * 100)} %</span>
+          </label>
+          <input
+            type="range"
+            min={0.01}
+            max={0.5}
+            step={0.01}
+            value={contextOpacity}
+            onChange={(e) => setPresetViewOptions({ contextOpacity: Number(e.target.value) })}
+            aria-label="Kontext-Transparenz"
+            style={{ width: '100%', accentColor: 'var(--orange)', cursor: 'ew-resize' }}
+          />
+        </div>
+      ) : null}
+    </div>
+  )
+}
+
+function PresetContent() {
+  const preset = useViewerStore((s) => s.activePreset)
+  if (!preset) return null
+  return (
+    <ColorLegendPanel
+      title={preset.label}
+      subtitle={(
+        <>
+          {preset.intent}
+          {preset.coverage === 'partial' && preset.coverageNote ? (
+            <div style={{ marginTop: 4, color: 'var(--orange)' }}>{preset.coverageNote}</div>
+          ) : null}
+        </>
+      )}
+      maxWidth={360}
+    >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {preset.groups.map((g) => (
+          <div key={g.label} style={{ display: 'grid', gridTemplateColumns: '11px 1fr', columnGap: 8, alignItems: 'start' }}>
+            <span
+              data-color-group={g.label}
+              style={{ width: 11, height: 11, marginTop: 2, background: hueToHex(g.hue), border: '1px solid var(--line-soft)' }}
+            />
+            <span>
+              <span className="mono-sm" style={{ display: 'block', color: 'var(--g800)', letterSpacing: '0.01em' }}>
+                {g.label}
+              </span>
+              <span className="mono-xs" style={{ display: 'block', lineHeight: 1.35, color: 'var(--g600)' }}>
+                {g.meaning}
+              </span>
+            </span>
+          </div>
+        ))}
+      </div>
+      <ContextToggle />
+    </ColorLegendPanel>
+  )
+}
+
+function ModeContent({ mode }: { mode: GlobalMode }) {
   const legendState = useViewerStore((s) => s.colorLegend)
   const setColorLegend = useViewerStore((s) => s.setColorLegend)
   const atlasHudActive = useViewerStore((s) => s.showCarveJulich || s.showCarveDkt || s.showCarveBrodmann)
   const isNarrow = useIsNarrow()
-  if (colorMode === 'preset') return null
-  const legend = LEGENDS[colorMode]
+  const legend = LEGENDS[mode]
 
   if (!legendState.visible || legendState.minimized) {
     return (
@@ -191,31 +187,24 @@ export default function GlobalColorLegend() {
       >
         <span className="eyebrow">Färbung</span>
         <span className="display-lg" style={{ lineHeight: 1.15 }}>
-          {COLOR_MODE_LABEL[colorMode]}
+          {COLOR_MODE_LABEL[mode]}
         </span>
         <span className="mono-xs" style={{ color: 'var(--g600)', lineHeight: 1.25 }}>
           aktiver Färbungsmodus
         </span>
-        <CompactLegendRows rows={legend.rows} />
+        <CompactRows rows={legend.rows} />
       </button>
     )
   }
 
   return (
     <ColorLegendPanel title={legend.title} subtitle={legend.subtitle} maxWidth={330}>
-      <CoreRoleSwatches />
-      <div style={{ display: 'grid', gap: 5, marginTop: 10 }}>
+      <div style={{ display: 'grid', gap: 5 }}>
         {legend.rows.map((row) => (
           <div key={row.label} style={{ display: 'grid', gridTemplateColumns: '10px 1fr', gap: 8, alignItems: 'start' }}>
             <span
               aria-hidden="true"
-              style={{
-                width: 10,
-                height: 10,
-                marginTop: 3,
-                background: row.color,
-                border: '1px solid var(--line-soft)',
-              }}
+              style={{ width: 10, height: 10, marginTop: 3, background: row.color, border: '1px solid var(--line-soft)' }}
             />
             <span style={{ display: 'grid', gap: 1 }}>
               <span className="mono-base" style={{ fontWeight: 700 }}>{row.label}</span>
@@ -226,6 +215,13 @@ export default function GlobalColorLegend() {
           </div>
         ))}
       </div>
+      <ContextToggle />
     </ColorLegendPanel>
   )
+}
+
+export default function ColorLegend() {
+  const colorMode = useViewerStore((s) => s.colorMode)
+  if (colorMode === 'preset') return <PresetContent />
+  return <ModeContent mode={colorMode} />
 }

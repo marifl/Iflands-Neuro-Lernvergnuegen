@@ -49,8 +49,11 @@ export function ColorFlyoutContent({ onClose }: { onClose: () => void }) {
         setPresetError(new Error(`Vortrags-Färbung "${item.id}" ist nicht auflösbar: ${issue}`))
         return
       }
+      // Modus zuerst wechseln (Clean-Slate), dann Preset setzen — sonst wischt setAppMode den Preset weg.
+      setAppMode('learn')
       setPreset({ ...preset, dimOthers: item.dimOthers ?? preset.dimOthers })
     } else {
+      setAppMode('learn')
       setPreset(null)
     }
     replaceCanonicalLocation({
@@ -60,7 +63,6 @@ export function ColorFlyoutContent({ onClose }: { onClose: () => void }) {
       sceneId: item.scene,
       step: 0,
     })
-    setAppMode('learn')
     onClose()
   }
 

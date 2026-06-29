@@ -8,8 +8,7 @@ import { useEffectiveConfig } from './atlas/atlasConfig'
 import { buildAliasMapByCarveSlug, loadCatalog, type AtlasCatalog } from './atlas/atlasCatalog'
 import StructureTree from './StructureTree'
 import FooterBar from './FooterBar'
-import PresetLegend from './PresetLegend'
-import GlobalColorLegend from './GlobalColorLegend'
+import ColorLegend from './ColorLegend'
 import IsolationBar from './IsolationBar'
 import ExplorerLearningFlyout, { learningTargetForNode, type ExplorerLearningTarget } from './ExplorerLearningFlyout'
 import {
@@ -620,8 +619,7 @@ export default function BodyParts3DViewer() {
               />
             ) : null}
 
-            <PresetLegend />
-            {isExploreMode ? <GlobalColorLegend /> : null}
+            <ColorLegend />
             {/* Atlas-auf-Hirn aktiv: geklicktes Areal benennen (oben rechts, kollidiert nicht mit der
                 Struktur-HUD links). Carve liegt 0 mm auf TARO -> Klick trifft das echte Areal. */}
             {atlasOnBrain && (

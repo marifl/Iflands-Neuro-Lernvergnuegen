@@ -8,6 +8,7 @@ import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
 import { useSettingsStore } from './settingsStore'
 import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
+import { ROUTE_CHANGE_EVENT } from '../scene/router'
 import { COLOR_MODE_LABEL } from './colorModeDefinitions'
 import SettingsPanel from './SettingsPanel'
 import { ShellControlButton } from './ShellStatePrimitives'
@@ -134,7 +135,14 @@ export default function FooterBar() {
       label: APP_MODE_LABEL[appMode],
       icon: <BookOpen {...FOOTER_ICON_PROPS} />,
       content: REGULAR_APP_MODE_DEFINITIONS.map((definition) => (
-        <Item key={definition.mode} active={appMode === definition.mode} onClick={() => { setAppMode(definition.mode); close() }}>
+        <Item key={definition.mode} active={appMode === definition.mode} onClick={() => {
+          if (definition.mode !== 'learn') {
+            window.history.replaceState(null, '', `?mode=${definition.mode}`)
+            window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+          }
+          setAppMode(definition.mode)
+          close()
+        }}>
           {definition.label}
         </Item>
       )),

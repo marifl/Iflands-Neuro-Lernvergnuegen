@@ -1,11 +1,10 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { hueToHex } from './colorPresets'
-import GlobalColorLegend, { CORE_COLOR_ROLE_SWATCHES } from './GlobalColorLegend'
+import ColorLegend from './ColorLegend'
 import { BASE_COLOR_MODE_DEFINITIONS, COLOR_MODE_LABEL } from './colorModeDefinitions'
 import { useViewerStore } from './viewerStore'
 
-describe('GlobalColorLegend', () => {
+describe('ColorLegend', () => {
   beforeEach(() => {
     useViewerStore.setState({
       activePreset: null,
@@ -18,31 +17,21 @@ describe('GlobalColorLegend', () => {
   })
 
   it('zeigt eingeklappt die Einträge des aktiven Färbungsmodus', () => {
-    render(<GlobalColorLegend />)
+    render(<ColorLegend />)
 
     expect(screen.getByRole('button', { name: 'Färbungsdetails öffnen' })).toBeInTheDocument()
     expect(screen.getByText('Färbung')).toBeInTheDocument()
     expect(screen.getByText('Region')).toBeInTheDocument()
     expect(screen.getByText('aktiver Färbungsmodus')).toBeInTheDocument()
-    // Region-Modus -> die Region-Zeilen, nicht die 3 Lernpfad-Rollen.
     expect(screen.getByText('Großhirn')).toBeInTheDocument()
     expect(screen.getByText('Zwischenhirn')).toBeInTheDocument()
-    expect(screen.queryByText('Kognition')).not.toBeInTheDocument()
     expect(screen.queryByText('Top-Level-Regionen der TARO-Ontologie; Gefäße und Nerven sind eigene Gruppen.')).not.toBeInTheDocument()
-  })
-
-  it('nutzt die drei didaktischen Rollenfarben aus der vorhandenen Hue-Pipeline', () => {
-    expect(CORE_COLOR_ROLE_SWATCHES.map((row) => [row.role, row.label, row.color])).toEqual([
-      ['cognition', 'Kognition', hueToHex(210)],
-      ['emotion', 'Emotion', hueToHex(30)],
-      ['motivation', 'Motivation', hueToHex(150)],
-    ])
   })
 
   it('zeigt jeden Basis-Färbungsmodus in der kompakten Legende an', () => {
     for (const definition of BASE_COLOR_MODE_DEFINITIONS) {
       useViewerStore.setState({ colorMode: definition.mode, colorLegend: { visible: true, minimized: true } })
-      const { unmount } = render(<GlobalColorLegend />)
+      const { unmount } = render(<ColorLegend />)
 
       expect(screen.getByText(COLOR_MODE_LABEL[definition.mode])).toBeInTheDocument()
       expect(screen.getByText('aktiver Färbungsmodus')).toBeInTheDocument()
@@ -52,7 +41,7 @@ describe('GlobalColorLegend', () => {
   })
 
   it('oeffnet per Tap die volle Färbungs-Erklärung', () => {
-    render(<GlobalColorLegend />)
+    render(<ColorLegend />)
 
     fireEvent.click(screen.getByRole('button', { name: 'Färbungsdetails öffnen' }))
 
@@ -61,11 +50,11 @@ describe('GlobalColorLegend', () => {
     expect(screen.getByText('Top-Level-Regionen der TARO-Ontologie; Gefäße und Nerven sind eigene Gruppen.')).toBeInTheDocument()
   })
 
-  it('ueberlaesst Preset-Faerbungen der Figur-Legende', () => {
+  it('rendert nichts bei Preset-Modus ohne aktives Preset', () => {
     useViewerStore.setState({ colorMode: 'preset' })
 
-    render(<GlobalColorLegend />)
+    const { container } = render(<ColorLegend />)
 
-    expect(screen.queryByRole('button', { name: 'Färbungsdetails öffnen' })).not.toBeInTheDocument()
+    expect(container.innerHTML).toBe('')
   })
 })

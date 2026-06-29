@@ -78,7 +78,7 @@ describe('FooterBar', () => {
       isolated: null,
       isolationPath: [],
       isolatedSlugs: new Set(),
-      presetViewOptions: { hideUncolored: true, focusColored: false },
+      presetViewOptions: { hideUncolored: true, focusColored: false, contextOpacity: 0.12 },
       selected: null,
       selectedSlugs: new Set(),
       selectedLabels: null,
@@ -216,7 +216,7 @@ describe('FooterBar', () => {
     expect(screen.queryByLabelText('Andere ausblenden')).not.toBeInTheDocument()
     expect(screen.queryByLabelText('Eingefärbte fokussieren')).not.toBeInTheDocument()
     expect(screen.queryByText('Andere dimmen')).not.toBeInTheDocument()
-    expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: false })
+    expect(useViewerStore.getState().presetViewOptions).toEqual({ hideUncolored: true, focusColored: false, contextOpacity: 0.12 })
   })
 
   it('bietet alle Basis-Färbungsmodi und Vortrags-Färbungen an', async () => {

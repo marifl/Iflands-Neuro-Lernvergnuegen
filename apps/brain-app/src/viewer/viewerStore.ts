@@ -148,6 +148,7 @@ export interface CameraPose {
 export interface PresetViewOptions {
   hideUncolored: boolean
   focusColored: boolean
+  contextOpacity: number
 }
 
 export interface ColorLegendState {
@@ -158,6 +159,7 @@ export interface ColorLegendState {
 const DEFAULT_PRESET_VIEW_OPTIONS: PresetViewOptions = {
   hideUncolored: true,
   focusColored: false,
+  contextOpacity: 0.12,
 }
 
 const DEFAULT_COLOR_LEGEND: ColorLegendState = {
@@ -309,6 +311,8 @@ interface ViewerState {
   setPreset: (preset: ColorPreset | null) => void
   /** Figur-Faerbungsansicht setzen: Kontext verstecken bzw. relevante Areale fokussieren. */
   setPresetViewOptions: (options: Partial<PresetViewOptions>) => void
+  /** Anatomischen Kontext in Lern-Szenen ein-/ausblenden (defaultVisibility-Filter toggeln). */
+  toggleLearnContext: () => void
   /** Farb-/Figur-Legende im Viewport ein-/ausblenden oder minimieren. */
   setColorLegend: (legend: Partial<ColorLegendState>) => void
   /** Eine Achse setzen (on/off + Position). */
@@ -577,8 +581,35 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     if (appMode !== 'learn' && appMode !== 'explore' && appMode !== 'atlas') {
       throw new Error(`setAppMode: unbekannter appMode "${appMode}"`)
     }
-    // Moduswechsel raeumt modus-fremde Viewport-States auf (kein stiller Rest).
-    set({ appMode, highlight: [] })
+    const st = get()
+    if (appMode === st.appMode) return
+    // Moduswechsel raeumt ALLE modus-spezifischen Viewport-States auf —
+    // Ziel-Modus setzt eigene States anschliessend selbst (ConfigLinkStateApplier, Atlas-Init etc.).
+    set({
+      appMode,
+      highlight: [],
+      colorMode: 'region',
+      activePreset: null,
+      presetViewOptions: DEFAULT_PRESET_VIEW_OPTIONS,
+      isolated: null,
+      isolatedSlugs: new Set(),
+      isolationPath: [],
+      erpActive: false,
+      erpPhase: 0,
+      erpPulse: 0,
+      defaultVisibility: null,
+      hidden: defaultHiddenSet(),
+      mode: 'full',
+      showCarveJulich: false,
+      showCarveDkt: false,
+      showCarveBrodmann: false,
+      showAtlasJulich: false,
+      showAtlasDkt: false,
+      pickedAtlasArea: null,
+      pickedAtlasSlug: null,
+      hoveredAtlasArea: null,
+      hoveredAtlasSlug: null,
+    })
   },
   // Verlassen des Preset-Modus raeumt das aktive Preset auf (kein stiller Rest).
   setColorMode: (colorMode) => set((s) => ({
@@ -594,6 +625,21 @@ export const useViewerStore = create<ViewerState>((set, get) => ({
     set((s) => ({
       presetViewOptions: { ...s.presetViewOptions, ...options },
     })),
+  toggleLearnContext: () =>
+    set((s) => {
+      const showing = s.presetViewOptions.hideUncolored
+      const nextHidden = new Set(s.hidden)
+      if (s.defaultVisibility) {
+        for (const slug of s.defaultVisibility.hidden) {
+          if (showing) nextHidden.delete(slug)
+          else nextHidden.add(slug)
+        }
+      }
+      return {
+        hidden: nextHidden,
+        presetViewOptions: { ...s.presetViewOptions, hideUncolored: !showing },
+      }
+    }),
   setColorLegend: (legend) =>
     set((s) => ({
       colorLegend: { ...s.colorLegend, ...legend },

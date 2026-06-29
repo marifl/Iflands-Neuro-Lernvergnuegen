@@ -158,7 +158,7 @@ export function Brain({ brainModel, dimOpacity }: { brainModel: BrainModelOption
     // den Cortex sichtbar werden.
     const presetViewActive = colorMode === 'preset' && Boolean(presetColors && activePreset)
     const sceneHighlightActive = highlightSet.size > 0 && !presetViewActive
-    const hidePresetUncolored = presetViewActive
+    const hidePresetUncolored = presetViewActive && presetViewOptions.hideUncolored
     const focusPresetColored = presetViewActive && presetViewOptions.focusColored
     const iso = isolatedSlugs.size > 0
     for (const mesh of meshes) {
@@ -193,8 +193,9 @@ export function Brain({ brainModel, dimOpacity }: { brainModel: BrainModelOption
         material.emissive.set(EMISSIVE_OFF_COLOR)
         material.emissiveIntensity = 0
       }
-      const dim = visible && ((sceneHighlightActive && !isActive) || focusDimmed)
-      setOpacityTarget(mesh, dim ? dimOpacity : 1)
+      const contextDim = visible && !hidePresetUncolored && presetViewActive && !isPresetColored
+      const dim = visible && ((sceneHighlightActive && !isActive) || focusDimmed || contextDim)
+      setOpacityTarget(mesh, dim ? (contextDim ? presetViewOptions.contextOpacity : dimOpacity) : 1)
     }
   }, [
     meshes,
