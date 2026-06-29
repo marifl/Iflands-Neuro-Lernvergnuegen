@@ -8,6 +8,19 @@ import { useIsNarrow, useIsTouchLandscape } from '../../useMediaQuery'
 import PresenterChrome from '../PresenterChrome'
 import PresenterNotes from '../PresenterNotes'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
+import { regionsToMeshes } from '../brainBridge'
+import { bridgeFor, type AtlasTarget } from '../../viewer/atlas/atlasBridge'
+import { useViewerStore } from '../../viewer/viewerStore'
+
+/** Erstes kuratiert verlinktes fsaverage-Areal der Szenen-Regionen (Bruecke Lernschritt -> Atlas),
+ *  oder null wenn keine Region ein zuordenbares Areal hat. */
+function atlasTargetForScene(scene: Scene): AtlasTarget | null {
+  for (const slug of regionsToMeshes(scene.brain.regions)) {
+    const target = bridgeFor(slug)
+    if (target) return target
+  }
+  return null
+}
 
 /** Waehlt den Overlay-Renderer nach scene.overlay.kind. */
 function renderOverlay(scene: Scene) {
@@ -38,6 +51,9 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
   const isTouchLandscape = useIsTouchLandscape()
   const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
   const deepenings = deepeningIdsForScene(scene)
+  const setAtlasFocus = useViewerStore((s) => s.setAtlasFocus)
+  const setAppMode = useViewerStore((s) => s.setAppMode)
+  const atlasTarget = atlasTargetForScene(scene)
   return (
     <aside
       className="ed-panel"
@@ -62,6 +78,20 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
           <h2 className="display-xl" style={{ color: 'var(--ink)', margin: '6px 0 0' }}>
             {scene.title}
           </h2>
+          {/* Bruecke Lernschritt -> Atlas: das praezise fsaverage-Areal zur Szenen-Region zeigen. */}
+          {atlasTarget ? (
+            <button
+              type="button"
+              className="ed-btn"
+              style={{ marginTop: 8, padding: '5px 11px', minHeight: 44 }}
+              onClick={() => {
+                setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                setAppMode('atlas')
+              }}
+            >
+              Im Atlas zeigen →
+            </button>
+          ) : null}
         </div>
 
         {renderOverlay(scene)}
