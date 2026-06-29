@@ -14,6 +14,7 @@ const CASES = [
 const browser = await chromium.launch()
 let failures = 0
 
+try {
 for (const testCase of CASES) {
   const context = await browser.newContext({ viewport: testCase.viewport, hasTouch: testCase.hasTouch })
   const page = await context.newPage()
@@ -52,6 +53,7 @@ for (const testCase of CASES) {
   if (errors.length) failures++
   console.log(`${errors.length ? 'FAIL' : 'PASS'} ${testCase.id} ${errors.join(' | ')}`)
 }
-
-await browser.close()
+} finally {
+  await browser.close()
+}
 if (failures) process.exit(1)

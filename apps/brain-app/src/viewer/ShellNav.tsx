@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Compass, Layers, MoreHorizontal, X } from 'lucide-react'
 import { useViewerStore, type AppMode } from './viewerStore'
 import { ROUTE_CHANGE_EVENT } from '../scene/router'
@@ -38,11 +38,35 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
   const appMode = useViewerStore((s) => s.appMode)
   const setAppMode = useViewerStore((s) => s.setAppMode)
   const [moreOpen, setMoreOpen] = useState(false)
+  const dialogRef = useRef<HTMLDivElement>(null)
   const variant = shellMode === 'portrait-drawer' ? 'dock' : 'rail'
 
-  const navTo = (mode: NavSurface['mode']) => {
-    goToSurface(mode, setAppMode)
-  }
+  // Sheet beim Oeffnen fokussieren und Escape abfangen, bevor der globale Viewer-Keydown-Handler
+  // (BodyParts3DViewer) Escape als Auswahl-Reset interpretiert. capture=true gewinnt das Rennen.
+  useEffect(() => {
+    if (!moreOpen) return
+    dialogRef.current?.focus()
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return
+      e.stopPropagation()
+      setMoreOpen(false)
+    }
+    window.addEventListener('keydown', onKey, { capture: true })
+    return () => window.removeEventListener('keydown', onKey, { capture: true })
+  }, [moreOpen])
+
+  // Aktiv-Akzent wie im Mockup: 3px-Leiste links (Rail) bzw. 2px oben (Dock). Bewusst statt
+  // ed-btn.active-Hintergrund, weil die Buehnen-Leiste transparent (Ghost) bleibt.
+  const activeAccent = (
+    <span
+      aria-hidden
+      style={
+        variant === 'dock'
+          ? { position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: 'var(--orange)' }
+          : { position: 'absolute', left: 0, top: 9, bottom: 9, width: 3, background: 'var(--orange)' }
+      }
+    />
+  )
 
   const surfaceButton = (surface: NavSurface) => {
     const active = appMode === surface.mode
@@ -53,8 +77,9 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
         className={`ed-btn${active ? ' active' : ''}`}
         aria-current={active ? 'page' : undefined}
         title={surface.description}
-        onClick={() => navTo(surface.mode)}
+        onClick={() => goToSurface(surface.mode, setAppMode)}
         style={{
+          position: 'relative',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -68,8 +93,9 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
           border: 'none',
         }}
       >
+        {active ? activeAccent : null}
         {surface.icon}
-        <span className="eyebrow" style={{ fontSize: 8 }}>{surface.label}</span>
+        <span className="eyebrow">{surface.label}</span>
       </button>
     )
   }
@@ -98,7 +124,7 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
       }}
     >
       <MoreHorizontal {...NAV_ICON_PROPS} />
-      <span className="eyebrow" style={{ fontSize: 8 }}>Mehr</span>
+      <span className="eyebrow">Mehr</span>
     </button>
   )
 
@@ -135,8 +161,11 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
 
       {moreOpen ? (
         <div
+          ref={dialogRef}
           role="dialog"
+          aria-modal="true"
           aria-label="Mehr"
+          tabIndex={-1}
           style={{
             position: 'fixed',
             inset: 0,
@@ -176,7 +205,7 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                     type="button"
                     className={`ed-btn${active ? ' active' : ''}`}
                     aria-current={active ? 'page' : undefined}
-                    onClick={() => { navTo(surface.mode); setMoreOpen(false) }}
+                    onClick={() => { goToSurface(surface.mode, setAppMode); setMoreOpen(false) }}
                     style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '10px 12px', minHeight: 44 }}
                   >
                     {surface.icon}
