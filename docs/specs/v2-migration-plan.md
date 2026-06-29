@@ -12,8 +12,8 @@
 Lernen = primärer Flow; Explorer/Atlas/Fall/Wiki/Chat = Surfaces, keine Peer-Modi.
 
 ## Status-Header
-- Aktiver Schritt: 10 (ifn-nav Rail/Dock) — IN PROGRESS · Branch feature/v2-mockup-completion · Backup-Tag pre-v2-mockup-completion
-- Letzter Commit: (folgt — Slice A ShellNav)
+- Aktiver Schritt: 13 abgeschlossen (Mockup-Completion komplett + Footer-Konsolidierung) · Branch feature/v2-mockup-completion
+- Letzter Commit: bcd3a0a5 (Konsolidierungs-Review-Fix)
 - Backup-Tag: pre-v2-shell-skeleton · pre-v2-mockup-completion
 - Letzte Update: 2026-06-29
 
@@ -27,9 +27,7 @@ Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD >
       Mehr ≤ „4+Mehr"; „Inhalt" = Lernen-Content-Panel, keine erfundene Surface). Mehr-Sheet = Sekundärnav
       + SettingsPanel (Shape §182). **Additiv** — FooterBar unangetastet (Modus-/Settings-Box-Entfernung
       bräche 5 FooterBar-Tests; FooterBar-Umbau bleibt eigener Chrome-Slice, s. Schritt 8-Note).
-      > Note: Portrait zeigt damit Dock (Nav) + FooterBar (Tools) als zwei Bottom-Leisten. Bewusste,
-      > dokumentierte Folge: Konsolidierung (Footer-Tools → Dock-Mehr, Footer-Modus/Settings-Box raus +
-      > Tests umziehen) ist der nächste Chrome-Slice, kein Migrations-Blocker.
+      > Note: Portrait zeigte zunächst Dock + FooterBar als zwei Bottom-Leisten — in Schritt 13 konsolidiert.
 - [x] Schritt 11 — ERP-Supplement (AtlasErpFrame): ERP-Kurve rendert bereits als Content des Lern-Panels
       (ErpChart, overlay.kind='erp', z.B. Szene p3a-konfliktmonitoring). Neu: die Kontextspalte ist jetzt
       **einklappbar** (Collapse-Chevron zwischen Bühne und Panel / Reopen-Tab im eingeklappten Zustand) =
@@ -46,6 +44,12 @@ Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD >
         wenn die Szenen-Region ein kuratiertes fsaverage-Areal hat (regionsToMeshes→bridgeFor).
         Klick: setAtlasFocus + setAppMode('atlas'). Kuratiert, kein generisches Fake-Mapping.
         Verify: smoke:atlas-bridge PASS + Screenshot (superiorfrontal hervorgehoben).
+- [x] Schritt 13 — FooterBar-Konsolidierung (Slice E, mit 3 file-disjunkten Subagents): Footer
+      verliert Modus-Box (Nav→Rail/Dock) + Settings-Box (→ShellNav-Mehr); Portrait rendert keine
+      zweite Bottom-Leiste mehr (Footer nur Desktop/Landscape), Werkzeuge liegen im Dock-Mehr-Sheet
+      (fixer Block am Boden, Flyouts nicht geclippt). 4 Box-Tests entfernt. Verify: typecheck 0,
+      test 506 (510−4), build 0, alle Smokes PASS, Screenshots (Portrait 1 Dock; Mehr-Sheet
+      Werkzeuge+Einstellungen). Doppel-Nav-Anti-Pattern beseitigt.
 
 ## Schlüsselbefund (29.06.)
 Die Runtime erfüllt das **AppFrame-Modell** für learn+explore bereits weitgehend:
