@@ -44,7 +44,7 @@ import ManifestAuthoringBridge from './ManifestAuthoringBridge'
 import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
-import ModeLauncher from './ModeLauncher'
+import ResumeLauncher from './ResumeLauncher'
 import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
 import CutCaps from './CutCaps'
 import CutPickBridge from './CutPickBridge'
@@ -325,8 +325,8 @@ export default function BodyParts3DViewer() {
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'var(--app-bg)', padding: 10, boxSizing: 'border-box' }}>
       {!launched && (
-        <ModeLauncher
-          onPick={(m) => {
+        <ResumeLauncher
+          onEnter={(m) => {
             setAppMode(m)
             setLaunched(true)
           }}
