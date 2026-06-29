@@ -20,6 +20,7 @@ import {
 } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
 import LearnSidebar from '../scene/LearnSidebar'
+import ShellNav from './ShellNav'
 import { ShellControlButton } from './ShellStatePrimitives'
 import { CanvasContentErrorBoundary, CanvasStateHtml } from './CanvasViewportState'
 import PerformanceGateProbe, { performanceGateEnabled } from './PerformanceGateProbe'
@@ -433,6 +434,8 @@ export default function BodyParts3DViewer() {
             position: 'relative',
           }}
         >
+          {/* Globale Surface-Navigation: Rail links bei Split/Landscape (Dock liegt portrait unten). */}
+          {shellMode !== 'portrait-drawer' ? <ShellNav shellMode={shellMode} /> : null}
           <div
             style={{
               // Portrait: feste Hoehen-Zone oben; Split/Rail: nimmt den Restraum links.
@@ -699,6 +702,9 @@ export default function BodyParts3DViewer() {
             </div>
           ) : null}
         </div>
+
+        {/* Portrait: horizontales Dock (4 Surfaces + Mehr) als globale Navigation unter der Buehne. */}
+        {shellMode === 'portrait-drawer' ? <ShellNav shellMode={shellMode} /> : null}
 
         {/* ── Steuer-Fussleiste: Atlas-Menue, Werkzeug (nur Explorer), Modus ── */}
         <FooterBar />

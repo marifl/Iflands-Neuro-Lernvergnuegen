@@ -12,10 +12,25 @@
 Lernen = primärer Flow; Explorer/Atlas/Fall/Wiki/Chat = Surfaces, keine Peer-Modi.
 
 ## Status-Header
-- Aktiver Schritt: 4 (Atlas-Supplement) / 7 (Smoke grün) — Rail/Dock-Nav ist die größte verbleibende V2-Sicht
-- Letzter Commit: (folgt — Schritt 2/3 + 6-Beleg)
-- Backup-Tag: pre-v2-shell-skeleton
+- Aktiver Schritt: 10 (ifn-nav Rail/Dock) — IN PROGRESS · Branch feature/v2-mockup-completion · Backup-Tag pre-v2-mockup-completion
+- Letzter Commit: (folgt — Slice A ShellNav)
+- Backup-Tag: pre-v2-shell-skeleton · pre-v2-mockup-completion
 - Letzte Update: 2026-06-29
+
+## Mockup-Completion (Schritt 10-12, Branch feature/v2-mockup-completion)
+Realisiert die „angepasst übernehmen"-Frames AppFrame/AtlasErpFrame/PresenterFrame (Frame-Mapping).
+Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD > ältere Dart-Subtasks (17.06.).
+
+- [ ] Schritt 10 — ifn-nav Rail/Dock (AppFrame): neue `ShellNav.tsx` (Rail desktop-split/landscape-rail,
+      Dock portrait-drawer) per `responsiveShellMode`. Items = Lernen·Struktur·Atlas + Mehr (3 Surfaces +
+      Mehr ≤ „4+Mehr"; „Inhalt" = Lernen-Content-Panel, keine erfundene Surface). Mehr-Sheet = Sekundärnav
+      + SettingsPanel (Shape §182). **Additiv** — FooterBar unangetastet (Modus-/Settings-Box-Entfernung
+      bräche 5 FooterBar-Tests; FooterBar-Umbau bleibt eigener Chrome-Slice, s. Schritt 8-Note).
+      > Note: Portrait zeigt damit Dock (Nav) + FooterBar (Tools) als zwei Bottom-Leisten. Bewusste,
+      > dokumentierte Folge: Konsolidierung (Footer-Tools → Dock-Mehr, Footer-Modus/Settings-Box raus +
+      > Tests umziehen) ist der nächste Chrome-Slice, kein Migrations-Blocker.
+- [ ] Schritt 11 — ERP-Supplement (AtlasErpFrame)
+- [ ] Schritt 12 — Presenter-Surface (PresenterFrame) + Lernschritt→Atlas-Bridge
 
 ## Schlüsselbefund (29.06.)
 Die Runtime erfüllt das **AppFrame-Modell** für learn+explore bereits weitgehend:
