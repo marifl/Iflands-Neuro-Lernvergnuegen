@@ -740,8 +740,9 @@ export default function BodyParts3DViewer() {
         {/* Portrait: horizontales Dock (4 Surfaces + Mehr) als globale Navigation unter der Buehne. */}
         {shellMode === 'portrait-drawer' ? <ShellNav shellMode={shellMode} /> : null}
 
-        {/* ── Steuer-Fussleiste: Atlas-Menue, Werkzeug (nur Explorer), Modus ── */}
-        <FooterBar />
+        {/* ── Steuer-Fussleiste (Werkzeug-Cockpit): nur Desktop/Landscape; auf Portrait liegen die
+            Werkzeuge im Dock-„Mehr"-Sheet (sonst zwei Bottom-Leisten). ── */}
+        {shellMode !== 'portrait-drawer' ? <FooterBar /> : null}
       </div>
     </div>
   )

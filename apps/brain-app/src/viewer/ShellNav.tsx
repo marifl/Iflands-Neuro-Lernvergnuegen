@@ -4,6 +4,7 @@ import { useViewerStore, type AppMode } from './viewerStore'
 import { ROUTE_CHANGE_EVENT } from '../scene/router'
 import { useSceneStore } from '../scene/sceneStore'
 import SettingsPanel from './SettingsPanel'
+import FooterBar from './FooterBar'
 import type { ResponsiveShellMode } from './explorerShellLayout'
 
 /** Einzige Kapitel-11-Vortragssequenz (config.default.toml). Praesentation ist ein Zustand des
@@ -245,6 +246,12 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                 {presentationActive ? 'Vortrag verlassen — zurück zum Lernpfad' : 'Vortrag starten (Kapitel 11)'}
               </button>
             </div>
+            {variant === 'dock' ? (
+              <div style={{ borderTop: '1.5px solid var(--line)', padding: '10px 12px' }}>
+                <div className="eyebrow" style={{ marginBottom: 8 }}>Werkzeuge</div>
+                <FooterBar />
+              </div>
+            ) : null}
             <div style={{ borderTop: '1.5px solid var(--line)', padding: '12px' }}>
               <div className="eyebrow" style={{ marginBottom: 8 }}>Einstellungen</div>
               <SettingsPanel />

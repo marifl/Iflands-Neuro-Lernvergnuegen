@@ -116,13 +116,6 @@ describe('FooterBar', () => {
     expect(useViewerStore.getState().authoringTransformMode).toBe('rotate')
   })
 
-  it('wechselt den appMode ueber das Modus-Flyout', async () => {
-    await renderFooterBar()
-    fireEvent.click(screen.getByRole('button', { name: /Strukturfokus/ })) // Lernraum-Box-Trigger oeffnen
-    fireEvent.click(screen.getByRole('button', { name: /Lernen · Home/ })) // Eintrag im Flyout
-    expect(useViewerStore.getState().appMode).toBe('learn')
-  })
-
   it('oeffnet die Quellen-Page ueber das Atlas-Menue', async () => {
     await renderFooterBar()
     fireEvent.click(screen.getByRole('button', { name: /Atlas/ }))
@@ -260,44 +253,6 @@ describe('FooterBar', () => {
     fireEvent.click(screen.getByRole('button', { name: /Zustand/ }))
     expect(screen.getByRole('button', { name: 'Exportieren' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Importieren' })).toBeInTheDocument()
-  })
-
-  it('oeffnet die zentrale Settings-UI ueber Mehr und schreibt in den Settings-Store', async () => {
-    await renderFooterBar()
-
-    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
-    expect(screen.getByRole('navigation', { name: 'Einstellungskategorien' })).toBeInTheDocument()
-    expect(screen.getByLabelText('Einstellungen')).toHaveAttribute('data-layout', 'split')
-
-    fireEvent.click(screen.getByRole('button', { name: 'Barrierefreiheit' }))
-    fireEvent.click(screen.getByLabelText('Ruhemodus'))
-
-    expect(useSettingsStore.getState().accessibility.quietMode).toBe(true)
-
-    fireEvent.click(screen.getByRole('button', { name: 'Zurücksetzen' }))
-    expect(useSettingsStore.getState().accessibility.quietMode).toBe(false)
-  })
-
-  it('stellt Settings-Controls fuer Select, Slider und Swatches bereit', async () => {
-    await renderFooterBar()
-
-    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
-    expect(screen.getByRole('button', { name: 'Orange' })).toBeInTheDocument()
-    fireEvent.click(screen.getByRole('button', { name: 'Färbung' }))
-    fireEvent.change(screen.getByLabelText('Standard-Färbung'), { target: { value: 'function' } })
-    fireEvent.change(screen.getByLabelText('Dim-Stärke'), { target: { value: '0.5' } })
-
-    expect(useSettingsStore.getState().coloring.defaultColorMode).toBe('function')
-    expect(useSettingsStore.getState().coloring.dimOpacity).toBe(0.5)
-  })
-
-  it('stackt die Settings-UI auf Phone-Breite', async () => {
-    mockViewportWidth(500)
-
-    await renderFooterBar()
-    fireEvent.click(screen.getByRole('button', { name: /Mehr/ }))
-
-    expect(screen.getByLabelText('Einstellungen')).toHaveAttribute('data-layout', 'stack')
   })
 
   it('importiert eine Unterrichts-Snapshot-Datei', async () => {

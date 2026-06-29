@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { BookOpen, Camera, FileJson, Map as MapIcon, MousePointer2, Palette, Scissors, Settings2, Skull } from 'lucide-react'
+import { Camera, FileJson, Map as MapIcon, MousePointer2, Palette, Scissors, Skull } from 'lucide-react'
 import { useViewerStore } from './viewerStore'
 import { CUT_AXES } from './cutCapsMerged'
 import { downloadViewerSnapshot, importViewerSnapshotFile } from './localDataActions'
@@ -7,14 +7,11 @@ import { useIsPhone } from '../useMediaQuery'
 import Flyout from './Flyout'
 import SourcesPage from './SourcesPage'
 import { useSettingsStore } from './settingsStore'
-import { APP_MODE_LABEL, REGULAR_APP_MODE_DEFINITIONS } from './appModeDefinitions'
-import { ROUTE_CHANGE_EVENT } from '../scene/router'
 import { COLOR_MODE_LABEL } from './colorModeDefinitions'
-import SettingsPanel from './SettingsPanel'
 import { ShellControlButton } from './ShellStatePrimitives'
 import { ColorFlyoutContent, CutFlyoutContent, ToolFlyoutContent, CUT_LABEL, TOOL_LABEL } from './FooterFlyoutContents'
 
-type OpenFlyout = 'atlas' | 'mode' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | 'settings' | null
+type OpenFlyout = 'atlas' | 'color' | 'cut' | 'view' | 'context' | 'snapshot' | 'tool' | null
 
 /** Kamera-Schnellwinkel (Shot-Name aus cameraPresets -> Label). */
 const VIEW_PRESETS: { name: string; label: string }[] = [
@@ -72,13 +69,12 @@ interface BoxDef {
 }
 
 const FOOTER_ICON_PROPS = { size: 18, strokeWidth: 1.8, 'aria-hidden': true } as const
-const MOBILE_BOX_ORDER: BoxDef['key'][] = ['mode', 'tool', 'view', 'cut', 'color', 'atlas', 'snapshot', 'settings']
+const MOBILE_BOX_ORDER: BoxDef['key'][] = ['tool', 'view', 'cut', 'color', 'atlas', 'snapshot']
 
-/** Fussleiste als globales Viewport-Cockpit: App-Ebene (Atlas, Modus) plus modusuebergreifende
- *  Darstellungs-Werkzeuge. Box-breite Flyouts klappen nach oben auf; Boxen gleichmaessig verteilt. */
+/** Fussleiste als reines Werkzeug-Cockpit: Atlas plus modusuebergreifende Darstellungs-Werkzeuge.
+ *  Navigation und Einstellungen liegen jetzt in der ShellNav-Rail/Dock bzw. deren „Mehr"-Sheet.
+ *  Box-breite Flyouts klappen nach oben auf; Boxen gleichmaessig verteilt. */
 export default function FooterBar() {
-  const appMode = useViewerStore((s) => s.appMode)
-  const setAppMode = useViewerStore((s) => s.setAppMode)
   const selectMode = useViewerStore((s) => s.selectMode)
   const authoringEditMode = useViewerStore((s) => s.authoringEditMode)
   const colorMode = useViewerStore((s) => s.colorMode)
@@ -130,26 +126,6 @@ export default function FooterBar() {
       ),
     },
     {
-      key: 'mode',
-      eyebrow: 'Lernraum',
-      label: APP_MODE_LABEL[appMode],
-      icon: <BookOpen {...FOOTER_ICON_PROPS} />,
-      // Lernen ist der primaere Flow (Home) und damit der Rueckweg jeder Surface zum Lernschritt;
-      // Strukturfokus ist eine Surface darin.
-      content: REGULAR_APP_MODE_DEFINITIONS.map((definition) => (
-        <Item key={definition.mode} active={appMode === definition.mode} onClick={() => {
-          if (definition.mode !== 'learn') {
-            window.history.replaceState(null, '', `?mode=${definition.mode}`)
-            window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
-          }
-          setAppMode(definition.mode)
-          close()
-        }}>
-          {definition.mode === 'learn' ? `${definition.label} · Home` : definition.label}
-        </Item>
-      )),
-    },
-    {
       key: 'color',
       eyebrow: 'Färbung',
       label: colorMode === 'preset' && activePreset ? activePreset.label : COLOR_MODE_LABEL[colorMode],
@@ -198,15 +174,6 @@ export default function FooterBar() {
           <Item onClick={() => snapshotInputRef.current?.click()}>Importieren</Item>
         </>
       ),
-    },
-    {
-      key: 'settings',
-      eyebrow: 'Mehr',
-      label: 'Einstellungen',
-      icon: <Settings2 {...FOOTER_ICON_PROPS} />,
-      popoverWidth: 'min(720px, calc(100vw - 24px))',
-      popoverMaxWidth: 'calc(100vw - 24px)',
-      content: <SettingsPanel />,
     },
     {
       key: 'tool',
