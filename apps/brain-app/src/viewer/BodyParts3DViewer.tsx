@@ -304,7 +304,7 @@ export default function BodyParts3DViewer() {
   const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode, caseStudyActive })
   // Einklappbar nur als echte Seitenspalte (Split/Landscape-Rail) — der Portrait-Drawer klappt anders.
   const panelCollapsible = renderInlineSidebar && shellMode !== 'portrait-drawer'
-  const sidebarCollapsed = panelCollapsible && panelCollapsed
+  const panelHidden = panelCollapsible && panelCollapsed
   // Collapse zuruecksetzen, sobald keine einklappbare Seitenspalte mehr aktiv ist (Atlas/Portrait),
   // damit das Panel beim Rueckwechsel nicht unsichtbar „klemmt".
   useEffect(() => {
@@ -706,10 +706,10 @@ export default function BodyParts3DViewer() {
                 ...sidePanelBorder({ shellMode }),
               }}
             >
-              {panelCollapsed ? <ChevronLeft size={14} aria-hidden /> : <ChevronRight size={14} aria-hidden />}
+              {panelCollapsed ? <ChevronLeft size={14} aria-hidden="true" /> : <ChevronRight size={14} aria-hidden="true" />}
             </button>
           ) : null}
-          {renderInlineSidebar && !sidebarCollapsed ? sidebar : null}
+          {renderInlineSidebar && !panelHidden ? sidebar : null}
           {renderMobileTreeDrawer ? (
             <div
               className="ed-panel ed-frame"
