@@ -59,6 +59,11 @@ describe('settingsRuntime', () => {
     expect(caseStudyLaunchFromSearch('?case-study=phineas-gage')).toBe('phineas-gage')
     expect(caseStudyLaunchFromSearch('?mode=learn&scene=vcpt')).toBeNull()
     expect(caseStudyLaunchFromSearch('')).toBeNull()
+    expect(explicitAppModeFromSearch('?case-study=phineas-gage')).toBe('explore')
+  })
+
+  it('wirft laut bei unbekannter Case-Study-ID statt sie still zu aktivieren', () => {
+    expect(() => caseStudyLaunchFromSearch('?case-study=gibt-es-nicht')).toThrow(/unbekannte Case-Study-ID/)
   })
 
   it('nutzt den Default-Modus nur wenn Onboarding ausgeschaltet ist', () => {

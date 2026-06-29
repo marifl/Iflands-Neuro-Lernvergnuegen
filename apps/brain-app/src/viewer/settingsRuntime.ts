@@ -27,11 +27,16 @@ export function explicitAppModeFromSearch(search: string): AppMode | null {
   const mode = params.get('mode')
   if (mode === 'phineas') return 'explore'
   if (mode && APP_MODES.includes(mode as AppMode)) return mode as AppMode
+  if (params.has('case-study')) return 'explore'
   if (params.has('scene')) return 'learn'
   if (params.has('config')) return 'explore'
   if (params.has('spike')) return 'learn'
   return null
 }
+
+// Bekannte Case-Studies. Erweitern, sobald Case Study #2 dazukommt (zusammen mit der
+// Aktivierungs-Verzweigung in main.tsx). Single Source fuer URL-Validierung.
+const KNOWN_CASE_STUDY_IDS = ['phineas-gage'] as const satisfies readonly string[]
 
 function defaultAppModeFromSettings(settings: BrainAppSettings): RegularAppMode | null {
   if (settings.start.defaultMode === 'last') {
@@ -60,7 +65,11 @@ export function caseStudyLaunchFromSearch(search: string): string | null {
   const params = new URLSearchParams(search)
   if (params.get('mode') === 'phineas') return 'phineas-gage'
   const caseStudy = params.get('case-study')
-  return caseStudy ? caseStudy : null
+  if (!caseStudy) return null
+  if (!KNOWN_CASE_STUDY_IDS.includes(caseStudy as never)) {
+    throw new Error(`caseStudyLaunchFromSearch: unbekannte Case-Study-ID "${caseStudy}" — bekannt: ${KNOWN_CASE_STUDY_IDS.join(', ')}`)
+  }
+  return caseStudy
 }
 
 export function rememberAppMode(mode: AppMode): void {

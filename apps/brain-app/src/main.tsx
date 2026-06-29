@@ -32,7 +32,8 @@ window.matchMedia('(display-mode: standalone)').addEventListener('change', apply
 
 // Case-Study-Launch (z. B. ?mode=phineas) aktiviert die Fall-Surface beim Start. Sonst bliebe
 // caseStudyActive false und der Strukturfokus-Baum statt der Fall-Sidebar wuerde rendern.
-if (caseStudyLaunchFromSearch(window.location.search)) {
+// Pro Case Study eigene Aktivierung — Phineas startet mit sichtbarem Schaedel (Schritt 1).
+if (caseStudyLaunchFromSearch(window.location.search) === 'phineas-gage') {
   useCaseStudyViewStore.getState().setSkull(true)
 }
 

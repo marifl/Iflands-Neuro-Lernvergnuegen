@@ -45,7 +45,7 @@ export default function ResumeLauncher({
   const seenCount = progress
     ? progress.steps.filter((step) => step.status !== 'not-started').length
     : 0
-  const isResume = Boolean(progress && (resumeIndex > 0 || seenCount > 0))
+  const isResume = Boolean(progress && seenCount > 0)
 
   const enterStep = (scene: LoadedScene) => {
     replaceCanonicalLocation({ configName: scene.configName, sceneId: scene.id, step: 0 })

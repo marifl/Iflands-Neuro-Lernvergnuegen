@@ -30,7 +30,11 @@ Bühne. Die V2-Migration ist also **Framing/Nav + Atlas-Supplement**, kein Rebui
 - [x] Schritt 1 — ModeLauncher entfernen (ResumeLauncher einziger Einstieg) · commit bcd9ea57
 - [x] Schritt 2 — FooterBar „Modus"→„Lernraum": Lernen=Home + Rückweg zum Lernschritt
 - [x] Schritt 3 — Explorer→„Strukturfokus" (Label + lernnahe Beschreibung)
-- [ ] Schritt 4 — Atlas-Supplement (aus Kontext geöffnet, kein Peer) — `isAtlas` ersetzt noch die Bühne
+- [x] Schritt 4 — Atlas-Supplement: verifiziert erfüllt (kein Code nötig). Atlas ist kein Start-Card
+      (aus ResumeLauncher/REGULAR_APP_MODE_DEFINITIONS heraus), wird nur via atlasBridge
+      („Im Atlas zeigen") + Deep-Link erreicht, hat Footer-Rückweg (Lernen·Home rendert im Atlas:
+      footer=1/Lernraum=1 per Screenshot), TARO≠fsaverage bleibt eigener Canvas-Zweig (CLAUDE.md).
+      Note: Lernschritt→Atlas-Bridge ist Feature-Enhancement, kein Migrations-Blocker.
 - [x] Schritt 5 — Fall/Phineas-Surface: `/?mode=phineas` aktiviert den Case beim Start
       (caseStudyLaunchFromSearch + setSkull-Bootstrap); Phineas rendert auf Portrait inline
       wie der Lernschritt (caseStudyActive durch shouldRenderInlineSidebar/viewportFlex/
