@@ -63,6 +63,9 @@ describe('PresenterChrome', () => {
     const stepPicker = screen.getByLabelText('Szene springen')
     expect(stepPicker.tagName).toBe('INPUT')
     expect(stepPicker).toHaveDisplayValue('2. VCPT und Go/No-go')
+    // Scene-Nav ist Touch-Primaernavigation: Step-Picker + Prev/Next >= 44px (Shape §Touch-Targets).
+    expect(stepPicker).toHaveStyle({ minHeight: '44px' })
+    expect(screen.getByLabelText('Nächste Szene')).toHaveStyle({ minHeight: '44px' })
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '2')
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuemax', '3')
   })

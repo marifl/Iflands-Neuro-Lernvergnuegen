@@ -60,6 +60,8 @@ describe('settingsRuntime', () => {
     expect(caseStudyLaunchFromSearch('?mode=learn&scene=vcpt')).toBeNull()
     expect(caseStudyLaunchFromSearch('')).toBeNull()
     expect(explicitAppModeFromSearch('?case-study=phineas-gage')).toBe('explore')
+    // Eingebettete Case-Study-URL ueberspringt den Launcher (resolved zu explore).
+    expect(shouldShowLauncher('?case-study=phineas-gage', defaultSettings())).toBe(false)
   })
 
   it('wirft laut bei unbekannter Case-Study-ID statt sie still zu aktivieren', () => {

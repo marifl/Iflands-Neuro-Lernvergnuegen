@@ -40,6 +40,13 @@ describe('explorerShellLayout', () => {
     expect(viewportFlex({ appMode: 'explore', isAtlas: false, shellMode, caseStudyActive: true })).toBe(MOBILE_LEARN_VIEWPORT_FLEX)
   })
 
+  it('behaelt fuer Phineas auf landscape-rail das normale Rail-Verhalten', () => {
+    const shellMode = 'landscape-rail'
+    expect(shouldRenderInlineSidebar({ appMode: 'explore', isAtlas: false, shellMode, caseStudyActive: true })).toBe(true)
+    expect(shouldRenderMobileTreeDrawer({ appMode: 'explore', isAtlas: false, shellMode, mobileTreeOpen: true, caseStudyActive: true })).toBe(false)
+    expect(viewportFlex({ appMode: 'explore', isAtlas: false, shellMode, caseStudyActive: true })).toBe(1)
+  })
+
   it('gibt dem mobilen Portrait-Explorer die volle Viewport-Flaeche', () => {
     expect(viewportFlex({ appMode: 'explore', isAtlas: false, shellMode: 'portrait-drawer' })).toBe(1)
     expect(viewportFlex({ appMode: 'learn', isAtlas: false, shellMode: 'portrait-drawer' })).toBe(MOBILE_LEARN_VIEWPORT_FLEX)

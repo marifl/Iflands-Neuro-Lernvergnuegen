@@ -133,7 +133,7 @@ export default function ResumeLauncher({
               aria-label="Lernfortschritt"
               aria-valuemin={0}
               aria-valuemax={scenes.length}
-              aria-valuenow={seenCount}
+              aria-valuenow={Math.min(seenCount, scenes.length)}
               style={{
                 display: 'block',
                 width: '100%',
@@ -148,7 +148,7 @@ export default function ResumeLauncher({
                 style={{
                   display: 'block',
                   height: '100%',
-                  width: `${(seenCount / scenes.length) * 100}%`,
+                  width: `${(Math.min(seenCount, scenes.length) / scenes.length) * 100}%`,
                   background: 'var(--orange, #e8651f)',
                 }}
               />

@@ -38,6 +38,13 @@ export function explicitAppModeFromSearch(search: string): AppMode | null {
 // Aktivierungs-Verzweigung in main.tsx). Single Source fuer URL-Validierung.
 const KNOWN_CASE_STUDY_IDS = ['phineas-gage'] as const satisfies readonly string[]
 
+function assertKnownCaseStudy(id: string): string {
+  if (!KNOWN_CASE_STUDY_IDS.includes(id as never)) {
+    throw new Error(`caseStudyLaunchFromSearch: unbekannte Case-Study-ID "${id}" — bekannt: ${KNOWN_CASE_STUDY_IDS.join(', ')}`)
+  }
+  return id
+}
+
 function defaultAppModeFromSettings(settings: BrainAppSettings): RegularAppMode | null {
   if (settings.start.defaultMode === 'last') {
     return loadRememberedAppMode()
@@ -61,15 +68,12 @@ export function shouldShowLauncher(search: string, settings: BrainAppSettings): 
  *  damit die Fall-Surface (PhineasSidebar) rendert statt des Strukturfokus-Baums. */
 export function caseStudyLaunchFromSearch(search: string): string | null {
   const launch = parseRegistryLaunchFromSearch(search)
-  if (launch?.entrypoint.kind === 'case-study') return launch.entrypoint.caseStudyId
+  if (launch?.entrypoint.kind === 'case-study') return assertKnownCaseStudy(launch.entrypoint.caseStudyId)
   const params = new URLSearchParams(search)
   if (params.get('mode') === 'phineas') return 'phineas-gage'
   const caseStudy = params.get('case-study')
   if (!caseStudy) return null
-  if (!KNOWN_CASE_STUDY_IDS.includes(caseStudy as never)) {
-    throw new Error(`caseStudyLaunchFromSearch: unbekannte Case-Study-ID "${caseStudy}" — bekannt: ${KNOWN_CASE_STUDY_IDS.join(', ')}`)
-  }
-  return caseStudy
+  return assertKnownCaseStudy(caseStudy)
 }
 
 export function rememberAppMode(mode: AppMode): void {
