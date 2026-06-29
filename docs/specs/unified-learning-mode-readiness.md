@@ -1,18 +1,37 @@
 # Unified Learning Mode Readiness-Gate
 
-Stand: 19. Juni 2026
+Stand: 29. Juni 2026 (ursprünglich 19. Juni 2026)
 
-Verdict: `FAIL`
+Verdict: `PASS`
 
-Dieses Gate entscheidet, ob nach dem Shape-Vertrag direkt V2-Code starten darf.
-Antwort: Nein. `docs/specs/unified-learning-mode-shape.md` ist als
-Planungsgrundlage ausreichend, aber weiterhin nicht als vollständige
-Code-Freigabe. Die Handoff-/Screenshot-/Prototype-State-Lücken aus der ersten
-Gate-Version sind geschlossen; der Canvas-Loading-/Error-State ist seit
-`2026-06-19-canvas-loading-error-empty-sta` im regulären BrainModel-Viewport
-belegt. Doku-Drift und Atlas-Farbarchitektur sind am 19. Juni 2026 mit
-frischer Evidenz geschlossen. Die verbleibenden Blocker sind No-Fallback-
-Restklassen und der eigentliche Unified-Shell-Migrationsslice.
+Update 29. Juni 2026: Beide verbleibenden Blocker sind geschlossen, die
+Unified-Shell-Migration ist auf Branch `feature/v2-unified-shell-skeleton`
+implementiert und verifiziert (siehe `docs/specs/v2-migration-plan.md`):
+
+1. No-Fallback-Restklassen (`ZwvSdKghcAmK`) geschlossen — NF-013-Abschlussinventur
+   (26. Juni) + Abschluss-`rg` am 29. Juni gegen den aktuellen Baum sauber; der
+   Migrations-Diff führt keine verbotenen Fallback-Pfade ein (nur No-Fallback-
+   Doku + laute `throw`s, u. a. Fail-loud-Validierung unbekannter Case-Study-IDs).
+2. Unified-Shell-Migrationsslice umgesetzt: ResumeLauncher als Resume-Einstieg
+   (kein Peer-Modus-Kachelgrid), ModeLauncher entfernt, Lernen primär +
+   Strukturfokus/Atlas/Phineas als Surfaces mit Rückweg, Phineas-Fall-Surface
+   aktiviert + Portrait-Render-Pfad, Scene-Nav Touch-Target ≥44px.
+
+Evidenz: `typecheck` 0, `test` grün (504), `build` 0, alle Browser-Smokes grün
+(responsive-layout 6/6, learning-layout 3/3, explorer-panel 3/3, phineas-gage 2/2,
+performance-gate 2/2), Screenshot-Matrix Desktop Learn 1440×900 + Phone Portrait
+Learn 390×844 (sichtbarer Canvas + Lernschritt, overflowX=0). Zwei Blind-/Kritisch-
+Review-Runden, alle Findings behoben.
+
+Offen (kein Migrations-Blocker): literale `ifn-nav` Rail/Dock-Chrome aus AppFrame
+ist optional (Shape: Rail „darf") und bleibt ein separater Chrome-Redesign-Slice;
+Lernschritt→Atlas-Bridge ist Feature-Enhancement.
+
+— Historischer Stand (19. Juni 2026, Verdict damals `FAIL`): Die Handoff-/
+Screenshot-/Prototype-State-Lücken waren geschlossen, der Canvas-Loading-/Error-
+State seit `2026-06-19-canvas-loading-error-empty-sta` belegt, Doku-Drift und
+Atlas-Farbarchitektur geschlossen; offen waren No-Fallback-Restklassen und der
+Unified-Shell-Migrationsslice (beide jetzt geschlossen, s. o.).
 
 ## Scope-Abgrenzung
 
@@ -113,10 +132,14 @@ Canvas-Pixel-/Runtime-Mesh-Proben.
 
 ## Blocker
 
-1. `ZwvSdKghcAmK` ist `In Review`: No-Fallback-/localStorage-Restklassen sind noch Gate-relevant; mehrere Untertasks sind weiter `To-do`.
-2. `tLMwOp54qQph` bleibt als großes Zustands-Epic offen, aber der konkrete
-   Canvas-Loading-/Error-Blocker ist durch
-   `2026-06-19-canvas-loading-error-empty-sta` geschlossen.
+Stand 29. Juni 2026: keine offenen Gate-Blocker mehr.
+
+1. `ZwvSdKghcAmK` (No-Fallback-/localStorage-Restklassen) — geschlossen.
+   NF-013-Abschlussinventur (26. Juni) erklärt jede Restklasse mit erlaubtem
+   Endzustand; Abschluss-`rg` am 29. Juni gegen den aktuellen Baum sauber.
+2. `tLMwOp54qQph` (Zustands-Epic) — der konkrete Canvas-Loading-/Error-Blocker
+   ist durch `2026-06-19-canvas-loading-error-empty-sta` geschlossen; ResumeLauncher
+   ergänzt sichtbare Loading-/Error-/Empty-States für den Lernpfad-Einstieg.
 
 ## Erster Code-Slice bei späterem PASS
 

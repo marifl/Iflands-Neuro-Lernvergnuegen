@@ -49,7 +49,9 @@ Bühne. Die V2-Migration ist also **Framing/Nav + Atlas-Supplement**, kein Rebui
       phineas 2/2); responsiveShellMode deckt desktop-split/portrait-drawer/landscape-rail ab.
       Note: literale ifn-nav Rail/Dock-Chrome ist optional (Shape: Rail „darf", FooterBar-Umbau
       war out-of-scope) — separater Chrome-Redesign-Slice, kein Migrations-Blocker.
-- [ ] Schritt 9 — Readiness-Gate-Verdict aktualisieren (nach finaler Review-Runde)
+- [x] Schritt 9 — Readiness-Gate-Verdict FAIL→PASS aktualisiert (beide Blocker geschlossen,
+      volle Evidenz: typecheck 0, test 504, build 0, 17/17 Smoke-Cases, Screenshot-Matrix,
+      2 Review-Runden behoben)
 
 ## Notizen
 - `appMode: 'learn'|'explore'|'atlas'` ist Store-Kern (15 Dateien). Migration heißt: `explore`/`atlas`
