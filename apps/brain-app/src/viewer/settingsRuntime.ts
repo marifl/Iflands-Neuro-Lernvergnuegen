@@ -47,7 +47,7 @@ export function startupAppModeFromSettings(search: string, settings: BrainAppSet
   return defaultAppModeFromSettings(settings)
 }
 
-export function shouldShowModeLauncher(search: string, settings: BrainAppSettings): boolean {
+export function shouldShowLauncher(search: string, settings: BrainAppSettings): boolean {
   return startupAppModeFromSettings(search, settings) === null
 }
 

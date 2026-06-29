@@ -32,7 +32,7 @@ import {
   resolveMotionPreference,
   resolveThemePreference,
 } from './appearanceRuntime'
-import { shouldShowModeLauncher } from './settingsRuntime'
+import { shouldShowLauncher } from './settingsRuntime'
 import CameraRig from '../scene/CameraRig'
 import SubParcels from './SubParcels'
 import EegHeadset from './EegHeadset'
@@ -160,7 +160,7 @@ export default function BodyParts3DViewer() {
 
   // Start-Screen (Modus-Wahl) beim ersten Laden — Settings duerfen nur beim normalen App-Start
   // ueberspringen, Deep-Links behalten immer Vorrang.
-  const [launched, setLaunched] = useState(() => !shouldShowModeLauncher(window.location.search, loadSettings()))
+  const [launched, setLaunched] = useState(() => !shouldShowLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
   const [brainModel, setBrainModel] = useState(() => resolveBrainModelOptionFromSearch(window.location.search))
   const [brainModelReviewActive, setBrainModelReviewActive] = useState(() => (

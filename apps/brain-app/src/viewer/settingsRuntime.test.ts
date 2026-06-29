@@ -7,7 +7,7 @@ import {
   explicitAppModeFromSearch,
   loadRememberedAppMode,
   rememberAppMode,
-  shouldShowModeLauncher,
+  shouldShowLauncher,
   startupAppModeFromSettings,
 } from './settingsRuntime'
 import { useViewerStore } from './viewerStore'
@@ -62,7 +62,7 @@ describe('settingsRuntime', () => {
   })
 
   it('nutzt den Default-Modus nur wenn Onboarding ausgeschaltet ist', () => {
-    expect(shouldShowModeLauncher('', defaultSettings())).toBe(true)
+    expect(shouldShowLauncher('', defaultSettings())).toBe(true)
     expect(startupAppModeFromSettings('', settingsWith({ start: { defaultMode: 'explore', showOnboarding: false } }))).toBe('explore')
   })
 

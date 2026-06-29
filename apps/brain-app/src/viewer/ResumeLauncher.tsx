@@ -45,7 +45,7 @@ export default function ResumeLauncher({
   const seenCount = progress
     ? progress.steps.filter((step) => step.status !== 'not-started').length
     : 0
-  const isResume = Boolean(progress && resumeIndex > 0)
+  const isResume = Boolean(progress && (resumeIndex > 0 || seenCount > 0))
 
   const enterStep = (scene: LoadedScene) => {
     replaceCanonicalLocation({ configName: scene.configName, sceneId: scene.id, step: 0 })
@@ -79,9 +79,16 @@ export default function ResumeLauncher({
             </strong>
             <span className="mono-base">{loadError.message}</span>
           </div>
-        ) : !scene ? (
+        ) : scenes === null ? (
           <div role="status" className="mono-base" style={{ color: 'var(--g600)', padding: '14px 0' }}>
             Lernpfad wird geladen…
+          </div>
+        ) : !scene ? (
+          <div role="alert" style={{ color: 'var(--red)', lineHeight: 1.5 }}>
+            <strong className="display-xl" style={{ display: 'block', marginBottom: 6 }}>
+              Kein Lernschritt verfügbar
+            </strong>
+            <span className="mono-base">Die Lernpfad-Sequenz enthält keine Szenen.</span>
           </div>
         ) : (
           <>
@@ -98,7 +105,7 @@ export default function ResumeLauncher({
                 gap: 9,
                 alignItems: 'flex-start',
                 whiteSpace: 'normal',
-                marginBottom: 14,
+                marginBottom: 12,
               }}
             >
               <span className="mono-xs" style={{ letterSpacing: '0.16em', textTransform: 'uppercase' }}>
@@ -112,35 +119,40 @@ export default function ResumeLauncher({
                 {scene.title}
               </span>
               <span className="mono-sm" style={{ color: 'var(--g600)' }}>
-                Schritt {resumeIndex + 1} von {scenes!.length}
-              </span>
-              <span
-                role="progressbar"
-                aria-label="Lernfortschritt"
-                aria-valuemin={0}
-                aria-valuemax={scenes!.length}
-                aria-valuenow={seenCount}
-                style={{
-                  width: '100%',
-                  height: 4,
-                  borderRadius: 2,
-                  background: 'var(--g200, rgba(127,127,127,0.25))',
-                  overflow: 'hidden',
-                }}
-              >
-                <span
-                  style={{
-                    display: 'block',
-                    height: '100%',
-                    width: `${(seenCount / scenes!.length) * 100}%`,
-                    background: 'var(--orange, #e8651f)',
-                  }}
-                />
+                Schritt {resumeIndex + 1} von {scenes.length}
               </span>
               <span className="mono-base" style={{ lineHeight: 1.5 }}>
                 {scene.companion.summary}
               </span>
             </button>
+
+            {/* Progressbar als eigenes Element (nicht im Button): Screenreader ignorieren
+                geschachtelte ARIA-Rollen im accessible name eines Buttons. */}
+            <span
+              role="progressbar"
+              aria-label="Lernfortschritt"
+              aria-valuemin={0}
+              aria-valuemax={scenes.length}
+              aria-valuenow={seenCount}
+              style={{
+                display: 'block',
+                width: '100%',
+                height: 4,
+                borderRadius: 2,
+                marginBottom: 14,
+                background: 'var(--g200, rgba(127,127,127,0.25))',
+                overflow: 'hidden',
+              }}
+            >
+              <span
+                style={{
+                  display: 'block',
+                  height: '100%',
+                  width: `${(seenCount / scenes.length) * 100}%`,
+                  background: 'var(--orange, #e8651f)',
+                }}
+              />
+            </span>
 
             <button
               type="button"
