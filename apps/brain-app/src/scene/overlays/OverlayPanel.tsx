@@ -6,6 +6,7 @@ import AnimationPlayer from '../../viewer/AnimationPlayer'
 import PhineasGageScene from '../../viewer/PhineasGageScene'
 import { useIsNarrow, useIsTouchLandscape } from '../../useMediaQuery'
 import PresenterChrome from '../PresenterChrome'
+import PresenterNotes from '../PresenterNotes'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
 
 /** Waehlt den Overlay-Renderer nach scene.overlay.kind. */
@@ -64,6 +65,8 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
         </div>
 
         {renderOverlay(scene)}
+
+        <PresenterNotes />
 
         {deepenings.length ? (
           <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid var(--line-soft)', paddingTop: 14 }}>

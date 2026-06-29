@@ -18,6 +18,7 @@
     "smoke:explorer-panel": "node scripts/smoke-explorer-panel.mjs",
     "smoke:learning-layout": "node scripts/smoke-learning-layout.mjs",
     "smoke:performance-gate": "node scripts/smoke-performance-gate.mjs",
+    "smoke:presenter": "node scripts/smoke-presenter.mjs",
     "smoke:phineas-gage": "node scripts/smoke-phineas-gage.mjs",
     "smoke:responsive-layout": "node scripts/smoke-responsive-layout.mjs",
     "smoke:shell-nav": "node scripts/smoke-shell-nav.mjs",

@@ -36,7 +36,13 @@ Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD >
       die fehlende AtlasErpFrame-Affordance „einklappbare Kontextspalte". Desktop/Landscape = Spalte mit
       Collapse; Portrait = ERP im Sheet (kein Streifen). Verify: smoke:erp-supplement 2/2 + Screenshots
       (expanded/collapsed), alle Regression-Smokes grün, typecheck 0, test 510, build 0.
-- [ ] Schritt 12 — Presenter-Surface (PresenterFrame) + Lernschritt→Atlas-Bridge
+- [~] Schritt 12 — Presenter-Surface (PresenterFrame) + Lernschritt→Atlas-Bridge
+  - [x] 12a Presenter: Präsentationszustand des Unified Mode (kein Silo). `presentation`-Sequenz
+        (`kapitel11-vorlesung`) über ShellNav-Mehr „Vortrag starten/verlassen" erreichbar (Rückweg);
+        LearnSidebar lädt Szenen bei Sequence-Wechsel neu; neue `PresenterNotes` (companion.summary =
+        Sprechernotiz + Quellen) im Lern-Panel; Timeline/Step-State via vorhandenes PresenterChrome.
+        Verify: smoke:presenter PASS + Screenshot, Regression grün, typecheck 0, test 510, build 0.
+  - [ ] 12b Lernschritt→Atlas-Bridge (Slice D)
 
 ## Schlüsselbefund (29.06.)
 Die Runtime erfüllt das **AppFrame-Modell** für learn+explore bereits weitgehend:

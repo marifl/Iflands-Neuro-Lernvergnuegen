@@ -2,8 +2,13 @@ import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Compass, Layers, MoreHorizontal, X } from 'lucide-react'
 import { useViewerStore, type AppMode } from './viewerStore'
 import { ROUTE_CHANGE_EVENT } from '../scene/router'
+import { useSceneStore } from '../scene/sceneStore'
 import SettingsPanel from './SettingsPanel'
 import type { ResponsiveShellMode } from './explorerShellLayout'
+
+/** Einzige Kapitel-11-Vortragssequenz (config.default.toml). Praesentation ist ein Zustand des
+ *  Unified Mode, kein eigener AppMode — sie laedt als Sequenz im learn-Shell. */
+const PRESENTATION_SEQUENCE = 'kapitel11-vorlesung'
 
 /** Globale Surface-Navigation des Unified Learning Mode (ifn-nav Rail/Dock-Topologie).
  *  Rail (Landscape/Desktop) bzw. Dock (Phone Portrait) fuehren zu den Unified-Surfaces;
@@ -37,6 +42,7 @@ function goToSurface(mode: NavSurface['mode'], setAppMode: (m: AppMode) => void)
 export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode }) {
   const appMode = useViewerStore((s) => s.appMode)
   const setAppMode = useViewerStore((s) => s.setAppMode)
+  const presentationActive = useSceneStore((s) => s.scenes[s.index]?.sequence.kind === 'presentation')
   const [moreOpen, setMoreOpen] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
   const variant = shellMode === 'portrait-drawer' ? 'dock' : 'rail'
@@ -216,6 +222,28 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                   </button>
                 )
               })}
+            </div>
+            <div style={{ borderTop: '1.5px solid var(--line)', padding: '10px 12px' }}>
+              <div className="eyebrow" style={{ marginBottom: 8 }}>Vortrag</div>
+              <button
+                type="button"
+                className={`ed-btn${presentationActive ? ' active' : ''}`}
+                aria-pressed={presentationActive}
+                onClick={() => {
+                  // Praesentationszustand des Unified Mode (kein Silo): Sequenz wechseln, learn-Shell bleibt.
+                  if (presentationActive) {
+                    window.history.replaceState(null, '', '?mode=learn')
+                  } else {
+                    setAppMode('learn')
+                    window.history.replaceState(null, '', `?sequence=presentation.${PRESENTATION_SEQUENCE}`)
+                  }
+                  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+                  setMoreOpen(false)
+                }}
+                style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '10px 12px', minHeight: 44 }}
+              >
+                {presentationActive ? 'Vortrag verlassen — zurück zum Lernpfad' : 'Vortrag starten (Kapitel 11)'}
+              </button>
             </div>
             <div style={{ borderTop: '1.5px solid var(--line)', padding: '12px' }}>
               <div className="eyebrow" style={{ marginBottom: 8 }}>Einstellungen</div>

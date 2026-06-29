@@ -54,6 +54,24 @@ export default function LearnSidebar() {
     const syncFromRoute = () => {
       const loc = parseLocation(window.location.search)
       const state = useSceneStore.getState()
+      const locSequenceName = loc.sequenceKind && loc.sequenceName ? `${loc.sequenceKind}.${loc.sequenceName}` : null
+      const curSequenceName = routeSequenceRef.current
+        ? `${routeSequenceRef.current.sequenceKind}.${routeSequenceRef.current.sequenceName}`
+        : null
+      // Sequence-Wechsel (z. B. Lernpfad -> Vortrag) laedt die Szenen neu, statt nur zu springen.
+      if (locSequenceName !== curSequenceName) {
+        routeSequenceRef.current = loc.sequenceKind && loc.sequenceName
+          ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName }
+          : null
+        loadScenes({ sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName })
+          .then((all) => {
+            setScenes(all)
+            const start = sceneIndexForLocation(all, loc)
+            useSceneStore.getState().goto(start >= 0 ? start : 0, loc.step)
+          })
+          .catch((error: unknown) => setLoadError(error instanceof Error ? error : new Error(String(error))))
+        return
+      }
       if (!state.scenes.length) return
       try {
         const next = sceneIndexForLocation(state.scenes, loc)
