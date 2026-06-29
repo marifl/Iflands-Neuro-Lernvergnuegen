@@ -1,0 +1,2407 @@
+{
+  "db": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-27-wiki-coverage-matrix-glossare-/coverage.sqlite",
+  "source": "Bear Sachverzeichnis",
+  "limit": 300,
+  "rows": [
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "\u0006-Spindelschleife",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61053",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "\b9-Tetrahydrocannabinol",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61123",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "/Hyperaktivitätssyndrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60046",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "2-Arachidonylglycerol",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60040",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "2-Desoxyglucose",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60161",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-HT1B -Rezeptor-Agonist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60481",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-HT1B -Rezeptor-Knock-out-Maus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60482",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-HTP-Decarboxylase",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60483",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-Hydroxyindolylessigsäure",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60432",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-Hydroxytryptamin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60434",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "5-Hydroxytryptophan",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60435",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abbau",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60734",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abhängigkeit von modulatorischen Signalen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60837",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ablation",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59951",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abnahme",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60833",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Absence-Epilepsie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59953",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Absinken",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60554",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "absolute",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60864",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Absorption",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59955",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "absteigende",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60970",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Acetylcholin-Zyklus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59964",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Acetylcholinesterase",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59959",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Acetylcholinesterase-Hemmer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59960",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Acetylcholinrezeptor",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59961",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aconitin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59967",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adaptation",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59969",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adaptationstheorien",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60984",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adaptionsverhalten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60598",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Addison, Thomas",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59971",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adenohypophyse",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59972",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adenosindiphosphat",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59976",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adergeflecht",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59979",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adolphs, Ralph",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59985",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "ADP",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59986",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Affe",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59992",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "affektive",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60003",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "afferentes Axon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59999",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Agate, R. J",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60000",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ageusie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60001",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Agonist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59953",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "agouti-related peptide",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59955",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Agrin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59957",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "AgRP",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59958",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aguayo, Albert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59959",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Akinesie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59960",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aktive Zone",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61110",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aktives Neuron",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61133",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aktivierender Effekt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61034",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59964",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivierungsmuster im Zusammenhang mit",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60334",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivität bei Orientierung im Raum",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60336",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "akzessorischer Riechkolben",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59974",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "akzessorisches Geruchssystem",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59975",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alkoholismussyndrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59977",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alkoholmissbrauch",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59979",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Allen, Laura",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59980",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alles-oder-nichts-Prinzip",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59981",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alligator",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59982",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alpha-Helix",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59984",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alpha-Zelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59986",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Kabel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60207",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Kaliumpuffer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60014",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Neurotoxin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60407",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Neurotransmitter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Zeitgeber",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60381",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alterssichtigkeit",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59987",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Altman, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59988",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alvarez, Francisco",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59989",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amateau, S. K",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59992",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amblyopie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59993",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amilorid",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59995",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "amiloridempfindlicher",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60654",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aminoaciderges Neuron",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59996",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aminogruppe",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59997",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aminosäureabhängiger",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60521",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aminosäureabhängiger Kanal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59998",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amnesiepatienten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59954",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "AMPA-abhängiger Kanal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59956",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amphetamine",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59960",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amplitude",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60261",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amputation",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59962",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amygdala und Hippocampus als",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61059",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amygdalaläsion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59972",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amygdalektomie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59973",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amyloid",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59975",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "amyotrophe Lateralsklerose (ALS)",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59976",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "an der Speicherung im deklarativen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60603",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "an exzitatorischen Synapsen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60414",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anandamid",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59979",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anatomie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59965",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anatomische Bezugspunkte",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59980",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anatomische Schnittebenen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59981",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Andersen, Per",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59982",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Androgene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59983",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Androgenrezeptor-Gen-Defekt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59985",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Androgenunempfindlichkeit",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59986",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angina pectoris",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59987",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angiotensin I",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59988",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angiotensin II",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59989",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angiotensinogen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59990",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angst",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59991",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angstkonditionierungsexperiment",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59993",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Angstreaktion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59994",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anhaltende starke Aktivierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60771",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anomalien",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60348",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anorexigene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60837",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anosmie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60003",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anschwellen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60562",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ansicht",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60112",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anstieg",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60555",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antagonist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60008",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anteriorer Gyrus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60011",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anteriorer Gyrus cinguli",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60013",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anterograde",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60002",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anterograder",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61132",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anti-Müller-Hormon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60025",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antidepressiva",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60016",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "antidiuretisches Hormon (ADH)",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60019",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "antidrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antigen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60021",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antihistaminika",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60022",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antikonvulsiva",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60023",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antikörper",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60024",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antiport",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60026",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antwort eines IT-Neurons",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60124",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anxiolytika",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60027",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aphasiearten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60035",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "apikaler",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60208",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aplysia",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60036",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arachnoidea mater encephali",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60041",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arachnophobie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60042",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arbeits-",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60300",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arbeitsgedächtnisaktivität",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60045",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Area hypothalamica lateralis",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60047",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Area praeoptica",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60048",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Area subcallosa",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60051",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Areal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60053",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Areal MST",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60058",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Areal V1",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60060",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arginin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60062",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aristoteles",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60063",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arousal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60064",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arsphenamin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60065",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59996",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria basilaris",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60066",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria carotis interna",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60067",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria cerebelli superior",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60068",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria cerebri anterior",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60069",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria cerebri media",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60070",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria cerebri posterior",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60071",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria communicans anterior",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60072",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria communicans posterior",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60073",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arteria vertebralis",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60074",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aspartam",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60075",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aspirin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60008",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Assoziationscortex",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60009",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Astereognosie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60011",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Astigmatismus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60012",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Asymmetrie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60831",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "asymmetrische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61111",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "asymmetrische Zellteilung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60015",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Athetose",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60017",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Atmungskette",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60018",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Atrophie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60661",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Atropin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60021",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aubertin, Simon Alexandre Ernest",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60022",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "auditorischer Cortex",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60023",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "auditorischer Sinn",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60024",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auerbach-Plexus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60025",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "auf Zellebene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60316",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufbau und Verbrauch",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60245",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufhebung der Fettsucht durch Leptin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60759",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufhebung durch Leptin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59983",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufmerksamkeitsarten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60042",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufmerksamkeitsdefizit",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60043",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufmerksamkeitssteuerung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60048",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufmerksamkeitsverlagerung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60050",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufnahme",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60407",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufrechterhaltung im Bereich des Sollwerts",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60536",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufzeichnung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60446",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufzeichnungen an Neuronen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60606",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auge",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60055",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenbecher",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60059",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenbewegung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60060",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenblasenstiel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60063",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenbläschen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60062",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augendominanz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60064",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenentwicklung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60072",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenhintergrund",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60074",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenhöhle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60075",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Augenmuskel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60008",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aura",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60009",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "ausgelöst",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60353",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auslösung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60489",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ausrichtung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60289",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Austausch an der Synapse",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59958",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung auf die Binokularität der",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61052",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung auf Neuronen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61035",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung einer Läsion auf Lösen einer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60607",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60417",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen auf Neuronenfunktion und",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60823",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen des Säugens",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61016",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Autismusspektrum-Störungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60014",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "autonomes",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60354",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "autophosphorylierende Proteinkinase",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60016",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Autostereogramm",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aversive",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60512",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aversive Konditionierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60021",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axel, Richard",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60022",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axialer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60650",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axoaxonische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61112",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axodendritische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61113",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axonale Wegfindung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60026",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axondurchmesser",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60572",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axonkollaterale",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60029",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axonmembran",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60030",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axonregeneration",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60031",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axonwachstum",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60033",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axoplasmatischer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61133",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axosomatische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61114",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aˇ-Axon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59950",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aˇ-Faser",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59991",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Babinski, Joseph",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60037",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Babinski-Zeichen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60038",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bacteriorhodopsin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60039",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Balzverhalten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60221",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bard, Philip",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60043",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Barlow, Horace",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Barrel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60045",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bartels, Andreas",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60046",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Basalganglienfunktion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60049",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Basalganglion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60051",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Basallamina",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60057",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Basalzelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60058",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Batrachotoxin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60068",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Baynes, Kathleen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60069",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "BDNF (brain-derived neurotrophic factor)",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60071",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bear, Mark",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60072",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bedeutung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60609",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bedingte Reaktion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60073",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bedingter Reiz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60074",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bedornte Sternzelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60075",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Begriff",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60218",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Behandlung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59997",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Behandlungsmethoden",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59994",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "behandlungsresistente",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60153",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Behaviorismus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60078",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Angststörungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60870",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei der Gehirnentwicklung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61233",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Hunden",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60643",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Mensch und Affe",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60387",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Panikstörungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60087",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Ratten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60931",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Tieren",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60644",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei verschiedenen Tierarten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60259",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei zweisprachigen und gehörlosen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60029",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Affen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60027",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Frosch",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60073",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Lesen von Brailleschrift",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60423",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Mann",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61035",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Menschen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59974",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Schlafen und Wachen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60322",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Zebrafink",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59984",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beißangriff",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60079",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bekoff, Anne",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60082",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bell, Charles",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60083",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Belohnung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60084",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Benzer, Seymour",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60085",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Benzodiazepinbindung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60086",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berger, Hans",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60090",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berman, Karen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60091",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berry, Caswell",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60092",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berson, David",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60093",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bestandteile",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60740",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beta-Rhythmus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60094",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beteiligte Strukturen in der Gehirnmitte",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60301",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Betz, Wladimir",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60095",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Betz’sche Riesenpyramidenzelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60096",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beugereflex",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60097",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beute-",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59949",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beuteaggression",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60098",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60099",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegung durch Muskeln",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60314",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegung, Ion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60100",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegungsauslösung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60101",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegungsplanung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60105",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegungsstörung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60107",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bicucullin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60114",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bidirektionale",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60834",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bidirektionale synaptische Modifikationen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60055",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bidirektionale synaptische Plastizität",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60115",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bienenstock, Elie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60116",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bilaterale Läsion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60464",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bilaterale Symmetrie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60117",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildanalyse",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60205",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildgebungsstudien",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60684",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "binaurales Neuron",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60119",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bindung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60121",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "binokuläre Verschaltungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60126",
+      "status": "open",
+      "match_rule": "none",
+      "matches": []
+    }
+  ]
+}

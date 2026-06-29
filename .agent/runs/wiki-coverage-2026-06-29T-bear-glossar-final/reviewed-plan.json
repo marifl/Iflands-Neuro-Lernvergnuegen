@@ -1,0 +1,134 @@
+{
+  "generated_at": "2026-06-29T00:00:00+02:00",
+  "repo": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone",
+  "source": "Bear Glossar",
+  "mode": "reviewed-parser-noise",
+  "actions": [
+    {
+      "source": "Bear Glossar",
+      "term": "Auslöser für eine Langzeitdepression",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59868",
+      "action": "parser_noise",
+      "reason": "Satzfortsetzung im Eintrag Untere Olive; kein eigenständiges Glossar-Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Axone weiß",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59901",
+      "action": "parser_noise",
+      "reason": "Satzfortsetzung im Eintrag Weiße Substanz; kein eigenständiges Glossar-Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Endorphin) und synthetische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59321",
+      "action": "parser_noise",
+      "reason": "Klammer-/Satzfragment im Eintrag Opioidrezeptor."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Ereignissen pro Sekunde, angegeben in Hertz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58720",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Frequenz; der eigentliche Begriff ist bereits abgedeckt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Folge eines Gehirnschadens",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58365",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Aphasie."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Körperzelle, das die Chromosomen enthält",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58956",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Kern/Nucleus."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Leitfähigkeit der Kehrwert des Widerstands",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59299",
+      "action": "parser_noise",
+      "reason": "Formel-/Definitionsfortsetzung im Eintrag Ohm’sches Gesetz; kein eigenes Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Nucleotide zyklisches Adenosinmonophosphat",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59360",
+      "action": "parser_noise",
+      "reason": "Spalten-/Zeilenbruchfragment, das mehrere Begriffe vermischt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Purkinje-Zellen innerviert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59339",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Moosfaser."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Reaktion einleitet",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59508",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Rezeptor."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Retrograder Botenstoff Jeder chemische Botenstoff, der",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59497",
+      "action": "parser_noise",
+      "reason": "Headword und Definitionsanfang wurden zusammengezogen; der saubere Begriff wird separat angelegt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Richtungen beeinflussbar sind",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58393",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag BCM-Theorie."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Rückenmark verbunden ist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58866",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Hinterwurzel."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Sehnerv, beide sind Teile des zentralen Nervensystems",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58885",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Hirnnerven."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "System und Drüsen innervieren",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59888",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Vegetatives Nervensystem."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Vesikel umgewandelt wird",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58669",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Endocytose."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Wert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58584",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Depolarisation."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Zahl von Neuronen verteilt ist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58685",
+      "action": "parser_noise",
+      "reason": "Definitionsfortsetzung im Eintrag Ensemble-Code."
+    }
+  ]
+}

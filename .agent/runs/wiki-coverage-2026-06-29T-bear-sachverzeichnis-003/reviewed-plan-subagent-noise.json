@@ -1,0 +1,260 @@
+{
+  "generated_at": "2026-06-29T10:08:56.618781+00:00",
+  "repo": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone",
+  "source": "Bear Sachverzeichnis",
+  "mode": "subagent-reviewed-parser-noise",
+  "actions": [
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "eines wachen, ruhenden Erwachsenen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60254",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "einfaches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60902",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "einseitiges",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Einstein, Albert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60266",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ekstrand, Bruce",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60270",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60529",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrischer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61073",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60864",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrochemische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61147",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "endogene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60032",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "enterisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60689",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entstehung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60765",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entwicklung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60057",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "episodisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60304",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "erhöhter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60556",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Erkrankungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60690",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "erregbare",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60630",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Erzeugung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59965",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Evarts, Edward",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60282",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exocytotische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60327",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exogene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60033",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "experimentelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59952",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "explizites",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60305",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exzitatorische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61118",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exzititorische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61119",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Falck, Bengt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60231",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "falsche",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60274",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "familiär gehäuftes Auftreten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60978",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fehm, Horst-Lorenz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60247",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ferrier, David",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60248",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fesenko, Evgeny E",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60249",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "fetales",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59978",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "antidrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "action": "parser_noise",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    }
+  ],
+  "counts": {
+    "parser_noise": 33,
+    "alias_existing": 0,
+    "new_stub": 0,
+    "needs_review": 0
+  },
+  "reviewers": [
+    {
+      "agent": "019f12d1-ddf2-7d90-ace2-fdca04e82f14",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "shard": "shard-1.json"
+    },
+    {
+      "agent": "019f12d2-2312-72f0-8c33-a92838945d59",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "shard": "shard-3.json"
+    }
+  ],
+  "note": "Shard 2 agent failed due model capacity; no shard-2 parser-noise decisions are materialized from this file."
+}

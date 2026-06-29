@@ -1,0 +1,129 @@
+{
+  "generated_at": "2026-06-29T10:08:56.620012+00:00",
+  "reason": "Removed premature parser_noise exclusions not confirmed by completed read-only matcher shards. Genuine terms return to open/needs-review coverage instead of being hidden.",
+  "removed_count": 20,
+  "removed": [
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "CART",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60098",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Codierung von Bewegung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60894",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "d’Ortous de Mairan, Jean Jacques",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60207",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Differenzierung der Areale",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60672",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Doeller, Christian",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60186",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dolan, Ray",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60187",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Donoghue, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60189",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dowling, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60208",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dronkers, Nina",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60219",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dudai, Yadin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60227",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dudek, Serena",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60228",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Eccles, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60251",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt auf die Detektion des Zielreizes",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60404",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt auf Neuronen im Sehrindenareal V4",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60030",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt von FEF-Stimulation",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60715",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ehrlich, Paul",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60264",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ein-Neuron-",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60830",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Eliminierung von Neuronenpopulationen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60763",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entdeckung der Sprachregionen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60339",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entladung einer Zelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60874",
+      "previous_reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    }
+  ],
+  "kept_from_initial_count": 10,
+  "subagent_confirmed_noise_count": 33
+}

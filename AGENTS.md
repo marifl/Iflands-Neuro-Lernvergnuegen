@@ -52,7 +52,7 @@ Bevor du direkt editierst oder Arbeit selbst "nebenbei" erledigst — nimm den A
 
 Das ist Lenkung, kein Zwang: fuer schnelles, freies Arbeiten `alrah profile use quick --until-commit`.
 
-### Working Principles (Karpathy + FAB — gilt fuer alle ALRAH-Skills)
+### Working Principles (Karpathy + FAB + Ponytail — gilt fuer alle ALRAH-Skills)
 
 Eine gemeinsame Sprache fuer Skills, Subagents und Contracts:
 
@@ -62,6 +62,49 @@ Eine gemeinsame Sprache fuer Skills, Subagents und Contracts:
 4. **Goal-Driven** — Jede Aufgabe ein verifizierbares Ziel (Test, Verdict, Verify-Step). `outcome:` Frontmatter in criteria.md ist Pflicht-Ziel.
 
 FAB-Achsen (siehe `docs/decisions/ADR-005-fab-design-principles.md`) sind komplementaer: I-X als praktische Codierung der gleichen Prinzipien.
+
+**Ponytail** (Plugin, Level `full`) ergaenzt als Coding-Stil: Stdlib vor Dependency, kuerzester Diff, YAGNI-Ladder (braucht es das? → Stdlib? → native Feature? → eine Zeile? → erst dann Code). Karpathy sagt *wie* du denkst, Ponytail sagt *wie minimal* du baust. Details: `/ponytail-help`.
+
+### Wiki-Subagent-Matrix
+
+Für massenhafte Wiki-Erstellung gilt eine feste Modell- und Rollenstaffel.
+Kleinere Modelle dürfen nicht direkt Wiki-Dateien schreiben.
+
+| Phase | Modell | Aufgabe | Output | Schreibrecht |
+|---|---|---|---|---|
+| Rohquellen-Fundstellen suchen | `gpt-5.3-codex-spark` · `medium` | Nur finden, extrahieren und Zeilenanker liefern. Keine Wiki-Entscheidung, keine Slugs, keine Artikelvorschläge. | `{term, source_anchor, snippet, why_candidate}` | nein |
+| Kandidaten gegen bestehendes Wiki abgleichen | `gpt-5.4-mini` · `medium` oder `xhigh` | Mögliche Matches, Aliase, Duplikate und offensichtliche Noise-Fälle markieren. Keine Schreibarbeit. | Match-/Noise-Tabelle oder JSON | nein |
+| Entscheiden: eigener Artikel vs. bestehende Seite vs. skip | `gpt-5.5-low`, wenn verfügbar im Fast Mode | Niedrigste Writer-Stufe für saubere Routing-Entscheidungen und JSON-Patchpläne. | Patchplan mit Zielslug, Aktion und Quelle | Patchplan ja, Datei-Write nur wenn explizit als Writer delegiert |
+| Finale fachliche Freigabe / Grenzfälle | `gpt-5.5-medium` | Verweisbegriffe, generische Begriffe, Duplikate und OCR-Bleed fachlich prüfen. | Review-Verdict mit Findings | nein |
+
+Writer-Subagents für Einzelartikel laufen standardmäßig auf `gpt-5.5-low` und,
+wenn das Tool es anbietet, im Fast Mode. Review- oder Spotcheck-Subagents
+laufen auf `gpt-5.5-medium`. Wenn das Tool keinen separaten Fast-Mode-Schalter
+anbietet, ist `reasoning_effort: low` die ökonomische Writer-Unterkante.
+
+### Wiki-Coverage-Datenbank
+
+Für die Massenarbeit am Neuropsychologie-Wiki wird eine lokale SQLite- bzw.
+libSQL-kompatible Coverage-Datenbank als abgeleiteter Arbeitsindex genutzt
+(`.agent/contracts/.../coverage.sqlite`). Markdown bleibt Source of Truth:
+Wiki-Seiten, Quellenanker, Crosswalks und Log werden aus Dateien rekonstruiert
+und nicht aus einer Cloud-Datenbank als kanonischem Zustand ersetzt.
+`knowledge/wiki/coverage-status.md` ist die einzige lesbare Source of Truth für
+Coverage-Zahlen, offene Arbeit und Prioritäten. `coverage-matrix.md`, alte
+Run-Reports und Contract-Audits sind nur Kompatibilitätsanker oder historische
+Snapshots und dürfen keine konkurrierenden Statuszahlen pflegen.
+
+Subagents dürfen die Datenbank parallel lesen. Parallele Schreibarbeit ist nur
+für append-only Staging-Tabellen oder agent-eigene Resultdateien zulässig
+(`candidate`, `patch_plan`, `review_note`, `gate_result`). Kanonische Updates an
+Wiki-Dateien, Crosswalk-Artefakten und abgeleiteten Coverage-Tabellen laufen
+serialisiert über den Hauptagenten oder genau einen Writer-Batch. Keine
+ungeprüften Multi-Writer-Korrekturen direkt auf dieselben Wiki-Slugs.
+
+Turso/remote libSQL ist erst sinnvoll, wenn mehrere Maschinen oder externe
+Dashboards denselben Arbeitsstand teilen müssen. Lokal reicht die stdlib-nahe
+SQLite-Schicht; sie ist schneller, auditierbar und erzeugt keine zusätzliche
+Infrastrukturabhängigkeit.
 
 ### Context-Locality
 
@@ -125,4 +168,3 @@ alrah chain        Sequentielle Contract-Ketten (create/run/show/archive)
 ```
 
 Details: `.claude/rules/alrah.md`</alrah-block>
-

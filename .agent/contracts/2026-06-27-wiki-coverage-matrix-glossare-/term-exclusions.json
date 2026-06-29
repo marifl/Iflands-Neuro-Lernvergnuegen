@@ -1,0 +1,1846 @@
+{
+  "generated_at": "2026-06-29T12:09:07+02:00",
+  "exclusions": [
+    {
+      "source": "Bear Glossar",
+      "term": "Auslöser für eine Langzeitdepression",
+      "norm": "ausloser-fur-eine-langzeitdepression",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59868",
+      "reason": "Satzfortsetzung im Eintrag Untere Olive; kein eigenständiges Glossar-Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Axone weiß",
+      "norm": "axone-weiss",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59901",
+      "reason": "Satzfortsetzung im Eintrag Weiße Substanz; kein eigenständiges Glossar-Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Endorphin) und synthetische",
+      "norm": "endorphin-und-synthetische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59321",
+      "reason": "Klammer-/Satzfragment im Eintrag Opioidrezeptor."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Ereignissen pro Sekunde, angegeben in Hertz",
+      "norm": "ereignissen-pro-sekunde-angegeben-in-hertz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58720",
+      "reason": "Definitionsfortsetzung im Eintrag Frequenz; der eigentliche Begriff ist bereits abgedeckt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Folge eines Gehirnschadens",
+      "norm": "folge-eines-gehirnschadens",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58365",
+      "reason": "Definitionsfortsetzung im Eintrag Aphasie."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Körperzelle, das die Chromosomen enthält",
+      "norm": "korperzelle-das-die-chromosomen-enthalt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58956",
+      "reason": "Definitionsfortsetzung im Eintrag Kern/Nucleus."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Leitfähigkeit der Kehrwert des Widerstands",
+      "norm": "leitfahigkeit-der-kehrwert-des-widerstands",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59299",
+      "reason": "Formel-/Definitionsfortsetzung im Eintrag Ohm’sches Gesetz; kein eigenes Headword."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Nucleotide zyklisches Adenosinmonophosphat",
+      "norm": "nucleotide-zyklisches-adenosinmonophosphat",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59360",
+      "reason": "Spalten-/Zeilenbruchfragment, das mehrere Begriffe vermischt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Purkinje-Zellen innerviert",
+      "norm": "purkinje-zellen-innerviert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59339",
+      "reason": "Definitionsfortsetzung im Eintrag Moosfaser."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Reaktion einleitet",
+      "norm": "reaktion-einleitet",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59508",
+      "reason": "Definitionsfortsetzung im Eintrag Rezeptor."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Retrograder Botenstoff Jeder chemische Botenstoff, der",
+      "norm": "retrograder-botenstoff-jeder-chemische-botenstoff-der",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59497",
+      "reason": "Headword und Definitionsanfang wurden zusammengezogen; der saubere Begriff wird separat angelegt."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Richtungen beeinflussbar sind",
+      "norm": "richtungen-beeinflussbar-sind",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58393",
+      "reason": "Definitionsfortsetzung im Eintrag BCM-Theorie."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Rückenmark verbunden ist",
+      "norm": "ruckenmark-verbunden-ist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58866",
+      "reason": "Definitionsfortsetzung im Eintrag Hinterwurzel."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Sehnerv, beide sind Teile des zentralen Nervensystems",
+      "norm": "sehnerv-beide-sind-teile-des-zentralen-nervensystems",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58885",
+      "reason": "Definitionsfortsetzung im Eintrag Hirnnerven."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "System und Drüsen innervieren",
+      "norm": "system-und-drusen-innervieren",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59888",
+      "reason": "Definitionsfortsetzung im Eintrag Vegetatives Nervensystem."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Vesikel umgewandelt wird",
+      "norm": "vesikel-umgewandelt-wird",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58669",
+      "reason": "Definitionsfortsetzung im Eintrag Endocytose."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Wert",
+      "norm": "wert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58584",
+      "reason": "Definitionsfortsetzung im Eintrag Depolarisation."
+    },
+    {
+      "source": "Bear Glossar",
+      "term": "Zahl von Neuronen verteilt ist",
+      "norm": "zahl-von-neuronen-verteilt-ist",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:58685",
+      "reason": "Definitionsfortsetzung im Eintrag Ensemble-Code."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "\b9-Tetrahydrocannabinol",
+      "norm": "9-tetrahydrocannabinol",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61123",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aˇ-Axon",
+      "norm": "a-axon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59950",
+      "reason": "OCR/control-character junk in fiber class"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aˇ-Faser",
+      "norm": "a-faser",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59991",
+      "reason": "OCR/control-character junk in fiber class"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abbau",
+      "norm": "abbau",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60734",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abhängigkeit von modulatorischen Signalen",
+      "norm": "abhangigkeit-von-modulatorischen-signalen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60837",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Abnahme",
+      "norm": "abnahme",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60833",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Absinken",
+      "norm": "absinken",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60554",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "absolute",
+      "norm": "absolute",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60864",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Absorption",
+      "norm": "absorption",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59955",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "absteigende",
+      "norm": "absteigende",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60970",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Addison, Thomas",
+      "norm": "addison-thomas",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59971",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Adolphs, Ralph",
+      "norm": "adolphs-ralph",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59985",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "ADP",
+      "norm": "adp",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59986",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Affe",
+      "norm": "affe",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59992",
+      "reason": "Generic animal/example entry, not a neuroscience headword for wiki coverage."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "affektive",
+      "norm": "affektive",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60003",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Agate, R. J",
+      "norm": "agate-r-j",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60000",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aguayo, Albert",
+      "norm": "aguayo-albert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59959",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aktives Neuron",
+      "norm": "aktives-neuron",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61133",
+      "reason": "Generic activity phrase without standalone scope."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aktivierender Effekt",
+      "norm": "aktivierender-effekt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61034",
+      "reason": "Dangling generic subentry, not a standalone concept."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivierung",
+      "norm": "aktivierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59964",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivierungsmuster im Zusammenhang mit",
+      "norm": "aktivierungsmuster-im-zusammenhang-mit",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60334",
+      "reason": "Dangling phrase ending in \"mit\"; target scope is incomplete."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aktivität bei Orientierung im Raum",
+      "norm": "aktivitat-bei-orientierung-im-raum",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60336",
+      "reason": "Dangling subentry about spatial-orientation activity, not a standalone headword."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alkoholismussyndrom",
+      "norm": "alkoholismussyndrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59977",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Allen, Laura",
+      "norm": "allen-laura",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59980",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alligator",
+      "norm": "alligator",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59982",
+      "reason": "Generic animal/example entry with no standalone wiki scope."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Kabel",
+      "norm": "als-kabel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60207",
+      "reason": "Generic \"als ...\" fragment explicitly matches parser-noise rule."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Kaliumpuffer",
+      "norm": "als-kaliumpuffer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60014",
+      "reason": "Generic \"als ...\" fragment explicitly matches parser-noise rule."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Neurotoxin",
+      "norm": "als-neurotoxin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60407",
+      "reason": "Generic \"als ...\" fragment explicitly matches parser-noise rule."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Neurotransmitter",
+      "norm": "als-neurotransmitter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "reason": "Generic \"als ...\" fragment explicitly matches parser-noise rule."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "als Zeitgeber",
+      "norm": "als-zeitgeber",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60381",
+      "reason": "Generic \"als ...\" fragment explicitly matches parser-noise rule."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Altman, John",
+      "norm": "altman-john",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59988",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Alvarez, Francisco",
+      "norm": "alvarez-francisco",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59989",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amateau, S. K",
+      "norm": "amateau-s-k",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59992",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "amiloridempfindlicher",
+      "norm": "amiloridempfindlicher",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60654",
+      "reason": "Dangling adjective without the governed noun; not a standalone headword."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aminosäureabhängiger",
+      "norm": "aminosaureabhangiger",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60521",
+      "reason": "Dangling adjective without the governed noun; the complete term appears separately."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Amygdala und Hippocampus als",
+      "norm": "amygdala-und-hippocampus-als",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61059",
+      "reason": "Dangling phrase ending in \"als\" and mixed with unrelated index columns."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "an der Speicherung im deklarativen",
+      "norm": "an-der-speicherung-im-deklarativen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60603",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "an exzitatorischen Synapsen",
+      "norm": "an-exzitatorischen-synapsen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60414",
+      "reason": "Dangling prepositional subentry, not a standalone headword."
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anatomie",
+      "norm": "anatomie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59965",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Andersen, Per",
+      "norm": "andersen-per",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59982",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anhaltende starke Aktivierung",
+      "norm": "anhaltende-starke-aktivierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60771",
+      "reason": "generic dangling index phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anomalien",
+      "norm": "anomalien",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60348",
+      "reason": "generic fragment without standalone headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anschwellen",
+      "norm": "anschwellen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60562",
+      "reason": "generic physiological fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ansicht",
+      "norm": "ansicht",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60112",
+      "reason": "generic index fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Anstieg",
+      "norm": "anstieg",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60555",
+      "reason": "generic index fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anteriorer Gyrus",
+      "norm": "anteriorer-gyrus",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60011",
+      "reason": "incomplete dangling subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "anterograder",
+      "norm": "anterograder",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61132",
+      "reason": "dangling adjective likely from axonal transport subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "antidrom",
+      "norm": "antidrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60020",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Antwort eines IT-Neurons",
+      "norm": "antwort-eines-it-neurons",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60124",
+      "reason": "confirmed generic/dangling subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "apikaler",
+      "norm": "apikaler",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60208",
+      "reason": "dangling adjective without headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arbeits-",
+      "norm": "arbeits",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60300",
+      "reason": "confirmed split word fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Areal",
+      "norm": "areal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60053",
+      "reason": "too generic index label"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aristoteles",
+      "norm": "aristoteles",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60063",
+      "reason": "person name"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Arten",
+      "norm": "arten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59996",
+      "reason": "generic subentry label"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "asymmetrische",
+      "norm": "asymmetrische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61111",
+      "reason": "dangling adjective"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aubertin, Simon Alexandre Ernest",
+      "norm": "aubertin-simon-alexandre-ernest",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60022",
+      "reason": "confirmed person name"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "auf Zellebene",
+      "norm": "auf-zellebene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60316",
+      "reason": "generic subentry phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufbau und Verbrauch",
+      "norm": "aufbau-und-verbrauch",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60245",
+      "reason": "generic subentry phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufhebung der Fettsucht durch Leptin",
+      "norm": "aufhebung-der-fettsucht-durch-leptin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60759",
+      "reason": "confirmed generic phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufhebung durch Leptin",
+      "norm": "aufhebung-durch-leptin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59983",
+      "reason": "generic dangling subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufnahme",
+      "norm": "aufnahme",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60407",
+      "reason": "generic index term"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufrechterhaltung im Bereich des Sollwerts",
+      "norm": "aufrechterhaltung-im-bereich-des-sollwerts",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60536",
+      "reason": "generic set-point phrase, not standalone headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufzeichnung",
+      "norm": "aufzeichnung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60446",
+      "reason": "generic index term"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Aufzeichnungen an Neuronen",
+      "norm": "aufzeichnungen-an-neuronen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60606",
+      "reason": "generic method phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "ausgelöst",
+      "norm": "ausgelost",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60353",
+      "reason": "generic participle fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auslösung",
+      "norm": "auslosung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60489",
+      "reason": "generic nominal fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Austausch an der Synapse",
+      "norm": "austausch-an-der-synapse",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59958",
+      "reason": "confirmed generic phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung auf die Binokularität der",
+      "norm": "auswirkung-auf-die-binokularitat-der",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61052",
+      "reason": "confirmed incomplete phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung auf Neuronen",
+      "norm": "auswirkung-auf-neuronen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61035",
+      "reason": "generic dangling phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkung einer Läsion auf Lösen einer",
+      "norm": "auswirkung-einer-lasion-auf-losen-einer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60607",
+      "reason": "confirmed incomplete phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen",
+      "norm": "auswirkungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60417",
+      "reason": "generic index fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen auf Neuronenfunktion und",
+      "norm": "auswirkungen-auf-neuronenfunktion-und",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60823",
+      "reason": "dangling multi-column OCR fragment, no standalone headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Auswirkungen des Säugens",
+      "norm": "auswirkungen-des-saugens",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61016",
+      "reason": "generic subentry phrase, not a standalone headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "autonomes",
+      "norm": "autonomes",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60354",
+      "reason": "dangling adjective; intended headword is autonomes Nervensystem"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "aversive",
+      "norm": "aversive",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60512",
+      "reason": "dangling adjective without conditioning noun"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Axel, Richard",
+      "norm": "axel-richard",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60022",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axialer",
+      "norm": "axialer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60650",
+      "reason": "dangling adjective from muscle subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axoaxonische",
+      "norm": "axoaxonische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61112",
+      "reason": "dangling synapse-type adjective without noun"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axodendritische",
+      "norm": "axodendritische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61113",
+      "reason": "dangling synapse-type adjective without noun"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axoplasmatischer",
+      "norm": "axoplasmatischer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61133",
+      "reason": "dangling adjective; complete term is axoplasmatischer Transport"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "axosomatische",
+      "norm": "axosomatische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61114",
+      "reason": "dangling synapse-type adjective without noun"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Babinski, Joseph",
+      "norm": "babinski-joseph",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60037",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bard, Philip",
+      "norm": "bard-philip",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60043",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Barlow, Horace",
+      "norm": "barlow-horace",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bartels, Andreas",
+      "norm": "bartels-andreas",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60046",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Baynes, Kathleen",
+      "norm": "baynes-kathleen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60069",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bear, Mark",
+      "norm": "bear-mark",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60072",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bedeutung",
+      "norm": "bedeutung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60609",
+      "reason": "generic index fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Begriff",
+      "norm": "begriff",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60218",
+      "reason": "generic index fragment"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Behandlung",
+      "norm": "behandlung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59997",
+      "reason": "generic treatment subentry without disease scope"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Behandlungsmethoden",
+      "norm": "behandlungsmethoden",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59994",
+      "reason": "generic treatment-methods subentry without disease scope"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "behandlungsresistente",
+      "norm": "behandlungsresistente",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60153",
+      "reason": "dangling adjective phrase"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Angststörungen",
+      "norm": "bei-angststorungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60870",
+      "reason": "dangling disease-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei der Gehirnentwicklung",
+      "norm": "bei-der-gehirnentwicklung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61233",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Hunden",
+      "norm": "bei-hunden",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60643",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Mensch und Affe",
+      "norm": "bei-mensch-und-affe",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60387",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Panikstörungen",
+      "norm": "bei-panikstorungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60087",
+      "reason": "dangling disease-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Ratten",
+      "norm": "bei-ratten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60931",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei Tieren",
+      "norm": "bei-tieren",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60644",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei verschiedenen Tierarten",
+      "norm": "bei-verschiedenen-tierarten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60259",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bei zweisprachigen und gehörlosen",
+      "norm": "bei-zweisprachigen-und-gehorlosen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60029",
+      "reason": "dangling population-context subentry under aphasia"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Affen",
+      "norm": "beim-affen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60027",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Frosch",
+      "norm": "beim-frosch",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60073",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Lesen von Brailleschrift",
+      "norm": "beim-lesen-von-brailleschrift",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60423",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Mann",
+      "norm": "beim-mann",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61035",
+      "reason": "generic sex-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Menschen",
+      "norm": "beim-menschen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59974",
+      "reason": "generic human-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Schlafen und Wachen",
+      "norm": "beim-schlafen-und-wachen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60322",
+      "reason": "generic state-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beim Zebrafink",
+      "norm": "beim-zebrafink",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59984",
+      "reason": "generic species-context subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Békésy, Georg von",
+      "norm": "bekesy-georg-von",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60081",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bekoff, Anne",
+      "norm": "bekoff-anne",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60082",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bell, Charles",
+      "norm": "bell-charles",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60083",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Benzer, Seymour",
+      "norm": "benzer-seymour",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60085",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berger, Hans",
+      "norm": "berger-hans",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60090",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berman, Karen",
+      "norm": "berman-karen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60091",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berry, Caswell",
+      "norm": "berry-caswell",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60092",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Berson, David",
+      "norm": "berson-david",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60093",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bestandteile",
+      "norm": "bestandteile",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60740",
+      "reason": "generic fragment without scoped headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "beteiligte Strukturen in der Gehirnmitte",
+      "norm": "beteiligte-strukturen-in-der-gehirnmitte",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60301",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Betz, Wladimir",
+      "norm": "betz-wladimir",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60095",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Beute-",
+      "norm": "beute",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59949",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bewegung, Ion",
+      "norm": "bewegung-ion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60100",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bidirektionale",
+      "norm": "bidirektionale",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60834",
+      "reason": "dangling adjective without synaptic-plasticity noun"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bienenstock, Elie",
+      "norm": "bienenstock-elie",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60116",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bilaterale Läsion",
+      "norm": "bilaterale-lasion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60464",
+      "reason": "generic lesion descriptor without target system"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildanalyse",
+      "norm": "bildanalyse",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60205",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildgebungsstudien",
+      "norm": "bildgebungsstudien",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "reason": "generic studies subentry under working memory"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bildung",
+      "norm": "bildung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60684",
+      "reason": "generic fragment without scoped headword"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bindung",
+      "norm": "bindung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60121",
+      "reason": "generic chemistry/social fragment without scope"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "biologische Erklärungsansätze",
+      "norm": "biologische-erklarungsansatze",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60857",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "biologische Grundlagen",
+      "norm": "biologische-grundlagen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59995",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "bipolares",
+      "norm": "bipolares",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60757",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Blais, Brian",
+      "norm": "blais-brian",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60141",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bleuler, Eugen",
+      "norm": "bleuler-eugen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60144",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Blinddarmentzündung",
+      "norm": "blinddarmentzundung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60145",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bliss, Timothy",
+      "norm": "bliss-timothy",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60080",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Blockade durch Phencyclidin",
+      "norm": "blockade-durch-phencyclidin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60772",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Blutversorgung",
+      "norm": "blutversorgung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60086",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bois-Reymond, Emil du",
+      "norm": "bois-reymond-emil-du",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60090",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bonhoeffer, Tobias",
+      "norm": "bonhoeffer-tobias",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60091",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Born, Jan",
+      "norm": "born-jan",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60092",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bouillaud, Jean-Baptiste",
+      "norm": "bouillaud-jean-baptiste",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60099",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bourgeois, Jean-Pierre",
+      "norm": "bourgeois-jean-pierre",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60100",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Brenner, Sidney",
+      "norm": "brenner-sidney",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60105",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Broca-",
+      "norm": "broca",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60031",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Broca, Jean",
+      "norm": "broca-jean",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60106",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Broca, Paul",
+      "norm": "broca-paul",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60107",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Brown, Thomas Graham",
+      "norm": "brown-thomas-graham",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60113",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Buck, Linda",
+      "norm": "buck-linda",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60120",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Bucy, Paul",
+      "norm": "bucy-paul",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60121",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Burgess, Neil",
+      "norm": "burgess-neil",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60126",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Byrne, Richard",
+      "norm": "byrne-richard",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60128",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cabanis, Emanuel",
+      "norm": "cabanis-emanuel",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60132",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "cabbage",
+      "norm": "cabbage",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60133",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cade, John",
+      "norm": "cade-john",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60134",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Caenorhabditis elegans",
+      "norm": "caenorhabditis-elegans",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60135",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cajal, y Santiago Ramón",
+      "norm": "cajal-y-santiago-ramon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60136",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Campbell, Alfred Walter",
+      "norm": "campbell-alfred-walter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60084",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Candolle, de Augustin",
+      "norm": "candolle-de-augustin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60085",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cannabiol-Rezeptor",
+      "norm": "cannabiol-rezeptor",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60088",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cannabis sativa",
+      "norm": "cannabis-sativa",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60089",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cannon, Walter",
+      "norm": "cannon-walter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60090",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Carlsson, Arvid",
+      "norm": "carlsson-arvid",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60096",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Carskadon, Mary",
+      "norm": "carskadon-mary",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60097",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Carter, Sue",
+      "norm": "carter-sue",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60099",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "catecholaminerges",
+      "norm": "catecholaminerges",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60758",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Caton, Richard",
+      "norm": "caton-richard",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60104",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Chalmers, David",
+      "norm": "chalmers-david",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60125",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Charcot, Jean-Martin",
+      "norm": "charcot-jean-martin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60127",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "chemische",
+      "norm": "chemische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61115",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "chemisches Milieu",
+      "norm": "chemisches-milieu",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60184",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Chlamydomonas reinhardtii",
+      "norm": "chlamydomonas-reinhardtii",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60136",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cho, Z. H",
+      "norm": "cho-z-h",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60140",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "cholinerges",
+      "norm": "cholinerges",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60759",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Churchland, Patricia",
+      "norm": "churchland-patricia",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60153",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "circadianer",
+      "norm": "circadianer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60928",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cirelli, Chiara",
+      "norm": "cirelli-chiara",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60161",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Clark, Brian",
+      "norm": "clark-brian",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60163",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Codierung",
+      "norm": "codierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60956",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cohen, Stanley",
+      "norm": "cohen-stanley",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60180",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cole, Kenneth C",
+      "norm": "cole-kenneth-c",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60181",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Coleman, Douglas",
+      "norm": "coleman-douglas",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60182",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Constantine-Paton, Martha",
+      "norm": "constantine-paton-martha",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60190",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cooper, Leon",
+      "norm": "cooper-leon",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60191",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Corkin, Suzanne",
+      "norm": "corkin-suzanne",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60192",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cormack, Allan",
+      "norm": "cormack-allan",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60193",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Cortexzellen",
+      "norm": "cortexzellen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60205",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Courtney, S",
+      "norm": "courtney-s",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60158",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Crick, Francis",
+      "norm": "crick-francis",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60168",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dale, Henry",
+      "norm": "dale-henry",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60190",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Damasio, Antonio",
+      "norm": "damasio-antonio",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60192",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Damasio, Hanna",
+      "norm": "damasio-hanna",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60193",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Darwin, Charles",
+      "norm": "darwin-charles",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60194",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Das, Gopal",
+      "norm": "das-gopal",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60195",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dauer",
+      "norm": "dauer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60513",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Definition",
+      "norm": "definition",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60219",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dehaene-Lambertz, Ghislaine",
+      "norm": "dehaene-lambertz-ghislaine",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60201",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Deiters, Otto",
+      "norm": "deiters-otto",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60203",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "deklaratives",
+      "norm": "deklaratives",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60303",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Delfine",
+      "norm": "delfine",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60985",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "dendritische",
+      "norm": "dendritische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60504",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "dendritischer",
+      "norm": "dendritischer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60201",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "dendrodendritische",
+      "norm": "dendrodendritische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61116",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "der Emotion",
+      "norm": "der-emotion",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60867",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "der rechten Hemisphäre",
+      "norm": "der-rechten-hemisphare",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61009",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "des Flaschennasendelfins",
+      "norm": "des-flaschennasendelfins",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60918",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "des Menschen",
+      "norm": "des-menschen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60671",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "des selbstorientierten Denkens",
+      "norm": "des-selbstorientierten-denkens",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60482",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Descartes, René",
+      "norm": "descartes-rene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60158",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Desimone, Robert",
+      "norm": "desimone-robert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60160",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Diagnostizierung",
+      "norm": "diagnostizierung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60858",
+      "reason": "index term needs alias target or page decision"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Diathese-Stress-Hypothese der affektiven",
+      "norm": "diathese-stress-hypothese-der-affektiven",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60168",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "eines wachen, ruhenden Erwachsenen",
+      "norm": "eines-wachen-ruhenden-erwachsenen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60254",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "einfaches",
+      "norm": "einfaches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60902",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "einseitiges",
+      "norm": "einseitiges",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60044",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Einstein, Albert",
+      "norm": "einstein-albert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60266",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ekstrand, Bruce",
+      "norm": "ekstrand-bruce",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60270",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrische",
+      "norm": "elektrische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60529",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrischer",
+      "norm": "elektrischer",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61073",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrisches",
+      "norm": "elektrisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60864",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "elektrochemische",
+      "norm": "elektrochemische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61147",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "endogene",
+      "norm": "endogene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60032",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "enterisches",
+      "norm": "enterisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60689",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entstehung",
+      "norm": "entstehung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60765",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entwicklung",
+      "norm": "entwicklung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60057",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "episodisches",
+      "norm": "episodisches",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60304",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "erhöhter",
+      "norm": "erhohter",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60556",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Erkrankungen",
+      "norm": "erkrankungen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60690",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "erregbare",
+      "norm": "erregbare",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60630",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Erzeugung",
+      "norm": "erzeugung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59965",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Evarts, Edward",
+      "norm": "evarts-edward",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60282",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exocytotische",
+      "norm": "exocytotische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60327",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exogene",
+      "norm": "exogene",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60033",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "experimentelle",
+      "norm": "experimentelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59952",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "explizites",
+      "norm": "explizites",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60305",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exzitatorische",
+      "norm": "exzitatorische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61118",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "exzititorische",
+      "norm": "exzititorische",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61119",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Falck, Bengt",
+      "norm": "falck-bengt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60231",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "falsche",
+      "norm": "falsche",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60274",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "familiär gehäuftes Auftreten",
+      "norm": "familiar-gehauftes-auftreten",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60978",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fehm, Horst-Lorenz",
+      "norm": "fehm-horst-lorenz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60247",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ferrier, David",
+      "norm": "ferrier-david",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60248",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fesenko, Evgeny E",
+      "norm": "fesenko-evgeny-e",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60249",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "fetales",
+      "norm": "fetales",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59978",
+      "reason": "read-only matcher review: parser fragment, dangling adjective/subentry, or person-name index entry without standalone learning concept"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "/Hyperaktivitätssyndrom",
+      "norm": "hyperaktivitatssyndrom",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60046",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "\u0006-Spindelschleife",
+      "norm": "spindelschleife",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:61053",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    }
+  ]
+}

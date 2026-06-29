@@ -1,0 +1,221 @@
+{
+  "generated_at": "2026-06-29T11:59:05+02:00",
+  "repo": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone",
+  "source": "Bear Sachverzeichnis",
+  "mode": "reviewed-parser-noise-only",
+  "actions": [
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "CART",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60098",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Codierung von Bewegung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60894",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Differenzierung der Areale",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60672",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Doeller, Christian",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60186",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dolan, Ray",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60187",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Donoghue, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60189",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dowling, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60208",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dronkers, Nina",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60219",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dudai, Yadin",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60227",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Dudek, Serena",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60228",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "d’Ortous de Mairan, Jean Jacques",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60207",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Eccles, John",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60251",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt auf die Detektion des Zielreizes",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60404",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt auf Neuronen im Sehrindenareal V4",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60030",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Effekt von FEF-Stimulation",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60715",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ehrlich, Paul",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60264",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ein-Neuron-",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60830",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "eines wachen, ruhenden Erwachsenen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60254",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Einstein, Albert",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60266",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ekstrand, Bruce",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60270",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Eliminierung von Neuronenpopulationen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60763",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entdeckung der Sprachregionen",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60339",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Entladung einer Zelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60874",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Erzeugung",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59965",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Evarts, Edward",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60282",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "experimentelle",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:59952",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Falck, Bengt",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60231",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fehm, Horst-Lorenz",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60247",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Ferrier, David",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60248",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    },
+    {
+      "source": "Bear Sachverzeichnis",
+      "term": "Fesenko, Evgeny E",
+      "anchor": "raw/textbooks/bear-neurowiss-4.md:60249",
+      "action": "parser_noise",
+      "reason": "index/OCR fragment, person name, dangling token, or generic subentry"
+    }
+  ],
+  "counts": {
+    "parser_noise": 30
+  }
+}

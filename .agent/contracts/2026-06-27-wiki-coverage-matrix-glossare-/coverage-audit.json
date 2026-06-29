@@ -1,0 +1,96 @@
+{
+    "generated_at": "2026-06-29T05:20:16+02:00",
+  "wiki_pages": 1008,
+  "crosswalk_non_root_pages": 1006,
+  "wiki_names": 3144,
+  "book_crosswalk_counts": {
+    "Jaencke Index": {
+      "total": 1667,
+            "matched": 226,
+            "partial": 80,
+            "open": 1361
+    },
+    "Lehrner Sachverzeichnis": {
+      "total": 454,
+            "matched": 99,
+            "partial": 9,
+            "open": 346
+    },
+    "Karnath Glossar": {
+      "total": 326,
+      "matched": 163,
+      "partial": 1,
+      "open": 162
+    },
+    "Bear Glossar": {
+      "total": 792,
+      "matched": 706,
+      "partial": 5,
+      "open": 81
+    },
+    "Bear Sachverzeichnis": {
+            "total": 3134,
+            "matched": 891,
+            "partial": 57,
+            "open": 2186
+    }
+  },
+  "book_crosswalk_artifact": ".agent/contracts/2026-06-27-wiki-coverage-matrix-glossare-/book-crosswalk-recomputed.json",
+  "sqlite_summary": {
+    "db": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/contracts/2026-06-27-wiki-coverage-matrix-glossare-/coverage.sqlite",
+    "pages": 1006,
+        "names": 5141,
+        "source_terms": 6373,
+        "open_terms": 4136,
+    "alias_collisions": 167,
+    "status_counts": {
+      "Bear Glossar:matched": 706,
+      "Bear Glossar:open": 81,
+      "Bear Glossar:partial": 5,
+            "Bear Sachverzeichnis:matched": 891,
+            "Bear Sachverzeichnis:open": 2186,
+            "Bear Sachverzeichnis:partial": 57,
+            "Jaencke Index:matched": 226,
+            "Jaencke Index:open": 1361,
+            "Jaencke Index:partial": 80,
+      "Karnath Glossar:matched": 163,
+      "Karnath Glossar:open": 162,
+            "Lehrner Sachverzeichnis:matched": 99,
+            "Lehrner Sachverzeichnis:open": 346,
+      "Lehrner Sachverzeichnis:partial": 9,
+      "Karnath Glossar:partial": 1
+    }
+  },
+  "sqlite_status_counts": {
+        "matched": 2085,
+        "open": 4136,
+        "partial": 152
+  },
+  "source_page_counts": {
+    "total": 15,
+    "matched": 13,
+    "partial": 2,
+    "open": 0
+  },
+  "fachseiten_current": {
+    "topics": 678,
+    "disorders": 97,
+    "methods": 65,
+    "pathways": 29,
+    "brain-regions": 118,
+    "atlases": 4,
+    "total": 991,
+    "missing_sources": 0,
+    "broken_links": 0
+  },
+  "duplicate_collision_counts_current": {
+    "raw_collisions": 167,
+    "resolved_redirect": 20,
+    "unresolved_review": 147
+  },
+  "notes": [
+    "Kompaktes Audit; Term-Level-Daten stehen in book-crosswalk-recomputed.json.",
+    "SQLite ist abgeleiteter Arbeitsindex; Markdown bleibt Source of Truth.",
+    "Kein 100%-Coverage-Claim, solange open_terms oder partial_terms > 0 sind."
+  ]
+}

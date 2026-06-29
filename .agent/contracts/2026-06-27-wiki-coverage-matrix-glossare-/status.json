@@ -1,0 +1,30 @@
+{
+  "id": "2026-06-27-wiki-coverage-matrix-glossare-",
+  "title": "wiki coverage matrix glossare areale paper 100 prozent",
+  "status": "active",
+  "round": 1,
+  "created": "2026-06-27T18:08:36.656Z",
+  "updated": "2026-06-27T18:15:36.987Z",
+  "type": "feature",
+  "frame_required": true,
+  "frame_completed": true,
+  "reversibility": "two-way",
+  "pipeline": {
+    "stages": [
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
+    ],
+    "currentStage": "implement",
+    "completedStages": [
+      "plan"
+    ],
+    "stageHistory": [
+      {
+        "stage": "plan",
+        "completedAt": "2026-06-27T18:15:36.987Z"
+      }
+    ]
+  }
+}

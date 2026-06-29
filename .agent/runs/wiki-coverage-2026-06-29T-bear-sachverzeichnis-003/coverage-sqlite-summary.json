@@ -1,0 +1,24 @@
+{
+  "db": "/Users/marcusifland/CFH_REAL_LOCAL/SEM 4 LOCAL/brain-app-standalone/.agent/runs/wiki-coverage-2026-06-29T-bear-sachverzeichnis-003/coverage.sqlite",
+  "pages": 1053,
+  "names": 5394,
+  "source_terms": 6322,
+  "open_terms": 3930,
+  "alias_collisions": 169,
+  "status_counts": {
+    "Bear Glossar:matched": 769,
+    "Bear Glossar:partial": 5,
+    "Bear Sachverzeichnis:matched": 974,
+    "Bear Sachverzeichnis:open": 2068,
+    "Bear Sachverzeichnis:partial": 59,
+    "Jaencke Index:matched": 229,
+    "Jaencke Index:open": 1356,
+    "Jaencke Index:partial": 82,
+    "Karnath Glossar:matched": 164,
+    "Karnath Glossar:open": 161,
+    "Karnath Glossar:partial": 1,
+    "Lehrner Sachverzeichnis:matched": 100,
+    "Lehrner Sachverzeichnis:open": 345,
+    "Lehrner Sachverzeichnis:partial": 9
+  }
+}
