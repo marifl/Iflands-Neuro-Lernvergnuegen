@@ -118,8 +118,8 @@ describe('FooterBar', () => {
 
   it('wechselt den appMode ueber das Modus-Flyout', async () => {
     await renderFooterBar()
-    fireEvent.click(screen.getByRole('button', { name: /Explorer/ })) // Modus-Box-Trigger oeffnen
-    fireEvent.click(screen.getByRole('button', { name: /^Lernen$/ })) // Eintrag im Flyout
+    fireEvent.click(screen.getByRole('button', { name: /Strukturfokus/ })) // Lernraum-Box-Trigger oeffnen
+    fireEvent.click(screen.getByRole('button', { name: /Lernen · Home/ })) // Eintrag im Flyout
     expect(useViewerStore.getState().appMode).toBe('learn')
   })
 

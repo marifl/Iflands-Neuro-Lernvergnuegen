@@ -9,7 +9,7 @@ describe('appModeDefinitions', () => {
     ])
     expect(REGULAR_APP_MODE_DEFINITIONS.map((definition) => definition.label)).toEqual([
       'Lernen',
-      'Explorer',
+      'Strukturfokus',
     ])
   })
 
@@ -21,6 +21,6 @@ describe('appModeDefinitions', () => {
 
   it('beschreibt die zwei Modi mit dem fachlichen Zweck', () => {
     expect(REGULAR_APP_MODE_DEFINITIONS[0].description).toContain('Lernpfad')
-    expect(REGULAR_APP_MODE_DEFINITIONS[1].description).toContain('Freies Anklicken und Isolieren')
+    expect(REGULAR_APP_MODE_DEFINITIONS[1].description).toContain('Strukturfokus')
   })
 })

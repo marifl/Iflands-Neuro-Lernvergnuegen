@@ -131,21 +131,30 @@ export default function FooterBar() {
     },
     {
       key: 'mode',
-      eyebrow: 'Modus',
+      eyebrow: 'Lernraum',
       label: APP_MODE_LABEL[appMode],
       icon: <BookOpen {...FOOTER_ICON_PROPS} />,
-      content: REGULAR_APP_MODE_DEFINITIONS.map((definition) => (
-        <Item key={definition.mode} active={appMode === definition.mode} onClick={() => {
-          if (definition.mode !== 'learn') {
-            window.history.replaceState(null, '', `?mode=${definition.mode}`)
-            window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
-          }
-          setAppMode(definition.mode)
-          close()
-        }}>
-          {definition.label}
-        </Item>
-      )),
+      // Lernen ist der primaere Flow (Home); Strukturfokus ist eine Surface darin.
+      // Jede Nicht-Lern-Surface bekommt einen sichtbaren Rueckweg zum Lernschritt.
+      content: (
+        <>
+          {appMode !== 'learn' ? (
+            <Item onClick={() => { setAppMode('learn'); close() }}>← Zurück zum Lernschritt</Item>
+          ) : null}
+          {REGULAR_APP_MODE_DEFINITIONS.map((definition) => (
+            <Item key={definition.mode} active={appMode === definition.mode} onClick={() => {
+              if (definition.mode !== 'learn') {
+                window.history.replaceState(null, '', `?mode=${definition.mode}`)
+                window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+              }
+              setAppMode(definition.mode)
+              close()
+            }}>
+              {definition.mode === 'learn' ? `${definition.label} · Home` : definition.label}
+            </Item>
+          ))}
+        </>
+      ),
     },
     {
       key: 'color',

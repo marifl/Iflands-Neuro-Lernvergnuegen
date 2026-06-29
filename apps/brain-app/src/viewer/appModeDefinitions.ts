@@ -18,8 +18,8 @@ export const REGULAR_APP_MODE_DEFINITIONS = [
   },
   {
     mode: 'explore',
-    label: 'Explorer',
-    description: 'Freies Anklicken und Isolieren: das Gehirn ohne geführte Szenen erkunden.',
+    label: 'Strukturfokus',
+    description: 'Strukturfokus: Suche, Strukturbaum, Auswahl und Isolieren — lernnahe Strukturen zuerst.',
     recommended: false,
   },
 ] as const satisfies readonly AppModeDefinition[]
