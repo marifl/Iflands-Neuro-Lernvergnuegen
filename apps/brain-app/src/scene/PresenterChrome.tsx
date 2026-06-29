@@ -83,7 +83,7 @@ function SceneJumpPicker({
         aria-autocomplete="list"
         role="combobox"
         placeholder={activeLabel}
-        style={{ width: '100%', minWidth: 0, padding: '4px 8px', textAlign: 'left' }}
+        style={{ width: '100%', minWidth: 0, minHeight: 44, padding: '4px 8px', textAlign: 'left' }}
       />
       {open ? (
         <div
@@ -142,7 +142,8 @@ export default function PresenterChrome() {
   if (!scenes.length) return null
   const scene = scenes[index]
   const sequence = scene.sequence
-  const nav: CSSProperties = { padding: '4px 9px', flex: 'none' }
+  // Scene-Nav ist Primaernavigation -> Touch-Target >= 44px (Shape-Vertrag §Touch-Targets).
+  const nav: CSSProperties = { padding: '4px 9px', flex: 'none', minHeight: 44 }
   // Sichtbarer Fortschritt durch die Szenen-Sequenz (gegen Time-Blindness; Lernende sehen,
   // wie weit sie sind + dass es ein Ende gibt).
   const progress = ((sequence.stepIndex + 1) / sequence.stepCount) * 100

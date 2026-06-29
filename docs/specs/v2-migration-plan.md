@@ -36,11 +36,10 @@ Bühne. Die V2-Migration ist also **Framing/Nav + Atlas-Supplement**, kein Rebui
       wie der Lernschritt (caseStudyActive durch shouldRenderInlineSidebar/viewportFlex/
       TreeDrawer-Gate gethreadet). Verify: smoke:responsive 6/6, smoke:phineas-gage 2/2
 - [x] Schritt 6 — No-Fallback-Restklassen geschlossen (verifiziert: Abschluss-rg sauber, NF-013)
-- [~] Schritt 7 — Smoke-Failures: learning-layout 2/3 grün (Route kanonisiert + Floating-Legende
-      in Learn gegated = echter Bug-Fix). Offen: (a) phone-portrait `step-picker-unbrauchbar`
-      = basalganglienschleifen-Overlay squeezt die Nav-Zeile <120px auf 390px (OverlayPanel-Layout);
-      (b) `tablet-landscape-phineas inline-tree-unerwartet` = `/?mode=phineas` aktiviert den Case
-      nicht (caseStudyActive false → StructureTree statt PhineasSidebar) → gehört in Schritt 5
+- [x] Schritt 7 — Alle Smokes grün: learning-layout 3/3, responsive 6/6, phineas-gage 2/2,
+      explorer-panel 3/3, performance-gate 2/2. Fixes: (a) Route kanonisiert, (b) Floating-Legende
+      aus Learn-Bühne, (c) Phineas-Aktivierung (Schritt 5), (d) Scene-Nav Touch-Target ≥44px
+      (Step-Picker war 22px hoch = Shape-Verletzung §Touch-Targets)
 - [ ] Schritt 8 — Rail/Dock-Nav (HfDyMF0aT88a) — größter verbleibender AppFrame-Schnitt
 - [ ] Schritt 9 — Readiness-Gate-Verdict aktualisieren (No-Fallback-Blocker belegt geschlossen)
 
