@@ -5,19 +5,19 @@ const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
 const CASES = [
   {
     id: 'phone-portrait-basalganglia',
-    path: '/?config=basalganglienschleifen',
+    path: '/?mode=learn&config=basalganglienschleifen&scene=basalganglienschleifen',
     viewport: { width: 390, height: 844 },
     hasTouch: true,
   },
   {
     id: 'desktop-basalganglia',
-    path: '/?config=basalganglienschleifen',
+    path: '/?mode=learn&config=basalganglienschleifen&scene=basalganglienschleifen',
     viewport: { width: 1366, height: 768 },
     hasTouch: false,
   },
   {
     id: 'phone-landscape-basalganglia',
-    path: '/?config=basalganglienschleifen',
+    path: '/?mode=learn&config=basalganglienschleifen&scene=basalganglienschleifen',
     viewport: { width: 844, height: 390 },
     hasTouch: true,
   },
