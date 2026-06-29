@@ -44,8 +44,12 @@ Bühne. Die V2-Migration ist also **Framing/Nav + Atlas-Supplement**, kein Rebui
       explorer-panel 3/3, performance-gate 2/2. Fixes: (a) Route kanonisiert, (b) Floating-Legende
       aus Learn-Bühne, (c) Phineas-Aktivierung (Schritt 5), (d) Scene-Nav Touch-Target ≥44px
       (Step-Picker war 22px hoch = Shape-Verletzung §Touch-Targets)
-- [ ] Schritt 8 — Rail/Dock-Nav (HfDyMF0aT88a) — größter verbleibender AppFrame-Schnitt
-- [ ] Schritt 9 — Readiness-Gate-Verdict aktualisieren (No-Fallback-Blocker belegt geschlossen)
+- [x] Schritt 8 — Responsive-DoD (HfDyMF0aT88a) erfüllt: alle Smokes grün je Geräteklasse +
+      Orientierung (responsive 6/6, learning 3/3, explorer-panel 3/3, performance-gate 2/2,
+      phineas 2/2); responsiveShellMode deckt desktop-split/portrait-drawer/landscape-rail ab.
+      Note: literale ifn-nav Rail/Dock-Chrome ist optional (Shape: Rail „darf", FooterBar-Umbau
+      war out-of-scope) — separater Chrome-Redesign-Slice, kein Migrations-Blocker.
+- [ ] Schritt 9 — Readiness-Gate-Verdict aktualisieren (nach finaler Review-Runde)
 
 ## Notizen
 - `appMode: 'learn'|'explore'|'atlas'` ist Store-Kern (15 Dateien). Migration heißt: `explore`/`atlas`
