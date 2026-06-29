@@ -193,16 +193,21 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
             style={{
               position: 'relative',
               maxHeight: '86%',
-              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
               borderTop: '1.5px solid var(--line)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderBottom: '1.5px solid var(--line)' }}>
+            <div style={{ flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', borderBottom: '1.5px solid var(--line)' }}>
               <span className="eyebrow">Mehr</span>
               <button type="button" className="ed-btn" style={{ padding: '6px 9px', minHeight: 44, minWidth: 44 }} onClick={() => setMoreOpen(false)}>
                 <X size={16} strokeWidth={1.8} aria-hidden />
               </button>
             </div>
+            {/* Scrollbarer Teil: Surfaces + Vortrag + Einstellungen. Die Werkzeuge-Leiste liegt
+                bewusst ausserhalb (siehe unten), damit ihre Flyouts nicht vom Scroll-Overflow
+                abgeschnitten werden. */}
+            <div style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
             <div style={{ display: 'flex', flexDirection: 'column', padding: '10px 12px', gap: 6 }}>
               {SURFACES.map((surface) => {
                 const active = appMode === surface.mode
@@ -246,16 +251,19 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                 {presentationActive ? 'Vortrag verlassen — zurück zum Lernpfad' : 'Vortrag starten (Kapitel 11)'}
               </button>
             </div>
-            {variant === 'dock' ? (
-              <div style={{ borderTop: '1.5px solid var(--line)', padding: '10px 12px' }}>
-                <div className="eyebrow" style={{ marginBottom: 8 }}>Werkzeuge</div>
-                <FooterBar />
-              </div>
-            ) : null}
             <div style={{ borderTop: '1.5px solid var(--line)', padding: '12px' }}>
               <div className="eyebrow" style={{ marginBottom: 8 }}>Einstellungen</div>
               <SettingsPanel />
             </div>
+            </div>
+            {/* Werkzeuge fest am Sheet-Boden (Portrait): ausserhalb des Scroll-Containers, damit die
+                Flyout-Popover (oeffnen nach oben) nicht vom overflow:auto abgeschnitten werden. */}
+            {variant === 'dock' ? (
+              <div style={{ flex: 'none', borderTop: '1.5px solid var(--line)', padding: '12px' }}>
+                <div className="eyebrow" style={{ marginBottom: 8 }}>Werkzeuge</div>
+                <FooterBar />
+              </div>
+            ) : null}
           </div>
         </div>
       ) : null}
