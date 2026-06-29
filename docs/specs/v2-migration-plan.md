@@ -21,7 +21,8 @@ Lernen = primärer Flow; Explorer/Atlas/Fall/Wiki/Chat = Surfaces, keine Peer-Mo
 Realisiert die „angepasst übernehmen"-Frames AppFrame/AtlasErpFrame/PresenterFrame (Frame-Mapping).
 Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD > ältere Dart-Subtasks (17.06.).
 
-- [ ] Schritt 10 — ifn-nav Rail/Dock (AppFrame): neue `ShellNav.tsx` (Rail desktop-split/landscape-rail,
+- [x] Schritt 10 — ifn-nav Rail/Dock (AppFrame) · commits a7a2f6dc + 56bb93f7 · typecheck 0, test 510,
+      build 0, smoke:shell-nav 3/3 + Screenshots: neue `ShellNav.tsx` (Rail desktop-split/landscape-rail,
       Dock portrait-drawer) per `responsiveShellMode`. Items = Lernen·Struktur·Atlas + Mehr (3 Surfaces +
       Mehr ≤ „4+Mehr"; „Inhalt" = Lernen-Content-Panel, keine erfundene Surface). Mehr-Sheet = Sekundärnav
       + SettingsPanel (Shape §182). **Additiv** — FooterBar unangetastet (Modus-/Settings-Box-Entfernung
@@ -29,7 +30,12 @@ Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD >
       > Note: Portrait zeigt damit Dock (Nav) + FooterBar (Tools) als zwei Bottom-Leisten. Bewusste,
       > dokumentierte Folge: Konsolidierung (Footer-Tools → Dock-Mehr, Footer-Modus/Settings-Box raus +
       > Tests umziehen) ist der nächste Chrome-Slice, kein Migrations-Blocker.
-- [ ] Schritt 11 — ERP-Supplement (AtlasErpFrame)
+- [x] Schritt 11 — ERP-Supplement (AtlasErpFrame): ERP-Kurve rendert bereits als Content des Lern-Panels
+      (ErpChart, overlay.kind='erp', z.B. Szene p3a-konfliktmonitoring). Neu: die Kontextspalte ist jetzt
+      **einklappbar** (Collapse-Chevron zwischen Bühne und Panel / Reopen-Tab im eingeklappten Zustand) =
+      die fehlende AtlasErpFrame-Affordance „einklappbare Kontextspalte". Desktop/Landscape = Spalte mit
+      Collapse; Portrait = ERP im Sheet (kein Streifen). Verify: smoke:erp-supplement 2/2 + Screenshots
+      (expanded/collapsed), alle Regression-Smokes grün, typecheck 0, test 510, build 0.
 - [ ] Schritt 12 — Presenter-Surface (PresenterFrame) + Lernschritt→Atlas-Bridge
 
 ## Schlüsselbefund (29.06.)

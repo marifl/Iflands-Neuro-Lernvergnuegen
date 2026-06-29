@@ -14,6 +14,7 @@
     "perf:budget": "node ../../scripts/perf/check-brain-app-budget.mjs",
     "preview": "vite preview",
     "preview:lan": "vite preview --host 0.0.0.0",
+    "smoke:erp-supplement": "node scripts/smoke-erp-supplement.mjs",
     "smoke:explorer-panel": "node scripts/smoke-explorer-panel.mjs",
     "smoke:learning-layout": "node scripts/smoke-learning-layout.mjs",
     "smoke:performance-gate": "node scripts/smoke-performance-gate.mjs",

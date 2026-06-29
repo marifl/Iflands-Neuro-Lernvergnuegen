@@ -1,6 +1,7 @@
 import { Suspense, useEffect, useMemo, useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import * as THREE from 'three'
 import { buildContextTree, flattenStructures, type Ontology, type OntologyNode } from './ontology'
 import { useViewerStore } from './viewerStore'
@@ -16,6 +17,7 @@ import {
   shellFlexDirection,
   shouldRenderInlineSidebar,
   shouldRenderMobileTreeDrawer,
+  sidePanelBorder,
   viewportFlex,
 } from './explorerShellLayout'
 import PhineasSidebar from './PhineasSidebar'
@@ -163,6 +165,8 @@ export default function BodyParts3DViewer() {
   // ueberspringen, Deep-Links behalten immer Vorrang.
   const [launched, setLaunched] = useState(() => !shouldShowLauncher(window.location.search, loadSettings()))
   const [mobileTreeOpen, setMobileTreeOpen] = useState(false)
+  // Kontextspalte (Lern-/Struktur-/Fall-Panel inkl. ERP-Kurve) einklappbar wie im AtlasErp/AppFrame-Mockup.
+  const [panelCollapsed, setPanelCollapsed] = useState(false)
   const [brainModel, setBrainModel] = useState(() => resolveBrainModelOptionFromSearch(window.location.search))
   const [brainModelReviewActive, setBrainModelReviewActive] = useState(() => (
     new URLSearchParams(window.location.search).has('brainModel')
@@ -298,6 +302,14 @@ export default function BodyParts3DViewer() {
   const sidebar =
     appMode === 'learn' ? <LearnSidebar /> : caseStudyActive ? <PhineasSidebar /> : <StructureTree />
   const renderInlineSidebar = shouldRenderInlineSidebar({ appMode, isAtlas, shellMode, caseStudyActive })
+  // Einklappbar nur als echte Seitenspalte (Split/Landscape-Rail) — der Portrait-Drawer klappt anders.
+  const panelCollapsible = renderInlineSidebar && shellMode !== 'portrait-drawer'
+  const sidebarCollapsed = panelCollapsible && panelCollapsed
+  // Collapse zuruecksetzen, sobald keine einklappbare Seitenspalte mehr aktiv ist (Atlas/Portrait),
+  // damit das Panel beim Rueckwechsel nicht unsichtbar „klemmt".
+  useEffect(() => {
+    if (!panelCollapsible) setPanelCollapsed(false)
+  }, [panelCollapsible])
   const renderMobileTreeDrawer = shouldRenderMobileTreeDrawer({ appMode, isAtlas, shellMode, mobileTreeOpen, caseStudyActive })
   const atlasTarget = bridgeFor(selected)
   const selectedSlugList = useMemo(() => [...selectedSlugs], [selectedSlugs])
@@ -675,7 +687,29 @@ export default function BodyParts3DViewer() {
             )}
           </div>
 
-          {renderInlineSidebar ? sidebar : null}
+          {/* Einklapp-Streifen zwischen Buehne und Kontextspalte (collapse →) bzw. Reopen-Tab (← ausklappen). */}
+          {panelCollapsible ? (
+            <button
+              type="button"
+              className="ed-btn"
+              aria-label={panelCollapsed ? 'Kontextspalte einblenden' : 'Kontextspalte einklappen'}
+              aria-expanded={!panelCollapsed}
+              onClick={() => setPanelCollapsed((collapsed) => !collapsed)}
+              style={{
+                flex: 'none',
+                width: 24,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 0,
+                borderRadius: 0,
+                ...sidePanelBorder({ shellMode }),
+              }}
+            >
+              {panelCollapsed ? <ChevronLeft size={14} aria-hidden /> : <ChevronRight size={14} aria-hidden />}
+            </button>
+          ) : null}
+          {renderInlineSidebar && !sidebarCollapsed ? sidebar : null}
           {renderMobileTreeDrawer ? (
             <div
               className="ed-panel ed-frame"
