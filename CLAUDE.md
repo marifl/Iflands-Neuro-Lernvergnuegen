@@ -97,7 +97,7 @@ Bevor du direkt editierst oder Arbeit selbst "nebenbei" erledigst — nimm den A
 
 Das ist Lenkung, kein Zwang: fuer schnelles, freies Arbeiten `alrah profile use quick --until-commit`.
 
-### Working Principles (Karpathy + FAB — gilt fuer alle ALRAH-Skills)
+### Working Principles (Karpathy + FAB + Ponytail — gilt fuer alle ALRAH-Skills)
 
 Eine gemeinsame Sprache fuer Skills, Subagents und Contracts:
 
@@ -107,6 +107,8 @@ Eine gemeinsame Sprache fuer Skills, Subagents und Contracts:
 4. **Goal-Driven** — Jede Aufgabe ein verifizierbares Ziel (Test, Verdict, Verify-Step). `outcome:` Frontmatter in criteria.md ist Pflicht-Ziel.
 
 FAB-Achsen (siehe `docs/decisions/ADR-005-fab-design-principles.md`) sind komplementaer: I-X als praktische Codierung der gleichen Prinzipien.
+
+**Ponytail** (Plugin, Level `full`) ergaenzt als Coding-Stil: Stdlib vor Dependency, kuerzester Diff, YAGNI-Ladder (braucht es das? → Stdlib? → native Feature? → eine Zeile? → erst dann Code). Karpathy sagt *wie* du denkst, Ponytail sagt *wie minimal* du baust. Details: `/ponytail-help`.
 
 ### Context-Locality
 

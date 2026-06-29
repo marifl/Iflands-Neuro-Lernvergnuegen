@@ -36,6 +36,7 @@ brain-app-standalone/knowledge/
 │
 └── wiki/                  # Schicht 2 — LLM-generiert (synthesized pages)
     ├── overview.md        # Top-Level-Synthese: Stand der Domaene
+    ├── coverage-status.md # Einzige Coverage-Statusquelle
     ├── sources/           # Eine Seite pro ingestierter Quelle (1:1 mit raw/)
     ├── topics/            # Multi-Source-Synthesen, Vergleiche, Deep Dives
     └── <project-types>/   # Per-Project: vom Projekt selbst deklarierte Kategorien
@@ -86,6 +87,9 @@ source_path: "raw/papers/<file>"    # nur bei type=source
 
 - **Immer `[[wikilinks]]`** bei Verweisen auf andere Wiki-Seiten
 - Display-Pipe nutzen wenn Anzeigeform abweicht: `[[grz|Grundflaechenzahl (GRZ)]]`
+- Coverage-Zahlen und offene Coverage-Arbeit ausschließlich in
+  `wiki/coverage-status.md` pflegen. `overview.md`, `index.md`, alte Run-Reports
+  und Contract-Audits verlinken dorthin statt eigene Zahlen zu duplizieren.
 
 ---
 
