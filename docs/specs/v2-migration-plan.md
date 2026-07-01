@@ -16,6 +16,7 @@ Lernen = primärer Flow; Explorer/Atlas/Fall/Wiki/Chat = Surfaces, keine Peer-Mo
 - Letzter Commit: bcd3a0a5 (Konsolidierungs-Review-Fix)
 - Backup-Tag: pre-v2-shell-skeleton · pre-v2-mockup-completion
 - Letzte Update: 2026-06-29
+- **PR #38 Review (kritische Findings):** [`docs/reviews/2026-06-29-pr38-v2-mockup-completion-review.md`](../reviews/2026-06-29-pr38-v2-mockup-completion-review.md) — URL-Bugs K1–K3 BLOCKER, Scope-Split empfohlen
 
 ## Mockup-Completion (Schritt 10-12, Branch feature/v2-mockup-completion)
 Realisiert die „angepasst übernehmen"-Frames AppFrame/AtlasErpFrame/PresenterFrame (Frame-Mapping).
