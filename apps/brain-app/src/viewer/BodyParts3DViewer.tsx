@@ -48,7 +48,7 @@ import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ResumeLauncher from './ResumeLauncher'
-import { replaceAppModeQuery } from '../scene/router'
+import { navigateToAtlasWithFocus } from '../scene/router'
 import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
 import CutCaps from './CutCaps'
 import CutPickBridge from './CutPickBridge'
@@ -593,8 +593,9 @@ export default function BodyParts3DViewer() {
                     className="ed-btn"
                     style={{ pointerEvents: 'auto', marginTop: 10, padding: '5px 11px' }}
                     onClick={() => {
-                      setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                      replaceAppModeQuery('atlas')
+                      const focus = { layer: atlasTarget.layer, name: atlasTarget.name }
+                      setAtlasFocus(focus)
+                      navigateToAtlasWithFocus(focus)
                       setAppMode('atlas')
                     }}
                   >
@@ -629,8 +630,9 @@ export default function BodyParts3DViewer() {
                 onClose={() => setClosedLearningFlyoutFor(selected)}
                 onOpenAtlas={() => {
                   if (!atlasTarget) return
-                  setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                  replaceAppModeQuery('atlas')
+                  const focus = { layer: atlasTarget.layer, name: atlasTarget.name }
+                  setAtlasFocus(focus)
+                  navigateToAtlasWithFocus(focus)
                   setAppMode('atlas')
                 }}
                 onOpenTarget={openExplorerTarget}
@@ -665,8 +667,9 @@ export default function BodyParts3DViewer() {
                         style={{ padding: '5px 11px' }}
                         onClick={() => {
                           const t = julichBridgeFor(pickedAtlasSlug)!
-                          setAtlasFocus({ layer: t.layer, name: t.name })
-                          replaceAppModeQuery('atlas')
+                          const focus = { layer: t.layer, name: t.name }
+                          setAtlasFocus(focus)
+                          navigateToAtlasWithFocus(focus)
                           setAppMode('atlas')
                         }}
                       >

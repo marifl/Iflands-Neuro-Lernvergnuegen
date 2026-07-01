@@ -94,30 +94,79 @@ export function replaceCanonicalLocation(input: CanonicalQueryInput): string {
   return query
 }
 
-/** Surface-Modus in der URL (Reload-sicher). Lernen nutzt config/scene — kein mode=learn. */
-export function replaceAppModeQuery(mode: 'explore' | 'atlas'): string {
-  const query = `?mode=${mode}`
+/** Surface-Modus in der URL (Reload-sicher). Lernen nutzt config/scene — kein mode=learn.
+ *  Bestehende Query-Params (preset, off/on, …) bleiben erhalten; Atlas-Fokus optional serialisiert. */
+export interface AppModeQueryOptions {
+  atlasFocus?: { layer: string; name: string }
+}
+
+export function parseAtlasFocusFromSearch(search: string): { layer: string; name: string } | null {
+  const params = new URLSearchParams(search)
+  if (params.get('mode') !== 'atlas') return null
+  const layer = params.get('atlasLayer')
+  const name = params.get('atlasArea')
+  if (!layer || !name) return null
+  return { layer, name }
+}
+
+export function replaceAppModeQuery(mode: 'explore' | 'atlas', options?: AppModeQueryOptions): string {
+  const params = new URLSearchParams(window.location.search)
+  params.set('mode', mode)
+  if (options?.atlasFocus) {
+    params.set('atlasLayer', options.atlasFocus.layer)
+    params.set('atlasArea', options.atlasFocus.name)
+  } else if (mode !== 'atlas') {
+    params.delete('atlasLayer')
+    params.delete('atlasArea')
+  }
+  const query = params.toString() ? `?${params.toString()}` : window.location.pathname
   window.history.replaceState(null, '', query)
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
   return query
 }
 
+export function navigateToAtlasWithFocus(focus: { layer: string; name: string }): string {
+  return replaceAppModeQuery('atlas', { atlasFocus: focus })
+}
+
+const PRESENTATION_RETURN_KEY = 'brain-app:presentation-return'
+
 let learnReturnBeforePresentation: CanonicalQueryInput | null = null
+
+function readPresentationReturn(): CanonicalQueryInput | null {
+  try {
+    const raw = sessionStorage.getItem(PRESENTATION_RETURN_KEY)
+    if (raw) return JSON.parse(raw) as CanonicalQueryInput
+  } catch {
+    // private mode / quota
+  }
+  return learnReturnBeforePresentation
+}
+
+function writePresentationReturn(input: CanonicalQueryInput | null): void {
+  learnReturnBeforePresentation = input
+  try {
+    if (input) sessionStorage.setItem(PRESENTATION_RETURN_KEY, JSON.stringify(input))
+    else sessionStorage.removeItem(PRESENTATION_RETURN_KEY)
+  } catch {
+    // private mode / quota
+  }
+}
 
 /** Merkt die aktuelle Lern-URL, bevor in die Praesentationssequenz gewechselt wird. */
 export function bookmarkLearnBeforePresentation(): void {
   const loc = parseLocation(window.location.search)
   if (loc.sequenceKind === 'presentation') return
   if (!loc.configName && !loc.sceneId) {
-    learnReturnBeforePresentation = null
+    writePresentationReturn(null)
     return
   }
-  learnReturnBeforePresentation = {
+  writePresentationReturn({
     ...(loc.sequenceKind && loc.sequenceName ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName } : {}),
     configName: loc.configName,
     sceneId: loc.sceneId,
     step: loc.step,
-  }
+  })
 }
 
 export function enterPresentationSequence(sequenceName: string): string {
@@ -130,9 +179,10 @@ export function enterPresentationSequence(sequenceName: string): string {
 
 /** Praesentation verlassen und zuvor gemerkte Lernposition wiederherstellen. */
 export function leavePresentationAndRestore(): string {
-  if (learnReturnBeforePresentation) {
-    const query = replaceCanonicalLocation(learnReturnBeforePresentation)
-    learnReturnBeforePresentation = null
+  const bookmark = readPresentationReturn()
+  if (bookmark) {
+    const query = replaceCanonicalLocation(bookmark)
+    writePresentationReturn(null)
     return query
   }
   const params = new URLSearchParams(window.location.search)
@@ -150,6 +200,8 @@ export function navigateToLearnFromScene(input: CanonicalQueryInput | null): str
   }
   const params = new URLSearchParams(window.location.search)
   params.delete('mode')
+  params.delete('atlasLayer')
+  params.delete('atlasArea')
   const query = params.toString() ? `?${params.toString()}` : window.location.pathname
   window.history.replaceState(null, '', query)
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))

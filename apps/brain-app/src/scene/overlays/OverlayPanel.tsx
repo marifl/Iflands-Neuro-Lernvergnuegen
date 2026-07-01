@@ -10,7 +10,7 @@ import PresenterNotes from '../PresenterNotes'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
 import { regionsToMeshes } from '../brainBridge'
 import { bridgeFor, type AtlasTarget } from '../../viewer/atlas/atlasBridge'
-import { replaceAppModeQuery } from '../router'
+import { navigateToAtlasWithFocus } from '../router'
 import { useViewerStore } from '../../viewer/viewerStore'
 
 /** Erstes kuratiert verlinktes fsaverage-Areal der Szenen-Regionen (Bruecke Lernschritt -> Atlas),
@@ -90,7 +90,7 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
               style={{ marginTop: 8, padding: '5px 11px', minHeight: 44 }}
               onClick={() => {
                 setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                replaceAppModeQuery('atlas')
+                navigateToAtlasWithFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
                 setAppMode('atlas')
               }}
             >

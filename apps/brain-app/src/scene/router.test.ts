@@ -3,6 +3,7 @@ import {
   enterPresentationSequence,
   leavePresentationAndRestore,
   navigateToLearnFromScene,
+  parseAtlasFocusFromSearch,
   parseLocation,
   replaceAppModeQuery,
   replaceCanonicalLocation,
@@ -11,7 +12,13 @@ import {
   toQuery,
 } from './router'
 
+const PRESENTATION_RETURN_KEY = 'brain-app:presentation-return'
+
 describe('router', () => {
+  beforeEach(() => {
+    sessionStorage.removeItem(PRESENTATION_RETURN_KEY)
+  })
+
   it('parst scene + step', () => {
     expect(parseLocation('?scene=p3a&step=2')).toEqual({ sceneId: 'p3a', configName: null, step: 2 })
   })
@@ -81,16 +88,34 @@ describe('router', () => {
   })
 
   it('replaceAppModeQuery setzt mode fuer Reload', () => {
+    window.history.replaceState(null, '', '/')
     expect(replaceAppModeQuery('atlas')).toBe('?mode=atlas')
     expect(window.location.search).toBe('?mode=atlas')
+  })
+
+  it('replaceAppModeQuery erhaelt bestehende Params und setzt Atlas-Fokus', () => {
+    window.history.replaceState(null, '', '/?mode=explore&preset=explorer&off=julich%3Aarea-44%3Al')
+    expect(replaceAppModeQuery('atlas', { atlasFocus: { layer: 'dkt', name: 'superiorfrontal' } })).toBe(
+      '?mode=atlas&preset=explorer&off=julich%3Aarea-44%3Al&atlasLayer=dkt&atlasArea=superiorfrontal',
+    )
+  })
+
+  it('parseAtlasFocusFromSearch liest Atlas-Fokus aus der URL', () => {
+    expect(parseAtlasFocusFromSearch('?mode=atlas&atlasLayer=dkt&atlasArea=superiorfrontal')).toEqual({
+      layer: 'dkt',
+      name: 'superiorfrontal',
+    })
+    expect(parseAtlasFocusFromSearch('?mode=explore')).toBeNull()
   })
 
   it('enterPresentationSequence merkt Lernposition und wechselt Sequenz', () => {
     window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=2')
     enterPresentationSequence('kapitel11-vorlesung')
     expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung')
+    expect(sessionStorage.getItem(PRESENTATION_RETURN_KEY)).toContain('vcpt')
     leavePresentationAndRestore()
     expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2')
+    expect(sessionStorage.getItem(PRESENTATION_RETURN_KEY)).toBeNull()
   })
 
   it('navigateToLearnFromScene entfernt mode und setzt kanonische Lern-URL', () => {
