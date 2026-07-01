@@ -1,7 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import { BookOpen, Compass, Layers, MoreHorizontal, X } from 'lucide-react'
 import { useViewerStore, type AppMode } from './viewerStore'
-import { ROUTE_CHANGE_EVENT } from '../scene/router'
+import {
+  enterPresentationSequence,
+  leavePresentationAndRestore,
+  navigateToLearnFromScene,
+  parseLocation,
+  replaceAppModeQuery,
+  type CanonicalQueryInput,
+} from '../scene/router'
 import { useSceneStore } from '../scene/sceneStore'
 import SettingsPanel from './SettingsPanel'
 import FooterBar from './FooterBar'
@@ -30,12 +37,28 @@ const SURFACES: NavSurface[] = [
   { mode: 'atlas', label: 'Atlas', description: 'Präzises fsaverage-Atlas-Supplement als Referenz zum Lernschritt.', icon: <Layers {...NAV_ICON_PROPS} /> },
 ]
 
-/** appMode wechseln + URL fuer Deep-Link/Reload synchron halten (wie FooterBar/atlasBridge).
- *  Lernen behaelt die aktive Szene (kein URL-Reset), damit der Lernschritt fortsetzbar bleibt. */
+function learnLocationFromStore(): CanonicalQueryInput | null {
+  const state = useSceneStore.getState()
+  const scene = state.scenes[state.index]
+  if (!scene || scene.sequence.kind !== 'learning') return null
+  return { configName: scene.configName, sceneId: scene.id, step: state.step }
+}
+
+/** appMode wechseln + URL fuer Deep-Link/Reload synchron halten. */
 function goToSurface(mode: NavSurface['mode'], setAppMode: (m: AppMode) => void) {
-  if (mode !== 'learn') {
-    window.history.replaceState(null, '', `?mode=${mode}`)
-    window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+  if (mode === 'learn') {
+    const loc = parseLocation(window.location.search)
+    const fromUrl = loc.sequenceKind !== 'presentation' && (loc.configName || loc.sceneId)
+      ? {
+          ...(loc.sequenceKind && loc.sequenceName ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName } : {}),
+          configName: loc.configName,
+          sceneId: loc.sceneId,
+          step: loc.step,
+        }
+      : null
+    navigateToLearnFromScene(learnLocationFromStore() ?? fromUrl)
+  } else {
+    replaceAppModeQuery(mode)
   }
   setAppMode(mode)
 }
@@ -52,14 +75,20 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
   // (BodyParts3DViewer) Escape als Auswahl-Reset interpretiert. capture=true gewinnt das Rennen.
   useEffect(() => {
     if (!moreOpen) return
-    dialogRef.current?.focus()
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const firstFocusable = dialogRef.current?.querySelector<HTMLElement>('button.ed-btn')
+    firstFocusable?.focus()
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Escape') return
       e.stopPropagation()
       setMoreOpen(false)
     }
     window.addEventListener('keydown', onKey, { capture: true })
-    return () => window.removeEventListener('keydown', onKey, { capture: true })
+    return () => {
+      document.body.style.overflow = prevOverflow
+      window.removeEventListener('keydown', onKey, { capture: true })
+    }
   }, [moreOpen])
 
   // Aktiv-Akzent wie im Mockup: 3px-Leiste links (Rail) bzw. 2px oben (Dock). Bewusst statt
@@ -236,14 +265,12 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                 className={`ed-btn${presentationActive ? ' active' : ''}`}
                 aria-pressed={presentationActive}
                 onClick={() => {
-                  // Praesentationszustand des Unified Mode (kein Silo): Sequenz wechseln, learn-Shell bleibt.
                   if (presentationActive) {
-                    window.history.replaceState(null, '', '?mode=learn')
+                    leavePresentationAndRestore()
                   } else {
                     setAppMode('learn')
-                    window.history.replaceState(null, '', `?sequence=presentation.${PRESENTATION_SEQUENCE}`)
+                    enterPresentationSequence(PRESENTATION_SEQUENCE)
                   }
-                  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
                   setMoreOpen(false)
                 }}
                 style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '10px 12px', minHeight: 44 }}

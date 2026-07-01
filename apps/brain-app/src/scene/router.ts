@@ -93,3 +93,65 @@ export function replaceCanonicalLocation(input: CanonicalQueryInput): string {
   window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
   return query
 }
+
+/** Surface-Modus in der URL (Reload-sicher). Lernen nutzt config/scene — kein mode=learn. */
+export function replaceAppModeQuery(mode: 'explore' | 'atlas'): string {
+  const query = `?mode=${mode}`
+  window.history.replaceState(null, '', query)
+  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+  return query
+}
+
+let learnReturnBeforePresentation: CanonicalQueryInput | null = null
+
+/** Merkt die aktuelle Lern-URL, bevor in die Praesentationssequenz gewechselt wird. */
+export function bookmarkLearnBeforePresentation(): void {
+  const loc = parseLocation(window.location.search)
+  if (loc.sequenceKind === 'presentation') return
+  if (!loc.configName && !loc.sceneId) {
+    learnReturnBeforePresentation = null
+    return
+  }
+  learnReturnBeforePresentation = {
+    ...(loc.sequenceKind && loc.sequenceName ? { sequenceKind: loc.sequenceKind, sequenceName: loc.sequenceName } : {}),
+    configName: loc.configName,
+    sceneId: loc.sceneId,
+    step: loc.step,
+  }
+}
+
+export function enterPresentationSequence(sequenceName: string): string {
+  bookmarkLearnBeforePresentation()
+  const query = `?sequence=presentation.${sequenceName}`
+  window.history.replaceState(null, '', query)
+  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+  return query
+}
+
+/** Praesentation verlassen und zuvor gemerkte Lernposition wiederherstellen. */
+export function leavePresentationAndRestore(): string {
+  if (learnReturnBeforePresentation) {
+    const query = replaceCanonicalLocation(learnReturnBeforePresentation)
+    learnReturnBeforePresentation = null
+    return query
+  }
+  const params = new URLSearchParams(window.location.search)
+  params.delete('sequence')
+  params.delete('mode')
+  const query = params.toString() ? `?${params.toString()}` : window.location.pathname
+  window.history.replaceState(null, '', query)
+  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+  return query
+}
+
+export function navigateToLearnFromScene(input: CanonicalQueryInput | null): string {
+  if (input?.configName || input?.sceneId) {
+    return replaceCanonicalLocation(input)
+  }
+  const params = new URLSearchParams(window.location.search)
+  params.delete('mode')
+  const query = params.toString() ? `?${params.toString()}` : window.location.pathname
+  window.history.replaceState(null, '', query)
+  window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+  return query
+}

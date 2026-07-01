@@ -10,6 +10,7 @@ import PresenterNotes from '../PresenterNotes'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
 import { regionsToMeshes } from '../brainBridge'
 import { bridgeFor, type AtlasTarget } from '../../viewer/atlas/atlasBridge'
+import { replaceAppModeQuery } from '../router'
 import { useViewerStore } from '../../viewer/viewerStore'
 
 /** Erstes kuratiert verlinktes fsaverage-Areal der Szenen-Regionen (Bruecke Lernschritt -> Atlas),
@@ -72,6 +73,9 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
       <div style={{ flex: 'none', padding: '12px 18px', borderBottom: '1.5px solid var(--line)' }}>
         <PresenterChrome />
       </div>
+      <div style={{ flex: 'none' }}>
+        <PresenterNotes />
+      </div>
       <div className="scrollbar-thin" style={{ flex: 1, overflowY: 'auto', padding: 18, display: 'flex', flexDirection: 'column', gap: 14 }}>
         <div>
           <div className="eyebrow">{scene.figure ?? scene.section}</div>
@@ -86,6 +90,7 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
               style={{ marginTop: 8, padding: '5px 11px', minHeight: 44 }}
               onClick={() => {
                 setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                replaceAppModeQuery('atlas')
                 setAppMode('atlas')
               }}
             >
@@ -95,8 +100,6 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
         </div>
 
         {renderOverlay(scene)}
-
-        <PresenterNotes />
 
         {deepenings.length ? (
           <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 8, borderTop: '1px solid var(--line-soft)', paddingTop: 14 }}>

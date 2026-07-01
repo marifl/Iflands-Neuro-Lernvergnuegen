@@ -1,5 +1,15 @@
 import { describe, it, expect } from 'vitest'
-import { parseLocation, replaceCanonicalLocation, toCanonicalQuery, toConfigQuery, toQuery } from './router'
+import {
+  enterPresentationSequence,
+  leavePresentationAndRestore,
+  navigateToLearnFromScene,
+  parseLocation,
+  replaceAppModeQuery,
+  replaceCanonicalLocation,
+  toCanonicalQuery,
+  toConfigQuery,
+  toQuery,
+} from './router'
 
 describe('router', () => {
   it('parst scene + step', () => {
@@ -68,5 +78,30 @@ describe('router', () => {
   it('replaceCanonicalLocation verwirft alte Area-Scope-Overrides beim Config-Wechsel', () => {
     window.history.replaceState(null, '', '/?config=broca-areal&scene=broca-areal&off=julich%3Aarea-44%3Al')
     expect(replaceCanonicalLocation({ configName: 'vcpt', sceneId: 'vcpt', step: 0 })).toBe('?config=vcpt&scene=vcpt&step=0')
+  })
+
+  it('replaceAppModeQuery setzt mode fuer Reload', () => {
+    expect(replaceAppModeQuery('atlas')).toBe('?mode=atlas')
+    expect(window.location.search).toBe('?mode=atlas')
+  })
+
+  it('enterPresentationSequence merkt Lernposition und wechselt Sequenz', () => {
+    window.history.replaceState(null, '', '/?config=vcpt&scene=vcpt&step=2')
+    enterPresentationSequence('kapitel11-vorlesung')
+    expect(window.location.search).toBe('?sequence=presentation.kapitel11-vorlesung')
+    leavePresentationAndRestore()
+    expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=2')
+  })
+
+  it('navigateToLearnFromScene entfernt mode und setzt kanonische Lern-URL', () => {
+    window.history.replaceState(null, '', '/?mode=explore')
+    navigateToLearnFromScene({ configName: 'vcpt', sceneId: 'vcpt', step: 1 })
+    expect(window.location.search).toBe('?config=vcpt&scene=vcpt&step=1')
+  })
+
+  it('leavePresentationAndRestore ohne Bookmark entfernt sequence', () => {
+    window.history.replaceState(null, '', '/?sequence=presentation.kapitel11-vorlesung')
+    leavePresentationAndRestore()
+    expect(window.location.search).not.toContain('sequence=')
   })
 })

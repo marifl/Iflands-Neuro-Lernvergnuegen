@@ -48,6 +48,7 @@ import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ResumeLauncher from './ResumeLauncher'
+import { replaceAppModeQuery } from '../scene/router'
 import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
 import CutCaps from './CutCaps'
 import CutPickBridge from './CutPickBridge'
@@ -593,6 +594,7 @@ export default function BodyParts3DViewer() {
                     style={{ pointerEvents: 'auto', marginTop: 10, padding: '5px 11px' }}
                     onClick={() => {
                       setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                      replaceAppModeQuery('atlas')
                       setAppMode('atlas')
                     }}
                   >
@@ -628,6 +630,7 @@ export default function BodyParts3DViewer() {
                 onOpenAtlas={() => {
                   if (!atlasTarget) return
                   setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                  replaceAppModeQuery('atlas')
                   setAppMode('atlas')
                 }}
                 onOpenTarget={openExplorerTarget}
@@ -663,6 +666,7 @@ export default function BodyParts3DViewer() {
                         onClick={() => {
                           const t = julichBridgeFor(pickedAtlasSlug)!
                           setAtlasFocus({ layer: t.layer, name: t.name })
+                          replaceAppModeQuery('atlas')
                           setAppMode('atlas')
                         }}
                       >

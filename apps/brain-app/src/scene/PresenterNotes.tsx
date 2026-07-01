@@ -1,6 +1,6 @@
 import { useViewerStore } from '../viewer/viewerStore'
 import { useSceneStore } from './sceneStore'
-import { ROUTE_CHANGE_EVENT } from './router'
+import { leavePresentationAndRestore } from './router'
 
 /** Praesentationszustand des Unified Mode (PresenterFrame): Sprechernotiz zur aktiven Folie
  *  plus Rueckweg zum Lernpfad. Kein eigener AppMode-Silo — rendert nur, wenn die aktive
@@ -10,11 +10,8 @@ export default function PresenterNotes() {
   const setAppMode = useViewerStore((s) => s.setAppMode)
   if (!scene || scene.sequence.kind !== 'presentation') return null
 
-  // Rueckweg: Praesentation verlassen -> zurueck in den Lernpfad (Default-Sequenz). Sequence-Wechsel
-  // in der URL laedt die Lern-Szenen neu (LearnSidebar.syncFromRoute).
   const leavePresentation = () => {
-    window.history.replaceState(null, '', '?mode=learn')
-    window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+    leavePresentationAndRestore()
     setAppMode('learn')
   }
 

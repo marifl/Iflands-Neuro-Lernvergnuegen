@@ -28,6 +28,11 @@ Artefakt-Hierarchie bei Konflikt: Shape-Vertrag (19.06., bindend) + Prompt-DoD >
       Mehr ≤ „4+Mehr"; „Inhalt" = Lernen-Content-Panel, keine erfundene Surface). Mehr-Sheet = Sekundärnav
       + SettingsPanel (Shape §182). **Additiv** — FooterBar unangetastet (Modus-/Settings-Box-Entfernung
       bräche 5 FooterBar-Tests; FooterBar-Umbau bleibt eigener Chrome-Slice, s. Schritt 8-Note).
+      > **Produktentscheidung Atlas auf Rail (Issue #40):** Shape §Phone Portrait nennt Atlas „hinter Mehr";
+      > Schritt 4 hielt Atlas von Start-Cards fern. V2-Shell setzt Atlas bewusst als **3. Rail/Dock-Button**
+      > (peer zu Lernen·Struktur) — schneller Supplement-Zugang, kein Startmodus (ResumeLauncher bleibt
+      > learn-first). Shape §68 gilt für Default-Dock-Aktionen (Weiter/Inhalt/Struktur/Mehr), nicht für
+      > die V2-ShellNav mit drei kuratierten Surfaces + Mehr.
       > Note: Portrait zeigte zunächst Dock + FooterBar als zwei Bottom-Leisten — in Schritt 13 konsolidiert.
 - [x] Schritt 11 — ERP-Supplement (AtlasErpFrame): ERP-Kurve rendert bereits als Content des Lern-Panels
       (ErpChart, overlay.kind='erp', z.B. Szene p3a-konfliktmonitoring). Neu: die Kontextspalte ist jetzt

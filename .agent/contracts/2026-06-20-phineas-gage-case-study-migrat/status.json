@@ -1,14 +1,15 @@
 {
   "id": "2026-06-20-phineas-gage-case-study-migrat",
   "title": "Phineas-Gage Case-Study Migration v1→V2-Registry-Launch",
-  "status": "active",
+  "status": "completed",
   "round": 1,
   "created": "2026-06-20T06:12:38.511Z",
-  "updated": "2026-06-20T06:16:39.844Z",
+  "updated": "2026-07-01T20:52:00.000Z",
   "type": "feature",
   "frame_required": true,
   "frame_completed": true,
   "reversibility": "two-way",
+  "verdict": "pass-with-waiver",
   "pipeline": {
     "stages": [
       "plan",
@@ -16,14 +17,21 @@
       "review",
       "evaluate"
     ],
-    "currentStage": "implement",
+    "currentStage": "evaluate",
     "completedStages": [
-      "plan"
+      "plan",
+      "implement",
+      "review",
+      "evaluate"
     ],
     "stageHistory": [
       {
         "stage": "plan",
         "completedAt": "2026-06-20T06:16:39.844Z"
+      },
+      {
+        "stage": "evaluate",
+        "completedAt": "2026-07-01T20:52:00.000Z"
       }
     ]
   }
