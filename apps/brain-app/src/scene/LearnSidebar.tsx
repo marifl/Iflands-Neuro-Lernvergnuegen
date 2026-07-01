@@ -86,6 +86,10 @@ export default function LearnSidebar() {
         return
       }
       if (!state.scenes.length) return
+      // Surface-Wechsel setzt nur ?mode=explore|atlas — ohne scene/config/sequence nicht
+      // auf Index 0 zurueckspringen (LearnSidebar bleibt kurz gemountet bis appMode wechselt).
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('mode') && !loc.configName && !loc.sceneId && !loc.sequenceKind) return
       try {
         const next = sceneIndexForLocation(state.scenes, loc)
         const nextIndex = next >= 0 ? next : 0

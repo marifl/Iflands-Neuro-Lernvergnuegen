@@ -211,6 +211,43 @@ describe('LearnSidebar', () => {
     expect(useStudentProgressStore.getState().progress?.steps.map((step) => step.status)).toEqual(['seen', 'seen'])
   })
 
+  it('ignoriert mode-only URL-Aenderungen ohne Lern-Route', async () => {
+    mockFetch({
+      '/assets/atlas-canonical/atlas-config.json': {
+        preset: 'kapitel11',
+        presets: { kapitel11: { label_de: 'Kapitel 11', scopes: {} } },
+        configurations: {
+          vcpt: configNode('vcpt'),
+          'p3a-konfliktmonitoring': configNode('p3a-konfliktmonitoring'),
+        },
+        presentation: {},
+        learning: {
+          'kapitel11-pfad': {
+            label_de: 'Lernpfad Kapitel 11',
+            steps: ['vcpt', 'p3a-konfliktmonitoring'],
+          },
+        },
+      },
+      '/scenes/vcpt.json': scene('vcpt', 10),
+      '/scenes/p3a-konfliktmonitoring.json': scene('p3a-konfliktmonitoring', 20),
+    })
+    window.history.replaceState(null, '', '/?config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring&step=2')
+
+    render(<LearnSidebar />)
+
+    await screen.findByTestId('overlay-panel')
+    await waitFor(() => expect(useSceneStore.getState().index).toBe(1))
+    expect(useSceneStore.getState().step).toBe(2)
+
+    act(() => {
+      window.history.replaceState(null, '', '/?mode=explore')
+      window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
+    })
+
+    expect(useSceneStore.getState().index).toBe(1)
+    expect(useSceneStore.getState().step).toBe(2)
+  })
+
   it('laesst Lernpfad-Fortschritt unangetastet wenn Speicherung deaktiviert ist', async () => {
     useSettingsStore.getState().updateCategory('learning', { saveProgress: false })
     mockFetch({

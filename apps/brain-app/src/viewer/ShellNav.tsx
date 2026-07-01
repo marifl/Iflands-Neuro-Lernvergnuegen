@@ -56,7 +56,7 @@ function goToSurface(mode: NavSurface['mode'], setAppMode: (m: AppMode) => void)
           step: loc.step,
         }
       : null
-    navigateToLearnFromScene(learnLocationFromStore() ?? fromUrl)
+    navigateToLearnFromScene(fromUrl ?? learnLocationFromStore())
   } else {
     replaceAppModeQuery(mode)
   }
@@ -66,7 +66,8 @@ function goToSurface(mode: NavSurface['mode'], setAppMode: (m: AppMode) => void)
 export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode }) {
   const appMode = useViewerStore((s) => s.appMode)
   const setAppMode = useViewerStore((s) => s.setAppMode)
-  const presentationActive = useSceneStore((s) => s.scenes[s.index]?.sequence.kind === 'presentation')
+  const presentationActive =
+    appMode === 'learn' && useSceneStore((s) => s.scenes[s.index]?.sequence.kind === 'presentation')
   const [moreOpen, setMoreOpen] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
   const variant = shellMode === 'portrait-drawer' ? 'dock' : 'rail'
@@ -267,6 +268,7 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                 onClick={() => {
                   if (presentationActive) {
                     leavePresentationAndRestore()
+                    setAppMode('learn')
                   } else {
                     setAppMode('learn')
                     enterPresentationSequence(PRESENTATION_SEQUENCE)
