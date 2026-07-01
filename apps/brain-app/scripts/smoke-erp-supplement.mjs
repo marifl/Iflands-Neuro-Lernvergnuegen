@@ -1,9 +1,9 @@
-import { chromium } from '@playwright/test'
+import { launchSmokeBrowser } from './smokeBrowser.mjs'
 
 const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
 const ERP_PATH = '/?mode=learn&config=p3a-konfliktmonitoring&scene=p3a-konfliktmonitoring'
 
-const browser = await chromium.launch()
+const browser = await launchSmokeBrowser()
 let failures = 0
 
 async function run(id, viewport, hasTouch, check) {

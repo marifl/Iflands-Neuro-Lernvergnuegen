@@ -595,8 +595,8 @@ export default function BodyParts3DViewer() {
                     onClick={() => {
                       const focus = { layer: atlasTarget.layer, name: atlasTarget.name }
                       setAtlasFocus(focus)
-                      navigateToAtlasWithFocus(focus)
                       setAppMode('atlas')
+                      navigateToAtlasWithFocus(focus)
                     }}
                   >
                     Im Atlas zeigen →
@@ -632,8 +632,8 @@ export default function BodyParts3DViewer() {
                   if (!atlasTarget) return
                   const focus = { layer: atlasTarget.layer, name: atlasTarget.name }
                   setAtlasFocus(focus)
-                  navigateToAtlasWithFocus(focus)
                   setAppMode('atlas')
+                  navigateToAtlasWithFocus(focus)
                 }}
                 onOpenTarget={openExplorerTarget}
               />
@@ -669,8 +669,8 @@ export default function BodyParts3DViewer() {
                           const t = julichBridgeFor(pickedAtlasSlug)!
                           const focus = { layer: t.layer, name: t.name }
                           setAtlasFocus(focus)
-                          navigateToAtlasWithFocus(focus)
                           setAppMode('atlas')
+                          navigateToAtlasWithFocus(focus)
                         }}
                       >
                         Im Atlas zeigen →

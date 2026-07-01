@@ -89,9 +89,10 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
               className="ed-btn"
               style={{ marginTop: 8, padding: '5px 11px', minHeight: 44 }}
               onClick={() => {
-                setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                navigateToAtlasWithFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
+                const focus = { layer: atlasTarget.layer, name: atlasTarget.name }
+                setAtlasFocus(focus)
                 setAppMode('atlas')
+                navigateToAtlasWithFocus(focus)
               }}
             >
               Im Atlas zeigen →

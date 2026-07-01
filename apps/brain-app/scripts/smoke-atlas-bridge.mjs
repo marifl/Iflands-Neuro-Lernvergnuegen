@@ -1,8 +1,8 @@
-import { chromium } from '@playwright/test'
+import { launchSmokeBrowser } from './smokeBrowser.mjs'
 
 const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
 
-const browser = await chromium.launch()
+const browser = await launchSmokeBrowser()
 let failures = 0
 
 async function run(id, sceneConfig, expectBridge) {
@@ -19,10 +19,10 @@ async function run(id, sceneConfig, expectBridge) {
     if (!expectBridge && present) errors.push('bridge-unerwartet')
 
     if (expectBridge && present) {
-      // Klick fuehrt vom Lernschritt in den Atlas-Modus (Rail-Item "Atlas" wird aktiv).
       await bridge.first().click()
-      await page.locator('nav[data-shell-nav] button[aria-current="page"]').filter({ hasText: 'Atlas' }).first()
-        .waitFor({ state: 'visible', timeout: 10000 })
+      await page.waitForURL(/[?&]mode=atlas/, { timeout: 10000 })
+      const url = page.url()
+      if (!url.includes('atlasLayer=') || !url.includes('atlasArea=')) errors.push('atlas-fokus-url-fehlt')
     }
   } catch (error) {
     errors.push(error instanceof Error ? error.message : String(error))

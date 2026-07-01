@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test'
+import { launchSmokeBrowser } from './smokeBrowser.mjs'
 
 const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
 
@@ -26,7 +26,7 @@ const CASES = [
   },
 ]
 
-const browser = await chromium.launch()
+const browser = await launchSmokeBrowser()
 let failures = 0
 const GAGE_ASSET_IDS = [
   'phineas-gage-skull-base',

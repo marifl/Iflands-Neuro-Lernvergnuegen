@@ -86,10 +86,13 @@ export default function LearnSidebar() {
         return
       }
       if (!state.scenes.length) return
+      const params = new URLSearchParams(window.location.search)
+      // Surface-URLs (explore/atlas) sind nicht LearnSidebar-Routing — nicht syncen.
+      const surfaceMode = params.get('mode')
+      if (surfaceMode === 'explore' || surfaceMode === 'atlas') return
       // Surface-Wechsel setzt nur ?mode=explore|atlas — ohne scene/config/sequence nicht
       // auf Index 0 zurueckspringen (LearnSidebar bleibt kurz gemountet bis appMode wechselt).
-      const params = new URLSearchParams(window.location.search)
-      if (params.get('mode') && !loc.configName && !loc.sceneId && !loc.sequenceKind) return
+      if (surfaceMode && !loc.configName && !loc.sceneId && !loc.sequenceKind) return
       try {
         const next = sceneIndexForLocation(state.scenes, loc)
         const nextIndex = next >= 0 ? next : 0
@@ -144,7 +147,9 @@ export default function LearnSidebar() {
   }, [])
 
   useEffect(() => {
-    if (scene) replaceCanonicalLocation({ ...(routeSequenceRef.current ?? {}), configName: scene.configName, sceneId: scene.id, step })
+    if (!scene) return
+    if (useViewerStore.getState().appMode !== 'learn') return
+    replaceCanonicalLocation({ ...(routeSequenceRef.current ?? {}), configName: scene.configName, sceneId: scene.id, step })
   }, [scene, step])
 
   if (loadError) throw loadError

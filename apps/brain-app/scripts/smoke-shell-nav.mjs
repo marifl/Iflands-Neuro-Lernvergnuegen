@@ -1,4 +1,4 @@
-import { chromium } from '@playwright/test'
+import { launchSmokeBrowser } from './smokeBrowser.mjs'
 import { mkdirSync } from 'node:fs'
 
 const BASE = process.env.SMOKE_URL ?? 'http://127.0.0.1:5173'
@@ -11,7 +11,7 @@ const CASES = [
   { id: 'phone-portrait-dock', path: '/?mode=learn&config=vcpt&scene=vcpt', viewport: { width: 390, height: 844 }, hasTouch: true, expect: 'dock' },
 ]
 
-const browser = await chromium.launch()
+const browser = await launchSmokeBrowser()
 let failures = 0
 
 try {
