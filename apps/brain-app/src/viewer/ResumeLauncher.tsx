@@ -3,6 +3,7 @@ import type { RegularAppMode } from './appModeDefinitions'
 import { useStudentProgressStore } from './studentProgress'
 import { loadScenes, type LoadedScene } from '../scene/scenes'
 import { replaceCanonicalLocation } from '../scene/router'
+import { navigateToExploreSearch } from './surfaceNavigation'
 
 /** Resume-Index: bei vorhandenem Fortschritt der zuletzt aktive Schritt, sonst Pfad-Anfang.
  *  Kein stiller Fallback — ohne Fortschritt ist der Anfang der ehrliche Startzustand. */
@@ -157,7 +158,10 @@ export default function ResumeLauncher({
             <button
               type="button"
               className="ed-btn"
-              onClick={() => onEnter('explore')}
+              onClick={() => {
+                navigateToExploreSearch()
+                onEnter('explore')
+              }}
               style={{ background: 'none', border: 'none', padding: '4px 0', cursor: 'pointer' }}
             >
               <span className="mono-sm" style={{ color: 'var(--g600)', textDecoration: 'underline' }}>

@@ -6,6 +6,7 @@ import { useSceneStore } from '../scene/sceneStore'
 import SettingsPanel from './SettingsPanel'
 import FooterBar from './FooterBar'
 import type { ResponsiveShellMode } from './explorerShellLayout'
+import { navigateSurface } from './surfaceNavigation'
 
 /** Einzige Kapitel-11-Vortragssequenz (config.default.toml). Praesentation ist ein Zustand des
  *  Unified Mode, kein eigener AppMode — sie laedt als Sequenz im learn-Shell. */
@@ -29,16 +30,6 @@ const SURFACES: NavSurface[] = [
   { mode: 'explore', label: 'Struktur', description: 'Strukturfokus: Suche, Strukturbaum, Auswahl und Isolieren.', icon: <Compass {...NAV_ICON_PROPS} /> },
   { mode: 'atlas', label: 'Atlas', description: 'Präzises fsaverage-Atlas-Supplement als Referenz zum Lernschritt.', icon: <Layers {...NAV_ICON_PROPS} /> },
 ]
-
-/** appMode wechseln + URL fuer Deep-Link/Reload synchron halten (wie FooterBar/atlasBridge).
- *  Lernen behaelt die aktive Szene (kein URL-Reset), damit der Lernschritt fortsetzbar bleibt. */
-function goToSurface(mode: NavSurface['mode'], setAppMode: (m: AppMode) => void) {
-  if (mode !== 'learn') {
-    window.history.replaceState(null, '', `?mode=${mode}`)
-    window.dispatchEvent(new Event(ROUTE_CHANGE_EVENT))
-  }
-  setAppMode(mode)
-}
 
 export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode }) {
   const appMode = useViewerStore((s) => s.appMode)
@@ -84,7 +75,7 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
         className={`ed-btn${active ? ' active' : ''}`}
         aria-current={active ? 'page' : undefined}
         title={surface.description}
-        onClick={() => goToSurface(surface.mode, setAppMode)}
+        onClick={() => navigateSurface(surface.mode, setAppMode)}
         style={{
           position: 'relative',
           display: 'flex',
@@ -217,7 +208,7 @@ export default function ShellNav({ shellMode }: { shellMode: ResponsiveShellMode
                     type="button"
                     className={`ed-btn${active ? ' active' : ''}`}
                     aria-current={active ? 'page' : undefined}
-                    onClick={() => { goToSurface(surface.mode, setAppMode); setMoreOpen(false) }}
+                    onClick={() => { navigateSurface(surface.mode, setAppMode); setMoreOpen(false) }}
                     style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '10px 12px', minHeight: 44 }}
                   >
                     {surface.icon}
