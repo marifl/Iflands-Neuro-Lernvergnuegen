@@ -10,7 +10,7 @@ import PresenterNotes from '../PresenterNotes'
 import { responsiveShellMode, sidePanelBorder, sidePanelFlex, sidePanelWidth } from '../../viewer/explorerShellLayout'
 import { regionsToMeshes } from '../brainBridge'
 import { bridgeFor, type AtlasTarget } from '../../viewer/atlas/atlasBridge'
-import { useViewerStore } from '../../viewer/viewerStore'
+import { openAtlasSupplement } from '../../viewer/surfaceNavigation'
 
 /** Erstes kuratiert verlinktes fsaverage-Areal der Szenen-Regionen (Bruecke Lernschritt -> Atlas),
  *  oder null wenn keine Region ein zuordenbares Areal hat. */
@@ -51,8 +51,6 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
   const isTouchLandscape = useIsTouchLandscape()
   const shellMode = responsiveShellMode({ isNarrow, isTouchLandscape })
   const deepenings = deepeningIdsForScene(scene)
-  const setAtlasFocus = useViewerStore((s) => s.setAtlasFocus)
-  const setAppMode = useViewerStore((s) => s.setAppMode)
   const atlasTarget = atlasTargetForScene(scene)
   return (
     <aside
@@ -84,10 +82,7 @@ export default function OverlayPanel({ scene }: { scene: Scene }) {
               type="button"
               className="ed-btn"
               style={{ marginTop: 8, padding: '5px 11px', minHeight: 44 }}
-              onClick={() => {
-                setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                setAppMode('atlas')
-              }}
+              onClick={() => openAtlasSupplement({ layer: atlasTarget.layer, name: atlasTarget.name })}
             >
               Im Atlas zeigen →
             </button>

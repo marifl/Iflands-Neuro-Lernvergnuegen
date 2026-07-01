@@ -48,6 +48,7 @@ import PhineasGageAssets from './PhineasGageAssets'
 import AtlasOverlay from './AtlasOverlay'
 import CanonicalAtlasMode from './atlas/CanonicalAtlasMode'
 import ResumeLauncher from './ResumeLauncher'
+import { openAtlasSupplement } from './surfaceNavigation'
 import { bridgeFor, julichBridgeFor } from './atlas/atlasBridge'
 import CutCaps from './CutCaps'
 import CutPickBridge from './CutPickBridge'
@@ -85,7 +86,6 @@ export default function BodyParts3DViewer() {
   const setOntology = useViewerStore((s) => s.setOntology)
   const setContext = useViewerStore((s) => s.setContext)
   const setAppMode = useViewerStore((s) => s.setAppMode)
-  const setAtlasFocus = useViewerStore((s) => s.setAtlasFocus)
   const ontology = useViewerStore((s) => s.ontology)
   const context = useViewerStore((s) => s.context)
   const selected = useViewerStore((s) => s.selected)
@@ -591,10 +591,7 @@ export default function BodyParts3DViewer() {
                     type="button"
                     className="ed-btn"
                     style={{ pointerEvents: 'auto', marginTop: 10, padding: '5px 11px' }}
-                    onClick={() => {
-                      setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                      setAppMode('atlas')
-                    }}
+                    onClick={() => openAtlasSupplement({ layer: atlasTarget.layer, name: atlasTarget.name })}
                   >
                     Im Atlas zeigen →
                   </button>
@@ -627,8 +624,7 @@ export default function BodyParts3DViewer() {
                 onClose={() => setClosedLearningFlyoutFor(selected)}
                 onOpenAtlas={() => {
                   if (!atlasTarget) return
-                  setAtlasFocus({ layer: atlasTarget.layer, name: atlasTarget.name })
-                  setAppMode('atlas')
+                  openAtlasSupplement({ layer: atlasTarget.layer, name: atlasTarget.name })
                 }}
                 onOpenTarget={openExplorerTarget}
               />
@@ -662,8 +658,7 @@ export default function BodyParts3DViewer() {
                         style={{ padding: '5px 11px' }}
                         onClick={() => {
                           const t = julichBridgeFor(pickedAtlasSlug)!
-                          setAtlasFocus({ layer: t.layer, name: t.name })
-                          setAppMode('atlas')
+                          openAtlasSupplement({ layer: t.layer, name: t.name })
                         }}
                       >
                         Im Atlas zeigen →
